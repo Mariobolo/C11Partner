@@ -40,10 +40,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
-    <!-- 空调相关权限 -->
-    <uses-permission android:name="android.permission.BYDAUTO_AC_COMMON"/>
-    <uses-permission android:name="android.permission.BYDAUTO_AC_GET"/>
-    <uses-permission android:name="android.permission.BYDAUTO_AC_SET"/>
+    <!-- 零跑C11不需要比亚迪专用权限 -->
 
     <!-- 读取系统日志及相关权限 -->
     <uses-permission
@@ -113,6 +110,10 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+        <!-- 零跑C11日志监控服务 -->
+        <service android:name="com.c11partner.desktop.LogcatMonitorService"
+                 android:enabled="true"
+                 android:exported="false" />
 
         <receiver
             android:name="com.c11partner.desktop.receiver.BootReceiver"

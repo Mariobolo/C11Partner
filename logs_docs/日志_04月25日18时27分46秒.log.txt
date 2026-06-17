@@ -1,0 +1,1403 @@
+V/SettingsProvider: Notifying for 0: content://settings/global/ag35_android_net_flow
+I/LocationManagerService: remove 76fd27e
+D/LocationManagerService: provider request: gps ProviderRequest[ON interval=+100ms lowPowerMode=false]
+E/MediaByBtManager: onServiceDisconnected : ComponentInfo{com.leapmotor.multimedia/com.leapmotor.mediac11.service.MediaService}
+E/BleControlService: onMediaServiceDisconnected disConnect
+I/GnssLocationProvider: WakeLock acquired by sendMessage(SET_REQUEST, 0, com.android.server.location.GnssLocationProvider$GpsRequest@165f31)
+I/ActivityManager: Process com.leapmotor.multimedia (pid 28709) has died: prcp FGS 
+W/libprocessgroup: kill(-28709, 9) failed: No such process
+I/libprocessgroup: Successfully killed process cgroup uid 10077 pid 28709 in 0ms
+W/ActivityManager: Scheduling restart of crashed service com.leapmotor.multimedia/com.leapmotor.mediac11.service.CtrlService in 12600000ms
+W/ActivityManager: Scheduling restart of crashed service com.leapmotor.multimedia/com.leapmotor.onlineradio.service.OnlineRadioService in 12610000ms
+E/MediaManager: binderDied
+W/ActivityManager: Scheduling restart of crashed service com.leapmotor.multimedia/com.leapmotor.ultimatetv.service.UltimatetvService in 12620000ms
+W/ActivityManager: Scheduling restart of crashed service com.leapmotor.multimedia/com.leapmotor.mediac11.service.MediaService in 1000ms
+I/MediaTlog - UdiskBrowserService: onUnbind
+I/GnssLocationProvider: WakeLock released by handleMessage(SET_REQUEST, 0, com.android.server.location.GnssLocationProvider$GpsRequest@165f31)
+I/MediaByBtManager: bindService : true
+I/MediaTlog - LpRadioBrowserService: onUnbind
+D/SmartDockService: onServiceDisconnected: pauseStatus = true
+I/MediaManager: bindService start
+W/ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.bindService:1611 android.content.ContextWrapper.bindService:698 com.leapmotor.mediac11.manager.MediaManager.bindService:90 com.leapmotor.appcenter.service.SmartDockService.bindMusicService:1203 com.leapmotor.appcenter.service.SmartDockService.access$3100:157 
+I/MediaManager: bindService : true
+D/SmartDockService: bindMusicService: SmartDockService = true
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+D/AppCenterlog - SmartDockService: showStatusbarMusicIfNeed = display0Resume = com.yunpan.appmanage/com.yunpan.appmanage.ui.ActivityKeyMapLogcat / musicType = 2 / speechState = false
+I/ActivityManager: Start proc 28888:com.leapmotor.multimedia/u0a77 for service com.leapmotor.multimedia/com.leapmotor.mediac11.service.MediaService
+E/otor.multimedi: Not starting debugger since process cannot load the jdwp agent.
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.mediac11.service.CtrlService}) with a broken notification (no icon: Notification(channel=meidaChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+I/MMKV    : <MemoryFile.cpp:97::open> open fd[0x2c], /data/user/0/com.leapmotor.multimedia/files/mmkv/DefaultMMKV.crc
+I/MMKV    : <MMKV_IO.cpp:81::loadFromFile> loading [DefaultMMKV] with 4470 actual size, file size 8192, InterProcess 0, meta info version:3
+I/MMKV    : <MMKV_IO.cpp:86::loadFromFile> loading [DefaultMMKV] with crc 625276274 sequence 764 version 3
+I/MMKV    : <MMKV_IO.cpp:130::loadFromFile> loaded [DefaultMMKV] with 20 key-values
+D/MediaTlog - MediaService: onCreate
+I/MediaTlog - QQManager: bindService start
+W/bl_ping : type=1400 audit(0.0:9470): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+I/MediaTlog - QQManager: bindService : true
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.ultimatetv.service.UltimatetvService}) with a broken notification (no icon: Notification(channel=ultimatetvChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+I/otor.multimedi: The ClassLoaderContext is a special shared library.
+D/zza     : 0x53A: 16 3A05000008030018114CC00000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+I/MultiDex: VM with version 2.1.0 has multidex support
+I/MultiDex: Installing application
+I/MultiDex: VM has multidex support, MultiDex support library is disabled.
+D/WM-WrkMgrInitializer: Initializing WorkManager with default configuration.
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/MMKV    : Disable checkProcessMode()
+I/MMKV    : <native-bridge.cpp:104::JNI_OnLoad> current API level = 28, libc++_shared=0
+I/MMKV    : <MMKV.cpp:165::initialize> version v1.2.14, page size 4096, arch arm64-v8a
+I/MMKV    : <MMKV.cpp:176::initialize> armv8 AES instructions is supported
+I/MMKV    : <MMKV.cpp:184::initialize> armv8 CRC32 instructions is supported
+I/MMKV    : <MMKV.cpp:207::initializeMMKV> root dir: /data/user/0/com.leapmotor.multimedia/files/mmkv
+I/MMKV    : <MemoryFile.cpp:97::open> open fd[0x2a], /data/user/0/com.leapmotor.multimedia/files/mmkv/DefaultMMKV
+I/UICHelper::: changeTheme: light
+I/WebViewFactory: Loading com.android.webview version 95.0.4638.74 (code 463807403)
+W/MediaTlog - UsbUtils: getUsbUUid not find
+I/MediaByBtManager: queryBinder ：1
+I/MediaByBtManager: queryBinder success !
+I/MediaByBtManager: onServiceConnected : ComponentInfo{com.leapmotor.multimedia/com.leapmotor.mediac11.service.MediaService}
+I/MediaTlog - CtrlService: onCreate start
+I/cr_WVCFactoryProvider: Loaded version=95.0.4638.74 minSdkVersion=21 isBundle=false multiprocess=true packageId=2
+D/LocationManagerService: getProviders()=[]
+D/LocationManagerService: getProviders()=[passive, gps]
+D/LocationManagerService: getBestProvider(Criteria[power=LOW acc=HIGH], true)=gps
+D/LocationManagerService: getLastLocation: Request[ACCURACY_FINE gps requested=0 fastest=0 num=1 lowPowerMode=false]
+I/MediaTlog - CtrlService: receive last known location : Location[gps 34.451735,115.060169 hAcc=1 et=+51m56s334ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[mParcelledData.dataSize=96]}]
+I/MediaManager: queryBinder ：0
+I/MediaManager: queryBinder success !
+D/SmartDockService: onServiceConnected: com.leapmotor.mediac11.MediaService
+D/MediaTlog - MediaBinder: getMediaBody
+D/MediaTlog - MediaBinder: getMediaBody is first : MediaBody{type=2, uniqueId='Booty Music', albumId='', name='Booty Music（Cover Deep Side）', title='Booty Music', artist='戳戳', imagUrl='/storage/emulated/0/bluetooth/AVRCP_BIP_IMG_6908472.JPEG', duration=178303, state=2}
+D/SmartDockService: onServiceConnected: mediaBody = MediaBody{type=2, uniqueId='Booty Music', albumId='', name='Booty Music（Cover Deep Side）', title='Booty Music', artist='戳戳', imagUrl='/storage/emulated/0/bluetooth/AVRCP_BIP_IMG_6908472.JPEG', duration=178303, state=2}
+D/MediaTlog - MediaBinder: isPlaying
+D/MediaTlog - MediaBinder: getLastMediaType : 2
+D/MediaTlog - MediaBinder: isPlayingByMediaType ：2
+E/MediaTlog - BtMusicManager: isAvailable : mBluetoothAdapter is null
+E/MediaTlog - LpRadioMediaBrowser: mediaBrowserCompat disconnect please first connect LpRadioMediaBrowserService !
+D/MediaBrowserCompat: Connecting to a MediaBrowserService.
+D/MediaTlog - MediaBinder: registerPlayStateListener size is : 1 ,and Thread[Binder:28888_2,5,main]
+D/AppCenterlog - SettingsObserver: mainA2dpAvailable = false
+D/AppCenterlog - SmartDockService: showStatusbarMusicIfNeed = display0Resume = com.yunpan.appmanage/com.yunpan.appmanage.ui.ActivityKeyMapLogcat / musicType = 2 / speechState = false
+D/SmartDockService: refreshMusicWidgetView: musicPos = 2
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+D/CarFloatBall: isAppOnSecondary: pkg=com.yunpan.appmanage, tracked=false, memory=[cn.wenyu.bodian, cn.leapmotor.ctvfp, com.baidu.naviautp, com.carfloat.ball, com.leapmotor.leapmotoriflyspeechservice, com.autonavi.minimap, com.autonavi.amapauto.lpmt]
+V/AutoTaskTrigger: onAppChanged: skip same pkg=com.yunpan.appmanage
+V/CarFloatBall: onAccessibilityEvent: WindowStateChanged pkg=com.yunpan.appmanage, class=j7.g4, displayId=0
+V/CarFloatBall: Updated Top Activity: com.yunpan.appmanage / j7.g4
+D/CarFloatBall: checkAndRefreshFloatCardVisibilityImpl: START
+D/CarFloatBall: checkAndRefreshFloatCardVisibilityImpl: Card 0 disabled, hiding
+D/CarFloatBall: hideFloatCardImpl: cardIndex=0, updatePrefs=false, cardView=false, parent=false, visibility=null
+W/CarFloatBall: hideFloatCardImpl: cardView is null, nothing to hide
+D/CarFloatBall: updateQuickAppsVisibility: isFullscreen=false, isHome=false, onlyDesktop=false, quickAppsHide=false
+D/CarFloatBall: isAppOnSecondary: pkg=com.yunpan.appmanage, tracked=false, memory=[cn.wenyu.bodian, cn.leapmotor.ctvfp, com.baidu.naviautp, com.carfloat.ball, com.leapmotor.leapmotoriflyspeechservice, com.autonavi.minimap, com.autonavi.amapauto.lpmt]
+I/CarFloatBall: Auto fullscreen NOT triggered for: com.yunpan.appmanage
+I/CarFloatBall: setFullscreen called: fullscreen=false, displayId=0, forceRefresh=true, controlMain=true, controlSecondary=false, isFullscreen=false, isSecondaryFullscreen=false
+I/CarFloatBall: setFullscreen: mainStateChanged=true, secondaryStateChanged=false
+D/CarFloatBall: forceShowAllQuickApps: showing 0 main + 0 secondary apps
+D/CarFloatBall: setFullscreen: fullscreen=false, displayId=0, main=true, secondary=false
+D/CarFloatBall: HiddenApiBypass enabled successfully
+W/CarFloatBall: getDpyTopAppInfo failed: getDpyTopAppInfo [int, int]
+W/CarFloatBall: getDpyTopAppInfo failed: getDpyTopAppInfo [int, int]
+D/CarFloatBall: showNavBar: package=com.qinggan.app.launcher, activity=com.qinggan.app.launcher.activity.MainActivity, show=true, type=2, displayId=0
+D/SmartDockAdapter: convert: com.leapmotor.tire
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+D/SmartDockAdapter: showMusicItem: musicType = 2
+E/CarFloatBall: showNavBar failed
+E/CarFloatBall: java.lang.ClassNotFoundException: com.qinggan.bus.QGBus
+E/CarFloatBall: 	at java.lang.Class.classForName(Native Method)
+E/CarFloatBall: 	at java.lang.Class.forName(Class.java:453)
+E/CarFloatBall: 	at java.lang.Class.forName(Class.java:378)
+E/CarFloatBall: 	at com.carfloat.ball.service.FloatBallService.showNavBar(FloatBallService.kt:7001)
+E/CarFloatBall: 	at com.carfloat.ball.service.FloatBallService.setFullscreen(FloatBallService.kt:6776)
+E/CarFloatBall: 	at com.carfloat.ball.service.FloatBallService.setFullscreen$default(FloatBallService.kt:6727)
+E/CarFloatBall: 	at com.carfloat.ball.service.FloatAccessibilityService.onAccessibilityEvent(FloatAccessibilityService.kt:1189)
+E/CarFloatBall: 	at android.accessibilityservice.AccessibilityService$2.onAccessibilityEvent(AccessibilityService.java:1538)
+E/CarFloatBall: 	at android.accessibilityservice.AccessibilityService$IAccessibilityServiceClientWrapper.executeMessage(AccessibilityService.java:1724)
+E/CarFloatBall: 	at com.android.internal.os.HandlerCaller$MyHandler.handleMessage(HandlerCaller.java:37)
+E/CarFloatBall: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+E/CarFloatBall: 	at android.os.Looper.loop(Looper.java:193)
+E/CarFloatBall: 	at android.app.ActivityThread.main(ActivityThread.java:6718)
+E/CarFloatBall: 	at java.lang.reflect.Method.invoke(Native Method)
+E/CarFloatBall: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:493)
+E/CarFloatBall: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:858)
+E/CarFloatBall: Caused by: java.lang.ClassNotFoundException: Didn't find class "com.qinggan.bus.QGBus" on path: DexPathList[[zip file "/data/app/com.carfloat.ball-sRikQAUlWnVijDKlAL2Riw==/base.apk"],nativeLibraryDirectories=[/data/app/com.carfloat.ball-sRikQAUlWnVijDKlAL2Riw==/lib/arm64, /data/app/com.carfloat.ball-sRikQAUlWnVijDKlAL2Riw==/base.apk!/lib/arm64-v8a, /system/lib64, /system/product/lib64]]
+E/CarFloatBall: 	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:134)
+E/CarFloatBall: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
+E/CarFloatBall: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
+E/CarFloatBall: 	... 16 more
+D/CarFloatBall: setFullscreen main display result: com.qinggan.bus.QGBus
+D/CarFloatBall: updateQuickAppsVisibility: isFullscreen=false, isHome=false, onlyDesktop=false, quickAppsHide=false
+D/CarFloatBall: checkAndRefreshFloatCardVisibilityImpl: START
+D/CarFloatBall: updateQuickAppsVisibility: isFullscreen=false, isHome=false, onlyDesktop=false, quickAppsHide=false
+D/CarFloatBall: checkAndRefreshFloatCardVisibilityImpl: Card 0 disabled, hiding
+D/CarFloatBall: hideFloatCardImpl: cardIndex=0, updatePrefs=false, cardView=false, parent=false, visibility=null
+W/CarFloatBall: hideFloatCardImpl: cardView is null, nothing to hide
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/chatty  : uid=1000(system) com.leapmotor.appcenter identical 2 lines
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+D/CarControl: pos: 0 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+D/SmartDockService: queryKgIsLikeFromDb onFav: false
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+D/SmartDockService: refreshMusicWidgetView: musicPos = 2
+D/SmartDockAdapter: convert: com.leapmotor.tire
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+I/WebViewUtils: Hook success!
+D/SmartDockAdapter: showMusicItem: musicType = 2
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+I/        : Configuration module loaded.
+I/        : Client [9008] is connecting to [0] at /mnt/vsomeip/vsomeip-0
+I/        : Application(media_pub, 9008) is initialized (11, 100).
+I/SomeipPubNative: Init end
+I/SomeipPub: ###  SomeIp start
+I/SomeipPub: ### offer service groupid 36867
+I/SomeipPub: ###### Register or offer events finished!
+W/System.err: 	at android.os.Looper.loop(Looper.java:193)
+W/System.err: 	at android.app.ActivityThread.main(ActivityThread.java:6718)
+I/SomeipPub: ###  SomeIp start finish!
+W/System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+I/MediaTlog - MediaTlog: startPub: SomeipInfo{serviceId=36865, instanceId=36866, appName='media_pub', reliability=1}
+I/        : Initializing vsomeip application "media_pub".
+W/System.err: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:493)
+W/System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:858)
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+I/        : Starting vsomeip application "media_pub" (9008) using 2 threads I/O nice 255
+I/        : io thread id from application: 9008 (media_pub) is: 7e953ef4f0 TID: 28941
+I/        : Listening at /mnt/vsomeip/vsomeip-9008
+I/        : Client 9008 (media_pub) successfully connected to routing  ~> registering..
+I/UltimateTv: setConfig, config: Config{connectTimeout=30000, readTimeout=15000, isHttpRetryConnect=true, forceMvPlayerDecodeMode=0, useFFmpegExtractor=true, defaultSongQuality=0, defaultMvQuality=4, mvQualityChoose=true, baseUrlProxyMap={}, ignoreCertExpiredOrNotYetValid=false, deviceTimestampOffset=0, isSongPlayerCache=true, isSongFastWhenCached=true, isForceNotFadeInOutWhenSongSeek=false, mvMuteVolume=0.0, isShowAiLyric=false, useNetworkProxyMode=false, networkProxyHost=fd53:7cb8:383:3::108, networkProxyPort=50007, proxyUrlPort=443, useHttpsUrl=false}
+I/KGSDK.kgc: cacheLimitSize：4096 availableLimitSize：4096 cacheMinSize：100 mvCacheLimitSize：300
+I/        : Application/Client 9008 is registering.
+I/        : io thread id from application: 9008 (media_pub) is: 7e959ff4f0 TID: 28944
+I/        : Client [9000] is connecting to [9008] at /mnt/vsomeip/vsomeip-9008
+I/        : Application/Client 9008 (media_pub) is registered.
+I/        : REGISTER EVENT(9008): [9001.9002.9401:is_provider=1]
+I/        : REGISTER EVENT(9008): [9001.9002.9402:is_provider=1]
+I/        : REGISTER EVENT(9008): [9001.9002.9501:is_provider=1]
+I/        : REGISTER EVENT(9008): [9001.9002.9601:is_provider=1]
+D/MediaTlog - CarUtil: getVin : LFZ63AL50PD104416
+I/        : REGISTERED_ACK(9008)
+I/        : main dispatch thread id from application: 9008 (media_pub) is: 7e9872f4f0 TID: 28942
+I/SomeipPub: #### offer_service finish
+I/SomeipPub: someip is registered
+I/SomeipPub: ##### Start offer_service service_id 9001 instance_id 9002 
+I/        : shutdown thread id from application: 9008 (media_pub) is: 7e961334f0 TID: 28943
+I/        : OFFER(9008): [9001.9002:0.0] (true)
+I/        : Port configuration missing for [9001.9002]. Service is internal.
+I/        : Client [9044] is connecting to [9008] at /mnt/vsomeip/vsomeip-9008
+I/        : Client [9008] is connecting to [9044] at /mnt/vsomeip/vsomeip-9044
+I/SomeipSub: on_available _service_id 9001 _instance_id 9002 _is_available 1
+I/        : SUBSCRIBE ACK(9008): [9001.9002.9003.ffff]
+I/        : SUBSCRIBE(9044): [9001.9002.9003:ffff:0]
+D/zza     : 0x53A: 16 3A05000008010015114CE00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=26}
+D/CarControl: pos: 1 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+I/UltimateTv: init2, pid: 201602
+I/UltimateTv: Version: version=130-major, gitSHA=c189a98, gitBranch=release-1.3.0, modifyDate=2024-01-12-171911
+I/KGSDK.kgh: getCacheFilesDir, savedCacheFilePath: /storage/emulated/0/Android/data/com.leapmotor.multimedia/files
+I/KGSDK.relinker: Beginning load of sign...
+I/KGSDK.FileCacheManager: resetData---1
+I/KGSDK.FileCacheManager: resetData---1
+I/KGSDK.RetrofitHolder: getRetrofitInstance, baseUrl: https://thirdsso.kugou.com/v2/
+D/NetworkSecurityConfig: Using Network Security Config from resource network_security_config debugBuild: false
+D/MediaTlog - CarUtil: getVin : LFZ63AL50PD104416
+E/SeCoreUtils: Hello JNI!
+I/KGSDK.ktv-api-log: --> POST https://thirdsso.kugou.com/v2/user/ip
+I/KGSDK.ktv-api-log: Content-Length: 242
+I/KGSDK.ktv-api-log: signature: 73dd2f1c25caf82feab071349368fcc4
+I/KGSDK.ktv-api-log: kgidentity: Jm7JdihmVC/18lDnYnOaWWltV/5+Qkc1LOLDuGOJH4U=
+I/KGSDK.ktv-api-log: {"device_id":"LFZ63AL50PD104416","client_ver":"130-major-c189a98-2024-01-12-171911","pid":"201602","client_ip":"42.238.159.5","nonce":"83af064246a5490ba51369c8807de43d","sp":"KG","userid":"anonymous","timestamp":1777112857,"token":"password"}
+I/KGSDK.ktv-api-log: --> END POST (242-byte body)
+W/Settings: Setting android_id has moved from android.provider.Settings.System to android.provider.Settings.Secure, returning read-only value.
+W/Settings: Setting android_id has moved from android.provider.Settings.System to android.provider.Settings.Secure, returning read-only value.
+I/player_log_tag: PlayerManager.init->
+I/MediaTlog - OnlineRadioUtil: already active success !
+I/MediaTlog - BtMusicManager: registerProfile A2DP_SINK success
+I/MediaTlog - BtMusicManager: registerProfile AVRCP_CONTROLLER success
+E/MediaTlog - UdiskMediaBrowser: mediaBrowserCompat disconnect please first connect UdiskBrowserService !
+V/MediaTlog - MediaTlog: publish: eventId : 37889 || length : 300
+I/MediaTlog - CtrlService: onCreate end
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.mediac11.service.CtrlService}) with a broken notification (no icon: Notification(channel=meidaChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+I/MediaTlog - OnlineRadioService: onCreate
+I/MediaTlog - OnlineRadioService: onStartCommand
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.onlineradio.service.OnlineRadioService}) with a broken notification (no icon: Notification(channel=onlineradioChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+I/MediaTlog - UltimatetvService: onCreate
+E/MediaTlog - UserManager: saveLikeToDb onFail : Response{status=0, code=200003, msg='认证失败，请重新登录', data=null}
+D/MediaTlog - CarUtil: getVin : LFZ63AL50PD104416
+I/KGSDK.UltimateSongPlayer145768458: addSongPlayStateListener, songPlayStateListener: b.c.c.kgq$kga@5005e98
+I/KGSDK.UltimateSongPlayer145768458: setCallback
+I/KGSDK.UltimateSongPlayer145768458: removeSongPlayStateListener, songPlayStateListener: com.leapmotor.ultimatetv.service.UltimatetvService@f8ac6f1
+I/KGSDK.UltimateSongPlayer145768458: addSongPlayStateListener, songPlayStateListener: com.leapmotor.ultimatetv.service.UltimatetvService@f8ac6f1
+D/ConnectivityService: requestNetwork for uid/pid:10077/28888 NetworkRequest [ TRACK_DEFAULT id=119, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED Unwanted:  Uid: 10077] ]
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.ultimatetv.service.UltimatetvService}) with a broken notification (no icon: Notification(channel=ultimatetvChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+D/Ethernet: got request NetworkRequest [ TRACK_DEFAULT id=119, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED Unwanted:  Uid: 10077] ] with score 60
+D/WIFI    : got request NetworkRequest [ TRACK_DEFAULT id=119, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED Unwanted:  Uid: 10077] ] with score 60
+D/WIFI_UT : got request NetworkRequest [ TRACK_DEFAULT id=119, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED Unwanted:  Uid: 10077] ] with score 60
+D/PhoneSwitcherNetworkRequstListener: got request NetworkRequest [ TRACK_DEFAULT id=119, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED Unwanted:  Uid: 10077] ] with score 60
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+D/MediaTlog - QQUtils: setEventListener : 0
+I/MediaTlog - QQManager: onServiceConnected : ComponentInfo{com.tencent.qqmusiccar/com.tencent.qqmusiccar.third.api.QQMusicApiService} ,isVerifyCallerIdentity : false ,registerEventListener : 0
+I/MediaTlog - CtrlService: onStartCommand
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+I/leap_input: handle_alarm_signal is_event 0
+I/KGSDK.NetworkChangeReceiver: NetworkInfo: [type: WIFI[], state: CONNECTED/CONNECTED, reason: (unspecified), extra: (none), failover: false, available: true, roaming: false]
+I/KGSDK.UltimateTv: setClientIpIfNetworkChange
+I/KGSDK.RetrofitHolder: getRetrofitInstance, baseUrl: https://thirdsso.kugou.com/v2/
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/KGSDK.UltimateSongPlayer145768458: setCallback
+I/KGSDK.UltimateSongPlayer145768458: removeSongPlayStateListener, songPlayStateListener: com.leapmotor.ultimatetv.service.UltimatetvService@f8ac6f1
+I/KGSDK.UltimateSongPlayer145768458: addSongPlayStateListener, songPlayStateListener: com.leapmotor.ultimatetv.service.UltimatetvService@f8ac6f1
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.ultimatetv.service.UltimatetvService}) with a broken notification (no icon: Notification(channel=ultimatetvChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+I/MediaTlog - OnlineRadioService: onStartCommand
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+I/KGSDK.KGSDKDownloadEngineManager: engineCallback loadDownloadLibrary
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.onlineradio.service.OnlineRadioService}) with a broken notification (no icon: Notification(channel=onlineradioChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+I/KGSDK.RetrofitHolder: x-route:thirdsso.kugou.com/111.206.98.92:443
+I/KGSDK.RetrofitHolder: connection.socket():SSL socket over Socket[address=thirdsso.kugou.com/111.206.98.92,port=443,localPort=48710]
+I/KGSDK.KGSDKDownloadEngineManager.NLog: DownloadEngine::init peerID [0]
+E/jp2p    : Can't get method callbackGetCustomProxyWithSocks
+E/jp2p    : Can't get method callbackLogHighLevel
+E/jp2p    : Can't get method callbackSourceCount6
+E/jp2p    : Can't get method callbackOnPeerID6Changed
+E/jp2p    : Can't get method callbackOnLocateHash6
+E/jp2p    : Can't get method callbackSaveLastFlowInfo
+E/jp2p    : Can't get method callbackFormatID3
+E/jp2p    : Can't get method callbackFetchID3
+E/jp2p    : Can't get method callbackHttpSpeedTest
+E/jp2p    : Can't get method callbackOnSeedResponse
+E/jp2p    : Can't get method callbackFlowStat
+D/BluetoothA2dpSink: Proxy object connected
+E/jp2p    : Can't get method callbackOnCheckNat6Result
+E/jp2p    : Can't get method callbackOnCheckNat6Failed
+I/KGSDK.KGSDKDownloadEngineManager: engineCallback getCardInfo
+I/BtMusicManager: isAvailable: false||bluetoothEnable :true||isBluetoothConnected: true||isA2dpAvailable: true||isAvrcpAvailable: false||isA2dpConneted: false||isAvrcpConneted: false||a2dp: false||avrcp: false||a2dpSinkState : 0||avrcpControllerState : 0
+D/AppCenterlog - SettingsObserver: mainA2dpAvailable = false
+D/SmartDockService: refreshMusicWidgetView: musicPos = 2
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+I/KGSDK.ktv-api-log: --> POST https://thirdsso.kugou.com/v2/user/ip
+I/KGSDK.ktv-api-log: Content-Type: application/json; charset=UTF-8
+I/KGSDK.ktv-api-log: Content-Length: 242
+I/KGSDK.ktv-api-log: signature: b00d6f6804ae9d6dd27d439db8f4926c
+I/KGSDK.ktv-api-log: kgidentity: 8oFblc+SHS0ZpcPXMAU0CeW6nmiNFmth+JtbwU0TXf0=
+I/KGSDK.ktv-api-log: {"device_id":"LFZ63AL50PD104416","client_ver":"130-major-c189a98-2024-01-12-171911","pid":"201602","client_ip":"42.238.159.5","nonce":"a61d48632e4e41e39ab0a3c64c491a60","sp":"KG","userid":"anonymous","timestamp":1777112857,"token":"password"}
+I/KGSDK.ktv-api-log: --> END POST (242-byte body)
+I/BtMusicManager: isAvailable: false||bluetoothEnable :true||isBluetoothConnected: true||isA2dpAvailable: true||isAvrcpAvailable: true||isA2dpConneted: false||isAvrcpConneted: false||a2dp: false||avrcp: false||a2dpSinkState : 0||avrcpControllerState : 0
+I/KGSDK.RetrofitHolder: x-route:thirdsso.kugou.com/111.206.98.92:443
+I/KGSDK.RetrofitHolder: connection.socket():SSL socket over Socket[address=thirdsso.kugou.com/111.206.98.92,port=443,localPort=48710]
+I/KGSDK.KGSDKDownloadEngineManager: notifyNetworkChanged netMode:1 , flag:
+D/SmartDockAdapter: convert: com.leapmotor.tire
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+D/SmartDockAdapter: showMusicItem: musicType = 2
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/chatty  : uid=1000(system) com.leapmotor.appcenter identical 2 lines
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+D/AppCenterlog - SettingsObserver: mainA2dpAvailable = false
+D/SmartDockService: refreshMusicWidgetView: musicPos = 2
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+I/KGSDK.KGSDKDownloadEngineManager.NLog: DownloadEngine_:_setID3Fetcher: false
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+D/SmartDockAdapter: showMusicItem: musicType = 2
+D/MediaTlog - LpRadioBrowserService: onGetRoot clientPackageName = com.leapmotor.multimedia
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/chatty  : uid=1000(system) com.leapmotor.appcenter identical 2 lines
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+D/AudioManager: NEW AudioManager mUseFixedVolume = false
+D/MediaTlog - UdiskBrowserService: onGetRoot clientPackageName = com.leapmotor.multimedia
+I/MediaTlog - LpRadioMediaBrowser: onConnected : com.leapmotor.multimedia
+W/MediaTlog - DataUploadWorker: doWork error : not bcp files exit !
+I/WM-WorkerWrapper: Worker result FAILURE for Work [ id=711e8288-2178-4710-a7a3-a8cfabad8545, tags={ com.leapmotor.baselib.work.DataUploadWorker } ]
+I/ExoPlayerImpl: Init a594cb1 [AndroidXMedia3/1.4.1] [msmnile_gvmq, msmnile_gvmq for arm64, QTI, 28]
+D/zza     : 0x53A: 16 3A05000008030018114C000000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+D/AudioManager: NEW AudioManager mUseFixedVolume = false
+I/ExoMediaPlayerAdapter: initPLayer: mExoPlayer Initialization completed
+I/MediaTlog - UdiskMediaBrowser: onConnected : com.leapmotor.multimedia
+I/MediaTlog - BtMusicManager: onConnected : __ROOT__
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/ConnectivityService: releasing NetworkRequest [ TRACK_DEFAULT id=119, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED Unwanted:  Uid: 10077] ] (release request)
+I/KGSDK.ktv-api-log: <-- 200 https://thirdsso.kugou.com/v2/user/ip (330ms)
+I/KGSDK.ktv-api-log: content-type: application/json; charset=utf-8
+I/KGSDK.ktv-api-log: content-length: 84
+I/KGSDK.ktv-api-log: sp: KG
+I/KGSDK.ktv-api-log: x-b3-traceid: 6ccdd713bb87b5f85c550aa276e9c0b4
+I/KGSDK.ktv-api-log: kg-svr-version: v260423.1_t_20260423151257
+I/KGSDK.ktv-api-log: kg-bc-ms: 1
+I/KGSDK.ktv-api-log: kg-rs-ms: 1777112857969
+I/KGSDK.ktv-api-log: server: kws
+I/KGSDK.ktv-api-log: {"data":{"ip":"42.238.159.5","timestamp":1777112857},"error_code":0,"error_msg":""}
+I/KGSDK.ktv-api-log: <-- END HTTP (84-byte body)
+I/KGSDK.ktv-api-log: <-- 200 https://thirdsso.kugou.com/v2/user/ip (128ms)
+I/KGSDK.ktv-api-log: date: Sat, 25 Apr 2026 10:27:37 GMT
+I/KGSDK.ktv-api-log: content-type: application/json; charset=utf-8
+I/KGSDK.ktv-api-log: content-length: 84
+I/KGSDK.ktv-api-log: sp: KG
+I/KGSDK.ktv-api-log: x-b3-traceid: a0eed853d482f552df6f239634477fc0
+I/KGSDK.ktv-api-log: kg-svr-version: v260423.1_t_20260423151257
+I/KGSDK.ktv-api-log: kg-bc-ms: 1
+I/KGSDK.ktv-api-log: kg-rs-ms: 1777112857969
+I/KGSDK.ktv-api-log: server: kws
+I/KGSDK.ktv-api-log: date: Sat, 25 Apr 2026 10:27:37 GMT
+I/KGSDK.kgh: getCacheFilesDir, savedCacheFilePath: /storage/emulated/0/Android/data/com.leapmotor.multimedia/files
+I/KGSDK.ktv-api-log: {"data":{"ip":"42.238.159.5","timestamp":1777112857},"error_code":0,"error_msg":""}
+I/KGSDK.ktv-api-log: <-- END HTTP (84-byte body)
+I/KGSDK.MonitorManager: addInterfaceCallData2SaveList    
+I/KGSDK.MonitorManager: addInterfaceCallData2SaveList    
+I/KGSDK.UltimateTv: refreshClientIp, response: Response{status=0, code=0, msg='', data=KgUserIpData{kgUserIp='42.238.159.5'}}
+I/UltimateTv: innerActiveDevice, pid: 201602, LFZ63AL50PD104416
+I/MediaTlog - UltimatetvUtil: UltimateTv Init Success : version=130-major, gitSHA=c189a98, gitBranch=release-1.3.0, modifyDate=2024-01-12-171911
+I/KGSDK.UserManager: clearUser
+I/KGSDK.BroadcastUtil: send local broadcast: action = com.kugou.ultimatetv.action.login_modified
+D/MediaTlog - PlaySongReciver: user login change !
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+I/LeapSystemAppService: ###  gpsLocationMsg 1777112858,1,34.451735,115.060169,63.300000,0.000000,0.000000,12,0.600000,0.700000,0.900000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1777112858,15,44,75,274,18,28,37,316,20,24,70,33,21,18,24,73,29,37,36,236,24,0,22,172
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@c3eac14)
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+51m57s330ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=44, meanCn0=31}]}])
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+51m57s330ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=44, meanCn0=31}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/MediaTlog - CtrlService: receive location change : Location[gps 34.451735,115.060169 hAcc=1 et=+51m57s330ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[mParcelledData.dataSize=96]}]
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+51m57s330ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=44, meanCn0=31}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@c3eac14)
+I/KGSDK.AckManager: fetchCachedAckServerData, networkName: wifi
+I/KGSDK.AckManager: fetchCachedAckServerData, mLastIsp: 8, mLastArea: 13
+I/KGSDK.AckManager: fetchCachedAckServerData, TextUtils.isEmpty(ackServerConfigMapString)
+I/KGSDK.AckManager: fetchCachedAckServerData, mServerIdVersionMap: 2
+I/KGSDK.AckManager: fetchCachedAckServerData, mAckServerConfigMap: 2
+I/KGSDK.AckManager: fetchCachedAckServerData, TextUtils.isEmpty(ackHostConfigMapString)
+I/KGSDK.AckManager: fetchCachedAckServerData, mHostVersionMap: 1
+I/KGSDK.AckManager: fetchCachedAckServerData, mAckHostConfigMap: 1
+I/KGSDK.AckManager: fetchAckServerDataWhenInit return, cause isFetchingData[false] or lastFetchDataTime[1777110930651] in 24h.
+I/KGSDK.PlayerOfflineWrapper: getCacheSongIds-start
+E/KGSDK.PlayerOfflineWrapper: paramList.size=:0
+I/KGSDK.PlayerOfflineWrapper: getCacheSongIds-end
+I/KGSDK.VipInterestsConfigManager: refreshVipInterestsConfig
+I/KGSDK.PurchasedCacheManager: refreshPurchasedCache, userId: , lstUserId: , forceUpdate: false
+I/KGSDK.KGSDKFileManager: moveDownloadSongDataIfNeed no data to move
+I/KGSDK.ktv-api-log: --> POST https://thirdsso.kugou.com/v2/config/vip/interests
+I/KGSDK.ktv-api-log: Content-Type: application/json; charset=UTF-8
+I/KGSDK.ktv-api-log: Content-Length: 242
+I/KGSDK.ktv-api-log: signature: 8df5de008aef8df6679d6f8b17616f33
+I/KGSDK.ktv-api-log: kgidentity: 5Y6QzK8tiUM6sou1OpscW6Sj7Z2bkEtj9MLXOW5W0K0=
+I/KGSDK.ktv-api-log: {"device_id":"LFZ63AL50PD104416","client_ver":"130-major-c189a98-2024-01-12-171911","pid":"201602","client_ip":"42.238.159.5","nonce":"703843b13e534873b1fe8e7c0a664c79","sp":"KG","userid":"anonymous","timestamp":1777112857,"token":"password"}
+I/KGSDK.ktv-api-log: --> END POST (242-byte body)
+I/KGSDK.ktv-api-log: --> POST https://thirdsso.kugou.com/v2/config/lyric/keyword
+I/KGSDK.ktv-api-log: Content-Length: 242
+I/KGSDK.ktv-api-log: signature: 861643af1cda44ae4ca2a654d2ee24b7
+I/KGSDK.ktv-api-log: kgidentity: QUNEy5sEVf28GW2pgRQbQB5pbOn7Q5k9QSWf5Rr2+kc=
+I/KGSDK.ktv-api-log: {"device_id":"LFZ63AL50PD104416","client_ver":"130-major-c189a98-2024-01-12-171911","pid":"201602","client_ip":"42.238.159.5","nonce":"dd06b4069f5c40b58bdf5d4e20cf5f35","sp":"KG","userid":"anonymous","timestamp":1777112857,"token":"password"}
+I/KGSDK.ktv-api-log: --> END POST (242-byte body)
+I/KGSDK.ktv-api-log: Content-Type: application/json; charset=UTF-8
+I/KGSDK.RetrofitHolder: x-route:thirdsso.kugou.com/111.206.98.92:443
+I/KGSDK.RetrofitHolder: connection.socket():SSL socket over Socket[address=thirdsso.kugou.com/111.206.98.92,port=443,localPort=48710]
+I/KGSDK.RetrofitHolder: x-route:thirdsso.kugou.com/111.206.98.92:443
+D/zza     : 0x53A: 16 3A05000008000018114E100000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/KGSDK.ktv-api-log: <-- 200 https://thirdsso.kugou.com/v2/config/vip/interests (65ms)
+I/KGSDK.ktv-api-log: date: Sat, 25 Apr 2026 10:27:38 GMT
+I/KGSDK.ktv-api-log: content-type: application/json; charset=utf-8
+I/KGSDK.ktv-api-log: content-length: 823
+I/KGSDK.ktv-api-log: sp: KG
+I/KGSDK.ktv-api-log: x-b3-traceid: cdb127afccce944b901d6621aea9761c
+I/KGSDK.ktv-api-log: kg-svr-version: v260423.1_t_20260423151257
+I/KGSDK.ktv-api-log: kg-bc-ms: 11
+I/KGSDK.ktv-api-log: kg-rs-ms: 1777112858241
+I/KGSDK.ktv-api-log: server: kws
+I/KGSDK.ktv-api-log: {"data":{"live":{"global":{"quality":null,"vip_type":null,"version":0},"lives":[{"quality":["HD","QHD","SD","LD"],"vip_type":["suvip","tv","svip"],"version":2,"id":55,"program_id":"3853"},{"quality":["FHD"],"vip_type":["suvip"],"version":2,"id":409,"program_id":"3853"}]},"mv":{"global":{"quality":["FHD"],"vip_type":["svip","car","tv","voicebox","ksing","suvip"],"version":7,"id":5},"globals":[{"quality":["FHD"],"vip_type":["svip","car","tv","voicebox","ksing","suvip"],"version":7,"id":5}],"mvs":[]},"qualities":[{"quality":"SQ","vips":["suvip","svip","car"]},{"quality":"HQ","vips":["suvip","svip","car"]},{"quality":"MQ","vips":["suvip"]}],"try_play":{"anonymous":{"try_time":60,"version":1,"id":1},"vip":{"try_time":120,"version":1,"id":3},"mv_trial_times":{"try_time":0,"version":0}}},"error_code":0,"error_msg":""}
+I/KGSDK.ktv-api-log: <-- END HTTP (823-byte body)
+I/KGSDK.MonitorManager: addInterfaceCallData2SaveList    
+I/KGSDK.VipInterestsConfigManager: refreshVipInterestsConfig, response: Response{status=0, code=0, msg='', data={"live":{"global":{"version":0},"lives":[{"program_id":"3853","quality":["HD","QHD","SD","LD"],"version":2,"vip_type":["suvip","tv","svip"]},{"program_id":"3853","quality":["FHD"],"version":2,"vip_type":["suvip"]}]},"mv":{"global":{"quality":["FHD"],"version":7,"vip_type":["svip","car","tv","voicebox","ksing","suvip"]},"mvs":[]},"try_play":{"anonymous":{"try_time":60,"version":1},"vip":{"try_time":120,"version":1}}}}
+W/bl_ping : type=1400 audit(0.0:9471): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/KGSDK.VipInterestsConfigManager: refreshVipInterestsConfig, do not update liveGlobal data, preVersion:0 , version:0
+D/zza     : 0x53A: 16 3A05000008010015114C200000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=26}
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+I/KGSDK.ktv-api-log: <-- 200 https://thirdsso.kugou.com/v2/config/lyric/keyword (391ms)
+I/KGSDK.ktv-api-log: date: Sat, 25 Apr 2026 10:27:38 GMT
+I/KGSDK.ktv-api-log: content-type: application/json; charset=utf-8
+I/KGSDK.ktv-api-log: content-length: 1693
+I/KGSDK.ktv-api-log: sp: KG
+I/KGSDK.ktv-api-log: x-b3-traceid: 0d28d683a3ad6b4f7a9771044906c717
+I/KGSDK.ktv-api-log: kg-svr-version: v260423.1_t_20260423151257
+I/KGSDK.ktv-api-log: kg-bc-ms: 1
+I/KGSDK.ktv-api-log: kg-rs-ms: 1777112858281
+I/KGSDK.ktv-api-log: server: kws
+I/KGSDK.ktv-api-log: {"data":{"filter":["和声","伴唱","合音","和音","詞","词","曲","编","混(?!唱)","监","笛","箫","琴","album","arragement","artist","background","bass","drum","engineer","flute","guitar","harmony","Instrument","isrc","keyboad","medley","mix","pgm","piano","produc","program","publish","sax","singer","writer","string","synthesize","sythn","title","trumpet","vocal","宣传","宣发","推广","顾问","封面","剪辑","鸣谢","出品","企划","营销","发行","出品","制作","统筹","字幕","策划","秀导","海报","摄影","mv合成","影视","母带","录音","后期","视觉","画师","调教","音响师","美工","题字","助理","乐务","经理","嘉宾","歌手","演奏","艺人","原唱","演唱","主唱","女声独唱","童声合唱","女声合唱","配唱","配器师","合唱团","乐团","乐队","合声","歌曲语言","所属语言","语言类别","首席","唤醒师","歌姬","领舞","编舞","伴舞","舞蹈","舞团","原调","中阮","吉他","吉它","鼓","贝司","贝斯","键盘","器乐","弦琴","二胡","三弦","弦乐","古筝","琵琶","管乐","木管","铜管","管子","管弦","低音管","双簧管","黑管","单簧管","克拉管","大号","长号","小号","圆号","柔音号","萨克斯","打击","小打","时长","歌名","专辑","群号","企鹅号","uc号","短号","版权","qq","唱吧","酷狗","公众号","地址","上传","共享","krc","lrc","lyric","http","OP","SP","人声工程师","声乐指导","studio","加入联系VX","Mastered by","Written by","Composed by"],"offline":["天琴实验室","本字幕由酷狗AI生成","本字幕由酷狗AI语音识别技术生成"]},"error_code":0,"error_msg":""}
+I/KGSDK.ktv-api-log: <-- END HTTP (1693-byte body)
+I/KGSDK.MonitorManager: addInterfaceCallData2SaveList    
+I/KGSDK.b.c.c.kgk: get lyric filter success! filter:LyricFilterConfig{offline=[天琴实验室, 本字幕由酷狗AI生成, 本字幕由酷狗AI语音识别技术生成], filter=[和声, 伴唱, 合音, 和音, 詞, 词, 曲, 编, 混(?!唱), 监, 笛, 箫, 琴, album, arragement, artist, background, bass, drum, engineer, flute, guitar, harmony, Instrument, isrc, keyboad, medley, mix, pgm, piano, produc, program, publish, sax, singer, writer, string, synthesize, sythn, title, trumpet, vocal, 宣传, 宣发, 推广, 顾问, 封面, 剪辑, 鸣谢, 出品, 企划, 营销, 发行, 出品, 制作, 统筹, 字幕, 策划, 秀导, 海报, 摄影, mv合成, 影视, 母带, 录音, 后期, 视觉, 画师, 调教, 音响师, 美工, 题字, 助理, 乐务, 经理, 嘉宾, 歌手, 演奏, 艺人, 原唱, 演唱, 主唱, 女声独唱, 童声合唱, 女声合唱, 配唱, 配器师, 合唱团, 乐团, 乐队, 合声, 歌曲语言, 所属语言, 语言类别, 首席, 唤醒师, 歌姬, 领舞, 编舞, 伴舞, 舞蹈, 舞团, 原调, 中阮, 吉他, 吉它, 鼓, 贝司, 贝斯, 键盘, 器乐, 弦琴, 二胡, 三弦, 弦乐, 古筝, 琵琶, 管乐, 木管, 铜管, 管子, 管弦, 低音管, 双簧管, 黑管, 单簧管, 克拉管, 大号, 长号, 小号, 圆号, 柔音号, 萨克斯, 打击, 小打, 时长, 歌名, 专辑, 群号, 企鹅号, uc号, 短号, 版权, qq, 唱吧, 酷狗, 公众号, 地址, 上传, 共享, krc, lrc, lyric, http, OP, SP, 人声工程师, 声乐指导, studio, 加入联系VX, Mastered by, Written by, Composed by]}
+D/zza     : 0x53A: 16 3A05000008020015114E300000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/zza     : 0x53A: 16 3A05000008030018114C400000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/leap_input: handle_alarm_signal is_event 0
+D/zza     : 0x53A: 16 3A05000008000018114E500000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+D/CarControl: pos: 0 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372035
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372035
+I/LeapSystemAppService: ###  gpsLocationMsg 1777112859,1,34.451735,115.060169,63.300000,0.000000,0.000000,12,0.600000,0.700000,0.900000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1777112859,15,44,75,274,18,28,37,316,20,23,70,33,21,19,24,73,29,37,36,236,24,0,22,172
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+51m58s334ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=44, meanCn0=30}]}])
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+51m58s334ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=44, meanCn0=30}]}]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@a958cbd)
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+51m58s334ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=44, meanCn0=30}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@a958cbd)
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+I/MediaByBtManager: bindService start
+W/ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.bindService:1611 android.content.ContextWrapper.bindService:698 com.leapmotor.mediac11.manager.MediaByBtManager.bindService:63 com.leapmotor.blecontrol.BleControlService$4.lambda$onServiceDisconnected$0$BleControlService$4:450 com.leapmotor.blecontrol.-$$Lambda$BleControlService$4$bMG_VpIlbzv-__fQugwTVPDwMbk.run:2 
+I/MediaByBtManager: bindService : true
+D/zza     : 0x53A: 16 3A05000008010015114C600000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=26}
+W/bl_ping : type=1400 audit(0.0:9472): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+D/zza     : 0x53A: 16 3A05000008020015114E700000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/zza     : 0x53A: 16 3A05000008030018114C800000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/leap_input: handle_alarm_signal is_event 0
+D/CarControl: pos: 1 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1777112860,1,34.451735,115.060169,63.300000,0.000000,0.000000,12,0.600000,0.700000,0.900000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+51m59s340ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=44, meanCn0=30}]}])
+I/LeapSystemAppService: ### gpsSvMsg 1777112860,15,44,75,274,18,29,37,316,20,23,70,33,21,21,24,73,29,37,36,236,5,0,48,54,24,0,22,172
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+51m59s340ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=44, meanCn0=30}]}]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@b768203)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/CamTest : #### dumpFrameCount 0 
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@b768203)
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+I/        : vSomeIP unknown version | (default)
+D/zza     : 0x53A: 16 3A05000008020015114EB00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/bl_ping : type=1400 audit(0.0:9473): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A05000008000018114ED00000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+D/CarControl: pos: 0 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/LPSysUI.BaseSettingsObserver: onChange  mSettingName=ag35_android_net_flow, value=2
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A05000008010015114CE00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=26}
+D/CarControl: pos: 1 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/leap_input: handle_alarm_signal is_event 0
+D/zza     : 0x53A: 16 3A05000008020015114EF00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+I/LeapSystemAppService: ###  gpsLocationMsg 1777112861,1,34.451735,115.060169,63.300000,0.000000,0.000000,12,0.600000,0.700000,0.900000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1777112861,15,44,75,274,18,28,37,316,20,24,70,33,21,22,24,73,29,37,36,236,5,0,48,54,24,0,22,172
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+52m0s343ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=44, meanCn0=25}]}])
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m0s343ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=44, meanCn0=25}]}]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@e647580)
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m0s343ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=44, meanCn0=25}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@e647580)
+D/zza     : 0x53A: 16 3A05000008030018114C000000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+W/bl_ping : type=1400 audit(0.0:9474): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A05000008000018114E100000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+D/zza     : 0x53A: 16 3A05000008010015114C200000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=26}
+D/CarControl: pos: 1 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/zza     : 0x53A: 16 3A05000008020015114E300000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+D/MediaTlog - CtrlService: launcherControlAutoPlay needn't dispatch play event because media is pause before the power-off : 2
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/leap_input: handle_alarm_signal is_event 0
+D/CarFloatBall: InstrumentLyrics: idx=24/46, pos=91779, text='我说寒山别哭'
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m1s347ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=44, meanCn0=25}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+D/zza     : 0x53A: 16 3A05000008000018114E500000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+D/SmartDockService: refreshWidgetView: Pos = 4
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+W/bl_ping : type=1400 audit(0.0:9475): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A05000008010015114C600000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=26}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/zza     : 0x53A: 16 3A05000008020015114E700000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/LPSysUI.BaseSettingsObserver: onChange  mSettingName=ag35_android_net_flow, value=4
+D/zza     : 0x53A: 16 3A05000008030018114C800000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+I/leap_input: handle_alarm_signal is_event 0
+I/AvmCtrlService: #### heartBeat
+D/zza     : 0x53A: 16 3A05000008000018114E900000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+D/CarControl: pos: 0 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/imsdk   : BIMManager : postCheckRunnable after 30s
+I/LeapSystemAppService: ###  gpsLocationMsg 1777112863,1,34.451735,115.060169,63.300000,0.000000,0.000000,12,0.600000,0.700000,0.900000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1777112863,15,43,75,278,18,28,38,316,20,23,69,33,21,22,24,74,29,36,36,234,5,0,47,56,24,0,22,172
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@4bf47fe)
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+52m2s344ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=25}]}])
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m2s344ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=25}]}]
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m2s344ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=25}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@4bf47fe)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/SmartDockService: refreshWidgetView: Pos = 3
+D/CarControl: pos: 1 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+W/bl_ping : type=1400 audit(0.0:9478): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+D/zza     : 0x53A: 16 3A05000008020015114EB00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+D/YunReporter: dump目录没有待上传的文件
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/zza     : 0x53A: 16 3A05000008030018114CC00000000000
+I/DPMJ    : |REQ:RCVR| DPM creating socket
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/Kanzi   : [info:generic] jin_fileData workerThreadCallback 331
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+I/SomeipSub: ###########  Init  ############
+I/        : Starting vsomeip application "media_sub" (9007) using 2 threads I/O nice 255
+I/        : Configuration module loaded.
+I/        : io thread id from application: 9007 (media_sub) is: 7e923ff4f0 TID: 29014
+I/        : Listening at /mnt/vsomeip/vsomeip-9007
+I/        : Client 9007 (media_sub) successfully connected to routing  ~> registering..
+I/        : Client [9000] is connecting to [9007] at /mnt/vsomeip/vsomeip-9007
+I/        : Application/Client 9007 (media_sub) is registered.
+I/        : REGISTERED_ACK(9007)
+I/        : REGISTER EVENT(9007): [1071.5071.02c7:is_provider=0:reliability=ff]
+I/        : REGISTER EVENT(9007): [1071.5071.02c9:is_provider=0:reliability=ff]
+I/        : REGISTER EVENT(9007): [1071.5071.02d3:is_provider=0:reliability=ff]
+I/        : REGISTER EVENT(9007): [1101.5101.1009:is_provider=0:reliability=ff]
+I/        : REGISTER EVENT(9007): [1101.5101.1010:is_provider=0:reliability=ff]
+I/        : shutdown thread id from application: 9007 (media_sub) is: 7e91ff74f0 TID: 29017
+I/        : main dispatch thread id from application: 9007 (media_sub) is: 7e920f54f0 TID: 29016
+I/SomeipSub: on_available _service_id 1071 _instance_id 5071 _is_available 0
+I/SomeipSub: on_available _service_id 1101 _instance_id 5101 _is_available 0
+I/SomeipSub: on_available _service_id 9023 _instance_id 9024 _is_available 0
+I/SomeipSub: on_available _service_id 9043 _instance_id 9044 _is_available 0
+I/SomeipSub: Someip registered!
+I/SomeipSub: #### request_service service_id 36931 instance_id 36932
+I/SomeipSub: #### request_service service_id 36899 instance_id 36900
+I/SomeipSub: #### request_service service_id 4353 instance_id 20737
+I/SomeipSub: #### request_service service_id 4209 instance_id 20593
+I/SomeipSub: Someip registered end!
+D/CarControl: pos: 0 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+I/        : REQUEST(9007): [1071.5071:255.4294967295]
+I/        : REQUEST(9007): [1101.5101:255.4294967295]
+I/        : REQUEST(9007): [9023.9024:255.4294967295]
+I/        : REQUEST(9007): [9043.9044:255.4294967295]
+I/        : Client [9007] is connecting to [108] at /mnt/vsomeip/vsomeip-108
+I/        : ON_AVAILABLE(9007): [1071.5071:0.0]
+I/        : Client [9007] is connecting to [10b] at /mnt/vsomeip/vsomeip-10b
+I/        : ON_AVAILABLE(9007): [1101.5101:0.0]
+I/        : Client [9007] is connecting to [9025] at /mnt/vsomeip/vsomeip-9025
+I/SomeipSub: on_available _service_id 1071 _instance_id 5071 _is_available 1
+I/SomeipSub: on_available _service_id 1101 _instance_id 5101 _is_available 1
+I/        : Client [10b] is connecting to [9007] at /mnt/vsomeip/vsomeip-9007
+I/        : SUBSCRIBE(9007): [1101.5101.4700:ffff:0]
+I/        : Client [108] is connecting to [9007] at /mnt/vsomeip/vsomeip-9007
+I/        : SUBSCRIBE(9007): [1071.5071.4071:ffff:0]
+I/leap_input: handle_alarm_signal is_event 0
+I/        : ON_AVAILABLE(9007): [9023.9024:0.0]
+I/        : Client [9007] is connecting to [106] at /mnt/vsomeip/vsomeip-106
+I/        : ON_AVAILABLE(9007): [9043.9044:0.0]
+I/        : Client [9025] is connecting to [9007] at /mnt/vsomeip/vsomeip-9007
+I/SomeipSub: on_available _service_id 9023 _instance_id 9024 _is_available 1
+I/SomeipSub: on_available _service_id 9043 _instance_id 9044 _is_available 1
+I/        : SUBSCRIBE ACK(010b): [1101.5101.4700.ffff]
+I/        : SUBSCRIBE ACK(0108): [1071.5071.4071.ffff]
+I/        : SUBSCRIBE ACK(9025): [9023.9024.9006.ffff]
+I/        : Client [106] is connecting to [9007] at /mnt/vsomeip/vsomeip-9007
+I/        : SUBSCRIBE(9007): [9023.9024.9006:ffff:0]
+I/        : SUBSCRIBE ACK(0106): [9043.9044.4410.ffff]
+I/        : SUBSCRIBE(9007): [9043.9044.4410:ffff:0]
+I/MediaTlog - CtrlService: Recive the screen on
+I/MediaTlog - CtrlService: Start recive someIp message eventId is : 4105
+E/memtrack: Couldn't load memtrack module
+W/android.os.Debug: failed to get memory consumption info: -1
+I/MediaTlog - CtrlService: Start recive someIp message eventId is : 4112
+I/BtMusicManager: isAvailable: false||bluetoothEnable :true||isBluetoothConnected: true||isA2dpAvailable: true||isAvrcpAvailable: true||isA2dpConneted: false||isAvrcpConneted: false||a2dp: false||avrcp: false||a2dpSinkState : 0||avrcpControllerState : 0
+D/WindowLPSystemBarXmlPar: isEnableWindowHideNavigationBar: mEnableHideNavigationBarAppList = [com.android.launcher3, com.android.settings, com.android.systemui, com.example.systemuiv2, com.example.systemuiv3, com.ebanma.tinyapp, com.leapmotor.appcenter, com.leapmotor.audiodevmonitor, com.leapmotor.autonavi, com.leapmotor.backup, com.leapmotor.bt, com.leapmotor.camera, com.leapmotor.cameraaround, com.leapmotor.castscreen, com.leapmotor.copilotshowapp, com.leapmotor.dmp, com.leapmotor.driverecord, com.leapmotor.dspcontrol, com.leapmotor.facevideo, com.leapmotor.fct, com.leapmotor.featuremap, com.leapmotor.iqiyi, com.leapmotor.kugouapp, com.leapmotor.leapmotoriflyspeechservice, com.leapmotor.leapmotorsoscall, com.leapmotor.log, com.leapmotor.lpmsgcenter, com.leapmotor.lpplayer, com.leapmotor.meditation, com.leapmotor.mediaclient, com.leapmotor.multimedia, com.leapmotor.myapplication, com.leapmotor.phone, com.leapmotor.privacy, com.leapmotor.rf, com.leapmotor.system, com.leapmotor.systemupdate, com.leapmotor.textreader, com.leapmotor.ucarhu, com.leapmotor.usermanual, com.leapmotor.wallpaper, com.leapmotor.watchhome, com.leapmotor.weatherforecast, com.qcarlink.quickapp.engine, com.rightware.kanzi.c11airconditioner, com.rightware.kanzi.c11autoparking, com.rightware.kanzi.c11carcontrol202008, com.rightware.kanzi.c11entertainment, com.rightware.kanzi.c11smartcontrl, com.thunder.carplay, com.vmos.carplay, com.iflytek.cutefly.speechclient.hmi, com.mgtv.auto, com.youku.car, com.bilibili.bilithings, com.bytedance.byteautoservice3]
+D/SmartDockAdapter: convert: com.leapmotor.tire
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+D/AndroidRuntime: Shutting down VM
+E/AndroidRuntime: FATAL EXCEPTION: main
+E/AndroidRuntime: Process: com.leapmotor.multimedia, PID: 28888
+E/AndroidRuntime: android.view.WindowManager$BadTokenException: Unable to add window android.view.ViewRootImpl$W@278f373 -- permission denied for window type 2038
+E/AndroidRuntime: 	at android.view.ViewRootImpl.setView(ViewRootImpl.java:841)
+E/AndroidRuntime: 	at android.view.WindowManagerGlobal.addView(WindowManagerGlobal.java:356)
+E/AndroidRuntime: 	at android.view.WindowManagerImpl.addView(WindowManagerImpl.java:93)
+E/AndroidRuntime: 	at com.leapmotor.lputils.utils.ToastUtils.lambda$show$8(ToastUtils.java:277)
+E/AndroidRuntime: 	at com.leapmotor.lputils.utils.ToastUtils$$ExternalSyntheticLambda8.run(Unknown Source:24)
+E/AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/AndroidRuntime: 	at android.os.Looper.loop(Looper.java:193)
+E/AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:6718)
+E/AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+E/AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:493)
+E/AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:858)
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+D/SmartDockAdapter: showMusicItem: musicType = 2
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+I/chatty  : uid=1000(system) com.leapmotor.appcenter identical 2 lines
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/Process : Sending signal. PID: 28888 SIG: 9
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/        : Client 0x106 handles a client error(9007)
+I/        : Client [9025] is closing connection to [9007]
+I/        : Client 0x108 handles a client error(9007)
+I/        : Client 0x9000 handles a client error(9007)
+I/        : Application/Client 9007 is deregistering.
+I/        : Client [108] is closing connection to [9007]
+I/        : Client [9000] is closing connection to [9007]
+I/        : Client [106] is closing connection to [9007]
+I/        : Client 0x9000 handles a client error(9008)
+I/        : Application/Client 9008 is deregistering.
+I/        : Client 0x9044 handles a client error(9008)
+I/        : Client [9000] is closing connection to [9008]
+I/        : Client [9044] is closing connection to [9008]
+I/SomeipSub: on_available _service_id 9001 _instance_id 9002 _is_available 0
+I/        : Client 0x10b handles a client error(9007)
+I/        : Client [10b] is closing connection to [9007]
+I/        : Client 0x9025 handles a client error(9007)
+D/LocationManagerService: Location listener died
+I/LocationManagerService: remove 84c76a1
+E/MediaManager: binderDied
+V/SettingsProvider: Notifying for 0: content://settings/global/ag35_android_net_flow
+I/ActivityManager: Process com.leapmotor.multimedia (pid 28888) has died: prcp FGS 
+D/LocationManagerService: provider request: gps ProviderRequest[ON interval=+100ms lowPowerMode=false]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(SET_REQUEST, 0, com.android.server.location.GnssLocationProvider$GpsRequest@c5724f1)
+W/libprocessgroup: kill(-28888, 9) failed: No such process
+I/libprocessgroup: Successfully killed process cgroup uid 10077 pid 28888 in 0ms
+E/MediaByBtManager: onServiceDisconnected : ComponentInfo{com.leapmotor.multimedia/com.leapmotor.mediac11.service.MediaService}
+E/BleControlService: onMediaServiceDisconnected disConnect
+E/MediaByBtManager: binderDied
+I/MediaByBtManager: bindService start
+W/ActivityManager: Scheduling restart of crashed service com.leapmotor.multimedia/com.leapmotor.mediac11.service.CtrlService in 14400000ms
+W/ActivityManager: Scheduling restart of crashed service com.leapmotor.multimedia/com.leapmotor.onlineradio.service.OnlineRadioService in 14410000ms
+W/ActivityManager: Scheduling restart of crashed service com.leapmotor.multimedia/com.leapmotor.ultimatetv.service.UltimatetvService in 14420000ms
+W/ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.bindService:1611 android.content.ContextWrapper.bindService:698 com.leapmotor.mediac11.manager.MediaByBtManager.bindService:63 com.leapmotor.blecontrol.BleControlService.bindMediaService:454 com.leapmotor.blecontrol.BleControlService.lambda$Z2bfdTGYjbP4B7cFYLnX0_26zwg:0 
+I/GnssLocationProvider: WakeLock released by handleMessage(SET_REQUEST, 0, com.android.server.location.GnssLocationProvider$GpsRequest@c5724f1)
+W/ActivityManager: Scheduling restart of crashed service com.leapmotor.multimedia/com.leapmotor.mediac11.service.MediaService in 1000ms
+I/Zygote  : Process 28888 exited due to signal (9)
+I/MediaByBtManager: bindService : true
+I/MediaTlog - UdiskBrowserService: onUnbind
+D/SmartDockService: onServiceDisconnected: pauseStatus = true
+I/MediaManager: bindService start
+W/ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.bindService:1611 android.content.ContextWrapper.bindService:698 com.leapmotor.mediac11.manager.MediaManager.bindService:90 com.leapmotor.appcenter.service.SmartDockService.bindMusicService:1203 com.leapmotor.appcenter.service.SmartDockService.access$3100:157 
+I/MediaManager: bindService : true
+D/SmartDockService: bindMusicService: SmartDockService = true
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+D/AppCenterlog - SmartDockService: showStatusbarMusicIfNeed = display0Resume = com.yunpan.appmanage/com.yunpan.appmanage.ui.ActivityKeyMapLogcat / musicType = 2 / speechState = false
+I/LeapSystemAppService: ###  gpsLocationMsg 1777112864,1,34.451735,115.060169,63.300000,0.000000,0.000000,12,0.600000,0.700000,0.900000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+52m3s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=29}]}])
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m3s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=29}]}]
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m3s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=29}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/ActivityManager: Start proc 29025:com.leapmotor.multimedia/u0a77 for service com.leapmotor.multimedia/com.leapmotor.mediac11.service.MediaService
+E/otor.multimedi: Not starting debugger since process cannot load the jdwp agent.
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.mediac11.service.CtrlService}) with a broken notification (no icon: Notification(channel=meidaChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.onlineradio.service.OnlineRadioService}) with a broken notification (no icon: Notification(channel=onlineradioChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.ultimatetv.service.UltimatetvService}) with a broken notification (no icon: Notification(channel=ultimatetvChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+I/otor.multimedi: The ClassLoaderContext is a special shared library.
+I/MultiDex: Installing application
+I/MultiDex: VM has multidex support, MultiDex support library is disabled.
+D/WM-WrkMgrInitializer: Initializing WorkManager with default configuration.
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+I/MMKV    : Disable checkProcessMode()
+I/MMKV    : <native-bridge.cpp:104::JNI_OnLoad> current API level = 28, libc++_shared=0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/MMKV    : <MemoryFile.cpp:97::open> open fd[0x2b], /data/user/0/com.leapmotor.multimedia/files/mmkv/DefaultMMKV
+I/MMKV    : <MMKV_IO.cpp:81::loadFromFile> loading [DefaultMMKV] with 4584 actual size, file size 8192, InterProcess 0, meta info version:3
+I/MMKV    : <MMKV_IO.cpp:86::loadFromFile> loading [DefaultMMKV] with crc 3461930849 sequence 764 version 3
+I/MMKV    : <MMKV_IO.cpp:130::loadFromFile> loaded [DefaultMMKV] with 20 key-values
+I/MMKV    : <MemoryFile.cpp:97::open> open fd[0x2c], /data/user/0/com.leapmotor.multimedia/files/mmkv/DefaultMMKV.crc
+I/UICHelper::: changeTheme: light
+D/MediaTlog - MediaService: onCreate
+I/MediaTlog - QQManager: bindService start
+I/MediaTlog - QQManager: bindService : true
+I/WebViewFactory: Loading com.android.webview version 95.0.4638.74 (code 463807403)
+I/QQMusicPermissionUtil: checkPermissionGranted PERMISSION_GRANTED
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+W/MediaTlog - UsbUtils: getUsbUUid not find
+D/MediaTlog - MediaService: onBind : null ,and checkPermission is 0
+D/LocationManagerService: getProviders()=[]
+D/LocationManagerService: getProviders()=[passive, gps]
+D/LocationManagerService: getBestProvider(Criteria[power=LOW acc=HIGH], true)=gps
+I/MediaTlog - CtrlService: receive last known location : Location[gps 34.451735,115.060169 hAcc=1 et=+52m3s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[mParcelledData.dataSize=96]}]
+D/LocationManagerService: request 42a2c61 gps Request[ACCURACY_FINE gps requested=+10m0s0ms fastest=+10m0s0ms lowPowerMode=false] from com.leapmotor.multimedia(10077 foreground)
+D/LocationManagerService: provider request: gps ProviderRequest[ON interval=+100ms lowPowerMode=false]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(SET_REQUEST, 0, com.android.server.location.GnssLocationProvider$GpsRequest@380a386)
+I/GnssLocationProvider: WakeLock released by handleMessage(SET_REQUEST, 0, com.android.server.location.GnssLocationProvider$GpsRequest@380a386)
+D/MediaBrowserCompat: Connecting to a MediaBrowserService.
+E/MediaTlog - LpRadioMediaBrowser: mediaBrowserCompat disconnect please first connect LpRadioMediaBrowserService !
+I/UltimateTv: Version: version=130-major, gitSHA=c189a98, gitBranch=release-1.3.0, modifyDate=2024-01-12-171911
+D/KGApplicationManager: onApplicationCreateFore, context: com.leapmotor.mediac11.service.CtrlService@49c37a0
+I/MediaManager: queryBinder ：0
+I/MediaManager: queryBinder success !
+I/MediaManager: onServiceConnected : ComponentInfo{com.leapmotor.multimedia/com.leapmotor.mediac11.service.MediaService}
+D/SmartDockService: onServiceConnected: com.leapmotor.mediac11.MediaService
+D/KGLog   : enableFlag, flag: 1, enable: true
+D/MediaTlog - MediaBinder: getMediaBody
+D/MediaTlog - MediaBinder: getMediaBody is first : MediaBody{type=2, uniqueId='Booty Music', albumId='', name='Booty Music（Cover Deep Side）', title='Booty Music', artist='戳戳', imagUrl='/storage/emulated/0/bluetooth/AVRCP_BIP_IMG_6908472.JPEG', duration=178303, state=2}
+D/SmartDockService: onServiceConnected: mediaBody = MediaBody{type=2, uniqueId='Booty Music', albumId='', name='Booty Music（Cover Deep Side）', title='Booty Music', artist='戳戳', imagUrl='/storage/emulated/0/bluetooth/AVRCP_BIP_IMG_6908472.JPEG', duration=178303, state=2}
+D/MediaTlog - MediaBinder: isPlaying
+D/MediaTlog - MediaBinder: getLastMediaType : 2
+D/MediaTlog - MediaBinder: isPlayingByMediaType ：2
+D/AppCenterlog - SmartDockService: 接收到多媒体信息：MediaBody{type=2, uniqueId='Booty Music', albumId='', name='Booty Music（Cover Deep Side）', title='Booty Music', artist='戳戳', imagUrl='/storage/emulated/0/bluetooth/AVRCP_BIP_IMG_6908472.JPEG', duration=178303, state=0}
+E/MediaTlog - BtMusicManager: isAvailable : mBluetoothAdapter is null
+D/MediaTlog - MediaBinder: queryKgIsLikeFromDb : Booty Music
+W/System.err: 	at android.app.ActivityThread.access$1300(ActivityThread.java:200)
+W/System.err: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1672)
+W/System.err: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+W/System.err: 	at android.os.Looper.loop(Looper.java:193)
+W/System.err: 	at android.app.ActivityThread.main(ActivityThread.java:6718)
+W/System.err: 	at java.lang.reflect.Method.invoke(Native Method)
+W/System.err: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:493)
+W/System.err: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:858)
+D/MediaTlog - MediaBinder: registerPlayStateListener size is : 1 ,and Thread[Binder:29025_2,5,main]
+D/AppCenterlog - SettingsObserver: mainA2dpAvailable = false
+D/AppCenterlog - SmartDockService: showStatusbarMusicIfNeed = display0Resume = com.yunpan.appmanage/com.yunpan.appmanage.ui.ActivityKeyMapLogcat / musicType = 2 / speechState = false
+D/SmartDockService: refreshMusicWidgetView: musicPos = 2
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+I/UltimateTv: setConfig, config: Config{connectTimeout=30000, readTimeout=15000, isHttpRetryConnect=true, forceMvPlayerDecodeMode=0, useFFmpegExtractor=true, defaultSongQuality=0, defaultMvQuality=4, mvQualityChoose=true, baseUrlProxyMap={}, ignoreCertExpiredOrNotYetValid=false, deviceTimestampOffset=0, isSongPlayerCache=true, isSongFastWhenCached=true, isForceNotFadeInOutWhenSongSeek=false, mvMuteVolume=0.0, isShowAiLyric=false, useNetworkProxyMode=false, networkProxyHost=fd53:7cb8:383:3::108, networkProxyPort=50007, proxyUrlPort=443, useHttpsUrl=false}
+D/zza     : 0x53A: 16 3A05000008030018114C000000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+I/WebViewUtils: Hook success!
+D/SmartDockAdapter: convert: com.leapmotor.tire
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+D/SmartDockAdapter: showMusicItem: musicType = 2
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/chatty  : uid=1000(system) com.leapmotor.appcenter identical 2 lines
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/SmartDockService: queryKgIsLikeFromDb onFav: false
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+I/SomeipSubNative: JNI_OnLoad
+I/SomeipPubNative: Init
+I/SomeipPub: ###########  Init  ############
+I/        : Parsed vsomeip configuration in 4ms
+I/        : Using configuration file: "/vendor/etc/vsomeip/someip.json".
+I/        : Configuration module loaded.
+I/        : Initializing vsomeip application "media_pub".
+D/SmartDockAdapter: convert: com.leapmotor.tire
+I/        : Instantiating routing manager [Proxy].
+I/        : Client [9008] is connecting to [0] at /mnt/vsomeip/vsomeip-0
+I/        : Application(media_pub, 9008) is initialized (11, 100).
+I/SomeipPubNative: Init end
+I/SomeipPub: ###  SomeIp start
+I/SomeipPub: ### offer service groupid 36867
+I/SomeipPub: ###### Register or offer events finished!
+I/SomeipPub: ###  SomeIp start finish!
+I/MediaTlog - MediaTlog: startPub: SomeipInfo{serviceId=36865, instanceId=36866, appName='media_pub', reliability=1}
+I/        : Starting vsomeip application "media_pub" (9008) using 2 threads I/O nice 255
+I/        : io thread id from application: 9008 (media_pub) is: 7e983e14f0 TID: 29075
+I/        : shutdown thread id from application: 9008 (media_pub) is: 7e982e34f0 TID: 29077
+I/        : Listening at /mnt/vsomeip/vsomeip-9008
+I/        : Client 9008 (media_pub) successfully connected to routing  ~> registering..
+I/        : Application/Client 9008 is registering.
+I/        : Client [9000] is connecting to [9008] at /mnt/vsomeip/vsomeip-9008
+I/        : main dispatch thread id from application: 9008 (media_pub) is: 7e987334f0 TID: 29076
+I/        : io thread id from application: 9008 (media_pub) is: 7e981e54f0 TID: 29078
+I/        : Application/Client 9008 (media_pub) is registered.
+I/        : REGISTER EVENT(9008): [9001.9002.9401:is_provider=1]
+I/        : REGISTER EVENT(9008): [9001.9002.9402:is_provider=1]
+I/        : REGISTER EVENT(9008): [9001.9002.9501:is_provider=1]
+I/        : REGISTER EVENT(9008): [9001.9002.9601:is_provider=1]
+I/        : REGISTERED_ACK(9008)
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+I/SomeipPub: ##### Start offer_service service_id 9001 instance_id 9002 
+I/        : Port configuration missing for [9001.9002]. Service is internal.
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+I/        : Client [9044] is connecting to [9008] at /mnt/vsomeip/vsomeip-9008
+D/SmartDockAdapter: showMusicItem: musicType = 2
+I/        : ON_AVAILABLE(9044): [9001.9002:0.0]
+I/SomeipSub: on_available _service_id 9001 _instance_id 9002 _is_available 1
+I/        : OFFER(9008): [9001.9002:0.0] (true)
+I/        : Client [9008] is connecting to [9044] at /mnt/vsomeip/vsomeip-9044
+I/        : SUBSCRIBE ACK(9008): [9001.9002.9003.ffff]
+I/        : SUBSCRIBE(9044): [9001.9002.9003:ffff:0]
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/WifiService: startScan uid=10162
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/zza     : 0x53A: 16 3A05000008000018114E100000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+I/KGSDK.kgh: getCacheFilesDir, savedCacheFilePath: /storage/emulated/0/Android/data/com.leapmotor.multimedia/files
+D/CarControl: pos: 0 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+I/KGSDK.FileCacheManager: resetData---1
+I/KGSDK.FileCacheManager: resetData---1
+I/KGSDK.RetrofitHolder: getRetrofitInstance, baseUrl: https://thirdsso.kugou.com/v2/
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+V/MediaTlog - VehicleConfig2Utils: getHimalaya : 1
+I/KGSDK.ktv-api-log: --> POST https://thirdsso.kugou.com/v2/user/ip
+I/KGSDK.ktv-api-log: Content-Length: 242
+I/KGSDK.ktv-api-log: signature: ac402cfcd5be68069a6a18653e310b45
+I/KGSDK.ktv-api-log: kgidentity: ATTK58Qrnu60OMRLyhbNAOHdvz4VaL1n1MfswL8PCsM=
+I/KGSDK.ktv-api-log: {"device_id":"LFZ63AL50PD104416","client_ver":"130-major-c189a98-2024-01-12-171911","pid":"201602","client_ip":"42.238.159.5","nonce":"221d1ec27c2a4ea6b13b848188d5ff73","sp":"KG","userid":"anonymous","timestamp":1777112864,"token":"password"}
+I/KGSDK.ktv-api-log: --> END POST (242-byte body)
+I/KGSDK.ktv-api-log: Content-Type: application/json; charset=UTF-8
+W/Settings: Setting android_id has moved from android.provider.Settings.System to android.provider.Settings.Secure, returning read-only value.
+W/Settings: Setting android_id has moved from android.provider.Settings.System to android.provider.Settings.Secure, returning read-only value.
+I/player_log_tag: PlayerManager.init->
+I/MediaTlog - BtMusicManager: registerProfile A2DP_SINK success
+D/OpenGLRenderer: Skia GL Pipeline
+E/MediaTlog - BtMusicManager: mediaBrowserCompat disconnect please first connect BluetoothMediaBrowserService !
+D/MediaBrowserCompat: Connecting to a MediaBrowserService.
+I/MediaTlog - UdiskBrowserService: onStartCommand
+D/MediaBrowserCompat: Connecting to a MediaBrowserService.
+V/MediaTlog - VehicleConfig2Utils: getHimalaya : 1
+I/MediaTlog - CtrlService: hasLocalPlayList : {"data":{"albumId":"","artist":"戳戳","duration":178303,"imagUrl":"/storage/emulated/0/bluetooth/AVRCP_BIP_IMG_6908472.JPEG","name":"Booty Music（Cover Deep Side）","state":2,"title":"Booty Music","type":2,"uniqueId":"Booty Music"},"detail":{"format":"jpeg","length":0,"offset":0},"type":"music"}
+W/MediaTlog - NotifyOutManager: notifyOutLastMediaInfo mediaType is : 2
+D/C11CarSomeIp: recv Media : {"data":{"albumId":"","artist":"戳戳","duration":178303,"imagUrl":"/storage/emulated/0/bluetooth/AVRCP_BIP_IMG_6908472.JPEG","name":"Booty Music（Cover Deep Side）","state":2,"title":"Booty Music","type":2,"uniqueId":"Booty Music"},"detail":{"format":"jpeg","length":0,"offset":0},"type":"music"}
+V/MediaTlog - MediaTlog: publish: eventId : 37889 || length : 300
+I/MediaTlog - CtrlService: onCreate end
+I/MediaTlog - CtrlService: onStartCommand
+I/MediaTlog - OnlineRadioService: onCreate
+I/MediaTlog - OnlineRadioService: onStartCommand
+E/MediaTlog - UserManager: saveLikeToDb onFail : Response{status=0, code=200003, msg='认证失败，请重新登录', data=null}
+D/MediaTlog - CarUtil: getVin : LFZ63AL50PD104416
+I/MediaTlog - UltimatetvService: onStartCommand
+V/MediaTlog - DataRecordManager: record : 0|LFZ63AL50PD104416|1777112864530|1777112864530|1|com.leapmotor.multimedia|酷狗音乐|后台服务页|PageView|登录用户数据 : null
+I/KGSDK.UltimateSongPlayer49189926: addSongPlayStateListener, songPlayStateListener: b.c.c.kgq$kga@b15b3ac
+I/KGSDK.UltimateSongPlayer49189926: setCallback
+I/KGSDK.UltimateSongPlayer49189926: removeSongPlayStateListener, songPlayStateListener: com.leapmotor.ultimatetv.service.UltimatetvService@8041875
+I/KGSDK.UltimateSongPlayer49189926: addSongPlayStateListener, songPlayStateListener: com.leapmotor.ultimatetv.service.UltimatetvService@8041875
+I/MediaTlog - CtrlService: onStartCommand
+D/CarControl: pos: 1 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.mediac11.service.CtrlService}) with a broken notification (no icon: Notification(channel=meidaChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+D/ConnectivityService: requestNetwork for uid/pid:10077/29025 NetworkRequest [ TRACK_DEFAULT id=120, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED Unwanted:  Uid: 10077] ]
+I/KGSDK.RetrofitHolder: getRetrofitInstance, baseUrl: https://thirdsso.kugou.com/v2/
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.ultimatetv.service.UltimatetvService}) with a broken notification (no icon: Notification(channel=ultimatetvChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+I/KGSDK.UltimateSongPlayer49189926: setCallback
+I/KGSDK.UltimateSongPlayer49189926: addSongPlayStateListener, songPlayStateListener: com.leapmotor.ultimatetv.service.UltimatetvService@8041875
+I/MediaTlog - OnlineRadioService: onStartCommand
+V/ActivityManager: Attempted to start a foreground service (ComponentInfo{com.leapmotor.multimedia/com.leapmotor.onlineradio.service.OnlineRadioService}) with a broken notification (no icon: Notification(channel=onlineradioChannel pri=0 contentView=null vibrate=null sound=null defaults=0x0 flags=0x40 color=0x00000000 vis=PRIVATE))
+V/yujd1   : To show Notification isSystemAPP = true isUpdateSystemAPP = false appName:零听
+D/BluetoothA2dpSink: Proxy object connected
+I/BtMusicManager: isAvailable: false||bluetoothEnable :true||isBluetoothConnected: true||isA2dpAvailable: true||isAvrcpAvailable: false||isA2dpConneted: false||isAvrcpConneted: false||a2dp: false||avrcp: false||a2dpSinkState : 0||avrcpControllerState : 0
+D/AppCenterlog - SettingsObserver: mainA2dpAvailable = false
+D/SmartDockService: refreshMusicWidgetView: musicPos = 2
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+I/BtMusicManager: isAvailable: false||bluetoothEnable :true||isBluetoothConnected: true||isA2dpAvailable: true||isAvrcpAvailable: true||isA2dpConneted: false||isAvrcpConneted: false||a2dp: false||avrcp: false||a2dpSinkState : 0||avrcpControllerState : 0
+I/KGSDK.KGSDKDownloadEngineManager: engineCallback loadDownloadLibrary
+D/SmartDockAdapter: convert: com.leapmotor.tire
+E/jp2p    : Can't get method callbackGetCustomProxyWithSocks
+E/jp2p    : Can't get method callbackLogHighLevel
+E/jp2p    : Can't get method callbackOnPeerID6Changed
+E/jp2p    : Can't get method callbackOnLocateHash6
+E/jp2p    : Can't get method callbackSaveLastFlowInfo
+E/jp2p    : Can't get method callbackFormatID3
+E/jp2p    : Can't get method callbackFetchID3
+E/jp2p    : Can't get method callbackHttpSpeedTest
+E/jp2p    : Can't get method callbackOnSeedResponse
+E/jp2p    : Can't get method callbackFlowStat
+E/jp2p    : Can't get method callbackOnCheckNat6Result
+E/jp2p    : Can't get method callbackOnCheckNat6Failed
+E/jp2p    : Can't get method callbackSourceCount6
+I/KGSDK.KGSDKDownloadEngineManager: engineCallback getCardInfo
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+D/SmartDockAdapter: showMusicItem: musicType = 2
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/chatty  : uid=1000(system) com.leapmotor.appcenter identical 2 lines
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+D/AppCenterlog - SettingsObserver: mainA2dpAvailable = false
+I/leap_input: handle_alarm_signal is_event 0
+D/SmartDockService: refreshMusicWidgetView: musicPos = 2
+D/SmartDockService: refreshMediaSourceList: mediaSourceAdapter == null
+D/SmartDockAdapter: convert: com.leapmotor.multimedia_card
+D/AudioManager: NEW AudioManager mUseFixedVolume = false
+D/SmartDockAdapter: resetIconPlay: pauseStatus = true / btAvailable = false
+D/SmartDockAdapter: showMusicItem: defaultMusicName = Booty Music（Cover Deep Side）
+D/SmartDockAdapter: showMusicItem: defaultSingerName = 戳戳
+D/MediaTlog - LpRadioBrowserService: onGetRoot clientPackageName = com.leapmotor.multimedia
+D/SmartDockAdapter: showMusicItem: musicType = 2
+D/SmartDockAdapter: showMusicItem: skin.support.widget.SkinCompatImageView{a28fcc1 V.ED..... ......ID 12,12-84,84 #7f090137 app:id/iv_zhuanji}
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/KGSDK.ktv-api-log: --> POST https://thirdsso.kugou.com/v2/user/ip
+I/KGSDK.ktv-api-log: Content-Type: application/json; charset=UTF-8
+I/KGSDK.ktv-api-log: Content-Length: 242
+I/KGSDK.ktv-api-log: signature: 2e22547f803e97acc5d94530e7ddd0f5
+I/KGSDK.ktv-api-log: kgidentity: b+/xExacwMscPDG6jsZLqPVowqLoWGNKtMevUzpWCWI=
+I/KGSDK.ktv-api-log: {"device_id":"LFZ63AL50PD104416","client_ver":"130-major-c189a98-2024-01-12-171911","pid":"201602","client_ip":"42.238.159.5","nonce":"45a0ca0bf6db4fabb8904e1fb81c88ba","sp":"KG","userid":"anonymous","timestamp":1777112864,"token":"password"}
+I/KGSDK.ktv-api-log: --> END POST (242-byte body)
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+I/chatty  : uid=1000(system) com.leapmotor.appcenter identical 1 line
+W/StaticLayout: maxLineHeight should not be -1.  maxLines:1 lineCount:1
+D/MediaTlog - UdiskBrowserService: onGetRoot clientPackageName = com.leapmotor.multimedia
+I/KGSDK.KGSDKDownloadEngineManager: notifyNetworkChanged netMode:1 , flag:
+I/KGSDK.KGSDKDownloadEngineManager.NLog: DownloadEngine_:_setID3Fetcher: false
+D/MediaTlog - CarUtil: getVin : LFZ63AL50PD104416
+W/MediaTlog - DataUploadWorker: doWork error : not bcp files exit !
+I/WM-WorkerWrapper: Worker result FAILURE for Work [ id=282fe71f-c9c5-4b94-8b12-1f5e6fd7c0d5, tags={ com.leapmotor.baselib.work.DataUploadWorker } ]
+I/ExoPlayerImpl: Init fa3fc3c [AndroidXMedia3/1.4.1] [msmnile_gvmq, msmnile_gvmq for arm64, QTI, 28]
+I/ExoMediaPlayerAdapter: initPLayer: mExoPlayer Initialization completed
+I/MediaTlog - LpRadioMediaBrowser: onConnected : com.leapmotor.multimedia
+I/MediaTlog - BtMusicManager: onConnected : __ROOT__
+D/zza     : 0x53A: 16 3A05000008020015114E300000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+I/MediaTlog - UdiskMediaBrowser: onConnected : com.leapmotor.multimedia
+D/ConnectivityService: releasing NetworkRequest [ TRACK_DEFAULT id=120, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED Unwanted:  Uid: 10077] ] (release request)
+I/CamTest : #### dumpFrameCount 0 
+I/LeapSystemAppService: ###  gpsLocationMsg 1777112865,1,34.451735,115.060169,63.300000,0.000000,0.000000,12,0.600000,0.700000,0.900000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+52m4s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=26}]}])
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m4s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=26}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m4s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=5, maxCn0=43, meanCn0=26}]}]
+I/MediaTlog - CtrlService: receive location change : Location[gps 34.451735,115.060169 hAcc=1 et=+52m4s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[mParcelledData.dataSize=96]}]
+I/KGSDK.RetrofitHolder: x-route:thirdsso.kugou.com/111.206.98.92:443
+I/KGSDK.RetrofitHolder: x-route:thirdsso.kugou.com/111.206.98.92:443
+I/KGSDK.RetrofitHolder: connection.socket():SSL socket over Socket[address=thirdsso.kugou.com/111.206.98.92,port=443,localPort=48720]
+D/zza     : 0x53A: 16 3A05000008030018114C400000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+D/CarFloatBall: InstrumentLyrics: idx=25/46, pos=95092, text='我带你出'
+W/bl_ping : type=1400 audit(0.0:9480): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/KGSDK.ktv-api-log: <-- 200 https://thirdsso.kugou.com/v2/user/ip (450ms)
+I/KGSDK.ktv-api-log: date: Sat, 25 Apr 2026 10:27:45 GMT
+I/KGSDK.ktv-api-log: content-type: application/json; charset=utf-8
+I/KGSDK.ktv-api-log: content-length: 84
+I/KGSDK.ktv-api-log: sp: KG
+I/KGSDK.ktv-api-log: x-b3-traceid: a8d3f99be6c8f6addb5607cae9471e40
+I/KGSDK.ktv-api-log: kg-svr-version: v260423.1_t_20260423151257
+I/KGSDK.ktv-api-log: kg-bc-ms: 1
+I/KGSDK.ktv-api-log: kg-rs-ms: 1777112865278
+I/KGSDK.ktv-api-log: server: kws
+I/KGSDK.ktv-api-log: {"data":{"ip":"42.238.159.5","timestamp":1777112865},"error_code":0,"error_msg":""}
+I/KGSDK.ktv-api-log: <-- END HTTP (84-byte body)
+I/KGSDK.kgh: getCacheFilesDir, savedCacheFilePath: /storage/emulated/0/Android/data/com.leapmotor.multimedia/files
+I/KGSDK.MonitorManager: addInterfaceCallData2SaveList    
+I/KGSDK.ktv-api-log: date: Sat, 25 Apr 2026 10:27:45 GMT
+I/KGSDK.ktv-api-log: content-type: application/json; charset=utf-8
+I/KGSDK.ktv-api-log: content-length: 84
+I/KGSDK.ktv-api-log: sp: KG
+I/KGSDK.ktv-api-log: x-b3-traceid: e8a97b375bee21a24a6d22e09800f7e5
+I/KGSDK.ktv-api-log: kg-svr-version: v260423.1_t_20260423151257
+I/KGSDK.ktv-api-log: kg-bc-ms: 1
+I/KGSDK.ktv-api-log: kg-rs-ms: 1777112865278
+I/KGSDK.ktv-api-log: server: kws
+I/KGSDK.ktv-api-log: {"data":{"ip":"42.238.159.5","timestamp":1777112865},"error_code":0,"error_msg":""}
+I/KGSDK.ktv-api-log: <-- END HTTP (84-byte body)
+I/KGSDK.MonitorManager: addInterfaceCallData2SaveList    
+I/KGSDK.ktv-api-log: <-- 200 https://thirdsso.kugou.com/v2/user/ip (664ms)
+I/KGSDK.UltimateTv: refreshClientIp, response: Response{status=0, code=0, msg='', data=KgUserIpData{kgUserIp='42.238.159.5'}}
+I/UltimateTv: innerActiveDevice, pid: 201602, LFZ63AL50PD104416
+I/MediaTlog - UltimatetvUtil: UltimateTv Init Success : version=130-major, gitSHA=c189a98, gitBranch=release-1.3.0, modifyDate=2024-01-12-171911
+I/KGSDK.UserManager: clearUser
+I/KGSDK.BroadcastUtil: send local broadcast: action = com.kugou.ultimatetv.action.login_modified
+D/MediaTlog - PlaySongReciver: user login change !
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/C11CarSomeIp:  hideAnimView  
+D/CarControl: pos: 0 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/KGSDK.PurchasedCacheManager: clear mvsOfPurchasedSong and programOfPurchasedLive
+I/KGSDK.FavoriteCacheManager: clearCache
+I/KGSDK.AckManager: fetchCachedAckServerData, TextUtils.isEmpty(ackServerConfigMapString)
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+E/ANDR-PERF-MPCTL: Invalid profile no. 0, total profiles 0 only
+E/ANDR-PERF-RESOURCEQS: Failed to apply optimization [2, 0]
+I/KGSDK.AckManager: fetchCachedAckServerData, mServerIdVersionMap: 2
+I/KGSDK.AckManager: fetchCachedAckServerData, mAckServerConfigMap: 2
+I/KGSDK.AckManager: fetchCachedAckServerData, TextUtils.isEmpty(ackHostConfigMapString)
+I/KGSDK.PlayerOfflineWrapper: getCacheSongIds-start
+I/KGSDK.PlayerOfflineWrapper: getCacheSongIds-end
+E/KGSDK.PlayerOfflineWrapper: paramList.size=:0
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+I/KGSDK.AckManager: fetchCachedAckServerData, mHostVersionMap: 1
+I/KGSDK.AckManager: fetchCachedAckServerData, mAckHostConfigMap: 1
+I/KGSDK.AckManager: fetchAckServerDataWhenInit return, cause isFetchingData[false] or lastFetchDataTime[1777110930651] in 24h.
+I/KGSDK.VipInterestsConfigManager: refreshVipInterestsConfig
+I/KGSDK.RetrofitHolder: getRetrofitInstance, baseUrl: https://thirdsso.kugou.com/v2/
+I/KGSDK.PurchasedCacheManager: refreshPurchasedCache, userId: , lstUserId: , forceUpdate: false
+I/KGSDK.FavoriteCacheManager: refreshFavoritePlaylistId userId：, lstUserId: 
+I/KGSDK.ktv-api-log: --> POST https://thirdsso.kugou.com/v2/config/vip/interests
+I/KGSDK.ktv-api-log: Content-Type: application/json; charset=UTF-8
+I/KGSDK.ktv-api-log: Content-Length: 242
+I/KGSDK.ktv-api-log: signature: f347b02006a28feedbb9c7c262ae5d10
+I/KGSDK.ktv-api-log: kgidentity: 2Ait7h4GSfeI7axIiIwv/mWToXH2oCC8ytDNuvN47eE=
+I/KGSDK.ktv-api-log: {"device_id":"LFZ63AL50PD104416","client_ver":"130-major-c189a98-2024-01-12-171911","pid":"201602","client_ip":"42.238.159.5","nonce":"e74120693bef430d9d3c8d86755ac255","sp":"KG","userid":"anonymous","timestamp":1777112865,"token":"password"}
+I/KGSDK.ktv-api-log: --> END POST (242-byte body)
+I/KGSDK.ktv-api-log: kgidentity: SLW0HcRzQBB1+TciZVOwQNFI34rmnOZH7Ru4HH+uDbI=
+I/KGSDK.RetrofitHolder: connection.socket():SSL socket over Socket[address=thirdsso.kugou.com/111.206.98.92,port=443,localPort=48720]
+I/KGSDK.RetrofitHolder: x-route:thirdsso.kugou.com/111.206.98.92:443
+I/KGSDK.ktv-api-log: {"device_id":"LFZ63AL50PD104416","client_ver":"130-major-c189a98-2024-01-12-171911","pid":"201602","client_ip":"42.238.159.5","nonce":"3bb67c8897c9405788b39a0fda019f12","sp":"KG","userid":"anonymous","timestamp":1777112865,"token":"password"}
+I/KGSDK.ktv-api-log: --> END POST (242-byte body)
+I/KGSDK.RetrofitHolder: connection.socket():SSL socket over Socket[address=thirdsso.kugou.com/111.206.98.92,port=443,localPort=48720]
+I/KGSDK.KGSDKFileManager: moveDownloadSongDataIfNeed no data to move
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+I/chatty  : uid=0(root) perf@1.0-servic identical 3 lines
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+I/KGSDK.ktv-api-log: <-- 200 https://thirdsso.kugou.com/v2/config/vip/interests (104ms)
+I/KGSDK.ktv-api-log: date: Sat, 25 Apr 2026 10:27:45 GMT
+I/KGSDK.ktv-api-log: content-type: application/json; charset=utf-8
+I/KGSDK.ktv-api-log: content-length: 823
+I/KGSDK.ktv-api-log: sp: KG
+I/KGSDK.ktv-api-log: x-b3-traceid: 03ee5cac6ebe712d03810d099fec2cb8
+I/KGSDK.ktv-api-log: kg-svr-version: v260423.1_t_20260423151257
+I/KGSDK.ktv-api-log: kg-bc-ms: 2
+I/KGSDK.ktv-api-log: kg-rs-ms: 1777112865564
+I/KGSDK.ktv-api-log: server: kws
+I/KGSDK.ktv-api-log: {"data":{"live":{"global":{"quality":null,"vip_type":null,"version":0},"lives":[{"quality":["HD","QHD","SD","LD"],"vip_type":["suvip","tv","svip"],"version":2,"id":55,"program_id":"3853"},{"quality":["FHD"],"vip_type":["suvip"],"version":2,"id":409,"program_id":"3853"}]},"mv":{"global":{"quality":["FHD"],"vip_type":["svip","car","tv","voicebox","ksing","suvip"],"version":7,"id":5},"globals":[{"quality":["FHD"],"vip_type":["svip","car","tv","voicebox","ksing","suvip"],"version":7,"id":5}],"mvs":[]},"qualities":[{"quality":"SQ","vips":["suvip","svip","car"]},{"quality":"HQ","vips":["suvip","svip","car"]},{"quality":"MQ","vips":["suvip"]}],"try_play":{"anonymous":{"try_time":60,"version":1,"id":1},"vip":{"try_time":120,"version":1,"id":3},"mv_trial_times":{"try_time":0,"version":0}}},"error_code":0,"error_msg":""}
+I/KGSDK.ktv-api-log: <-- END HTTP (823-byte body)
+I/KGSDK.MonitorManager: addInterfaceCallData2SaveList    
+I/KGSDK.VipInterestsConfigManager: refreshVipInterestsConfig, response: Response{status=0, code=0, msg='', data={"live":{"global":{"version":0},"lives":[{"program_id":"3853","quality":["HD","QHD","SD","LD"],"version":2,"vip_type":["suvip","tv","svip"]},{"program_id":"3853","quality":["FHD"],"version":2,"vip_type":["suvip"]}]},"mv":{"global":{"quality":["FHD"],"version":7,"vip_type":["svip","car","tv","voicebox","ksing","suvip"]},"mvs":[]},"try_play":{"anonymous":{"try_time":60,"version":1},"vip":{"try_time":120,"version":1}}}}
+I/KGSDK.VipInterestsConfigManager: refreshVipInterestsConfig, config: {"live":{"global":{"version":0},"lives":[{"program_id":"3853","quality":["HD","QHD","SD","LD"],"version":2,"vip_type":["suvip","tv","svip"]},{"program_id":"3853","quality":["FHD"],"version":2,"vip_type":["suvip"]}]},"mv":{"global":{"quality":["FHD"],"version":7,"vip_type":["svip","car","tv","voicebox","ksing","suvip"]},"mvs":[]},"try_play":{"anonymous":{"try_time":60,"version":1},"vip":{"try_time":120,"version":1}}}
+I/KGSDK.VipInterestsConfigManager: refreshVipInterestsConfig, do not update data, vipTryPlayTime: 120000 , preVersion:1 , version:1
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=26}
+I/KGSDK.VipInterestsConfigManager: refreshVipInterestsConfig, do not update data, anonymousTryPlayTime: 60000 , preVersion:1 , version:1
+I/KGSDK.VipInterestsConfigManager: getTryPlayTimeForVip vipTryPlayTime:120000
+D/zza     : 0x53A: 16 3A05000008010015114C600000000000
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/KGSDK.ktv-api-log: <-- 200 https://thirdsso.kugou.com/v2/config/lyric/keyword (208ms)
+I/KGSDK.ktv-api-log: date: Sat, 25 Apr 2026 10:27:45 GMT
+I/KGSDK.ktv-api-log: content-type: application/json; charset=utf-8
+I/KGSDK.ktv-api-log: content-length: 1693
+I/KGSDK.ktv-api-log: sp: KG
+I/KGSDK.ktv-api-log: x-b3-traceid: 482b33f6903a2b99ba20b776391ab90b
+I/KGSDK.ktv-api-log: kg-svr-version: v260423.1_t_20260423151257
+I/KGSDK.ktv-api-log: kg-bc-ms: 4
+I/KGSDK.ktv-api-log: kg-rs-ms: 1777112865606
+I/KGSDK.ktv-api-log: server: kws
+I/KGSDK.ktv-api-log: {"data":{"filter":["和声","伴唱","合音","和音","詞","词","曲","编","混(?!唱)","监","笛","箫","琴","album","arragement","artist","background","bass","drum","engineer","flute","guitar","harmony","Instrument","isrc","keyboad","medley","mix","pgm","piano","produc","program","publish","sax","singer","writer","string","synthesize","sythn","title","trumpet","vocal","宣传","宣发","推广","顾问","封面","剪辑","鸣谢","出品","企划","营销","发行","出品","制作","统筹","字幕","策划","秀导","海报","摄影","mv合成","影视","母带","录音","后期","视觉","画师","调教","音响师","美工","题字","助理","乐务","经理","嘉宾","歌手","演奏","艺人","原唱","演唱","主唱","女声独唱","童声合唱","女声合唱","配唱","配器师","合唱团","乐团","乐队","合声","歌曲语言","所属语言","语言类别","首席","唤醒师","歌姬","领舞","编舞","伴舞","舞蹈","舞团","原调","中阮","吉他","吉它","鼓","贝司","贝斯","键盘","器乐","弦琴","二胡","三弦","弦乐","古筝","琵琶","管乐","木管","铜管","管子","管弦","低音管","双簧管","黑管","单簧管","克拉管","大号","长号","小号","圆号","柔音号","萨克斯","打击","小打","时长","歌名","专辑","群号","企鹅号","uc号","短号","版权","qq","唱吧","酷狗","公众号","地址","上传","共享","krc","lrc","lyric","http","OP","SP","人声工程师","声乐指导","studio","加入联系VX","Mastered by","Written by","Composed by"],"offline":["天琴实验室","本字幕由酷狗AI生成","本字幕由酷狗AI语音识别技术生成"]},"error_code":0,"error_msg":""}
+I/KGSDK.ktv-api-log: <-- END HTTP (1693-byte body)
+I/KGSDK.MonitorManager: addInterfaceCallData2SaveList    
+I/KGSDK.b.c.c.kgk: get lyric filter success! filter:LyricFilterConfig{offline=[天琴实验室, 本字幕由酷狗AI生成, 本字幕由酷狗AI语音识别技术生成], filter=[和声, 伴唱, 合音, 和音, 詞, 词, 曲, 编, 混(?!唱), 监, 笛, 箫, 琴, album, arragement, artist, background, bass, drum, engineer, flute, guitar, harmony, Instrument, isrc, keyboad, medley, mix, pgm, piano, produc, program, publish, sax, singer, writer, string, synthesize, sythn, title, trumpet, vocal, 宣传, 宣发, 推广, 顾问, 封面, 剪辑, 鸣谢, 出品, 企划, 营销, 发行, 出品, 制作, 统筹, 字幕, 策划, 秀导, 海报, 摄影, mv合成, 影视, 母带, 录音, 后期, 视觉, 画师, 调教, 音响师, 美工, 题字, 助理, 乐务, 经理, 嘉宾, 歌手, 演奏, 艺人, 原唱, 演唱, 主唱, 女声独唱, 童声合唱, 女声合唱, 配唱, 配器师, 合唱团, 乐团, 乐队, 合声, 歌曲语言, 所属语言, 语言类别, 首席, 唤醒师, 歌姬, 领舞, 编舞, 伴舞, 舞蹈, 舞团, 原调, 中阮, 吉他, 吉它, 鼓, 贝司, 贝斯, 键盘, 器乐, 弦琴, 二胡, 三弦, 弦乐, 古筝, 琵琶, 管乐, 木管, 铜管, 管子, 管弦, 低音管, 双簧管, 黑管, 单簧管, 克拉管, 大号, 长号, 小号, 圆号, 柔音号, 萨克斯, 打击, 小打, 时长, 歌名, 专辑, 群号, 企鹅号, uc号, 短号, 版权, qq, 唱吧, 酷狗, 公众号, 地址, 上传, 共享, krc, lrc, lyric, http, OP, SP, 人声工程师, 声乐指导, studio, 加入联系VX, Mastered by, Written by, Composed by]}
+I/Kanzi   : [info:generic] jin_fileData workerThreadCallback 331
+I/KGSDK.LyricDataUtil: setFilterPattern:[\S\s]*(?i)(和声|伴唱|合音|和音|詞|词|曲|编|混(?!唱)|监|笛|箫|琴|album|arragement|artist|background|bass|drum|engineer|flute|guitar|harmony|Instrument|isrc|keyboad|medley|mix|pgm|piano|produc|program|publish|sax|singer|writer|string|synthesize|sythn|title|trumpet|vocal|宣传|宣发|推广|顾问|封面|剪辑|鸣谢|出品|企划|营销|发行|出品|制作|统筹|字幕|策划|秀导|海报|摄影|mv合成|影视|母带|录音|后期|视觉|画师|调教|音响师|美工|题字|助理|乐务|经理|嘉宾|歌手|演奏|艺人|原唱|演唱|主唱|女声独唱|童声合唱|女声合唱|配唱|配器师|合唱团|乐团|乐队|合声|歌曲语言|所属语言|语言类别|首席|唤醒师|歌姬|领舞|编舞|伴舞|舞蹈|舞团|原调|中阮|吉他|吉它|鼓|贝司|贝斯|键盘|器乐|弦琴|二胡|三弦|弦乐|古筝|琵琶|管乐|木管|铜管|管子|管弦|低音管|双簧管|黑管|单簧管|克拉管|大号|长号|小号|圆号|柔音号|萨克斯|打击|小打|时长|歌名|专辑|群号|企鹅号|uc号|短号|版权|qq|唱吧|酷狗|公众号|地址|上传|共享|krc|lrc|lyric|http|OP|SP|人声工程师|声乐指导|studio|加入联系VX|Mastered by|Written by|Composed by)[\S\s]*[:：][\S\s]+
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372031
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372031
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/leap_input: handle_alarm_signal is_event 0
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372031
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372031
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372031
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372030
+D/zza     : 0x53A: 16 3A05000008030018114C800000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372030
+I/LeapSystemAppService: ### gpsSvMsg 1777112866,15,43,75,278,18,27,38,316,20,22,69,33,21,25,24,74,29,37,36,234
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@43d6172)
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@43d6172)
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/MediaByBtManager: bindService start
+W/ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.bindService:1611 android.content.ContextWrapper.bindService:698 com.leapmotor.mediac11.manager.MediaByBtManager.bindService:63 com.leapmotor.blecontrol.BleControlService$4.lambda$onServiceDisconnected$0$BleControlService$4:450 com.leapmotor.blecontrol.-$$Lambda$BleControlService$4$bMG_VpIlbzv-__fQugwTVPDwMbk.run:2 
+I/MediaByBtManager: bindService : true
+I/LeapSystemAppService: ###  gpsLocationMsg 1777112866,1,34.451735,115.060169,63.300000,0.000000,0.000000,12,0.600000,0.700000,0.900000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m5s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=43, meanCn0=31}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+52m5s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=43, meanCn0=31}]}])
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m5s352ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=43, meanCn0=31}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/zza     : 0x53A: 16 3A05000008000018114E900000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/bl_ping : type=1400 audit(0.0:9481): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/KGSDK.UltimateTv: refreshClientIp, response: Response{status=0, code=0, msg='', data=KgUserIpData{kgUserIp='42.238.159.5'}}
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A05000008010015114CA00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=26}
+D/CarControl: pos: 1 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/data_sd_sdisk: type=1400 audit(0.0:9482): avc: denied { search } for name="net" dev="sysfs" ino=15659 scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:object_r:sysfs_net:s0 tclass=dir permissive=0
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/zza     : 0x53A: 16 3A05000008020015114EB00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=28}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 28 singleTempSts: 0
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/arcontrol20200: Background concurrent copying GC freed 61330(2MB) AllocSpace objects, 40(1584KB) LOS objects, 50% free, 3MB/7MB, paused 6.845ms total 26.293ms
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/MediaTlog - CtrlService: launcherControlAutoPlay needn't dispatch play event because media is pause before the power-off : 1
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+D/zza     : 0x53A: 16 3A05000008030018114CC00000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=26}
+I/ngs.android.po: Note: end time exceeds INT32_MAX: 9223372036
+D/CarControl: pos: 3 singleTirePress: 280 singlePressSts: 0 singleTireTemp: 26 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/AvmCtrlService: #### heartBeat
+D/zza     : 0x53A: 16 3A05000008000018114ED00000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=280, singleTireTemp=28}
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.451735,115.060169 hAcc=1 et=+29m37s112ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1777112867,10,22,0,0,15,43,75,278,18,29,38,316,20,22,69,33,21,23,24,74,29,36,36,234,5,0,47,56,24,0,22,172
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@bcba240)
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m6s260ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=43, meanCn0=31}]}]
+D/LocationManagerService: incoming location: Location[gps 34.451735,115.060169 hAcc=1 et=+52m6s260ms alt=63.3 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=4, maxCn0=43, meanCn0=31}]}]
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@bcba240)
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+D/SmartDockService: refreshWidgetView: Pos = 4
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1

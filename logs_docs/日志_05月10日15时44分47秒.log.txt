@@ -1,0 +1,883 @@
+W/bl_ping : type=1400 audit(0.0:14880): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/CarFloatBall: isAppOnSecondary: pkg=com.yunpan.appmanage, tracked=false, memory=[bin.mt.plus, com.luna.music.car, com.autonavi.minimap, com.autonavi.amapauto.lpmt]
+V/AutoTaskTrigger: onAppChanged: skip same pkg=com.yunpan.appmanage
+V/CarFloatBall: onAccessibilityEvent: WindowStateChanged pkg=com.yunpan.appmanage, class=j7.g4, displayId=0
+W/data_sd_sdisk: type=1400 audit(0.0:14881): avc: denied { search } for name="net" dev="sysfs" ino=15659 scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:object_r:sysfs_net:s0 tclass=dir permissive=0
+V/CarFloatBall: Updated Top Activity: com.yunpan.appmanage / j7.g4
+D/CarFloatBall: checkAndRefreshFloatCardVisibilityImpl: START
+D/CarFloatBall: updateQuickAppsVisibility: isFullscreen=true, isHome=false, onlyDesktop=false, quickAppsHide=false
+D/CarFloatBall: checkAndRefreshFloatCardVisibilityImpl: currentPackage=com.yunpan.appmanage, isHome=false, cardCount=1
+D/CarFloatBall: checkAndRefreshFloatCardVisibilityImpl: card[0] enabled=true, onlyDesktop=true, isHidden=true
+D/CarFloatBall: checkAndRefreshFloatCardVisibilityImpl: card[0] shouldShow=false
+D/CarFloatBall: hideFloatCardImpl: cardIndex=0, updatePrefs=false, cardView=false, parent=false, visibility=null
+W/CarFloatBall: hideFloatCardImpl: cardView is null, nothing to hide
+D/CarFloatBall: isAppOnSecondary: pkg=com.yunpan.appmanage, tracked=false, memory=[bin.mt.plus, com.luna.music.car, com.autonavi.minimap, com.autonavi.amapauto.lpmt]
+I/CarFloatBall: Auto fullscreen triggered for: com.yunpan.appmanage
+I/CarFloatBall: setFullscreen called: fullscreen=true, displayId=0, forceRefresh=false, controlMain=true, controlSecondary=false, isFullscreen=true, isSecondaryFullscreen=false
+I/CarFloatBall: setFullscreen: mainStateChanged=false, secondaryStateChanged=false
+I/CarFloatBall: setFullscreen: No state change, skipping
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/zza     : 0x53A: 16 3A050000080200151153B00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/bl_ping : type=1400 audit(0.0:14883): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000803001E1154C00000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399074,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1778399074,5,43,62,326,6,25,12,112,7,36,6,53,11,44,49,94,12,29,1,216,15,38,33,210,20,45,56,185,21,36,54,29,25,35,2,250,29,46,40,300,30,32,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@8ca5254)
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m44s988ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=45, meanCn0=37}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m44s988ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=45, meanCn0=37}]}]
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m44s988ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=45, meanCn0=37}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@8ca5254)
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+W/NavRelayPoller: Poll failed: HTTP 404 from http://47.107.88.63:8088/api/navigate/poll?code=496081
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000800001B1154D00000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/zza     : 0x53A: 16 3A0500000801001E1156E00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.330078)  course:140.489120  tickTime:1778427873518  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.330078)  course:140.489120  tickTime:1778427873518  status:A
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/JsonProtocolManager: received:{"requestAuthor":"com.autonavi.amapauto","responseCode":"","protocolId":80033,"messageType":"dispatch","requestCode":"","versionName":"9.1.0.600087","message":"","data":{"geolocation":1},"needResponse":false,"statusCode":200}
+D/NaviMessageResponse: data:{"requestAuthor":"com.autonavi.amapauto","responseCode":"","protocolId":80033,"messageType":"dispatch","requestCode":"","versionName":"9.1.0.600087","message":"","data":{"geolocation":1},"needResponse":false,"statusCode":200}
+D/Dispatch: postDelayed 0
+D/zza     : 0x53A: 16 3A050000080200151153F00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+I/leap_input: handle_alarm_signal is_event 0
+W/bl_ping : type=1400 audit(0.0:14884): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/AutoBackgroundWorker: startAutoBackgroundService, mIsWorkStarting
+I/AvmCtrlService: #### heartBeat
+W/bl_ping : type=1400 audit(0.0:14885): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A0500000803001E1154000000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/SmartDockService: refreshWidgetView: Pos = 4
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000800001B1154100000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399075,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m45s987ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=36}]}])
+I/LeapSystemAppService: ### gpsSvMsg 1778399075,5,44,62,326,6,27,12,112,7,36,6,53,11,45,49,94,12,29,1,216,15,39,33,210,20,45,56,185,21,37,54,29,25,36,2,250,29,46,40,300,30,33,16,88,18,0,0,0
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m45s987ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=36}]}]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@58a0d43)
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m45s987ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=36}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@58a0d43)
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/SmartDockService: refreshWidgetView: Pos = 3
+D/SmartDockAdapter: convert: com.leapmotor.tire
+D/SmartDockAdapter: convert: com.leapmotor.energy
+D/EnergyDataBinder: updateEnergyData: EV_MILE: 63.44083035391942EV_TIME: 305EV_AVERAGE_CONSUME: 10.94878481452737
+I/LPSysUI.BaseSettingsObserver: onChange  mSettingName=ag35_android_net_flow, value=2
+D/zza     : 0x53A: 16 3A0500000801001E1156200000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/C11SmartContrl: node_name : LastPercentOther  setTextContent: 5h5min
+D/zza     : 0x53A: 16 3A050000080200151153300000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/HwBinder:381_2: type=1400 audit(0.0:14886): avc: denied { write } for name="dnsproxyd" dev="tmpfs" ino=13592 scontext=u:r:hal_audio_default:s0 tcontext=u:object_r:dnsproxyd_socket:s0 tclass=sock_file permissive=0
+W/HwBinder:381_2: type=1400 audit(0.0:14887): avc: denied { create } for scontext=u:r:hal_audio_default:s0 tcontext=u:r:hal_audio_default:s0 tclass=udp_socket permissive=0
+I/Kanzi   : [info:generic] jin_fileData workerThreadCallback 331
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.329960)  course:140.490295  tickTime:1778427874518  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.329960)  course:140.490295  tickTime:1778427874518  status:A
+D/zza     : 0x53A: 16 3A0500000803001E1154400000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/leap_input: handle_alarm_signal is_event 0
+I/AutoNavi-Patrons: [0] every thing is OK, vss = 1967 mb, current period = 0.4802332, heap = 899 mb
+W/bl_ping : type=1400 audit(0.0:14889): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A0500000800001B1154500000000000
+W/bl_ping : type=1400 audit(0.0:14890): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/hsl_work: type=1400 audit(0.0:14891): avc: denied { search } for name="net" dev="sysfs" ino=15659 scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:object_r:sysfs_net:s0 tclass=dir permissive=0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/zza     : 0x53A: 16 3A0500000801001E1156600000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399076,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1778399076,5,43,62,326,6,27,12,112,7,37,6,53,11,44,49,94,12,28,1,216,15,39,33,210,20,45,56,185,21,38,54,29,25,34,2,250,29,46,40,300,30,34,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m46s997ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m46s997ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@a43fc0)
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m46s997ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@a43fc0)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/zza     : 0x53A: 16 3A050000080200151153700000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+I/CamTest : #### dumpFrameCount 0 
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/SomeIpUtils: notifyLocation  getAddressInfo: {"method":"getAddressInfo","params":{"valid":true,"address":"河南省商丘市睢县048县道","cityDistrict":"商丘市睢县","desc":"赵楼"}}
+D/SomeIpUtils: sendLocation: {"method":"getAddressInfo","params":{"valid":true,"address":"河南省商丘市睢县048县道","cityDistrict":"商丘市睢县","desc":"赵楼"}}
+E/CarControlSDK: service not connect! 
+I/CarConfig: ##################### position ###{"method":"getAddressInfo","params":{"valid":true,"address":"河南省商丘市睢县048县道","cityDistrict":"商丘市睢县","desc":"赵楼"}}###
+E/CarConfig: #### City district: 商丘市睢县
+I/CarConfig: #### data: ###商丘市睢县###,length: 15
+I/CarConfig: #### file: ###商丘市睢县###,length: 15
+I/CarConfig: #### /mnt/mmap/lp_position same !!!
+D/zza     : 0x53A: 16 3A0500000803001E1154800000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.330521)  course:140.490829  tickTime:1778427875518  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.330521)  course:140.490829  tickTime:1778427875518  status:A
+D/zza     : 0x53A: 16 3A0500000800001B1154900000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+I/leap_input: handle_alarm_signal is_event 0
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/bl_ping : type=1400 audit(0.0:14893): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/AvmCtrlService: #### heartBeat
+W/bl_ping : type=1400 audit(0.0:14894): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A0500000801001E1156A00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A050000080200151153B00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399077,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1778399077,5,44,62,326,6,29,12,112,7,37,6,53,11,45,49,94,12,29,1,216,15,40,33,210,20,46,56,185,21,36,54,29,25,35,2,250,29,47,40,300,30,34,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@fdbd4f9)
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m47s995ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m47s995ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m47s995ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@fdbd4f9)
+I/LPSysUI.BaseSettingsObserver: onChange  mSettingName=ag35_android_net_flow, value=4
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000803001E1154C00000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+I/DPMJ    : |REQ:RCVR| DPM creating socket
+D/zza     : 0x53A: 16 3A0500000800001B1154D00000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+W/KEVA.NATIVE: mark bitmap can not find space! remain=28110 wanted=18
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.330914)  course:140.490295  tickTime:1778427876540  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.330914)  course:140.490295  tickTime:1778427876540  status:A
+D/zza     : 0x53A: 16 3A0500000801001E1156E00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/C11CarSomeIp: onMessage  eventId: 3131 value: 2.5
+--------- beginning of system
+I/chatty  : uid=1000 system_server expire 2 lines
+V/SettingsProvider: Notifying for 0: content://settings/global/ag35_android_net_flow
+W/ActivityManager: Unable to start service Intent { act=com.leapmotor.carcontrol.services.BINDER_POOL pkg=com.leapmotor.carcontrol } U=0: not found
+I/leap_input: handle_alarm_signal is_event 0
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/bl_ping : type=1400 audit(0.0:14895): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/C11CarXml: node_name : TCCurrent  setTextContent: 2.5
+D/C11CarXml: NodeLength: 6 xmlStr: <?xml version="1.0" encoding="UTF-8"?><carcontrol><option><optionEnergyMode type="int">0</optionEnergyMode><optionWD type="int">1</optionWD><optionC01anye type="int">0</optionC01anye><optionC11evhpc type="int">0</optionC11evhpc><optionModeEconomy type="int">1</optionModeEconomy></option><Battery><TCCurrent type="string">2.5</TCCurrent></Battery></carcontrol>
+I/Kanzi   : [info:generic] The XMLError error is 0.
+D/zza     : 0x53A: 16 3A050000080200151153F00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+W/bl_ping : type=1400 audit(0.0:14896): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000803001E1154000000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399078,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1778399078,5,45,62,326,6,28,12,112,7,37,6,53,11,44,49,94,12,28,1,216,15,42,33,210,20,46,56,185,21,36,54,29,25,36,2,250,29,46,40,300,30,34,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@d13bc3e)
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m49s0ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=47, meanCn0=38}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m49s0ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=47, meanCn0=38}]}]
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m49s0ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=47, meanCn0=38}]}]
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@d13bc3e)
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/AutoNavi-Patrons: [0] every thing is OK, vss = 1881 mb, current period = 0.4594288, heap = 1024 mb
+D/zza     : 0x53A: 16 3A0500000800001B1154100000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000801001E1156200000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/ThirdActivityViewModel: every 1min,send 6 times someip info to yb
+D/zza     : 0x53A: 16 3A050000080200151153300000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.330891)  course:140.490921  tickTime:1778427877558  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.330891)  course:140.490921  tickTime:1778427877558  status:A
+I/leap_input: handle_alarm_signal is_event 0
+W/bl_ping : type=1400 audit(0.0:14897): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/AvmCtrlService: #### heartBeat
+W/bl_ping : type=1400 audit(0.0:14898): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A0500000803001E1154400000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/SomeIpUtils: sendNapTurnStatus: 0
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000800001B1154500000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399079,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m49s992ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m49s992ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}]
+I/LeapSystemAppService: ### gpsSvMsg 1778399079,5,44,62,326,6,26,12,112,7,37,6,53,11,44,49,94,12,31,1,216,15,41,33,210,20,46,56,185,21,36,54,29,25,37,2,250,29,45,40,300,30,35,16,88,18,0,0,0
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m49s992ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@ab63a9f)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@ab63a9f)
+I/        : vSomeIP unknown version | (default)
+D/zza     : 0x53A: 16 3A0500000801001E1156600000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+I/WifiService: startScan uid=10162
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/NavRelayPoller: Poll failed: HTTP 404 from http://47.107.88.63:8088/api/navigate/poll?code=496081
+D/zza     : 0x53A: 16 3A050000080200151153700000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000803001E1154800000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/leap_input: handle_alarm_signal is_event 0
+D/JsonProtocolManager: received:{"requestAuthor":"com.autonavi.amapauto","responseCode":"","protocolId":80033,"messageType":"dispatch","requestCode":"","versionName":"9.1.0.600087","message":"","data":{"geolocation":1},"needResponse":false,"statusCode":200}
+D/NaviMessageResponse: data:{"requestAuthor":"com.autonavi.amapauto","responseCode":"","protocolId":80033,"messageType":"dispatch","requestCode":"","versionName":"9.1.0.600087","message":"","data":{"geolocation":1},"needResponse":false,"statusCode":200}
+D/Dispatch: postDelayed 0
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331047)  course:140.493057  tickTime:1778427878578  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331047)  course:140.493057  tickTime:1778427878578  status:A
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/bl_ping : type=1400 audit(0.0:14899): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+W/bl_ping : type=1400 audit(0.0:14900): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/zza     : 0x53A: 16 3A0500000800001B1154900000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000801001E1156A00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399080,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m51s1ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m51s1ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}]
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m51s1ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}]
+I/LeapSystemAppService: ### gpsSvMsg 1778399080,5,43,62,326,6,30,12,112,7,36,6,53,11,44,49,94,12,32,1,216,15,40,33,210,20,46,56,185,21,35,54,29,25,37,2,250,29,46,40,300,30,34,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@e7bc7b5)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@e7bc7b5)
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+W/bl_thd_pool_wor: type=1400 audit(0.0:14901): avc: denied { search } for name="net" dev="sysfs" ino=15659 scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:object_r:sysfs_net:s0 tclass=dir permissive=0
+D/zza     : 0x53A: 16 3A050000080200151153B00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000803001E1154C00000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000800001B1154D00000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/C11CarSomeIp: onMessage  eventId: 3131 value: 2.7
+I/leap_input: handle_alarm_signal is_event 0
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331013)  course:140.491592  tickTime:1778427879598  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331013)  course:140.491592  tickTime:1778427879598  status:A
+W/bl_ping : type=1400 audit(0.0:14903): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/AutoBackgroundWorker: startAutoBackgroundService, mIsWorkStarting
+D/C11CarXml: node_name : TCCurrent  setTextContent: 2.7
+D/C11CarXml: NodeLength: 6 xmlStr: <?xml version="1.0" encoding="UTF-8"?><carcontrol><option><optionEnergyMode type="int">0</optionEnergyMode><optionWD type="int">1</optionWD><optionC01anye type="int">0</optionC01anye><optionC11evhpc type="int">0</optionC11evhpc><optionModeEconomy type="int">1</optionModeEconomy></option><Battery><TCCurrent type="string">2.7</TCCurrent></Battery></carcontrol>
+I/Kanzi   : [info:generic] The XMLError error is 0.
+I/AvmCtrlService: #### heartBeat
+D/zza     : 0x53A: 16 3A0500000801001E1156E00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+W/bl_ping : type=1400 audit(0.0:14904): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A050000080200151153F00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399081,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1778399081,5,44,62,326,6,31,12,112,7,35,6,53,11,44,49,94,12,31,1,216,15,41,33,210,20,46,56,185,21,36,54,29,25,37,2,250,29,46,40,300,30,35,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m51s996ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}])
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@e9246d8)
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m51s996ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}]
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m51s996ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@e9246d8)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+V/SettingsProvider: Notifying for 0: content://settings/global/ag35_android_net_flow
+I/LPSysUI.BaseSettingsObserver: onChange  mSettingName=ag35_android_net_flow, value=2
+D/zza     : 0x53A: 16 3A0500000803001E1154000000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+I/CamTest : #### dumpFrameCount 0 
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/DPMJ    : |REQ:RCVR| DPM creating socket
+D/zza     : 0x53A: 16 3A0500000800001B1154100000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000801001E1156200000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331295)  course:140.492706  tickTime:1778427880598  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331295)  course:140.492706  tickTime:1778427880598  status:A
+I/leap_input: handle_alarm_signal is_event 0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+W/bl_ping : type=1400 audit(0.0:14905): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A050000080200151153300000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+W/bl_ping : type=1400 audit(0.0:14906): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+I/LeapBtApi: getBtState
+I/LeapBtService: getBtState
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000803001E1154400000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399082,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m53s2ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m53s2ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}]
+I/LeapSystemAppService: ### gpsSvMsg 1778399082,5,44,62,326,6,30,12,112,7,34,6,53,11,43,49,94,12,32,1,216,15,40,33,210,20,45,56,185,21,37,54,29,25,35,2,250,29,46,40,300,30,35,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@8ee2a31)
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m53s2ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@8ee2a31)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/C11CarSomeIp: onMessage  eventId: 3131 value: 2.6
+D/C11CarXml: node_name : TCCurrent  setTextContent: 2.6
+D/C11CarXml: NodeLength: 6 xmlStr: <?xml version="1.0" encoding="UTF-8"?><carcontrol><option><optionEnergyMode type="int">0</optionEnergyMode><optionWD type="int">1</optionWD><optionC01anye type="int">0</optionC01anye><optionC11evhpc type="int">0</optionC11evhpc><optionModeEconomy type="int">1</optionModeEconomy></option><Battery><TCCurrent type="string">2.6</TCCurrent></Battery></carcontrol>
+I/LOWI-8.6.0.46.b: [LOWI-Scan] lowi_close_record:Scan done in 4600148ms, 12 APs in scan results
+I/LOWI-8.6.0.46.b: [LOWIUtils] responseToOutPostcard - TO: FreeWifiScanObserver, FROM:   LOWI-SERVER, RESP:  LOWI_ASYNC_DISCOVERY_SCAN_RESULTS
+D/WificondControl: Scan result ready event
+D/ANQPRequestManager: Not allowed to send ANQP request to 20448342624187 for another 553 seconds
+D/PasspointManager: ANQP entry not found for: 12:99:00:32:c7:bb:<Xiaomi 14 Pro>
+D/PasspointManager: Match not found for Xiaomi 14 Pro
+D/zza     : 0x53A: 16 3A0500000800001B1154500000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+I/Kanzi   : [info:generic] The XMLError error is 0.
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+E/WifiServerApi: accessPoints.size 8
+E/C11CarGetServInfo:  onWifiDevicesCallback 8
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/zza     : 0x53A: 16 3A0500000801001E1156600000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/TDLog   : [SDK] Submit local data to collector server ...
+I/TDLog   : [SDK] Data submitted successfully!
+D/zza     : 0x53A: 16 3A050000080200151153700000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+I/leap_input: handle_alarm_signal is_event 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/bl_ping : type=1400 audit(0.0:14907): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331345)  course:140.493088  tickTime:1778427881618  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331345)  course:140.493088  tickTime:1778427881618  status:A
+W/KEVA.NATIVE: mark bitmap can not find space! remain=28169 wanted=16
+I/AvmCtrlService: #### heartBeat
+D/zza     : 0x53A: 16 3A0500000803001E1154800000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+W/bl_ping : type=1400 audit(0.0:14908): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000800001B1154900000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399083,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m54s11ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m54s11ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}]
+I/LeapSystemAppService: ### gpsSvMsg 1778399083,5,43,62,326,6,27,12,112,7,34,6,53,11,44,49,94,12,32,1,216,15,41,33,210,20,46,56,185,21,37,54,29,25,36,2,250,29,46,40,300,30,35,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@1291516)
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m54s11ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=38}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@1291516)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/LPSysUI.BaseSettingsObserver: onChange  mSettingName=ag35_android_net_flow, value=4
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/zza     : 0x53A: 16 3A0500000801001E1156A00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/C11SmartContrl: node_name : PresentHours  setTextContent: 1h2min
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/zza     : 0x53A: 16 3A050000080200151153B00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/Kanzi   : [info:generic] jin_fileData workerThreadCallback 331
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/zza     : 0x53A: 16 3A0500000803001E1154C00000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/leap_input: handle_alarm_signal is_event 0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+W/bl_ping : type=1400 audit(0.0:14909): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331676)  course:140.493561  tickTime:1778427882638  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331676)  course:140.493561  tickTime:1778427882638  status:A
+W/bl_ping : type=1400 audit(0.0:14910): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A0500000800001B1154D00000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000801001E1156E00000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399084,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/LeapSystemAppService: ### gpsSvMsg 1778399084,5,44,62,326,6,28,12,112,7,34,6,53,11,44,49,94,12,33,1,216,15,41,33,210,20,45,56,185,21,35,54,29,25,36,2,250,29,47,40,300,30,36,16,88,18,0,0,0
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@7eede97)
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m55s6ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}])
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m55s6ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}]
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m55s6ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=46, meanCn0=37}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@7eede97)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/zza     : 0x53A: 16 3A050000080200151153F00000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000803001E1154000000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/NavRelayPoller: Poll failed: HTTP 404 from http://47.107.88.63:8088/api/navigate/poll?code=496081
+D/zza     : 0x53A: 16 3A0500000800001B1154100000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+I/leap_input: handle_alarm_signal is_event 0
+D/JsonProtocolManager: received:{"requestAuthor":"com.autonavi.amapauto","responseCode":"","protocolId":80033,"messageType":"dispatch","requestCode":"","versionName":"9.1.0.600087","message":"","data":{"geolocation":1},"needResponse":false,"statusCode":200}
+D/NaviMessageResponse: data:{"requestAuthor":"com.autonavi.amapauto","responseCode":"","protocolId":80033,"messageType":"dispatch","requestCode":"","versionName":"9.1.0.600087","message":"","data":{"geolocation":1},"needResponse":false,"statusCode":200}
+D/Dispatch: postDelayed 0
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+W/bl_ping : type=1400 audit(0.0:14911): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331688)  course:140.493576  tickTime:1778427883639  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.331688)  course:140.493576  tickTime:1778427883639  status:A
+I/AvmCtrlService: #### heartBeat
+W/bl_ping : type=1400 audit(0.0:14912): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/zza     : 0x53A: 16 3A0500000801001E1156200000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/zza     : 0x53A: 16 3A050000080200151153300000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/LeapSystemAppService: ###  gpsLocationMsg 1778399085,1,34.236372,115.051939,52.000000,0.000000,0.000000,12,0.500000,0.600000,0.700000
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+29m38s399ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=???])
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_LOCATION, 0, Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m56s16ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=47, meanCn0=38}]}])
+I/LeapSystemAppService: ### gpsSvMsg 1778399085,5,44,62,326,6,29,12,112,7,33,6,53,11,44,49,94,12,32,1,216,15,40,33,210,20,45,56,185,21,37,54,29,25,37,2,250,29,47,40,300,30,36,16,88,18,0,0,0
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m56s16ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=47, meanCn0=38}]}]
+I/GnssLocationProvider: WakeLock acquired by sendMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@850f884)
+D/LocationManagerService: incoming location: Location[gps 34.236372,115.051939 hAcc=1 et=+1h16m56s16ms alt=52.0 vel=0.0 bear=0.0 vAcc=1 sAcc=??? bAcc=??? {Bundle[{satellites=9, maxCn0=47, meanCn0=38}]}]
+I/GnssLocationProvider: WakeLock released by handleMessage(REPORT_SV_STATUS, 0, com.android.server.location.GnssLocationProvider$SvStatusInfo@850f884)
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/C11CarSomeIp: onMessage  eventId: 3131 value: 2.5
+D/zza     : 0x53A: 16 3A0500000803001E1154400000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/C11CarXml: node_name : TCCurrent  setTextContent: 2.5
+D/C11CarXml: NodeLength: 6 xmlStr: <?xml version="1.0" encoding="UTF-8"?><carcontrol><option><optionEnergyMode type="int">0</optionEnergyMode><optionWD type="int">1</optionWD><optionC01anye type="int">0</optionC01anye><optionC11evhpc type="int">0</optionC11evhpc><optionModeEconomy type="int">1</optionModeEconomy></option><Battery><TCCurrent type="string">2.5</TCCurrent></Battery></carcontrol>
+I/Kanzi   : [info:generic] The XMLError error is 0.
+I/DPMJ    : |REQ:RCVR| DPM creating socket
+D/CarControl: pos: 0 singleTirePress: 283 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/zza     : 0x53A: 16 3A0500000800001B1154500000000000
+D/zza     : TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+D/SmartDockService: refreshWidgetView: Pos = 4
+D/zza     : 0x53A: 16 3A0500000801001E1156600000000000
+D/zza     : TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=36}
+I/leap_input: handle_alarm_signal is_event 0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+D/CarControl: pos: 1 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 36 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/AutoNavi-Patrons: [0] every thing is OK, vss = 1967 mb, current period = 0.48023796, heap = 899 mb
+W/bl_ping : type=1400 audit(0.0:14913): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.332050)  course:140.495331  tickTime:1778427884657  status:A
+I/LocationDataC23Handler: setLocDrPos ### print loc info: H:(0.0000000  0.0000000  0.000000)  course:0.000000  tickTime:0
+I/LocationDataC23Handler: D:(34.2363644  115.0519388  49.332050)  course:140.495331  tickTime:1778427884657  status:A
+W/bl_ping : type=1400 audit(0.0:14914): avc: denied { create } for scontext=u:r:untrusted_app_25:s0:c512,c768 tcontext=u:r:untrusted_app_25:s0:c512,c768 tclass=icmp_socket permissive=0
+D/zza     : 0x53A: 16 3A050000080200151153700000000000
+D/zza     : TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=277, singleTireTemp=33}
+I/CarConfig: #### data: ######,length: 8
+I/CarConfig: #### file: ######,length: 8
+I/CarConfig: #### /mnt/mmap/lp_speed same !!!
+D/CarControl: pos: 2 singleTirePress: 277 singlePressSts: 0 singleTireTemp: 33 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
+I/PermissionUtils: checkPermissions, permission:android.permission.ACCESS_FINE_LOCATION,op:android:fine_location
+I/PermissionUtils: checkPermissions, noteProxyOp,result:0
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+E/ANDR-PERF-MPCTL: Invalid profile no. 0, total profiles 0 only
+E/ANDR-PERF-RESOURCEQS: Failed to apply optimization [2, 0]
+E/ANDR-PERF-TARGET: Error: Invalid logical cluster id 1
+E/CpuMonitor: Failed to sample CPU usage
+E/CpuMonitor: java.io.FileNotFoundException: /proc/stat: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:485)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:288)
+E/CpuMonitor: 	at java.io.RandomAccessFile.<init>(RandomAccessFile.java:151)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.sample(CpuMonitor.kt:89)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor.access$sample(CpuMonitor.kt:13)
+E/CpuMonitor: 	at com.carfloat.ball.util.CpuMonitor$sampleRunnable$1.run(CpuMonitor.kt:33)
+E/CpuMonitor: 	at android.os.Handler.handleCallback(Handler.java:873)
+E/CpuMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/CpuMonitor: 	at android.os.Looper.loop(Looper.java:193)
+E/CpuMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:65)
+E/CpuMonitor: Caused by: android.system.ErrnoException: open failed: EACCES (Permission denied)
+E/CpuMonitor: 	at libcore.io.Linux.open(Native Method)
+E/CpuMonitor: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:210)
+E/CpuMonitor: 	at libcore.io.IoBridge.open(IoBridge.java:471)
+E/CpuMonitor: 	... 9 more
+D/zza     : 0x53A: 16 3A0500000803001E1154800000000000
+D/zza     : TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=286, singleTireTemp=34}
+D/CarControl: pos: 3 singleTirePress: 286 singlePressSts: 0 singleTireTemp: 34 singleTempSts: 0
+D/SmartDockService: refreshWidgetView: Pos = 4
