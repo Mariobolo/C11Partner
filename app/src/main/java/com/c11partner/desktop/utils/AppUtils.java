@@ -72,7 +72,7 @@ public class AppUtils {
                 processedPackages.add(packageName); // 记录已处理包名
                 
                 // 跳过自身应用
-                if(packageName.equals("com.c11partner.desktop.)){
+                if(packageName.equals("com.c11partner.desktop")) {
                     continue;
                 }
 
