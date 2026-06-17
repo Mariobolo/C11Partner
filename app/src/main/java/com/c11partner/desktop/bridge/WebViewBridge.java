@@ -1290,6 +1290,7 @@ public class WebViewBridge {
     
     /**
      * 执行本地ADB授权命令
+     * 零跑C11专用：授予READ_LOGS、DUMP、WRITE_SECURE_SETTINGS三大核心权限
      */
     private void executeWirelessAdbAuthorization(int port) {
         Log.d(TAG, "executeWirelessAdbAuthorization 被调用，端口: " + port);
@@ -1301,7 +1302,7 @@ public class WebViewBridge {
                 String packageName = mContext.getPackageName();
                 boolean allSuccess = true;
                 
-                // 授予READ_LOGS权限
+                // 1. 授予READ_LOGS权限（日志监控）
                 String command1 = "pm grant " + packageName + " android.permission.READ_LOGS";
                 Log.d(TAG, "尝试通过ADB授予权限: " + command1);
                 boolean result1 = com.c11partner.desktop.adb.AdbManager.connectAndExecute("127.0.0.1", port, command1);
@@ -1310,7 +1311,7 @@ public class WebViewBridge {
                     allSuccess = false;
                 }
                 
-                // 授予DUMP权限
+                // 2. 授予DUMP权限（系统状态获取）
                 String command2 = "pm grant " + packageName + " android.permission.DUMP";
                 Log.d(TAG, "尝试通过ADB授予权限: " + command2);
                 boolean result2 = com.c11partner.desktop.adb.AdbManager.connectAndExecute("127.0.0.1", port, command2);
@@ -1319,12 +1320,25 @@ public class WebViewBridge {
                     allSuccess = false;
                 }
                 
+                // 3. 授予WRITE_SECURE_SETTINGS权限（车控功能）
+                String command3 = "pm grant " + packageName + " android.permission.WRITE_SECURE_SETTINGS";
+                Log.d(TAG, "尝试通过ADB授予权限: " + command3);
+                boolean result3 = com.c11partner.desktop.adb.AdbManager.connectAndExecute("127.0.0.1", port, command3);
+                if (!result3) {
+                    Log.e(TAG, "WRITE_SECURE_SETTINGS权限授权失败");
+                    allSuccess = false;
+                }
+                
                 if (allSuccess) {
-                    Log.d(TAG, "所有权限授权成功");
-                    showToastOnUiThread("ADB权限授权成功");
+                    Log.d(TAG, "三大核心权限授权成功");
+                    showToastOnUiThread("三大核心权限授权成功！\nREAD_LOGS + DUMP + WRITE_SECURE_SETTINGS");
                 } else {
                     Log.e(TAG, "部分权限授权失败");
-                    showToastOnUiThread("ADB权限授权部分失败，请查看日志");
+                    String msg = "ADB权限授权结果：\n";
+                    msg += "READ_LOGS: " + (result1 ? "✅" : "❌") + " ";
+                    msg += "DUMP: " + (result2 ? "✅" : "❌") + " ";
+                    msg += "WRITE_SECURE_SETTINGS: " + (result3 ? "✅" : "❌");
+                    showToastOnUiThread(msg);
                 }
                 
             } catch (Exception e) {
@@ -1336,7 +1350,7 @@ public class WebViewBridge {
     
     /**
      * 执行ADB权限授权命令
-     * 授予READ_LOGS和DUMP权限
+     * 零跑C11专用：授予READ_LOGS、DUMP、WRITE_SECURE_SETTINGS三大核心权限
      */
     @JavascriptInterface
     public void executeAdbPermissionGrant() {
@@ -1348,27 +1362,29 @@ public class WebViewBridge {
                 // 使用ADB命令处理器执行权限授权
                 AdbCommandProcessor processor = new AdbCommandProcessor(mContext);
                 
-                // 执行第一个权限授权
+                // 1. 授予READ_LOGS权限（日志监控）
                 String command1 = "pm grant " + packageName + " android.permission.READ_LOGS";
                 Log.d(TAG, "执行命令: " + command1);
                 boolean result1 = processor.executeCommand(command1);
                 
-                // 执行第二个权限授权
+                // 2. 授予DUMP权限（系统状态获取）
                 String command2 = "pm grant " + packageName + " android.permission.DUMP";
                 Log.d(TAG, "执行命令: " + command2);
                 boolean result2 = processor.executeCommand(command2);
                 
+                // 3. 授予WRITE_SECURE_SETTINGS权限（车控功能）
+                String command3 = "pm grant " + packageName + " android.permission.WRITE_SECURE_SETTINGS";
+                Log.d(TAG, "执行命令: " + command3);
+                boolean result3 = processor.executeCommand(command3);
+                
                 // 显示结果
-                if (result1 && result2) {
-                    showToastOnUiThread("ADB权限授权成功");
+                if (result1 && result2 && result3) {
+                    showToastOnUiThread("三大核心权限授权成功！\nREAD_LOGS + DUMP + WRITE_SECURE_SETTINGS");
                 } else {
-                    String errorMsg = "ADB权限授权失败\n";
-                    if (!result1) {
-                        errorMsg += "READ_LOGS: 失败\n";
-                    }
-                    if (!result2) {
-                        errorMsg += "DUMP: 失败\n";
-                    }
+                    String errorMsg = "ADB权限授权结果：\n";
+                    errorMsg += "READ_LOGS: " + (result1 ? "✅ 成功" : "❌ 失败") + "\n";
+                    errorMsg += "DUMP: " + (result2 ? "✅ 成功" : "❌ 失败") + "\n";
+                    errorMsg += "WRITE_SECURE_SETTINGS: " + (result3 ? "✅ 成功" : "❌ 失败");
                     showToastOnUiThread(errorMsg);
                 }
                 
