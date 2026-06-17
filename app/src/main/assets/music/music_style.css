@@ -1,0 +1,123 @@
+
+
+audio::-webkit-media-controls-panel {
+    background: white;
+}
+
+#app {
+    display: flex;
+    padding: 16px;
+    background: linear-gradient(0, #181929, 10%, #404264, 90%, #181929, 100%, #404264);
+    border-radius: 6px;
+}
+
+.player-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header {
+    display: flex;
+    padding: 6px 12px;
+    background: linear-gradient(#404264, #10111a, #404264);
+    color: #e6e7ea;
+    margin-bottom: 4px;
+}
+
+.player .canvas {
+    display: flex;
+    border-radius: 6px;
+    border: 4px solid black;
+    margin-bottom: 16px;
+}
+
+.player .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.player .controls audio {
+    background: white;
+    border-radius: 6px;
+    flex: 1;
+}
+
+.list-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    border-radius: 6px;
+    padding-top: 2px;
+    border: 2px solid #666895;
+    background: #2a2a3e;
+    width: 260px;
+}
+
+.list-wrapper .list {
+    flex: 1;
+    overflow: auto;
+}
+
+.list-wrapper .list li {
+    width: 250px;
+    padding: 4px;
+    color: #666895;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #666895;
+    margin-bottom: 1px;
+    list-style: none;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.list-wrapper .list li:hover {
+    background: #5f6282;
+    border: 1px solid white;
+    color: #e6e7ea;
+}
+
+.list-wrapper .list li.active {
+    color: #e6e7ea;
+    background: #5f6282;
+    border: 1px solid white;
+}
+
+.list-wrapper .uploader {
+    text-align: right;
+}
+
+.list-wrapper .uploader label {
+    padding: 8px 0;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #e6e7ea;
+    border-top: 2px solid #666895;
+    cursor: pointer;
+    background: #2a2a3e;
+}
+
+.list-wrapper .uploader label input {
+    display: none;
+}
+
+/* 滚动条样式 */
+.list-wrapper .list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list-wrapper .list::-webkit-scrollbar-track {
+    background: #2a2a3e;
+}
+
+.list-wrapper .list::-webkit-scrollbar-thumb {
+    background: #5f6282;
+    border-radius: 3px;
+}

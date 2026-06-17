@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>千千静听</title>
+    <link rel="stylesheet" href="music_style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="player-wrapper">
+            <header class="header">
+                正在播放：<span id="current-song-name">周杰伦 - 稻香</span>
+                <span style="margin-left: auto;" id="current-time">00:00</span>
+            </header>
+            <div class="player">
+                <div class="canvas">
+                    <canvas id="canvas" width="500" height="300"></canvas>
+                </div>
+                <div class="controls">
+                    <audio id="audio-player" controls></audio>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../js/music_visualizer.js"></script>
+</body>
+</html>

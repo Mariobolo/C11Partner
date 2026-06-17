@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 允许所有HTTP流量 -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">cdn-hsyq-static.shanhutech.cn</domain>
+        <domain includeSubdomains="true">api.ixiaowai.cn</domain>
+        <domain includeSubdomains="true">pic1.xhby.net</domain>
+        <domain includeSubdomains="true">api.btstu.cn</domain>
+        <domain includeSubdomains="true">api.dujin.org</domain>
+        <domain includeSubdomains="true">unsplash.it</domain>
+        <domain includeSubdomains="true">wp.upx8.com</domain>
+        <!-- 添加360壁纸API域名 -->
+        <domain includeSubdomains="true">wallpaper.apc.360.cn</domain>
+        <!-- 添加360壁纸图片域名 -->
+        <domain includeSubdomains="true">p18.qhimg.com</domain>
+        <!-- 添加p19.qhimg.com域名 -->
+        <domain includeSubdomains="true">p19.qhimg.com</domain>
+    </domain-config>
+</network-security-config>

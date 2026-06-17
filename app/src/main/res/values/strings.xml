@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">C11伙伴</string>
+    <string name="accessibility_service_description">用于打开多任务页面的辅助功能服务</string>
+</resources>

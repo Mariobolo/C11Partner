@@ -1,0 +1,91 @@
+name: Android CI Build
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    - name: Set up Android SDK (API 28 for 零跑C11)
+      uses: android-actions/setup-android@v3
+      with:
+        api-level: 28
+        build-tools: "28.0.3"
+        ndk-version: ""
+
+    - name: Accept Android SDK licenses
+      run: yes | sdkmanager --licenses > /dev/null 2>&1
+
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+
+    - name: Clean previous build
+      run: ./gradlew clean --no-build-cache
+
+    - name: Build debug APK
+      run: ./gradlew assembleDebug --stacktrace --info
+
+    - name: Build unsigned release APK
+      run: ./gradlew assembleRelease --stacktrace --info -x signReleaseBundle -x signReleaseApk
+
+    - name: Find APK files
+      id: find_apk
+      run: |
+        echo "=== 查找APK文件 ==="
+        DEBUG_APK=$(find app/build/outputs/apk/debug -name "*.apk" -type f | head -1)
+        RELEASE_APK=$(find app/build/outputs/apk/release -name "*-unsigned.apk" -type f | head -1)
+        
+        echo "debug_apk=$DEBUG_APK" >> $GITHUB_OUTPUT
+        echo "release_apk=$RELEASE_APK" >> $GITHUB_OUTPUT
+        
+        echo "Debug APK: $DEBUG_APK"
+        echo "Release APK: $RELEASE_APK"
+
+    - name: Upload debug APK
+      if: steps.find_apk.outputs.debug_apk != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: C11Partner-debug-${{ github.sha }}
+        path: ${{ steps.find_apk.outputs.debug_apk }}
+        retention-days: 30
+
+    - name: Upload unsigned release APK
+      if: steps.find_apk.outputs.release_apk != ''
+      uses: actions/upload-artifact@v4
+      with:
+        name: C11Partner-release-unsigned-${{ github.sha }}
+        path: ${{ steps.find_apk.outputs.release_apk }}
+        retention-days: 90
+
+    - name: Create GitHub Release (打标签时触发)
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          ${{ steps.find_apk.outputs.debug_apk }}
+          ${{ steps.find_apk.outputs.release_apk }}
+        name: Release v${{ github.ref_name }}
+        generate_release_notes: true
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

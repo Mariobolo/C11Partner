@@ -1,0 +1,2063 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 主背景图容器 */
+.background-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* Bootstrap风格壁纸动画 */
+.wallpaper-fade-enter {
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.wallpaper-fade-enter-active {
+    opacity: 1;
+}
+
+.wallpaper-fade-exit {
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.wallpaper-fade-exit-active {
+    opacity: 0;
+}
+
+/* 主背景图 - Bootstrap风格 */
+.background-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+    pointer-events: auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+    contain: layout style paint;
+    transform-style: preserve-3d;
+    /* 保持3D变换 */
+    backface-visibility: hidden;
+    /* 隐藏背面 */
+}
+
+/* 壁纸预览层 - 简化版 */
+.wallpaper-preview {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    display: none;
+    /* 不再需要预览层 */
+}
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    /* 确保body元素能够接收触摸事件 */
+    touch-action: manipulation;
+    /* 允许浏览器在适当的时候推迟处理手势 */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* 主容器 */
+.main-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    /* 防止主容器拦截背景的触摸事件 */
+}
+
+/* 为需要交互的子元素明确设置 pointer-events: auto */
+.top-status-bar,
+.layout-left,
+.card-view,
+.status-bar,
+.modal,
+#app {
+    pointer-events: auto;
+}
+
+/* 顶部状态栏 - 重新设计 */
+.top-status-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 12px;
+    z-index: 1000;
+    pointer-events: auto;
+}
+
+.top-left-time {
+    font-size: 12px;
+    font-weight: 500;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.top-left-time .time-text {
+    font-size: 14px;
+    color: #ffffff;
+    display: block !important;
+    /* 强制显示 */
+    font-weight: 600;
+}
+
+.top-right-info {
+    display: flex;
+    align-items: center;
+}
+
+.network-status-icon,
+.bluetooth-status-icon,
+.network-5g-icon {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.9;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    margin-left: 15px;
+}
+
+.network-status-icon:first-child,
+.bluetooth-status-icon:first-child,
+.network-5g-icon:first-child {
+    margin-left: 0;
+}
+
+.network-status-icon:hover,
+.bluetooth-status-icon:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* 网络状态图标动画 */
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+.network-status-icon.connected,
+.bluetooth-status-icon.connected {
+    animation: pulse 2s infinite;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+    .top-status-bar {
+        height: 35px;
+        padding: 0 15px;
+    }
+
+    .top-left-time .time-text {
+        font-size: 12px;
+    }
+
+    .network-status-icon,
+    .bluetooth-status-icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .top-status-bar {
+        height: 30px;
+        padding: 0 10px;
+    }
+
+    .top-left-time {
+        font-size: 10px;
+    }
+
+    .top-left-time .time-text {
+        font-size: 11px;
+    }
+
+    .network-status-icon,
+    .bluetooth-status-icon {
+        width: 18px;
+        height: 18px;
+        margin-left: 8px;
+    }
+}
+
+.temperature-info,
+.battery-level,
+.gps-status {
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* 每日一言 */
+.daily-quote {
+    width: 100%;
+    text-align: center;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* 左侧布局 */
+.layout-left {
+    position: absolute;
+    left: 50px;
+    top: 60px;
+    /* 从50px调整为60px，为顶部状态栏留出更多空间 */
+    pointer-events: auto;
+    /* 重新启用指针事件 */
+}
+
+/* 时间显示 */
+.time-text {
+    padding-top: 20px;
+    font-size: 58px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1.0;
+}
+
+/* 日期显示 */
+.date-text {
+    padding-top: 0;
+    font-size: 21px;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+/* 农历显示 */
+.lunar-calendar-text {
+    font-size: 16px;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+/* 音乐相关样式已移至music.css文件 */
+
+/* 底部卡片 */
+.card-view {
+    position: absolute;
+    bottom: 100px;
+    left: 50px;
+    right: 50px;
+    height: 120px;
+    /* 增加高度以适应内容 */
+    background-color: transparent;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    pointer-events: auto;
+    /* 重新启用指针事件 */
+    /* 确保不会干扰内部横向滚动 */
+    overflow: hidden;
+}
+
+.widgets-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    /* 确保容器不会干扰横向滚动 */
+    overflow: hidden;
+}
+
+.horizontal-scroll {
+    width: 100%;
+    overflow-x: auto;
+    /* 允许横向滚动 */
+    overflow-y: hidden;
+    /* 隐藏纵向滚动 */
+    white-space: nowrap;
+    padding: 10px 0;
+    -webkit-overflow-scrolling: touch;
+    /* 添加平滑滚动 */
+    /* 隐藏滚动条 */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+    /* 确保在所有设备上都能正确隐藏滚动条 */
+    -webkit-transform: translate3d(0, 0, 0);
+    /* 触发硬件加速 */
+    /* 添加一些额外的优化 */
+    touch-action: pan-x;
+    /* 允许水平平移手势 */
+    -webkit-touch-callout: none;
+    /* 禁止长按弹出菜单 */
+    /* 确保横向滚动正常工作 */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    /* 确保内容可以正确滚动 */
+    position: relative;
+    /* 添加额外的优化确保横向滚动正常工作 */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+}
+
+/* 隐藏 Webkit 浏览器的滚动条 */
+.horizontal-scroll::-webkit-scrollbar {
+    display: none;
+    /* Chrome Safari */
+}
+
+/* 隐藏 Webkit 浏览器滚动条轨道 */
+.horizontal-scroll::-webkit-scrollbar-track {
+    display: none;
+}
+
+/* 隐藏 Webkit 浏览器滚动条拇指 */
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+.widget-group {
+    display: inline-flex;
+    height: 100px;
+    align-items: center;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.29);
+    border-radius: 10px;
+    vertical-align: top;
+    min-width: 150px;
+    /* 设置最小宽度确保组件显示完整 */
+    /* 确保组件能够正确显示在横向滚动容器中 */
+    flex-shrink: 0;
+    /* 防止组件在容器中被压缩 */
+    /* 添加额外的优化 */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.widget-group:last-child {
+    margin-right: 0;
+}
+
+.widget {
+    height: 100%;
+    background-color: #00000000;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    /* 确保widget不会干扰横向滚动 */
+    flex-shrink: 0;
+}
+
+.map-widget {
+    width: 250px;
+    /* 增加宽度以适应内容 */
+}
+
+
+
+/* 整体播放器容器 */
+.music-player {
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    padding: 12px 16px;
+    width: 100%;
+}
+
+/* 黑胶唱片容器 */
+.vinyl-record-container {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+}
+
+/* 黑胶唱片 */
+.vinyl-record {
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    /* 加快转速：2秒/圈，视觉变化更明显 */
+    animation: spin 2s linear infinite;
+    animation-play-state: paused;
+}
+
+/* 黑胶唱片旋转动画 - 播放状态 */
+.vinyl-record.spinning {
+    animation-play-state: running;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 1. 强化黑胶纹路对比度（明暗差异更大） */
+.vinyl-record::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-radial-gradient(circle at center,
+            transparent 0%,
+            transparent 2px,
+            rgba(255, 255, 255, 0.15) 2px,
+            rgba(255, 255, 255, 0.15) 4px);
+}
+
+/* 2. 添加高对比度参考标记（关键：一眼能看到转动） */
+.vinyl-record::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(255, 90, 95, 0.8) 0%,
+            rgba(255, 90, 95, 0) 100%);
+    /* 多添加几个标记，转动感更强 */
+    box-shadow:
+        15px 0 0 0 rgba(255, 90, 95, 0.6),
+        -15px 0 0 0 rgba(255, 90, 95, 0.6),
+        0 15px 0 0 rgba(255, 90, 95, 0.4),
+        0 -15px 0 0 rgba(255, 90, 95, 0.4);
+}
+
+/* 黑胶唱片中心区域 */
+.vinyl-record .vinyl-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    background-color: #121212;
+    border-radius: 50%;
+    z-index: 1;
+    /* 中心区域也加标记，强化转动 */
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* 黑胶唱片中心红点 */
+.vinyl-record .vinyl-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: #ff5a5f;
+    border-radius: 50%;
+    z-index: 2;
+    /* 红点加高光，更醒目 */
+    box-shadow: inset 0 -2px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+/* 唱针 */
+.tonearm {
+    position: absolute;
+    top: -5px;
+    right: 8px;
+    width: 4px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: 2px;
+    transform-origin: top center;
+    transform: rotate(-30deg);
+    transition: transform 0.5s ease;
+    z-index: 10;
+}
+
+.tonearm::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #999;
+    border-radius: 50%;
+}
+
+.tonearm::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #666;
+    border-radius: 50%;
+}
+
+/* 播放时唱针移动到唱片上 */
+.tonearm.playing {
+    transform: rotate(5deg);
+}
+
+/* 右侧控制区 */
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 歌曲名称 */
+.music-header {
+    width: 100%;
+    overflow: hidden;
+}
+
+.music-name {
+    width: 180px;
+    font-size: 12px;
+    color: white;
+    white-space: nowrap;
+    display: inline-block;
+
+}
+
+/* 跑马灯动画 - 从右往左滚动 */
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* 当标题过长时启用跑马灯效果 */
+.music-name.scrolling {
+    animation: marquee 10s linear infinite;
+}
+
+/* 音乐播放进度条容器 */
+.music-progress-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 3px 0;
+}
+
+/* 时间显示 */
+.music-current-time,
+.music-total-time {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    min-width: 32px;
+    text-align: center;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+.music-current-time {
+    margin-right: 6px;
+}
+
+.music-total-time {
+    margin-left: 6px;
+}
+
+/* 音乐播放进度条 */
+.music-progress-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* 音乐播放进度条填充 */
+.music-progress-filled {
+    height: 100%;
+    background: linear-gradient(90deg, #4285f4 0%, #34a853 100%);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+/* 进度条头部高光 */
+.music-progress-filled::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5));
+    border-radius: 0 2px 2px 0;
+}
+
+/* 进度条 */
+.progress-bar {
+    height: 4px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar {
+    --progress: 10%;
+    /* 默认进度 */
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--progress);
+    background: linear-gradient(90deg, #4285f4 0%, #34a853 100%);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.progress-dot {
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    /* 模拟当前进度 */
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(66, 133, 244, 0.4);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.progress-dot:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.6);
+}
+
+/* 控制按钮组 */
+.control-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.control-buttons button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 15px;
+    outline: none; /* 去除焦点边框 */
+    -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
+    box-shadow: none; /* 确保无阴影 */
+}
+
+.control-buttons button:last-child {
+    margin-right: 0;
+}
+
+.control-buttons button:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.control-buttons button:active {
+    transform: scale(0.95);
+    outline: none; /* 去除激活状态边框 */
+    box-shadow: none; /* 确保无阴影 */
+}
+
+.control-buttons button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.control-buttons .btn-play {
+    width: 32px;
+    height: 32px;
+}
+
+.control-buttons .btn-play:hover {
+    transform: scale(1.1);
+}
+
+.app-widget {
+    width: auto;
+}
+
+.quick-apps-widget {
+    width: auto;
+    min-width: 200px;
+    /* 设置最小宽度 */
+    display: flex;
+    align-items: center;
+}
+
+.quick-apps-container {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.quick-app-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.quick-app-item:active {
+    transform: scale(0.95);
+}
+
+.quick-app-icon {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 5px;
+}
+
+.quick-app-name {
+    font-size: 12px;
+    color: #FFFFFF;
+    text-align: center;
+    max-width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.car-widget {
+    padding: 10px;
+    width: 200px;
+    /* 增加宽度 */
+    position: relative;
+}
+
+.weather-widget {
+    padding: 10px;
+    width: auto;
+    min-width: 150px;
+    /* 设置最小宽度 */
+}
+
+.map-icon {
+    width: 80px;
+    height: 80px;
+    margin-left: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.nav-button:active {
+    transform: scale(0.95);
+}
+
+.nav-icon {
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.nav-text {
+    font-size: 12px;
+    color: #FFFFFF;
+    margin-top: 5px;
+}
+
+.car-image {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.tire-pressure {
+    padding: 10px;
+    position: absolute;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.front-left {
+    top: 10px;
+    left: 0;
+}
+
+.front-right {
+    top: 10px;
+    right: 0;
+}
+
+.rear-left {
+    bottom: 0;
+    left: 0;
+}
+
+.rear-right {
+    bottom: 0;
+    right: 0;
+}
+
+.weather-icon {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('images/nav_weather.png');
+    /* 默认天气图标 */
+}
+
+.weather-info {
+    margin-left: 10px;
+}
+
+.temperature {
+    font-size: 12px;
+    color: #FFFFFF;
+}
+
+.condition {
+    font-size: 12px;
+    color: #FFFFFF;
+    margin-top: 5px;
+}
+
+.app-icon {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.app-name {
+    font-size: 15px;
+    color: #FFFFFF;
+    margin-top: 5px;
+}
+
+/* 底部状态栏 */
+.status-bar {
+    z-index: 99999;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    pointer-events: auto;
+    /* 重新启用指针事件 */
+}
+
+.left-buttons,
+.right-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.center-controls {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background-color: #00000000;
+    background-size: 100% 100%;
+    padding: 0 25px;
+}
+
+.control-icon {
+    width: 35px;
+    height: 35px;
+    margin: 0 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    outline: none !important;
+    /* 强制去掉点击时的轮廓 */
+    border: none !important;
+    /* 强制去掉边框 */
+    -webkit-tap-highlight-color: transparent;
+    /* 去掉移动端点击高亮 */
+    box-shadow: none !important;
+    /* 去掉阴影 */
+}
+
+.control-icon:active {
+    transform: scale(0.9);
+}
+
+.control-icon:focus {
+    outline: none !important;
+    /* 确保焦点时也没有轮廓 */
+    border: none !important;
+    /* 确保焦点时也没有边框 */
+    box-shadow: none !important;
+    /* 确保焦点时也没有阴影 */
+}
+
+.ac-control {
+    width: 35px;
+    height: 35px;
+    margin: 0 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.ac-control:active {
+    transform: scale(0.9);
+}
+
+.ac-hcs {
+    width: 35px;
+    height: 35px;
+    margin: 0 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.ac-hcs:active {
+    transform: scale(0.9);
+}
+
+.air-text {
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0 10px;
+}
+
+.wind-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    height: 35px;
+}
+
+.wind-background {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+
+.wind-level {
+    width: 50px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    flex-shrink: 0;
+}
+
+/* 按钮点击效果 */
+.button-pressed {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+/* 设置弹窗样式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 半透明背景 */
+    pointer-events: auto;
+    /* 确保弹窗可以接收事件 */
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* 弹窗显示动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 弹窗内容动画 */
+.modal-content {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background-color: rgba(44, 44, 44, 0.8);
+    /* 半透明背景 */
+    margin: auto;
+    padding: 0;
+    border: 1px solid rgba(136, 136, 136, 0.5);
+    border-radius: 8px;
+    width: 75%;
+    /* 与应用列表弹窗一致 */
+    height: 75%;
+    /* 与应用列表弹窗一致 */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    /* 磨砂效果 */
+    pointer-events: auto;
+    /* 确保弹窗可以接收事件 */
+    overflow: hidden;
+    /* 防止内容溢出 */
+    animation: slideIn 0.3s ease-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-header {
+    padding: 10px;
+    background-color: rgba(30, 30, 30, 0.8);
+    color: white;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    flex: 1;
+    /* 标题占据剩余空间 */
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 30px;
+    /* 与应用列表弹窗一致 */
+    height: 30px;
+    /* 与应用列表弹窗一致 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    /* 与应用列表弹窗一致 */
+    transition: background-color 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+}
+
+/* 应用列表弹窗关闭按钮样式 */
+.apps-modal-header .close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 30px;
+    /* 固定宽度 */
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.apps-modal-header .close:hover,
+.apps-modal-header .close:focus {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+}
+
+/* TAB导航样式 */
+.tab-navigation {
+    display: flex;
+    background-color: #252525;
+    /* 扁平化背景色 */
+    border-bottom: 1px solid #444;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 18px 0;
+    /* 增加内边距 */
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 15px;
+    /* 增大字体 */
+    font-weight: 500;
+    /* 中等字重 */
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    /* 大写 */
+    letter-spacing: 1px;
+    /* 字母间距 */
+}
+
+.tab-button:hover {
+    background-color: #333333;
+    /* 扁平化悬停背景色 */
+    color: #ccc;
+}
+
+.tab-button.active {
+    background-color: #1e1e1e;
+    /* 扁平化激活背景色 */
+    color: #4dabf7;
+    /* 蓝色高亮 */
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #4dabf7;
+    /* 蓝色下划线 */
+}
+
+.tab-button:focus {
+    outline: none;
+}
+
+.modal-body {
+    padding: 12px;
+    /* 与应用列表弹窗一致 */
+    flex: 1;
+    display: flex;
+    /* 与应用列表弹窗一致 */
+    flex-direction: column;
+    /* 与应用列表弹窗一致 */
+    overflow-y: auto;
+    background-color: #2a2a2a;
+    /* 内容区域背景色 */
+}
+
+/* TAB内容样式 */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+    /* 添加淡入动画 */
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item label {
+    font-size: 16px;
+    color: #ffffff;
+    flex: 0 1 auto;
+    font-weight: 400;
+    cursor: pointer;
+    user-select: none;
+}
+
+.setting-item label:active {
+    opacity: 0.7;
+}
+
+.setting-button {
+    background-color: #3a3a3a;
+    /* 扁平化背景色 */
+    color: white;
+    border: none;
+    /* 扁平化设计，去除边框 */
+    padding: 10px 20px;
+    /* 增加内边距 */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    /* 增大字体 */
+    border-radius: 0;
+    /* 扁平化设计，保持直角 */
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: none;
+    /* 扁平化设计，去除阴影 */
+    font-weight: 500;
+    /* 中等字重 */
+    text-transform: uppercase;
+    /* 大写 */
+    letter-spacing: 1px;
+    /* 字母间距 */
+}
+
+.setting-button:hover {
+    background-color: #4a4a4a;
+    /* 悬停背景色 */
+    transform: none;
+    /* 扁平化设计，去除变换效果 */
+    box-shadow: none;
+    /* 扁平化设计，去除阴影 */
+}
+
+.setting-select {
+    background-color: #333;
+    /* 扁平化背景色 */
+    color: white;
+    border: 1px solid #555;
+    border-radius: 0;
+    /* 扁平化设计，保持直角 */
+    padding: 10px 14px;
+    /* 增加内边距 */
+    font-size: 14px;
+    /* 增大字体 */
+    transition: border-color 0.3s;
+}
+
+.setting-select:focus {
+    outline: none;
+    border-color: #4dabf7;
+    /* 蓝色边框 */
+}
+
+.setting-input {
+    background-color: #333;
+    /* 扁平化背景色 */
+    color: white;
+    border: 1px solid #555;
+    border-radius: 0;
+    /* 扁平化设计，保持直角 */
+    padding: 10px 14px;
+    /* 增加内边距 */
+    font-size: 14px;
+    /* 增大字体 */
+    width: 80px;
+    /* 增加宽度 */
+    transition: border-color 0.3s;
+}
+
+.setting-input:focus {
+    outline: none;
+    border-color: #4dabf7;
+    /* 蓝色边框 */
+}
+
+.setting-checkbox {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    accent-color: #4dabf7;
+}
+
+.category-checkbox {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    accent-color: #4dabf7;
+}
+
+/* 壁纸选项样式 */
+.wallpaper-options {
+    padding: 0 12px;
+    background-color: #3a3a3a;
+    border-left: 4px solid #4dabf7;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+/* 在线壁纸分类样式 */
+.online-wallpaper-categories {
+    display: none;
+    padding: 0 20px;
+    background-color: #3a3a3a;
+    border-left: 4px solid #4dabf7;
+    border-radius: 0;
+}
+
+.online-wallpaper-categories h4 {
+    color: #4dabf7;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.categories-list {
+    margin-top: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.categories-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.categories-list::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+.categories-list::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
+}
+
+.categories-list::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+/* 关于页面样式 */
+#about-tab .setting-item span {
+    font-size: 16px;
+    color: #ccc;
+}
+
+/* 系统管理页面样式 */
+#apps-tab .setting-item {
+    border-bottom: 1px solid #3a3a3a;
+}
+
+#apps-tab .setting-item:last-child {
+    border-bottom: none;
+}
+
+/* 组件配置页面样式 */
+#components-tab .setting-item {
+    border-bottom: 1px solid #3a3a3a;
+}
+
+#components-tab .setting-item:last-child {
+    border-bottom: none;
+}
+
+/* 壁纸设置页面样式 */
+#wallpaper-tab .setting-item {
+    border-bottom: 1px solid #3a3a3a;
+}
+
+#wallpaper-tab .setting-item:last-child {
+    border-bottom: none;
+}
+
+#wallpaper-tab .setting-item label {
+    font-size: 16px;
+    color: #ffffff;
+    flex: 0 1 auto;
+    font-weight: 400;
+    cursor: pointer;
+    user-select: none;
+}
+
+#wallpaper-tab .setting-item label:active {
+    opacity: 0.7;
+}
+
+/* 设置弹窗滚动条样式 */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #4dabf7;
+    border-radius: 0;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: #3a86c9;
+}
+
+/* 设置弹窗TAB按钮样式 */
+.tab-button:first-child {
+    border-radius: 0;
+}
+
+.tab-button:last-child {
+    border-radius: 0;
+}
+
+/* 应用列表弹窗样式 */
+.apps-modal-content {
+    background-color: rgba(44, 44, 44, 0.8);
+    /* 半透明背景 */
+    margin: auto;
+    padding: 0;
+    border: 1px solid rgba(136, 136, 136, 0.5);
+    border-radius: 8px;
+    width: 75%;
+    height: 75%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    /* 磨砂效果 */
+    pointer-events: auto;
+    /* 确保弹窗可以接收事件 */
+    overflow: hidden;
+    /* 防止内容溢出 */
+    animation: slideIn 0.3s ease-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+.apps-modal-header {
+    padding: 10px;
+    background-color: rgba(30, 30, 30, 0.8);
+    color: white;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.apps-modal-header h2 {
+    margin: 0;
+    font-size: 16px;
+    flex: 1;
+    /* 标题占据剩余空间 */
+}
+
+.apps-modal-body {
+    padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 搜索框样式 */
+.search-container {
+    margin-bottom: 10px;
+}
+
+.search-container input[type="text"] {
+    width: 100%;
+    padding: 6px 12px;
+    margin: 3px 0;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    border-radius: 2px;
+    background-color: #333;
+    color: white;
+    font-size: 12px;
+}
+
+.search-container input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* 应用内容区域 */
+.apps-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* 字母导航栏 */
+.alphabet-nav {
+    width: 35px;
+    background-color: rgba(30, 30, 30, 0.8);
+    border-radius: 2px;
+    margin-right: 10px;
+    overflow-y: auto;
+    /* 隐藏滚动条 */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+}
+
+.alphabet-nav::-webkit-scrollbar {
+    display: none;
+    /* Chrome Safari */
+}
+
+.alphabet-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.alphabet-nav li {
+    padding: 2px 0;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 10px;
+    color: #aaa;
+    transition: color 0.3s;
+}
+
+.alphabet-nav li:hover {
+    color: #007bff;
+}
+
+/* 应用列表容器 */
+.apps-list-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+    /* 为滚动条留出空间 */
+    /* 隐藏滚动条 */
+    scrollbar-width: thin;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+}
+
+.apps-list-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome Safari */
+}
+
+/* 应用分组 */
+.app-section {
+    margin-bottom: 10px;
+}
+
+.app-section-title {
+    font-size: 12px;
+    color: #007bff;
+    margin-bottom: 5px;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #444;
+}
+
+/* 应用网格 */
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+}
+
+.app-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 2px;
+    margin: 4px;
+    transition: background-color 0.3s;
+}
+
+.app-item:hover {
+    background-color: #3a3a3a;
+}
+
+.app-item .app-icon {
+    width: 35px;
+    height: 35px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 3px;
+}
+
+.app-item .app-name {
+    font-size: 9px;
+    text-align: center;
+    word-break: break-word;
+    max-width: 60px;
+}
+
+/* Toast提示样式 */
+#toastMessage {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    text-align: center;
+    min-width: 100px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+/* 滑动提示样式 */
+#swipeHint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    text-align: center;
+    min-width: 120px;
+}
+
+/* 音乐播放器样式 */
+#app {
+    position: absolute;
+    left: 50px;
+    top: 215px;
+    width: 250px;
+    z-index: 100;
+    background: rgb(0 0 0);
+    border-radius: 5px;
+    padding: 5px;
+    pointer-events: auto;
+}
+
+#app .player-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#app .header {
+    display: flex;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+#app .player .canvas {
+    display: flex;
+    border-radius: 6px;
+    border: 2px solid black;
+    width: 100%;
+    height: 80px;
+}
+
+#app canvas {
+    width: 100%;
+    height: 100%;
+    background: rgb(29, 19, 62);
+}
+
+#app .player .controls {
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#app .player .controls audio {
+    background: white;
+    border-radius: 6px;
+    flex: 1;
+}
+
+audio {
+    height: 30px;
+}
+
+/* 自定义音频播放器样式 */
+.custom-audio-player {
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.control-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    /* 添加过渡效果 */
+}
+
+/* 点击动画效果 */
+.control-btn:active {
+    transform: scale(0.9);
+    /* 点击时缩小 */
+}
+
+.play-btn {
+    background-image: url('../images/nav_music_play.png');
+}
+
+.play-btn.playing {
+    background-image: url('../images/nav_music_pause.png');
+}
+
+.next-btn {
+    background-image: url('../images/nav_music_next.png');
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin: 0 10px;
+}
+
+.progress-container span {
+    font-size: 12px;
+    color: #333;
+    margin: 0 5px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background-color: #ccc;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-filled {
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s linear;
+    /* 添加过渡效果使进度条更平滑 */
+}
+
+/* 如果缺少某些图标，使用基础CSS样式替代 */
+.stop-btn {
+    background-image: none;
+    position: relative;
+}
+
+.stop-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background-color: #333;
+}
+
+.volume-btn {
+    background-image: none;
+    position: relative;
+}
+
+.volume-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid #333;
+}
+
+.volume-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 30%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 10px;
+    background-color: #333;
+}
+
+.volume-btn.muted::after {
+    height: 0;
+    width: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid #333;
+    background-color: transparent;
+}
+
+/* 美化后的确认对话框样式 */
+.confirm-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+}
+
+
+.confirm-dialog-content {
+    height: auto;
+    background-color: #2d2d2d;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.confirm-dialog-header {
+    background-color: #252525;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #444;
+}
+
+.confirm-dialog-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.confirm-dialog-body {
+    padding: 25px;
+    text-align: center;
+}
+
+.confirm-dialog-body .app-icon {
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 auto 15px;
+}
+
+.confirm-dialog-body .app-name {
+    font-size: 18px;
+    color: #ffffff;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.confirm-dialog-body .confirm-message {
+    font-size: 14px;
+    color: #aaa;
+    margin: 15px 0 0;
+}
+
+.confirm-dialog-footer {
+    display: flex;
+    padding: 15px 20px 20px;
+    justify-content: center;
+}
+
+.confirm-dialog-footer .dialog-button:first-child {
+    margin-right: 15px;
+}
+
+.dialog-button {
+    width: 120px;
+    padding: 12px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    text-align: center;
+}
+
+.cancel-button {
+    background-color: #666;
+    color: #ffffff;
+}
+
+.cancel-button:hover {
+    background-color: #777;
+}
+
+.cancel-button:active {
+    background-color: #555;
+    transform: scale(0.98);
+}
+
+.confirm-button {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.confirm-button:hover {
+    background-color: #0069d9;
+}
+
+.confirm-button:active {
+    background-color: #0056b3;
+    transform: scale(0.98);
+}

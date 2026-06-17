@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android接口对接测试</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        canvas {
+            border: 2px solid #444;
+            margin: 20px auto;
+            display: block;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background: #4a4a4a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #5a5a5a;
+        }
+        .status {
+            margin: 20px;
+            padding: 10px;
+            background: #222;
+            border-radius: 5px;
+        }
+        .controls {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Android接口对接测试页面</h1>
+    
+    <div class="status">
+        <p>Android接口状态: <span id="interfaceStatus">未检测到</span></p>
+        <p>音乐播放状态: <span id="musicStatus">未知</span></p>
+    </div>
+    
+    <canvas id="testCanvas" width="300" height="200"></canvas>
+    
+    <div class="controls">
+        <button id="playBtn">播放音乐</button>
+        <button id="pauseBtn">暂停音乐</button>
+    </div>
+    
+    <div>
+        <button id="checkInterfaceBtn">检查接口</button>
+        <button id="startTestBtn">开始测试</button>
+        <button id="stopTestBtn">停止测试</button>
+    </div>
+
+    <script>
+        // 检查Android接口
+        function checkAndroidInterface() {
+            const interfaceStatus = document.getElementById('interfaceStatus');
+            const musicStatus = document.getElementById('musicStatus');
+            
+            if (typeof Android !== 'undefined') {
+                interfaceStatus.textContent = '已检测到';
+                interfaceStatus.style.color = 'green';
+                
+                // 检查音乐播放状态
+                try {
+                    const isPlaying = Android.isMusicPlaying();
+                    musicStatus.textContent = isPlaying ? '正在播放' : '未播放';
+                    musicStatus.style.color = isPlaying ? 'green' : 'red';
+                } catch (e) {
+                    musicStatus.textContent = '无法获取状态';
+                    musicStatus.style.color = 'yellow';
+                }
+            } else {
+                interfaceStatus.textContent = '未检测到';
+                interfaceStatus.style.color = 'red';
+                musicStatus.textContent = '未知';
+                musicStatus.style.color = 'gray';
+            }
+        }
+        
+        // 获取音乐频率数据并可视化
+        function visualizeMusicData() {
+            const canvas = document.getElementById('testCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            if (typeof Android !== 'undefined' && Android.getMusicFrequencyData) {
+                try {
+                    const frequencyData = Android.getMusicFrequencyData();
+                    
+                    if (frequencyData && frequencyData.length > 0) {
+                        // 清除画布
+                        ctx.fillStyle = 'rgb(29,19,62)';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        
+                        // 绘制柱状图
+                        const barWidth = canvas.width / frequencyData.length;
+                        for (let i = 0; i < frequencyData.length; i++) {
+                            const barHeight = frequencyData[i];
+                            const x = i * barWidth;
+                            const y = canvas.height - barHeight;
+                            
+                            // 创建渐变色
+                            const gradient = ctx.createLinearGradient(0, y, 0, canvas.height);
+                            gradient.addColorStop(0, '#68b3ec');
+                            gradient.addColorStop(0.5, '#4b5fc9');
+                            gradient.addColorStop(1, '#68b3ec');
+                            
+                            ctx.fillStyle = gradient;
+                            ctx.fillRect(x, y, barWidth - 2, barHeight);
+                        }
+                        
+                        // 绘制跳动的方块
+                        for (let i = 0; i < frequencyData.length; i++) {
+                            const barHeight = frequencyData[i];
+                            const x = i * barWidth;
+                            const y = canvas.height - barHeight - 10;
+                            
+                            ctx.fillStyle = '#3e47a0';
+                            ctx.fillRect(x, y, barWidth - 2, 4);
+                        }
+                    } else {
+                        // 没有数据时清空画布
+                        ctx.fillStyle = 'rgb(29,19,62)';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    }
+                } catch (e) {
+                    console.error("获取音乐频率数据时出错:", e);
+                }
+            }
+        }
+        
+        // 测试间隔ID
+        let testInterval = null;
+        
+        // 开始测试
+        function startTest() {
+            if (testInterval) {
+                clearInterval(testInterval);
+            }
+            
+            testInterval = setInterval(() => {
+                checkAndroidInterface();
+                visualizeMusicData();
+            }, 100);
+        }
+        
+        // 停止测试
+        function stopTest() {
+            if (testInterval) {
+                clearInterval(testInterval);
+                testInterval = null;
+            }
+            
+            // 清空画布
+            const canvas = document.getElementById('testCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'rgb(29,19,62)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        // 播放音乐
+        function playMusic() {
+            if (typeof Android !== 'undefined' && Android.playMusic) {
+                Android.playMusic();
+                checkAndroidInterface();
+            }
+        }
+        
+        // 暂停音乐
+        function pauseMusic() {
+            if (typeof Android !== 'undefined' && Android.pauseMusic) {
+                Android.pauseMusic();
+                checkAndroidInterface();
+                
+                // 清空画布
+                const canvas = document.getElementById('testCanvas');
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = 'rgb(29,19,62)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查接口状态
+            checkAndroidInterface();
+            
+            // 添加按钮事件监听器
+            document.getElementById('checkInterfaceBtn').addEventListener('click', checkAndroidInterface);
+            document.getElementById('startTestBtn').addEventListener('click', startTest);
+            document.getElementById('stopTestBtn').addEventListener('click', stopTest);
+            document.getElementById('playBtn').addEventListener('click', playMusic);
+            document.getElementById('pauseBtn').addEventListener('click', pauseMusic);
+        });
+    </script>
+</body>
+</html>

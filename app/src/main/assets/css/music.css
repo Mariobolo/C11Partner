@@ -1,0 +1,222 @@
+/* 音乐组件 */
+.music-component {
+    position: absolute;
+    left: 50px;
+    top: 300px; /* 从250px调整为270px，为顶部状态栏留出空间 */
+    /* 根据实际布局调整 */
+    width: 230px;
+    background-color: rgba(255, 255, 255, 0.29);
+    border-radius: 10px;
+    background-size: 100% 100%;
+    padding: 20px;
+    pointer-events: auto; /* 重新启用指针事件 */
+    /* 添加阴影效果 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* 添加边框 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 音乐名称 */
+.music-name {
+    width: 100%;
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFFFFF;
+    padding: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 为长文本添加跑马灯效果 */
+.music-name.marquee {
+    display: inline-block;
+    animation: scroll-text 15s linear infinite;
+}
+
+/* 跑马灯动画 */
+@keyframes scroll-text {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* 鼠标悬停时暂停动画 */
+.music-name:hover {
+    animation-play-state: paused;
+}
+
+
+/* 律动效果 */
+.music-rhythm {
+    width: 100%;
+    height: 80px; /* 增加高度以显示更明显的起伏效果 */
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    pointer-events: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    contain: layout style paint; /* CSS Containment优化 */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    /* 确保铺满整个屏幕宽度 */
+    width: 100vw;
+    /* 添加一些额外的样式确保正确显示 */
+    min-width: 100%;
+    /* 添加模糊背景效果 */
+    backdrop-filter: blur(1px);
+    /* 添加边框效果 */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rhythm-bar {
+    width: 4px; /* 增加宽度以更好地显示效果 */
+    height: 4px; /* 增加默认高度 */
+    background: linear-gradient(to top, #FF6B6B, #FF0000);
+    margin: 0 1px; /* 添加微小间距 */
+    flex-shrink: 0;
+    will-change: transform;
+    box-shadow: 0 0 4px rgba(255, 107, 107, 0.8);
+    opacity: 0.9;
+    position: absolute;
+    bottom: 0;
+    transform-origin: bottom;
+    transition: transform 0.05s ease-out, opacity 0.2s ease-out, box-shadow 0.2s ease-out; /* 添加更多过渡效果 */
+    contain: layout style; /* CSS Containment优化 */
+    /* 添加硬件加速 */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    border-radius: 2px 2px 0 0; /* 添加圆角效果 */
+    /* 添加发光效果 */
+    filter: blur(0.5px);
+    /* 确保律动条正确显示 */
+    min-height: 0px;
+    /* 添加3D变换效果 */
+    transform-style: preserve-3d;
+    /* 添加阴影效果 */
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* 音乐控制栏 */
+.music-control {
+    width: 190px;
+    height: 35px;
+    margin-top: 10px;
+    background-color: #ffffff36;
+    border-radius: 8px;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 音乐进度波纹效果 */
+.music-control::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.music-control.playing::before {
+    left: 100%;
+}
+
+.control-button {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    outline: none; /* 去除焦点边框 */
+    -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
+    -webkit-focus-ring-color: transparent; /* 移除Webkit焦点环 */
+    box-shadow: none; /* 确保无阴影 */
+}
+
+.control-button:focus {
+    outline: none; /* 确保去除焦点边框 */
+    box-shadow: none; /* 确保无阴影 */
+    border: none; /* 确保无边框 */
+}
+
+.control-button:active {
+    transform: scale(0.9);
+    outline: none; /* 确保去除激活状态边框 */
+    box-shadow: none; /* 确保无阴影 */
+    border: none; /* 确保无边框 */
+}
+
+.progress-bar {
+    width: 50px;
+    height: 4px;
+    background-color: #cccccc;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    width: 30%;
+    /* 30% 进度 */
+}
+
+/* 添加进度条填充元素的样式 */
+.progress-filled {
+    height: 100%;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s ease;
+    position: relative;
+}
+
+/* 添加循环动画的关键帧 */
+@keyframes progressLoop {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* 添加循环进度条的类 */
+.progress-bar.looping {
+    background-color: #cccccc;
+}
+
+.progress-bar.looping .progress-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background-color: #FFFFFF;
+    animation: progressLoop 1s linear infinite;
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+/* 添加正常进度条的样式 */
+.progress-bar:not(.looping) .progress-filled {
+    position: relative;
+    transition: width 0.1s ease;
+}

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统界面</title>
+    <link rel="stylesheet" href="css/music.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/toast.js"></script>
+    <script src="js/datetime.js"></script>
+    <script src="js/wallpaper.js"></script>
+    <script src="js/wallpaper-swipe-bootstrap.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/music.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/index.js"></script>
+</head>
+
+<body>
+    <!-- 主背景容器 -->
+    <div class="background-container">
+        <!-- 主背景图 -->
+        <div class="background-image"></div>
+        <!-- 壁纸预览层 -->
+        <div class="wallpaper-preview" id="wallpaperPreview"></div>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 顶部状态栏 -->
+        <div class="top-status-bar">
+            <!-- 左侧时间显示 -->
+            <div class="top-left-time">
+
+            </div>
+
+            <!-- 右侧信息 -->
+            <div class="top-right-info">
+                <div id="bluetoothIcon" class="bluetooth-status-icon"
+                    style="background-image: url('images/lanya.png');"></div>
+                <div id="wifiIcon" class="network-status-icon"
+                    style="background-image: url('images/wifi.png');"></div>
+            </div>
+        </div>
+
+        <!-- 左侧布局 -->
+        <div class="layout-left">
+            <!-- 时间显示 -->
+            <div class="time-text" id="timeDisplay">23:59:59</div>
+
+            <!-- 日期显示 -->
+            <div class="date-text" id="dateDisplay">2001年04月21日 星期四</div>
+
+            <!-- 农历显示 -->
+            <div class="lunar-calendar-text" id="lunarDisplay"></div>
+        </div>
+        <!-- 底部卡片 -->
+        <div class="card-view">
+            <div class="widgets-container">
+                <div class="horizontal-scroll">
+                    <!-- 地图组件 -->
+                    <div class="widget-group">
+                        <div class="widget map-widget">
+                            <div class="map-icon"
+                                style="background-image: url('images/nav_map.png');"></div>
+
+                            <div class="nav-button" id="goHomeBtn" data-configurable="true">
+                                <div class="nav-icon"
+                                    style="background-image: url('images/nav_map_go_home.png');">
+                                </div>
+                                <div class="nav-text">回家</div>
+                            </div>
+
+                            <div class="nav-button" id="goCompanyBtn" data-configurable="true">
+                                <div class="nav-icon"
+                                    style="background-image: url('images/nav_map_go_company.png');">
+                                </div>
+                                <div class="nav-text">公司</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 音乐组件 -->
+                    <div class="widget-group">
+                        <div class="widget music-widget">
+                            <div class="music-player">
+                                <!-- 左侧黑胶唱片 -->
+                                <div class="vinyl-record-container">
+                                    <div class="vinyl-record" id="vinylRecord">
+                                        <div class="vinyl-center"></div>
+                                        <div class="vinyl-dot"></div>
+                                    </div>
+                                    <!-- 唱针 -->
+                                    <div class="tonearm" id="tonearm"></div>
+                                </div>
+
+                                <!-- 右侧控制区 -->
+                                <div class="controls">
+                                    <!-- 歌曲名称 -->
+                                    <div class="music-header">
+                                        <span id="current-song-name" class="music-name">此刻无声，佳音已备候君启...</span>
+                                    </div>
+
+                                    <!-- 播放进度条 -->
+                                    <div class="music-progress-container">
+                                        <span class="music-current-time">00:00</span>
+                                        <div class="music-progress-bar">
+                                            <div class="music-progress-filled"></div>
+                                        </div>
+                                        <span class="music-total-time">00:00</span>
+                                    </div>
+
+                                    <!-- 控制按钮组 -->
+                                    <div class="control-buttons">
+                                        <button class="btn-prev" id="prev-btn"><img src="images/nav_music_next0.png"
+                                                alt="上一首"></button>
+                                        <button class="btn-play" id="play-pause-btn"><img
+                                                src="images/nav_music_play.png" alt="播放"></button>
+                                        <button class="btn-next" id="next-btn"><img src="images/nav_music_next1.png"
+                                                alt="下一首"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 快速启动App组件 -->
+                    <div class="widget-group">
+                        <div class="widget quick-apps-widget">
+                            <div class="quick-apps-container" id="quickAppsContainer">
+                                <!-- 快速启动应用将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 胎压组件 -->
+                    <div class="widget-group">
+                        <div class="widget car-widget">
+                            <div class="car-image"
+                                style="background-image: url('images/nav_car.png');"></div>
+                            <div class="tire-pressure front-left">240kPa</div>
+                            <div class="tire-pressure front-right">240kPa</div>
+                            <div class="tire-pressure rear-left">240kPa</div>
+                            <div class="tire-pressure rear-right">240kPa</div>
+                        </div>
+                    </div>
+
+                    <!-- 天气组件 -->
+                    <div class="widget-group">
+                        <div class="widget weather-widget">
+                            <div class="weather-icon"></div>
+
+                            <div class="weather-info">
+                                <div class="temperature"></div>
+                            </div>
+
+                            <div class="weather-info">
+                                <div class="condition"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部状态栏 -->
+        <div class="status-bar">
+            <!-- 左侧按钮组 -->
+            <div class="left-buttons">
+                <button class="control-icon" id="appsBtn"
+                    style="background-image: url('images/nav_apps.png'); width: 25px; height: 25px; background-color: transparent;border: none;"></button>
+                <button class="control-icon" id="tasksBtn"
+                    style="background-image: url('images/nav_tasks.png'); width: 25px; height: 25px; margin-left: 20px; background-color: transparent;border: none;"></button>
+            </div>
+
+            <!-- 中间控制组 -->
+            <div class="center-controls">
+                <div class="ac-control rotate-animation" id="acControl"
+                    style="background-image: url('images/nav_air.png');"></div>
+                <div class="ac-control" id="acMinus"
+                    style="background-image: url('images/nav_minus.png');"></div>
+                <div class="air-text">22°</div>
+                <div class="ac-control" id="acPlus"
+                    style="background-image: url('images/nav_add.png');"></div>
+                <div class="ac-control" id="acArrow1"
+                    style="background-image: url('images/nav_arrow1.png');"></div>
+
+                <div class="wind-display">
+                    <div class="wind-background"
+                        style="background-image: url('images/nav_air.png');"></div>
+                    <div class="wind-level"
+                        style="background-image: url('images/wind_level_06.png');"></div>
+                </div>
+
+                <div class="ac-control" id="acArrow2"
+                    style="background-image: url('images/nav_arrow2.png');"></div>
+                <div class="ac-control" id="acWindMinus"
+                    style="background-image: url('images/nav_minus.png');"></div>
+                <div class="air-text">22°</div>
+                <div class="ac-control" id="acWindPlus"
+                    style="background-image: url('images/nav_add.png');"></div>
+                <div class="ac-hcs" id="acHcs"
+                    style="background-image: url('images/nav_ac_hcs.png');"></div>
+            </div>
+
+            <!-- 右侧按钮组 -->
+            <div class="right-buttons">
+                <button class="control-icon" id="bydBtn"
+                    style="background-image: url('images/nav_byds.png'); width: 25px; height: 25px; background-color: transparent; border: none;"></button>
+                <button class="control-icon" id="settingsBtn"
+                    style="background-image: url('images/nav_seetings.png'); width: 25px; height: 25px; margin-left: 20px; background-color: transparent; border: none;"></button>
+            </div>
+        </div>
+
+
+
+
+        <!-- 设置弹窗页面 -->
+        <div id="settingsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>设置</h2>
+                    <span class="close" id="closeSettings">&times;</span>
+                </div>
+                <!-- TAB导航 -->
+                <div class="tab-navigation">
+                    <button class="tab-button active" data-tab="wallpaper">壁纸设置</button>
+                    <button class="tab-button" data-tab="components">组件配置</button>
+                    <button class="tab-button" data-tab="apps">系统管理</button>
+                </div>
+                <div class="modal-body">
+                    <!-- 壁纸设置TAB -->
+                    <div class="tab-content" id="wallpaper-tab">
+                        <div class="setting-item">
+                            <label>壁纸轮播</label>
+                            <input type="checkbox" id="wallpaperCarouselCheckbox"
+                                class="setting-checkbox">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>本地随机</label>
+                            <input type="checkbox" id="randomModeCheckbox" class="setting-checkbox">
+                        </div>
+                        <div class="setting-item">
+                            <label>本地指定</label>
+                            <input type="checkbox" id="specifiedModeCheckbox" class="setting-checkbox">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>高清壁纸</label>
+                            <input type="checkbox" id="category36" class="category-checkbox" data-category-id="36">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>美女模特</label>
+                            <input type="checkbox" id="category6" class="category-checkbox" data-category-id="6">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>爱情美图</label>
+                            <input type="checkbox" id="category30" class="category-checkbox" data-category-id="30">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>风景大片</label>
+                            <input type="checkbox" id="category9" class="category-checkbox" data-category-id="9">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>清新风格</label>
+                            <input type="checkbox" id="category15" class="category-checkbox" data-category-id="15">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>动漫卡通</label>
+                            <input type="checkbox" id="category26" class="category-checkbox" data-category-id="26">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>明星风尚</label>
+                            <input type="checkbox" id="category11" class="category-checkbox" data-category-id="11">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>萌宠动物</label>
+                            <input type="checkbox" id="category14" class="category-checkbox" data-category-id="14">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>游戏壁纸</label>
+                            <input type="checkbox" id="category5" class="category-checkbox" data-category-id="5">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>汽车天下</label>
+                            <input type="checkbox" id="category12" class="category-checkbox" data-category-id="12">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>炫酷时尚</label>
+                            <input type="checkbox" id="category10" class="category-checkbox" data-category-id="10">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>军事天地</label>
+                            <input type="checkbox" id="category22" class="category-checkbox" data-category-id="22">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>劲爆体育</label>
+                            <input type="checkbox" id="category16" class="category-checkbox" data-category-id="16">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>纹理壁纸</label>
+                            <input type="checkbox" id="category32" class="category-checkbox" data-category-id="32">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>文字壁纸</label>
+                            <input type="checkbox" id="category35" class="category-checkbox" data-category-id="35">
+                        </div>
+
+                        <div class="setting-item">
+                            <label>限时壁纸</label>
+                            <input type="checkbox" id="category1" class="category-checkbox" data-category-id="1">
+                        </div>
+
+
+
+                        <div class="setting-item">
+                            <label>轮播间隔(秒)</label>
+                            <input type="number" id="switchIntervalInput" class="setting-input" min="5"
+                                max="300" value="15">
+                        </div>
+                    </div>
+
+
+                    <!-- 组件配置TAB -->
+                    <div class="tab-content" id="components-tab">
+                        <div class="setting-item">
+                            <label>音乐组件</label>
+                            <input type="checkbox" id="musicComponentCheckbox" class="setting-checkbox">
+                        </div>
+                        <div class="setting-item">
+                            <label>地图组件</label>
+                            <input type="checkbox" id="mapComponentCheckbox" class="setting-checkbox">
+                        </div>
+                        <div class="setting-item">
+                            <label>APP组件</label>
+                            <input type="checkbox" id="appComponentCheckbox" class="setting-checkbox">
+                        </div>
+                        <div class="setting-item">
+                            <label>胎压组件</label>
+                            <input type="checkbox" id="tirePressureComponentCheckbox"
+                                class="setting-checkbox">
+                        </div>
+                        <div class="setting-item">
+                            <label>天气组件</label>
+                            <input type="checkbox" id="weatherComponentCheckbox"
+                                class="setting-checkbox">
+                        </div>
+                    </div>
+
+                    <!-- 系统管理TAB -->
+                    <div class="tab-content" id="apps-tab">
+                        <div class="setting-item">
+                            <label>桌面自启</label>
+                            <input type="checkbox" id="bydAutoStartCheckbox" class="setting-checkbox">
+                        </div>
+                        <div class="setting-item">
+                            <label>开机问候</label>
+                            <input type="checkbox" id="bootGreetingCheckbox" class="setting-checkbox">
+                        </div>
+                        <!-- 添加重启应用按钮 -->
+                        <div class="setting-item">
+                            <label>应用控制</label>
+                            <button class="setting-button" id="restartAppBtn">重启应用</button>
+                        </div>
+                        <div class="setting-item">
+                            <label>应用设置</label>
+                            <button class="setting-button" id="setDefaultDesktopBtn">默认桌面</button>
+                        </div>
+                        <div class="setting-item">
+                            <label>授权管理</label>
+                            <button class="setting-button" id="adbAuthorizationBtn">申请ADB</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 应用列表弹窗 -->
+        <div id="appsModal" class="modal">
+            <div class="apps-modal-content">
+                <div class="apps-modal-header">
+                    <h2>应用列表</h2>
+                    <span class="close" id="closeApps">&times;</span>
+                </div>
+                <div class="apps-modal-body">
+                    <!-- 搜索框 -->
+                    <div class="search-container">
+                        <input type="text" id="appSearch" placeholder="搜索应用...">
+                    </div>
+
+                    <!-- 应用列表内容 -->
+                    <div class="apps-content">
+                        <!-- 字母导航栏 -->
+                        <div class="alphabet-nav">
+                            <ul id="alphabetList">
+                                <!-- 字母将通过JavaScript动态生成 -->
+                            </ul>
+                        </div>
+
+                        <!-- 应用列表 -->
+                        <div class="apps-list-container">
+                            <div id="appsList">
+                                <!-- 应用列表将通过JavaScript动态生成 -->
+                            </div>
+                            <!-- 加载提示 -->
+                            <div id="appsLoading"
+                                style="display: none; text-align: center; padding: 15px; color: #aaa;">
+                                <div style="font-size: 14px; margin-bottom: 8px;">加载中...</div>
+                                <div class="loading-spinner"
+                                    style="border: 3px solid #333; border-top: 3px solid #007bff; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载动画样式 -->
+    <style>
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 旋转动画样式 */
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rotate-animation {
+            animation: rotate 2s linear infinite;
+        }
+    </style>
+
+</body>
+
+</html>
