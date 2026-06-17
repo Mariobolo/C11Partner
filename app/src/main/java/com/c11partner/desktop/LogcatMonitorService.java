@@ -1,8 +1,12 @@
 package com.c11partner.desktop;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -65,6 +69,10 @@ public class LogcatMonitorService extends Service {
     // Handler用于主线程回调
     private Handler mainHandler;
     
+    // 前台通知相关
+    private static final int NOTIFICATION_ID = 1001;
+    private static final String CHANNEL_ID = "C11Partner_Monitor_Service";
+    
     public class LogcatMonitorBinder extends Binder {
         public LogcatMonitorService getService() {
             return LogcatMonitorService.this;
@@ -75,7 +83,47 @@ public class LogcatMonitorService extends Service {
     public void onCreate() {
         super.onCreate();
         mainHandler = new Handler(Looper.getMainLooper());
+        createNotificationChannel();
+        startForeground(NOTIFICATION_ID, createNotification());
         Log.i(TAG, "日志监控服务创建");
+    }
+    
+    /**
+     * 创建通知渠道（Android 8+）
+     */
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                CHANNEL_ID,
+                "C11伙伴车辆监控",
+                NotificationManager.IMPORTANCE_LOW
+            );
+            channel.setDescription("实时监控车辆状态，自动触发360全景");
+            channel.enableVibration(false);
+            channel.enableLights(false);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+    }
+    
+    /**
+     * 创建前台服务通知
+     */
+    private Notification createNotification() {
+        Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this, CHANNEL_ID);
+        } else {
+            builder = new Notification.Builder(this);
+        }
+        
+        builder.setContentTitle("C11伙伴正在运行")
+               .setContentText("实时监控车辆状态")
+               .setSmallIcon(android.R.drawable.ic_menu_info_details)
+               .setOngoing(true)
+               .setShowWhen(false);
+        
+        return builder.build();
     }
     
     @Override

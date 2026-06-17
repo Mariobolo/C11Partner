@@ -3561,5 +3561,120 @@ public class WebViewBridge {
             return 0;
         }
     }
+    
+    // ==================== 零跑C11车辆监控相关方法 ====================
+    
+    /**
+     * 获取当前车辆状态
+     * 
+     * @return JSON格式的车辆状态信息
+     */
+    @JavascriptInterface
+    public String getCarState() {
+        try {
+            if (mActivity.logcatMonitorService != null) {
+                com.c11partner.desktop.LeapMotorCarState state = mActivity.logcatMonitorService.getCurrentState();
+                if (state != null) {
+                    JSONObject stateJson = new JSONObject();
+                    stateJson.put("gear", state.getGear());
+                    stateJson.put("gearText", state.getGearText());
+                    stateJson.put("leftTurnLight", state.getLeftTurnLight());
+                    stateJson.put("rightTurnLight", state.getRightTurnLight());
+                    stateJson.put("speed", state.getSpeed());
+                    stateJson.put("frontLeftDoor", state.getFrontLeftDoor());
+                    stateJson.put("frontRightDoor", state.getFrontRightDoor());
+                    stateJson.put("rearLeftDoor", state.getRearLeftDoor());
+                    stateJson.put("rearRightDoor", state.getRearRightDoor());
+                    stateJson.put("trunkDoor", state.getTrunkDoor());
+                    stateJson.put("hoodDoor", state.getHoodDoor());
+                    stateJson.put("sunroof", state.getSunroof());
+                    stateJson.put("sunshade", state.getSunshade());
+                    stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
+                    stateJson.put("isLocked", state.isLocked());
+                    return stateJson.toString();
+                }
+            }
+            return "{}";
+        } catch (Exception e) {
+            Log.e(TAG, "获取车辆状态失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
+     * 手动触发360全景
+     * 
+     * @return 是否触发成功
+     */
+    @JavascriptInterface
+    public boolean startCamera360() {
+        try {
+            com.c11partner.desktop.LeapMotorCamera360.startCamera360(mContext, "手动触发");
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "手动触发360全景失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 检查日志监控服务是否正在运行
+     * 
+     * @return 是否正在运行
+     */
+    @JavascriptInterface
+    public boolean isLogServiceRunning() {
+        return mActivity.isLogcatServiceBound;
+    }
+    
+    /**
+     * 检查是否有READ_LOGS权限
+     * 
+     * @return 是否有权限
+     */
+    @JavascriptInterface
+    public boolean hasReadLogsPermission() {
+        try {
+            int result = mContext.checkCallingOrSelfPermission("android.permission.READ_LOGS");
+            return result == PackageManager.PERMISSION_GRANTED;
+        } catch (Exception e) {
+            Log.e(TAG, "检查READ_LOGS权限失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 检查是否有WRITE_SECURE_SETTINGS权限
+     * 
+     * @return 是否有权限
+     */
+    @JavascriptInterface
+    public boolean hasWriteSecureSettingsPermission() {
+        try {
+            int result = mContext.checkCallingOrSelfPermission("android.permission.WRITE_SECURE_SETTINGS");
+            return result == PackageManager.PERMISSION_GRANTED;
+        } catch (Exception e) {
+            Log.e(TAG, "检查WRITE_SECURE_SETTINGS权限失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 检查是否有DUMP权限
+     * 
+     * @return 是否有权限
+     */
+    @JavascriptInterface
+    public boolean hasDumpPermission() {
+        try {
+            int result = mContext.checkCallingOrSelfPermission("android.permission.DUMP");
+            return result == PackageManager.PERMISSION_GRANTED;
+        } catch (Exception e) {
+            Log.e(TAG, "检查DUMP权限失败", e);
+            return false;
+        }
+    }
+        }
+    }
 }
 

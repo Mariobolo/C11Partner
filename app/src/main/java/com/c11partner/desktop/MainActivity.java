@@ -200,6 +200,65 @@ public class MainActivity extends AppCompatActivity {
     // 壁纸设置更改广播接收器
     private WallpaperSettingsChangedReceiver wallpaperSettingsChangedReceiver;
 
+    // 零跑C11日志监控服务
+    private LogcatMonitorService logcatMonitorService;
+    private boolean isLogcatServiceBound = false;
+    // 日志监控服务连接
+    private ServiceConnection logcatServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            LogcatMonitorService.LogcatMonitorBinder binder = (LogcatMonitorService.LogcatMonitorBinder) service;
+            logcatMonitorService = binder.getService();
+            isLogcatServiceBound = true;
+            // 注册车辆状态监听器
+            logcatMonitorService.addListener(carStateListener);
+            Log.i("MainActivity", "日志监控服务已绑定");
+        }
+        
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isLogcatServiceBound = false;
+            Log.i("MainActivity", "日志监控服务已断开");
+        }
+    };
+    // 车辆状态监听器实现
+    private CarStateListener carStateListener = new CarStateListener() {
+        @Override
+        public void onGearChanged(int oldGear, int newGear) {
+            Log.i("MainActivity", "档位变化: " + oldGear + " -> " + newGear);
+            updateCarStateToFrontend();
+        }
+        
+        @Override
+        public void onTurnLightChanged(boolean isLeft, int state) {
+            Log.i("MainActivity", (isLeft ? "左" : "右") + "转向灯: " + state);
+            updateCarStateToFrontend();
+        }
+        
+        @Override
+        public void onDoorChanged(String doorName, int state) {
+            Log.i("MainActivity", doorName + "状态: " + (state == 1 ? "开" : "关"));
+            updateCarStateToFrontend();
+        }
+        
+        @Override
+        public void onSpeedChanged(float speed) {
+            updateCarStateToFrontend();
+        }
+        
+        @Override
+        public void onLockStateChanged(boolean isLocked) {
+            Log.i("MainActivity", "锁车状态: " + (isLocked ? "已锁" : "已解锁"));
+            updateCarStateToFrontend();
+        }
+        
+        @Override
+        public void onNeedStart360(String reason) {
+            Log.i("MainActivity", "触发360全景: " + reason);
+            LeapMotorCamera360.startCamera360(MainActivity.this, reason);
+        }
+    };
+    
     // 工具类
     private InitManager initManager;
     private TaskManager taskManager;
@@ -253,7 +312,57 @@ public class MainActivity extends AppCompatActivity {
 
         // 启动各项任务
         initManager.startTasks();
-
+        
+        // 启动零跑C11日志监控服务
+        startLogcatMonitorService();
+    }
+    
+    /**
+     * 启动日志监控服务
+     */
+    private void startLogcatMonitorService() {
+        try {
+            Intent serviceIntent = new Intent(this, LogcatMonitorService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent);
+            } else {
+                startService(serviceIntent);
+            }
+            // 绑定服务
+            bindService(serviceIntent, logcatServiceConnection, Context.BIND_AUTO_CREATE);
+            Log.i("MainActivity", "日志监控服务已启动");
+        } catch (Exception e) {
+            Log.e("MainActivity", "启动日志监控服务失败: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * 更新车辆状态到前端
+     */
+    private void updateCarStateToFrontend() {
+        if (webView != null && isLogcatServiceBound && logcatMonitorService != null) {
+            LeapMotorCarState state = logcatMonitorService.getCurrentState();
+            if (state != null) {
+                runOnUiThread(() -> {
+                    try {
+                        JSONObject stateJson = new JSONObject();
+                        stateJson.put("gear", state.getGear());
+                        stateJson.put("gearText", state.getGearText());
+                        stateJson.put("leftTurnLight", state.getLeftTurnLight());
+                        stateJson.put("rightTurnLight", state.getRightTurnLight());
+                        stateJson.put("speed", state.getSpeed());
+                        stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
+                        stateJson.put("isLocked", state.isLocked());
+                        
+                        String jsCode = "javascript:if(typeof window.updateCarState === 'function') { window.updateCarState(" 
+                                + stateJson.toString() + "); }";
+                        webView.evaluateJavascript(jsCode, null);
+                    } catch (Exception e) {
+                        Log.e("MainActivity", "更新车辆状态到前端失败: " + e.getMessage());
+                    }
+                });
+            }
+        }
     }
 
     /**
