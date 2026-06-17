@@ -144,18 +144,31 @@ C11Partner/
 
 ## 🔑 **核心权限说明**
 
-应用需要以下ADB授权权限以实现完整功能：
+应用需要以下ADB授权权限以实现完整功能（零跑C11专用）：
 
 ```bash
-# 读取系统日志（用于车机状态监控）
+# 1. 读取系统日志（用于车机状态监控、转向灯/档位监听、广播捕获）
 adb shell pm grant com.c11partner.desktop android.permission.READ_LOGS
-# DUMP权限
+
+# 2. DUMP权限（获取系统状态、内存、CPU、Activity信息）
 adb shell pm grant com.c11partner.desktop android.permission.DUMP
-# 写入系统设置（车控功能）
+
+# 3. 写入系统设置（车控功能、Settings.Global属性、系统Intent发送）
 adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTINGS
-# 空调控制权限
-adb shell pm grant com.c11partner.desktop android.permission.BYDAUTO_AC_COMMON
 ```
+
+> 💡 **零跑C11车控原理**：通过 `logcat` 捕获系统广播 + `Settings.Global` 读写系统属性 + `sendBroadcast` 发送车控Intent实现，无需比亚迪专用权限。**以上三个权限必须全部授予！**
+
+## 🔏 **APK签名说明**
+
+项目已内置签名文件 `app/dipartner.jks`，可直接构建Release版本：
+
+- **签名文件**：`app/dipartner.jks`
+- **密钥库密码**：`dipartner123`
+- **密钥别名**：`dipartner`
+- **密钥密码**：`dipartner123`
+
+> ⚠️ **注意**：此为开发测试签名，正式发布请替换为您自己的签名文件！
 
 ## 📐 **代码规范**
 
