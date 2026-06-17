@@ -2,37 +2,96 @@
 
 一个基于 Android 的开源车载桌面启动器，专为零跑C11车机系统深度定制。
 
-## ✨ 项目简介
+---
+
+## 📢 **项目最新动态**
+
+### ✅ **v1.0.0 - 已完成 (2026-06-17)**
+- ✅ 从 DiPartner 开源项目 fork 并定制化
+- ✅ **全局包名重命名**：`com.dipartner.desktop` → `com.c11partner.desktop`
+- ✅ 应用名称改为「C11伙伴」
+- ✅ 天气模块默认经纬度改为河南商丘 (34.44, 115.65)
+- ✅ GitHub Actions CI 自动构建配置完成
+- ✅ 代码语法错误修复完成
+- ✅ 项目已上传至 GitHub：https://github.com/Mariobolo/C11Partner
+
+---
+
+## ✨ **项目简介**
 
 C11Partner 是基于 DiPartner 开源项目定制的零跑C11专属车载桌面，针对零跑C11 Android 9 车机系统进行了深度优化和功能适配。
 
-## 🚀 功能特性
+## 🚀 **已实现功能**
 
 - 🎵 **音乐控制组件** - 支持主流音乐播放器的控制和显示
 - 🌤️ **天气显示** - 实时天气信息展示（默认商丘地区）
 - 🗺️ **地图导航快捷入口**
-- 🚗 **零跑C11专属车控功能**
 - ❄️ **空调控制面板**
 - 🖼️ **壁纸切换系统**
 - 📱 **快速启动应用**
 - 🛞 **胎压监测显示**
-- 🎬 **360环视PIP触发**（转向灯联动）
 - 🔧 **ADB一键权限授权**
 
-## 🛠️ 技术栈
+## 🎯 **开发路线图 (Roadmap)**
+
+### 📋 **v1.1.0 - 正在规划中**
+#### 🔴 **高优先级**
+- [ ] **零跑C11日志状态监控系统**
+  - [ ] Logcat实时日志抓取与解析
+  - [ ] 车机系统状态监控（CPU、内存、温度）
+  - [ ] 车辆CAN信号解析与显示
+  - [ ] 故障码读取与告警
+  - [ ] 转向灯/双闪状态监听
+
+- [ ] **360环视PIP触发功能**
+  - [ ] 打转向灯自动触发360全景
+  - [ ] 倒车自动触发360全景
+  - [ ] 低速（<15km/h）自动触发
+  - [ ] PIP画中画模式优化
+
+#### 🟡 **中优先级**
+- [ ] **车机功能控制增强**
+  - [ ] 空调温度/风量精准控制
+  - [ ] 座椅加热/通风控制
+  - [ ] 车窗/天窗控制
+  - [ ] 氛围灯颜色调节
+  - [ ] 驾驶模式切换
+
+#### 🟢 **低优先级**
+- [ ] **UI/UX整体美化**
+  - [ ] 零跑C11专属主题配色
+  - [ ] 动态壁纸支持
+  - [ ] 卡片式布局优化
+  - [ ] 动画效果增强
+  - [ ] 暗黑模式适配
+
+### 📋 **v1.2.0 - 远期规划**
+- [ ] **自动化规则引擎**
+  - [ ] 上车自动开空调（基于温度）
+  - [ ] 下雨自动关窗
+  - [ ] 夜间自动降低屏幕亮度
+  - [ ] 充电状态提示
+- [ ] **OTA在线更新**
+- [ ] **用户配置云同步**
+- [ ] **第三方插件系统**
+
+---
+
+## 🛠️ **技术栈**
 
 - **前端**: HTML5 + CSS3 + JavaScript
 - **后端**: Android Java (API 25+)
 - **通信**: WebView Bridge 双向通信
 - **数据库**: SQLite
 - **目标平台**: 零跑C11 Android 9 (API 28)
+- **CI/CD**: GitHub Actions 自动构建
 
-## 📋 系统要求
+## 📋 **系统要求**
 
 - Android 7.1+ (API 25)
 - 零跑C11车机推荐：Android 9 (API 28)
 
-## 🔧 快速开始
+## 🔧 **快速开始**
 
 ### 1. 克隆项目
 ```bash
@@ -56,7 +115,7 @@ chmod +x gradlew
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
-## 📁 项目结构
+## 📁 **项目结构**
 
 ```
 C11Partner/
@@ -78,44 +137,79 @@ C11Partner/
 │   │   └── res/             # Android 资源
 │   └── build.gradle         # 模块构建配置
 ├── .github/workflows/       # GitHub Actions CI
+├── PROJECT_PLAN.md          # 详细项目开发计划
 ├── build.gradle             # 项目构建配置
 └── README.md
 ```
 
-## 🔑 核心权限说明
+## 🔑 **核心权限说明**
 
 应用需要以下ADB授权权限以实现完整功能：
 
 ```bash
-# 读取系统日志
+# 读取系统日志（用于车机状态监控）
 adb shell pm grant com.c11partner.desktop android.permission.READ_LOGS
 # DUMP权限
 adb shell pm grant com.c11partner.desktop android.permission.DUMP
-# 写入系统设置
+# 写入系统设置（车控功能）
 adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTINGS
 # 空调控制权限
 adb shell pm grant com.c11partner.desktop android.permission.BYDAUTO_AC_COMMON
 ```
 
-## 🤝 贡献指南
+## 📐 **代码规范**
+
+为保证项目质量，我们遵循以下规范：
+
+### Java 代码规范
+- ✅ 使用驼峰命名法（camelCase）
+- ✅ 类名使用大驼峰（PascalCase）
+- ✅ 常量使用全大写下划线分隔
+- ✅ 每个方法必须添加Javadoc注释
+- ✅ 缩进使用4个空格
+- ✅ 最大行宽120字符
+
+### JavaScript 代码规范
+- ✅ 使用ES6+语法
+- ✅ 使用 `const` / `let` 替代 `var`
+- ✅ 统一使用单引号
+- ✅ 语句末尾加分号
+- ✅ 缩进使用2个空格
+
+### Git 提交规范
+```
+feat: 新功能
+fix: 修复bug
+docs: 文档更新
+style: 代码格式调整
+refactor: 重构
+test: 测试相关
+chore: 构建/工具链变动
+```
+
+## 🤝 **贡献指南**
 
 欢迎提交 Issue 和 Pull Request！
 
 1. Fork 本仓库
 2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+3. 提交更改 (`git commit -m 'feat: Add some AmazingFeature'`)
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 创建 Pull Request
 
-## 📄 开源协议
+## 📄 **开源协议**
 
 本项目采用 [MIT](LICENSE) 协议开源。
 
-## 🙏 致谢
+## 🙏 **致谢**
 
 - 感谢 DiPartner 原作者的开源项目
 - 感谢所有为这个项目做出贡献的开发者
 
-## 📞 联系方式
+## 📞 **联系方式**
 
 如有问题或建议，欢迎提交 Issue。
+
+---
+
+**🌟 如果这个项目对你有帮助，欢迎给个 Star 支持！**
