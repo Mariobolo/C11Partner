@@ -44,15 +44,15 @@ jobs:
     - name: Build debug APK
       run: ./gradlew assembleDebug --stacktrace --info
 
-    - name: Build unsigned release APK
-      run: ./gradlew assembleRelease --stacktrace --info -x signReleaseBundle -x signReleaseApk
+    - name: Build release APK
+      run: ./gradlew assembleRelease --stacktrace --info
 
     - name: Find APK files
       id: find_apk
       run: |
         echo "=== 查找APK文件 ==="
         DEBUG_APK=$(find app/build/outputs/apk/debug -name "*.apk" -type f | head -1)
-        RELEASE_APK=$(find app/build/outputs/apk/release -name "*-unsigned.apk" -type f | head -1)
+        RELEASE_APK=$(find app/build/outputs/apk/release -name "*.apk" -type f | head -1)
         
         echo "debug_apk=$DEBUG_APK" >> $GITHUB_OUTPUT
         echo "release_apk=$RELEASE_APK" >> $GITHUB_OUTPUT
