@@ -3303,7 +3303,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public String getAcInfo() {
-        return "{"supported":true,"platform":"leapmotor_c11"}";
+        return "{\"supported\":true,\"platform\":\"leapmotor_c11\"}";
     }
 
     /**
