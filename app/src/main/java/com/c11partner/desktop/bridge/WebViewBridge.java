@@ -2929,13 +2929,13 @@ public class WebViewBridge {
      * 通过反射获取空调的当前状态并传递给前端
      */
     /**
-     * 初始化空调状态（零跑C11预留接口）
+     * 初始化空调状态（零跑C11专用）
      * 原比亚迪BYDAutoAcDevice反射代码已移除
-     * 后续实现零跑专用空调控制
+     * 零跑C11通过Intent打开原生空调页面实现控制
      */
     @JavascriptInterface
     public void initializeAcStatus() {
-        Log.d(TAG, "零跑C11空调控制 - 待实现 initializeAcStatus");
+        Log.d(TAG, "零跑C11空调控制初始化完成");
     }
 
     /**
@@ -3265,133 +3265,77 @@ public class WebViewBridge {
     }
 
     /**
-     * 切换空调开关（零跑C11预留接口）
+     * 打开零跑C11原生空调控制页面
      * 原比亚迪BYDAutoAcDevice反射代码已移除
-     * 后续实现零跑专用空调控制
+     * 零跑C11通过Intent直接打开系统原生空调页面
      */
     @JavascriptInterface
     public void toggleAirConditioning() {
-        Log.d(TAG, "零跑C11空调控制 - 待实现 toggleAirConditioning");
+        Log.d(TAG, "打开零跑C11原生空调控制页面");
+        try {
+            // 零跑C11打开空调控制页面
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(
+                "com.leapmotor.carcontrol",
+                "com.leapmotor.carcontrol.presentation.ui.aircontrol.AirControlActivity"
+            ));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            try {
+                mContext.startActivity(intent);
+                return;
+            } catch (Exception e) {
+                Log.d(TAG, "精确Intent失败，尝试通用方式");
+            }
+            
+            // 备用：打开系统设置
+            Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+            settingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(settingsIntent);
+        } catch (Exception e) {
+            Log.e(TAG, "打开空调页面失败", e);
+        }
     }
 
     /**
-     * 获取空调信息（零跑C11预留接口）
+     * 获取空调信息（零跑C11专用）
      * 原比亚迪BYDAutoAcDevice反射代码已移除
-     * 后续实现零跑专用空调控制
      * @return 空调信息JSON
      */
     @JavascriptInterface
     public String getAcInfo() {
-        Log.d(TAG, "零跑C11空调控制 - 待实现 getAcInfo");
-        return "{"supported":false}";
+        return "{"supported":true,"platform":"leapmotor_c11"}";
     }
 
     /**
-     * 调整空调温度
+     * 调整空调温度（零跑C11专用）
+     * 点击直接打开原生空调控制页面
      * @param delta 温度变化值（正数为增加，负数为减少）
      */
     @JavascriptInterface
     public void adjustTemperature(int delta) {
-        try {
-            initAcDevice();
-            if (acDeviceInstance == null) {
-                Log.e(TAG, "空调设备实例未初始化");
-                return;
-            }
-
-            Class<?> acDeviceClass = acDeviceInstance.getClass();
-            
-            // 获取当前温度
-            java.lang.reflect.Method getTempratureMethod = acDeviceClass.getMethod("getTemprature", int.class);
-            int AC_TEMPERATURE_MAIN = getStaticIntValue(acDeviceClass, "AC_TEMPERATURE_MAIN");
-            int currentTemp = (int) getTempratureMethod.invoke(acDeviceInstance, AC_TEMPERATURE_MAIN);
-            
-            // 计算新温度（限制在17-30度之间）
-            int newTemp = Math.max(17, Math.min(30, currentTemp + delta));
-            
-            // 设置新温度
-            java.lang.reflect.Method setAcTemperatureMethod = acDeviceClass.getMethod("setAcTemperature", int.class, int.class, int.class, int.class);
-            int AC_CTRL_SOURCE_UI_KEY = getStaticIntValue(acDeviceClass, "AC_CTRL_SOURCE_UI_KEY");
-            int AC_TEMPERATURE_UNIT_OC = getStaticIntValue(acDeviceClass, "AC_TEMPERATURE_UNIT_OC");
-            int AC_TEMPERATURE_MAIN_DEPUTY = getStaticIntValue(acDeviceClass, "AC_TEMPERATURE_MAIN_DEPUTY");
-            
-            setAcTemperatureMethod.invoke(acDeviceInstance, AC_TEMPERATURE_MAIN_DEPUTY, newTemp, AC_CTRL_SOURCE_UI_KEY, AC_TEMPERATURE_UNIT_OC);
-            Log.d(TAG, "温度已调整: " + currentTemp + " -> " + newTemp);
-        } catch (Exception e) {
-            Log.e(TAG, "调整空调温度失败", e);
-        }
+        Log.d(TAG, "调整空调温度: " + delta + "，打开零跑C11原生空调控制页面");
+        toggleAirConditioning();
     }
 
     /**
-     * 调整空调风量
+     * 调整空调风量（零跑C11专用）
+     * 点击直接打开原生空调控制页面
      * @param delta 风量变化值（正数为增加，负数为减少）
      */
     @JavascriptInterface
     public void adjustWindLevel(int delta) {
-        try {
-            initAcDevice();
-            if (acDeviceInstance == null) {
-                Log.e(TAG, "空调设备实例未初始化");
-                return;
-            }
-
-            Class<?> acDeviceClass = acDeviceInstance.getClass();
-            
-            // 获取当前风量
-            java.lang.reflect.Method getAcWindLevelMethod = acDeviceClass.getMethod("getAcWindLevel");
-            int currentWindLevel = (int) getAcWindLevelMethod.invoke(acDeviceInstance);
-            
-            // 计算新风量（限制在0-7级之间）
-            int newWindLevel = Math.max(0, Math.min(7, currentWindLevel + delta));
-            
-            // 设置新风量
-            java.lang.reflect.Method setAcWindLevelMethod = acDeviceClass.getMethod("setAcWindLevel", int.class, int.class);
-            int AC_CTRL_SOURCE_UI_KEY = getStaticIntValue(acDeviceClass, "AC_CTRL_SOURCE_UI_KEY");
-            
-            setAcWindLevelMethod.invoke(acDeviceInstance, AC_CTRL_SOURCE_UI_KEY, newWindLevel);
-            Log.d(TAG, "风量已调整: " + currentWindLevel + " -> " + newWindLevel);
-        } catch (Exception e) {
-            Log.e(TAG, "调整空调风量失败", e);
-        }
+        Log.d(TAG, "调整空调风量: " + delta + "，打开零跑C11原生空调控制页面");
+        toggleAirConditioning();
     }
 
     /**
-     * 切换前除霜状态
+     * 切换前除霜状态（零跑C11专用）
+     * 点击直接打开原生空调控制页面
      */
     @JavascriptInterface
     public void toggleDefrost() {
-        try {
-            initAcDevice();
-            if (acDeviceInstance == null) {
-                Log.e(TAG, "空调设备实例未初始化");
-                return;
-            }
-
-            Class<?> acDeviceClass = acDeviceInstance.getClass();
-            
-            // 获取当前除霜状态
-            java.lang.reflect.Method getAcDefrostStateMethod = acDeviceClass.getMethod("getAcDefrostState", int.class);
-            int AC_DEFROST_AREA_FRONT = getStaticIntValue(acDeviceClass, "AC_DEFROST_AREA_FRONT");
-            int AC_DEFROST_STATE_ON = getStaticIntValue(acDeviceClass, "AC_DEFROST_STATE_ON");
-            int AC_DEFROST_STATE_OFF = getStaticIntValue(acDeviceClass, "AC_DEFROST_STATE_OFF");
-            int AC_CTRL_SOURCE_UI_KEY = getStaticIntValue(acDeviceClass, "AC_CTRL_SOURCE_UI_KEY");
-            
-            int currentState = (int) getAcDefrostStateMethod.invoke(acDeviceInstance, AC_DEFROST_AREA_FRONT);
-            
-            if (currentState == AC_DEFROST_STATE_ON) {
-                // 关闭前除霜
-                java.lang.reflect.Method setAcDefrostStateMethod = acDeviceClass.getMethod("setAcDefrostState", int.class, int.class, int.class);
-                setAcDefrostStateMethod.invoke(acDeviceInstance, AC_CTRL_SOURCE_UI_KEY, AC_DEFROST_AREA_FRONT, AC_DEFROST_STATE_OFF);
-                Log.d(TAG, "前除霜已关闭");
-            } else {
-                // 开启前除霜
-                java.lang.reflect.Method setAcDefrostStateMethod = acDeviceClass.getMethod("setAcDefrostState", int.class, int.class, int.class);
-                setAcDefrostStateMethod.invoke(acDeviceInstance, AC_CTRL_SOURCE_UI_KEY, AC_DEFROST_AREA_FRONT, AC_DEFROST_STATE_ON);
-                Log.d(TAG, "前除霜已开启");
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "切换前除霜状态失败", e);
-        }
+        Log.d(TAG, "切换除霜状态，打开零跑C11原生空调控制页面");
+        toggleAirConditioning();
     }
 
     /**
