@@ -3674,7 +3674,5 @@ public class WebViewBridge {
             return false;
         }
     }
-        }
-    }
 }
 
