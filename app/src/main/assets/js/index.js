@@ -387,9 +387,9 @@ function loadWallpaperSettings() {
 // 加载系统设置（原桌面自启和开机问候语）
 function loadSystemSettings(settings) {
     // 设置原桌面自启复选框状态
-    const bydAutoStartCheckbox = document.getElementById('bydAutoStartCheckbox');
-    if (bydAutoStartCheckbox) {
-        bydAutoStartCheckbox.checked = settings.byd_auto_start !== undefined ? settings.byd_auto_start : false; // 默认不启用
+    const systemLauncherCheckbox = document.getElementById('systemLauncherCheckbox');
+    if (systemLauncherCheckbox) {
+        systemLauncherCheckbox.checked = settings.system_launcher !== undefined ? settings.system_launcher : false; // 默认不启用
     }
 
     // 设置开机问候语复选框状态
@@ -539,12 +539,12 @@ function initRestartAppButton() {
     }
 
     // 初始化原桌面自启复选框事件
-    const bydAutoStartCheckbox = document.getElementById('bydAutoStartCheckbox');
-    if (bydAutoStartCheckbox && !bydAutoStartCheckbox.dataset.listenerAdded) {
-        bydAutoStartCheckbox.addEventListener('change', function () {
-            if (typeof Android !== 'undefined' && Android.saveBydAutoStartSetting) {
+    const systemLauncherCheckbox = document.getElementById('systemLauncherCheckbox');
+    if (systemLauncherCheckbox && !systemLauncherCheckbox.dataset.listenerAdded) {
+        systemLauncherCheckbox.addEventListener('change', function () {
+            if (typeof Android !== 'undefined' && Android.saveSystemLauncherSetting) {
                 // 使用同步方法
-                const result = Android.saveBydAutoStartSetting(this.checked);
+                const result = Android.saveSystemLauncherSetting(this.checked);
                 if (result) {
                     showToast('原桌面自启设置保存成功');
                 } else {
@@ -552,7 +552,7 @@ function initRestartAppButton() {
                 }
             }
         });
-        bydAutoStartCheckbox.dataset.listenerAdded = 'true';
+        systemLauncherCheckbox.dataset.listenerAdded = 'true';
     }
 
     // 初始化开机问候语复选框事件
@@ -1987,12 +1987,12 @@ function initConfigurableButtons() {
     }
 
     // 为比亚迪桌面按钮添加点击事件
-    const bydBtn = document.getElementById('bydBtn');
-    if (bydBtn) {
-        bydBtn.addEventListener('click', function () {
-            if (typeof Android !== 'undefined' && Android.launchBydHome) {
+    const camera360Btn = document.getElementById('camera360Btn');
+    if (camera360Btn) {
+        camera360Btn.addEventListener('click', function () {
+            if (typeof Android !== 'undefined' && Android.startCamera360) {
                 try {
-                    Android.launchBydHome();
+                    Android.startCamera360();
                 } catch (e) {
                 }
             }
@@ -2086,9 +2086,9 @@ function initConfigurableButtons() {
                 target.closest('.ac-control') ||
                 target.closest('.ac-hcs') ||
                 target.closest('.wind-display')) {
-                if (typeof Android !== 'undefined' && Android.launchBydAir) {
+                if (typeof Android !== 'undefined' && Android.toggleAirConditioning) {
                     try {
-                        Android.launchBydAir();
+                        Android.toggleAirConditioning();
                     } catch (e) {
                     }
                 }

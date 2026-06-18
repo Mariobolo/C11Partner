@@ -192,7 +192,7 @@ class WallpaperSwipeManager {
                     'images/default_bg_1.jpg',
                     'images/nav_air.png',
                     'images/nav_apps.png',
-                    'images/nav_byds.png'
+                    'images/nav_camera.png'
                 ];
                 const randomImage = mockImages[Math.floor(Math.random() * mockImages.length)];
                 if (callback) callback(randomImage);

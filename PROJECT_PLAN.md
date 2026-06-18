@@ -1,5 +1,4 @@
 # C11Partner 项目开发计划
-
 **零跑C11专属车载桌面系统 - 详细开发 roadmap**
 
 ---
@@ -70,6 +69,61 @@ I/AroundService: dealTurnRightLight mRightLightSts 0  // 右转向灯关
 
 ---
 
+## 🎯 车机控制三层模型
+
+### 控制逻辑架构
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    应用层 (C11Partner)                   │
+├─────────────────────────────────────────────────────────┤
+│  ① Intent主动控制  │  ② Logcat被动监控  │  ③ Settings读写 │
+├─────────────────────────────────────────────────────────┤
+│                    零跑车机系统层                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+### 控制方式说明
+
+| 控制方式 | 说明 | 权限要求 | 实时性 |
+|---------|------|---------|--------|
+| **Intent主动控制** | 发送系统广播/启动Activity | 普通权限 | 即时 |
+| **Logcat被动监控** | 读取系统日志解析状态 | READ_LOGS | 秒级延迟 |
+| **Settings.Global** | 读写系统全局属性 | WRITE_SECURE_SETTINGS | 即时 |
+
+### ① Intent主动控制功能
+
+| 功能 | Action | 类型 | 状态 |
+|------|--------|------|------|
+| **360全景启动** | `com.leapmotor.camera_around` | Activity | ✅ 已实现 |
+| **空调控制页面** | `com.leapmotor.action.AIR_CONTROL` | Activity | ✅ 已实现 |
+| **方控按键模拟** | `com.leapmotor.action.METER.CTRL` | Broadcast | 🔍 待验证 |
+| **语音车控接口** | `com.iflytek.autofly.handMessage` | Broadcast | 🔍 待研究 |
+
+### ② Logcat被动监控功能
+
+| 功能 | EventId/Tag | 状态 |
+|------|------------|------|
+| **档位** | eventId: 1110 | ✅ 已实现 |
+| **车门（6门）** | eventId: 9123-9128 | ✅ 已实现 |
+| **转向灯** | AroundService | ✅ 已实现 |
+| **天窗** | eventId: 21201 | ✅ 已实现 |
+| **遮阳帘** | eventId: 21207 | 🔲 待集成 |
+| **锁车状态** | eventId: 1200 | ✅ 已实现 |
+| **近光灯** | C11CarXml | 🔲 待集成 |
+| **空调开关** | LPSysUI | 🔲 待集成 |
+| **车速** | C11CarXml | 🔲 待集成 |
+
+### ③ Settings.Global 系统属性
+
+| 属性名 | 说明 | 权限 | 状态 |
+|--------|------|------|------|
+| `camera_overspeed` | 360全景超速限制 | WRITE_SECURE_SETTINGS | 🔍 待验证 |
+| `strCarVehicleLock` | 车辆锁状态 | READ_LOGS | 🔍 待验证 |
+| `C11_VIDEO_ENABLE` | 行驶中视频播放 | WRITE_SECURE_SETTINGS | 🔍 待验证 |
+
+---
+
 ## 🎯 版本规划
 
 ### ✅ v1.0.0 - 基础版本 (已完成)
@@ -101,6 +155,8 @@ I/AroundService: dealTurnRightLight mRightLightSts 0  // 右转向灯关
 - [x] ✅ **WebViewBridge JS接口** - 前端可获取车辆状态
 - [x] ✅ **AndroidX 规范** - 全面清理比亚迪专用代码
 - [x] ✅ **三大核心权限一键授权** - READ_LOGS/DUMP/WRITE_SECURE_SETTINGS
+- [x] ✅ **零跑C11空调控制** - 点击打开原生空调页面
+- [x] ✅ **比亚迪代码100%清理** - 前端/后端全部替换为零跑实现
 
 ---
 
@@ -227,7 +283,7 @@ startActivity(intent);
 
 ## 🟡 Phase 2: 中优先级功能 (v1.1.0)
 
-### 2.1 车机功能控制增强
+### 2.1 车机功能控制增强（三层控制模型）
 
 **优先级**：🟡 中  
 **负责人**：Mariobolo  
@@ -235,29 +291,24 @@ startActivity(intent);
 **状态**：📋 **规划中**
 
 #### 功能清单
-- [ ] **2.1.1 空调精准控制**
-  - [ ] 温度调节（16-30°C）
-  - [ ] 风量控制（1-7档）
-  - [ ] 模式切换（吹脸/吹脚/除雾）
-  - [ ] AC开关控制
-  - [ ] 内外循环切换
-  - [ ] 前后除霜控制
-- [ ] **2.1.2 座椅控制**
-  - [ ] 主驾座椅加热（3档）
-  - [ ] 副驾座椅加热（3档）
-  - [ ] 座椅通风控制
-  - [ ] 座椅记忆位置
-- [ ] **2.1.3 车窗控制**
-  - [ ] 主驾车窗升降
-  - [ ] 副驾车窗升降
-  - [ ] 后排车窗控制
-  - [ ] 天窗开合控制
-  - [ ] 一键升窗/降窗
-- [ ] **2.1.4 其他控制**
-  - [ ] 氛围灯颜色调节
-  - [ ] 驾驶模式切换（ECO/COMFORT/SPORT）
-  - [ ] 能量回收强度调节
-  - [ ] 大灯高度调节
+- [x] **2.1.1 空调控制（打开原生页面）** ✅ 已完成
+  - [x] 点击空调按钮打开零跑原生空调页面
+  - [x] 温度调节按钮同样打开原生页面
+  - [ ] 通过Settings.Global精准控制温度
+  - [ ] 通过语音接口控制空调
+- [ ] **2.1.2 车辆状态显示增强**
+  - [ ] 天窗/遮阳帘状态显示
+  - [ ] 近光灯状态显示
+  - [ ] 车速实时显示
+  - [ ] 空调开关状态显示
+- [ ] **2.1.3 Settings.Global功能**
+  - [ ] 360全景超速限制解除
+  - [ ] 行驶中视频播放解禁
+  - [ ] 车辆锁状态监控（双重确认）
+- [ ] **2.1.4 语音车控接口研究**
+  - [ ] 儿童锁控制（讯飞语音接口）
+  - [ ] 车窗控制（语音接口）
+  - [ ] 座椅加热控制（语音接口）
 
 #### 核心权限（零跑C11专用）
 ```bash
@@ -276,12 +327,19 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
 
 ## 🟢 Phase 3: 低优先级功能 (v1.1.0)
 
-### 3.1 UI/UX整体美化
+### 3.1 UI/UX整体美化 + 图标规范化
 
 **优先级**：🟢 低  
 **负责人**：Mariobolo  
 **预计工时**：24小时  
 **状态**：🚧 **开发中**
+
+#### 图标美化方案
+- [ ] **3.1.0 图标素材选型**
+  - [ ] 选择图标库（推荐Material Design Icons）
+  - [ ] 统一图标风格（圆角正方形背板）
+  - [ ] 图标大小规范（24dp/32dp/48dp）
+  - [ ] 图标颜色规范（白色/主题色/警告色）
 
 #### 功能清单
 - [ ] **3.1.1 零跑C11专属主题**
@@ -309,6 +367,23 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
   - [ ] 定时切换
   - [ ] 手动切换开关
   - [ ] 对比度优化
+
+#### 图标规范
+```css
+/* 所有图标统一规范 - 圆角正方形背板 */
+.icon-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;          /* 圆角正方形 */
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+```
 
 ---
 
@@ -407,12 +482,17 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
 - [x] android.enableJetifier=true
 - [x] 完全兼容 Android 9 (API 28)
 
-### ✅ 比亚迪专用代码清理
+### ✅ 比亚迪专用代码清理（100%完成）
 - [x] 移除 BYDAUTO_AC_COMMON 权限
 - [x] 移除 launchBydHome/launchBydAir 方法
 - [x] 移除 byd_auto_start 相关字段
 - [x] 重命名为通用命名（system_launcher）
 - [x] 移除 BYDAutoAcDevice 反射调用
+- [x] 前端 bydBtn → camera360Btn（360全景按钮）
+- [x] 前端 bydAutoStartCheckbox → systemLauncherCheckbox
+- [x] JS saveBydAutoStartSetting → saveSystemLauncherSetting
+- [x] JS launchBydAir → toggleAirConditioning
+- [x] 壁纸模块比亚迪图片引用清理
 
 ### Java 代码规范强制执行
 - [x] 所有类添加Javadoc注释
@@ -465,6 +545,10 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
 | ADB功能精简重构 | 100% | ✅ 完成 | 2026-06-17 |
 | 日志监控系统 | 100% | ✅ 完成 | 2026-06-17 |
 | 360环视触发 | 100% | ✅ 完成 | 2026-06-17 |
+| 空调控制（原生页面） | 100% | ✅ 完成 | 2026-06-17 |
+| 比亚迪代码清理 | 100% | ✅ 完成 | 2026-06-17 |
+| 车机控制能力分析 | 100% | ✅ 完成 | 2026-06-17 |
+| 图标素材规划 | 100% | ✅ 完成 | 2026-06-17 |
 | 前端UI改造 | 10% | 🚧 开发中 | 2026-06-25 |
 | 车控功能增强 | 0% | 📋 规划 | 2026-07-10 |
 | UI美化优化 | 0% | 📋 规划 | 2026-07-15 |
@@ -482,12 +566,24 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
 - ✅ **M2** (2026-06-17): 日志监控系统完成
 - ✅ **M3** (2026-06-17): 360环视功能完成
 - ✅ **M3.5** (2026-06-17): AndroidX规范清理，比亚迪代码移除
+- ✅ **M3.8** (2026-06-17): 空调控制功能完成（打开原生页面）
+- ✅ **M3.9** (2026-06-17): 车机控制能力分析文档完成
 - 🚧 **M4** (2026-06-25): 前端UI改造完成
 - 🚧 **M5** (2026-07-10): 车控功能增强完成
 - 🚧 **M6** (2026-07-15): v1.1.0 正式发布
 - 🚧 **M7** (2026-08-15): 自动任务引擎完成
 - 🚧 **M8** (2026-08-30): 副屏投屏系统完成
 - 💭 **M9** (2026-09-15): v1.2.0 正式发布
+
+---
+
+## 📚 相关文档
+
+- 📄 [AI_ENTRY_GUIDE.md](./AI_ENTRY_GUIDE.md) - ⭐ **AI项目引导文档（标准入口）**
+- 📄 [README.md](./README.md) - 项目主文档
+- 📄 [docs/LEAPMOTOR_LOG_ANALYSIS.md](./docs/LEAPMOTOR_LOG_ANALYSIS.md) - 实车日志分析报告
+- 📄 [docs/C11_CAR_CONTROL_CAPABILITIES.md](./docs/C11_CAR_CONTROL_CAPABILITIES.md) - 车机控制能力分析
+- 📄 [docs/ICON_RESOURCES.md](./docs/ICON_RESOURCES.md) - 图标素材推荐清单
 
 ---
 
@@ -500,5 +596,4 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
 
 ---
 
-**最后更新**：2026-06-17  
-**文档版本**：v1.2
+**最后更新**：2026-06-18
