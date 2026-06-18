@@ -23,9 +23,6 @@ public class TaskManager {
      */
     public void scheduleDelayedStartupTasks() {
         try {
-            // 只在应用启动时执行一次，从成员变量获取配置
-                Log.d("TaskManager", "已安排30秒后启动原桌面");
-            }
 
             if (activity.bootGreetingEnabled) {
                 activity.bootGreetingRunnable = () -> activity.playRandomGreeting();
