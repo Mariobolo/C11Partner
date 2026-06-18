@@ -24,9 +24,6 @@ public class TaskManager {
     public void scheduleDelayedStartupTasks() {
         try {
             // 只在应用启动时执行一次，从成员变量获取配置
-            if (activity.bydAutoStartEnabled) {
-                activity.bydAutoStartRunnable = () -> activity.launchBydHome();
-                handler.postDelayed(activity.bydAutoStartRunnable, 30000);
                 Log.d("TaskManager", "已安排30秒后启动原桌面");
             }
 
@@ -44,8 +41,6 @@ public class TaskManager {
      * 取消所有延迟启动任务
      */
     public void cancelDelayedStartupTasks() {
-        if (activity.bydAutoStartRunnable != null) {
-            handler.removeCallbacks(activity.bydAutoStartRunnable);
         }
         if (activity.bootGreetingRunnable != null) {
             handler.removeCallbacks(activity.bootGreetingRunnable);

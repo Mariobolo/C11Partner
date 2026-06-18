@@ -1476,7 +1476,6 @@ public class WebViewBridge {
                 for (int port : commonPorts) {
                     try {
                         Log.d(TAG, "尝试连接到 " + deviceIp + ":" + port);
-                        connected = com.c11partner.desktop.adb.AdbManager.connectAndExecute(deviceIp, port, "pm grant com.c11partner.desktop.android.permission.BYDAUTO_AC_COMMON");
                         connected = com.c11partner.desktop.adb.AdbManager.connectAndExecute(deviceIp, port, "pm clear-defaults android.intent.category.HOME");
                         if (connected) {
                             connectedPort = port;
@@ -1810,7 +1809,6 @@ public class WebViewBridge {
             settingsObj.put("switch_interval", settings.get("switch_interval"));
             settingsObj.put("random_mode", settings.get("random_mode"));
             settingsObj.put("specified_mode", settings.get("specified_mode"));
-            settingsObj.put("byd_auto_start", settings.get("byd_auto_start"));
             settingsObj.put("boot_greeting", settings.get("boot_greeting"));
 
             return settingsObj.toString();
@@ -1840,7 +1838,6 @@ public class WebViewBridge {
                     settingsObj.put("switch_interval", settings.get("switch_interval"));
                     settingsObj.put("random_mode", settings.get("random_mode"));
                     settingsObj.put("specified_mode", settings.get("specified_mode"));
-                    settingsObj.put("byd_auto_start", settings.get("byd_auto_start"));
                     settingsObj.put("boot_greeting", settings.get("boot_greeting"));
 
                     final String result = settingsObj.toString();
@@ -2381,44 +2378,6 @@ public class WebViewBridge {
         }
     }
 
-    /**
-     * 启动比亚迪桌面
-     */
-    @JavascriptInterface
-    public void launchBydHome() {
-        try {
-            String BYD_PACKAGE_NAME = "com.android.launcher3";
-            String BASE_ACTIVITY_CLASS = "com.android.launcher3.Launcher";
-            Intent intent = new Intent();
-            intent.setComponent(new ComponentName(BYD_PACKAGE_NAME, BASE_ACTIVITY_CLASS));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(mContext, "启动失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e("MainActivity", "启动比亚迪桌面失败", e);
-        }
-    }
-
-    /**
-     * 启动比亚迪空调
-     */
-    @JavascriptInterface
-    public void launchBydAir() {
-        try {
-            String BYD_PACKAGE_NAME = "com.byd.airconditioning";
-            String BASE_ACTIVITY_CLASS = "com.byd.airconditioning.mainactivity.FullScreenMainActivity";
-            Intent intent = new Intent();
-            intent.setComponent(new ComponentName(BYD_PACKAGE_NAME, BASE_ACTIVITY_CLASS));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(mContext, "启动失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e("MainActivity", "启动比亚迪空调失败", e);
-        }
-    }
-
-    /**
-     * 检查WiFi是否已连接
      *
      * @return WiFi连接状态
      */

@@ -156,9 +156,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean isAppInForeground = false;
 
     // 延迟启动任务
-    public boolean bydAutoStartEnabled = false;
     public boolean bootGreetingEnabled = false;
-    public Runnable bydAutoStartRunnable;
     public Runnable bootGreetingRunnable;
 
     // 壁纸状态
@@ -1126,13 +1124,10 @@ public class MainActivity extends AppCompatActivity {
     private void initSettings() {
         try {
             Map<String, Object> settings = wallpaperSettingsDbHelper.getAllSettings();
-            bydAutoStartEnabled = (boolean) settings.getOrDefault("byd_auto_start", false);
             bootGreetingEnabled = (boolean) settings.getOrDefault("boot_greeting", false);
-            Log.d("MainActivity", "初始化配置完成 - bydAutoStartEnabled: " + bydAutoStartEnabled + ", bootGreetingEnabled: "
                     + bootGreetingEnabled);
         } catch (Exception e) {
             Log.e("MainActivity", "初始化配置时出错", e);
-            bydAutoStartEnabled = false;
             bootGreetingEnabled = false;
         }
     }
@@ -1505,8 +1500,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public void rescheduleDelayedStartupTasks() {
         if (delayedStartHandler != null) {
-            if (bydAutoStartRunnable != null) {
-                delayedStartHandler.removeCallbacks(bydAutoStartRunnable);
             }
             if (bootGreetingRunnable != null) {
                 delayedStartHandler.removeCallbacks(bootGreetingRunnable);
