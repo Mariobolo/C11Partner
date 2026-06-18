@@ -2927,72 +2927,14 @@ public class WebViewBridge {
      * 初始化空调状态
      * 通过反射获取空调的当前状态并传递给前端
      */
+    /**
+     * 初始化空调状态（零跑C11预留接口）
+     * 原比亚迪BYDAutoAcDevice反射代码已移除
+     * 后续实现零跑专用空调控制
+     */
     @JavascriptInterface
     public void initializeAcStatus() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Class<?> acDeviceClass = Class.forName("android.hardware.bydauto.ac.BYDAutoAcDevice");
-                    java.lang.reflect.Method getInstanceMethod = acDeviceClass.getMethod("getInstance", Context.class);
-                    Object acDeviceInstance = getInstanceMethod.invoke(null, mContext);
-                    
-                    if (acDeviceInstance == null) {
-                        Log.e(TAG, "空调设备实例未初始化");
-                        return;
-                    }
-
-                    Class<?> deviceClass = acDeviceInstance.getClass();
-                    
-                    // 获取空调开关状态
-                    java.lang.reflect.Method getAcStartStateMethod = deviceClass.getMethod("getAcStartState");
-                    int acStartState = (int) getAcStartStateMethod.invoke(acDeviceInstance);
-                    
-                    // 获取温度
-                    java.lang.reflect.Method getTempratureMethod = deviceClass.getMethod("getTemprature", int.class);
-                    int AC_TEMPERATURE_MAIN = getStaticIntValue(deviceClass, "AC_TEMPERATURE_MAIN");
-                    int temperature = (int) getTempratureMethod.invoke(acDeviceInstance, AC_TEMPERATURE_MAIN);
-                    
-                    // 获取风量
-                    java.lang.reflect.Method getAcWindLevelMethod = deviceClass.getMethod("getAcWindLevel");
-                    int windLevel = (int) getAcWindLevelMethod.invoke(acDeviceInstance);
-                    
-                    // 获取前除霜状态
-                    java.lang.reflect.Method getAcDefrostStateMethod = deviceClass.getMethod("getAcDefrostState", int.class);
-                    int AC_DEFROST_AREA_FRONT = getStaticIntValue(deviceClass, "AC_DEFROST_AREA_FRONT");
-                    int defrostState = (int) getAcDefrostStateMethod.invoke(acDeviceInstance, AC_DEFROST_AREA_FRONT);
-                    
-                    // 获取常量值
-                    int AC_POWER_ON = getStaticIntValue(deviceClass, "AC_POWER_ON");
-                    int AC_DEFROST_STATE_ON = getStaticIntValue(deviceClass, "AC_DEFROST_STATE_ON");
-                    
-                    // 构建传递给前端的JSON数据
-                    JSONObject acData = new JSONObject();
-                    acData.put("acOn", acStartState == AC_POWER_ON);
-                    acData.put("temperature", temperature);
-                    acData.put("windLevel", windLevel);
-                    acData.put("defrostOn", defrostState == AC_DEFROST_STATE_ON);
-                    
-                    final String jsonData = acData.toString();
-                    Log.d(TAG, "空调状态: " + jsonData);
-                    
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.initializeAcStatus(%s)",
-                                        jsonData);
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "初始化空调状态时出错", e);
-                }
-            }
-        }).start();
+        Log.d(TAG, "零跑C11空调控制 - 待实现 initializeAcStatus");
     }
 
     /**
@@ -3322,57 +3264,25 @@ public class WebViewBridge {
     }
 
     /**
-     * 空调控制 - 使用反射调用BYDAutoAcDevice
-     */
-    private Object acDeviceInstance = null;
-    private boolean acDeviceInitialized = false;
-
-    /**
-     * 初始化空调设备实例（使用反射）
-     */
-    private void initAcDevice() {
-        if (acDeviceInitialized) {
-            return;
-        }
-        
-        try {
-            Class<?> acDeviceClass = Class.forName("android.hardware.bydauto.ac.BYDAutoAcDevice");
-            java.lang.reflect.Method getInstanceMethod = acDeviceClass.getMethod("getInstance", Context.class);
-            acDeviceInstance = getInstanceMethod.invoke(null, mContext);
-            acDeviceInitialized = true;
-            Log.d(TAG, "空调设备实例初始化成功");
-        } catch (Exception e) {
-            Log.e(TAG, "初始化空调设备实例失败", e);
-            acDeviceInitialized = false;
-        }
-    }
-
-    /**
-     * 切换空调开关状态
+     * 切换空调开关（零跑C11预留接口）
+     * 原比亚迪BYDAutoAcDevice反射代码已移除
+     * 后续实现零跑专用空调控制
      */
     @JavascriptInterface
     public void toggleAirConditioning() {
-        new Thread(() -> {
-            Log.i(TAG, "开始切换空调开关状态");
-            
-            try {
-                com.c11partner.desktop.adb.AdbIntentForwarder.setContext(mContext);
-                
-                String currentState = com.c11partner.desktop.adb.AdbIntentForwarder.getAcStartState();
-                
-                boolean isOn = currentState.contains("ac_start=true") || currentState.contains("1");
-                
-                String result = com.c11partner.desktop.adb.AdbIntentForwarder.toggleAirConditioning(!isOn);
-                
-                if (result.contains("执行成功") || result.contains("Broadcast completed")) {
-                    Log.i(TAG, "空调开关切换成功：" + result);
-                } else {
-                    Log.e(TAG, "切换空调开关状态失败：" + result);
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "切换空调开关状态异常", e);
-            }
-        }).start();
+        Log.d(TAG, "零跑C11空调控制 - 待实现 toggleAirConditioning");
+    }
+
+    /**
+     * 获取空调信息（零跑C11预留接口）
+     * 原比亚迪BYDAutoAcDevice反射代码已移除
+     * 后续实现零跑专用空调控制
+     * @return 空调信息JSON
+     */
+    @JavascriptInterface
+    public String getAcInfo() {
+        Log.d(TAG, "零跑C11空调控制 - 待实现 getAcInfo");
+        return "{"supported":false}";
     }
 
     /**
