@@ -3572,8 +3572,8 @@ public class WebViewBridge {
     @JavascriptInterface
     public String getCarState() {
         try {
-            if (mActivity.logcatMonitorService != null) {
-                com.c11partner.desktop.LeapMotorCarState state = mActivity.logcatMonitorService.getCurrentState();
+            if (mActivity.getLogcatMonitorService() != null) {
+                com.c11partner.desktop.LeapMotorCarState state = mActivity.getLogcatMonitorService().getCurrentState();
                 if (state != null) {
                     JSONObject stateJson = new JSONObject();
                     stateJson.put("gear", state.getGear());
@@ -3624,7 +3624,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isLogServiceRunning() {
-        return mActivity.isLogcatServiceBound;
+        return mActivity.isLogServiceBound();
     }
     
     /**

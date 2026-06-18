@@ -203,6 +203,20 @@ public class MainActivity extends AppCompatActivity {
     // 零跑C11日志监控服务
     private LogcatMonitorService logcatMonitorService;
     private boolean isLogcatServiceBound = false;
+
+    /**
+     * 获取日志监控服务（供WebViewBridge调用）
+     */
+    public LogcatMonitorService getLogcatMonitorService() {
+        return logcatMonitorService;
+    }
+
+    /**
+     * 检查日志服务是否已绑定（供WebViewBridge调用）
+     */
+    public boolean isLogServiceBound() {
+        return isLogcatServiceBound;
+    }
     // 日志监控服务连接
     private ServiceConnection logcatServiceConnection = new ServiceConnection() {
         @Override
