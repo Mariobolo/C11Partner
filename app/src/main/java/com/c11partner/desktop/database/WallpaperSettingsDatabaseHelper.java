@@ -28,7 +28,7 @@ public class WallpaperSettingsDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LOCAL_WALLPAPER = "local_wallpaper";
     public static final String COLUMN_ONLINE_WALLPAPER = "online_wallpaper";
     public static final String COLUMN_SWITCH_INTERVAL = "switch_interval";
-    public static final String COLUMN_BYD_AUTO_START = "byd_auto_start"; // 新增：原桌面自启
+    public static final String COLUMN_SYSTEM_LAUNCHER = "system_launcher"; // 新增：原桌面自启
     public static final String COLUMN_BOOT_GREETING = "boot_greeting"; // 新增：开机问候语
     public static final String COLUMN_RANDOM_MODE = "random_mode"; // 新增：随机模式
     public static final String COLUMN_SPECIFIED_MODE = "specified_mode"; // 新增：指定模式
@@ -41,7 +41,7 @@ public class WallpaperSettingsDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_LOCAL_WALLPAPER + " INTEGER NOT NULL DEFAULT 1, " +
             COLUMN_ONLINE_WALLPAPER + " INTEGER NOT NULL DEFAULT 0, " +
             COLUMN_SWITCH_INTERVAL + " INTEGER NOT NULL DEFAULT 15000, " +
-            COLUMN_BYD_AUTO_START + " INTEGER NOT NULL DEFAULT 0, " + // 默认不启用原桌面自启
+            COLUMN_SYSTEM_LAUNCHER + " INTEGER NOT NULL DEFAULT 0, " + // 默认不启用原桌面自启
             COLUMN_BOOT_GREETING + " INTEGER NOT NULL DEFAULT 0, " + // 默认不启用开机问候语
             COLUMN_RANDOM_MODE + " INTEGER NOT NULL DEFAULT 1, " + // 默认启用随机模式
             COLUMN_SPECIFIED_MODE + " INTEGER NOT NULL DEFAULT 0);"; // 默认不启用指定模式
@@ -80,7 +80,7 @@ public class WallpaperSettingsDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_LOCAL_WALLPAPER, 1);    // 默认启用本地壁纸
         values.put(COLUMN_ONLINE_WALLPAPER, 0);   // 默认不启用在线壁纸
         values.put(COLUMN_SWITCH_INTERVAL, 15000); // 默认轮播间隔15秒
-        values.put(COLUMN_BYD_AUTO_START, 0); // 默认不启用原桌面自启
+        values.put(COLUMN_SYSTEM_LAUNCHER, 0); // 默认不启用原桌面自启
         values.put(COLUMN_BOOT_GREETING, 0); // 默认不启用开机问候语
         values.put(COLUMN_RANDOM_MODE, 1); // 默认启用随机模式
         values.put(COLUMN_SPECIFIED_MODE, 0); // 默认不启用指定模式
@@ -92,7 +92,7 @@ public class WallpaperSettingsDatabaseHelper extends SQLiteOpenHelper {
         // 根据版本进行升级
         if (oldVersion < 2) {
             // 添加新的列
-            db.execSQL("ALTER TABLE " + TABLE_SETTINGS + " ADD COLUMN " + COLUMN_BYD_AUTO_START + " INTEGER NOT NULL DEFAULT 0");
+            db.execSQL("ALTER TABLE " + TABLE_SETTINGS + " ADD COLUMN " + COLUMN_SYSTEM_LAUNCHER + " INTEGER NOT NULL DEFAULT 0");
             db.execSQL("ALTER TABLE " + TABLE_SETTINGS + " ADD COLUMN " + COLUMN_BOOT_GREETING + " INTEGER NOT NULL DEFAULT 0");
         } else if (oldVersion < 3) {
             // 添加随机模式和指定模式列
@@ -119,7 +119,7 @@ public class WallpaperSettingsDatabaseHelper extends SQLiteOpenHelper {
             settings.put("local_wallpaper", cursor.getInt(cursor.getColumnIndex(COLUMN_LOCAL_WALLPAPER)) == 1);
             settings.put("online_wallpaper", cursor.getInt(cursor.getColumnIndex(COLUMN_ONLINE_WALLPAPER)) == 1);
             settings.put("switch_interval", cursor.getInt(cursor.getColumnIndex(COLUMN_SWITCH_INTERVAL)));
-            settings.put("byd_auto_start", cursor.getInt(cursor.getColumnIndex(COLUMN_BYD_AUTO_START)) == 1); // 新增
+            settings.put("system_launcher", cursor.getInt(cursor.getColumnIndex(COLUMN_SYSTEM_LAUNCHER)) == 1); // 新增
             settings.put("boot_greeting", cursor.getInt(cursor.getColumnIndex(COLUMN_BOOT_GREETING)) == 1); // 新增
             settings.put("random_mode", cursor.getInt(cursor.getColumnIndex(COLUMN_RANDOM_MODE)) == 1); // 新增
             settings.put("specified_mode", cursor.getInt(cursor.getColumnIndex(COLUMN_SPECIFIED_MODE)) == 1); // 新增
@@ -129,7 +129,7 @@ public class WallpaperSettingsDatabaseHelper extends SQLiteOpenHelper {
             settings.put("local_wallpaper", true);
             settings.put("online_wallpaper", false);
             settings.put("switch_interval", 15000);
-            settings.put("byd_auto_start", false); // 默认值
+            settings.put("system_launcher", false); // 默认值
             settings.put("boot_greeting", false); // 默认值
             settings.put("random_mode", true); // 默认值
             settings.put("specified_mode", false); // 默认值
@@ -200,10 +200,10 @@ public class WallpaperSettingsDatabaseHelper extends SQLiteOpenHelper {
      * 更新原桌面自启设置
      * @param enabled 是否启用
      */
-    public void updateBydAutoStart(boolean enabled) {
+    public void updateSystemLauncher(boolean enabled) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_BYD_AUTO_START, enabled ? 1 : 0);
+        values.put(COLUMN_SYSTEM_LAUNCHER, enabled ? 1 : 0);
         
         db.update(TABLE_SETTINGS, values, null, null);
         db.close();

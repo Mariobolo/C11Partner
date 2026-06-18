@@ -2552,9 +2552,9 @@ public class WebViewBridge {
      * @return 是否保存成功
      */
     @JavascriptInterface
-    public boolean saveBydAutoStartSetting(boolean enabled) {
+    public boolean saveSystemLauncherSetting(boolean enabled) {
         try {
-            wallpaperSettingsDbHelper.updateBydAutoStart(enabled);
+            wallpaperSettingsDbHelper.updateSystemLauncher(enabled);
             return true;
         } catch (Exception e) {
             Log.e(TAG, "保存原桌面自启设置时出错", e);
@@ -2635,19 +2635,19 @@ public class WebViewBridge {
      * @param callbackId 回调ID，用于JavaScript端识别回调
      */
     @JavascriptInterface
-    public void saveBydAutoStartSettingAsync(final boolean enabled, final String callbackId) {
+    public void saveSystemLauncherSettingAsync(final boolean enabled, final String callbackId) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    wallpaperSettingsDbHelper.updateBydAutoStart(enabled);
+                    wallpaperSettingsDbHelper.updateSystemLauncher(enabled);
                     // 在UI线程中执行JavaScript回调
                     mActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (mActivity.webView != null) {
                                 String javascript = String.format(
-                                        "javascript:window.handleSaveBydAutoStartSettingCallback('%s', %s)",
+                                        "javascript:window.handleSaveSystemLauncherSettingCallback('%s', %s)",
                                         callbackId, "true");
                                 mActivity.webView.loadUrl(javascript);
                             }
@@ -2661,7 +2661,7 @@ public class WebViewBridge {
                         public void run() {
                             if (mActivity.webView != null) {
                                 String javascript = String.format(
-                                        "javascript:window.handleSaveBydAutoStartSettingCallback('%s', %s)",
+                                        "javascript:window.handleSaveSystemLauncherSettingCallback('%s', %s)",
                                         callbackId, "false");
                                 mActivity.webView.loadUrl(javascript);
                             }

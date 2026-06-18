@@ -1377,7 +1377,7 @@ public class MainActivity extends AppCompatActivity {
      * 启动原桌面
      * 使用ADB命令后台启动com.android.launcher3，不显示界面
      */
-    public void launchBydHome() {
+    public void launchSystemHome() {
         new Thread(() -> {
             try {
                 String packageName = "com.android.launcher3";
