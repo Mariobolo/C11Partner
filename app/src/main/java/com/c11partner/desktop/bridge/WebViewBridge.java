@@ -2377,8 +2377,6 @@ public class WebViewBridge {
             return "{\"isPlaying\":false,\"currentPosition\":0,\"duration\":0}";
         }
     }
-
-     *
      * @return WiFi连接状态
      */
     @JavascriptInterface

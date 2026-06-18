@@ -1125,7 +1125,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             Map<String, Object> settings = wallpaperSettingsDbHelper.getAllSettings();
             bootGreetingEnabled = (boolean) settings.getOrDefault("boot_greeting", false);
-                    + bootGreetingEnabled);
+            Log.d("MainActivity", "初始化配置完成 - bootGreetingEnabled: " + bootGreetingEnabled);
         } catch (Exception e) {
             Log.e("MainActivity", "初始化配置时出错", e);
             bootGreetingEnabled = false;
@@ -1500,7 +1500,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public void rescheduleDelayedStartupTasks() {
         if (delayedStartHandler != null) {
-            }
             if (bootGreetingRunnable != null) {
                 delayedStartHandler.removeCallbacks(bootGreetingRunnable);
             }
