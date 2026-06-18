@@ -38,9 +38,10 @@ public class TaskManager {
      * 取消所有延迟启动任务
      */
     public void cancelDelayedStartupTasks() {
-        }
-        if (activity.bootGreetingRunnable != null) {
-            handler.removeCallbacks(activity.bootGreetingRunnable);
+        if (handler != null) {
+            if (activity.bootGreetingRunnable != null) {
+                handler.removeCallbacks(activity.bootGreetingRunnable);
+            }
         }
     }
 
