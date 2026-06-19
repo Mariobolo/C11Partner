@@ -27,6 +27,7 @@ public class CarControlManager {
     public static final String ACTION_TO_SETTINGS = "com.leapmotor.speech.tosettings";
     public static final String ACTION_METER_CTRL = "com.leapmotor.action.METER.CTRL";
     public static final String ACTION_CAMERA_AROUND = "com.leapmotor.camera_around";
+    public static final String ACTION_VOICE_HAND_MESSAGE = "com.iflytek.autofly.handMessage";
     
     // Settings.Global属性常量
     public static final String KEY_CAMERA_OVERSPEED = "camera_overspeed";
@@ -40,6 +41,7 @@ public class CarControlManager {
     public static final String KEY_C11_MUSIC = "C11_MUSIC";
     public static final String KEY_STR_CAR_1409 = "strCar1409";
     public static final String KEY_STR_CAR_1410 = "strCar1410";
+    public static final String KEY_STR_CAR_1411 = "strCar1411";
     public static final String KEY_STR_CAR_100006 = "strCar100006";
     public static final String KEY_STR_CAR_1800 = "strCar1800";
     public static final String KEY_STR_CAR_8867 = "strCar8867";
@@ -258,6 +260,27 @@ public class CarControlManager {
         }
     }
     
+    // ==================== 语音控制 ====================
+
+    /**
+     * 发送语音指令（通过讯飞语音接口）
+     * 暂时用于替代没有直接控制接口的功能
+     * @param command 语音指令文本
+     * @return 是否成功
+     */
+    public boolean sendVoiceCommand(String command) {
+        try {
+            Intent intent = new Intent(ACTION_VOICE_HAND_MESSAGE);
+            intent.putExtra("text", command);  // 猜测的参数名，待实车验证
+            context.sendBroadcast(intent);
+            Log.d(TAG, "发送语音指令: " + command);
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "发送语音指令失败: " + command, e);
+            return false;
+        }
+    }
+
     // ==================== 空调控制 ====================
     
     /**
@@ -282,7 +305,14 @@ public class CarControlManager {
      * @return 是否成功
      */
     public boolean setAcEnabled(boolean on) {
-        return setGlobalInt(KEY_STR_CAR_100006, on ? 1 : 0);
+        // 先尝试直接控制
+        boolean result = setGlobalInt(KEY_STR_CAR_100006, on ? 1 : 0);
+        if (!result) {
+            // 失败则用语音控制作为备选
+            String command = on ? "打开空调" : "关闭空调";
+            result = sendVoiceCommand(command);
+        }
+        return result;
     }
 
     /**
@@ -299,7 +329,14 @@ public class CarControlManager {
      * @return 是否成功
      */
     public boolean setWindLevel(int level) {
-        return setGlobalInt(KEY_STR_CAR_1411, Math.max(1, Math.min(8, level)));
+        // 先尝试直接控制
+        boolean result = setGlobalInt(KEY_STR_CAR_1411, Math.max(1, Math.min(8, level)));
+        if (!result) {
+            // 失败则用语音控制作为备选
+            String command = "空调风量调到" + level + "档";
+            result = sendVoiceCommand(command);
+        }
+        return result;
     }
 
     /**
@@ -309,6 +346,17 @@ public class CarControlManager {
     public int getWindLevel() {
         return getGlobalInt(KEY_STR_CAR_1411, 3);
     }
+    /**
+     * 设置除霜模式
+     * 暂未找到直接控制接口，使用语音控制
+     * @param on true=开, false=关
+     * @return 是否成功
+     */
+    public boolean setDefrost(boolean on) {
+        String command = on ? "打开除霜" : "关闭除霜";
+        return sendVoiceCommand(command);
+    }
+
     
     // ==================== 系统设置控制 ====================
     

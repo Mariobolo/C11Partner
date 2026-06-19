@@ -3424,9 +3424,17 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void toggleDefrost() {
-        Log.d(TAG, "切换除霜状态，打开零跑C11原生空调控制页面");
-        // 暂未找到除霜直接控制接口，打开原生空调页面
-        openAirConditioningPage();
+        Log.d(TAG, "切换除霜状态");
+        try {
+            CarControlManager carControl = getCarControlManager();
+            // 暂未找到除霜状态读取接口，默认切换为打开
+            // 后续可以优化为读取当前状态再切换
+            carControl.setDefrost(true);
+            Log.d(TAG, "已发送打开除霜语音指令");
+        } catch (Exception e) {
+            Log.e(TAG, "切换除霜失败，降级打开空调页面", e);
+            openAirConditioningPage();
+        }
     }
 
     /**
