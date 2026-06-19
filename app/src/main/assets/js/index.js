@@ -3145,6 +3145,7 @@ function registerTimeUpdateListener() {
             { id: 'ambientLight', name: '氛围灯', icon: '🌈', type: 'toggle' },
             { id: 'speech', name: '语音播报', icon: '🔊', type: 'toggle' },
             { id: 'secondaryScreen', name: '副屏', icon: '📺', type: 'toggle' },
+            { id: 'screenPresentation', name: '副屏投屏', icon: '🖥️', type: 'toggle' },
         ],
         
         // 驾驶模式列表
@@ -3351,6 +3352,15 @@ function registerTimeUpdateListener() {
                         const screenEnabled = window.AndroidInterface.isSecondaryScreenEnabled();
                         result = window.AndroidInterface.setSecondaryScreenEnabled(!screenEnabled);
                         break;
+                    case 'screenPresentation':
+                        const showing = window.AndroidInterface.isPresentationShowing();
+                        if (showing) {
+                            window.AndroidInterface.hidePresentation();
+                            result = true;
+                        } else {
+                            result = window.AndroidInterface.showCarStatusPresentation();
+                        }
+                        break;
                 }
                 
                 console.log('切换开关:', switchId, '结果:', result);
@@ -3418,6 +3428,7 @@ function registerTimeUpdateListener() {
                 'ambientLight': window.AndroidInterface.isAmbientLightEnabled ? window.AndroidInterface.isAmbientLightEnabled() : null,
                 'speech': window.AndroidInterface.isSpeechEnabled ? window.AndroidInterface.isSpeechEnabled() : null,
                 'secondaryScreen': window.AndroidInterface.isSecondaryScreenEnabled ? window.AndroidInterface.isSecondaryScreenEnabled() : null,
+                'screenPresentation': window.AndroidInterface.isPresentationShowing ? window.AndroidInterface.isPresentationShowing() : null,
             };
             
             panel.querySelectorAll('.switch-item').forEach(item => {
