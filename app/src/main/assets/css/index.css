@@ -922,6 +922,73 @@ body {
     white-space: nowrap;
 }
 
+/* 快捷开关组件 */
+.quick-switches-widget {
+    width: auto;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.quick-switches-container {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.quick-switch-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 12px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.quick-switch-item:active {
+    transform: scale(0.95);
+}
+
+.quick-switch-icon {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+.quick-switch-item.active .quick-switch-icon {
+    background: rgba(0, 230, 118, 0.2);
+    color: #00e676;
+}
+
+.quick-switch-name {
+    font-size: 12px;
+    color: #FFFFFF;
+    text-align: center;
+    max-width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.quick-switch-item.active .quick-switch-name {
+    color: #00e676;
+}
+
+/* 更多按钮特殊样式 */
+.quick-switch-item.more .quick-switch-icon {
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 24px;
+}
+
 .car-widget {
     padding: 10px;
     width: 200px;

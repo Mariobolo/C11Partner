@@ -1796,6 +1796,88 @@ function loadQuickApps() {
     }
 }
 
+// 加载桌面快捷开关
+function loadQuickSwitches() {
+    const container = document.getElementById('quickSwitchesContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // 桌面显示的4个常用开关 + 1个更多按钮
+    const desktopSwitches = [
+        { id: 'lowBeamLight', name: '近光灯', icon: '💡' },
+        { id: 'maxCooling', name: '极速制冷', icon: '❄️' },
+        { id: 'cameraOverspeed', name: '360限速', icon: '📸' },
+        { id: 'ambientLight', name: '氛围灯', icon: '🌈' },
+    ];
+
+    // 添加4个快捷开关
+    desktopSwitches.forEach(sw => {
+        const item = document.createElement('div');
+        item.className = 'quick-switch-item';
+        item.setAttribute('data-id', sw.id);
+        item.innerHTML = `
+            <div class="quick-switch-icon">${sw.icon}</div>
+            <div class="quick-switch-name">${sw.name}</div>
+        `;
+
+        // 点击切换开关
+        item.addEventListener('click', function() {
+            if (window.QuickSwitchManager) {
+                window.QuickSwitchManager.toggleSwitch(sw.id);
+                // 更新显示状态
+                updateQuickSwitchStatus(sw.id);
+            }
+        });
+
+        container.appendChild(item);
+    });
+
+    // 添加"全部"按钮
+    const moreItem = document.createElement('div');
+    moreItem.className = 'quick-switch-item more';
+    moreItem.innerHTML = `
+        <div class="quick-switch-icon">⋯</div>
+        <div class="quick-switch-name">全部</div>
+    `;
+
+    moreItem.addEventListener('click', function() {
+        if (window.QuickSwitchManager) {
+            window.QuickSwitchManager.togglePanel();
+        }
+    });
+
+    container.appendChild(moreItem);
+
+    // 初始化状态
+    refreshQuickSwitchesStatus();
+}
+
+// 更新单个快捷开关状态
+function updateQuickSwitchStatus(switchId) {
+    const item = document.querySelector('.quick-switch-item[data-id="' + switchId + '"]');
+    if (!item || !window.QuickSwitchManager) return;
+
+    // 从QuickSwitchManager获取状态
+    const sw = window.QuickSwitchManager.switches.find(s => s.id === switchId);
+    if (sw && sw.currentState) {
+        item.classList.add('active');
+    } else {
+        item.classList.remove('active');
+    }
+}
+
+// 刷新所有快捷开关状态
+function refreshQuickSwitchesStatus() {
+    if (!window.QuickSwitchManager) return;
+
+    const items = document.querySelectorAll('.quick-switch-item[data-id]');
+    items.forEach(item => {
+        const id = item.getAttribute('data-id');
+        updateQuickSwitchStatus(id);
+    });
+}
+
 
 // 检查是否有其他元素覆盖在背景上:
 function checkForOverlappingElements() {
@@ -2500,6 +2582,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // 加载快速启动应用列表
     loadQuickApps();
+
+    // 加载桌面快捷开关
+    loadQuickSwitches();
 
     // 初始化可配置按钮
     initConfigurableButtons();
@@ -3477,6 +3562,21 @@ function registerTimeUpdateListener() {
                     item.style.background = statusMap[id] ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255,255,255,0.1)';
                 }
             });
+            
+            // 更新桌面快捷开关状态
+            const desktopContainer = document.getElementById('quickSwitchesContainer');
+            if (desktopContainer) {
+                desktopContainer.querySelectorAll('.quick-switch-item[data-id]').forEach(item => {
+                    const id = item.getAttribute('data-id');
+                    if (statusMap[id] !== null && statusMap[id] !== undefined) {
+                        if (statusMap[id]) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            }
         }
     };
     
