@@ -1,3 +1,26 @@
+
+// 页面加载时立即显示默认天气
+document.addEventListener('DOMContentLoaded', function() {
+    initWeatherDisplay();
+});
+
+// 初始化天气显示（默认占位）
+function initWeatherDisplay() {
+    const temperatureElement = document.querySelector('.temperature');
+    const conditionElement = document.querySelector('.condition');
+    const weatherIconElement = document.querySelector('.weather-icon');
+
+    if (temperatureElement) {
+        temperatureElement.textContent = '--°';
+    }
+    if (conditionElement) {
+        conditionElement.textContent = '加载中...';
+    }
+    if (weatherIconElement) {
+        weatherIconElement.style.backgroundImage = "url('images/nav_weather.png')";
+    }
+}
+
 // 天气API配置
 const WEATHER_API_BASE = 'https://api.open-meteo.com/v1/forecast';
 
@@ -90,17 +113,18 @@ function updateWeatherDisplay(weatherData) {
             weatherIconElement.style.backgroundImage = `url('images/${weatherIcon}')`;
         }
     } else {
-        // 使用默认数据
+        // 获取失败，显示占位
         if (temperatureElement) {
-            temperatureElement.textContent = '28°';
+            temperatureElement.textContent = '--°';
         }
 
         if (conditionElement) {
-            conditionElement.textContent = '局部 晴转多云';
+            conditionElement.textContent = '暂无数据';
         }
 
         if (weatherIconElement) {
             weatherIconElement.style.backgroundImage = "url('images/nav_weather.png')";
+            weatherIconElement.style.opacity = '0.6';
         }
     }
 }

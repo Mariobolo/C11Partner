@@ -390,6 +390,15 @@ public class MainActivity extends AppCompatActivity {
                         stateJson.put("screenOn", state.isScreenOn());
                         stateJson.put("acPageOpen", state.isAcPageOpen());
                         stateJson.put("camera360Visible", state.isCamera360Visible());
+                        // 添加胎压和胎温数据
+                        stateJson.put("frontLeftTirePressure", state.getFrontLeftTirePressure());
+                        stateJson.put("frontRightTirePressure", state.getFrontRightTirePressure());
+                        stateJson.put("rearLeftTirePressure", state.getRearLeftTirePressure());
+                        stateJson.put("rearRightTirePressure", state.getRearRightTirePressure());
+                        stateJson.put("frontLeftTireTemp", state.getFrontLeftTireTemp());
+                        stateJson.put("frontRightTireTemp", state.getFrontRightTireTemp());
+                        stateJson.put("rearLeftTireTemp", state.getRearLeftTireTemp());
+                        stateJson.put("rearRightTireTemp", state.getRearRightTireTemp());
                         
                         String jsCode = "javascript:if(typeof window.updateCarState === 'function') { window.updateCarState(" 
                                 + stateJson.toString() + "); }";

@@ -125,10 +125,17 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 16px;
     font-size: 12px;
     z-index: 1000;
     pointer-events: auto;
+}
+
+/* 左侧区域：时间 + 车辆状态 */
+.top-left-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 .top-left-time {
@@ -151,45 +158,57 @@ body {
     align-items: center;
 }
 
-/* 车辆状态指示器 */
+/* 车辆状态指示器 - 车机风格优化 */
 .car-status-indicators {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     font-size: 14px;
     color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    padding: 4px 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
 }
 
 .status-indicator {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    opacity: 0.7;
+    font-size: 16px;
+    opacity: 0.6;
     transition: all 0.3s ease;
+    min-width: 24px;
+    height: 24px;
 }
 
 .status-indicator.active {
     opacity: 1;
-    color: #00ff88;
 }
 
 .gear-indicator {
     font-weight: bold;
-    font-size: 16px;
-    min-width: 20px;
+    font-size: 18px;
+    min-width: 28px;
     text-align: center;
+    color: #00e676;
+    text-shadow: 0 0 8px rgba(0, 230, 118, 0.6);
 }
 
-.gear-indicator.active {
-    color: #ffcc00;
-    text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+.gear-indicator.gear-r {
+    color: #ff5252;
+    text-shadow: 0 0 8px rgba(255, 82, 82, 0.6);
+}
+
+.gear-indicator.gear-n {
+    color: #ffd740;
+    text-shadow: 0 0 8px rgba(255, 215, 64, 0.6);
 }
 
 .door-indicator {
-    color: #ff4444;
+    color: #ff5252;
     animation: pulse 1s ease-in-out infinite;
+    font-size: 18px;
 }
 
 @keyframes pulse {
@@ -198,19 +217,35 @@ body {
 }
 
 .turn-indicator {
-    font-size: 16px;
+    font-size: 18px;
     opacity: 0.3;
+    color: #ffffff;
 }
 
 .turn-indicator.active {
     opacity: 1;
-    color: #00ff00;
+    color: #00e676;
     animation: blink 0.5s ease-in-out infinite;
+    text-shadow: 0 0 8px rgba(0, 230, 118, 0.8);
 }
 
 @keyframes blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    50% { opacity: 0.2; }
+}
+
+.lock-indicator {
+    font-size: 16px;
+    color: #00e676;
+}
+
+.lock-indicator.unlocked {
+    color: #ff9800;
+}
+
+.camera-indicator {
+    font-size: 16px;
+    color: #2196f3;
 }
 
 .lock-indicator {
@@ -895,9 +930,11 @@ body {
 }
 
 .weather-widget {
-    padding: 10px;
+    padding: 10px 15px;
     width: auto;
-    min-width: 150px;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
     /* 设置最小宽度 */
 }
 
@@ -971,9 +1008,9 @@ body {
 }
 
 .weather-icon {
-    width: 50px;
-    height: 50px;
-    margin-left: 10px;
+    width: 64px;
+    height: 64px;
+    margin-left: 15px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -982,18 +1019,24 @@ body {
 }
 
 .weather-info {
-    margin-left: 10px;
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .temperature {
-    font-size: 12px;
+    font-size: 28px;
+    font-weight: bold;
     color: #FFFFFF;
+    line-height: 1.2;
 }
 
 .condition {
-    font-size: 12px;
-    color: #FFFFFF;
-    margin-top: 5px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 4px;
+    line-height: 1.2;
 }
 
 .app-icon {

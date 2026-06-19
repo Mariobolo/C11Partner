@@ -87,6 +87,11 @@ public class AppUtils {
                 Map<String, Object> appData = new HashMap<>();
                 appData.put("name", appInfo.loadLabel(pm));
                 appData.put("packageName", packageName);
+
+                // 判断是否是系统应用
+                boolean isSystemApp = (appInfo.flags & android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0
+                        || (appInfo.flags & android.content.pm.ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
+                appData.put("isSystemApp", isSystemApp);
                 
                 // 优化：延迟加载图标，在需要时再加载
                 appData.put("icon", appInfo.loadIcon(pm));

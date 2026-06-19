@@ -1726,17 +1726,18 @@ function loadQuickApps() {
             const quickAppsJson = Android.getQuickAppList();
             const quickApps = JSON.parse(quickAppsJson);
 
-            // 如果没有快速启动应用，隐藏整个组件
-            if (quickApps.length === 0) {
-                if (quickAppsWidget) {
-                    quickAppsWidget.style.display = 'none';
-                }
-                return;
-            }
-
             // 显示组件
             if (quickAppsWidget) {
                 quickAppsWidget.style.display = 'flex';
+            }
+
+            // 如果没有快速启动应用，显示占位提示
+            if (quickApps.length === 0) {
+                const emptyTip = document.createElement('div');
+                emptyTip.style.cssText = 'color: rgba(255,255,255,0.6); font-size: 14px; padding: 0 20px; text-align: center;';
+                emptyTip.innerHTML = '长按应用列表<br>中的应用添加';
+                quickAppsContainer.appendChild(emptyTip);
+                return;
             }
 
             // 生成快速启动应用列表
@@ -1745,8 +1746,8 @@ function loadQuickApps() {
                 appItem.className = 'quick-app-item';
                 appItem.setAttribute('data-package', app.packageName);
                 appItem.innerHTML = `
-                    <div class="quick-app-icon" style="background-image: url('${app.icon}');"></div>
-                    <div class="quick-app-name">${app.name}</div>
+                    <div class="quick-app-icon" style="background-image: url('${app.icon}'); width: 60px; height: 60px;"></div>
+                    <div class="quick-app-name" style="font-size: 14px;">${app.name}</div>
                 `;
 
                 // 添加点击事件
@@ -2950,6 +2951,7 @@ function registerTimeUpdateListener() {
             this.updateTurnIndicators(state.leftTurnLight, state.rightTurnLight);
             this.updateLockIndicator(state.isLocked);
             this.updateSpeedDisplay(state.speed);
+            this.updateTirePressure(state);
         },
         
         /**
@@ -2959,13 +2961,17 @@ function registerTimeUpdateListener() {
             const element = document.getElementById('gearIndicator');
             if (element) {
                 element.textContent = gearText || 'P';
-                // 根据档位设置不同颜色
+                // 移除所有档位类
+                element.classList.remove('gear-r', 'gear-n', 'gear-d', 'gear-p');
+                // 根据档位添加对应类
                 if (gear === 1) { // R挡
-                    element.style.color = '#ff4444';
+                    element.classList.add('gear-r');
+                } else if (gear === 2) { // N挡
+                    element.classList.add('gear-n');
                 } else if (gear === 3) { // D挡
-                    element.style.color = '#44ff44';
-                } else {
-                    element.style.color = '#ffffff';
+                    element.classList.add('gear-d');
+                } else { // P挡
+                    element.classList.add('gear-p');
                 }
             }
         },
@@ -3034,10 +3040,10 @@ function registerTimeUpdateListener() {
             if (element) {
                 if (isLocked) {
                     element.textContent = '🔒';
-                    element.style.color = '#4CAF50';
+                    element.classList.remove('unlocked');
                 } else {
                     element.textContent = '🔓';
-                    element.style.color = '#ff9800';
+                    element.classList.add('unlocked');
                 }
             }
         },
@@ -3048,6 +3054,37 @@ function registerTimeUpdateListener() {
         updateSpeedDisplay: function(speed) {
             // 可以在状态栏显示车速，或者在其他位置显示
             console.log('当前车速:', speed, 'km/h');
+        },
+
+        /**
+         * 更新胎压显示
+         */
+        updateTirePressure: function(state) {
+            const pressures = [
+                { selector: '.tire-pressure.front-left', pressure: state.frontLeftTirePressure, temp: state.frontLeftTireTemp },
+                { selector: '.tire-pressure.front-right', pressure: state.frontRightTirePressure, temp: state.frontRightTireTemp },
+                { selector: '.tire-pressure.rear-left', pressure: state.rearLeftTirePressure, temp: state.rearLeftTireTemp },
+                { selector: '.tire-pressure.rear-right', pressure: state.rearRightTirePressure, temp: state.rearRightTireTemp }
+            ];
+
+            pressures.forEach(item => {
+                const el = document.querySelector(item.selector);
+                if (el) {
+                    if (item.pressure && item.pressure > 0) {
+                        // 有真实数据，显示胎压和胎温
+                        const pressureKpa = Math.round(item.pressure);
+                        const temp = item.temp || 0;
+                        el.innerHTML = pressureKpa + 'kPa<br><span style="font-size:10px;opacity:0.7;">' + temp + '°C</span>';
+                        // 异常胎压标红
+                        if (pressureKpa < 200 || pressureKpa > 300) {
+                            el.style.color = '#ff4444';
+                        } else {
+                            el.style.color = '#ffffff';
+                        }
+                    }
+                    // 没有数据时保持默认显示
+                }
+            });
         },
         
         /**

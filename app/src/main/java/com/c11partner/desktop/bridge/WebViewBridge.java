@@ -229,6 +229,7 @@ public class WebViewBridge {
                     JSONObject appObj = new JSONObject();
                     appObj.put("name", app.get("name"));
                     appObj.put("packageName", app.get("packageName"));
+                    appObj.put("isSystemApp", app.get("isSystemApp"));
 
                     // 优化：使用缓存的图标Base64数据，避免重复转换
                     String iconBase64 = getCachedAppIconBase64((String) app.get("packageName"));

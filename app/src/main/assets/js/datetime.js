@@ -1,3 +1,21 @@
+
+// 页面加载后启动时间自动更新
+document.addEventListener('DOMContentLoaded', function() {
+    // 立即更新一次
+    updateTime();
+    updateDate();
+    updateLunarDate();
+    
+    // 每秒更新时间
+    setInterval(updateTime, 1000);
+    
+    // 每分钟更新日期和农历
+    setInterval(function() {
+        updateDate();
+        updateLunarDate();
+    }, 60000);
+});
+
 // 更新时间显示
 function updateTime() {
     const now = new Date();
@@ -5,12 +23,19 @@ function updateTime() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
     
-    // 更新顶部状态栏的时间显示（仅时分秒）
-    const topTimeText = `${hours}:${minutes}:${seconds}`;
-    document.querySelector('.top-left-time .time-text').textContent = topTimeText;
+    const timeText = `${hours}:${minutes}:${seconds}`;
     
-    // 更新原来的时间显示（仅时分秒）
-    document.querySelector('.layout-left .time-text').textContent = topTimeText;
+    // 更新顶部状态栏的时间显示
+    const topTimeEl = document.querySelector('.top-left-time .time-text');
+    if (topTimeEl) {
+        topTimeEl.textContent = timeText;
+    }
+    
+    // 更新左侧的时间显示
+    const leftTimeEl = document.querySelector('.layout-left .time-text');
+    if (leftTimeEl) {
+        leftTimeEl.textContent = timeText;
+    }
 }
 
 // 获取星期几
