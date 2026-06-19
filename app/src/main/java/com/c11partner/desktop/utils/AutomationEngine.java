@@ -52,7 +52,7 @@ public class AutomationEngine {
     public AutomationEngine(Context context) {
         mContext = context;
         mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        mCarControlManager = new CarControlManager(context);
+        mCarControlManager = CarControlManager.getInstance(context);
         initTts();
     }
     
