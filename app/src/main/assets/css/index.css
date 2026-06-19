@@ -2246,3 +2246,578 @@ audio {
     background-color: #0056b3;
     transform: scale(0.98);
 }
+/* ============================================
+   C11Partner 深色毛玻璃主题美化
+   参考：迪力车载桌面 UI 风格
+   ============================================ */
+
+/* 背景遮罩 - 让壁纸变暗，突出前景 */
+.background-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.1) 30%,
+        rgba(0, 0, 0, 0.1) 60%,
+        rgba(0, 0, 0, 0.5) 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* ========== 顶部状态栏美化 ========== */
+.top-status-bar {
+    background: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 24px !important;
+    height: 48px !important;
+}
+
+.top-left-section {
+    gap: 16px;
+}
+
+.top-left-time .time-text {
+    font-size: 16px !important;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* 车辆状态指示器美化 */
+.car-status-indicators {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-indicator {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+}
+
+.gear-indicator {
+    font-weight: 700;
+    font-size: 16px;
+    color: #00ff88 !important;
+    text-shadow: 0 0 12px rgba(0, 255, 136, 0.5);
+}
+
+.turn-indicator {
+    color: #ffcc00 !important;
+    animation: turnBlink 0.8s infinite;
+}
+
+@keyframes turnBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.lock-indicator {
+    font-size: 14px;
+}
+
+/* 右侧图标美化 */
+.top-right-info {
+    gap: 16px;
+}
+
+.bluetooth-status-icon,
+.network-status-icon {
+    opacity: 0.8 !important;
+    filter: brightness(1.2);
+}
+
+/* ========== 时间日期显示美化 ========== */
+.layout-left {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    text-align: center;
+    width: auto !important;
+    padding: 0 !important;
+}
+
+.time-text#timeDisplay {
+    font-size: 120px !important;
+    font-weight: 200 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.date-text {
+    font-size: 24px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 400;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+.lunar-calendar-text {
+    font-size: 18px !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-weight: 400;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ========== 底部Dock卡片美化 ========== */
+.card-view {
+    background: transparent !important;
+    padding: 0 32px 24px 32px !important;
+    bottom: 80px !important;
+}
+
+.widgets-container {
+    background: transparent !important;
+}
+
+.widget {
+    background: rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 20px !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.widget-group {
+    padding: 0 8px !important;
+}
+
+/* ========== 快捷应用模块美化 ========== */
+.quick-apps-widget {
+    padding: 16px !important;
+}
+
+.quick-apps-container {
+    gap: 12px !important;
+}
+
+.quick-app-item {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 12px 8px !important;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.quick-app-item:active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(0.95);
+}
+
+.quick-app-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    margin-bottom: 8px !important;
+}
+
+.quick-app-name {
+    font-size: 12px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ========== 快捷开关模块美化 ========== */
+.quick-switches-widget {
+    padding: 16px !important;
+}
+
+.quick-switches-container {
+    gap: 12px !important;
+}
+
+/* ========== 天气组件美化 ========== */
+.weather-widget {
+    padding: 20px !important;
+    min-width: 200px !important;
+}
+
+.weather-widget .temperature {
+    font-size: 48px !important;
+    font-weight: 300 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.weather-widget .condition {
+    font-size: 16px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.weather-icon {
+    width: 64px !important;
+    height: 64px !important;
+    opacity: 0.9 !important;
+}
+
+/* ========== 胎压组件美化 ========== */
+.car-widget {
+    padding: 20px !important;
+    min-width: 220px !important;
+}
+
+.tire-pressure {
+    font-size: 14px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(0, 255, 136, 0.15) !important;
+    border: 1px solid rgba(0, 255, 136, 0.3) !important;
+    border-radius: 8px !important;
+    padding: 4px 8px !important;
+}
+
+/* ========== 音乐组件美化 ========== */
+.music-widget {
+    padding: 16px 20px !important;
+    min-width: 320px !important;
+}
+
+.music-name {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-size: 16px !important;
+}
+
+.music-current-time,
+.music-total-time {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 12px !important;
+}
+
+.music-progress-bar {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-radius: 4px !important;
+}
+
+.music-progress-filled {
+    background: linear-gradient(90deg, #00ff88, #00ccff) !important;
+    border-radius: 4px !important;
+}
+
+.control-buttons button {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.control-buttons button:active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(0.9);
+}
+
+.btn-play {
+    width: 48px !important;
+    height: 48px !important;
+    background: linear-gradient(135deg, #00ff88, #00ccff) !important;
+}
+
+/* ========== 地图导航组件美化 ========== */
+.map-widget {
+    padding: 16px !important;
+    min-width: 200px !important;
+}
+
+.nav-button {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-button:active {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(0.95);
+}
+
+.nav-text {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 12px !important;
+    margin-top: 6px !important;
+}
+
+/* ========== 底部状态栏美化 ========== */
+.status-bar {
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    height: 72px !important;
+    padding: 0 24px !important;
+}
+
+.control-icon {
+    opacity: 0.85 !important;
+    transition: all 0.2s ease;
+}
+
+.control-icon:active {
+    opacity: 1 !important;
+    transform: scale(0.9);
+}
+
+.air-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 18px !important;
+    font-weight: 500;
+    min-width: 40px;
+    text-align: center;
+}
+
+.ac-control {
+    opacity: 0.8 !important;
+    transition: all 0.2s ease;
+}
+
+.ac-control:active {
+    opacity: 1 !important;
+    transform: scale(0.9);
+}
+
+/* ========== 弹窗/模态框美化 ========== */
+.modal-content {
+    background: rgba(20, 20, 20, 0.95) !important;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.modal-header h2 {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.close {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 28px !important;
+}
+
+.close:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Tab按钮美化 */
+.tab-button {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 10px 20px !important;
+    transition: all 0.2s ease;
+}
+
+.tab-button.active {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 204, 255, 0.2)) !important;
+    color: #00ff88 !important;
+    border-color: rgba(0, 255, 136, 0.3) !important;
+}
+
+/* 设置项美化 */
+.setting-item {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    margin-bottom: 12px !important;
+}
+
+.setting-item label {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-size: 15px !important;
+}
+
+/* 复选框美化 */
+.setting-checkbox {
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 6px !important;
+    accent-color: #00ff88;
+}
+
+/* ========== 应用列表美化 ========== */
+.app-list-item {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    transition: all 0.2s ease;
+}
+
+.app-list-item:active {
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: scale(0.98);
+}
+
+.app-name {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ========== 快捷开关面板美化 ========== */
+.quick-switch-panel {
+    background: rgba(20, 20, 20, 0.95) !important;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.switch-item {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    transition: all 0.2s ease;
+}
+
+.switch-item.active {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 204, 255, 0.15)) !important;
+    border-color: rgba(0, 255, 136, 0.3) !important;
+}
+
+.switch-item:active {
+    transform: scale(0.95);
+}
+
+.switch-icon {
+    font-size: 24px !important;
+}
+
+.switch-label {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 13px !important;
+}
+
+.switch-status {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 11px !important;
+}
+
+.switch-item.active .switch-status {
+    color: #00ff88 !important;
+}
+
+/* ========== 自动化配置面板美化 ========== */
+.automation-panel {
+    background: rgba(20, 20, 20, 0.95) !important;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.automation-category-title {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 13px !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.automation-item {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    transition: all 0.2s ease;
+}
+
+.automation-item:active {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.automation-name {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 15px !important;
+}
+
+.automation-desc {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 12px !important;
+}
+
+/* 开关按钮美化 */
+.automation-toggle {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+    transition: all 0.3s ease;
+}
+
+.automation-toggle.active {
+    background: linear-gradient(135deg, #00ff88, #00ccff) !important;
+}
+
+.automation-toggle .toggle-dot {
+    background: white !important;
+    border-radius: 50% !important;
+    transition: all 0.3s ease;
+}
+
+/* ========== Toast 美化 ========== */
+.toast {
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ========== 滚动条美化 ========== */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== 横向滚动指示器 ========== */
+.horizontal-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+}
+
