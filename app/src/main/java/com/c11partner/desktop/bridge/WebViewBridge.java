@@ -2937,6 +2937,23 @@ public class WebViewBridge {
     @JavascriptInterface
     public void initializeAcStatus() {
         Log.d(TAG, "零跑C11空调控制初始化完成");
+        // 初始化时更新前端温度显示
+        try {
+            CarControlManager carControl = getCarControlManager();
+            final int driverTemp = carControl.getDriverTemp();
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        mActivity.loadUrl("javascript:updateAcTemperature(" + driverTemp + ")");
+                    } catch (Exception e) {
+                        Log.e(TAG, "更新温度显示失败", e);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "初始化空调状态失败", e);
+        }
     }
 
     /**
@@ -3314,8 +3331,22 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void adjustTemperature(int delta) {
-        Log.d(TAG, "调整空调温度: " + delta + "，打开零跑C11原生空调控制页面");
-        toggleAirConditioning();
+        Log.d(TAG, "调整空调温度: " + delta);
+        try {
+            CarControlManager carControl = getCarControlManager();
+            int currentTemp = carControl.getDriverTemp();
+            int newTemp = Math.max(16, Math.min(30, currentTemp + delta));
+            carControl.setDriverTemp(newTemp);
+            // 同步调整副驾温度
+            int passengerTemp = carControl.getPassengerTemp();
+            int newPassengerTemp = Math.max(16, Math.min(30, passengerTemp + delta));
+            carControl.setPassengerTemp(newPassengerTemp);
+            Log.d(TAG, "主驾温度: " + currentTemp + " -> " + newTemp + 
+                  ", 副驾温度: " + passengerTemp + " -> " + newPassengerTemp);
+        } catch (Exception e) {
+            Log.e(TAG, "调整温度失败，打开空调页面", e);
+            toggleAirConditioning();
+        }
     }
 
     /**

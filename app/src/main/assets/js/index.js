@@ -2617,6 +2617,9 @@ window.addEventListener('DOMContentLoaded', () => {
     // 初始化音乐播放控制按钮
     initMusicControls();
 
+    // 初始化空调温度显示
+    initAcTemperature();
+
     // 启动音乐名称更新
     //updateMusicName();
     //setInterval(updateMusicName, 2000); // 每2秒更新一次音乐名称
@@ -4018,5 +4021,28 @@ if (document.readyState === 'loading') {
     });
 } else {
     AutomationManager.init();
+}
+
+
+
+// 初始化空调温度显示
+function initAcTemperature() {
+    if (typeof Android !== 'undefined' && Android.getAcInfo) {
+        try {
+            const acInfo = Android.getAcInfo();
+            if (acInfo) {
+                try {
+                    const acData = JSON.parse(acInfo);
+                    if (acData.driverTemp) {
+                        updateAcTemperature(acData.driverTemp);
+                    }
+                } catch (e) {
+                    console.error('解析空调信息失败:', e);
+                }
+            }
+        } catch (e) {
+            console.error('获取空调信息失败:', e);
+        }
+    }
 }
 
