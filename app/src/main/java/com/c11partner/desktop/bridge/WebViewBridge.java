@@ -3968,6 +3968,20 @@ public class WebViewBridge {
     
     // ==================== 副屏控制 ====================
     
+    // 副屏管理类（懒加载）
+    private com.c11partner.desktop.utils.SecondaryScreenManager mSecondaryScreenManager;
+    private com.c11partner.desktop.CarStatusPresentation mCarStatusPresentation;
+    
+    /**
+     * 获取副屏管理类实例
+     */
+    private com.c11partner.desktop.utils.SecondaryScreenManager getSecondaryScreenManager() {
+        if (mSecondaryScreenManager == null) {
+            mSecondaryScreenManager = new com.c11partner.desktop.utils.SecondaryScreenManager(mContext);
+        }
+        return mSecondaryScreenManager;
+    }
+    
     /**
      * 设置副屏显示状态
      */
@@ -3991,6 +4005,154 @@ public class WebViewBridge {
         } catch (Exception e) {
             Log.e(TAG, "获取副屏状态失败", e);
             return true;
+        }
+    }
+    
+    /**
+     * 检查是否存在副屏
+     */
+    @JavascriptInterface
+    public boolean hasSecondaryDisplay() {
+        try {
+            return getSecondaryScreenManager().hasSecondaryDisplay();
+        } catch (Exception e) {
+            Log.e(TAG, "检查副屏失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取副屏信息
+     */
+    @JavascriptInterface
+    public String getSecondaryDisplayInfo() {
+        try {
+            return getSecondaryScreenManager().getSecondaryDisplayInfo();
+        } catch (Exception e) {
+            Log.e(TAG, "获取副屏信息失败", e);
+            return "获取失败: " + e.getMessage();
+        }
+    }
+    
+    /**
+     * 显示车辆状态副屏
+     */
+    @JavascriptInterface
+    public boolean showCarStatusPresentation() {
+        try {
+            if (mActivity == null) {
+                return false;
+            }
+            
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        com.c11partner.desktop.utils.SecondaryScreenManager manager = getSecondaryScreenManager();
+                        android.view.Display display = manager.getSecondaryDisplay();
+                        if (display == null) {
+                            Log.w(TAG, "未找到副屏");
+                            return;
+                        }
+                        
+                        mCarStatusPresentation = new com.c11partner.desktop.CarStatusPresentation(mActivity, display);
+                        manager.showPresentation(mCarStatusPresentation);
+                        
+                        // 同步当前车辆状态
+                        if (mActivity.getLogcatMonitorService() != null) {
+                            com.c11partner.desktop.LeapMotorCarState state = mActivity.getLogcatMonitorService().getCurrentState();
+                            if (state != null && mCarStatusPresentation != null) {
+                                mCarStatusPresentation.updateSpeed(state.getSpeed());
+                                mCarStatusPresentation.updateGear(state.getGear());
+                                mCarStatusPresentation.updateDoorStatus(state.getOpenDoorCount());
+                                mCarStatusPresentation.updateTurnLights(state.isLeftTurnLightOn(), state.isRightTurnLightOn());
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.e(TAG, "显示车辆状态副屏失败", e);
+                    }
+                }
+            });
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "显示车辆状态副屏失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 隐藏副屏Presentation
+     */
+    @JavascriptInterface
+    public boolean hidePresentation() {
+        try {
+            if (mActivity == null) {
+                return false;
+            }
+            
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        getSecondaryScreenManager().hidePresentation();
+                        mCarStatusPresentation = null;
+                    } catch (Exception e) {
+                        Log.e(TAG, "隐藏副屏失败", e);
+                    }
+                }
+            });
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "隐藏副屏失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 检查副屏是否正在显示
+     */
+    @JavascriptInterface
+    public boolean isPresentationShowing() {
+        try {
+            return getSecondaryScreenManager().isShowing();
+        } catch (Exception e) {
+            Log.e(TAG, "检查副屏显示状态失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 更新副屏车辆状态（供后端调用）
+     */
+    public void updatePresentationCarState(final com.c11partner.desktop.LeapMotorCarState state) {
+        if (mCarStatusPresentation != null && mActivity != null) {
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (mCarStatusPresentation != null && state != null) {
+                        mCarStatusPresentation.updateSpeed(state.getSpeed());
+                        mCarStatusPresentation.updateGear(state.getGear());
+                        mCarStatusPresentation.updateDoorStatus(state.getOpenDoorCount());
+                        mCarStatusPresentation.updateTurnLights(state.isLeftTurnLightOn(), state.isRightTurnLightOn());
+                    }
+                }
+            });
+        }
+    }
+    
+    /**
+     * 更新副屏时间显示（供后端调用）
+     */
+    public void updatePresentationTime(final String time) {
+        if (mCarStatusPresentation != null && mActivity != null) {
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (mCarStatusPresentation != null && time != null) {
+                        mCarStatusPresentation.updateTime(time);
+                    }
+                }
+            });
         }
     }
     
