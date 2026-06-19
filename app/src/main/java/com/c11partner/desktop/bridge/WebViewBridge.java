@@ -2950,9 +2950,9 @@ public class WebViewBridge {
                 @Override
                 public void run() {
                     try {
-                        mActivity.loadUrl("javascript:updateAcTemperature(" + driverTemp + ")");
-                        mActivity.loadUrl("javascript:updateAcState(" + (acEnabled ? "true" : "false") + ")");
-                        mActivity.loadUrl("javascript:updateWindLevel(" + windLevel + ")");
+                        mActivity.webView.loadUrl("javascript:updateAcTemperature(" + driverTemp + ")");
+                        mActivity.webView.loadUrl("javascript:updateAcState(" + (acEnabled ? "true" : "false") + ")");
+                        mActivity.webView.loadUrl("javascript:updateWindLevel(" + windLevel + ")");
                     } catch (Exception e) {
                         Log.e(TAG, "更新空调状态显示失败", e);
                     }
@@ -3309,7 +3309,7 @@ public class WebViewBridge {
                 @Override
                 public void run() {
                     try {
-                        mActivity.loadUrl("javascript:updateAcState(" + (finalNewState ? "true" : "false") + ")");
+                        mActivity.webView.loadUrl("javascript:updateAcState(" + (finalNewState ? "true" : "false") + ")");
                     } catch (Exception e) {
                         Log.e(TAG, "更新空调状态显示失败", e);
                     }
@@ -3405,7 +3405,7 @@ public class WebViewBridge {
                 @Override
                 public void run() {
                     try {
-                        mActivity.loadUrl("javascript:updateWindLevel(" + finalNewLevel + ")");
+                        mActivity.webView.loadUrl("javascript:updateWindLevel(" + finalNewLevel + ")");
                     } catch (Exception e) {
                         Log.e(TAG, "更新风量显示失败", e);
                     }
