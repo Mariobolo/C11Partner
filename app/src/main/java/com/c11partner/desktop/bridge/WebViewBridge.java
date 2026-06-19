@@ -29,6 +29,7 @@ import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
 import com.c11partner.desktop.service.MediaSessionService;
 import com.c11partner.desktop.utils.AppUtils;
+import com.c11partner.desktop.utils.CarControlManager;
 import com.c11partner.desktop.utils.WallpaperCategoryApiUtils;
 import com.c11partner.desktop.utils.WallpaperDownloadUtils;
 
