@@ -2,6 +2,7 @@ package com.c11partner.desktop.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import com.c11partner.desktop.LeapMotorCarState;
@@ -9,6 +10,8 @@ import com.c11partner.desktop.LeapMotorCarState;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 /**
  * 自动化场景引擎
@@ -27,11 +30,14 @@ public class AutomationEngine {
     private Context mContext;
     private SharedPreferences mPrefs;
     private CarControlManager mCarControlManager;
+    private TextToSpeech mTts;
+    private boolean mTtsReady = false;
 
     // 上次执行时间，用于防抖
     private long mLast360TriggerTime = 0;
     private long mLastVoiceTime = 0;
     private float mLastSpeed = 0;
+    private int mSavedMusicVolume = -1; // 保存的媒体音量，用于倒车降音量
 
     // 360全景触发冷却时间（毫秒）
     private static final long CAMERA_360_COOLDOWN = 3000;
@@ -47,6 +53,36 @@ public class AutomationEngine {
         mContext = context;
         mPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         mCarControlManager = new CarControlManager(context);
+        initTts();
+    }
+    
+    /**
+     * 初始化TTS语音引擎
+     */
+    private void initTts() {
+        try {
+            mTts = new TextToSpeech(mContext, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if (status == TextToSpeech.SUCCESS) {
+                        int result = mTts.setLanguage(Locale.CHINA);
+                        if (result == TextToSpeech.LANG_MISSING_DATA 
+                                || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                            Log.w(TAG, "TTS不支持中文，尝试默认语言");
+                            mTts.setLanguage(Locale.getDefault());
+                        }
+                        mTtsReady = true;
+                        Log.d(TAG, "TTS语音引擎初始化成功");
+                    } else {
+                        Log.e(TAG, "TTS语音引擎初始化失败，状态: " + status);
+                        mTtsReady = false;
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "TTS初始化异常", e);
+            mTtsReady = false;
+        }
     }
 
     /**
@@ -163,11 +199,28 @@ public class AutomationEngine {
         // 倒车自动降音量
         if (isScenarioEnabled("reverseLowerVolume")) {
             if (newGear == LeapMotorCarState.GEAR_R) {
-                // 进入R档，降低音量（暂时记录，后续实现音量保存恢复）
-                Log.d(TAG, "R档自动降音量（待实现）");
-            } else if (oldGear == LeapMotorCarState.GEAR_R) {
+                // 进入R档，保存当前音量并降低
+                try {
+                    int currentVolume = mCarControlManager.getMusicVolume();
+                    if (currentVolume > 0) {
+                        mSavedMusicVolume = currentVolume;
+                        // 降低到30%音量（假设最大音量是15，30%约等于5）
+                        int lowerVolume = Math.max(1, (int)(currentVolume * 0.3));
+                        mCarControlManager.setMusicVolume(lowerVolume);
+                        Log.d(TAG, "R档自动降音量: " + currentVolume + " -> " + lowerVolume);
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "倒车降音量失败", e);
+                }
+            } else if (oldGear == LeapMotorCarState.GEAR_R && mSavedMusicVolume > 0) {
                 // 离开R档，恢复音量
-                Log.d(TAG, "离开R档，恢复音量（待实现）");
+                try {
+                    mCarControlManager.setMusicVolume(mSavedMusicVolume);
+                    Log.d(TAG, "离开R档，恢复音量: " + mSavedMusicVolume);
+                    mSavedMusicVolume = -1;
+                } catch (Exception e) {
+                    Log.e(TAG, "恢复音量失败", e);
+                }
             }
         }
     }
@@ -277,8 +330,28 @@ public class AutomationEngine {
         }
         mLastVoiceTime = now;
         Log.d(TAG, "语音播报: " + text);
-        // TODO: 实现语音播报功能
-        // 可以通过系统语音引擎或者零跑语音接口实现
+        
+        // 使用TTS播报
+        if (mTtsReady && mTts != null) {
+            try {
+                mTts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "automation_tts");
+            } catch (Exception e) {
+                Log.e(TAG, "TTS播报失败", e);
+            }
+        }
+    }
+    
+    /**
+     * 释放资源
+     */
+    public void destroy() {
+        if (mTts != null) {
+            mTts.stop();
+            mTts.shutdown();
+            mTts = null;
+            mTtsReady = false;
+            Log.d(TAG, "TTS资源已释放");
+        }
     }
 
     /**

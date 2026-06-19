@@ -151,6 +151,9 @@ public class LogcatMonitorService extends Service {
     public void onDestroy() {
         super.onDestroy();
         stopLogcatMonitoring();
+        if (mAutomationEngine != null) {
+            mAutomationEngine.destroy();
+        }
         Log.i(TAG, "日志监控服务停止");
     }
     
@@ -314,10 +317,6 @@ public class LogcatMonitorService extends Service {
             case EVENT_GEAR:
                 carState.setGear(value);
                 notifyGearChanged(oldGear, value);
-                // R挡触发360全景
-                if (value == LeapMotorCarState.GEAR_R) {
-                    trigger360IfNeeded("挂入R挡");
-                }
                 break;
                 
             case EVENT_FRONT_LEFT_DOOR:
@@ -375,18 +374,12 @@ public class LogcatMonitorService extends Service {
                 int state = extractIntAfter(line, "mLeftLightSts");
                 carState.setLeftTurnLight(state);
                 notifyTurnLightChanged(true, state);
-                if (state == 1) {
-                    trigger360IfNeeded("左转向灯开启");
-                }
             }
             // 右转向灯
             else if (line.contains("dealTurnRightLight")) {
                 int state = extractIntAfter(line, "mRightLightSts");
                 carState.setRightTurnLight(state);
                 notifyTurnLightChanged(false, state);
-                if (state == 1) {
-                    trigger360IfNeeded("右转向灯开启");
-                }
             }
         } catch (Exception e) {
             Log.e(TAG, "解析转向灯信号错误: " + e.getMessage());
