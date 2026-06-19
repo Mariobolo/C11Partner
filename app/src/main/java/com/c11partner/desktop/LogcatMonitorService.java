@@ -34,7 +34,11 @@ public class LogcatMonitorService extends Service {
     private static final String[] FILTER_TAGS = {
         "C11CarSomeIp",
         "AroundService",
-        "C11CarXml"
+        "C11CarXml",
+        "LPSysUI",
+        "BtMusicManager",
+        "MediaTlog-CtrlService",
+        "zza"
     };
     
     // CAN信号EventId定义（来自实车日志分析）
@@ -235,6 +239,36 @@ public class LogcatMonitorService extends Service {
                 parseSpeedSignal(line);
             }
             
+            // 解析近光灯状态
+            // 格式: D/C11CarXml: node_name : nearLight  setTextContent: 0
+            else if (line.contains("C11CarXml") && line.contains("nearLight")) {
+                parseLowBeamLightSignal(line);
+            }
+            
+            // 解析空调页面状态
+            // 格式: D/LPSysUI.LeapMotorTopTaskHelper: topPackage: com.leapmotor.carcontrol
+            else if (line.contains("LPSysUI") && line.contains("topPackage")) {
+                parseAcPageState(line);
+            }
+            
+            // 解析蓝牙连接状态
+            // 格式: I/BtMusicManager: bluetooth connected
+            else if (line.contains("BtMusicManager")) {
+                parseBluetoothState(line);
+            }
+            
+            // 解析屏幕状态
+            // 格式: I/MediaTlog-CtrlService: screen on/off
+            else if (line.contains("MediaTlog-CtrlService") && line.contains("screen")) {
+                parseScreenState(line);
+            }
+            
+            // 解析胎压胎温
+            // 格式: D/zza: TPMSBean: ...
+            else if (line.contains("zza") && line.contains("TPMSBean")) {
+                parseTirePressureSignal(line);
+            }
+            
         } catch (Exception e) {
             Log.e(TAG, "解析日志行错误: " + e.getMessage());
         }
@@ -367,6 +401,89 @@ public class LogcatMonitorService extends Service {
             }
         } catch (Exception e) {
             Log.e(TAG, "解析车速信号错误: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 解析近光灯信号
+     */
+    private void parseLowBeamLightSignal(String line) {
+        try {
+            if (line.contains("setTextContent:")) {
+                int pos = line.indexOf("setTextContent:");
+                String stateStr = line.substring(pos + 15).trim();
+                int state = Integer.parseInt(stateStr);
+                carState.setLowBeamLight(state);
+                Log.d(TAG, "近光灯状态: " + (state == 0 ? "开" : "关"));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "解析近光灯信号错误: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 解析空调页面状态
+     */
+    private void parseAcPageState(String line) {
+        try {
+            if (line.contains("com.leapmotor.carcontrol")) {
+                carState.setAcPageOpen(true);
+                Log.d(TAG, "空调页面已打开");
+            } else {
+                carState.setAcPageOpen(false);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "解析空调页面状态错误: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 解析蓝牙连接状态
+     */
+    private void parseBluetoothState(String line) {
+        try {
+            if (line.contains("connected") || line.contains("已连接")) {
+                carState.setBluetoothConnected(true);
+                Log.d(TAG, "蓝牙已连接");
+            } else if (line.contains("disconnected") || line.contains("断开")) {
+                carState.setBluetoothConnected(false);
+                Log.d(TAG, "蓝牙已断开");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "解析蓝牙状态错误: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 解析屏幕状态
+     */
+    private void parseScreenState(String line) {
+        try {
+            if (line.contains("screen on") || line.contains("点亮")) {
+                carState.setScreenOn(true);
+                Log.d(TAG, "屏幕已点亮");
+            } else if (line.contains("screen off") || line.contains("熄灭")) {
+                carState.setScreenOn(false);
+                Log.d(TAG, "屏幕已熄灭");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "解析屏幕状态错误: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 解析胎压胎温信号
+     */
+    private void parseTirePressureSignal(String line) {
+        try {
+            // 简单解析TPMSBean数据，提取胎压胎温
+            // 实际格式需要根据实车日志调整
+            if (line.contains("TPMSBean")) {
+                // 这里简化处理，实际需要根据日志格式解析
+                Log.d(TAG, "收到胎压数据: " + line);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "解析胎压信号错误: " + e.getMessage());
         }
     }
     

@@ -3486,5 +3486,570 @@ public class WebViewBridge {
             return false;
         }
     }
+    
+    // ==================== 零跑C11车控功能相关方法 ====================
+    
+    /**
+     * 获取车控管理器实例
+     */
+    private com.c11partner.desktop.utils.CarControlManager getCarControlManager() {
+        return com.c11partner.desktop.utils.CarControlManager.getInstance(mContext);
+    }
+    
+    // ==================== 灯光控制 ====================
+    
+    /**
+     * 控制近光灯
+     * @param on true=开, false=关
+     * @return 是否成功
+     */
+    @JavascriptInterface
+    public boolean setLowBeamLight(boolean on) {
+        try {
+            return getCarControlManager().setLowBeamLight(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制近光灯失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制后雾灯
+     */
+    @JavascriptInterface
+    public boolean setRearFogLight(boolean on) {
+        try {
+            return getCarControlManager().setRearFogLight(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制后雾灯失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制示廓灯
+     */
+    @JavascriptInterface
+    public boolean setPositionLight(boolean on) {
+        try {
+            return getCarControlManager().setPositionLight(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制示廓灯失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制行人警示音
+     */
+    @JavascriptInterface
+    public boolean setPedestrianAlert(boolean on) {
+        try {
+            return getCarControlManager().setPedestrianAlert(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制行人警示音失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 驾驶模式控制 ====================
+    
+    /**
+     * 设置驾驶模式
+     * @param mode 0=舒适, 1=运动, 2=自定义, 3=极致, 4=经济, 5=零跑模式
+     */
+    @JavascriptInterface
+    public boolean setDriveMode(int mode) {
+        try {
+            return getCarControlManager().setDriveMode(mode);
+        } catch (Exception e) {
+            Log.e(TAG, "设置驾驶模式失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 场景模式控制 ====================
+    
+    /**
+     * 控制守护模式
+     */
+    @JavascriptInterface
+    public boolean setGuardMode(boolean on) {
+        try {
+            return getCarControlManager().setGuardMode(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制守护模式失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制小憩模式
+     */
+    @JavascriptInterface
+    public boolean setRestMode(boolean on) {
+        try {
+            return getCarControlManager().setRestMode(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制小憩模式失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制露营模式
+     */
+    @JavascriptInterface
+    public boolean setCampingMode(boolean on) {
+        try {
+            return getCarControlManager().setCampingMode(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制露营模式失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制省电模式
+     */
+    @JavascriptInterface
+    public boolean setPowerSaveMode(boolean on) {
+        try {
+            return getCarControlManager().setPowerSaveMode(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制省电模式失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制哨兵模式
+     */
+    @JavascriptInterface
+    public boolean setSentinelMode(boolean on) {
+        try {
+            return getCarControlManager().setSentinelMode(on);
+        } catch (Exception e) {
+            Log.e(TAG, "控制哨兵模式失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 空调控制 ====================
+    
+    /**
+     * 设置最大制冷模式
+     */
+    @JavascriptInterface
+    public boolean setMaxCooling(boolean on) {
+        try {
+            return getCarControlManager().setMaxCooling(on);
+        } catch (Exception e) {
+            Log.e(TAG, "设置最大制冷失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 系统设置控制 ====================
+    
+    /**
+     * 设置夜间/白天模式
+     * @param night true=夜间, false=白天
+     */
+    @JavascriptInterface
+    public boolean setNightMode(boolean night) {
+        try {
+            return getCarControlManager().setNightMode(night);
+        } catch (Exception e) {
+            Log.e(TAG, "设置夜间模式失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制WiFi开关
+     */
+    @JavascriptInterface
+    public boolean setWifiEnabled(boolean enabled) {
+        try {
+            return getCarControlManager().setWifiEnabled(enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "控制WiFi失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 控制蓝牙开关
+     */
+    @JavascriptInterface
+    public boolean setBluetoothEnabled(boolean enabled) {
+        try {
+            return getCarControlManager().setBluetoothEnabled(enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "控制蓝牙失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 方控按键模拟 ====================
+    
+    /**
+     * 模拟方控上一曲
+     */
+    @JavascriptInterface
+    public boolean sendPrevTrack() {
+        try {
+            return getCarControlManager().sendPrevTrack();
+        } catch (Exception e) {
+            Log.e(TAG, "发送上一曲失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 模拟方控下一曲
+     */
+    @JavascriptInterface
+    public boolean sendNextTrack() {
+        try {
+            return getCarControlManager().sendNextTrack();
+        } catch (Exception e) {
+            Log.e(TAG, "发送下一曲失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== Settings.Global 读写 ====================
+    
+    /**
+     * 设置360全景超速限制
+     * @param enabled true=开启限制, false=关闭限制
+     */
+    @JavascriptInterface
+    public boolean setCameraOverspeedLimit(boolean enabled) {
+        try {
+            return getCarControlManager().setCameraOverspeedLimit(enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "设置360超速限制失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取360全景超速限制状态
+     */
+    @JavascriptInterface
+    public boolean isCameraOverspeedLimitEnabled() {
+        try {
+            return getCarControlManager().isCameraOverspeedLimitEnabled();
+        } catch (Exception e) {
+            Log.e(TAG, "获取360超速限制状态失败", e);
+            return true;
+        }
+    }
+    
+    /**
+     * 设置行驶中视频播放限制
+     * @param enabled true=允许播放, false=禁止播放
+     */
+    @JavascriptInterface
+    public boolean setVideoWhileDriving(boolean enabled) {
+        try {
+            return getCarControlManager().setVideoWhileDriving(enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "设置行驶视频播放失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取行驶中视频播放状态
+     */
+    @JavascriptInterface
+    public boolean isVideoWhileDrivingEnabled() {
+        try {
+            return getCarControlManager().isVideoWhileDrivingEnabled();
+        } catch (Exception e) {
+            Log.e(TAG, "获取行驶视频播放状态失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 音量控制 ====================
+    
+    /**
+     * 设置蓝牙电话音量
+     */
+    @JavascriptInterface
+    public boolean setCallVolume(int volume) {
+        try {
+            return getCarControlManager().setCallVolume(volume);
+        } catch (Exception e) {
+            Log.e(TAG, "设置电话音量失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取蓝牙电话音量
+     */
+    @JavascriptInterface
+    public int getCallVolume() {
+        try {
+            return getCarControlManager().getCallVolume();
+        } catch (Exception e) {
+            Log.e(TAG, "获取电话音量失败", e);
+            return 50;
+        }
+    }
+    
+    /**
+     * 设置导航音量
+     */
+    @JavascriptInterface
+    public boolean setNaviVolume(int volume) {
+        try {
+            return getCarControlManager().setNaviVolume(volume);
+        } catch (Exception e) {
+            Log.e(TAG, "设置导航音量失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取导航音量
+     */
+    @JavascriptInterface
+    public int getNaviVolume() {
+        try {
+            return getCarControlManager().getNaviVolume();
+        } catch (Exception e) {
+            Log.e(TAG, "获取导航音量失败", e);
+            return 50;
+        }
+    }
+    
+    /**
+     * 设置媒体音量
+     */
+    @JavascriptInterface
+    public boolean setMusicVolume(int volume) {
+        try {
+            return getCarControlManager().setMusicVolume(volume);
+        } catch (Exception e) {
+            Log.e(TAG, "设置媒体音量失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取媒体音量
+     */
+    @JavascriptInterface
+    public int getMusicVolume() {
+        try {
+            return getCarControlManager().getMusicVolume();
+        } catch (Exception e) {
+            Log.e(TAG, "获取媒体音量失败", e);
+            return 50;
+        }
+    }
+    
+    // ==================== 空调温度控制 ====================
+    
+    /**
+     * 设置主驾空调温度
+     * @param temp 16-30℃
+     */
+    @JavascriptInterface
+    public boolean setDriverTemp(int temp) {
+        try {
+            return getCarControlManager().setDriverTemp(temp);
+        } catch (Exception e) {
+            Log.e(TAG, "设置主驾温度失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取主驾空调温度
+     */
+    @JavascriptInterface
+    public int getDriverTemp() {
+        try {
+            return getCarControlManager().getDriverTemp();
+        } catch (Exception e) {
+            Log.e(TAG, "获取主驾温度失败", e);
+            return 24;
+        }
+    }
+    
+    /**
+     * 设置副驾空调温度
+     */
+    @JavascriptInterface
+    public boolean setPassengerTemp(int temp) {
+        try {
+            return getCarControlManager().setPassengerTemp(temp);
+        } catch (Exception e) {
+            Log.e(TAG, "设置副驾温度失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取副驾空调温度
+     */
+    @JavascriptInterface
+    public int getPassengerTemp() {
+        try {
+            return getCarControlManager().getPassengerTemp();
+        } catch (Exception e) {
+            Log.e(TAG, "获取副驾温度失败", e);
+            return 24;
+        }
+    }
+    
+    // ==================== 氛围灯控制 ====================
+    
+    /**
+     * 设置氛围灯开关
+     */
+    @JavascriptInterface
+    public boolean setAmbientLightEnabled(boolean enabled) {
+        try {
+            return getCarControlManager().setAmbientLightEnabled(enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "设置氛围灯开关失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取氛围灯开关状态
+     */
+    @JavascriptInterface
+    public boolean isAmbientLightEnabled() {
+        try {
+            return getCarControlManager().isAmbientLightEnabled();
+        } catch (Exception e) {
+            Log.e(TAG, "获取氛围灯开关状态失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置氛围灯颜色
+     * @param color 0=红, 1=橙, 3=黄, 7=绿, 10=青, 14=蓝, 16=紫
+     */
+    @JavascriptInterface
+    public boolean setAmbientLightColor(int color) {
+        try {
+            return getCarControlManager().setAmbientLightColor(color);
+        } catch (Exception e) {
+            Log.e(TAG, "设置氛围灯颜色失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取氛围灯颜色
+     */
+    @JavascriptInterface
+    public int getAmbientLightColor() {
+        try {
+            return getCarControlManager().getAmbientLightColor();
+        } catch (Exception e) {
+            Log.e(TAG, "获取氛围灯颜色失败", e);
+            return 0;
+        }
+    }
+    
+    // ==================== 副屏控制 ====================
+    
+    /**
+     * 设置副屏显示状态
+     */
+    @JavascriptInterface
+    public boolean setSecondaryScreenEnabled(boolean enabled) {
+        try {
+            return getCarControlManager().setSecondaryScreenEnabled(enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "设置副屏状态失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取副屏显示状态
+     */
+    @JavascriptInterface
+    public boolean isSecondaryScreenEnabled() {
+        try {
+            return getCarControlManager().isSecondaryScreenEnabled();
+        } catch (Exception e) {
+            Log.e(TAG, "获取副屏状态失败", e);
+            return true;
+        }
+    }
+    
+    // ==================== 语音播报控制 ====================
+    
+    /**
+     * 设置语音播报开关
+     */
+    @JavascriptInterface
+    public boolean setSpeechEnabled(boolean enabled) {
+        try {
+            return getCarControlManager().setSpeechEnabled(enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "设置语音播报开关失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取语音播报开关状态
+     */
+    @JavascriptInterface
+    public boolean isSpeechEnabled() {
+        try {
+            return getCarControlManager().isSpeechEnabled();
+        } catch (Exception e) {
+            Log.e(TAG, "获取语音播报开关状态失败", e);
+            return true;
+        }
+    }
+    
+    // ==================== 车辆状态读取 ====================
+    
+    /**
+     * 获取车辆锁状态
+     * @return true=上锁, false=解锁
+     */
+    @JavascriptInterface
+    public boolean isVehicleLocked() {
+        try {
+            return getCarControlManager().isVehicleLocked();
+        } catch (Exception e) {
+            Log.e(TAG, "获取车辆锁状态失败", e);
+            return true;
+        }
+    }
+    
+    /**
+     * 获取屏幕状态
+     * @return true=点亮, false=熄灭
+     */
+    @JavascriptInterface
+    public boolean isScreenOn() {
+        try {
+            return getCarControlManager().isScreenOn();
+        } catch (Exception e) {
+            Log.e(TAG, "获取屏幕状态失败", e);
+            return true;
+        }
+    }
 }
 

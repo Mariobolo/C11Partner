@@ -43,6 +43,31 @@ public class LeapMotorCarState {
     // 车速
     private float speed = 0;                      // 当前车速 km/h
     
+    // 近光灯状态
+    private int lowBeamLight = 1;                 // 近光灯 0=开, 1=关（反向逻辑）
+    
+    // 胎压胎温
+    private float frontLeftTirePressure = 0;      // 左前轮胎压 kPa
+    private float frontRightTirePressure = 0;     // 右前轮胎压 kPa
+    private float rearLeftTirePressure = 0;       // 左后轮胎压 kPa
+    private float rearRightTirePressure = 0;      // 右后轮胎压 kPa
+    private int frontLeftTireTemp = 0;            // 左前轮胎温 ℃
+    private int frontRightTireTemp = 0;           // 右前轮胎温 ℃
+    private int rearLeftTireTemp = 0;             // 左后轮胎温 ℃
+    private int rearRightTireTemp = 0;            // 右后轮胎温 ℃
+    
+    // 蓝牙状态
+    private boolean bluetoothConnected = false;   // 蓝牙连接状态
+    
+    // 屏幕状态
+    private boolean screenOn = true;              // 屏幕点亮状态
+    
+    // 空调页面状态
+    private boolean acPageOpen = false;           // 空调页面是否打开
+    
+    // 360全景状态
+    private boolean camera360Visible = false;     // 360全景是否显示
+    
     // 时间戳
     private long lastUpdateTime = 0;
     
@@ -90,6 +115,46 @@ public class LeapMotorCarState {
     public float getSpeed() { return speed; }
     public void setSpeed(float speed) { this.speed = speed; updateTime(); }
     
+    public int getLowBeamLight() { return lowBeamLight; }
+    public void setLowBeamLight(int state) { this.lowBeamLight = state; updateTime(); }
+    
+    // 胎压胎温
+    public float getFrontLeftTirePressure() { return frontLeftTirePressure; }
+    public void setFrontLeftTirePressure(float value) { this.frontLeftTirePressure = value; updateTime(); }
+    
+    public float getFrontRightTirePressure() { return frontRightTirePressure; }
+    public void setFrontRightTirePressure(float value) { this.frontRightTirePressure = value; updateTime(); }
+    
+    public float getRearLeftTirePressure() { return rearLeftTirePressure; }
+    public void setRearLeftTirePressure(float value) { this.rearLeftTirePressure = value; updateTime(); }
+    
+    public float getRearRightTirePressure() { return rearRightTirePressure; }
+    public void setRearRightTirePressure(float value) { this.rearRightTirePressure = value; updateTime(); }
+    
+    public int getFrontLeftTireTemp() { return frontLeftTireTemp; }
+    public void setFrontLeftTireTemp(int value) { this.frontLeftTireTemp = value; updateTime(); }
+    
+    public int getFrontRightTireTemp() { return frontRightTireTemp; }
+    public void setFrontRightTireTemp(int value) { this.frontRightTireTemp = value; updateTime(); }
+    
+    public int getRearLeftTireTemp() { return rearLeftTireTemp; }
+    public void setRearLeftTireTemp(int value) { this.rearLeftTireTemp = value; updateTime(); }
+    
+    public int getRearRightTireTemp() { return rearRightTireTemp; }
+    public void setRearRightTireTemp(int value) { this.rearRightTireTemp = value; updateTime(); }
+    
+    public boolean isBluetoothConnected() { return bluetoothConnected; }
+    public void setBluetoothConnected(boolean connected) { this.bluetoothConnected = connected; updateTime(); }
+    
+    public boolean isScreenOn() { return screenOn; }
+    public void setScreenOn(boolean on) { this.screenOn = on; updateTime(); }
+    
+    public boolean isAcPageOpen() { return acPageOpen; }
+    public void setAcPageOpen(boolean open) { this.acPageOpen = open; updateTime(); }
+    
+    public boolean isCamera360Visible() { return camera360Visible; }
+    public void setCamera360Visible(boolean visible) { this.camera360Visible = visible; updateTime(); }
+    
     public long getLastUpdateTime() { return lastUpdateTime; }
     
     private void updateTime() {
@@ -113,6 +178,26 @@ public class LeapMotorCarState {
     
     public boolean isLocked() { return lockState == 1; }
     public boolean isUnlocked() { return lockState == 0; }
+    
+    // 近光灯（注意：反向逻辑，0=开，1=关）
+    public boolean isLowBeamLightOn() { return lowBeamLight == 0; }
+    public boolean isLowBeamLightOff() { return lowBeamLight == 1; }
+    
+    // 天窗和遮阳帘
+    public boolean isSunroofOpen() { return sunroof == 3; }
+    public boolean isSunshadeOpen() { return sunshade == 3; }
+    
+    // 获取开门数量
+    public int getOpenDoorCount() {
+        int count = 0;
+        if (frontLeftDoor == DOOR_OPEN) count++;
+        if (frontRightDoor == DOOR_OPEN) count++;
+        if (rearLeftDoor == DOOR_OPEN) count++;
+        if (rearRightDoor == DOOR_OPEN) count++;
+        if (trunkDoor == DOOR_OPEN) count++;
+        if (hoodDoor == DOOR_OPEN) count++;
+        return count;
+    }
     
     public String getGearText() {
         switch(gear) {

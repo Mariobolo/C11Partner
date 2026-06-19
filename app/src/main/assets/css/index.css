@@ -151,6 +151,81 @@ body {
     align-items: center;
 }
 
+/* 车辆状态指示器 */
+.car-status-indicators {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.status-indicator.active {
+    opacity: 1;
+    color: #00ff88;
+}
+
+.gear-indicator {
+    font-weight: bold;
+    font-size: 16px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.gear-indicator.active {
+    color: #ffcc00;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+
+.door-indicator {
+    color: #ff4444;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.turn-indicator {
+    font-size: 16px;
+    opacity: 0.3;
+}
+
+.turn-indicator.active {
+    opacity: 1;
+    color: #00ff00;
+    animation: blink 0.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.lock-indicator {
+    font-size: 14px;
+}
+
+.lock-indicator.unlocked {
+    color: #ffaa00;
+}
+
+.camera-indicator {
+    color: #00aaff;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
 .network-status-icon,
 .bluetooth-status-icon,
 .network-5g-icon {
