@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢您对 DiPartner 项目的关注！我们欢迎各种形式的贡献。
+感谢您对 C11Partner 项目的关注！我们欢迎各种形式的贡献。
 
 ## 如何贡献
 
@@ -17,8 +17,8 @@
 
 1. **Fork 仓库**
    ```bash
-   git clone https://gitee.com/hex_code/DiPartner.git
-   cd DiPartner
+   git clone https://gitee.com/hex_code/C11Partner.git
+   cd C11Partner
    ```
 
 2. **创建分支**

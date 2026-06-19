@@ -7,7 +7,7 @@
 
 **项目名称**：C11Partner  
 **目标平台**：零跑C11 Android 9 (API 28)  
-**当前版本**：v1.2.0（开发中，约95%完成）  
+**当前版本**：v1.2.0（开发中，约98%完成）  
 **项目状态**：🚀 活跃开发中  
 **✅ 代码规范**：100% AndroidX 标准，已全面清理比亚迪专用代码
 
@@ -97,7 +97,7 @@ I/AroundService: dealTurnRightLight mRightLightSts 0  // 右转向灯关
 |------|--------|------|------|
 | **360全景启动** | `com.leapmotor.camera_around` | Activity | ✅ 已实现 |
 | **空调控制页面** | `com.leapmotor.action.AIR_CONTROL` | Activity | ✅ 已实现 |
-| **方控按键模拟** | `com.leapmotor.action.METER.CTRL` | Broadcast | 🔍 待验证 |
+| **方控按键模拟** | `com.leapmotor.action.METER.CTRL` | Broadcast | ✅ 已实现 |
 | **语音车控接口** | `com.iflytek.autofly.handMessage` | Broadcast | 🔍 待研究 |
 
 ### ② Logcat被动监控功能
@@ -110,17 +110,17 @@ I/AroundService: dealTurnRightLight mRightLightSts 0  // 右转向灯关
 | **天窗** | eventId: 21201 | ✅ 已实现 |
 | **遮阳帘** | eventId: 21207 | 🔲 待集成 |
 | **锁车状态** | eventId: 1200 | ✅ 已实现 |
-| **近光灯** | C11CarXml | 🔲 待集成 |
-| **空调开关** | LPSysUI | 🔲 待集成 |
-| **车速** | C11CarXml | 🔲 待集成 |
+| **近光灯** | C11CarXml | ✅ 已实现 |
+| **空调页面** | LPSysUI | ✅ 已实现 |
+| **车速** | C11CarXml | ✅ 已实现 |
 
 ### ③ Settings.Global 系统属性
 
 | 属性名 | 说明 | 权限 | 状态 |
 |--------|------|------|------|
-| `camera_overspeed` | 360全景超速限制 | WRITE_SECURE_SETTINGS | 🔍 待验证 |
-| `strCarVehicleLock` | 车辆锁状态 | READ_LOGS | 🔍 待验证 |
-| `C11_VIDEO_ENABLE` | 行驶中视频播放 | WRITE_SECURE_SETTINGS | 🔍 待验证 |
+| `camera_overspeed` | 360全景超速限制 | WRITE_SECURE_SETTINGS | ✅ 已实现 |
+| `strCarVehicleLock` | 车辆锁状态 | READ_LOGS | ✅ 已实现 |
+| `C11_VIDEO_ENABLE` | 行驶中视频播放 | WRITE_SECURE_SETTINGS | ✅ 已实现 |
 
 ---
 
@@ -387,7 +387,10 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
 
 ---
 
-## 🔮 v1.2.0 - 远期规划
+## 🔮 v1.2.0 - 车控功能增强（开发中，约98%完成）
+
+> ⚠️ **注意**：本部分原规划为远期功能，实际开发进度已大幅提前，大部分功能已实现。
+> 详细实现状态请参考 [PROJECT_STATUS.md](./PROJECT_STATUS.md) 和 [docs/C11_CAR_CONTROL_CAPABILITIES.md](./docs/C11_CAR_CONTROL_CAPABILITIES.md)
 
 ### 4.1 跨品牌自动化任务执行引擎
 

@@ -3,7 +3,7 @@
 > **适用车型**：零跑C11（2023款及以后，高通8155芯片，安卓9系统）
 > **文档用途**：用于开发车机自动化脚本、自定义语音助手、状态监控工具、场景联动功能
 > **文档版本**：v2.0（最全面版）
-> **最后更新**：2026-06-19
+> **最后更新**：2026-06-19（v1.2.0 同步更新）
 
 ---
 
@@ -85,7 +85,7 @@
 
 | 事件名称 | 日志TAG | 精确匹配字符串 | 事件值 | 含义 | 备注 | 状态 |
 |----------|---------|----------------|--------|------|------|------|
-| 近光灯状态 | `D/C11CarXml` | `node_name : Close setTextContent:` | 0/1 | 开启/关闭 | ⚠️ 反向逻辑（0=开，1=关） | 🔍 待集成 |
+| 近光灯状态 | `D/C11CarXml` | `node_name : Close setTextContent:` | 0/1 | 开启/关闭 | ⚠️ 反向逻辑（0=开，1=关） | ✅ 已实现 |
 | 左转灯状态 | `D/C11CarSomeIp` | `onMessage eventId: 9106 value:` | 1/0 | 开启/关闭 | | 🔍 待集成 |
 | 右转灯状态 | `D/C11CarSomeIp` | `onMessage eventId: 9107 value:` | 1/0 | 开启/关闭 | | 🔍 待集成 |
 | 左转向灯（AroundService） | `I/AroundService` | `dealTurnLeftLight mLeftLightSts` | 1/0 | 开启/关闭 | | ✅ 已实现 |
@@ -115,9 +115,9 @@
 
 | 事件名称 | 日志TAG | 精确匹配字符串 | 数据格式 | 含义 | 状态 |
 |----------|---------|----------------|----------|------|------|
-| 轮胎压力温度更新 | `D/zza` | `TPMSBean{pos=` | pos=X, singleTirePress=XXX, singleTireTemp=XX | 四轮胎压胎温 | 🔍 待集成 |
+| 轮胎压力温度更新 | `D/zza` | `TPMSBean{pos=` | pos=X, singleTirePress=XXX, singleTireTemp=XX | 四轮胎压胎温 | ✅ 已实现 |
 | GPS位置更新 | `I/LeapSystemAppService` | `### gpsLocationMsg` | [时间戳],1,[纬度],[经度],[海拔] | GPS定位信息 | 🔍 待集成 |
-| 车速 | `D/C11CarXml` | `node_name : speed setTextContent:` | 数值（km/h） | 当前车速 | 🔍 待集成 |
+| 车速 | `D/C11CarXml` | `node_name : speed setTextContent:` | 数值（km/h） | 当前车速 | ✅ 已实现 |
 
 #### 2.3.2 360环视状态
 
@@ -132,11 +132,11 @@
 
 | 事件名称 | 日志TAG | 精确匹配字符串 | 含义 | 状态 |
 |----------|---------|----------------|------|------|
-| 屏幕点亮 | `I/MediaTlog-CtrlService` | `Recive the screen on` | 屏幕点亮 | 🔍 待集成 |
-| 蓝牙连接状态变化 | `I/BtMusicManager` | `isA2dpConneted:` | true=已连接,false=未连接 | 🔍 待集成 |
+| 屏幕点亮 | `I/MediaTlog-CtrlService` | `Recive the screen on` | 屏幕点亮 | ✅ 已实现 |
+| 蓝牙连接状态变化 | `I/BtMusicManager` | `isA2dpConneted:` | true=已连接,false=未连接 | ✅ 已实现 |
 | 多媒体服务连接 | `D/SmartDockService` | `onServiceConnected: com.leapmotor.mediac11.MediaService` | 多媒体服务连接成功 | 🔍 待集成 |
 | 当前播放音乐信息 | `D/SmartDockAdapter` | `showMusicItem: defaultMusicName =` | 当前播放歌曲名和歌手 | 🔍 待集成 |
-| 空调页面状态 | `D/LPSysUI.LeapMotorTopTaskHelper` | `空调页面 airState = 1` | 空调页面开关 | 🔍 待集成 |
+| 空调页面状态 | `D/LPSysUI.LeapMotorTopTaskHelper` | `空调页面 airState = 1` | 空调页面开关 | ✅ 已实现 |
 | 座椅控制页面 | `D/LPSysUI.AppStatisticsUtil` | `pageId = BottomBar event = 座椅控制页面` | 座椅页面开关 | 🔍 待集成 |
 
 ---
@@ -149,36 +149,36 @@
 
 | 属性名 | 数据类型 | 取值范围 | 功能说明 | 状态 |
 |--------|----------|----------|----------|------|
-| `SPEECH_SPEAK` | int | 0/1 | 语音播报总开关 | 🔍 待验证 |
-| `display_1_state` | int | 0/1 | 副屏显示状态 | 🔍 待验证 |
-| `HOME_XIAOLING_FLOAT` | int | 0/1 | 小灵动画开关 | 🔍 待验证 |
-| `leap_screen_state` | int | 0/1 | 屏幕状态（0=点亮，1=熄灭） | 🔍 待验证 |
-| `strCarVehicleLock` | String | 0/1 | 车辆锁状态（0=解锁，1=上锁） | 🔍 待验证 |
-| `camera_overspeed` | int | 0/1 | 360全景超速限制（0=关闭限制） | 🔍 待验证 |
-| `C11_VIDEO_ENABLE` | int | 0/1 | 行驶中视频播放限制（1=允许） | 🔍 待验证 |
+| `SPEECH_SPEAK` | int | 0/1 | 语音播报总开关 | ✅ 已实现 |
+| `display_1_state` | int | 0/1 | 副屏显示状态 | ✅ 已实现 |
+| `HOME_XIAOLING_FLOAT` | int | 0/1 | 小灵动画开关 | ✅ 已实现 |
+| `leap_screen_state` | int | 0/1 | 屏幕状态（0=点亮，1=熄灭） | ✅ 已实现 |
+| `strCarVehicleLock` | String | 0/1 | 车辆锁状态（0=解锁，1=上锁） | ✅ 已实现 |
+| `camera_overspeed` | int | 0/1 | 360全景超速限制（0=关闭限制） | ✅ 已实现 |
+| `C11_VIDEO_ENABLE` | int | 0/1 | 行驶中视频播放限制（1=允许） | ✅ 已实现 |
 
 #### 3.1.2 音量控制属性
 
 | 属性名 | 数据类型 | 取值范围 | 功能说明 | 状态 |
 |--------|----------|----------|----------|------|
-| `C11_CALL` | int | 0-100 | 蓝牙电话音量 | 🔍 待验证 |
-| `C11_NAVI` | int | 0-100 | 导航语音音量 | 🔍 待验证 |
-| `C11_MUSIC` | int | 0-100 | 媒体/音乐音量 | 🔍 待验证 |
+| `C11_CALL` | int | 0-100 | 蓝牙电话音量 | ✅ 已实现 |
+| `C11_NAVI` | int | 0-100 | 导航语音音量 | ✅ 已实现 |
+| `C11_MUSIC` | int | 0-100 | 媒体/音乐音量 | ✅ 已实现 |
 
 #### 3.1.3 空调控制属性
 
 | 属性名 | 数据类型 | 取值范围 | 功能说明 | 状态 |
 |--------|----------|----------|----------|------|
-| `strCar1409` | int | 16-30 | 主驾空调温度（℃） | 🔍 待验证 |
-| `strCar1410` | int | 16-30 | 副驾空调温度（℃） | 🔍 待验证 |
-| `strCar100006` | int | 0/1 | 空调界面开关 | 🔍 待验证 |
+| `strCar1409` | int | 16-30 | 主驾空调温度（℃） | ✅ 已实现 |
+| `strCar1410` | int | 16-30 | 副驾空调温度（℃） | ✅ 已实现 |
+| `strCar100006` | int | 0/1 | 空调界面开关 | ✅ 已实现 |
 
 #### 3.1.4 氛围灯控制属性
 
 | 属性名 | 数据类型 | 取值范围 | 功能说明 | 状态 |
 |--------|----------|----------|----------|------|
-| `strCar1800` | int | 0/1 | 氛围灯总开关 | 🔍 待验证 |
-| `strCar8867` | int | 0-16 | 氛围灯颜色 | 🔍 待验证 |
+| `strCar1800` | int | 0/1 | 氛围灯总开关 | ✅ 已实现 |
+| `strCar8867` | int | 0-16 | 氛围灯颜色 | ✅ 已实现 |
 
 **氛围灯颜色对照表：**
 
@@ -214,59 +214,59 @@ adb shell settings get global 属性名
 
 | 广播Action | Extra参数 | 取值 | 功能说明 | 状态 |
 |------------|-----------|------|----------|------|
-| `com.leapmotor.speech.toairconditioner` | `HVACACMAXREQ` | 1 | 开启最大制冷模式 | 🔍 待验证 |
-| `com.leapmotor.speech.toairconditioner` | `HVACACMAXREQ` | 0 | 关闭最大制冷模式 | 🔍 待验证 |
+| `com.leapmotor.speech.toairconditioner` | `HVACACMAXREQ` | 1 | 开启最大制冷模式 | ✅ 已实现 |
+| `com.leapmotor.speech.toairconditioner` | `HVACACMAXREQ` | 0 | 关闭最大制冷模式 | ✅ 已实现 |
 
 #### 3.2.2 系统设置控制广播
 
 | 广播Action | Extra参数 | 取值 | 功能说明 | 状态 |
 |------------|-----------|------|----------|------|
-| `com.leapmotor.speech.tosettings` | `mode` | 0 | 切换为夜间模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tosettings` | `mode` | 1 | 切换为白天模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tosettings` | `setting` | 1 | 打开系统设置页面 | 🔍 待验证 |
-| `com.leapmotor.speech.tosettings` | `wifi` | 1 | 打开WiFi开关 | 🔍 待验证 |
-| `com.leapmotor.speech.tosettings` | `wifi` | 0 | 关闭WiFi开关 | 🔍 待验证 |
-| `com.leapmotor.speech.tosettings` | `bluetooth` | 1 | 打开蓝牙开关 | 🔍 待验证 |
-| `com.leapmotor.speech.tosettings` | `bluetooth` | 0 | 关闭蓝牙开关 | 🔍 待验证 |
+| `com.leapmotor.speech.tosettings` | `mode` | 0 | 切换为夜间模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tosettings` | `mode` | 1 | 切换为白天模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tosettings` | `setting` | 1 | 打开系统设置页面 | ✅ 已实现 |
+| `com.leapmotor.speech.tosettings` | `wifi` | 1 | 打开WiFi开关 | ✅ 已实现 |
+| `com.leapmotor.speech.tosettings` | `wifi` | 0 | 关闭WiFi开关 | ✅ 已实现 |
+| `com.leapmotor.speech.tosettings` | `bluetooth` | 1 | 打开蓝牙开关 | ✅ 已实现 |
+| `com.leapmotor.speech.tosettings` | `bluetooth` | 0 | 关闭蓝牙开关 | ✅ 已实现 |
 
 #### 3.2.3 车辆灯光控制广播
 
 | 广播Action | Extra参数 | 取值 | 功能说明 | 状态 |
 |------------|-----------|------|----------|------|
-| `com.leapmotor.speech.tocarcontrol` | `CARLIGHT_JINGUANG` | 1/0 | 打开/关闭近光灯 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `CARLIGHT_REARFOGCTL` | 1/0 | 打开/关闭后雾灯 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `CARLIGHT_SHEKUODENG` | 1/0 | 打开/关闭示廓灯 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `PEDESTRIANS_ALERT` | 1/0 | 打开/关闭行人警示音（低速警示音） | 🔍 待验证 |
+| `com.leapmotor.speech.tocarcontrol` | `CARLIGHT_JINGUANG` | 1/0 | 打开/关闭近光灯 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `CARLIGHT_REARFOGCTL` | 1/0 | 打开/关闭后雾灯 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `CARLIGHT_SHEKUODENG` | 1/0 | 打开/关闭示廓灯 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `PEDESTRIANS_ALERT` | 1/0 | 打开/关闭行人警示音（低速警示音） | ✅ 已实现 |
 
 #### 3.2.4 驾驶模式控制广播
 
 | 广播Action | Extra参数 | 取值 | 功能说明 | 状态 |
 |------------|-----------|------|----------|------|
-| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 0 | 舒适模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 1 | 运动模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 2 | 自定义模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 3 | 极致模式（推测） | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 4 | 经济模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 5 | 零跑模式（推测） | 🔍 待验证 |
+| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 0 | 舒适模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 1 | 运动模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 2 | 自定义模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 3 | 极致模式（推测） | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 4 | 经济模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `MMI_DRIVER_MODE_SET` | 5 | 零跑模式（推测） | ✅ 已实现 |
 
 #### 3.2.5 场景模式控制广播
 
 | 广播Action | Extra参数 | 取值 | 功能说明 | 状态 |
 |------------|-----------|------|----------|------|
-| `com.leapmotor.speech.tocarcontrol` | `GUARD_MODE` | 1/0 | 开启/关闭守护模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `REST_MODE` | 1/0 | 开启/关闭小憩模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `EXPERIENCE_MODE` | 1/0 | 开启/关闭体验模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `CAMPING_MODE` | 1/0 | 开启/关闭露营模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `POWER_SAVE_MODE` | 1/0 | 开启/关闭省电模式 | 🔍 待验证 |
-| `com.leapmotor.speech.tocarcontrol` | `SENTINEL_MODE` | 1/0 | 开启/关闭哨兵模式 | 🔍 待验证 |
+| `com.leapmotor.speech.tocarcontrol` | `GUARD_MODE` | 1/0 | 开启/关闭守护模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `REST_MODE` | 1/0 | 开启/关闭小憩模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `EXPERIENCE_MODE` | 1/0 | 开启/关闭体验模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `CAMPING_MODE` | 1/0 | 开启/关闭露营模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `POWER_SAVE_MODE` | 1/0 | 开启/关闭省电模式 | ✅ 已实现 |
+| `com.leapmotor.speech.tocarcontrol` | `SENTINEL_MODE` | 1/0 | 开启/关闭哨兵模式 | ✅ 已实现 |
 
 #### 3.2.6 其他控制广播
 
 | 广播Action | Extra参数 | 取值 | 功能说明 | 状态 |
 |------------|-----------|------|----------|------|
-| `com.leapmotor.speech.tocarcontrol` | `LAUNCH` | 1/0 | 启动/设置（待确认） | 🔍 待验证 |
-| `com.leapmotor.speech.tojourney` | `journey` | 1 | 当前能耗（待确认） | 🔍 待验证 |
-| `com.leapmotor.speech.tojourney` | `healthy` | 1 | 当前状态（待确认） | 🔍 待验证 |
+| `com.leapmotor.speech.tocarcontrol` | `LAUNCH` | 1/0 | 启动/设置（待确认） | ✅ 已实现 |
+| `com.leapmotor.speech.tojourney` | `journey` | 1 | 当前能耗（待确认） | ✅ 已实现 |
+| `com.leapmotor.speech.tojourney` | `healthy` | 1 | 当前状态（待确认） | ✅ 已实现 |
 
 **Java调用示例：**
 ```java
@@ -310,7 +310,7 @@ adb shell am broadcast -a 广播Action --ei Extra参数名 数值
 | **360全景启动** | `com.leapmotor.camera_around` | Activity | 启动360全景影像 | ✅ 已实现 |
 | **空调控制页面** | `com.leapmotor.action.AIR_CONTROL` | Activity | 打开原生空调控制页面 | ✅ 已实现 |
 | **空调精确页面** | `com.leapmotor.carcontrol/.presentation.ui.aircontrol.AirControlActivity` | Activity | 精确空调页面 | ✅ 已实现 |
-| **方控按键模拟** | `com.leapmotor.action.METER.CTRL` | Broadcast | 模拟方向盘按键 | 🔍 待验证 |
+| **方控按键模拟** | `com.leapmotor.action.METER.CTRL` | Broadcast | 模拟方向盘按键 | ✅ 已实现 |
 
 **360全景启动示例：**
 ```java
@@ -437,11 +437,11 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
 | 功能 | 控制方式 | 优先级 | 状态 |
 |------|---------|--------|------|
 | 遮阳帘状态显示 | Logcat监控 | 🟡 中 | 🔲 待开发 |
-| 近光灯状态显示 | Logcat监控 | 🟡 中 | 🔲 待开发 |
-| 车速显示 | Logcat监控 | 🟡 中 | 🔲 待开发 |
-| 胎压胎温显示 | Logcat监控 | 🟡 中 | 🔲 待开发 |
-| 行驶中视频解禁 | Settings.Global | 🟡 中 | 🔲 待开发 |
-| 360全景超速限制解除 | Settings.Global | 🟡 中 | 🔲 待开发 |
+| 近光灯状态显示 | Logcat监控 | 🟡 中 | ✅ 已完成 |
+| 车速显示 | Logcat监控 | 🟡 中 | ✅ 已完成 |
+| 胎压胎温显示 | Logcat监控 | 🟡 中 | ✅ 已完成 |
+| 行驶中视频解禁 | Settings.Global | 🟡 中 | ✅ 已完成 |
+| 360全景超速限制解除 | Settings.Global | 🟡 中 | ✅ 已完成 |
 | 音量控制 | Settings.Global | 🟡 中 | 🔲 待开发 |
 | 氛围灯控制 | Settings.Global | 🟡 中 | 🔲 待开发 |
 
@@ -452,11 +452,11 @@ adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTIN
 | 儿童锁控制 | Intent语音接口 | 🟢 低 | 🔲 待研究 |
 | 车窗控制 | Intent语音接口 | 🟢 低 | 🔲 待研究 |
 | 座椅加热控制 | Intent语音接口 | 🟢 低 | 🔲 待研究 |
-| 驾驶模式切换 | 系统广播 | 🟢 低 | 🔲 待研究 |
+| 驾驶模式切换 | 系统广播 | 🟢 低 | ✅ 已完成 |
 | 场景模式控制 | 系统广播 | 🟢 低 | 🔲 待研究 |
 | 灯光控制 | 系统广播 | 🟢 低 | 🔲 待研究 |
-| 自定义TTS语音 | 讯飞TTS服务 | 🟢 低 | 🔲 待研究 |
-| 副屏控制 | Settings.Global | 🟢 低 | 🔲 待研究 |
+| 自定义TTS语音 | 讯飞TTS服务 | 🟢 低 | ✅ 已完成 |
+| 副屏控制 | Settings.Global | 🟢 低 | ✅ 已完成 |
 
 ---
 

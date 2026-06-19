@@ -1,4 +1,4 @@
-# C11Partner AI项目引导文档 v2.0
+# C11Partner AI项目引导文档 v2.1
 
 > 🚨 **强制阅读顺序**：每次接手项目时，必须按以下顺序读取：
 > 1. **PROJECT_STATUS.md** - 项目当前状态总览（最新进度、已完成、待办）
@@ -24,6 +24,9 @@
 | **前端页面UI** | index.html | `app/src/main/assets/index.html` |
 | **前端JS逻辑** | index.js | `app/src/main/assets/js/index.js` |
 | **前后端通信** | WebViewBridge.java + android_interface.js | bridge目录 + assets/js目录 |
+| **车控功能** | CarControlManager.java | `app/src/main/java/com/c11partner/desktop/utils/CarControlManager.java` |
+| **自动化场景** | AutomationEngine.java | `app/src/main/java/com/c11partner/desktop/utils/AutomationEngine.java` |
+| **副屏功能** | SecondaryScreenManager.java + CarStatusPresentation.java | utils目录 + 根目录 |
 | **ADB功能/权限** | AdbManager.java + PermissionGrantHelper.java | adb目录 + bridge目录 |
 | **主Activity入口** | MainActivity.java | `app/src/main/java/com/c11partner/desktop/MainActivity.java` |
 | **应用清单/权限** | AndroidManifest.xml | `app/src/main/AndroidManifest.xml` |
@@ -43,7 +46,7 @@
 |------|------|
 | **项目名称** | C11Partner（零跑C11专属车载桌面） |
 | **基于项目** | DiPartner 开源车载桌面（已深度定制） |
-| **当前版本** | v1.1.0 |
+| **当前版本** | v1.2.0（开发中，约98%完成） |
 | **项目状态** | 活跃开发中 |
 | **包名** | `com.c11partner.desktop` |
 | **应用名称** | C11伙伴 |
