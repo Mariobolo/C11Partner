@@ -4134,6 +4134,17 @@ public class WebViewBridge {
                         mCarStatusPresentation.updateGear(state.getGear());
                         mCarStatusPresentation.updateDoorStatus(state.getOpenDoorCount());
                         mCarStatusPresentation.updateTurnLights(state.isLeftTurnLightOn(), state.isRightTurnLightOn());
+                        // 更新胎压
+                        mCarStatusPresentation.updateTirePressure(
+                            state.getFrontLeftTirePressure(),
+                            state.getFrontRightTirePressure(),
+                            state.getRearLeftTirePressure(),
+                            state.getRearRightTirePressure()
+                        );
+                        // 更新其他状态
+                        mCarStatusPresentation.updateLowBeamLight(state.isLowBeamLightOn());
+                        mCarStatusPresentation.updateBluetoothState(state.isBluetoothConnected());
+                        mCarStatusPresentation.updateLockState(state.isLocked());
                     }
                 }
             });
