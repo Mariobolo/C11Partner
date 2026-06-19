@@ -4051,5 +4051,80 @@ public class WebViewBridge {
             return true;
         }
     }
+    
+    // ==================== 自动化场景配置 ====================
+    
+    /**
+     * 自动化场景引擎实例
+     */
+    private com.c11partner.desktop.utils.AutomationEngine mAutomationEngine;
+    
+    /**
+     * 获取自动化场景引擎实例（懒加载）
+     */
+    private com.c11partner.desktop.utils.AutomationEngine getAutomationEngine() {
+        if (mAutomationEngine == null) {
+            mAutomationEngine = new com.c11partner.desktop.utils.AutomationEngine(mContext);
+        }
+        return mAutomationEngine;
+    }
+    
+    /**
+     * 获取所有自动化场景配置
+     * @return JSON字符串
+     */
+    @JavascriptInterface
+    public String getAutomationSettings() {
+        try {
+            return getAutomationEngine().getAllScenariosJson();
+        } catch (Exception e) {
+            Log.e(TAG, "获取自动化配置失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
+     * 设置所有自动化场景配置
+     * @param jsonStr JSON字符串
+     */
+    @JavascriptInterface
+    public void setAutomationSettings(String jsonStr) {
+        try {
+            getAutomationEngine().loadScenariosFromJson(jsonStr);
+            Log.d(TAG, "自动化配置已更新");
+        } catch (Exception e) {
+            Log.e(TAG, "设置自动化配置失败", e);
+        }
+    }
+    
+    /**
+     * 检查单个自动化场景是否启用
+     * @param scenarioId 场景ID
+     * @return 是否启用
+     */
+    @JavascriptInterface
+    public boolean isAutomationScenarioEnabled(String scenarioId) {
+        try {
+            return getAutomationEngine().isScenarioEnabled(scenarioId);
+        } catch (Exception e) {
+            Log.e(TAG, "检查场景状态失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置单个自动化场景启用状态
+     * @param scenarioId 场景ID
+     * @param enabled 是否启用
+     */
+    @JavascriptInterface
+    public void setAutomationScenarioEnabled(String scenarioId, boolean enabled) {
+        try {
+            getAutomationEngine().setScenarioEnabled(scenarioId, enabled);
+            Log.d(TAG, "场景 " + scenarioId + " 状态: " + (enabled ? "启用" : "禁用"));
+        } catch (Exception e) {
+            Log.e(TAG, "设置场景状态失败", e);
+        }
+    }
 }
 

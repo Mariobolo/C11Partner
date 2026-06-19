@@ -3622,6 +3622,24 @@ const AutomationManager = {
      */
     loadSettings: function() {
         try {
+            // 优先从后端加载配置
+            if (typeof Android !== 'undefined' && Android.getAutomationSettings) {
+                try {
+                    const backendSettings = Android.getAutomationSettings();
+                    if (backendSettings) {
+                        const parsed = JSON.parse(backendSettings);
+                        if (parsed && Object.keys(parsed).length > 0) {
+                            this.enabledScenarios = parsed;
+                            console.log('从后端加载自动化配置成功');
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    console.warn('从后端加载配置失败，使用本地配置:', e);
+                }
+            }
+            
+            // 从本地存储加载
             const saved = localStorage.getItem('automationSettings');
             if (saved) {
                 this.enabledScenarios = JSON.parse(saved);
@@ -3643,6 +3661,15 @@ const AutomationManager = {
     saveSettings: function() {
         try {
             localStorage.setItem('automationSettings', JSON.stringify(this.enabledScenarios));
+            
+            // 同步到后端
+            if (typeof Android !== 'undefined' && Android.setAutomationSettings) {
+                try {
+                    Android.setAutomationSettings(JSON.stringify(this.enabledScenarios));
+                } catch (e) {
+                    console.error('同步配置到后端失败:', e);
+                }
+            }
         } catch (e) {
             console.error('保存自动化配置失败:', e);
         }
@@ -3662,12 +3689,12 @@ const AutomationManager = {
         this.enabledScenarios[scenarioId] = !this.enabledScenarios[scenarioId];
         this.saveSettings();
         
-        // 如果后端支持，通知后端
-        if (window.AndroidInterface && window.AndroidInterface.setAutomationScenario) {
+        // 单独通知后端（可选，saveSettings已包含全量同步）
+        if (typeof Android !== 'undefined' && Android.setAutomationScenarioEnabled) {
             try {
-                window.AndroidInterface.setAutomationScenario(scenarioId, this.enabledScenarios[scenarioId]);
+                Android.setAutomationScenarioEnabled(scenarioId, this.enabledScenarios[scenarioId]);
             } catch (e) {
-                console.error('通知后端自动化场景失败:', e);
+                console.error('通知后端场景状态失败:', e);
             }
         }
         

@@ -17,6 +17,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.c11partner.desktop.utils.AutomationEngine;
+
 /**
  * 零跑C11日志监控服务
  * 实时抓取logcat并解析车辆CAN信号
@@ -62,6 +64,9 @@ public class LogcatMonitorService extends Service {
     // 监听器列表
     private List<CarStateListener> listeners = new ArrayList<>();
     
+    // 自动化场景引擎
+    private AutomationEngine mAutomationEngine;
+    
     // 日志读取线程
     private Thread logcatThread;
     private volatile boolean isRunning = false;
@@ -87,6 +92,7 @@ public class LogcatMonitorService extends Service {
     public void onCreate() {
         super.onCreate();
         mainHandler = new Handler(Looper.getMainLooper());
+        mAutomationEngine = new AutomationEngine(this);
         createNotificationChannel();
         startForeground(NOTIFICATION_ID, createNotification());
         Log.i(TAG, "日志监控服务创建");
@@ -543,6 +549,9 @@ public class LogcatMonitorService extends Service {
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
+                // 触发自动化场景
+                mAutomationEngine.onGearChanged(oldGear, newGear, carState);
+                // 通知监听器
                 for (CarStateListener listener : listeners) {
                     listener.onGearChanged(oldGear, newGear);
                 }
@@ -554,6 +563,9 @@ public class LogcatMonitorService extends Service {
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
+                // 触发自动化场景
+                mAutomationEngine.onTurnLightChanged(isLeft, state, carState);
+                // 通知监听器
                 for (CarStateListener listener : listeners) {
                     listener.onTurnLightChanged(isLeft, state);
                 }
@@ -565,6 +577,9 @@ public class LogcatMonitorService extends Service {
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
+                // 触发自动化场景
+                mAutomationEngine.onDoorChanged(doorName, state, carState);
+                // 通知监听器
                 for (CarStateListener listener : listeners) {
                     listener.onDoorChanged(doorName, state);
                 }
@@ -576,6 +591,9 @@ public class LogcatMonitorService extends Service {
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
+                // 触发自动化场景
+                mAutomationEngine.onSpeedChanged(speed, carState);
+                // 通知监听器
                 for (CarStateListener listener : listeners) {
                     listener.onSpeedChanged(speed);
                 }
@@ -587,6 +605,9 @@ public class LogcatMonitorService extends Service {
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
+                // 触发自动化场景
+                mAutomationEngine.onLockStateChanged(isLocked, carState);
+                // 通知监听器
                 for (CarStateListener listener : listeners) {
                     listener.onLockStateChanged(isLocked);
                 }
