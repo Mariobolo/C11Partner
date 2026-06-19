@@ -1,0 +1,319 @@
+# C11Partner 项目状态总览
+
+> 📌 **本文档是项目状态的唯一真相来源**，每次对话前请先读取本文档，再读取相关文档。
+>
+> 最后更新：2026-06-19
+> 当前版本：v1.2.0 (开发中)
+
+---
+
+## 📋 项目基本信息
+
+| 项目 | 详情 |
+|------|------|
+| **项目名称** | C11Partner（零跑C11专属车载桌面） |
+| **原项目** | DiPartner (https://gitee.com/hex_code/DiPartner) |
+| **包名** | com.c11partner.desktop |
+| **应用名** | C11伙伴 |
+| **GitHub仓库** | https://github.com/Mariobolo/C11Partner |
+| **CI构建** | https://github.com/Mariobolo/C11Partner/actions |
+| **本地目录** | /home/user/.super_doubao/super-doubao-runtime/workspace/C11Partner |
+| **目标平台** | 零跑C11车机 (Android 9, API 28, arm64-v8a) |
+| **编译SDK** | API 30, minSdk 25, targetSdk 30 |
+
+---
+
+## 🎯 当前版本进度
+
+### v1.2.0 - 车控功能增强 (开发中，约85%完成)
+
+#### ✅ 已完成
+
+**后端功能 (100%)**：
+- ✅ CarControlManager.java - 完整车控功能管理类
+  - Intent主动控制：灯光、驾驶模式、场景模式、空调、WiFi、蓝牙、方控
+  - Settings.Global读写：360限速、行驶视频、音量、空调温度、氛围灯、副屏、语音播报
+- ✅ LogcatMonitorService.java - 日志监控服务增强
+  - CAN信号解析：档位、6车门、转向灯、天窗、锁车、车速
+  - 新增解析：近光灯、蓝牙连接、屏幕状态、空调页面、胎压胎温
+  - 前台Service保活，主动推送状态到前端
+- ✅ WebViewBridge.java - 40+个车控JS接口
+- ✅ MainActivity.java - 状态推送（已修复字段不完整问题）
+- ✅ LeapMotorCarState.java - 增强版车辆状态数据类
+
+**前端功能 (90%)**：
+- ✅ 顶部状态栏车辆状态指示器
+  - 档位指示器（P/R/N/D，不同颜色）
+  - 车门指示器（开门数量，红色警告）
+  - 转向灯指示器（闪烁动画）
+  - 锁车指示器（🔒/🔓）
+  - 360全景指示器
+- ✅ 快捷开关面板（长按360按钮呼出）
+  - 13个快捷开关
+  - 6种驾驶模式
+  - 5种场景模式
+  - Settings.Global类开关显示"开/关"状态
+- ✅ 自动化场景配置界面
+  - 12个常用自动化场景
+  - 按分类分组
+  - 可独立开关
+  - localStorage持久化存储
+
+**文档**：
+- ✅ docs/C11_CAR_CONTROL_CAPABILITIES.md - v2.0 最全面版车控接口文档
+- ✅ docs/LEAPMOTOR_LOG_ANALYSIS.md - 实车日志分析报告
+- ✅ docs/ICON_RESOURCES.md - 图标素材推荐清单
+- ✅ AI_ENTRY_GUIDE.md - AI项目引导文档v2.0
+- ✅ PROJECT_PLAN.md - 详细开发计划
+- ✅ README.md - 项目说明文档
+
+#### 🚧 待完成
+
+- [ ] 文档全面更新（README、PROJECT_PLAN等同步v1.2.0）
+- [ ] 后端自动化任务执行引擎
+- [ ] 副屏投屏功能
+- [ ] 前端UI整体美化
+- [ ] 图标替换和主题美化
+- [ ] 实车测试和bug修复
+
+---
+
+## 🏗️ 三层控制模型（核心架构）
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    应用层 (C11Partner)                   │
+├─────────────────────────────────────────────────────────┤
+│  ① Intent主动控制  │  ② Logcat被动监控  │  ③ Settings读写 │
+├─────────────────────────────────────────────────────────┤
+│                    零跑车机系统层                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+### ① Intent主动控制（14项功能）
+| 分类 | 功能 | 状态 |
+|------|------|------|
+| 360全景 | 启动360全景 | ✅ |
+| 空调 | 打开空调页面、最大制冷 | ✅ |
+| 灯光 | 近光灯、后雾灯、示廓灯、行人警示 | ✅ |
+| 驾驶模式 | 舒适/运动/自定义/极致/经济/零跑 | ✅ |
+| 场景模式 | 守护/小憩/露营/省电/哨兵 | ✅ |
+| 系统设置 | 夜间模式、WiFi、蓝牙 | ✅ |
+| 方控按键 | 上一曲、下一曲 | ✅ |
+
+### ② Logcat被动监控（14项状态）
+| 分类 | 状态 | 状态 |
+|------|------|------|
+| 车门 | 6门状态（前后左右+尾箱+机盖） | ✅ |
+| 档位 | P/R/N/D | ✅ |
+| 锁车 | 上锁/解锁 | ✅ |
+| 转向灯 | 左/右转向灯 | ✅ |
+| 天窗/遮阳帘 | 开/关 | ✅/🔍 |
+| 灯光 | 近光灯 | ✅ |
+| 车速 | 当前速度 | ✅ |
+| 胎压胎温 | 四轮胎压温度 | ✅（简化版） |
+| 蓝牙 | 连接状态 | ✅ |
+| 屏幕 | 点亮/熄灭 | ✅ |
+| 空调页面 | 页面开关 | ✅ |
+| GPS位置 | 经纬度海拔 | 🔍 |
+
+### ③ Settings.Global读写（17项属性）
+| 分类 | 属性 | 可读 | 可写 |
+|------|------|------|------|
+| 通用 | strCarVehicleLock（锁状态） | ✅ | ❓ |
+| 通用 | leap_screen_state（屏幕状态） | ✅ | ❓ |
+| 通用 | display_1_state（副屏状态） | ✅ | ✅ |
+| 通用 | SPEECH_SPEAK（语音播报） | ✅ | ✅ |
+| 360全景 | camera_overspeed（超速限制） | ✅ | ✅ |
+| 视频 | C11_VIDEO_ENABLE（行驶解禁） | ✅ | ✅ |
+| 音量 | C11_CALL / C11_NAVI / C11_MUSIC | ✅ | ✅ |
+| 空调 | strCar1409 / strCar1410（温度） | ✅ | ✅ |
+| 空调 | strCar100006（空调界面） | ✅ | ✅ |
+| 氛围灯 | strCar1800（总开关） | ✅ | ✅ |
+| 氛围灯 | strCar8867（颜色） | ✅ | ✅ |
+
+---
+
+## 📂 关键文件索引
+
+### 后端核心文件
+```
+app/src/main/java/com/c11partner/desktop/
+├── MainActivity.java                    # 主Activity，状态推送
+├── LeapMotorCarState.java               # 车辆状态数据类
+├── CarStateListener.java                # 状态变化监听接口
+├── LogcatMonitorService.java            # 日志监控服务（核心）
+├── LeapMotorCamera360.java              # 360全景控制
+├── bridge/
+│   └── WebViewBridge.java               # JS接口（40+方法）
+├── utils/
+│   ├── CarControlManager.java           # 车控功能管理类
+│   └── TaskManager.java
+├── service/
+│   └── LogcatMonitorService.java        # （实际在根目录）
+└── adb/
+    └── AdbManager.java
+```
+
+### 前端核心文件
+```
+app/src/main/assets/
+├── index.html                           # 主页面
+├── css/
+│   └── index.css                        # 样式
+└── js/
+    ├── index.js                         # 主逻辑（含CarStateManager、QuickSwitchManager、AutomationManager）
+    ├── weather.js
+    ├── music.js
+    └── ...
+```
+
+### 文档文件
+```
+├── README.md                            # 项目说明
+├── PROJECT_PLAN.md                      # 详细开发计划
+├── PROJECT_STATUS.md                    # 本文档（状态总览）
+├── AI_ENTRY_GUIDE.md                    # AI项目引导文档
+└── docs/
+    ├── C11_CAR_CONTROL_CAPABILITIES.md  # 车控接口文档v2.0
+    ├── LEAPMOTOR_LOG_ANALYSIS.md        # 实车日志分析
+    └── ICON_RESOURCES.md                # 图标素材推荐
+```
+
+---
+
+## 🔑 核心技术点（必须了解）
+
+### 权限要求（三个核心权限，必须ADB授权）
+```bash
+# 1. 读取系统日志（车辆状态监控）
+adb shell pm grant com.c11partner.desktop android.permission.READ_LOGS
+
+# 2. DUMP权限（获取系统状态）
+adb shell pm grant com.c11partner.desktop android.permission.DUMP
+
+# 3. 写入系统设置（车控功能）
+adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTINGS
+```
+
+### 关键CAN信号（EventId）
+| 功能 | EventId | 值 |
+|------|---------|-----|
+| 档位 | 1110 | 1=R, 2=N, 3=D, 4=P |
+| 左前门 | 9123 | 0=关, 1=开 |
+| 右前门 | 9124 | 0=关, 1=开 |
+| 左后门 | 9125 | 0=关, 1=开 |
+| 右后门 | 9126 | 0=关, 1=开 |
+| 后备箱 | 9127 | 0=关, 1=开 |
+| 前机盖 | 9128 | 0=关, 1=开 |
+| 天窗 | 21201 | 0=关, 1=开 |
+| 锁车 | 1200 | 0=解锁, 1=上锁 |
+
+### 关键日志TAG
+| TAG | 用途 |
+|-----|------|
+| D/C11CarSomeIp | 核心CAN信号（车门、档位、天窗、锁车） |
+| I/AroundService | 转向灯信号 |
+| D/C11CarXml | 灯光、空调、车速 |
+| D/LPSysUI | 页面状态 |
+| I/BtMusicManager | 蓝牙音乐、连接状态 |
+| I/MediaTlog-CtrlService | 多媒体、屏幕状态 |
+| D/zza | 胎压胎温（TPMSBean） |
+
+### 360全景启动Intent
+```java
+Intent intent = new Intent("com.leapmotor.camera_around");
+intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+startActivity(intent);
+```
+
+---
+
+## 🎮 前端功能使用说明
+
+### 状态栏车辆状态
+- **位置**：顶部状态栏中间
+- **内容**：档位、车门、转向灯、锁车、360状态
+- **更新方式**：后端主动推送（Logcat监控 → 监听回调 → evaluateJavascript）
+
+### 快捷开关面板
+- **呼出方式**：长按底部360全景按钮（500ms）
+- **内容**：13个快捷开关 + 6种驾驶模式 + 5种场景模式
+- **状态显示**：
+  - Settings.Global类（5个）：显示"开/关"，绿色/灰色
+  - Intent类（8个）：显示"--"，暂无法读取状态
+
+### 自动化场景配置
+- **呼出方式**：暂未绑定入口，可通过JS调用 `AutomationManager.togglePanel()`
+- **内容**：12个场景，按分类分组
+- **存储**：localStorage的automationSettings键
+
+---
+
+## 📝 开发规范
+
+### Git提交规范
+```
+feat: 新功能
+fix: 修复bug
+docs: 文档更新
+style: 代码格式调整
+refactor: 重构
+test: 测试相关
+chore: 构建/工具链变动
+```
+
+### Java代码规范
+- 驼峰命名法，类名大驼峰
+- 常量全大写下划线分隔
+- 每个方法必须有Javadoc注释
+- 4空格缩进，最大行宽120字符
+
+### 比亚迪代码清理状态
+- ✅ 100%清理完成，无残留
+- ✅ 完全AndroidX标准
+- ✅ 零跑C11专属实现
+
+---
+
+## 🚀 快速开始（AI接手流程）
+
+1. **读取本文档** - 了解项目当前状态
+2. **读取AI_ENTRY_GUIDE.md** - 详细的项目引导
+3. **读取相关文档** - 根据任务读取对应文档
+4. **查看代码** - 根据文件索引找到对应文件
+5. **开始工作** - 修改代码、提交、推送
+
+---
+
+## ⚠️ 已知问题和注意事项
+
+1. **Intent类开关无法读取状态** - 通过广播发送，没有返回接口，显示"--"
+   - 解决方案：后续通过Logcat被动监控补充
+
+2. **自动化场景仅前端配置** - 后端执行引擎尚未实现
+   - 当前状态：仅UI配置，实际逻辑在后端服务中硬编码
+
+3. **CI构建** - 每次push自动触发，约5-10分钟完成
+   - 地址：https://github.com/Mariobolo/C11Partner/actions
+
+4. **签名文件** - app/dipartner.jks（开发测试用）
+   - 密码：dipartner123
+   - 别名：dipartner
+
+---
+
+## 📅 版本历史
+
+| 版本 | 日期 | 主要内容 |
+|------|------|---------|
+| v1.0.0 | 2026-06-17 | 项目初始化，包名重命名，基础功能 |
+| v1.1.0 | 2026-06-17 | 日志监控系统、360自动触发、空调控制 |
+| v1.2.0 | 2026-06-19 | 车控功能增强、快捷开关、状态栏状态（开发中） |
+
+---
+
+**文档维护说明**：
+- 每次完成重要功能后更新本文档
+- 版本发布时必须更新
+- 这是项目状态的唯一真相来源
