@@ -1,5 +1,6 @@
 package com.c11partner.desktop.utils;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;

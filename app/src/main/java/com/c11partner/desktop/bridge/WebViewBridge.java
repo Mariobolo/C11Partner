@@ -30,6 +30,7 @@ import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
 import com.c11partner.desktop.service.MediaSessionService;
 import com.c11partner.desktop.utils.AppUtils;
 import com.c11partner.desktop.utils.CarControlManager;
+import com.c11partner.desktop.LeapMotorCarState;
 import com.c11partner.desktop.utils.WallpaperCategoryApiUtils;
 import com.c11partner.desktop.utils.WallpaperDownloadUtils;
 
@@ -2942,13 +2943,18 @@ public class WebViewBridge {
         try {
             CarControlManager carControl = getCarControlManager();
             final int driverTemp = carControl.getDriverTemp();
+            final int passengerTemp = carControl.getPassengerTemp();
+            final boolean acEnabled = carControl.isAcEnabled();
+            final int windLevel = carControl.getWindLevel();
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         mActivity.loadUrl("javascript:updateAcTemperature(" + driverTemp + ")");
+                        mActivity.loadUrl("javascript:updateAcState(" + (acEnabled ? "true" : "false") + ")");
+                        mActivity.loadUrl("javascript:updateWindLevel(" + windLevel + ")");
                     } catch (Exception e) {
-                        Log.e(TAG, "更新温度显示失败", e);
+                        Log.e(TAG, "更新空调状态显示失败", e);
                     }
                 }
             });
@@ -3356,7 +3362,7 @@ public class WebViewBridge {
 
     /**
      * 调整空调温度（零跑C11专用）
-     * 点击直接打开原生空调控制页面
+     * 直接调节主驾和副驾温度，失败则打开原生空调页面
      * @param delta 温度变化值（正数为增加，负数为减少）
      */
     @JavascriptInterface
@@ -3381,7 +3387,7 @@ public class WebViewBridge {
 
     /**
      * 调整空调风量（零跑C11专用）
-     * 点击直接打开原生空调控制页面
+     * 直接调节空调风量，失败则打开原生空调页面
      * @param delta 风量变化值（正数为增加，负数为减少）
      */
     @JavascriptInterface
@@ -3419,7 +3425,8 @@ public class WebViewBridge {
     @JavascriptInterface
     public void toggleDefrost() {
         Log.d(TAG, "切换除霜状态，打开零跑C11原生空调控制页面");
-        toggleAirConditioning();
+        // 暂未找到除霜直接控制接口，打开原生空调页面
+        openAirConditioningPage();
     }
 
     /**
