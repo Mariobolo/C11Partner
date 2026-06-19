@@ -2821,3 +2821,169 @@ audio {
     border-radius: 2px;
 }
 
+
+/* ============================================
+   UI美化修复 - 解决时间重复、重叠问题
+   ============================================ */
+
+/* ========== 修复顶部时间重复问题 ========== */
+/* 把顶部时间移到右侧，小字体，作为辅助时间 */
+.top-left-time {
+    display: none !important;  /* 隐藏左侧时间，避免重复 */
+}
+
+/* 在右侧添加时间显示（如果需要的话） */
+/* 暂时隐藏顶部时间，因为中间已经有大时间了 */
+
+/* ========== 调整中间时间日期位置 ========== */
+.layout-left.center-time-display {
+    top: 35% !important;  /* 往上移，避免被底部卡片挡住 */
+    transform: translate(-50%, -50%) !important;
+}
+
+.time-text#timeDisplay {
+    font-size: 100px !important;  /* 稍微减小一点 */
+    margin-bottom: 12px !important;
+}
+
+.date-text {
+    font-size: 20px !important;
+    margin-bottom: 6px !important;
+}
+
+.lunar-calendar-text {
+    font-size: 16px !important;
+}
+
+/* ========== 调整底部卡片位置 ========== */
+.card-view {
+    bottom: 90px !important;  /* 往下移，避免挡住日期 */
+    padding: 0 24px 20px 24px !important;
+}
+
+/* ========== 修复底部快捷栏重叠问题 ========== */
+.status-bar {
+    height: 64px !important;
+    padding: 0 16px !important;
+    gap: 8px;
+}
+
+.left-buttons {
+    gap: 12px !important;
+    min-width: 80px;
+}
+
+.right-buttons {
+    gap: 12px !important;
+    min-width: 80px;
+}
+
+.center-controls {
+    gap: 6px !important;
+    flex: 1;
+    justify-content: center;
+}
+
+.ac-control {
+    width: 24px !important;
+    height: 24px !important;
+    background-size: contain !important;
+}
+
+.air-text {
+    font-size: 16px !important;
+    min-width: 32px !important;
+}
+
+.wind-display {
+    width: 28px !important;
+    height: 28px !important;
+}
+
+/* ========== 天气组件优化 ========== */
+.weather-widget {
+    min-width: 180px !important;
+    padding: 16px !important;
+}
+
+.weather-widget .temperature {
+    font-size: 36px !important;
+}
+
+.weather-icon {
+    width: 48px !important;
+    height: 48px !important;
+}
+
+/* ========== 音乐组件优化 ========== */
+.music-widget {
+    min-width: 280px !important;
+    padding: 14px 16px !important;
+}
+
+.control-buttons button {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.btn-play {
+    width: 42px !important;
+    height: 42px !important;
+}
+
+/* ========== 快捷应用优化 ========== */
+.quick-apps-widget {
+    padding: 12px !important;
+}
+
+.quick-app-item {
+    padding: 10px 6px !important;
+}
+
+.quick-app-icon {
+    width: 40px !important;
+    height: 40px !important;
+    margin-bottom: 6px !important;
+}
+
+.quick-app-name {
+    font-size: 11px !important;
+}
+
+/* ========== 胎压组件优化 ========== */
+.car-widget {
+    min-width: 200px !important;
+    padding: 16px !important;
+}
+
+.tire-pressure {
+    font-size: 12px !important;
+    padding: 3px 6px !important;
+}
+
+/* ========== 导航组件优化 ========== */
+.map-widget {
+    min-width: 180px !important;
+    padding: 12px !important;
+}
+
+.nav-button {
+    padding: 10px !important;
+}
+
+.nav-icon {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.nav-text {
+    font-size: 11px !important;
+    margin-top: 4px !important;
+}
+
+/* ========== 卡片大小统一 ========== */
+.widget {
+    min-height: 120px !important;
+    border-radius: 16px !important;
+}
+
