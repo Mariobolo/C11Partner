@@ -3438,6 +3438,25 @@ public class WebViewBridge {
     }
 
     /**
+     * 发送语音指令（开发者测试用）
+     * @param command 语音指令文本
+     * @return 是否成功
+     */
+    @JavascriptInterface
+    public boolean sendVoiceCommand(String command) {
+        Log.d(TAG, "发送语音指令（测试）: " + command);
+        try {
+            CarControlManager carControl = getCarControlManager();
+            boolean result = carControl.sendVoiceCommand(command);
+            Log.d(TAG, "语音指令发送结果: " + result);
+            return result;
+        } catch (Exception e) {
+            Log.e(TAG, "发送语音指令失败: " + command, e);
+            return false;
+        }
+    }
+
+    /**
      * 检查是否有通知监听权限
      *
      * @return 是否有通知监听权限

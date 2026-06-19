@@ -2987,3 +2987,100 @@ audio {
     border-radius: 16px !important;
 }
 
+
+/* 语音指令测试 */
+.voice-test-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.voice-test-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.voice-test-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.voice-test-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.voice-test-input:focus {
+    border-color: rgba(0, 255, 136, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.voice-test-btn {
+    white-space: nowrap;
+}
+
+.voice-test-result {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    min-height: 20px;
+    display: none;
+}
+
+.voice-test-result.show {
+    display: block;
+}
+
+.voice-test-result.success {
+    color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.voice-test-result.error {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.voice-test-tips {
+    width: 100%;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.voice-test-tips p {
+    margin: 0 0 8px 0;
+}
+
+.voice-quick-commands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.quick-cmd {
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.2s;
+}
+
+.quick-cmd:hover {
+    background: rgba(0, 255, 136, 0.2);
+    color: #00ff88;
+}
+
+.quick-cmd:active {
+    transform: scale(0.95);
+}

@@ -407,6 +407,28 @@
                             <label>授权管理</label>
                             <button class="setting-button" id="adbAuthorizationBtn">申请ADB</button>
                         </div>
+                        
+                        <!-- 语音指令测试（开发者工具） -->
+                        <div class="setting-item voice-test-section">
+                            <label>语音指令测试</label>
+                            <div class="voice-test-container">
+                                <input type="text" id="voiceCommandInput" class="voice-test-input" 
+                                    placeholder="输入语音指令，如：打开空调、温度调到24度">
+                                <button class="setting-button voice-test-btn" id="voiceTestBtn">发送测试</button>
+                            </div>
+                            <div class="voice-test-result" id="voiceTestResult"></div>
+                            <div class="voice-test-tips">
+                                <p>💡 常用测试指令：</p>
+                                <div class="voice-quick-commands">
+                                    <span class="quick-cmd" data-cmd="打开空调">打开空调</span>
+                                    <span class="quick-cmd" data-cmd="关闭空调">关闭空调</span>
+                                    <span class="quick-cmd" data-cmd="温度调到24度">温度24度</span>
+                                    <span class="quick-cmd" data-cmd="打开除霜">打开除霜</span>
+                                    <span class="quick-cmd" data-cmd="打开近光灯">打开近光灯</span>
+                                    <span class="quick-cmd" data-cmd="切换到舒适模式">舒适模式</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
