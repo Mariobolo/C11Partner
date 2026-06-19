@@ -365,6 +365,21 @@ public class MainActivity extends AppCompatActivity {
                         stateJson.put("speed", state.getSpeed());
                         stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
                         stateJson.put("isLocked", state.isLocked());
+                        // 补充具体车门状态
+                        stateJson.put("frontLeftDoor", state.getFrontLeftDoor());
+                        stateJson.put("frontRightDoor", state.getFrontRightDoor());
+                        stateJson.put("rearLeftDoor", state.getRearLeftDoor());
+                        stateJson.put("rearRightDoor", state.getRearRightDoor());
+                        stateJson.put("trunkDoor", state.getTrunkDoor());
+                        stateJson.put("hoodDoor", state.getHoodDoor());
+                        stateJson.put("sunroof", state.getSunroof());
+                        stateJson.put("sunshade", state.getSunshade());
+                        stateJson.put("lowBeamLight", state.getLowBeamLight());
+                        stateJson.put("isLowBeamLightOn", state.isLowBeamLightOn());
+                        stateJson.put("bluetoothConnected", state.isBluetoothConnected());
+                        stateJson.put("screenOn", state.isScreenOn());
+                        stateJson.put("acPageOpen", state.isAcPageOpen());
+                        stateJson.put("camera360Visible", state.isCamera360Visible());
                         
                         String jsCode = "javascript:if(typeof window.updateCarState === 'function') { window.updateCarState(" 
                                 + stateJson.toString() + "); }";
