@@ -4044,6 +4044,11 @@ public class WebViewBridge {
                 return false;
             }
             
+            // 如果已经在显示，直接返回
+            if (mCarStatusPresentation != null && mCarStatusPresentation.isShowing()) {
+                return true;
+            }
+            
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -4055,10 +4060,20 @@ public class WebViewBridge {
                             return;
                         }
                         
+                        // 先取消之前的实例
+                        if (mCarStatusPresentation != null) {
+                            try {
+                                mCarStatusPresentation.cancel();
+                            } catch (Exception e) {
+                                // 忽略取消异常
+                            }
+                            mCarStatusPresentation = null;
+                        }
+                        
                         mCarStatusPresentation = new com.c11partner.desktop.CarStatusPresentation(mActivity, display);
                         manager.showPresentation(mCarStatusPresentation);
                         
-                        // 同步当前车辆状态
+                        // 同步当前完整车辆状态
                         if (mActivity.getLogcatMonitorService() != null) {
                             com.c11partner.desktop.LeapMotorCarState state = mActivity.getLogcatMonitorService().getCurrentState();
                             if (state != null && mCarStatusPresentation != null) {
@@ -4066,6 +4081,15 @@ public class WebViewBridge {
                                 mCarStatusPresentation.updateGear(state.getGear());
                                 mCarStatusPresentation.updateDoorStatus(state.getOpenDoorCount());
                                 mCarStatusPresentation.updateTurnLights(state.isLeftTurnLightOn(), state.isRightTurnLightOn());
+                                mCarStatusPresentation.updateTirePressure(
+                                    state.getFrontLeftTirePressure(),
+                                    state.getFrontRightTirePressure(),
+                                    state.getRearLeftTirePressure(),
+                                    state.getRearRightTirePressure()
+                                );
+                                mCarStatusPresentation.updateLowBeamLight(state.isLowBeamLightOn());
+                                mCarStatusPresentation.updateBluetoothState(state.isBluetoothConnected());
+                                mCarStatusPresentation.updateLockState(state.isLocked());
                             }
                         }
                     } catch (Exception e) {
