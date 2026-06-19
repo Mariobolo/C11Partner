@@ -274,6 +274,40 @@ public class CarControlManager {
             return false;
         }
     }
+
+    /**
+     * 设置空调开关
+     * @param on true=开, false=关
+     * @return 是否成功
+     */
+    public boolean setAcEnabled(boolean on) {
+        return setGlobalInt(KEY_STR_CAR_100006, on ? 1 : 0);
+    }
+
+    /**
+     * 获取空调开关状态
+     * @return true=开, false=关
+     */
+    public boolean isAcEnabled() {
+        return getGlobalInt(KEY_STR_CAR_100006, 0) == 1;
+    }
+
+    /**
+     * 设置空调风量
+     * @param level 风量等级（1-7或1-8，待验证）
+     * @return 是否成功
+     */
+    public boolean setWindLevel(int level) {
+        return setGlobalInt(KEY_STR_CAR_1411, Math.max(1, Math.min(8, level)));
+    }
+
+    /**
+     * 获取空调风量
+     * @return 风量等级
+     */
+    public int getWindLevel() {
+        return getGlobalInt(KEY_STR_CAR_1411, 3);
+    }
     
     // ==================== 系统设置控制 ====================
     

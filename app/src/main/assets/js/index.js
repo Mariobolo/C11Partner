@@ -4025,17 +4025,6 @@ if (document.readyState === 'loading') {
 
 
 
-// 初始化空调温度显示
-function initAcTemperature() {
-    if (typeof Android !== 'undefined' && Android.getAcInfo) {
-        try {
-            const acInfo = Android.getAcInfo();
-            if (acInfo) {
-                try {
-                    const acData = JSON.parse(acInfo);
-                    if (acData.driverTemp) {
-                        updateAcTemperature(acData.driverTemp);
-                    }
                 } catch (e) {
                     console.error('解析空调信息失败:', e);
                 }
@@ -4046,3 +4035,53 @@ function initAcTemperature() {
     }
 }
 
+
+
+// ==================== 空调控制相关函数 ====================
+
+// 更新空调温度显示（供Android调用）
+function updateAcTemperature(temp) {
+    const airTextElements = document.querySelectorAll('.air-text');
+    airTextElements.forEach(element => {
+        element.textContent = temp + '°';
+    });
+}
+
+// 更新空调开关状态（供Android调用）
+function updateAcState(acOn) {
+    console.log('空调状态更新:', acOn ? '开' : '关');
+    // 可以在这里更新空调开关图标的样式
+}
+
+// 更新风量显示（供Android调用）
+function updateWindLevel(level) {
+    console.log('风量更新:', level);
+    // 可以在这里更新风量的显示
+}
+
+// 初始化空调状态
+function initAcTemperature() {
+    if (typeof Android !== 'undefined' && Android.getAcInfo) {
+        try {
+            const acInfo = Android.getAcInfo();
+            if (acInfo) {
+                try {
+                    const acData = JSON.parse(acInfo);
+                    if (acData.driverTemp) {
+                        updateAcTemperature(acData.driverTemp);
+                    }
+                    if (typeof acData.acOn !== 'undefined') {
+                        updateAcState(acData.acOn);
+                    }
+                    if (acData.windLevel) {
+                        updateWindLevel(acData.windLevel);
+                    }
+                } catch (e) {
+                    console.error('解析空调信息失败:', e);
+                }
+            }
+        } catch (e) {
+            console.error('获取空调信息失败:', e);
+        }
+    }
+}

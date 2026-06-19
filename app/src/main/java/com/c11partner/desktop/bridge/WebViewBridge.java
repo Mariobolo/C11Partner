@@ -3289,7 +3289,36 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void toggleAirConditioning() {
-        Log.d(TAG, "打开零跑C11原生空调控制页面");
+        Log.d(TAG, "切换空调开关");
+        try {
+            CarControlManager carControl = getCarControlManager();
+            boolean currentState = carControl.isAcEnabled();
+            boolean newState = !currentState;
+            carControl.setAcEnabled(newState);
+            Log.d(TAG, "空调状态: " + currentState + " -> " + newState);
+            // 更新前端显示
+            final boolean finalNewState = newState;
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        mActivity.loadUrl("javascript:updateAcState(" + (finalNewState ? "true" : "false") + ")");
+                    } catch (Exception e) {
+                        Log.e(TAG, "更新空调状态显示失败", e);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "切换空调开关失败，打开空调页面", e);
+            // 失败则打开空调页面
+            openAirConditioningPage();
+        }
+    }
+
+    /**
+     * 打开原生空调控制页面
+     */
+    private void openAirConditioningPage() {
         try {
             // 零跑C11打开空调控制页面
             Intent intent = new Intent();
@@ -3356,8 +3385,30 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void adjustWindLevel(int delta) {
-        Log.d(TAG, "调整空调风量: " + delta + "，打开零跑C11原生空调控制页面");
-        toggleAirConditioning();
+        Log.d(TAG, "调整空调风量: " + delta);
+        try {
+            CarControlManager carControl = getCarControlManager();
+            int currentLevel = carControl.getWindLevel();
+            int newLevel = Math.max(1, Math.min(8, currentLevel + delta));
+            carControl.setWindLevel(newLevel);
+            Log.d(TAG, "风量: " + currentLevel + " -> " + newLevel);
+            // 更新前端显示
+            final int finalNewLevel = newLevel;
+            mActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        mActivity.loadUrl("javascript:updateWindLevel(" + finalNewLevel + ")");
+                    } catch (Exception e) {
+                        Log.e(TAG, "更新风量显示失败", e);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "调整风量失败，打开空调页面", e);
+            // 失败则打开空调页面
+            openAirConditioningPage();
+        }
     }
 
     /**
