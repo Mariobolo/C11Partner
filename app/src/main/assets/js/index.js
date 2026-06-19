@@ -3662,7 +3662,7 @@ const AutomationManager = {
             description: '打转向灯时自动启动360全景影像',
             icon: '📸',
             category: '360全景',
-            defaultEnabled: true
+            defaultEnabled: false
         },
         {
             id: 'reverse360',
@@ -3670,7 +3670,7 @@ const AutomationManager = {
             description: '挂倒挡时自动启动360全景影像',
             icon: '🚗',
             category: '360全景',
-            defaultEnabled: true
+            defaultEnabled: false
         },
         {
             id: 'lowSpeed360',
@@ -3742,7 +3742,7 @@ const AutomationManager = {
             description: '车门未关好时语音提醒',
             icon: '🚪',
             category: '驾驶安全',
-            defaultEnabled: true
+            defaultEnabled: false
         },
         {
             id: 'seatbeltReminder',

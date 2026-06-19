@@ -102,14 +102,8 @@ public class AutomationEngine {
      * @return 默认是否启用
      */
     private boolean getDefaultEnabled(String scenarioId) {
-        switch (scenarioId) {
-            case "turnLight360":
-            case "reverse360":
-            case "doorOpenWarning":
-                return true;
-            default:
-                return false;
-        }
+        // 所有预设场景默认不启用，由用户自行选择开启
+        return false;
     }
 
     /**
