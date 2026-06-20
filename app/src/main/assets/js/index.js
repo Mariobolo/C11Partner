@@ -3155,24 +3155,47 @@ function registerTimeUpdateListener() {
                 { selector: '.tire-pressure.rear-right', pressure: state.rearRightTirePressure, temp: state.rearRightTireTemp }
             ];
 
+            let hasAnyData = false;
+
             pressures.forEach(item => {
                 const el = document.querySelector(item.selector);
                 if (el) {
+                    const pressureEl = el.querySelector('.tire-pressure-value');
+                    const tempEl = el.querySelector('.tire-temp-value');
+                    
                     if (item.pressure && item.pressure > 0) {
                         // 有真实数据，显示胎压和胎温
+                        hasAnyData = true;
                         const pressureKpa = Math.round(item.pressure);
-                        const temp = item.temp || 0;
-                        el.innerHTML = pressureKpa + 'kPa<br><span style="font-size:10px;opacity:0.7;">' + temp + '°C</span>';
+                        const temp = item.temp || '--';
+                        
+                        if (pressureEl) {
+                            pressureEl.textContent = pressureKpa + 'kPa';
+                        }
+                        if (tempEl) {
+                            tempEl.textContent = temp + '°';
+                        }
+                        
                         // 异常胎压标红
                         if (pressureKpa < 200 || pressureKpa > 300) {
-                            el.style.color = '#ff4444';
+                            el.classList.add('warning');
                         } else {
-                            el.style.color = '#ffffff';
+                            el.classList.remove('warning');
                         }
                     }
-                    // 没有数据时保持默认显示
+                    // 没有数据时保持默认显示（-- 和 --°）
                 }
             });
+
+            // 有数据时隐藏"正在获取"提示
+            const loadingTip = document.querySelector('.tire-loading-tip');
+            if (loadingTip) {
+                if (hasAnyData) {
+                    loadingTip.style.display = 'none';
+                } else {
+                    loadingTip.style.display = 'block';
+                }
+            }
         },
         
         /**

@@ -2,6 +2,8 @@
 // 页面加载时立即显示默认天气
 document.addEventListener('DOMContentLoaded', function() {
     initWeatherDisplay();
+    // 延迟一点获取天气数据，确保页面加载完成
+    setTimeout(updateWeatherInfo, 500);
 });
 
 // 初始化天气显示（默认占位）
