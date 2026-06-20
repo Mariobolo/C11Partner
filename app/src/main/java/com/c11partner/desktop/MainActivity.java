@@ -186,10 +186,8 @@ public class MainActivity extends AppCompatActivity {
                     // 调用WebViewBridge的updateTimeDisplay方法更新时间
                     webViewBridge.updateTimeDisplay(time, date, lunarDate);
                     
-                    // 更新副屏时间显示
-                    if (webViewBridge.isPresentationShowing()) {
-                        webViewBridge.updatePresentationTime(time);
-                    }
+                    // 注意：副屏时间已由CarStatusPresentation内部自动更新（每分钟一次，HH:mm格式）
+                    // 此处不再主动更新副屏时间，避免冗余和格式不一致
                 }
             } catch (Exception e) {
                 Log.e("MainActivity", "更新时间时出错", e);
