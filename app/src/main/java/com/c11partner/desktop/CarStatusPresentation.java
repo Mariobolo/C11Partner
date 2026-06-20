@@ -87,8 +87,8 @@ public class CarStatusPresentation extends Presentation {
     }
     
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         stopTimeUpdate();
     }
     
