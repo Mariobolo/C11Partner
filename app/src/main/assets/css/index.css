@@ -3101,3 +3101,159 @@ audio {
 .quick-cmd:active {
     transform: scale(0.95);
 }
+
+
+/* ==================== 新版壁纸设置样式 ==================== */
+
+.setting-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.setting-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.setting-section h3 {
+    font-size: 16px;
+    color: #ffffff;
+    margin: 0 0 15px 0;
+    font-weight: 500;
+}
+
+.wallpaper-type-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wallpaper-type-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.wallpaper-type-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.wallpaper-type-item input[type="radio"] {
+    margin-right: 12px;
+    width: 18px;
+    height: 18px;
+    accent-color: #00ff88;
+}
+
+.wallpaper-type-item input[type="radio"]:checked + .type-icon {
+    /* 选中时的样式 */
+}
+
+.wallpaper-type-item:has(input[type="radio"]:checked) {
+    background: rgba(0, 255, 136, 0.1);
+    border-color: rgba(0, 255, 136, 0.5);
+}
+
+.wallpaper-type-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.type-icon {
+    font-size: 24px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.type-name {
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 500;
+    flex: 1;
+}
+
+.type-desc {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    flex-shrink: 0;
+}
+
+.setting-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #ffffff;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.setting-input:focus {
+    outline: none;
+    border-color: rgba(0, 255, 136, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.setting-select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #ffffff;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.setting-select:focus {
+    outline: none;
+    border-color: rgba(0, 255, 136, 0.5);
+}
+
+.setting-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 10px;
+}
+
+.setting-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.setting-btn.primary {
+    background: rgba(0, 255, 136, 0.2);
+    border-color: rgba(0, 255, 136, 0.5);
+    color: #00ff88;
+}
+
+.setting-btn.primary:hover {
+    background: rgba(0, 255, 136, 0.3);
+}
+
+.setting-hint {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 10px;
+}
+
+/* 复选框美化 */
+.setting-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: #00ff88;
+    cursor: pointer;
+}
+

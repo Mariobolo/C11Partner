@@ -10,6 +10,7 @@
     <script src="js/toast.js"></script>
     <script src="js/datetime.js"></script>
     <script src="js/wallpaper.js"></script>
+    <script src="js/wallpaper-manager.js"></script>
     <script src="js/wallpaper-swipe-bootstrap.js"></script>
     <script src="js/weather.js"></script>
     <script src="js/music.js"></script>
@@ -253,112 +254,107 @@
                 <div class="modal-body">
                     <!-- 壁纸设置TAB -->
                     <div class="tab-content" id="wallpaper-tab">
-                        <div class="setting-item">
-                            <label>壁纸轮播</label>
-                            <input type="checkbox" id="wallpaperCarouselCheckbox"
-                                class="setting-checkbox">
+                        <div class="setting-section">
+                            <h3>壁纸类型</h3>
+                            
+                            <div class="wallpaper-type-list">
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="wallpaperType" value="0" checked>
+                                    <span class="type-icon">🏠</span>
+                                    <span class="type-name">默认壁纸</span>
+                                    <span class="type-desc">内置默认背景图片</span>
+                                </label>
+                                
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="wallpaperType" value="1">
+                                    <span class="type-icon">🌄</span>
+                                    <span class="type-name">必应壁纸</span>
+                                    <span class="type-desc">每日自动更新精美壁纸</span>
+                                </label>
+                                
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="wallpaperType" value="2">
+                                    <span class="type-icon">🖼️</span>
+                                    <span class="type-name">本地图片</span>
+                                    <span class="type-desc">选择单张图片作为壁纸</span>
+                                </label>
+                                
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="wallpaperType" value="3">
+                                    <span class="type-icon">🎬</span>
+                                    <span class="type-name">本地视频</span>
+                                    <span class="type-desc">选择视频作为动态壁纸</span>
+                                </label>
+                                
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="wallpaperType" value="4">
+                                    <span class="type-icon">📁</span>
+                                    <span class="type-name">本地文件夹</span>
+                                    <span class="type-desc">文件夹内图片/视频自动轮播</span>
+                                </label>
+                                
+                                <label class="wallpaper-type-item disabled">
+                                    <input type="radio" name="wallpaperType" value="5" disabled>
+                                    <span class="type-icon">🌐</span>
+                                    <span class="type-name">iframe壁纸</span>
+                                    <span class="type-desc">网页壁纸（暂未开放）</span>
+                                </label>
+                            </div>
                         </div>
-
-                        <div class="setting-item">
-                            <label>本地随机</label>
-                            <input type="checkbox" id="randomModeCheckbox" class="setting-checkbox">
+                        
+                        <div class="setting-section" id="wallpaperPathSection" style="display:none;">
+                            <h3>壁纸路径</h3>
+                            <div class="setting-item">
+                                <input type="text" id="wallpaperPathInput" class="setting-input" 
+                                    placeholder="请输入文件或文件夹路径">
+                            </div>
+                            <div class="setting-item">
+                                <button class="setting-btn" id="pickWallpaperFileBtn">选择文件</button>
+                                <button class="setting-btn" id="pickWallpaperFolderBtn">选择文件夹</button>
+                            </div>
                         </div>
-                        <div class="setting-item">
-                            <label>本地指定</label>
-                            <input type="checkbox" id="specifiedModeCheckbox" class="setting-checkbox">
+                        
+                        <div class="setting-section">
+                            <h3>轮播设置</h3>
+                            
+                            <div class="setting-item">
+                                <label>启用轮播</label>
+                                <input type="checkbox" id="wallpaperCarouselV2Checkbox" class="setting-checkbox">
+                            </div>
+                            
+                            <div class="setting-item">
+                                <label>轮播间隔（秒）</label>
+                                <input type="number" id="wallpaperIntervalV2Input" class="setting-input" 
+                                    value="15" min="5" max="3600" style="width: 100px;">
+                            </div>
                         </div>
-
-                        <div class="setting-item">
-                            <label>高清壁纸</label>
-                            <input type="checkbox" id="category36" class="category-checkbox" data-category-id="36">
+                        
+                        <div class="setting-section">
+                            <h3>显示设置</h3>
+                            
+                            <div class="setting-item">
+                                <label>填充模式</label>
+                                <select id="wallpaperFillModeSelect" class="setting-select">
+                                    <option value="0">填充（裁剪）</option>
+                                    <option value="1">包含（留白）</option>
+                                    <option value="2">拉伸</option>
+                                </select>
+                            </div>
                         </div>
-
-                        <div class="setting-item">
-                            <label>美女模特</label>
-                            <input type="checkbox" id="category6" class="category-checkbox" data-category-id="6">
+                        
+                        <div class="setting-section" id="bingWallpaperSection" style="display:none;">
+                            <h3>必应壁纸</h3>
+                            <div class="setting-item">
+                                <button class="setting-btn" id="refreshBingWallpaperBtn">立即刷新壁纸</button>
+                                <span class="setting-hint">每天自动更新一次</span>
+                            </div>
                         </div>
-
+                        
                         <div class="setting-item">
-                            <label>爱情美图</label>
-                            <input type="checkbox" id="category30" class="category-checkbox" data-category-id="30">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>风景大片</label>
-                            <input type="checkbox" id="category9" class="category-checkbox" data-category-id="9">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>清新风格</label>
-                            <input type="checkbox" id="category15" class="category-checkbox" data-category-id="15">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>动漫卡通</label>
-                            <input type="checkbox" id="category26" class="category-checkbox" data-category-id="26">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>明星风尚</label>
-                            <input type="checkbox" id="category11" class="category-checkbox" data-category-id="11">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>萌宠动物</label>
-                            <input type="checkbox" id="category14" class="category-checkbox" data-category-id="14">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>游戏壁纸</label>
-                            <input type="checkbox" id="category5" class="category-checkbox" data-category-id="5">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>汽车天下</label>
-                            <input type="checkbox" id="category12" class="category-checkbox" data-category-id="12">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>炫酷时尚</label>
-                            <input type="checkbox" id="category10" class="category-checkbox" data-category-id="10">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>军事天地</label>
-                            <input type="checkbox" id="category22" class="category-checkbox" data-category-id="22">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>劲爆体育</label>
-                            <input type="checkbox" id="category16" class="category-checkbox" data-category-id="16">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>纹理壁纸</label>
-                            <input type="checkbox" id="category32" class="category-checkbox" data-category-id="32">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>文字壁纸</label>
-                            <input type="checkbox" id="category35" class="category-checkbox" data-category-id="35">
-                        </div>
-
-                        <div class="setting-item">
-                            <label>限时壁纸</label>
-                            <input type="checkbox" id="category1" class="category-checkbox" data-category-id="1">
-                        </div>
-
-
-
-                        <div class="setting-item">
-                            <label>轮播间隔(秒)</label>
-                            <input type="number" id="switchIntervalInput" class="setting-input" min="5"
-                                max="300" value="15">
+                            <button class="setting-btn primary" id="applyWallpaperBtn">应用设置</button>
                         </div>
                     </div>
-
-
-                    <!-- 组件配置TAB -->
+                    
                     <div class="tab-content" id="components-tab">
                         <div class="setting-item">
                             <label>音乐组件</label>

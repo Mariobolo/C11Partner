@@ -1,5 +1,6 @@
 package com.c11partner.desktop.bridge;
 
+import com.c11partner.desktop.utils.WallpaperManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -4441,5 +4442,170 @@ public class WebViewBridge {
             Log.e(TAG, "设置场景状态失败", e);
         }
     }
+
+
+    // ==================== 新版壁纸管理接口 ====================
+
+    /**
+     * 获取壁纸管理器
+     */
+    private WallpaperManager getWallpaperManager() {
+        return WallpaperManager.getInstance(mContext);
+    }
+
+    /**
+     * 获取所有壁纸设置
+     */
+    @JavascriptInterface
+    public String getWallpaperSettingsV2() {
+        try {
+            return getWallpaperManager().getAllSettingsJson();
+        } catch (Exception e) {
+            Log.e(TAG, "获取壁纸设置失败", e);
+            return "{}";
+        }
+    }
+
+    /**
+     * 设置壁纸类型
+     * @param type 壁纸类型：0=默认,1=必应,2=本地图片,3=本地视频,4=本地文件夹,5=iframe
+     */
+    @JavascriptInterface
+    public void setWallpaperType(int type) {
+        try {
+            getWallpaperManager().setWallpaperType(type);
+            Log.d(TAG, "设置壁纸类型: " + type);
+        } catch (Exception e) {
+            Log.e(TAG, "设置壁纸类型失败", e);
+        }
+    }
+
+    /**
+     * 设置壁纸路径
+     */
+    @JavascriptInterface
+    public void setWallpaperPath(String path) {
+        try {
+            getWallpaperManager().setWallpaperPath(path);
+            Log.d(TAG, "设置壁纸路径: " + path);
+        } catch (Exception e) {
+            Log.e(TAG, "设置壁纸路径失败", e);
+        }
+    }
+
+    /**
+     * 获取当前壁纸URL
+     */
+    @JavascriptInterface
+    public String getCurrentWallpaperUrl() {
+        try {
+            return getWallpaperManager().getCurrentWallpaperUrl();
+        } catch (Exception e) {
+            Log.e(TAG, "获取当前壁纸URL失败", e);
+            return "images/default_bg_1.jpg";
+        }
+    }
+
+    /**
+     * 获取下一张壁纸URL（用于轮播）
+     */
+    @JavascriptInterface
+    public String getNextWallpaperUrl() {
+        try {
+            return getWallpaperManager().getNextWallpaperUrl();
+        } catch (Exception e) {
+            Log.e(TAG, "获取下一张壁纸URL失败", e);
+            return "images/default_bg_1.jpg";
+        }
+    }
+
+    /**
+     * 设置是否启用轮播
+     */
+    @JavascriptInterface
+    public void setWallpaperCarouselEnabled(boolean enabled) {
+        try {
+            getWallpaperManager().setCarouselEnabled(enabled);
+            // 重启轮播
+            if (mActivity != null) {
+                mActivity.restartWallpaperCarousel();
+            }
+            Log.d(TAG, "设置壁纸轮播: " + enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "设置壁纸轮播失败", e);
+        }
+    }
+
+    /**
+     * 设置轮播间隔
+     * @param intervalMs 间隔毫秒
+     */
+    @JavascriptInterface
+    public void setWallpaperCarouselInterval(int intervalMs) {
+        try {
+            getWallpaperManager().setCarouselInterval(intervalMs);
+            // 重启轮播
+            if (mActivity != null) {
+                mActivity.restartWallpaperCarousel();
+            }
+            Log.d(TAG, "设置轮播间隔: " + intervalMs + "ms");
+        } catch (Exception e) {
+            Log.e(TAG, "设置轮播间隔失败", e);
+        }
+    }
+
+    /**
+     * 设置填充模式
+     * @param mode 0=填充,1=包含,2=拉伸
+     */
+    @JavascriptInterface
+    public void setWallpaperFillMode(int mode) {
+        try {
+            getWallpaperManager().setFillMode(mode);
+            Log.d(TAG, "设置填充模式: " + mode);
+        } catch (Exception e) {
+            Log.e(TAG, "设置填充模式失败", e);
+        }
+    }
+
+    /**
+     * 刷新必应壁纸
+     */
+    @JavascriptInterface
+    public void refreshBingWallpaper() {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // 直接调用会触发刷新
+                    getWallpaperManager().getNextWallpaperUrl();
+                }
+            }).start();
+            Log.d(TAG, "刷新必应壁纸");
+        } catch (Exception e) {
+            Log.e(TAG, "刷新必应壁纸失败", e);
+        }
+    }
+
+    /**
+     * 选择本地壁纸文件（调用系统文件选择器）
+     * 预留接口，后续实现
+     */
+    @JavascriptInterface
+    public void pickLocalWallpaperFile() {
+        Log.d(TAG, "选择本地壁纸文件（预留接口）");
+        // TODO: 调用系统文件选择器
+    }
+
+    /**
+     * 选择本地壁纸文件夹（调用系统文件夹选择器）
+     * 预留接口，后续实现
+     */
+    @JavascriptInterface
+    public void pickLocalWallpaperFolder() {
+        Log.d(TAG, "选择本地壁纸文件夹（预留接口）");
+        // TODO: 调用系统文件夹选择器
+    }
+
 }
 
