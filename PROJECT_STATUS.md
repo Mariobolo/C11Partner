@@ -398,8 +398,8 @@ chore: 构建/工具链变动
 |------|------|------|--------|
 | **基类** | `BaseBridge.java` | ✅ 完成 | - |
 | **车控功能** | `CarControlBridge.java` | ✅ 完成 | 50+ |
-| **壁纸功能** | `WallpaperBridge.java` | ✅ 进行中 | 5/14 已实现 |
-| **应用管理** | `AppBridge.java` | ✅ 进行中 | 3/14 已实现 |
+| **壁纸功能** | `WallpaperBridge.java` | ✅ 进行中 | 8/14 已实现 |
+| **应用管理** | `AppBridge.java` | ✅ 进行中 | 6/14 已实现 |
 
 - **车控模块迁移**：42/46 方法（~91%）
 - **剩余 4 个**：UI 相关高级方法（建议保留在 WebViewBridge）
