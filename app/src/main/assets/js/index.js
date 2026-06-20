@@ -2676,13 +2676,8 @@ window.addEventListener('DOMContentLoaded', () => {
     // 初始化空调温度显示
     initAcTemperature();
 
-    // 启动音乐名称更新
-    //updateMusicName();
-    //setInterval(updateMusicName, 2000); // 每2秒更新一次音乐名称
-
-    // 启动音乐播放状态图标更新
-    updateMusicPlayPauseIcon();
-    setInterval(updateMusicPlayPauseIcon, 1000); // 每1秒更新一次音乐播放状态图标
+    // 注意：音乐信息更新已由 SystemMusicManager 统一管理
+    // 每2秒自动更新一次，包含歌名、歌手、播放状态等
 
     // 启动音乐进度更新
     updateMusicProgress();
