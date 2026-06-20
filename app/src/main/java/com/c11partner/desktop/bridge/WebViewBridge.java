@@ -1072,17 +1072,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void launchApp(String packageName) {
-        try {
-            Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(packageName);
-            if (intent != null) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            } else {
-                Log.e(TAG, "无法找到应用: " + packageName);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "启动应用时出错: " + packageName, e);
-        }
+        mAppBridge.launchApp(packageName);
     }
 
     /**
@@ -1090,14 +1080,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void pauseWallpaperCarousel() {
-        try {
-            if (mActivity != null) {
-                mActivity.pauseWallpaperCarousel();
-                Log.d(TAG, "壁纸轮播已暂停");
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "暂停壁纸轮播时出错", e);
-        }
+        mWallpaperBridge.pauseWallpaperCarousel();
     }
 
     /**
@@ -1105,14 +1088,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void resumeWallpaperCarousel() {
-        try {
-            if (mActivity != null) {
-                mActivity.resumeWallpaperCarousel();
-                Log.d(TAG, "壁纸轮播已恢复");
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "恢复壁纸轮播时出错", e);
-        }
+        mWallpaperBridge.resumeWallpaperCarousel();
     }
 
     /**
@@ -1121,14 +1097,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean deleteCurrentWallpaper() {
-        try {
-            if (mActivity != null) {
-                return mActivity.deleteCurrentWallpaper();
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "删除壁纸时出错", e);
-        }
-        return false;
+        return mWallpaperBridge.deleteCurrentWallpaper();
     }
 
     /**

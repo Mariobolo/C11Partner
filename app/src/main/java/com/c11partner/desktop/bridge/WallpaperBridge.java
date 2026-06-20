@@ -1,17 +1,13 @@
 package com.c11partner.desktop.bridge;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.utils.WallpaperManager;
 import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
-
 import org.json.JSONObject;
 import java.util.Map;
-
 /**
  * 壁纸功能模块 Bridge
  * 
@@ -177,6 +173,50 @@ public class WallpaperBridge extends BaseBridge {
         } catch (Exception e) {
             Log.e(TAG, "获取壁纸设置时出错", e);
             return "{}";
+        }
+    }
+    
+    /**
+     * 暂停壁纸轮播
+     */
+    public void pauseWallpaperCarousel() {
+        try {
+            if (mActivity != null) {
+                mActivity.pauseWallpaperCarousel();
+                Log.d(TAG, "壁纸轮播已暂停");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "暂停壁纸轮播失败", e);
+        }
+    }
+    
+    /**
+     * 恢复壁纸轮播
+     */
+    public void resumeWallpaperCarousel() {
+        try {
+            if (mActivity != null) {
+                mActivity.resumeWallpaperCarousel();
+                Log.d(TAG, "壁纸轮播已恢复");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "恢复壁纸轮播失败", e);
+        }
+    }
+    
+    /**
+     * 删除当前壁纸
+     * @return 是否成功
+     */
+    public boolean deleteCurrentWallpaper() {
+        try {
+            if (mActivity != null) {
+                return mActivity.deleteCurrentWallpaper();
+            }
+            return false;
+        } catch (Exception e) {
+            Log.e(TAG, "删除当前壁纸失败", e);
+            return false;
         }
     }
     
