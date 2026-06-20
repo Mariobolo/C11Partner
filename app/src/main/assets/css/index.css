@@ -420,13 +420,9 @@ body {
     overflow: hidden;
 }
 
+/* .widgets-container 已废弃，样式已合并到 .card-view */
 .widgets-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    /* 确保容器不会干扰横向滚动 */
-    overflow: hidden;
+    display: none;
 }
 
 .horizontal-scroll {
@@ -480,43 +476,33 @@ body {
     display: none;
 }
 
+/* .widget-group 已废弃，样式已合并到 .widget */
 .widget-group {
+    display: none;
+}
+
+/* .widget-group:last-child 已废弃 */
+.widget:last-child {
+    margin-right: 0;
+}
+
+.widget {
     display: inline-flex;
     height: 100px;
     align-items: flex-start;
     justify-content: flex-start;
     margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.29);
-    border-radius: 10px;
+    border-radius: 16px;
     vertical-align: top;
     min-width: 150px;
     padding: 10px 15px;
     box-sizing: border-box;
-    /* 设置最小宽度确保组件显示完整 */
-    /* 确保组件能够正确显示在横向滚动容器中 */
     flex-shrink: 0;
     /* 防止组件在容器中被压缩 */
-    /* 添加额外的优化 */
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-}
-
-.widget-group:last-child {
-    margin-right: 0;
-}
-
-.widget {
-    height: 100%;
-    background-color: #00000000;
-    background-size: 100% 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    /* 确保widget不会干扰横向滚动 */
-    flex-shrink: 0;
 }
 
 .map-widget {
@@ -2401,9 +2387,7 @@ audio {
     bottom: 80px !important;
 }
 
-.widgets-container {
-    background: transparent !important;
-}
+/* 美化后的 .widgets-container 已废弃 */
 
 .widget {
     background: rgba(0, 0, 0, 0.25) !important;
@@ -2417,8 +2401,9 @@ audio {
     color: rgba(255, 255, 255, 0.9) !important;
 }
 
-.widget-group {
-    padding: 0 8px !important;
+/* 美化后的 .widget-group 已废弃 */
+.widget {
+    /* 保持原有的美化样式 */
 }
 
 /* ========== 快捷应用模块美化 ========== */

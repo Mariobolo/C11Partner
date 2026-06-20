@@ -959,24 +959,19 @@ function updateComponentVisibility(componentName, isVisible) {
 
     switch (componentName) {
         case 'music_component':
-            // 音乐组件在.widget-group中的第二个
-            selector = '.widget-group:nth-child(2)';
+            selector = '.music-widget';
             break;
         case 'map_component':
-            // 地图组件在.widget-group中的第一个
-            selector = '.widget-group:nth-child(1)';
+            selector = '.map-widget';
             break;
         case 'app_component':
-            // APP组件在.widget-group中的第三个
-            selector = '.widget-group:nth-child(3)';
+            selector = '.quick-apps-widget';
             break;
         case 'tire_pressure_component':
-            // 胎压组件在.widget-group中的第四个
-            selector = '.widget-group:nth-child(4)';
+            selector = '.car-widget';
             break;
         case 'weather_component':
-            // 天气组件在.widget-group中的第五个
-            selector = '.widget-group:nth-child(5)';
+            selector = '.weather-widget';
             break;
     }
 
@@ -985,8 +980,8 @@ function updateComponentVisibility(componentName, isVisible) {
         element = document.querySelector(selector);
     }
     if (element) {
-        // 对于.widget-group元素，使用flex显示以保持布局
-        if (selector.includes('.widget-group')) {
+        // 对于.widget元素，使用inline-flex显示以保持布局
+        if (selector.includes('.widget')) {
             element.style.display = isVisible ? 'inline-flex' : 'none';
         } else {
             element.style.display = isVisible ? 'block' : 'none';
