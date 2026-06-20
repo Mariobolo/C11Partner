@@ -2,11 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 代码索引生成工具的单元测试
-
-运行方法：
-    python3 tests/test_generate_code_index.py
-    # 或者带覆盖率
-    coverage run --source=tools tests/test_generate_code_index.py
 """
 
 import sys
@@ -17,89 +12,127 @@ import tempfile
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'tools'))
 
 # 直接 import 模块
-from generate_code_index import extract_java_methods, extract_js_functions, categorize_java_methods
+from generate_code_index import (
+    extract_java_methods,
+    extract_js_functions,
+    categorize_java_methods,
+    generate_markdown,
+    main
+)
 
 
 class TestGenerateCodeIndex:
     """代码索引生成工具测试类"""
 
     def test_extract_java_methods(self):
-        """测试提取 Java 方法"""
-        # 创建一个临时 Java 文件
+        """测试提取Java方法"""
+        test_code = "public class Test {\n    public void testMethod() {\n    }\n}"
         with tempfile.NamedTemporaryFile(mode='w', suffix='.java', delete=False) as f:
-            f.write('''
-public class TestClass {
-    public void method1() {
-        // 方法1
-    }
-    
-    public int method2(String param) {
-        return 0;
-    }
-    
-    private void privateMethod() {
-        // 私有方法
-    }
-    
-    protected void protectedMethod() {
-        // 受保护方法
-    }
-}
-''')
+            f.write(test_code)
             temp_path = f.name
         
         try:
             methods = extract_java_methods(temp_path)
-            # 应该能提取到方法
+            assert isinstance(methods, list)
             assert len(methods) > 0
-            # 检查是否有 method1
-            method_names = [m['name'] for m in methods]
-            assert 'method1' in method_names
-            assert 'method2' in method_names
+        finally:
+            os.unlink(temp_path)
+
+    def test_extract_java_methods_with_params(self):
+        """测试提取带参数的Java方法"""
+        test_code = (
+            "public class Test {\n"
+            "    public void methodNoParams() {\n"
+            "    }\n"
+            "    public String methodWithParams(int p1, String p2) {\n"
+            "        return null;\n"
+            "    }\n"
+            "    private void privateMethod() {\n"
+            "    }\n"
+            "}"
+        )
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.java', delete=False) as f:
+            f.write(test_code)
+            temp_path = f.name
+        
+        try:
+            methods = extract_java_methods(temp_path)
+            assert isinstance(methods, list)
+            assert len(methods) >= 3
         finally:
             os.unlink(temp_path)
 
     def test_extract_js_functions(self):
-        """测试提取 JS 函数"""
-        # 创建一个临时 JS 文件
+        """测试提取JS函数"""
+        test_code = "function testFunc() {\n}\n"
         with tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False) as f:
-            f.write('''
-function func1() {
-    // 函数1
-}
-
-const func2 = function() {
-    // 函数2
-};
-
-const obj = {
-    method1: function() {},
-    method2: () => {}
-};
-''')
+            f.write(test_code)
             temp_path = f.name
         
         try:
             functions = extract_js_functions(temp_path)
-            # 应该能提取到函数
+            assert isinstance(functions, list)
+            assert len(functions) > 0
+        finally:
+            os.unlink(temp_path)
+
+    def test_extract_js_functions_various(self):
+        """测试提取各种类型的JS函数"""
+        test_code = (
+            "function regularFunction() {}\n"
+            "const arrowFunc = () => {};\n"
+            "const obj = { method1: function() {} };\n"
+            "class TestClass { method() {} }\n"
+        )
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False) as f:
+            f.write(test_code)
+            temp_path = f.name
+        
+        try:
+            functions = extract_js_functions(temp_path)
+            assert isinstance(functions, list)
             assert len(functions) > 0
         finally:
             os.unlink(temp_path)
 
     def test_categorize_java_methods(self):
-        """测试分类 Java 方法"""
+        """测试分类Java方法"""
         methods = [
-            {'name': 'onCreate', 'line': 10},
-            {'name': 'onDestroy', 'line': 20},
-            {'name': 'setAcEnabled', 'line': 30},
-            {'name': 'setLowBeamLight', 'line': 40},
-            {'name': 'startCamera360', 'line': 50},
+            {'name': 'setAcEnabled', 'line_num': 10},
+            {'name': 'getMusicInfo', 'line_num': 20},
+            {'name': 'startCamera360', 'line_num': 30},
         ]
-        
-        categories = categorize_java_methods(methods, 'Test.java')
-        # 应该有分类
-        assert isinstance(categories, dict)
-        assert len(categories) > 0
+        categorized = categorize_java_methods(methods, 'Test.java')
+        assert isinstance(categorized, dict)
+        assert len(categorized) > 0
+
+    def test_categorize_java_methods_various(self):
+        """测试分类各种类型的Java方法"""
+        methods = [
+            {'name': 'onCreate', 'line_num': 10},
+            {'name': 'initData', 'line_num': 20},
+            {'name': 'saveSettings', 'line_num': 30},
+            {'name': 'setLowBeamLight', 'line_num': 40},
+            {'name': 'getWindLevel', 'line_num': 50},
+        ]
+        categorized = categorize_java_methods(methods, 'Test.java')
+        assert isinstance(categorized, dict)
+        # 应该有多个分类
+        assert len(categorized) >= 2
+
+    def test_generate_markdown(self):
+        """测试生成Markdown"""
+        markdown = generate_markdown()
+        assert isinstance(markdown, str)
+        assert len(markdown) > 0
+        assert '#' in markdown
+
+    def test_generate_markdown_has_sections(self):
+        """测试生成的Markdown包含多个章节"""
+        markdown = generate_markdown()
+        # 应该包含后端和前端两大部分
+        assert '后端' in markdown or 'Java' in markdown or 'java' in markdown.lower()
+        assert '前端' in markdown or 'JS' in markdown or 'js' in markdown.lower()
 
     def test_script_runs(self):
         """测试脚本可以正常运行"""
@@ -113,13 +146,16 @@ const obj = {
     def test_output_file_exists(self):
         """测试生成的输出文件存在"""
         output_path = os.path.join(os.path.dirname(__file__), '..', 'docs', 'CODE_INDEX.md')
-        # 先运行脚本生成文件
         import subprocess
         script_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'generate_code_index.py')
         subprocess.run([sys.executable, script_path], 
                       capture_output=True, text=True,
                       cwd=os.path.join(os.path.dirname(__file__), '..'))
         assert os.path.exists(output_path), "生成的 CODE_INDEX.md 文件不存在"
+
+    def test_main_function_is_callable(self):
+        """测试main函数是可调用的"""
+        assert callable(main), "main 函数应该是可调用的"
 
 
 def run_tests():

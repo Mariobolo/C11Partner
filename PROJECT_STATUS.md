@@ -18,7 +18,7 @@
 | **编译SDK** | API 30, minSdk 25, targetSdk 30 |
 ---
 ## 🎯 当前版本进度
-### v1.2.0 - 车控功能增强 (开发中，约99.8%完成)
+### v1.2.0 - 车控功能增强 (开发中，约99.9%完成)
 #### ✅ 已完成
 **后端功能 (100%)**：
 - ✅ CarControlManager.java - 完整车控功能管理类
@@ -386,3 +386,64 @@ chore: 构建/工具链变动
 - 每次完成重要功能后更新本文档
 - 版本发布时必须更新
 - 这是项目状态的唯一真相来源
+
+
+---
+
+## 🔧 代码质量与工程化
+
+### 模块化拆分（进行中）
+
+| 模块 | 类名 | 状态 | 方法数 |
+|------|------|------|--------|
+| **基类** | `BaseBridge.java` | ✅ 完成 | - |
+| **车控功能** | `CarControlBridge.java` | ✅ 完成 | 50+ |
+| **壁纸功能** | `WallpaperBridge.java` | 🔧 骨架已建 | 14 个占位 |
+| **应用管理** | `AppBridge.java` | 🔧 骨架已建 | 14 个占位 |
+
+- **车控模块迁移**：42/46 方法（~91%）
+- **剩余 4 个**：UI 相关高级方法（建议保留在 WebViewBridge）
+- **拆分模式**：委托模式（Facade），前端不用改
+
+### 测试覆盖
+
+| 工具 | 测试数 | 覆盖率 |
+|------|--------|--------|
+| check_commit_msg.py | 12 个 | 47% |
+| generate_api_docs.py | 8 个 | 57% |
+| generate_code_index.py | 5 个 | 25% |
+| **总计** | **25 个** | **41%** |
+
+- **Python 工具测试**：25 个测试全部通过 ✅
+- **Android 单元测试**：CarControlManagerTest 骨架已建（24 个测试方法）
+- **CI/CD**：GitHub Actions 自动构建 + 代码质量检查 + 覆盖率统计
+
+### 文档体系（17 份文档）
+
+| 类型 | 文档 |
+|------|------|
+| **项目总览** | PROJECT_STATUS.md, README.md, PROJECT_PLAN.md |
+| **开发指南** | AI_ENTRY_GUIDE.md, DEVELOPMENT_GUIDE.md, ARCHITECTURE.md |
+| **车控接口** | C11_CAR_CONTROL_CAPABILITIES.md, CAR_CONTROL_API.md, JS_API_REFERENCE.md |
+| **日志分析** | LEAPMOTOR_LOG_ANALYSIS.md |
+| **工程化** | CODE_INDEX.md, COMMIT_CONVENTION.md, TESTING.md, REFACTORING_PLAN.md |
+| **其他** | FAQ.md, ICON_RESOURCES.md, docs/README.md |
+
+---
+
+## 📋 近期计划
+
+### 高优先级
+- [ ] 填充 WallpaperBridge 具体实现（迁移 26 个壁纸方法）
+- [ ] 填充 AppBridge 具体实现（迁移 15 个应用管理方法）
+- [ ] 完善 CarControlManager 单元测试
+
+### 中优先级
+- [ ] 提升 Python 工具测试覆盖率（目标 70%+）
+- [ ] 拆分音乐模块（MusicBridge）
+- [ ] 拆分系统设置模块（SystemBridge）
+
+### 低优先级
+- [ ] 拆分副屏模块
+- [ ] 拆分 ADB/权限模块
+- [ ] WebViewBridge 精简到 800 行以内

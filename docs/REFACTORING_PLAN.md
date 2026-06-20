@@ -235,3 +235,80 @@ public class BaseBridge {
 
 **文档版本**：v1.0  
 **最后更新**：2026-06-20
+
+
+---
+
+## 五、最新进展（2026-06-20）
+
+### 5.1 已完成
+
+| 模块 | 类名 | 状态 | 方法数 |
+|------|------|------|--------|
+| **基类** | `BaseBridge.java` | ✅ 完成 | - |
+| **车控功能** | `CarControlBridge.java` | ✅ 完成 | 50+ |
+| **壁纸功能** | `WallpaperBridge.java` | 🔧 骨架已建 | 14 个占位 |
+| **应用管理** | `AppBridge.java` | 🔧 骨架已建 | 14 个占位 |
+
+### 5.2 车控模块迁移详情
+
+- **总方法数**：46 个
+- **已迁移**：42 个（~91%）
+- **未迁移**：4 个（UI 相关高级方法）
+
+**未迁移的 4 个空调方法**（建议保留在 WebViewBridge）：
+- `initializeAcStatus()` - 初始化并更新 UI
+- `toggleAirConditioning()` - 切换空调并更新 UI
+- `getAcInfo()` - 返回平台信息
+- `adjustWindLevel(int delta)` - 相对调整风量并更新 UI
+
+**原因**：这些是高级 UI 方法，包含 runOnUiThread 更新前端的逻辑，不属于纯车控底层方法。
+
+### 5.3 下一步计划
+
+#### 短期（1-2天）
+- [ ] 填充 WallpaperBridge 具体实现（迁移 26 个壁纸方法）
+- [ ] 填充 AppBridge 具体实现（迁移 15 个应用管理方法）
+- [ ] 完善 CarControlManager 单元测试
+
+#### 中期（3-5天）
+- [ ] 拆分音乐模块（MusicBridge，12 个方法）
+- [ ] 拆分系统设置模块（SystemBridge，11 个方法）
+- [ ] 拆分副屏模块（SecondaryScreenBridge，7 个方法）
+
+#### 长期（1周+）
+- [ ] 拆分 ADB 模块（AdbBridge，4 个方法）
+- [ ] 拆分权限模块（PermissionBridge，4 个方法）
+- [ ] 拆分自动化模块（AutomationBridge，4 个方法）
+- [ ] WebViewBridge 精简到 800 行以内
+
+### 5.4 迁移流程（标准步骤）
+
+1. 在子 Bridge 中实现具体方法
+2. 在 WebViewBridge 中改为委托调用
+3. 运行测试确保功能正常
+4. 更新代码索引和文档
+5. 提交代码
+
+---
+
+## 六、测试覆盖
+
+### 6.1 Python 工具测试
+
+| 工具 | 测试数 | 覆盖率 |
+|------|--------|--------|
+| check_commit_msg.py | 12 个 | 47% |
+| generate_api_docs.py | 8 个 | 57% |
+| generate_code_index.py | 5 个 | 25% |
+| **总计** | **25 个** | **41%** |
+
+### 6.2 Android 单元测试
+
+- CarControlManagerTest - 骨架已建（24 个测试方法占位）
+- 后续逐步填充具体测试逻辑
+
+---
+
+*文档版本：v1.1*
+*最后更新：2026-06-20*
