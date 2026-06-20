@@ -2380,7 +2380,152 @@ public class WebViewBridge {
         } catch (Exception e) {
             return "{\"isPlaying\":false,\"currentPosition\":0,\"duration\":0}";
         }
+
+    /**
+     * 获取系统音乐信息（从通知监听服务）
+     *
+     * @return 音乐信息JSON字符串
+     */
+    @JavascriptInterface
+    public String getSystemMusicInfo() {
+        try {
+            org.json.JSONObject musicInfo = new org.json.JSONObject();
+            
+            // 从通知监听服务获取音乐信息
+            String title = com.c11partner.desktop.service.MusicNotificationListenerService.getCurrentTitle();
+            String artist = com.c11partner.desktop.service.MusicNotificationListenerService.getCurrentArtist();
+            boolean isPlaying = com.c11partner.desktop.service.MusicNotificationListenerService.isPlaying();
+            
+            musicInfo.put("title", title);
+            musicInfo.put("artist", artist);
+            musicInfo.put("isPlaying", isPlaying);
+            musicInfo.put("hasData", title != null && !title.isEmpty());
+            
+            return musicInfo.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "获取系统音乐信息失败", e);
+            try {
+                org.json.JSONObject defaultInfo = new org.json.JSONObject();
+                defaultInfo.put("title", "");
+                defaultInfo.put("artist", "");
+                defaultInfo.put("isPlaying", false);
+                defaultInfo.put("hasData", false);
+                return defaultInfo.toString();
+            } catch (Exception ex) {
+                return "{}";
+            }
+        }
     }
+
+    /**
+     * 播放/暂停音乐
+     */
+    @JavascriptInterface
+    public void playPauseMusic() {
+        try {
+            // 使用 CarControlManager 发送方控按键
+            com.c11partner.desktop.utils.CarControlManager carControl = 
+                com.c11partner.desktop.utils.CarControlManager.getInstance(mContext);
+            // 发送播放/暂停按键（通过方控）
+            // 注意：零跑C11方控可能没有播放暂停键，尝试使用媒体按钮广播
+            sendMediaButton(android.view.KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
+        } catch (Exception e) {
+            Log.e(TAG, "播放/暂停音乐失败", e);
+        }
+    }
+
+    /**
+     * 下一首
+     */
+    @JavascriptInterface
+    public void nextMusic() {
+        try {
+            com.c11partner.desktop.utils.CarControlManager carControl = 
+                com.c11partner.desktop.utils.CarControlManager.getInstance(mContext);
+            carControl.sendNextTrack();
+        } catch (Exception e) {
+            Log.e(TAG, "下一首失败", e);
+            // 降级方案：发送媒体按钮广播
+            sendMediaButton(android.view.KeyEvent.KEYCODE_MEDIA_NEXT);
+        }
+    }
+
+    /**
+     * 上一首
+     */
+    @JavascriptInterface
+    public void prevMusic() {
+        try {
+            com.c11partner.desktop.utils.CarControlManager carControl = 
+                com.c11partner.desktop.utils.CarControlManager.getInstance(mContext);
+            carControl.sendPrevTrack();
+        } catch (Exception e) {
+            Log.e(TAG, "上一首失败", e);
+            // 降级方案：发送媒体按钮广播
+            sendMediaButton(android.view.KeyEvent.KEYCODE_MEDIA_PREVIOUS);
+        }
+    }
+
+    /**
+     * 发送媒体按钮广播
+     */
+    private void sendMediaButton(int keyCode) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_MEDIA_BUTTON);
+            android.os.Bundle extras = new android.os.Bundle();
+            extras.putParcelable(Intent.EXTRA_KEY_EVENT, 
+                new android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN, keyCode));
+            intent.putExtras(extras);
+            mContext.sendBroadcast(intent);
+            
+            // 再发送一个ACTION_UP
+            Intent intentUp = new Intent(Intent.ACTION_MEDIA_BUTTON);
+            android.os.Bundle extrasUp = new android.os.Bundle();
+            extrasUp.putParcelable(Intent.EXTRA_KEY_EVENT, 
+                new android.view.KeyEvent(android.view.KeyEvent.ACTION_UP, keyCode));
+            intentUp.putExtras(extrasUp);
+            mContext.sendBroadcast(intentUp);
+            
+            Log.d(TAG, "发送媒体按钮: " + keyCode);
+        } catch (Exception e) {
+            Log.e(TAG, "发送媒体按钮失败", e);
+        }
+    }
+
+    /**
+     * 检查通知监听权限是否开启
+     */
+    @JavascriptInterface
+    public boolean isNotificationListenerEnabled() {
+        try {
+            String packageName = mContext.getPackageName();
+            String flat = android.provider.Settings.Secure.getString(
+                mContext.getContentResolver(),
+                "enabled_notification_listeners");
+            if (flat != null) {
+                return flat.contains(packageName);
+            }
+            return false;
+        } catch (Exception e) {
+            Log.e(TAG, "检查通知监听权限失败", e);
+            return false;
+        }
+    }
+
+    /**
+     * 打开通知监听设置页面
+     */
+    @JavascriptInterface
+    public void openNotificationListenerSettings() {
+        try {
+            Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, "打开通知监听设置失败", e);
+        }
+    }
+
     /**
      * @return WiFi连接状态
      */
