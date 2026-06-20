@@ -1765,6 +1765,37 @@ body {
     margin-bottom: 10px;
 }
 
+/* 应用分类切换标签 */
+.app-category-tabs {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-tab {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.app-tab:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.app-tab.active {
+    background: #007bff;
+    color: white;
+}
+
+
 .search-container input[type="text"] {
     width: 100%;
     padding: 6px 12px;

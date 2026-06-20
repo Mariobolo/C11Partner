@@ -1134,6 +1134,7 @@ function renderAppsList(appsData) {
                 const appItem = document.createElement('div');
                 appItem.className = 'app-item';
                 appItem.setAttribute('data-package', app.packageName);
+                appItem.setAttribute('data-is-system-app', app.isSystemApp || false);
                 appItem.innerHTML = `
                     <div class="app-icon" style="background-image: url('${app.icon}');"></div>
                     <div class="app-name">${app.name}</div>
@@ -1195,6 +1196,9 @@ function initAppsModal() {
     let lastAppListLoadTime = 0;
     const APP_LIST_CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
     
+    // 当前选中的应用分类
+    let currentAppCategory = 'all'; // all, user, system
+    
     // 接收预加载的应用列表
     function setAppListCache(appListJson) {
         try {
@@ -1242,20 +1246,76 @@ function initAppsModal() {
         }
     });
 
+    // 分类切换功能
+    const categoryTabs = document.querySelectorAll('.app-tab');
+    categoryTabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+            // 更新标签状态
+            categoryTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // 更新当前分类
+            currentAppCategory = this.dataset.category;
+            
+            // 重新过滤应用列表
+            filterAppList();
+        });
+    });
+
     // 搜索功能
     appSearch.addEventListener('input', function () {
-        const searchTerm = this.value.toLowerCase();
+        filterAppList();
+    });
+    
+    // 过滤应用列表（同时考虑分类和搜索）
+    function filterAppList() {
+        const searchTerm = appSearch.value.toLowerCase();
         const appItems = document.querySelectorAll('.app-item');
 
         appItems.forEach(item => {
             const appName = item.querySelector('.app-name').textContent.toLowerCase();
-            if (appName.includes(searchTerm)) {
+            const isSystemApp = item.dataset.isSystemApp === 'true';
+            
+            // 分类过滤
+            let categoryMatch = true;
+            if (currentAppCategory === 'user') {
+                categoryMatch = !isSystemApp;
+            } else if (currentAppCategory === 'system') {
+                categoryMatch = isSystemApp;
+            }
+            
+            // 搜索过滤
+            const searchMatch = appName.includes(searchTerm);
+            
+            // 同时满足才显示
+            if (categoryMatch && searchMatch) {
                 item.style.display = 'flex';
             } else {
                 item.style.display = 'none';
             }
         });
-    });
+        
+        // 更新字母导航栏的显示状态
+        updateAlphabetNavVisibility();
+    }
+    
+    // 更新字母导航栏的显示状态（隐藏没有应用的字母）
+    function updateAlphabetNavVisibility() {
+        const sections = document.querySelectorAll('.app-section');
+        const alphabetItems = document.querySelectorAll('#alphabetList li');
+        
+        sections.forEach(section => {
+            const letter = section.id.replace('section-', '');
+            const visibleApps = section.querySelectorAll('.app-item[style*="display: flex"]');
+            
+            // 如果这个字母分组下没有可见的应用，隐藏整个分组
+            if (visibleApps.length === 0) {
+                section.style.display = 'none';
+            } else {
+                section.style.display = 'block';
+            }
+        });
+    }
 
     // 加载应用列表的函数
     function loadAppList() {
@@ -1357,6 +1417,7 @@ function renderAppsList(appsData) {
                 const appItem = document.createElement('div');
                 appItem.className = 'app-item';
                 appItem.setAttribute('data-package', app.packageName);
+                appItem.setAttribute('data-is-system-app', app.isSystemApp || false);
                 appItem.innerHTML = `
                     <div class="app-icon" style="background-image: url('${app.icon}');"></div>
                     <div class="app-name">${app.name}</div>
