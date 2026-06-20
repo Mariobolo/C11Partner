@@ -47,13 +47,14 @@ public class WallpaperBridge extends BaseBridge {
      */
     public boolean setWallpaper(String path) {
         try {
-            // TODO: 实现壁纸设置逻辑
+            wallpaperManager.setWallpaperPath(path);
             Log.d(TAG, "设置壁纸: " + path);
             return true;
         } catch (Exception e) {
             Log.e(TAG, "设置壁纸失败", e);
             return false;
         }
+    }
     }
     
     /**
@@ -62,12 +63,12 @@ public class WallpaperBridge extends BaseBridge {
      */
     public String getCurrentWallpaper() {
         try {
-            // TODO: 实现获取当前壁纸逻辑
-            return "";
+            return wallpaperManager.getCurrentWallpaperUrl();
         } catch (Exception e) {
             Log.e(TAG, "获取当前壁纸失败", e);
-            return "";
+            return "images/default_bg_1.jpg";
         }
+    }
     }
     
     // ==================== 壁纸分类相关 ====================
