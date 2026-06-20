@@ -59,6 +59,11 @@ public class CarStatusPresentation extends Presentation {
     private boolean mBluetoothConnected = false;
     private boolean mLocked = true;
     
+    // 时间更新
+    private android.os.Handler mTimeHandler = new android.os.Handler();
+    private Runnable mTimeUpdateRunnable;
+    private java.text.SimpleDateFormat mTimeFormat;
+    
     public CarStatusPresentation(Context outerContext, Display display) {
         super(outerContext, display);
     }
@@ -71,8 +76,68 @@ public class CarStatusPresentation extends Presentation {
         View contentView = createContentView();
         setContentView(contentView);
         
+        // 初始化时间格式
+        mTimeFormat = new java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+        
+        // 启动时间更新
+        startTimeUpdate();
+
         // 更新显示
         updateDisplay();
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopTimeUpdate();
+    }
+    
+    /**
+     * 启动时间更新（每分钟更新一次，精确对齐分钟）
+     */
+    private void startTimeUpdate() {
+        if (mTimeUpdateRunnable == null) {
+            mTimeUpdateRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        updateCurrentTime();
+                    } finally {
+                        // 计算到下一分钟的延迟时间
+                        long now = System.currentTimeMillis();
+                        long delay = 60000 - (now % 60000);
+                        mTimeHandler.postDelayed(this, delay);
+                    }
+                }
+            };
+        }
+        
+        // 立即更新一次
+        updateCurrentTime();
+        
+        // 计算到下一分钟的延迟，然后开始定时更新
+        long now = System.currentTimeMillis();
+        long delay = 60000 - (now % 60000);
+        mTimeHandler.postDelayed(mTimeUpdateRunnable, delay);
+    }
+    
+    /**
+     * 停止时间更新
+     */
+    private void stopTimeUpdate() {
+        if (mTimeHandler != null && mTimeUpdateRunnable != null) {
+            mTimeHandler.removeCallbacks(mTimeUpdateRunnable);
+        }
+    }
+    
+    /**
+     * 更新当前时间显示
+     */
+    private void updateCurrentTime() {
+        if (mTimeText != null && mTimeFormat != null) {
+            String time = mTimeFormat.format(new java.util.Date());
+            mTimeText.setText(time);
+        }
     }
     
     /**
@@ -487,6 +552,12 @@ public class CarStatusPresentation extends Presentation {
     
     /**
      * 更新时间
+     */
+    /**
+     * 更新时间显示（外部调用接口）
+     * 注意：副屏已内置每分钟自动更新时间，通常不需要外部调用此方法
+     *
+     * @param time 时间字符串
      */
     public void updateTime(String time) {
         if (mTimeText != null) {
