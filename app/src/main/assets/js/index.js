@@ -3043,7 +3043,7 @@ function registerTimeUpdateListener() {
         updateGearIndicator: function(gear, gearText) {
             const element = document.getElementById('gearIndicator');
             if (element) {
-                element.textContent = gearText || 'P';
+                element.textContent = gearText || 'P档';
                 // 移除所有档位类
                 element.classList.remove('gear-r', 'gear-n', 'gear-d', 'gear-p');
                 // 根据档位添加对应类
@@ -3076,7 +3076,7 @@ function registerTimeUpdateListener() {
                     if (rr === 1) doorCount++;
                     if (trunk === 1) doorCount++;
                     if (hood === 1) doorCount++;
-                    element.textContent = '🚪×' + doorCount;
+                    element.textContent = doorCount + '门开';
                 } else {
                     element.style.display = 'none';
                 }
@@ -3122,10 +3122,10 @@ function registerTimeUpdateListener() {
             const element = document.getElementById('lockIndicator');
             if (element) {
                 if (isLocked) {
-                    element.textContent = '🔒';
+                    element.textContent = '已锁';
                     element.classList.remove('unlocked');
                 } else {
-                    element.textContent = '🔓';
+                    element.textContent = '未锁';
                     element.classList.add('unlocked');
                 }
             }
