@@ -3595,16 +3595,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean sendVoiceCommand(String command) {
-        Log.d(TAG, "发送语音指令（测试）: " + command);
-        try {
-            CarControlManager carControl = getCarControlManager();
-            boolean result = carControl.sendVoiceCommand(command);
-            Log.d(TAG, "语音指令发送结果: " + result);
-            return result;
-        } catch (Exception e) {
-            Log.e(TAG, "发送语音指令失败: " + command, e);
-            return false;
-        }
+        return mCarControlBridge.sendVoiceCommand(command);
     }
 
     /**
@@ -3776,12 +3767,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setRearFogLight(boolean on) {
-        try {
-            return getCarControlManager().setRearFogLight(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制后雾灯失败", e);
-            return false;
-        }
+        return mCarControlBridge.setRearFogLight(on);
     }
     
     /**
@@ -3789,12 +3775,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setPositionLight(boolean on) {
-        try {
-            return getCarControlManager().setPositionLight(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制示廓灯失败", e);
-            return false;
-        }
+        return mCarControlBridge.setPositionLight(on);
     }
     
     /**
@@ -3802,12 +3783,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setPedestrianAlert(boolean on) {
-        try {
-            return getCarControlManager().setPedestrianAlert(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制行人警示音失败", e);
-            return false;
-        }
+        return mCarControlBridge.setPedestrianAlert(on);
     }
     
     // ==================== 驾驶模式控制 ====================
@@ -3828,12 +3804,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setGuardMode(boolean on) {
-        try {
-            return getCarControlManager().setGuardMode(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制守护模式失败", e);
-            return false;
-        }
+        return mCarControlBridge.setGuardMode(on);
     }
     
     /**
@@ -3841,12 +3812,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setRestMode(boolean on) {
-        try {
-            return getCarControlManager().setRestMode(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制小憩模式失败", e);
-            return false;
-        }
+        return mCarControlBridge.setRestMode(on);
     }
     
     /**
@@ -3854,12 +3820,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setCampingMode(boolean on) {
-        try {
-            return getCarControlManager().setCampingMode(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制露营模式失败", e);
-            return false;
-        }
+        return mCarControlBridge.setCampingMode(on);
     }
     
     /**
@@ -3867,12 +3828,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setPowerSaveMode(boolean on) {
-        try {
-            return getCarControlManager().setPowerSaveMode(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制省电模式失败", e);
-            return false;
-        }
+        return mCarControlBridge.setPowerSaveMode(on);
     }
     
     /**
@@ -3880,12 +3836,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setSentinelMode(boolean on) {
-        try {
-            return getCarControlManager().setSentinelMode(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制哨兵模式失败", e);
-            return false;
-        }
+        return mCarControlBridge.setSentinelMode(on);
     }
     
     // ==================== 空调控制 ====================
@@ -3895,12 +3846,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setMaxCooling(boolean on) {
-        try {
-            return getCarControlManager().setMaxCooling(on);
-        } catch (Exception e) {
-            Log.e(TAG, "设置最大制冷失败", e);
-            return false;
-        }
+        return mCarControlBridge.setMaxCooling(on);
     }
     
     // ==================== 系统设置控制 ====================
@@ -3911,12 +3857,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setNightMode(boolean night) {
-        try {
-            return getCarControlManager().setNightMode(night);
-        } catch (Exception e) {
-            Log.e(TAG, "设置夜间模式失败", e);
-            return false;
-        }
+        return mCarControlBridge.setNightMode(on);
     }
     
     /**
@@ -3924,12 +3865,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setWifiEnabled(boolean enabled) {
-        try {
-            return getCarControlManager().setWifiEnabled(enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "控制WiFi失败", e);
-            return false;
-        }
+        return mCarControlBridge.setWifiEnabled(enabled);
     }
     
     /**
@@ -3937,12 +3873,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setBluetoothEnabled(boolean enabled) {
-        try {
-            return getCarControlManager().setBluetoothEnabled(enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "控制蓝牙失败", e);
-            return false;
-        }
+        return mCarControlBridge.setBluetoothEnabled(enabled);
     }
     
     // ==================== 方控按键模拟 ====================
@@ -3952,12 +3883,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean sendPrevTrack() {
-        try {
-            return getCarControlManager().sendPrevTrack();
-        } catch (Exception e) {
-            Log.e(TAG, "发送上一曲失败", e);
-            return false;
-        }
+        return mCarControlBridge.sendPrevTrack();
     }
     
     /**
@@ -3965,12 +3891,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean sendNextTrack() {
-        try {
-            return getCarControlManager().sendNextTrack();
-        } catch (Exception e) {
-            Log.e(TAG, "发送下一曲失败", e);
-            return false;
-        }
+        return mCarControlBridge.sendNextTrack();
     }
     
     // ==================== Settings.Global 读写 ====================
@@ -3981,12 +3902,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setCameraOverspeedLimit(boolean enabled) {
-        try {
-            return getCarControlManager().setCameraOverspeedLimit(enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "设置360超速限制失败", e);
-            return false;
-        }
+        return mCarControlBridge.setCameraOverspeedLimit(enabled);
     }
     
     /**
@@ -3994,12 +3910,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isCameraOverspeedLimitEnabled() {
-        try {
-            return getCarControlManager().isCameraOverspeedLimitEnabled();
-        } catch (Exception e) {
-            Log.e(TAG, "获取360超速限制状态失败", e);
-            return true;
-        }
+        return mCarControlBridge.isCameraOverspeedLimitEnabled();
     }
     
     /**
@@ -4008,12 +3919,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setVideoWhileDriving(boolean enabled) {
-        try {
-            return getCarControlManager().setVideoWhileDriving(enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "设置行驶视频播放失败", e);
-            return false;
-        }
+        return mCarControlBridge.setVideoWhileDriving(enabled);
     }
     
     /**
@@ -4021,12 +3927,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isVideoWhileDrivingEnabled() {
-        try {
-            return getCarControlManager().isVideoWhileDrivingEnabled();
-        } catch (Exception e) {
-            Log.e(TAG, "获取行驶视频播放状态失败", e);
-            return false;
-        }
+        return mCarControlBridge.isVideoWhileDrivingEnabled();
     }
     
     // ==================== 音量控制 ====================
@@ -4036,12 +3937,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setCallVolume(int volume) {
-        try {
-            return getCarControlManager().setCallVolume(volume);
-        } catch (Exception e) {
-            Log.e(TAG, "设置电话音量失败", e);
-            return false;
-        }
+        return mCarControlBridge.setCallVolume(volume);
     }
     
     /**
@@ -4049,12 +3945,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public int getCallVolume() {
-        try {
-            return getCarControlManager().getCallVolume();
-        } catch (Exception e) {
-            Log.e(TAG, "获取电话音量失败", e);
-            return 50;
-        }
+        return mCarControlBridge.getCallVolume();
     }
     
     /**
@@ -4062,12 +3953,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setNaviVolume(int volume) {
-        try {
-            return getCarControlManager().setNaviVolume(volume);
-        } catch (Exception e) {
-            Log.e(TAG, "设置导航音量失败", e);
-            return false;
-        }
+        return mCarControlBridge.setNaviVolume(volume);
     }
     
     /**
@@ -4075,12 +3961,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public int getNaviVolume() {
-        try {
-            return getCarControlManager().getNaviVolume();
-        } catch (Exception e) {
-            Log.e(TAG, "获取导航音量失败", e);
-            return 50;
-        }
+        return mCarControlBridge.getNaviVolume();
     }
     
     /**
@@ -4096,12 +3977,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public int getMusicVolume() {
-        try {
-            return getCarControlManager().getMusicVolume();
-        } catch (Exception e) {
-            Log.e(TAG, "获取媒体音量失败", e);
-            return 50;
-        }
+        return mCarControlBridge.getMusicVolume();
     }
     
     // ==================== 空调温度控制 ====================
@@ -4112,12 +3988,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setDriverTemp(int temp) {
-        try {
-            return getCarControlManager().setDriverTemp(temp);
-        } catch (Exception e) {
-            Log.e(TAG, "设置主驾温度失败", e);
-            return false;
-        }
+        return mCarControlBridge.setDriverTemp(temp);
     }
     
     /**
@@ -4125,12 +3996,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public int getDriverTemp() {
-        try {
-            return getCarControlManager().getDriverTemp();
-        } catch (Exception e) {
-            Log.e(TAG, "获取主驾温度失败", e);
-            return 24;
-        }
+        return mCarControlBridge.getDriverTemp();
     }
     
     /**
@@ -4138,12 +4004,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setPassengerTemp(int temp) {
-        try {
-            return getCarControlManager().setPassengerTemp(temp);
-        } catch (Exception e) {
-            Log.e(TAG, "设置副驾温度失败", e);
-            return false;
-        }
+        return mCarControlBridge.setPassengerTemp(temp);
     }
     
     /**
@@ -4151,12 +4012,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public int getPassengerTemp() {
-        try {
-            return getCarControlManager().getPassengerTemp();
-        } catch (Exception e) {
-            Log.e(TAG, "获取副驾温度失败", e);
-            return 24;
-        }
+        return mCarControlBridge.getPassengerTemp();
     }
     
     // ==================== 氛围灯控制 ====================
@@ -4174,12 +4030,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isAmbientLightEnabled() {
-        try {
-            return getCarControlManager().isAmbientLightEnabled();
-        } catch (Exception e) {
-            Log.e(TAG, "获取氛围灯开关状态失败", e);
-            return false;
-        }
+        return mCarControlBridge.isAmbientLightEnabled();
     }
     
     /**
@@ -4188,12 +4039,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setAmbientLightColor(int color) {
-        try {
-            return getCarControlManager().setAmbientLightColor(color);
-        } catch (Exception e) {
-            Log.e(TAG, "设置氛围灯颜色失败", e);
-            return false;
-        }
+        return mCarControlBridge.setAmbientLightColor(color);
     }
     
     /**
@@ -4201,12 +4047,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public int getAmbientLightColor() {
-        try {
-            return getCarControlManager().getAmbientLightColor();
-        } catch (Exception e) {
-            Log.e(TAG, "获取氛围灯颜色失败", e);
-            return 0;
-        }
+        return mCarControlBridge.getAmbientLightColor();
     }
     
     // ==================== 副屏控制 ====================
@@ -4230,12 +4071,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setSecondaryScreenEnabled(boolean enabled) {
-        try {
-            return getCarControlManager().setSecondaryScreenEnabled(enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "设置副屏状态失败", e);
-            return false;
-        }
+        return mCarControlBridge.setSecondaryScreenEnabled(enabled);
     }
     
     /**
@@ -4243,12 +4079,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isSecondaryScreenEnabled() {
-        try {
-            return getCarControlManager().isSecondaryScreenEnabled();
-        } catch (Exception e) {
-            Log.e(TAG, "获取副屏状态失败", e);
-            return true;
-        }
+        return mCarControlBridge.isSecondaryScreenEnabled();
     }
     
     /**
@@ -4441,12 +4272,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setSpeechEnabled(boolean enabled) {
-        try {
-            return getCarControlManager().setSpeechEnabled(enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "设置语音播报开关失败", e);
-            return false;
-        }
+        return mCarControlBridge.setSpeechEnabled(enabled);
     }
     
     /**
@@ -4454,12 +4280,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isSpeechEnabled() {
-        try {
-            return getCarControlManager().isSpeechEnabled();
-        } catch (Exception e) {
-            Log.e(TAG, "获取语音播报开关状态失败", e);
-            return true;
-        }
+        return mCarControlBridge.isSpeechEnabled();
     }
     
     // ==================== 车辆状态读取 ====================
@@ -4470,12 +4291,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isVehicleLocked() {
-        try {
-            return getCarControlManager().isVehicleLocked();
-        } catch (Exception e) {
-            Log.e(TAG, "获取车辆锁状态失败", e);
-            return true;
-        }
+        return mCarControlBridge.isVehicleLocked();
     }
     
     /**
@@ -4484,12 +4300,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isScreenOn() {
-        try {
-            return getCarControlManager().isScreenOn();
-        } catch (Exception e) {
-            Log.e(TAG, "获取屏幕状态失败", e);
-            return true;
-        }
+        return mCarControlBridge.isScreenOn();
     }
     
     // ==================== 自动化场景配置 ====================

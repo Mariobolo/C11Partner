@@ -50,10 +50,31 @@ jobs:
         echo "提交信息: $LATEST_COMMIT_MSG"
         python3 tools/check_commit_msg.py "$LATEST_COMMIT_MSG"
 
-    - name: Run unit tests
+    - name: Install coverage tools
       run: |
-        echo "=== 运行单元测试 ==="
-        python3 tests/test_check_commit_msg.py
+        pip install coverage
+
+    - name: Run unit tests with coverage
+      run: |
+        echo "=== 运行单元测试（带覆盖率） ==="
+        coverage run --source=tools -m pytest tests/ -v || coverage run --source=tools tests/test_check_commit_msg.py
+        coverage run --append --source=tools tests/test_generate_code_index.py
+        coverage run --append --source=tools tests/test_generate_api_docs.py
+        
+        echo ""
+        echo "=== 覆盖率报告 ==="
+        coverage report -m
+        
+        echo ""
+        echo "=== 生成 HTML 报告 ==="
+        coverage html -d coverage_html
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage_html/
+        retention-days: 7
 
     - name: Make gradlew executable
       run: chmod +x gradlew
