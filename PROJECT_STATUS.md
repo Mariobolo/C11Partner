@@ -97,7 +97,12 @@
 - ✅ docs/C11_CAR_CONTROL_CAPABILITIES.md - v2.0 最全面版车控接口文档
 - ✅ docs/LEAPMOTOR_LOG_ANALYSIS.md - 实车日志分析报告
 - ✅ docs/ICON_RESOURCES.md - 图标素材推荐清单
-- ✅ docs/CODE_INDEX.md - 代码索引文档（函数级快速定位，74个关键函数行号）
+- ✅ docs/CODE_INDEX.md - 代码索引文档（函数级快速定位，633个函数，自动生成）
+- ✅ docs/ARCHITECTURE.md - 架构设计文档（模块划分、关键流程、设计决策）
+- ✅ docs/DEVELOPMENT_GUIDE.md - 开发指南文档（环境搭建、调试方法、开发流程）
+- ✅ docs/CAR_CONTROL_API.md - 车控接口速查手册（三层控制模型完整列表）
+- ✅ docs/FAQ.md - 常见问题FAQ文档（安装、编译、车控、调试等问题解答）
+- ✅ docs/README.md - 文档中心总览（所有文档的入口和导航）
 - ✅ AI_ENTRY_GUIDE.md - AI项目引导文档v2.0
 - ✅ PROJECT_PLAN.md - 详细开发计划
 - ✅ README.md - 项目说明文档
@@ -107,6 +112,7 @@
 - [x] 应用列表分类显示（全部/用户应用/系统应用，可与搜索组合）
 - [x] 副屏时间更新优化（内置定时器，每分钟自动更新）
 - [x] 代码索引文档创建（函数级快速定位，优化开发效率）
+- [x] 完整文档体系建设（架构、开发指南、接口速查、FAQ）
 - [ ] 前端UI整体美化
 - [ ] 图标替换和主题美化
 - [ ] 更多实车测试和bug修复
