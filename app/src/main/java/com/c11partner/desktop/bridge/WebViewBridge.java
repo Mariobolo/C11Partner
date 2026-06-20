@@ -3857,7 +3857,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setNightMode(boolean night) {
-        return mCarControlBridge.setNightMode(on);
+        return mCarControlBridge.setNightMode(night);
     }
     
     /**
