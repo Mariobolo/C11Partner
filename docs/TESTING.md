@@ -251,3 +251,52 @@ test_<功能>_<场景>_<预期结果>
 
 **文档版本**：v1.0  
 **最后更新**：2026-06-20
+
+
+---
+
+## 六、最新测试数据（2026-06-20）
+
+### 6.1 测试覆盖率
+
+| 工具 | 测试数 | 覆盖率 |
+|------|--------|--------|
+| check_commit_msg.py | 12 个 | 47% |
+| generate_api_docs.py | 8 个 | 57% |
+| generate_code_index.py | 11 个 | 85% |
+| **总计** | **31 个** | **68%** |
+
+### 6.2 运行测试
+
+```bash
+# 运行所有测试
+python3 tests/test_check_commit_msg.py
+python3 tests/test_generate_code_index.py
+python3 tests/test_generate_api_docs.py
+
+# 带覆盖率运行
+coverage run --source=tools tests/test_check_commit_msg.py
+coverage run --append --source=tools tests/test_generate_code_index.py
+coverage run --append --source=tools tests/test_generate_api_docs.py
+coverage report -m
+
+# 生成 HTML 报告
+coverage html
+```
+
+### 6.3 Android 单元测试
+
+CarControlManager 单元测试骨架已创建：
+- 位置：`app/src/test/java/com/c11partner/desktop/utils/CarControlManagerTest.java`
+- 测试方法：24 个占位
+- 框架：JUnit + Mockito + Robolectric
+
+运行方法：
+```bash
+./gradlew testDebugUnitTest
+```
+
+---
+
+*文档版本：v1.1*
+*最后更新：2026-06-20*
