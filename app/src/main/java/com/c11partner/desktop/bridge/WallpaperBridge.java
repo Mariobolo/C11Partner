@@ -69,6 +69,32 @@ public class WallpaperBridge extends BaseBridge {
             return "images/default_bg_1.jpg";
         }
     }
+    
+    /**
+     * 获取壁纸设置（V2版本）
+     * @return 壁纸设置JSON字符串
+     */
+    public String getWallpaperSettingsV2() {
+        try {
+            return wallpaperManager.getAllSettingsJson();
+        } catch (Exception e) {
+            Log.e(TAG, "获取壁纸设置失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
+     * 设置壁纸类型
+     * @param type 壁纸类型
+     */
+    public void setWallpaperType(int type) {
+        try {
+            wallpaperManager.setWallpaperType(type);
+            Log.d(TAG, "设置壁纸类型: " + type);
+        } catch (Exception e) {
+            Log.e(TAG, "设置壁纸类型失败", e);
+        }
+    }
     }
     
     // ==================== 壁纸分类相关 ====================
