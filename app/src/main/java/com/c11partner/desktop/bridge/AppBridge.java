@@ -11,6 +11,10 @@ import com.c11partner.desktop.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.c11partner.desktop.database.AppDatabaseHelper;
+import com.c11partner.desktop.database.QuickAppDatabaseHelper;
+import com.c11partner.desktop.database.ComponentConfigDatabaseHelper;
+import android.content.pm.PackageManager;
 
 /**
  * 应用管理模块 Bridge
@@ -25,6 +29,12 @@ public class AppBridge extends BaseBridge {
     
     private static final String TAG = "AppBridge";
     
+    // 应用管理相关
+    private AppDatabaseHelper appDbHelper;
+    private QuickAppDatabaseHelper quickAppDbHelper;
+    private ComponentConfigDatabaseHelper componentConfigDbHelper;
+    private PackageManager packageManager;
+    
     /**
      * 构造函数
      * @param context 上下文
@@ -32,6 +42,10 @@ public class AppBridge extends BaseBridge {
      */
     public AppBridge(Context context, MainActivity activity) {
         super(context, activity);
+        this.appDbHelper = AppDatabaseHelper.getInstance(context);
+        this.quickAppDbHelper = QuickAppDatabaseHelper.getInstance(context);
+        this.componentConfigDbHelper = ComponentConfigDatabaseHelper.getInstance(context);
+        this.packageManager = context.getPackageManager();
     }
     
     // ==================== 应用列表相关 ====================

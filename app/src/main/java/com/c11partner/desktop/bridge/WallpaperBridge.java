@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.c11partner.desktop.MainActivity;
+import com.c11partner.desktop.utils.WallpaperManager;
+import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
+import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
 
 /**
  * 壁纸功能模块 Bridge
@@ -18,6 +21,11 @@ public class WallpaperBridge extends BaseBridge {
     
     private static final String TAG = "WallpaperBridge";
     
+    // 壁纸管理相关
+    private WallpaperManager wallpaperManager;
+    private WallpaperCategoryDatabaseHelper wallpaperDbHelper;
+    private WallpaperSettingsDatabaseHelper wallpaperSettingsDbHelper;
+    
     /**
      * 构造函数
      * @param context 上下文
@@ -25,6 +33,9 @@ public class WallpaperBridge extends BaseBridge {
      */
     public WallpaperBridge(Context context, MainActivity activity) {
         super(context, activity);
+        this.wallpaperManager = WallpaperManager.getInstance(context);
+        this.wallpaperDbHelper = WallpaperCategoryDatabaseHelper.getInstance(context);
+        this.wallpaperSettingsDbHelper = WallpaperSettingsDatabaseHelper.getInstance(context);
     }
     
     // ==================== 壁纸设置相关 ====================
