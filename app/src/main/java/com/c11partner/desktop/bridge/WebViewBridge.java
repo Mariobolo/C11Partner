@@ -93,6 +93,10 @@ public class WebViewBridge {
     private com.c11partner.desktop.utils.MusicUtils musicUtils;
     // 车控功能 Bridge
     private CarControlBridge mCarControlBridge;
+    // 壁纸功能 Bridge
+    private WallpaperBridge mWallpaperBridge;
+    // 应用管理 Bridge
+    private AppBridge mAppBridge;
 
     // USB调试连接
     private com.c11partner.desktop.adb.UsbDebugConnection usbDebugConnection;
@@ -130,6 +134,10 @@ public class WebViewBridge {
         this.musicUtils = new com.c11partner.desktop.utils.MusicUtils(context);
         // 初始化车控 Bridge
         this.mCarControlBridge = new CarControlBridge(context, activity);
+        // 初始化壁纸 Bridge
+        this.mWallpaperBridge = new WallpaperBridge(context, activity);
+        // 初始化应用管理 Bridge
+        this.mAppBridge = new AppBridge(context, activity);
         
         // 初始化USB调试连接
         this.usbDebugConnection = new com.c11partner.desktop.adb.UsbDebugConnection(context);
@@ -375,18 +383,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean saveWallpaperCarouselSetting(boolean enabled) {
-        try {
-            wallpaperSettingsDbHelper.updateWallpaperCarousel(enabled);
-            // 重启壁纸轮播
-            mActivity.restartWallpaperCarousel();
-            // 发送壁纸设置更改广播
-            Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
-            mActivity.sendBroadcast(intent);
-            return true;
-        } catch (Exception e) {
-            Log.e(TAG, "保存壁纸轮播设置时出错", e);
-            return false;
-        }
+        return mWallpaperBridge.saveWallpaperCarouselSetting(enabled);
     }
 
     /**
@@ -446,18 +443,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean saveWallpaperSwitchInterval(int interval) {
-        try {
-            wallpaperSettingsDbHelper.updateSwitchInterval(interval);
-            // 重启壁纸轮播
-            mActivity.restartWallpaperCarousel();
-            // 发送壁纸设置更改广播
-            Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
-            mActivity.sendBroadcast(intent);
-            return true;
-        } catch (Exception e) {
-            Log.e(TAG, "保存壁纸轮播时间间隔时出错", e);
-            return false;
-        }
+        return mWallpaperBridge.saveWallpaperSwitchInterval(interval);
     }
 
     /**
@@ -1807,23 +1793,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public String getWallpaperSettings() {
-        try {
-            Map<String, Object> settings = wallpaperSettingsDbHelper.getAllSettings();
-            JSONObject settingsObj = new JSONObject();
-
-            settingsObj.put("wallpaper_carousel", settings.get("wallpaper_carousel"));
-            settingsObj.put("local_wallpaper", settings.get("local_wallpaper"));
-            settingsObj.put("online_wallpaper", settings.get("online_wallpaper"));
-            settingsObj.put("switch_interval", settings.get("switch_interval"));
-            settingsObj.put("random_mode", settings.get("random_mode"));
-            settingsObj.put("specified_mode", settings.get("specified_mode"));
-            settingsObj.put("boot_greeting", settings.get("boot_greeting"));
-
-            return settingsObj.toString();
-        } catch (Exception e) {
-            Log.e(TAG, "获取壁纸设置时出错", e);
-            return "{}";
-        }
+        return mWallpaperBridge.getWallpaperSettings();
     }
 
     /**
@@ -2237,23 +2207,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void addQuickApp(String name, String packageName, String iconBase64) {
-        try {
-            long result = quickAppDbHelper.insertQuickApp(name, packageName, iconBase64);
-            if (result != -1) {
-                mActivity.runOnUiThread(() -> {
-                    Toast.makeText(mContext, "已添加到快速启动: " + name, Toast.LENGTH_SHORT).show();
-                });
-            } else {
-                mActivity.runOnUiThread(() -> {
-                    Toast.makeText(mContext, "添加到快速启动失败: " + name, Toast.LENGTH_SHORT).show();
-                });
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "添加到快速启动应用时出错", e);
-            mActivity.runOnUiThread(() -> {
-                Toast.makeText(mContext, "添加到快速启动失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            });
-        }
+        mAppBridge.addQuickApp(name, packageName, iconBase64);
     }
 
     /**
@@ -2263,19 +2217,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void removeQuickApp(String packageName) {
-        try {
-            int result = quickAppDbHelper.deleteQuickApp(packageName);
-            if (result > 0) {
-                mActivity.runOnUiThread(() -> {
-                    Toast.makeText(mContext, "已从快速启动移除", Toast.LENGTH_SHORT).show();
-                });
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "删除快速启动应用时出错", e);
-            mActivity.runOnUiThread(() -> {
-                Toast.makeText(mContext, "移除快速启动失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            });
-        }
+        mAppBridge.removeQuickApp(packageName);
     }
 
     /**
@@ -2286,8 +2228,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean isQuickApp(String packageName) {
-        try {
-            return quickAppDbHelper.isQuickApp(packageName);
+        return mAppBridge.isQuickApp(packageName);
         } catch (Exception e) {
             Log.e(TAG, "检查快速启动应用时出错", e);
             return false;

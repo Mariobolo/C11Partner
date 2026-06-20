@@ -1,11 +1,16 @@
 package com.c11partner.desktop.bridge;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.utils.WallpaperManager;
 import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
+
+import org.json.JSONObject;
+import java.util.Map;
 
 /**
  * 壁纸功能模块 Bridge
@@ -104,6 +109,74 @@ public class WallpaperBridge extends BaseBridge {
         } catch (Exception e) {
             Log.e(TAG, "获取下一张壁纸URL失败", e);
             return "images/default_bg_1.jpg";
+        }
+    }
+    
+    /**
+     * 保存壁纸轮播设置
+     * @param enabled 是否启用轮播
+     * @return 是否成功
+     */
+    public boolean saveWallpaperCarouselSetting(boolean enabled) {
+        try {
+            wallpaperSettingsDbHelper.updateWallpaperCarousel(enabled);
+            // 重启壁纸轮播
+            if (mActivity != null) {
+                mActivity.restartWallpaperCarousel();
+                // 发送壁纸设置更改广播
+                Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
+                mActivity.sendBroadcast(intent);
+            }
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "保存壁纸轮播设置时出错", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 保存壁纸轮播时间间隔
+     * @param interval 间隔时间（秒）
+     * @return 是否成功
+     */
+    public boolean saveWallpaperSwitchInterval(int interval) {
+        try {
+            wallpaperSettingsDbHelper.updateSwitchInterval(interval);
+            // 重启壁纸轮播
+            if (mActivity != null) {
+                mActivity.restartWallpaperCarousel();
+                // 发送壁纸设置更改广播
+                Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
+                mActivity.sendBroadcast(intent);
+            }
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "保存壁纸轮播时间间隔时出错", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取所有壁纸设置
+     * @return 壁纸设置JSON字符串
+     */
+    public String getWallpaperSettings() {
+        try {
+            Map<String, Object> settings = wallpaperSettingsDbHelper.getAllSettings();
+            JSONObject settingsObj = new JSONObject();
+            
+            settingsObj.put("wallpaper_carousel", settings.get("wallpaper_carousel"));
+            settingsObj.put("local_wallpaper", settings.get("local_wallpaper"));
+            settingsObj.put("online_wallpaper", settings.get("online_wallpaper"));
+            settingsObj.put("switch_interval", settings.get("switch_interval"));
+            settingsObj.put("random_mode", settings.get("random_mode"));
+            settingsObj.put("specified_mode", settings.get("specified_mode"));
+            settingsObj.put("boot_greeting", settings.get("boot_greeting"));
+            
+            return settingsObj.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "获取壁纸设置时出错", e);
+            return "{}";
         }
     }
     

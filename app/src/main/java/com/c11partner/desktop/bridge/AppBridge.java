@@ -6,15 +6,16 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.c11partner.desktop.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.c11partner.desktop.database.AppDatabaseHelper;
 import com.c11partner.desktop.database.QuickAppDatabaseHelper;
 import com.c11partner.desktop.database.ComponentConfigDatabaseHelper;
-import android.content.pm.PackageManager;
 
 /**
  * 应用管理模块 Bridge
@@ -167,30 +168,60 @@ public class AppBridge extends BaseBridge {
     
     /**
      * 添加快捷应用
-     * @param packageName 包名
-     * @return 是否成功
+     * @param name 应用名称
+     * @param packageName 应用包名
+     * @param iconBase64 应用图标Base64
      */
-    public boolean addQuickApp(String packageName) {
+    public void addQuickApp(String name, String packageName, String iconBase64) {
         try {
-            // TODO: 添加到数据库
-            return true;
+            long result = quickAppDbHelper.insertQuickApp(name, packageName, iconBase64);
+            if (result != -1) {
+                runOnUiThread(() -> {
+                    Toast.makeText(mContext, "已添加到快速启动: " + name, Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                runOnUiThread(() -> {
+                    Toast.makeText(mContext, "添加到快速启动失败: " + name, Toast.LENGTH_SHORT).show();
+                });
+            }
         } catch (Exception e) {
-            Log.e(TAG, "添加快捷应用失败: " + packageName, e);
-            return false;
+            Log.e(TAG, "添加到快速启动应用时出错", e);
+            runOnUiThread(() -> {
+                Toast.makeText(mContext, "添加到快速启动失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
         }
     }
     
     /**
-     * 移除快捷应用
-     * @param packageName 包名
-     * @return 是否成功
+     * 删除快速启动应用
+     * @param packageName 应用包名
      */
-    public boolean removeQuickApp(String packageName) {
+    public void removeQuickApp(String packageName) {
         try {
-            // TODO: 从数据库移除
-            return true;
+            int result = quickAppDbHelper.deleteQuickApp(packageName);
+            if (result > 0) {
+                runOnUiThread(() -> {
+                    Toast.makeText(mContext, "已从快速启动移除", Toast.LENGTH_SHORT).show();
+                });
+            }
         } catch (Exception e) {
-            Log.e(TAG, "移除快捷应用失败: " + packageName, e);
+            Log.e(TAG, "删除快速启动应用时出错", e);
+            runOnUiThread(() -> {
+                Toast.makeText(mContext, "移除快速启动失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+        }
+    }
+    
+    /**
+     * 检查应用是否已添加到快速启动
+     * @param packageName 应用包名
+     * @return 是否已添加
+     */
+    public boolean isQuickApp(String packageName) {
+        try {
+            return quickAppDbHelper.isQuickApp(packageName);
+        } catch (Exception e) {
+            Log.e(TAG, "检查快速启动应用时出错", e);
             return false;
         }
     }
