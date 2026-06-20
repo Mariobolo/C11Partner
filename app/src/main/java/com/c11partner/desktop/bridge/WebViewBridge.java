@@ -2380,6 +2380,7 @@ public class WebViewBridge {
         } catch (Exception e) {
             return "{\"isPlaying\":false,\"currentPosition\":0,\"duration\":0}";
         }
+    }
 
     /**
      * 获取系统音乐信息（从通知监听服务）
