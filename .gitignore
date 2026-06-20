@@ -63,3 +63,16 @@ out/
 !**/src/main/**/rs/**
 !**/src/main/**/shaders/**
 !**/src/main/**/webapp/**
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+

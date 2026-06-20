@@ -117,3 +117,17 @@ sed -n '3770,3785p' app/src/main/java/com/c11partner/desktop/bridge/WebViewBridg
 
 **文档版本**：v1.0  
 **最后更新**：2026-06-20
+
+## 🛠️ 工具脚本
+
+| 工具 | 说明 |
+|------|------|
+| [代码索引生成](../tools/generate_code_index.py) | 自动生成代码索引文档 |
+| [API 文档生成](../tools/generate_api_docs.py) | 自动生成 JS 接口文档 |
+| [提交信息检查](../tools/check_commit_msg.py) | 检查提交信息是否符合规范 |
+
+## 🧪 测试
+
+| 测试文件 | 说明 |
+|---------|------|
+| [提交检查测试](../tests/test_check_commit_msg.py) | 提交信息检查工具的单元测试 |
