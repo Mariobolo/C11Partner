@@ -2,7 +2,6 @@ package com.c11partner.desktop.bridge;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.utils.WallpaperManager;
 import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
@@ -55,7 +54,6 @@ public class WallpaperBridge extends BaseBridge {
             return false;
         }
     }
-    }
     
     /**
      * 获取当前壁纸
@@ -85,7 +83,7 @@ public class WallpaperBridge extends BaseBridge {
     
     /**
      * 设置壁纸类型
-     * @param type 壁纸类型
+     * @param type 壁纸类型：0=默认,1=必应,2=本地图片,3=本地视频,4=本地文件夹,5=iframe
      */
     public void setWallpaperType(int type) {
         try {
@@ -95,6 +93,18 @@ public class WallpaperBridge extends BaseBridge {
             Log.e(TAG, "设置壁纸类型失败", e);
         }
     }
+    
+    /**
+     * 获取下一张壁纸URL（用于轮播）
+     * @return 下一张壁纸URL
+     */
+    public String getNextWallpaperUrl() {
+        try {
+            return wallpaperManager.getNextWallpaperUrl();
+        } catch (Exception e) {
+            Log.e(TAG, "获取下一张壁纸URL失败", e);
+            return "images/default_bg_1.jpg";
+        }
     }
     
     // ==================== 壁纸分类相关 ====================

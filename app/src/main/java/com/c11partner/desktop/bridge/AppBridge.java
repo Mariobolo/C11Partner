@@ -116,40 +116,36 @@ public class AppBridge extends BaseBridge {
     
     /**
      * 启动应用
-     * @param packageName 包名
-     * @return 是否成功
+     * @param packageName 应用包名
      */
-    public boolean launchApp(String packageName) {
+    public void launchApp(String packageName) {
         try {
-            PackageManager pm = mContext.getPackageManager();
-            Intent intent = pm.getLaunchIntentForPackage(packageName);
+            Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(packageName);
             if (intent != null) {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
-                return true;
+                Log.d(TAG, "启动应用: " + packageName);
+            } else {
+                Log.e(TAG, "无法找到应用: " + packageName);
             }
-            return false;
         } catch (Exception e) {
-            Log.e(TAG, "启动应用失败: " + packageName, e);
-            return false;
+            Log.e(TAG, "启动应用时出错: " + packageName, e);
         }
     }
     
     /**
      * 打开应用信息页面
-     * @param packageName 包名
-     * @return 是否成功
+     * @param packageName 应用包名
      */
-    public boolean openAppInfo(String packageName) {
+    public void openAppInfo(String packageName) {
         try {
             Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(android.net.Uri.parse("package:" + packageName));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
-            return true;
+            Log.d(TAG, "打开应用信息: " + packageName);
         } catch (Exception e) {
             Log.e(TAG, "打开应用信息失败: " + packageName, e);
-            return false;
         }
     }
     
