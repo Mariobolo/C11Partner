@@ -91,6 +91,8 @@ public class WebViewBridge {
 
     // 音乐工具类
     private com.c11partner.desktop.utils.MusicUtils musicUtils;
+    // 车控功能 Bridge
+    private CarControlBridge mCarControlBridge;
 
     // USB调试连接
     private com.c11partner.desktop.adb.UsbDebugConnection usbDebugConnection;
@@ -126,6 +128,8 @@ public class WebViewBridge {
 
         // 初始化音乐工具类
         this.musicUtils = new com.c11partner.desktop.utils.MusicUtils(context);
+        // 初始化车控 Bridge
+        this.mCarControlBridge = new CarControlBridge(context, activity);
         
         // 初始化USB调试连接
         this.usbDebugConnection = new com.c11partner.desktop.adb.UsbDebugConnection(context);
@@ -3685,13 +3689,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean startCamera360() {
-        try {
-            com.c11partner.desktop.LeapMotorCamera360.startCamera360(mContext, "手动触发");
-            return true;
-        } catch (Exception e) {
-            Log.e(TAG, "手动触发360全景失败", e);
-            return false;
-        }
+        return mCarControlBridge.startCamera360();
     }
     
     /**
@@ -3770,12 +3768,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setLowBeamLight(boolean on) {
-        try {
-            return getCarControlManager().setLowBeamLight(on);
-        } catch (Exception e) {
-            Log.e(TAG, "控制近光灯失败", e);
-            return false;
-        }
+        return mCarControlBridge.setLowBeamLight(on);
     }
     
     /**
@@ -3825,12 +3818,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setDriveMode(int mode) {
-        try {
-            return getCarControlManager().setDriveMode(mode);
-        } catch (Exception e) {
-            Log.e(TAG, "设置驾驶模式失败", e);
-            return false;
-        }
+        return mCarControlBridge.setDriveMode(mode);
     }
     
     // ==================== 场景模式控制 ====================
@@ -4100,12 +4088,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setMusicVolume(int volume) {
-        try {
-            return getCarControlManager().setMusicVolume(volume);
-        } catch (Exception e) {
-            Log.e(TAG, "设置媒体音量失败", e);
-            return false;
-        }
+        return mCarControlBridge.setMusicVolume(volume);
     }
     
     /**
@@ -4183,12 +4166,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean setAmbientLightEnabled(boolean enabled) {
-        try {
-            return getCarControlManager().setAmbientLightEnabled(enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "设置氛围灯开关失败", e);
-            return false;
-        }
+        return mCarControlBridge.setAmbientLightEnabled(enabled);
     }
     
     /**

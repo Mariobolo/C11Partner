@@ -38,6 +38,23 @@ jobs:
         yes | sdkmanager --licenses || true
         sdkmanager "platforms;android-30" "build-tools;30.0.3"
 
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Run commit message check
+      run: |
+        echo "=== 检查最新提交信息 ==="
+        LATEST_COMMIT_MSG=$(git log -1 --pretty=%B)
+        echo "提交信息: $LATEST_COMMIT_MSG"
+        python3 tools/check_commit_msg.py "$LATEST_COMMIT_MSG"
+
+    - name: Run unit tests
+      run: |
+        echo "=== 运行单元测试 ==="
+        python3 tests/test_check_commit_msg.py
+
     - name: Make gradlew executable
       run: chmod +x gradlew
 
