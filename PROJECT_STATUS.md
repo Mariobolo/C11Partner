@@ -97,6 +97,7 @@
 - ✅ docs/C11_CAR_CONTROL_CAPABILITIES.md - v2.0 最全面版车控接口文档
 - ✅ docs/LEAPMOTOR_LOG_ANALYSIS.md - 实车日志分析报告
 - ✅ docs/ICON_RESOURCES.md - 图标素材推荐清单
+- ✅ docs/CODE_INDEX.md - 代码索引文档（函数级快速定位，74个关键函数行号）
 - ✅ AI_ENTRY_GUIDE.md - AI项目引导文档v2.0
 - ✅ PROJECT_PLAN.md - 详细开发计划
 - ✅ README.md - 项目说明文档
@@ -105,6 +106,7 @@
 - [x] 音乐模块系统对接（通知监听服务和前端显示对接）
 - [x] 应用列表分类显示（全部/用户应用/系统应用，可与搜索组合）
 - [x] 副屏时间更新优化（内置定时器，每分钟自动更新）
+- [x] 代码索引文档创建（函数级快速定位，优化开发效率）
 - [ ] 前端UI整体美化
 - [ ] 图标替换和主题美化
 - [ ] 更多实车测试和bug修复
