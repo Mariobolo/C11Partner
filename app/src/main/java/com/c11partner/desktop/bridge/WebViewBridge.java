@@ -4303,12 +4303,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public String getWallpaperSettingsV2() {
-        try {
-            return getWallpaperManager().getAllSettingsJson();
-        } catch (Exception e) {
-            Log.e(TAG, "获取壁纸设置失败", e);
-            return "{}";
-        }
+        return mWallpaperBridge.getWallpaperSettingsV2();
     }
 
     /**
@@ -4317,12 +4312,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void setWallpaperType(int type) {
-        try {
-            getWallpaperManager().setWallpaperType(type);
-            Log.d(TAG, "设置壁纸类型: " + type);
-        } catch (Exception e) {
-            Log.e(TAG, "设置壁纸类型失败", e);
-        }
+        mWallpaperBridge.setWallpaperType(type);
     }
 
     /**
@@ -4330,12 +4320,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void setWallpaperPath(String path) {
-        try {
-            getWallpaperManager().setWallpaperPath(path);
-            Log.d(TAG, "设置壁纸路径: " + path);
-        } catch (Exception e) {
-            Log.e(TAG, "设置壁纸路径失败", e);
-        }
+        mWallpaperBridge.setWallpaper(path);
     }
 
     /**
@@ -4343,12 +4328,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public String getCurrentWallpaperUrl() {
-        try {
-            return getWallpaperManager().getCurrentWallpaperUrl();
-        } catch (Exception e) {
-            Log.e(TAG, "获取当前壁纸URL失败", e);
-            return "images/default_bg_1.jpg";
-        }
+        return mWallpaperBridge.getCurrentWallpaper();
     }
 
     /**

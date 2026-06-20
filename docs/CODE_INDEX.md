@@ -1,7 +1,7 @@
 # C11Partner 代码索引文档
 > 📌 **快速定位代码的神器** - 修改代码前先看本文档，找到对应函数行号再精准读取，避免读取大文件占用上下文
 >
-> 自动生成时间：2026-06-21 06:11:30
+> 自动生成时间：2026-06-21 07:43:26
 > 生成脚本：`tools/generate_code_index.py`
 
 ---
@@ -231,7 +231,7 @@ python3 tools/generate_code_index.py
 
 ### WebViewBridge.java ⭐
 **路径**：`app/src/main/java/com/c11partner/desktop/bridge/WebViewBridge.java`  
-**行数**：约 4456 行  
+**行数**：约 4436 行  
 **职责**：JS桥接层，提供50+个JS接口给前端调用
 
 #### 保存/设置
@@ -313,7 +313,7 @@ python3 tools/generate_code_index.py
 | `run()` | 4103 | public |
 | `run()` | 4139 | public |
 | `run()` | 4169 | public |
-| `run()` | 4424 | public |
+| `run()` | 4404 | public |
 
 #### 壁纸相关
 
@@ -341,16 +341,16 @@ python3 tools/generate_code_index.py
 | `getRandomWallpaperBase64Async()` | 2026 | public |
 | `getWallpaperManager()` | 4297 | private |
 | `getWallpaperSettingsV2()` | 4305 | public |
-| `setWallpaperType()` | 4319 | public |
-| `setWallpaperPath()` | 4332 | public |
-| `getCurrentWallpaperUrl()` | 4345 | public |
-| `getNextWallpaperUrl()` | 4358 | public |
-| `setWallpaperCarouselEnabled()` | 4371 | public |
-| `setWallpaperCarouselInterval()` | 4389 | public |
-| `setWallpaperFillMode()` | 4407 | public |
-| `refreshBingWallpaper()` | 4420 | public |
-| `pickLocalWallpaperFile()` | 4440 | public |
-| `pickLocalWallpaperFolder()` | 4450 | public |
+| `setWallpaperType()` | 4314 | public |
+| `setWallpaperPath()` | 4322 | public |
+| `getCurrentWallpaperUrl()` | 4330 | public |
+| `getNextWallpaperUrl()` | 4338 | public |
+| `setWallpaperCarouselEnabled()` | 4351 | public |
+| `setWallpaperCarouselInterval()` | 4369 | public |
+| `setWallpaperFillMode()` | 4387 | public |
+| `refreshBingWallpaper()` | 4400 | public |
+| `pickLocalWallpaperFile()` | 4420 | public |
+| `pickLocalWallpaperFolder()` | 4430 | public |
 
 #### 初始化
 
