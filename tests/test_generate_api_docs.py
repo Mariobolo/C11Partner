@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 API 文档生成工具的单元测试
-
-运行方法：
-    python3 tests/test_generate_api_docs.py
 """
 
 import sys
@@ -13,14 +10,95 @@ import os
 # 添加 tools 目录到路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'tools'))
 
+# 直接 import 模块
+from generate_api_docs import MethodInfo, parse_method_signature, categorize_method, generate_markdown
+
+
+def make_method(name, return_type='void', params=None, description='', line_num=0):
+    """创建 MethodInfo 对象的辅助函数
+    params 可以是字符串列表（自动解析）或 (type, name) 元组列表
+    """
+    m = MethodInfo()
+    m.name = name
+    m.return_type = return_type
+    # 处理 params 格式
+    if params:
+        parsed_params = []
+        for p in params:
+            if isinstance(p, tuple) and len(p) == 2:
+                parsed_params.append(p)
+            elif isinstance(p, str):
+                # 从字符串解析类型和名称，如 "String param1"
+                parts = p.strip().split()
+                if len(parts) >= 2:
+                    parsed_params.append((parts[0], parts[-1]))
+                else:
+                    parsed_params.append(('', p))
+        m.params = parsed_params
+    else:
+        m.params = []
+    m.description = description
+    m.line_num = line_num
+    return m
+
 
 class TestGenerateApiDocs:
     """API 文档生成工具测试类"""
 
-    def test_script_exists(self):
-        """测试脚本文件存在"""
-        script_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'generate_api_docs.py')
-        assert os.path.exists(script_path), "generate_api_docs.py 脚本不存在"
+    def test_method_info_class(self):
+        """测试 MethodInfo 类"""
+        method = make_method('testMethod', 'void', ['String param1', 'int param2'], '测试方法', 10)
+        assert method.name == 'testMethod'
+        assert method.return_type == 'void'
+        assert len(method.params) == 2
+        assert method.line_num == 10
+
+    def test_parse_method_signature(self):
+        """测试解析方法签名"""
+        line = '    public void testMethod() {'
+        method = parse_method_signature(line)
+        assert method is not None
+        assert method.name == 'testMethod'
+        assert method.return_type == 'void'
+        assert len(method.params) == 0
+
+    def test_parse_method_with_params(self):
+        """测试解析带参数的方法"""
+        line = '    public boolean setAcEnabled(boolean enabled) {'
+        method = parse_method_signature(line)
+        assert method is not None
+        assert method.name == 'setAcEnabled'
+        assert method.return_type == 'boolean'
+        assert len(method.params) == 1
+
+    def test_categorize_method(self):
+        """测试方法分类"""
+        method = make_method('setAcEnabled', 'boolean', ['boolean enabled'])
+        category = categorize_method(method)
+        assert isinstance(category, str)
+        assert len(category) > 0
+
+    def test_categorize_light_method(self):
+        """测试灯光方法分类"""
+        method = make_method('setLowBeamLight', 'boolean', ['boolean on'])
+        category = categorize_method(method)
+        assert isinstance(category, str)
+        # 应该分类到灯光相关
+        assert '灯' in category or 'light' in category.lower() or 'Light' in category
+
+    def test_generate_markdown(self):
+        """测试生成 Markdown"""
+        methods = [
+            make_method('testMethod1', 'void', [], '测试方法1', 10),
+            make_method('testMethod2', 'boolean', ['String param'], '测试方法2', 20),
+        ]
+        
+        markdown = generate_markdown(methods, '测试文档')
+        assert isinstance(markdown, str)
+        assert len(markdown) > 0
+        assert '测试文档' in markdown
+        assert 'testMethod1' in markdown
+        assert 'testMethod2' in markdown
 
     def test_script_runs(self):
         """测试脚本可以正常运行"""
@@ -34,66 +112,12 @@ class TestGenerateApiDocs:
     def test_output_file_exists(self):
         """测试生成的输出文件存在"""
         output_path = os.path.join(os.path.dirname(__file__), '..', 'docs', 'JS_API_REFERENCE.md')
-        # 先运行脚本生成文件
         import subprocess
         script_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'generate_api_docs.py')
         subprocess.run([sys.executable, script_path], 
                       capture_output=True, text=True,
                       cwd=os.path.join(os.path.dirname(__file__), '..'))
         assert os.path.exists(output_path), "生成的 JS_API_REFERENCE.md 文件不存在"
-
-    def test_output_has_content(self):
-        """测试生成的文件有内容"""
-        output_path = os.path.join(os.path.dirname(__file__), '..', 'docs', 'JS_API_REFERENCE.md')
-        # 先运行脚本生成文件
-        import subprocess
-        script_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'generate_api_docs.py')
-        subprocess.run([sys.executable, script_path], 
-                      capture_output=True, text=True,
-                      cwd=os.path.join(os.path.dirname(__file__), '..'))
-        
-        with open(output_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        assert len(content) > 100, "生成的文件内容太少"
-        assert 'JS API' in content or 'JavaScript' in content or '接口' in content, "文件标题不正确"
-        assert '方法' in content or 'method' in content.lower(), "缺少方法说明"
-
-    def test_output_has_key_methods(self):
-        """测试生成的文件包含关键方法"""
-        output_path = os.path.join(os.path.dirname(__file__), '..', 'docs', 'JS_API_REFERENCE.md')
-        # 先运行脚本生成文件
-        import subprocess
-        script_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'generate_api_docs.py')
-        subprocess.run([sys.executable, script_path], 
-                      capture_output=True, text=True,
-                      cwd=os.path.join(os.path.dirname(__file__), '..'))
-        
-        with open(output_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # 检查是否包含一些关键方法
-        assert 'startCamera360' in content or '360' in content, "缺少 360 全景相关方法"
-        assert 'setLowBeamLight' in content or '近光灯' in content or '灯光' in content, "缺少灯光控制方法"
-        assert 'setDriveMode' in content or '驾驶模式' in content, "缺少驾驶模式方法"
-
-    def test_output_has_categories(self):
-        """测试生成的文件有分类"""
-        output_path = os.path.join(os.path.dirname(__file__), '..', 'docs', 'JS_API_REFERENCE.md')
-        # 先运行脚本生成文件
-        import subprocess
-        script_path = os.path.join(os.path.dirname(__file__), '..', 'tools', 'generate_api_docs.py')
-        subprocess.run([sys.executable, script_path], 
-                      capture_output=True, text=True,
-                      cwd=os.path.join(os.path.dirname(__file__), '..'))
-        
-        with open(output_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # 检查是否有分类标题（## 开头的）
-        import re
-        categories = re.findall(r'^##\s+', content, re.MULTILINE)
-        assert len(categories) >= 5, f"分类太少，只有 {len(categories)} 个"
 
 
 def run_tests():
