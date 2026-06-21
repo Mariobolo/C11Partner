@@ -1,35 +1,77 @@
+/* ========== 音乐播放器主题美化 v2.0 ========== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 
+                 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: rgba(0, 0, 0, 0.9);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 audio::-webkit-media-controls-panel {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 #app {
     display: flex;
-    padding: 16px;
-    background: linear-gradient(0, #181929, 10%, #404264, 90%, #181929, 100%, #404264);
-    border-radius: 6px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(40, 40, 60, 0.9));
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .player-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 12px;
 }
 
 .header {
     display: flex;
-    padding: 6px 12px;
-    background: linear-gradient(#404264, #10111a, #404264);
-    color: #e6e7ea;
-    margin-bottom: 4px;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.header #current-song-name {
+    color: #00ff88;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.header #current-time {
+    color: rgba(255, 255, 255, 0.6);
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
 }
 
 .player .canvas {
     display: flex;
-    border-radius: 6px;
-    border: 4px solid black;
-    margin-bottom: 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.player .canvas canvas {
+    border-radius: 10px;
 }
 
 .player .controls {
@@ -39,53 +81,61 @@ audio::-webkit-media-controls-panel {
 }
 
 .player .controls audio {
-    background: white;
-    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
     flex: 1;
+    height: 36px;
 }
 
+/* 播放列表美化 */
 .list-wrapper {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    border-radius: 6px;
-    padding-top: 2px;
-    border: 2px solid #666895;
-    background: #2a2a3e;
+    border-radius: 12px;
+    padding-top: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
     width: 260px;
+    margin-left: 16px;
+    backdrop-filter: blur(10px);
 }
 
 .list-wrapper .list {
     flex: 1;
     overflow: auto;
+    padding: 8px;
 }
 
 .list-wrapper .list li {
-    width: 250px;
-    padding: 4px;
-    color: #666895;
+    width: auto;
+    padding: 10px 12px;
+    color: rgba(255, 255, 255, 0.6);
     border: 1px solid transparent;
-    border-bottom: 1px solid #666895;
-    margin-bottom: 1px;
+    border-radius: 8px;
+    margin-bottom: 4px;
     list-style: none;
     cursor: pointer;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-size: 13px;
+    transition: all 0.2s ease;
 }
 
 .list-wrapper .list li:hover {
-    background: #5f6282;
-    border: 1px solid white;
-    color: #e6e7ea;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .list-wrapper .list li.active {
-    color: #e6e7ea;
-    background: #5f6282;
-    border: 1px solid white;
+    color: #00ff88;
+    background: rgba(0, 255, 136, 0.1);
+    border-color: rgba(0, 255, 136, 0.3);
+    font-weight: 500;
 }
 
 .list-wrapper .uploader {
@@ -93,31 +143,43 @@ audio::-webkit-media-controls-panel {
 }
 
 .list-wrapper .uploader label {
-    padding: 8px 0;
+    padding: 12px 0;
     width: 100%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #e6e7ea;
-    border-top: 2px solid #666895;
+    color: rgba(255, 255, 255, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
-    background: #2a2a3e;
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.list-wrapper .uploader label:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #00ff88;
 }
 
 .list-wrapper .uploader label input {
     display: none;
 }
 
-/* 滚动条样式 */
+/* 滚动条美化 */
 .list-wrapper .list::-webkit-scrollbar {
     width: 6px;
 }
 
 .list-wrapper .list::-webkit-scrollbar-track {
-    background: #2a2a3e;
+    background: transparent;
 }
 
 .list-wrapper .list::-webkit-scrollbar-thumb {
-    background: #5f6282;
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 3px;
+}
+
+.list-wrapper .list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
