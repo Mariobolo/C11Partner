@@ -287,6 +287,39 @@ class TestCarControlManager(unittest.TestCase):
         tag_pattern = r'Log\.\w+\(TAG,'
         tag_usages = len(re.findall(tag_pattern, self.source_code))
         self.assertGreaterEqual(tag_usages, 20, "应该有足够的日志输出使用TAG常量")
+    
+    def test_set_guard_mode(self):
+        """测试守护模式方法"""
+        self.assertIn('public boolean setGuardMode(boolean on)', self.source_code)
+        self.assertIn('intent.putExtra("GUARD_MODE", on ? 1 : 0);', self.source_code)
+    
+    def test_set_rest_mode(self):
+        """测试小憩模式方法"""
+        self.assertIn('public boolean setRestMode(boolean on)', self.source_code)
+        self.assertIn('intent.putExtra("REST_MODE", on ? 1 : 0);', self.source_code)
+    
+    def test_set_camping_mode(self):
+        """测试露营模式方法"""
+        self.assertIn('public boolean setCampingMode(boolean on)', self.source_code)
+        self.assertIn('intent.putExtra("CAMPING_MODE", on ? 1 : 0);', self.source_code)
+    
+    def test_set_power_save_mode(self):
+        """测试省电模式方法"""
+        self.assertIn('public boolean setPowerSaveMode(boolean on)', self.source_code)
+        self.assertIn('intent.putExtra("POWER_SAVE_MODE", on ? 1 : 0);', self.source_code)
+    
+    def test_set_sentinel_mode(self):
+        """测试哨兵模式方法"""
+        self.assertIn('public boolean setSentinelMode(boolean on)', self.source_code)
+        self.assertIn('intent.putExtra("SENTINEL_MODE", on ? 1 : 0);', self.source_code)
+    
+    def test_code_style_imports(self):
+        """测试import语句规范"""
+        # 应该导入必要的类
+        self.assertIn('import android.content.Context;', self.source_code)
+        self.assertIn('import android.content.Intent;', self.source_code)
+        self.assertIn('import android.provider.Settings;', self.source_code)
+        self.assertIn('import android.util.Log;', self.source_code)
 
 
 if __name__ == '__main__':

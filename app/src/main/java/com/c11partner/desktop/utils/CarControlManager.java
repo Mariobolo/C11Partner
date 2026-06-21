@@ -167,6 +167,11 @@ public class CarControlManager {
      */
     public boolean setDriveMode(int mode) {
         try {
+            // 参数验证
+            if (mode < 0 || mode > 5) {
+                Log.e(TAG, "无效的驾驶模式: " + mode);
+                return false;
+            }
             Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
             intent.putExtra("MMI_DRIVER_MODE_SET", mode);
             context.sendBroadcast(intent);
@@ -613,6 +618,11 @@ public class CarControlManager {
      * @param color 0=红, 1=橙, 3=黄, 7=绿, 10=青, 14=蓝, 16=紫
      */
     public boolean setAmbientLightColor(int color) {
+        // 参数验证
+        if (color < 0 || color > 16) {
+            Log.e(TAG, "无效的氛围灯颜色: " + color);
+            return false;
+        }
         return setGlobalInt(KEY_STR_CAR_8867, color);
     }
     

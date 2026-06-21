@@ -1,7 +1,7 @@
 # C11Partner 代码索引文档
 > 📌 **快速定位代码的神器** - 修改代码前先看本文档，找到对应函数行号再精准读取，避免读取大文件占用上下文
 >
-> 自动生成时间：2026-06-21 22:40:40
+> 自动生成时间：2026-06-21 22:56:19
 > 生成脚本：`tools/generate_code_index.py`
 
 ---
@@ -443,7 +443,7 @@ python3 tools/generate_code_index.py
 
 ### CarControlManager.java ⭐
 **路径**：`app/src/main/java/com/c11partner/desktop/utils/CarControlManager.java`  
-**行数**：约 678 行  
+**行数**：约 688 行  
 **职责**：车控功能管理类，三层控制模型的核心实现
 
 #### 状态获取
@@ -451,11 +451,11 @@ python3 tools/generate_code_index.py
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `getInstance()` | 70 | public |
-| `isAcEnabled()` | 322 | public |
-| `isCameraOverspeedLimitEnabled()` | 499 | public |
-| `isVideoWhileDrivingEnabled()` | 516 | public |
-| `isVehicleLocked()` | 664 | public |
-| `isScreenOn()` | 675 | public |
+| `isAcEnabled()` | 327 | public |
+| `isCameraOverspeedLimitEnabled()` | 504 | public |
+| `isVideoWhileDrivingEnabled()` | 521 | public |
+| `isVehicleLocked()` | 674 | public |
+| `isScreenOn()` | 685 | public |
 
 #### 初始化
 
@@ -472,75 +472,75 @@ python3 tools/generate_code_index.py
 | `setPositionLight()` | 133 | public |
 | `setPedestrianAlert()` | 149 | public |
 | `setDriveMode()` | 168 | public |
-| `setGuardMode()` | 186 | public |
-| `setRestMode()` | 202 | public |
-| `setCampingMode()` | 218 | public |
-| `setPowerSaveMode()` | 234 | public |
-| `setSentinelMode()` | 250 | public |
-| `sendVoiceCommand()` | 271 | public |
-| `setMaxCooling()` | 289 | public |
-| `setAcEnabled()` | 307 | public |
-| `setWindLevel()` | 331 | public |
-| `setDefrost()` | 355 | public |
-| `setNightMode()` | 367 | public |
-| `setWifiEnabled()` | 383 | public |
-| `setBluetoothEnabled()` | 399 | public |
-| `sendPrevTrack()` | 417 | public |
-| `sendNextTrack()` | 433 | public |
-| `setCameraOverspeedLimit()` | 492 | public |
-| `setVideoWhileDriving()` | 509 | public |
-| `setCallVolume()` | 525 | public |
-| `setNaviVolume()` | 539 | public |
-| `setMusicVolume()` | 553 | public |
-| `setDriverTemp()` | 570 | public |
-| `setPassengerTemp()` | 584 | public |
-| `setAmbientLightEnabled()` | 600 | public |
-| `setAmbientLightColor()` | 615 | public |
-| `setSecondaryScreenEnabled()` | 631 | public |
+| `setGuardMode()` | 191 | public |
+| `setRestMode()` | 207 | public |
+| `setCampingMode()` | 223 | public |
+| `setPowerSaveMode()` | 239 | public |
+| `setSentinelMode()` | 255 | public |
+| `sendVoiceCommand()` | 276 | public |
+| `setMaxCooling()` | 294 | public |
+| `setAcEnabled()` | 312 | public |
+| `setWindLevel()` | 336 | public |
+| `setDefrost()` | 360 | public |
+| `setNightMode()` | 372 | public |
+| `setWifiEnabled()` | 388 | public |
+| `setBluetoothEnabled()` | 404 | public |
+| `sendPrevTrack()` | 422 | public |
+| `sendNextTrack()` | 438 | public |
+| `setCameraOverspeedLimit()` | 497 | public |
+| `setVideoWhileDriving()` | 514 | public |
+| `setCallVolume()` | 530 | public |
+| `setNaviVolume()` | 544 | public |
+| `setMusicVolume()` | 558 | public |
+| `setDriverTemp()` | 575 | public |
+| `setPassengerTemp()` | 589 | public |
+| `setAmbientLightEnabled()` | 605 | public |
+| `setAmbientLightColor()` | 620 | public |
+| `setSecondaryScreenEnabled()` | 641 | public |
 
 #### 空调控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getWindLevel()` | 346 | public |
-| `getDriverTemp()` | 577 | public |
-| `getPassengerTemp()` | 591 | public |
+| `getWindLevel()` | 351 | public |
+| `getDriverTemp()` | 582 | public |
+| `getPassengerTemp()` | 596 | public |
 
 #### 系统设置
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getGlobalInt()` | 451 | public |
-| `getGlobalString()` | 463 | public |
-| `setGlobalInt()` | 475 | public |
+| `getGlobalInt()` | 456 | public |
+| `getGlobalString()` | 468 | public |
+| `setGlobalInt()` | 480 | public |
 
 #### 音量控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getCallVolume()` | 532 | public |
-| `getNaviVolume()` | 546 | public |
-| `getMusicVolume()` | 560 | public |
+| `getCallVolume()` | 537 | public |
+| `getNaviVolume()` | 551 | public |
+| `getMusicVolume()` | 565 | public |
 
 #### 灯光控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `isAmbientLightEnabled()` | 607 | public |
-| `getAmbientLightColor()` | 622 | public |
+| `isAmbientLightEnabled()` | 612 | public |
+| `getAmbientLightColor()` | 632 | public |
 
 #### 副屏相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `isSecondaryScreenEnabled()` | 638 | public |
+| `isSecondaryScreenEnabled()` | 648 | public |
 
 #### 语音控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `setSpeechEnabled()` | 647 | public |
-| `isSpeechEnabled()` | 654 | public |
+| `setSpeechEnabled()` | 657 | public |
+| `isSpeechEnabled()` | 664 | public |
 
 ---
 
