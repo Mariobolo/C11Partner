@@ -399,17 +399,6 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public boolean saveWallpaperSwitchInterval(int interval) {
-        mWallpaperBridge.saveWallpaperSwitchIntervalAsync(interval, callbackId);
-    }
-
-    /**
-     * 保存壁纸轮播时间间隔
-     *
-     * @param interval 时间间隔(毫秒)
-     * @return 是否保存成功
-     */
-    @JavascriptInterface
-    public boolean saveWallpaperSwitchInterval(int interval) {
         return mWallpaperBridge.saveWallpaperSwitchInterval(interval);
     }
 
@@ -1501,30 +1490,6 @@ public class WebViewBridge {
 
     // ==================== 配置应用相关方法 ====================
 
-    /**
-     * 保存或更新配置的应用信息
-     *
-     * @param buttonId    按钮ID
-     * @param appName     应用名称
-     * @param packageName 应用包名
-     * @param appIcon     应用图标Base64编码
-     */
-    @JavascriptInterface
-    public void saveConfigApp(String buttonId, String appName, String packageName, String appIcon) {
-        mAppBridge.saveConfigApp(buttonId, appName, packageName, appIcon);
-    }
-
-    /**
-     * 根据按钮ID获取配置的应用信息
-     *
-     * @param buttonId 按钮ID
-     * @return JSON格式的应用信息
-     */
-    @JavascriptInterface
-    public String getConfigApp(String buttonId) {
-        return mAppBridge.getConfigApp(buttonId);
-    }
-
     // ==================== 组件配置相关方法 ====================
 
     /**
@@ -1671,83 +1636,7 @@ public class WebViewBridge {
         mWallpaperBridge.updateCategoryEnabledAsync(categoryId, enabled, callbackId);
     }
 
-    /**
-     * 获取已启用的分类ID列表
-     *
-     * @return JSON格式的分类ID列表
-     */
-    @JavascriptInterface
-    public String getEnabledCategories() {
-        try {
-            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
-            JSONArray enabledCategoriesArray = new JSONArray();
 
-            for (Map<String, Object> category : enabledCategories) {
-                if ((boolean) category.get("enabled")) {
-                    enabledCategoriesArray.put(category.get("id"));
-                }
-            }
-
-            return enabledCategoriesArray.toString();
-        } catch (Exception e) {
-            Log.e(TAG, "获取已启用分类时出错", e);
-            return "[]";
-        }
-    }
-
-    /**
-     * 异步获取已启用的分类ID列表
-     *
-     * @param callbackId 回调ID，用于JavaScript端识别回调
-     */
-    @JavascriptInterface
-    public void getEnabledCategoriesAsync(final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
-                    JSONArray enabledCategoriesArray = new JSONArray();
-
-                    for (Map<String, Object> category : enabledCategories) {
-                        if ((boolean) category.get("enabled")) {
-                            enabledCategoriesArray.put(category.get("id"));
-                        }
-                    }
-
-                    final String result = enabledCategoriesArray.toString();
-
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleGetEnabledCategoriesCallback('%s', '%s')",
-                                        callbackId, result);
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "获取已启用分类时出错", e);
-
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleGetEnabledCategoriesCallback('%s', '%s')",
-                                        callbackId, "[]");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
-    }
 
     /**
      * 获取所有壁纸设置

@@ -1,7 +1,7 @@
 # C11Partner 代码索引文档
 > 📌 **快速定位代码的神器** - 修改代码前先看本文档，找到对应函数行号再精准读取，避免读取大文件占用上下文
 >
-> 自动生成时间：2026-06-21 18:20:24
+> 自动生成时间：2026-06-21 18:35:55
 > 生成脚本：`tools/generate_code_index.py`
 
 ---
@@ -30,9 +30,9 @@ python3 tools/generate_code_index.py
 
 | 类型 | 文件数 | 函数/方法数 |
 |------|--------|------------|
-| Java后端 | 8 | 488 |
+| Java后端 | 8 | 480 |
 | JS前端 | 3 | 145 |
-| **总计** | **11** | **633** |
+| **总计** | **11** | **625** |
 
 ---
 
@@ -231,7 +231,7 @@ python3 tools/generate_code_index.py
 
 ### WebViewBridge.java ⭐
 **路径**：`app/src/main/java/com/c11partner/desktop/bridge/WebViewBridge.java`  
-**行数**：约 4035 行  
+**行数**：约 3924 行  
 **职责**：JS桥接层，提供50+个JS接口给前端调用
 
 #### 保存/设置
@@ -239,7 +239,7 @@ python3 tools/generate_code_index.py
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `setMediaSessionService()` | 152 | public |
-| `setDefaultDesktop()` | 2768 | public |
+| `setDefaultDesktop()` | 2657 | public |
 
 #### 应用管理
 
@@ -247,58 +247,53 @@ python3 tools/generate_code_index.py
 |--------|------|-----------|
 | `getAppList()` | 166 | public |
 | `getAppListAsync()` | 305 | public |
-| `launchApp()` | 1032 | public |
-| `getQuickAppList()` | 1052 | public |
-| `addQuickApp()` | 1064 | public |
-| `removeQuickApp()` | 1074 | public |
-| `isQuickApp()` | 1085 | public |
-| `saveConfigApp()` | 1098 | public |
-| `getConfigApp()` | 1109 | public |
-| `saveConfigApp()` | 1513 | public |
-| `getConfigApp()` | 1524 | public |
-| `saveComponentConfig()` | 1538 | public |
-| `isComponentEnabled()` | 1564 | public |
-| `getAllComponentConfigs()` | 1581 | public |
-| `getQuickAppList()` | 1810 | public |
-| `addQuickApp()` | 1822 | public |
-| `removeQuickApp()` | 1832 | public |
-| `isQuickApp()` | 1843 | public |
-| `saveSystemLauncherSetting()` | 2258 | public |
-| `saveSystemLauncherSettingAsync()` | 2341 | public |
+| `launchApp()` | 1021 | public |
+| `getQuickAppList()` | 1041 | public |
+| `addQuickApp()` | 1053 | public |
+| `removeQuickApp()` | 1063 | public |
+| `isQuickApp()` | 1074 | public |
+| `saveConfigApp()` | 1087 | public |
+| `getConfigApp()` | 1098 | public |
+| `saveComponentConfig()` | 1503 | public |
+| `isComponentEnabled()` | 1529 | public |
+| `getAllComponentConfigs()` | 1546 | public |
+| `getQuickAppList()` | 1699 | public |
+| `addQuickApp()` | 1711 | public |
+| `removeQuickApp()` | 1721 | public |
+| `isQuickApp()` | 1732 | public |
+| `saveSystemLauncherSetting()` | 2147 | public |
+| `saveSystemLauncherSettingAsync()` | 2230 | public |
 
 #### 匿名内部类
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `compare()` | 208 | public |
-| `run()` | 954 | public |
-| `run()` | 1707 | public |
-| `run()` | 1723 | public |
-| `run()` | 1738 | public |
-| `run()` | 2344 | public |
-| `run()` | 2350 | public |
-| `run()` | 2364 | public |
-| `run()` | 2388 | public |
-| `run()` | 2394 | public |
-| `run()` | 2408 | public |
-| `run()` | 2432 | public |
-| `run()` | 2438 | public |
-| `run()` | 2452 | public |
-| `run()` | 2476 | public |
-| `run()` | 2482 | public |
-| `run()` | 2496 | public |
-| `run()` | 2533 | public |
-| `run()` | 2561 | public |
-| `run()` | 2582 | public |
-| `run()` | 2603 | public |
-| `run()` | 2652 | public |
-| `run()` | 3011 | public |
-| `run()` | 3107 | public |
-| `isLogServiceRunning()` | 3242 | public |
-| `run()` | 3678 | public |
-| `run()` | 3743 | public |
-| `run()` | 3779 | public |
-| `run()` | 3809 | public |
+| `run()` | 943 | public |
+| `run()` | 2233 | public |
+| `run()` | 2239 | public |
+| `run()` | 2253 | public |
+| `run()` | 2277 | public |
+| `run()` | 2283 | public |
+| `run()` | 2297 | public |
+| `run()` | 2321 | public |
+| `run()` | 2327 | public |
+| `run()` | 2341 | public |
+| `run()` | 2365 | public |
+| `run()` | 2371 | public |
+| `run()` | 2385 | public |
+| `run()` | 2422 | public |
+| `run()` | 2450 | public |
+| `run()` | 2471 | public |
+| `run()` | 2492 | public |
+| `run()` | 2541 | public |
+| `run()` | 2900 | public |
+| `run()` | 2996 | public |
+| `isLogServiceRunning()` | 3131 | public |
+| `run()` | 3567 | public |
+| `run()` | 3632 | public |
+| `run()` | 3668 | public |
+| `run()` | 3698 | public |
 
 #### 壁纸相关
 
@@ -311,259 +306,256 @@ python3 tools/generate_code_index.py
 | `getRandomWallpaperAsync()` | 380 | public |
 | `getRandomWallpaperBase64Async()` | 390 | public |
 | `saveWallpaperSwitchInterval()` | 401 | public |
-| `saveWallpaperSwitchInterval()` | 412 | public |
-| `sendWallpaperSettingsChangedBroadcast()` | 420 | public |
-| `getRandomWallpaper()` | 430 | public |
-| `getRandomLocalWallpaper()` | 439 | private |
-| `getRandomOnlineWallpaper()` | 602 | private |
-| `getRandomOnlineWallpaperBase64()` | 659 | private |
-| `getRandomWallpaperUrl()` | 711 | private |
-| `notifyWallpaperUpdate()` | 951 | public |
-| `pauseWallpaperCarousel()` | 1117 | public |
-| `resumeWallpaperCarousel()` | 1125 | public |
-| `deleteCurrentWallpaper()` | 1134 | public |
-| `updateWallpaperCategories()` | 1603 | public |
-| `old_updateWallpaperCategories()` | 1612 | private |
-| `getWallpaperSettings()` | 1758 | public |
-| `getWallpaperSettingsAsync()` | 1768 | public |
-| `getRandomWallpaperAsync()` | 1778 | public |
-| `getRandomWallpaperBase64()` | 1788 | public |
-| `getRandomWallpaperBase64Async()` | 1798 | public |
-| `getWallpaperManager()` | 3937 | private |
-| `getWallpaperSettingsV2()` | 3945 | public |
-| `setWallpaperType()` | 3954 | public |
-| `setWallpaperPath()` | 3962 | public |
-| `getCurrentWallpaperUrl()` | 3970 | public |
-| `getNextWallpaperUrl()` | 3978 | public |
-| `setWallpaperCarouselEnabled()` | 3986 | public |
-| `setWallpaperCarouselInterval()` | 3995 | public |
-| `setWallpaperFillMode()` | 4004 | public |
-| `refreshBingWallpaper()` | 4012 | public |
-| `pickLocalWallpaperFile()` | 4021 | public |
-| `pickLocalWallpaperFolder()` | 4030 | public |
+| `sendWallpaperSettingsChangedBroadcast()` | 409 | public |
+| `getRandomWallpaper()` | 419 | public |
+| `getRandomLocalWallpaper()` | 428 | private |
+| `getRandomOnlineWallpaper()` | 591 | private |
+| `getRandomOnlineWallpaperBase64()` | 648 | private |
+| `getRandomWallpaperUrl()` | 700 | private |
+| `notifyWallpaperUpdate()` | 940 | public |
+| `pauseWallpaperCarousel()` | 1106 | public |
+| `resumeWallpaperCarousel()` | 1114 | public |
+| `deleteCurrentWallpaper()` | 1123 | public |
+| `updateWallpaperCategories()` | 1568 | public |
+| `old_updateWallpaperCategories()` | 1577 | private |
+| `getWallpaperSettings()` | 1647 | public |
+| `getWallpaperSettingsAsync()` | 1657 | public |
+| `getRandomWallpaperAsync()` | 1667 | public |
+| `getRandomWallpaperBase64()` | 1677 | public |
+| `getRandomWallpaperBase64Async()` | 1687 | public |
+| `getWallpaperManager()` | 3826 | private |
+| `getWallpaperSettingsV2()` | 3834 | public |
+| `setWallpaperType()` | 3843 | public |
+| `setWallpaperPath()` | 3851 | public |
+| `getCurrentWallpaperUrl()` | 3859 | public |
+| `getNextWallpaperUrl()` | 3867 | public |
+| `setWallpaperCarouselEnabled()` | 3875 | public |
+| `setWallpaperCarouselInterval()` | 3884 | public |
+| `setWallpaperFillMode()` | 3893 | public |
+| `refreshBingWallpaper()` | 3901 | public |
+| `pickLocalWallpaperFile()` | 3910 | public |
+| `pickLocalWallpaperFolder()` | 3919 | public |
 
 #### 时间日期
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `updateCategoryEnabledAsync()` | 350 | public |
-| `updateCategoryEnabled()` | 1649 | public |
-| `updateCategoryEnabledAsync()` | 1670 | public |
-| `getLunarCalendar()` | 2308 | public |
-| `updateTimeDisplay()` | 2519 | public |
-| `updateTimeDisplayAsync()` | 2558 | public |
-| `getWeekDay()` | 2623 | private |
+| `updateCategoryEnabled()` | 1614 | public |
+| `updateCategoryEnabledAsync()` | 1635 | public |
+| `getLunarCalendar()` | 2197 | public |
+| `updateTimeDisplay()` | 2408 | public |
+| `updateTimeDisplayAsync()` | 2447 | public |
+| `getWeekDay()` | 2512 | private |
 
 #### 状态获取
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `getEnabledCategoriesAsync()` | 360 | public |
-| `getAllApps()` | 969 | public |
-| `getUserApps()` | 979 | public |
-| `getSystemApps()` | 989 | public |
-| `getAppInfo()` | 1000 | public |
-| `getAppIcon()` | 1011 | public |
-| `isAppInstalled()` | 1022 | public |
-| `getDeviceIpAddress()` | 1229 | private |
-| `getEnabledCategories()` | 1658 | public |
-| `getEnabledCategories()` | 1680 | public |
-| `getEnabledCategoriesAsync()` | 1704 | public |
-| `isNotificationListenerEnabled()` | 2054 | public |
-| `isWifiConnected()` | 2088 | public |
-| `isBluetoothConnected()` | 2118 | public |
-| `getStaticIntValue()` | 3177 | private |
-| `getCarState()` | 3195 | public |
-| `isCameraOverspeedLimitEnabled()` | 3462 | public |
-| `isVideoWhileDrivingEnabled()` | 3479 | public |
-| `isVehicleLocked()` | 3843 | public |
-| `isScreenOn()` | 3852 | public |
+| `getAllApps()` | 958 | public |
+| `getUserApps()` | 968 | public |
+| `getSystemApps()` | 978 | public |
+| `getAppInfo()` | 989 | public |
+| `getAppIcon()` | 1000 | public |
+| `isAppInstalled()` | 1011 | public |
+| `getDeviceIpAddress()` | 1218 | private |
+| `getEnabledCategories()` | 1623 | public |
+| `isNotificationListenerEnabled()` | 1943 | public |
+| `isWifiConnected()` | 1977 | public |
+| `isBluetoothConnected()` | 2007 | public |
+| `getStaticIntValue()` | 3066 | private |
+| `getCarState()` | 3084 | public |
+| `isCameraOverspeedLimitEnabled()` | 3351 | public |
+| `isVideoWhileDrivingEnabled()` | 3368 | public |
+| `isVehicleLocked()` | 3732 | public |
+| `isScreenOn()` | 3741 | public |
 
 #### 初始化
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getRandomWallpaperFromFstartExcept00()` | 493 | private |
-| `getRandomWallpaperFromFstart00()` | 556 | private |
-| `startMusicVisualizer()` | 1853 | public |
-| `initializeAcStatus()` | 2641 | public |
-| `restartApp()` | 2671 | public |
-| `startCamera360()` | 3232 | public |
+| `getRandomWallpaperFromFstartExcept00()` | 482 | private |
+| `getRandomWallpaperFromFstart00()` | 545 | private |
+| `startMusicVisualizer()` | 1742 | public |
+| `initializeAcStatus()` | 2530 | public |
+| `restartApp()` | 2560 | public |
+| `startCamera360()` | 3121 | public |
 
 #### 图片处理
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `encodeImageToBase64()` | 726 | private |
-| `drawableToBase64()` | 741 | private |
-| `drawableToBitmap()` | 764 | private |
-| `scaleBitmap()` | 807 | private |
-| `bitmapToBase64()` | 827 | private |
-| `getFirstLetter()` | 849 | private |
-| `isChineseChar()` | 876 | private |
-| `getChineseFirstLetter()` | 891 | private |
-| `cacheAppIconBase64()` | 929 | private |
-| `getCachedAppIconBase64()` | 940 | private |
+| `encodeImageToBase64()` | 715 | private |
+| `drawableToBase64()` | 730 | private |
+| `drawableToBitmap()` | 753 | private |
+| `scaleBitmap()` | 796 | private |
+| `bitmapToBase64()` | 816 | private |
+| `getFirstLetter()` | 838 | private |
+| `isChineseChar()` | 865 | private |
+| `getChineseFirstLetter()` | 880 | private |
+| `cacheAppIconBase64()` | 918 | private |
+| `getCachedAppIconBase64()` | 929 | private |
 
 #### 其他
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `clearAppIconCache()` | 911 | private |
-| `openAppInfo()` | 1042 | public |
-| `showToastOnUiThread()` | 1283 | private |
-| `openRecentTasks()` | 1400 | public |
-| `openRecents()` | 1426 | public |
+| `clearAppIconCache()` | 900 | private |
+| `openAppInfo()` | 1031 | public |
+| `showToastOnUiThread()` | 1272 | private |
+| `openRecentTasks()` | 1389 | public |
+| `openRecents()` | 1415 | public |
 
 #### ADB相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `triggerUsbDebugAuthorization()` | 1143 | public |
-| `triggerWirelessAdbAuthorization()` | 1182 | public |
-| `executeWirelessAdbAuthorization()` | 1293 | private |
-| `executeAdbPermissionGrant()` | 1354 | public |
-| `setDefaultDesktopViaAdb()` | 1450 | public |
-| `autoConnectWirelessAdb()` | 2800 | public |
-| `executeAdbAuthorization()` | 2865 | private |
-| `isUsbDebuggingEnabled()` | 2896 | private |
-| `executeAdbCommands()` | 2913 | private |
-| `executeAdbCommandsAfterConnection()` | 2966 | private |
+| `triggerUsbDebugAuthorization()` | 1132 | public |
+| `triggerWirelessAdbAuthorization()` | 1171 | public |
+| `executeWirelessAdbAuthorization()` | 1282 | private |
+| `executeAdbPermissionGrant()` | 1343 | public |
+| `setDefaultDesktopViaAdb()` | 1439 | public |
+| `autoConnectWirelessAdb()` | 2689 | public |
+| `executeAdbAuthorization()` | 2754 | private |
+| `isUsbDebuggingEnabled()` | 2785 | private |
+| `executeAdbCommands()` | 2802 | private |
+| `executeAdbCommandsAfterConnection()` | 2855 | private |
 
 #### 音乐相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `stopMusicVisualizer()` | 1874 | public |
-| `isMusicPlaying()` | 1894 | public |
-| `getCurrentMusicName()` | 1905 | public |
-| `getMusicProgressInfo()` | 1916 | public |
-| `getSystemMusicInfo()` | 1945 | public |
-| `playPauseMusic()` | 1979 | public |
-| `nextMusic()` | 1996 | public |
-| `prevMusic()` | 2012 | public |
-| `sendMediaButton()` | 2027 | private |
-| `playPause()` | 2206 | public |
-| `playNext()` | 2224 | public |
-| `playPrevious()` | 2236 | public |
+| `stopMusicVisualizer()` | 1763 | public |
+| `isMusicPlaying()` | 1783 | public |
+| `getCurrentMusicName()` | 1794 | public |
+| `getMusicProgressInfo()` | 1805 | public |
+| `getSystemMusicInfo()` | 1834 | public |
+| `playPauseMusic()` | 1868 | public |
+| `nextMusic()` | 1885 | public |
+| `prevMusic()` | 1901 | public |
+| `sendMediaButton()` | 1916 | private |
+| `playPause()` | 2095 | public |
+| `playNext()` | 2113 | public |
+| `playPrevious()` | 2125 | public |
 
 #### 系统设置
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `openNotificationListenerSettings()` | 2074 | public |
-| `saveBootGreetingSetting()` | 2275 | public |
-| `saveRandomModeSetting()` | 2292 | public |
-| `saveSpecifiedModeSetting()` | 2324 | public |
-| `saveBootGreetingSettingAsync()` | 2385 | public |
-| `saveRandomModeSettingAsync()` | 2429 | public |
-| `saveSpecifiedModeSettingAsync()` | 2473 | public |
+| `openNotificationListenerSettings()` | 1963 | public |
+| `saveBootGreetingSetting()` | 2164 | public |
+| `saveRandomModeSetting()` | 2181 | public |
+| `saveSpecifiedModeSetting()` | 2213 | public |
+| `saveBootGreetingSettingAsync()` | 2274 | public |
+| `saveRandomModeSettingAsync()` | 2318 | public |
+| `saveSpecifiedModeSettingAsync()` | 2362 | public |
 
 #### 导航相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `isAmapInstalled()` | 2683 | private |
-| `navigateToHome()` | 2697 | public |
-| `navigateToCompany()` | 2733 | public |
+| `isAmapInstalled()` | 2572 | private |
+| `navigateToHome()` | 2586 | public |
+| `navigateToCompany()` | 2622 | public |
 
 #### 车控功能
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `toggleAirConditioning()` | 2999 | public |
-| `openAirConditioningPage()` | 3029 | private |
-| `getAcInfo()` | 3060 | public |
-| `adjustTemperature()` | 3070 | public |
-| `adjustWindLevel()` | 3095 | public |
-| `toggleDefrost()` | 3127 | public |
-| `sendVoiceCommand()` | 3147 | public |
-| `setLowBeamLight()` | 3311 | public |
-| `setRearFogLight()` | 3319 | public |
-| `setPositionLight()` | 3327 | public |
-| `setPedestrianAlert()` | 3335 | public |
-| `setDriveMode()` | 3346 | public |
-| `setGuardMode()` | 3356 | public |
-| `setRestMode()` | 3364 | public |
-| `setCampingMode()` | 3372 | public |
-| `setPowerSaveMode()` | 3380 | public |
-| `setSentinelMode()` | 3388 | public |
-| `setMaxCooling()` | 3398 | public |
-| `setNightMode()` | 3409 | public |
-| `setWifiEnabled()` | 3417 | public |
-| `setBluetoothEnabled()` | 3425 | public |
-| `sendPrevTrack()` | 3435 | public |
-| `sendNextTrack()` | 3443 | public |
-| `setCameraOverspeedLimit()` | 3454 | public |
-| `setVideoWhileDriving()` | 3471 | public |
-| `setCallVolume()` | 3489 | public |
-| `setNaviVolume()` | 3505 | public |
-| `setMusicVolume()` | 3521 | public |
-| `setDriverTemp()` | 3540 | public |
-| `setPassengerTemp()` | 3556 | public |
-| `setAmbientLightEnabled()` | 3574 | public |
-| `setAmbientLightColor()` | 3591 | public |
-| `setSecondaryScreenEnabled()` | 3623 | public |
+| `toggleAirConditioning()` | 2888 | public |
+| `openAirConditioningPage()` | 2918 | private |
+| `getAcInfo()` | 2949 | public |
+| `adjustTemperature()` | 2959 | public |
+| `adjustWindLevel()` | 2984 | public |
+| `toggleDefrost()` | 3016 | public |
+| `sendVoiceCommand()` | 3036 | public |
+| `setLowBeamLight()` | 3200 | public |
+| `setRearFogLight()` | 3208 | public |
+| `setPositionLight()` | 3216 | public |
+| `setPedestrianAlert()` | 3224 | public |
+| `setDriveMode()` | 3235 | public |
+| `setGuardMode()` | 3245 | public |
+| `setRestMode()` | 3253 | public |
+| `setCampingMode()` | 3261 | public |
+| `setPowerSaveMode()` | 3269 | public |
+| `setSentinelMode()` | 3277 | public |
+| `setMaxCooling()` | 3287 | public |
+| `setNightMode()` | 3298 | public |
+| `setWifiEnabled()` | 3306 | public |
+| `setBluetoothEnabled()` | 3314 | public |
+| `sendPrevTrack()` | 3324 | public |
+| `sendNextTrack()` | 3332 | public |
+| `setCameraOverspeedLimit()` | 3343 | public |
+| `setVideoWhileDriving()` | 3360 | public |
+| `setCallVolume()` | 3378 | public |
+| `setNaviVolume()` | 3394 | public |
+| `setMusicVolume()` | 3410 | public |
+| `setDriverTemp()` | 3429 | public |
+| `setPassengerTemp()` | 3445 | public |
+| `setAmbientLightEnabled()` | 3463 | public |
+| `setAmbientLightColor()` | 3480 | public |
+| `setSecondaryScreenEnabled()` | 3512 | public |
 
 #### 权限相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `hasNotificationAccess()` | 3157 | public |
-| `hasReadLogsPermission()` | 3252 | public |
-| `hasWriteSecureSettingsPermission()` | 3268 | public |
-| `hasDumpPermission()` | 3284 | public |
+| `hasNotificationAccess()` | 3046 | public |
+| `hasReadLogsPermission()` | 3141 | public |
+| `hasWriteSecureSettingsPermission()` | 3157 | public |
+| `hasDumpPermission()` | 3173 | public |
 
 #### 音量控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getCallVolume()` | 3497 | public |
-| `getNaviVolume()` | 3513 | public |
-| `getMusicVolume()` | 3529 | public |
+| `getCallVolume()` | 3386 | public |
+| `getNaviVolume()` | 3402 | public |
+| `getMusicVolume()` | 3418 | public |
 
 #### 空调控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getDriverTemp()` | 3548 | public |
-| `getPassengerTemp()` | 3564 | public |
+| `getDriverTemp()` | 3437 | public |
+| `getPassengerTemp()` | 3453 | public |
 
 #### 灯光控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `isAmbientLightEnabled()` | 3582 | public |
-| `getAmbientLightColor()` | 3599 | public |
+| `isAmbientLightEnabled()` | 3471 | public |
+| `getAmbientLightColor()` | 3488 | public |
 
 #### 副屏相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `isSecondaryScreenEnabled()` | 3631 | public |
-| `hasSecondaryDisplay()` | 3639 | public |
-| `getSecondaryDisplayInfo()` | 3652 | public |
-| `showCarStatusPresentation()` | 3665 | public |
-| `hidePresentation()` | 3735 | public |
-| `isPresentationShowing()` | 3763 | public |
-| `updatePresentationCarState()` | 3775 | public |
-| `updatePresentationTime()` | 3805 | public |
+| `isSecondaryScreenEnabled()` | 3520 | public |
+| `hasSecondaryDisplay()` | 3528 | public |
+| `getSecondaryDisplayInfo()` | 3541 | public |
+| `showCarStatusPresentation()` | 3554 | public |
+| `hidePresentation()` | 3624 | public |
+| `isPresentationShowing()` | 3652 | public |
+| `updatePresentationCarState()` | 3664 | public |
+| `updatePresentationTime()` | 3694 | public |
 
 #### 语音控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `setSpeechEnabled()` | 3824 | public |
-| `isSpeechEnabled()` | 3832 | public |
+| `setSpeechEnabled()` | 3713 | public |
+| `isSpeechEnabled()` | 3721 | public |
 
 #### 自动化
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getAutomationSettings()` | 3878 | public |
-| `setAutomationSettings()` | 3892 | public |
-| `isAutomationScenarioEnabled()` | 3907 | public |
-| `setAutomationScenarioEnabled()` | 3922 | public |
+| `getAutomationSettings()` | 3767 | public |
+| `setAutomationSettings()` | 3781 | public |
+| `isAutomationScenarioEnabled()` | 3796 | public |
+| `setAutomationScenarioEnabled()` | 3811 | public |
 
 ---
 
