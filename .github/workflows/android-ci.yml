@@ -83,10 +83,20 @@ jobs:
       run: ./gradlew clean --no-build-cache
 
     - name: Build debug APK
-      run: ./gradlew assembleDebug --stacktrace
+      run: ./gradlew assembleDebug --stacktrace 2>&1 | tee build-debug.log
 
     - name: Build release APK
-      run: ./gradlew assembleRelease --stacktrace
+      run: ./gradlew assembleRelease --stacktrace 2>&1 | tee build-release.log
+
+    - name: Upload build error log
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-error-log
+        path: |
+          build-debug.log
+          build-release.log
+        retention-days: 14
 
     - name: Find APK files
       id: find_apk
