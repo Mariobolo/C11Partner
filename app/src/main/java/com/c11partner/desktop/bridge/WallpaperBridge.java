@@ -495,6 +495,19 @@ public class WallpaperBridge extends BaseBridge {
     }
     
     /**
+     * 发送壁纸设置更改广播
+     */
+    public void sendWallpaperSettingsChangedBroadcast() {
+        try {
+            Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
+            mContext.sendBroadcast(intent);
+            Log.d(TAG, "已发送壁纸设置更改广播");
+        } catch (Exception e) {
+            Log.e(TAG, "发送壁纸设置更改广播时出错", e);
+        }
+    }
+    
+    /**
      * 从SD卡下fstart目录下除了00文件夹下的图片中随机选择一张
      *
      * @return 壁纸文件路径，如果没有壁纸则返回null

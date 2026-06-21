@@ -451,13 +451,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void sendWallpaperSettingsChangedBroadcast() {
-        try {
-            Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
-            mContext.sendBroadcast(intent);
-            Log.d(TAG, "已发送壁纸设置更改广播");
-        } catch (Exception e) {
-            Log.e(TAG, "发送壁纸设置更改广播时出错", e);
-        }
+        mWallpaperBridge.sendWallpaperSettingsChangedBroadcast();
     }
 
     /**
@@ -1070,6 +1064,83 @@ public class WebViewBridge {
     @JavascriptInterface
     public void launchApp(String packageName) {
         mAppBridge.launchApp(packageName);
+    }
+
+    /**
+     * 打开应用信息页面
+     *
+     * @param packageName 应用包名
+     */
+    @JavascriptInterface
+    public void openAppInfo(String packageName) {
+        mAppBridge.openAppInfo(packageName);
+    }
+
+    /**
+     * 获取快速应用列表
+     *
+     * @return JSON格式的快速应用列表
+     */
+    @JavascriptInterface
+    public String getQuickAppList() {
+        return mAppBridge.getQuickAppList();
+    }
+
+    /**
+     * 添加快速应用
+     *
+     * @param name 应用名称
+     * @param packageName 应用包名
+     * @param iconBase64 应用图标Base64编码
+     */
+    @JavascriptInterface
+    public void addQuickApp(String name, String packageName, String iconBase64) {
+        mAppBridge.addQuickApp(name, packageName, iconBase64);
+    }
+
+    /**
+     * 移除快速应用
+     *
+     * @param packageName 应用包名
+     */
+    @JavascriptInterface
+    public void removeQuickApp(String packageName) {
+        mAppBridge.removeQuickApp(packageName);
+    }
+
+    /**
+     * 检查是否为快速应用
+     *
+     * @param packageName 应用包名
+     * @return 是否为快速应用
+     */
+    @JavascriptInterface
+    public boolean isQuickApp(String packageName) {
+        return mAppBridge.isQuickApp(packageName);
+    }
+
+    /**
+     * 保存配置应用
+     *
+     * @param buttonId 按钮ID
+     * @param appName 应用名称
+     * @param packageName 应用包名
+     * @param appIcon 应用图标
+     */
+    @JavascriptInterface
+    public void saveConfigApp(String buttonId, String appName, String packageName, String appIcon) {
+        mAppBridge.saveConfigApp(buttonId, appName, packageName, appIcon);
+    }
+
+    /**
+     * 获取配置应用
+     *
+     * @param buttonId 按钮ID
+     * @return JSON格式的配置应用信息
+     */
+    @JavascriptInterface
+    public String getConfigApp(String buttonId) {
+        return mAppBridge.getConfigApp(buttonId);
     }
 
     /**
