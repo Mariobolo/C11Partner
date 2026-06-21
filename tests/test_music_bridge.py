@@ -88,6 +88,7 @@ class TestMusicBridge(unittest.TestCase):
         self.assertIn('private void safeMediaSessionAction(Runnable action, String actionName)', self.source_code)
         self.assertIn('private <T> T safeMediaSessionGet(java.util.function.Supplier<T> supplier', self.source_code)
         self.assertIn('private void safeUiThreadAction(Runnable action, String actionName)', self.source_code)
+        self.assertIn('private void safeStartActivity(Intent intent, String activityName)', self.source_code)
         self.assertIn('private boolean isMediaSessionAvailable()', self.source_code)
         self.assertIn('private void sendMediaButton(int keyCode)', self.source_code)
 
@@ -104,8 +105,8 @@ class TestMusicBridge(unittest.TestCase):
 
     def test_playback_control_methods(self):
         """测试播放进度控制方法"""
-        self.assertIn('public void seekTo(long position)', self.source_code)
-        self.assertIn('public void setPlaybackSpeed(float speed)', self.source_code)
+        self.assertIn('public void seekTo(final long position)', self.source_code)
+        self.assertIn('public void setPlaybackSpeed(final float speed)', self.source_code)
 
     def test_notification_listener_methods(self):
         """测试通知监听权限方法"""
@@ -117,6 +118,11 @@ class TestMusicBridge(unittest.TestCase):
     def test_playlist_methods(self):
         """测试播放列表方法"""
         self.assertIn('public String getPlaylist()', self.source_code)
+        self.assertIn('public void playSongAtIndex(final int index)', self.source_code)
+        self.assertIn('public void setRepeatMode(final int mode)', self.source_code)
+        self.assertIn('public int getRepeatMode()', self.source_code)
+        self.assertIn('public void setShuffleMode(final boolean enabled)', self.source_code)
+        self.assertIn('public boolean isShuffleEnabled()', self.source_code)
 
     def test_imports(self):
         """测试import语句"""

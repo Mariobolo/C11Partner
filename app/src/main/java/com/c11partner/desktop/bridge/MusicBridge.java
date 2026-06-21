@@ -327,6 +327,22 @@ public class MusicBridge extends BaseBridge {
     }
     
     /**
+     * 安全启动Activity（统一错误处理）
+     *
+     * @param intent 启动Intent
+     * @param activityName Activity名称（用于日志）
+     */
+    private void safeStartActivity(Intent intent, String activityName) {
+        try {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+            logD(TAG, "启动" + activityName + "成功");
+        } catch (Exception e) {
+            logE(TAG, "启动" + activityName + "失败", e);
+        }
+    }
+    
+    /**
      * 检查媒体会话服务是否可用
      *
      * @return 媒体会话服务是否可用
@@ -422,15 +438,11 @@ public class MusicBridge extends BaseBridge {
      * @param position 播放位置（毫秒）
      */
     @JavascriptInterface
-    public void seekTo(long position) {
-        try {
-            if (isMediaSessionServiceBound && mediaSessionService != null) {
-                mediaSessionService.seekTo(position);
-                logD(TAG, "跳转到播放位置: " + position);
-            }
-        } catch (Exception e) {
-            logE(TAG, "跳转播放位置失败", e);
-        }
+    public void seekTo(final long position) {
+        safeMediaSessionAction(() -> {
+            mediaSessionService.seekTo(position);
+            logD(TAG, "跳转到播放位置: " + position);
+        }, "跳转播放位置");
     }
     /**
      * 设置播放速度
@@ -438,15 +450,11 @@ public class MusicBridge extends BaseBridge {
      * @param speed 播放速度（0.5-2.0）
      */
     @JavascriptInterface
-    public void setPlaybackSpeed(float speed) {
-        try {
-            if (isMediaSessionServiceBound && mediaSessionService != null) {
-                mediaSessionService.setPlaybackSpeed(speed);
-                logD(TAG, "设置播放速度: " + speed);
-            }
-        } catch (Exception e) {
-            logE(TAG, "设置播放速度失败", e);
-        }
+    public void setPlaybackSpeed(final float speed) {
+        safeMediaSessionAction(() -> {
+            mediaSessionService.setPlaybackSpeed(speed);
+            logD(TAG, "设置播放速度: " + speed);
+        }, "设置播放速度");
     }
     // ==================== 通知监听权限相关方法 ====================
     /**
@@ -475,13 +483,8 @@ public class MusicBridge extends BaseBridge {
      */
     @JavascriptInterface
     public void openNotificationListenerSettings() {
-        try {
-            Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
-        } catch (Exception e) {
-            logE(TAG, "打开通知监听设置失败", e);
-        }
+        Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+        safeStartActivity(intent, "通知监听设置");
     }
     
     // ==================== 音乐收藏与播放列表方法 ====================
@@ -508,15 +511,11 @@ public class MusicBridge extends BaseBridge {
      * @param index 歌曲索引
      */
     @JavascriptInterface
-    public void playSongAtIndex(int index) {
-        try {
-            if (isMediaSessionServiceBound && mediaSessionService != null) {
-                mediaSessionService.playSongAtIndex(index);
-                logD(TAG, "播放第 " + index + " 首歌曲");
-            }
-        } catch (Exception e) {
-            logE(TAG, "播放指定歌曲失败", e);
-        }
+    public void playSongAtIndex(final int index) {
+        safeMediaSessionAction(() -> {
+            mediaSessionService.playSongAtIndex(index);
+            logD(TAG, "播放第 " + index + " 首歌曲");
+        }, "播放指定歌曲");
     }
     
     /**
@@ -525,15 +524,11 @@ public class MusicBridge extends BaseBridge {
      * @param mode 循环模式：0-不循环，1-单曲循环，2-列表循环
      */
     @JavascriptInterface
-    public void setRepeatMode(int mode) {
-        try {
-            if (isMediaSessionServiceBound && mediaSessionService != null) {
-                mediaSessionService.setRepeatMode(mode);
-                logD(TAG, "设置循环模式: " + mode);
-            }
-        } catch (Exception e) {
-            logE(TAG, "设置循环模式失败", e);
-        }
+    public void setRepeatMode(final int mode) {
+        safeMediaSessionAction(() -> {
+            mediaSessionService.setRepeatMode(mode);
+            logD(TAG, "设置循环模式: " + mode);
+        }, "设置循环模式");
     }
     
     /**
@@ -543,14 +538,11 @@ public class MusicBridge extends BaseBridge {
      */
     @JavascriptInterface
     public int getRepeatMode() {
-        try {
-            if (isMediaSessionServiceBound && mediaSessionService != null) {
-                return mediaSessionService.getRepeatMode();
-            }
-        } catch (Exception e) {
-            logE(TAG, "获取循环模式失败", e);
-        }
-        return 0;
+        return safeMediaSessionGet(
+            () -> mediaSessionService.getRepeatMode(),
+            0,
+            "获取循环模式"
+        );
     }
     
     /**
@@ -559,15 +551,11 @@ public class MusicBridge extends BaseBridge {
      * @param enabled 是否启用随机播放
      */
     @JavascriptInterface
-    public void setShuffleMode(boolean enabled) {
-        try {
-            if (isMediaSessionServiceBound && mediaSessionService != null) {
-                mediaSessionService.setShuffleMode(enabled);
-                logD(TAG, "设置随机播放: " + enabled);
-            }
-        } catch (Exception e) {
-            logE(TAG, "设置随机播放失败", e);
-        }
+    public void setShuffleMode(final boolean enabled) {
+        safeMediaSessionAction(() -> {
+            mediaSessionService.setShuffleMode(enabled);
+            logD(TAG, "设置随机播放: " + enabled);
+        }, "设置随机播放");
     }
     
     /**
@@ -577,13 +565,10 @@ public class MusicBridge extends BaseBridge {
      */
     @JavascriptInterface
     public boolean isShuffleEnabled() {
-        try {
-            if (isMediaSessionServiceBound && mediaSessionService != null) {
-                return mediaSessionService.isShuffleEnabled();
-            }
-        } catch (Exception e) {
-            logE(TAG, "获取随机播放状态失败", e);
-        }
-        return false;
+        return safeMediaSessionGet(
+            () -> mediaSessionService.isShuffleEnabled(),
+            false,
+            "获取随机播放状态"
+        );
     }
 }
