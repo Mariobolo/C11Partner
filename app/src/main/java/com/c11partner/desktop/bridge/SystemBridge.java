@@ -64,6 +64,39 @@ public class SystemBridge extends BaseBridge {
         }
     }
     
+    /**
+     * 安全执行数据库写操作（无返回值）
+     *
+     * @param operation 数据库操作
+     * @param operationName 操作名称（用于日志）
+     */
+    private void safeDbWrite(Runnable operation, String operationName) {
+        try {
+            operation.run();
+            logD(TAG, operationName + " 成功");
+        } catch (Exception e) {
+            logE(TAG, operationName + " 失败", e);
+        }
+    }
+    
+    /**
+     * 安全获取数据（统一错误处理）
+     *
+     * @param supplier 数据提供者
+     * @param defaultValue 默认值
+     * @param operationName 操作名称（用于日志）
+     * @param <T> 返回值类型
+     * @return 获取到的数据或默认值
+     */
+    private <T> T safeGet(java.util.function.Supplier<T> supplier, T defaultValue, String operationName) {
+        try {
+            return supplier.get();
+        } catch (Exception e) {
+            logE(TAG, operationName + " 失败", e);
+            return defaultValue;
+        }
+    }
+    
     // ==================== 网络状态检测方法 ====================
     /**
      * 检查WiFi是否已连接
@@ -179,13 +212,10 @@ public class SystemBridge extends BaseBridge {
      */
     @JavascriptInterface
     public boolean saveSystemLauncherSetting(boolean enabled) {
-        try {
+        return safeDbOperation(() -> {
             wallpaperSettingsDbHelper.updateSystemLauncher(enabled);
             return true;
-        } catch (Exception e) {
-            logE(TAG, "保存原桌面自启设置时出错", e);
-            return false;
-        }
+        }, "保存原桌面自启设置");
     }
     /**
      * 异步保存原桌面自启设置
@@ -229,13 +259,10 @@ public class SystemBridge extends BaseBridge {
      */
     @JavascriptInterface
     public boolean saveBootGreetingSetting(boolean enabled) {
-        try {
+        return safeDbOperation(() -> {
             wallpaperSettingsDbHelper.updateBootGreeting(enabled);
             return true;
-        } catch (Exception e) {
-            logE(TAG, "保存开机问候语设置时出错", e);
-            return false;
-        }
+        }, "保存开机问候语设置");
     }
     /**
      * 保存随机模式设置
@@ -245,13 +272,10 @@ public class SystemBridge extends BaseBridge {
      */
     @JavascriptInterface
     public boolean saveRandomModeSetting(boolean enabled) {
-        try {
+        return safeDbOperation(() -> {
             wallpaperSettingsDbHelper.updateRandomMode(enabled);
             return true;
-        } catch (Exception e) {
-            logE(TAG, "保存随机模式设置时出错", e);
-            return false;
-        }
+        }, "保存随机模式设置");
     }
     /**
      * 保存指定模式设置
@@ -261,13 +285,10 @@ public class SystemBridge extends BaseBridge {
      */
     @JavascriptInterface
     public boolean saveSpecifiedModeSetting(boolean enabled) {
-        try {
+        return safeDbOperation(() -> {
             wallpaperSettingsDbHelper.updateSpecifiedMode(enabled);
             return true;
-        } catch (Exception e) {
-            logE(TAG, "保存指定模式设置时出错", e);
-            return false;
-        }
+        }, "保存指定模式设置");
     }
     // ==================== 农历日期获取方法 ====================
     /**
