@@ -2,7 +2,7 @@
 
 > 📋 本文档由工具自动生成，请勿手动修改
 > 
-> 生成时间：2026-06-22 03:18:59
+> 生成时间：2026-06-22 03:38:57
 > 
 > 接口总数：4 个
 
@@ -213,19 +213,27 @@
 |--------|------|--------|------|
 | `setAutoBrightness()` | - | `boolean` | `enabled`: boolean |
 | `setCameraOverspeedLimit()` | - | `boolean` | `enabled`: boolean |
+| `setDriverSeatHeating()` | - | `boolean` | `level`: int |
+| `setDriverSeatVentilation()` | - | `boolean` | `level`: int |
+| `setMirrorHeating()` | - | `boolean` | `on`: boolean |
+| `setPassengerSeatHeating()` | - | `boolean` | `level`: int |
+| `setPassengerSeatVentilation()` | - | `boolean` | `level`: int |
 | `setPlaybackSpeed()` | - | `void` | `speed`: float |
 | `setScreenBrightness()` | - | `boolean` | `brightness`: int |
+| `setSteeringWheelHeating()` | - | `boolean` | `on`: boolean |
 | `setVideoWhileDriving()` | - | `boolean` | `enabled`: boolean |
 
 ## 其他
 
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
+| `foldMirrors()` | - | `boolean` | - |
 | `openRecentTasks()` | - | `void` | - |
 | `openRecents()` | - | `void` | - |
 | `seekTo()` | - | `void` | `position`: long |
 | `sendNextTrack()` | - | `boolean` | - |
 | `sendPrevTrack()` | - | `boolean` | - |
+| `unfoldMirrors()` | - | `boolean` | - |
 
 ---
 
@@ -412,7 +420,7 @@
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 475 行
+- **行号**：第 518 行
 
 #### `getNaviVolume()`
 
@@ -432,7 +440,7 @@
 - **返回值**：`void`
 - **参数**：
   - `volume`: `int`
-- **行号**：第 472 行
+- **行号**：第 515 行
 
 #### `setNaviVolume()`
 
@@ -445,13 +453,13 @@
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 481 行
+- **行号**：第 524 行
 
 #### `volumeUp()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 478 行
+- **行号**：第 521 行
 
 ### 副屏相关
 
@@ -496,73 +504,73 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 453 行
+- **行号**：第 496 行
 
 #### `getCurrentMusicName()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 450 行
+- **行号**：第 493 行
 
 #### `getMusicProgressInfo()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 456 行
+- **行号**：第 499 行
 
 #### `getSystemMusicInfo()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 459 行
+- **行号**：第 502 行
 
 #### `isMusicPlaying()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 447 行
+- **行号**：第 490 行
 
 #### `isNotificationListenerEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 491 行
+- **行号**：第 534 行
 
 #### `nextMusic()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 465 行
+- **行号**：第 508 行
 
 #### `openNotificationListenerSettings()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 496 行
+- **行号**：第 539 行
 
 #### `playPauseMusic()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 462 行
+- **行号**：第 505 行
 
 #### `prevMusic()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 468 行
+- **行号**：第 511 行
 
 #### `startMusicVisualizer()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 441 行
+- **行号**：第 484 行
 
 #### `stopMusicVisualizer()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 444 行
+- **行号**：第 487 行
 
 ### 应用管理
 
@@ -573,106 +581,106 @@
   - `name`: `String`
   - `packageName`: `String`
   - `iconBase64`: `String`
-- **行号**：第 344 行
+- **行号**：第 387 行
 
 #### `getAllApps()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 317 行
+- **行号**：第 360 行
 
 #### `getAllComponentConfigs()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 586 行
+- **行号**：第 629 行
 
 #### `getAppIcon()`
 
 - **返回值**：`String`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 329 行
+- **行号**：第 372 行
 
 #### `getAppInfo()`
 
 - **返回值**：`String`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 326 行
+- **行号**：第 369 行
 
 #### `getAppList()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 314 行
+- **行号**：第 357 行
 
 #### `getConfigApp()`
 
 - **返回值**：`String`
 - **参数**：
   - `buttonId`: `String`
-- **行号**：第 360 行
+- **行号**：第 403 行
 
 #### `getQuickAppList()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 341 行
+- **行号**：第 384 行
 
 #### `getSystemApps()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 323 行
+- **行号**：第 366 行
 
 #### `getUserApps()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 320 行
+- **行号**：第 363 行
 
 #### `isAppInstalled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 332 行
+- **行号**：第 375 行
 
 #### `isComponentEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `componentName`: `String`
-- **行号**：第 581 行
+- **行号**：第 624 行
 
 #### `isQuickApp()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 352 行
+- **行号**：第 395 行
 
 #### `launchApp()`
 
 - **返回值**：`void`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 335 行
+- **行号**：第 378 行
 
 #### `openAppInfo()`
 
 - **返回值**：`void`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 338 行
+- **行号**：第 381 行
 
 #### `removeQuickApp()`
 
 - **返回值**：`void`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 349 行
+- **行号**：第 392 行
 
 #### `saveComponentConfig()`
 
@@ -680,7 +688,7 @@
 - **参数**：
   - `componentName`: `String`
   - `isEnabled`: `boolean`
-- **行号**：第 576 行
+- **行号**：第 619 行
 
 #### `saveConfigApp()`
 
@@ -690,14 +698,14 @@
   - `appName`: `String`
   - `packageName`: `String`
   - `appIcon`: `String`
-- **行号**：第 355 行
+- **行号**：第 398 行
 
 #### `saveSystemLauncherSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 508 行
+- **行号**：第 551 行
 
 #### `saveSystemLauncherSettingAsync()`
 
@@ -705,7 +713,7 @@
 - **参数**：
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 513 行
+- **行号**：第 556 行
 
 ### 壁纸相关
 
@@ -713,65 +721,65 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 437 行
+- **行号**：第 480 行
 
 #### `getRandomWallpaper()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 389 行
+- **行号**：第 432 行
 
 #### `getRandomWallpaperAsync()`
 
 - **返回值**：`void`
 - **参数**：
   - `callbackId`: `final String`
-- **行号**：第 392 行
+- **行号**：第 435 行
 
 #### `getRandomWallpaperBase64()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 397 行
+- **行号**：第 440 行
 
 #### `getRandomWallpaperBase64Async()`
 
 - **返回值**：`void`
 - **参数**：
   - `callbackId`: `final String`
-- **行号**：第 402 行
+- **行号**：第 445 行
 
 #### `getWallpaperSettings()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 423 行
+- **行号**：第 466 行
 
 #### `getWallpaperSettingsAsync()`
 
 - **返回值**：`void`
 - **参数**：
   - `callbackId`: `final String`
-- **行号**：第 426 行
+- **行号**：第 469 行
 
 #### `pauseWallpaperCarousel()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 431 行
+- **行号**：第 474 行
 
 #### `resumeWallpaperCarousel()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 434 行
+- **行号**：第 477 行
 
 #### `saveWallpaperCarouselSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 364 行
+- **行号**：第 407 行
 
 #### `saveWallpaperCarouselSettingAsync()`
 
@@ -779,14 +787,14 @@
 - **参数**：
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 369 行
+- **行号**：第 412 行
 
 #### `saveWallpaperSwitchInterval()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `interval`: `int`
-- **行号**：第 374 行
+- **行号**：第 417 行
 
 #### `saveWallpaperSwitchIntervalAsync()`
 
@@ -794,19 +802,19 @@
 - **参数**：
   - `interval`: `final int`
   - `callbackId`: `final String`
-- **行号**：第 379 行
+- **行号**：第 422 行
 
 #### `sendWallpaperSettingsChangedBroadcast()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 384 行
+- **行号**：第 427 行
 
 #### `updateWallpaperCategories()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 407 行
+- **行号**：第 450 行
 
 ### ADB相关
 
@@ -814,25 +822,25 @@
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 563 行
+- **行号**：第 606 行
 
 #### `setDefaultDesktopViaAdb()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 572 行
+- **行号**：第 615 行
 
 #### `triggerUsbDebugAuthorization()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 557 行
+- **行号**：第 600 行
 
 #### `triggerWirelessAdbAuthorization()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 560 行
+- **行号**：第 603 行
 
 ### 时间日期
 
@@ -840,20 +848,20 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 533 行
+- **行号**：第 576 行
 
 #### `getScreenTimeout()`
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 553 行
+- **行号**：第 596 行
 
 #### `setScreenTimeout()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `seconds`: `int`
-- **行号**：第 550 行
+- **行号**：第 593 行
 
 #### `updateCategoryEnabled()`
 
@@ -861,7 +869,7 @@
 - **参数**：
   - `categoryId`: `String`
   - `enabled`: `boolean`
-- **行号**：第 410 行
+- **行号**：第 453 行
 
 #### `updateCategoryEnabledAsync()`
 
@@ -870,7 +878,7 @@
   - `categoryId`: `final String`
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 418 行
+- **行号**：第 461 行
 
 ### 系统设置
 
@@ -878,34 +886,34 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 505 行
+- **行号**：第 548 行
 
 #### `isWifiConnected()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 502 行
+- **行号**：第 545 行
 
 #### `saveBootGreetingSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 518 行
+- **行号**：第 561 行
 
 #### `saveRandomModeSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 523 行
+- **行号**：第 566 行
 
 #### `saveSpecifiedModeSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 528 行
+- **行号**：第 571 行
 
 #### `setBluetoothEnabled()`
 
@@ -934,19 +942,19 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 415 行
+- **行号**：第 458 行
 
 #### `getScreenBrightness()`
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 540 行
+- **行号**：第 583 行
 
 #### `isAutoBrightnessEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 546 行
+- **行号**：第 589 行
 
 #### `isCameraOverspeedLimitEnabled()`
 
@@ -979,7 +987,7 @@
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 543 行
+- **行号**：第 586 行
 
 #### `setCameraOverspeedLimit()`
 
@@ -988,19 +996,61 @@
   - `enabled`: `boolean`
 - **行号**：第 88 行
 
+#### `setDriverSeatHeating()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `level`: `int`
+- **行号**：第 314 行
+
+#### `setDriverSeatVentilation()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `level`: `int`
+- **行号**：第 324 行
+
+#### `setMirrorHeating()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `on`: `boolean`
+- **行号**：第 351 行
+
+#### `setPassengerSeatHeating()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `level`: `int`
+- **行号**：第 319 行
+
+#### `setPassengerSeatVentilation()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `level`: `int`
+- **行号**：第 329 行
+
 #### `setPlaybackSpeed()`
 
 - **返回值**：`void`
 - **参数**：
   - `speed`: `float`
-- **行号**：第 488 行
+- **行号**：第 531 行
 
 #### `setScreenBrightness()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `brightness`: `int`
-- **行号**：第 537 行
+- **行号**：第 580 行
+
+#### `setSteeringWheelHeating()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `on`: `boolean`
+- **行号**：第 335 行
 
 #### `setVideoWhileDriving()`
 
@@ -1011,24 +1061,30 @@
 
 ### 其他
 
+#### `foldMirrors()`
+
+- **返回值**：`boolean`
+- **参数**：无
+- **行号**：第 341 行
+
 #### `openRecentTasks()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 566 行
+- **行号**：第 609 行
 
 #### `openRecents()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 569 行
+- **行号**：第 612 行
 
 #### `seekTo()`
 
 - **返回值**：`void`
 - **参数**：
   - `position`: `long`
-- **行号**：第 485 行
+- **行号**：第 528 行
 
 #### `sendNextTrack()`
 
@@ -1041,6 +1097,12 @@
 - **返回值**：`boolean`
 - **参数**：无
 - **行号**：第 292 行
+
+#### `unfoldMirrors()`
+
+- **返回值**：`boolean`
+- **参数**：无
+- **行号**：第 346 行
 
 ---
 

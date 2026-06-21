@@ -685,4 +685,148 @@ public class CarControlManager {
     public boolean isScreenOn() {
         return getGlobalInt(KEY_LEAP_SCREEN_STATE, 0) == 0;
     }
+    
+    // ==================== 座椅控制 ====================
+    
+    /**
+     * 设置主驾座椅加热
+     * @param level 加热等级（0-3，0=关闭）
+     */
+    public boolean setDriverSeatHeating(int level) {
+        try {
+            int safeLevel = Math.max(0, Math.min(3, level));
+            Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
+            intent.putExtra("SEAT_HEAT_LEFT", safeLevel);
+            context.sendBroadcast(intent);
+            Log.d(TAG, "主驾座椅加热等级: " + safeLevel);
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "设置主驾座椅加热失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置副驾座椅加热
+     * @param level 加热等级（0-3，0=关闭）
+     */
+    public boolean setPassengerSeatHeating(int level) {
+        try {
+            int safeLevel = Math.max(0, Math.min(3, level));
+            Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
+            intent.putExtra("SEAT_HEAT_RIGHT", safeLevel);
+            context.sendBroadcast(intent);
+            Log.d(TAG, "副驾座椅加热等级: " + safeLevel);
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "设置副驾座椅加热失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置主驾座椅通风
+     * @param level 通风等级（0-3，0=关闭）
+     */
+    public boolean setDriverSeatVentilation(int level) {
+        try {
+            int safeLevel = Math.max(0, Math.min(3, level));
+            Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
+            intent.putExtra("SEAT_VENT_LEFT", safeLevel);
+            context.sendBroadcast(intent);
+            Log.d(TAG, "主驾座椅通风等级: " + safeLevel);
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "设置主驾座椅通风失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置副驾座椅通风
+     * @param level 通风等级（0-3，0=关闭）
+     */
+    public boolean setPassengerSeatVentilation(int level) {
+        try {
+            int safeLevel = Math.max(0, Math.min(3, level));
+            Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
+            intent.putExtra("SEAT_VENT_RIGHT", safeLevel);
+            context.sendBroadcast(intent);
+            Log.d(TAG, "副驾座椅通风等级: " + safeLevel);
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "设置副驾座椅通风失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 方向盘控制 ====================
+    
+    /**
+     * 设置方向盘加热
+     * @param on true=开启, false=关闭
+     */
+    public boolean setSteeringWheelHeating(boolean on) {
+        try {
+            Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
+            intent.putExtra("STEERING_HEAT", on ? 1 : 0);
+            context.sendBroadcast(intent);
+            Log.d(TAG, "方向盘加热: " + (on ? "开" : "关"));
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "设置方向盘加热失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 后视镜控制 ====================
+    
+    /**
+     * 折叠后视镜
+     */
+    public boolean foldMirrors() {
+        try {
+            Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
+            intent.putExtra("MIRROR_FOLD", 1);
+            context.sendBroadcast(intent);
+            Log.d(TAG, "折叠后视镜");
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "折叠后视镜失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 展开后视镜
+     */
+    public boolean unfoldMirrors() {
+        try {
+            Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
+            intent.putExtra("MIRROR_FOLD", 0);
+            context.sendBroadcast(intent);
+            Log.d(TAG, "展开后视镜");
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "展开后视镜失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置后视镜加热
+     * @param on true=开启, false=关闭
+     */
+    public boolean setMirrorHeating(boolean on) {
+        try {
+            Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
+            intent.putExtra("MIRROR_HEAT", on ? 1 : 0);
+            context.sendBroadcast(intent);
+            Log.d(TAG, "后视镜加热: " + (on ? "开" : "关"));
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "设置后视镜加热失败", e);
+            return false;
+        }
+    }
 }

@@ -786,4 +786,136 @@ public class CarControlBridge extends BaseBridge {
             return false;
         }
     }
+    
+    // ==================== 座椅控制 ====================
+    
+    /**
+     * 设置主驾座椅加热
+     * 
+     * @param level 加热等级（0-3，0=关闭）
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setDriverSeatHeating(int level) {
+        try {
+            return getCarControlManager().setDriverSeatHeating(level);
+        } catch (Exception e) {
+            Log.e(TAG, "设置主驾座椅加热失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置副驾座椅加热
+     * 
+     * @param level 加热等级（0-3，0=关闭）
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setPassengerSeatHeating(int level) {
+        try {
+            return getCarControlManager().setPassengerSeatHeating(level);
+        } catch (Exception e) {
+            Log.e(TAG, "设置副驾座椅加热失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置主驾座椅通风
+     * 
+     * @param level 通风等级（0-3，0=关闭）
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setDriverSeatVentilation(int level) {
+        try {
+            return getCarControlManager().setDriverSeatVentilation(level);
+        } catch (Exception e) {
+            Log.e(TAG, "设置主驾座椅通风失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置副驾座椅通风
+     * 
+     * @param level 通风等级（0-3，0=关闭）
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setPassengerSeatVentilation(int level) {
+        try {
+            return getCarControlManager().setPassengerSeatVentilation(level);
+        } catch (Exception e) {
+            Log.e(TAG, "设置副驾座椅通风失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 方向盘控制 ====================
+    
+    /**
+     * 设置方向盘加热
+     * 
+     * @param on 是否开启
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setSteeringWheelHeating(boolean on) {
+        try {
+            return getCarControlManager().setSteeringWheelHeating(on);
+        } catch (Exception e) {
+            Log.e(TAG, "设置方向盘加热失败", e);
+            return false;
+        }
+    }
+    
+    // ==================== 后视镜控制 ====================
+    
+    /**
+     * 折叠后视镜
+     * 
+     * @return 是否成功
+     */
+    @JavascriptInterface
+    public boolean foldMirrors() {
+        try {
+            return getCarControlManager().foldMirrors();
+        } catch (Exception e) {
+            Log.e(TAG, "折叠后视镜失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 展开后视镜
+     * 
+     * @return 是否成功
+     */
+    @JavascriptInterface
+    public boolean unfoldMirrors() {
+        try {
+            return getCarControlManager().unfoldMirrors();
+        } catch (Exception e) {
+            Log.e(TAG, "展开后视镜失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 设置后视镜加热
+     * 
+     * @param on 是否开启
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setMirrorHeating(boolean on) {
+        try {
+            return getCarControlManager().setMirrorHeating(on);
+        } catch (Exception e) {
+            Log.e(TAG, "设置后视镜加热失败", e);
+            return false;
+        }
+    }
 }

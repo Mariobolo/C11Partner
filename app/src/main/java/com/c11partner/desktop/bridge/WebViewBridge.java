@@ -308,6 +308,49 @@ public class WebViewBridge extends BaseBridge {
     public boolean isScreenOn() { 
         return mCarControlBridge.isScreenOn(); 
     }
+    
+    // 座椅控制
+    @JavascriptInterface
+    public boolean setDriverSeatHeating(int level) { 
+        return mCarControlBridge.setDriverSeatHeating(level); 
+    }
+    
+    @JavascriptInterface
+    public boolean setPassengerSeatHeating(int level) { 
+        return mCarControlBridge.setPassengerSeatHeating(level); 
+    }
+    
+    @JavascriptInterface
+    public boolean setDriverSeatVentilation(int level) { 
+        return mCarControlBridge.setDriverSeatVentilation(level); 
+    }
+    
+    @JavascriptInterface
+    public boolean setPassengerSeatVentilation(int level) { 
+        return mCarControlBridge.setPassengerSeatVentilation(level); 
+    }
+    
+    // 方向盘控制
+    @JavascriptInterface
+    public boolean setSteeringWheelHeating(boolean on) { 
+        return mCarControlBridge.setSteeringWheelHeating(on); 
+    }
+    
+    // 后视镜控制
+    @JavascriptInterface
+    public boolean foldMirrors() { 
+        return mCarControlBridge.foldMirrors(); 
+    }
+    
+    @JavascriptInterface
+    public boolean unfoldMirrors() { 
+        return mCarControlBridge.unfoldMirrors(); 
+    }
+    
+    @JavascriptInterface
+    public boolean setMirrorHeating(boolean on) { 
+        return mCarControlBridge.setMirrorHeating(on); 
+    }
 
     // ==================== AppBridge 委托方法 ====================
     @JavascriptInterface
