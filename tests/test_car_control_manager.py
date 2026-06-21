@@ -298,6 +298,125 @@ class TestCarControlManager(unittest.TestCase):
             self.assertEqual(constant, constant.upper(), 
                 f"常量 '{constant}' 应该使用全大写下划线命名规范")
     
+    def test_ac_control_fallback_logic(self):
+        """测试空调控制fallback逻辑完整性"""
+        # 测试setAcEnabled的fallback机制
+        self.assertIn('boolean result = setGlobalInt(KEY_STR_CAR_100006, on ? 1 : 0);', self.source_code)
+        self.assertIn('if (!result)', self.source_code)
+        self.assertIn('String command = on ? "打开空调" : "关闭空调";', self.source_code)
+        self.assertIn('result = sendVoiceCommand(command);', self.source_code)
+        self.assertIn('return result;', self.source_code)
+    
+    def test_wind_level_fallback_logic(self):
+        """测试风量控制fallback逻辑"""
+        self.assertIn('boolean result = setGlobalInt(KEY_STR_CAR_1411, Math.max(1, Math.min(8, level)));', self.source_code)
+        self.assertIn('String command = "空调风量调到" + level + "档";', self.source_code)
+        self.assertIn('result = sendVoiceCommand(command);', self.source_code)
+    
+    def test_defrost_voice_command(self):
+        """测试除霜使用语音指令"""
+        self.assertIn('public boolean setDefrost(boolean on)', self.source_code)
+        self.assertIn('String command = on ? "打开除霜" : "关闭除霜";', self.source_code)
+        self.assertIn('return sendVoiceCommand(command);', self.source_code)
+    
+    def test_getter_method_consistency(self):
+        """测试getter方法返回值一致性"""
+        getter_methods = [
+            ('isAcEnabled', 'getGlobalInt(KEY_STR_CAR_100006, 0) == 1'),
+            ('getWindLevel', 'getGlobalInt(KEY_STR_CAR_1411, 3)'),
+            ('isCameraOverspeedLimitEnabled', 'getGlobalInt(KEY_CAMERA_OVERSPEED, 1) == 1'),
+            ('isVideoWhileDrivingEnabled', 'getGlobalInt(KEY_C11_VIDEO_ENABLE, 0) == 1'),
+            ('getCallVolume', 'getGlobalInt(KEY_C11_CALL, 50)'),
+            ('getNaviVolume', 'getGlobalInt(KEY_C11_NAVI, 50)'),
+            ('getMusicVolume', 'getGlobalInt(KEY_C11_MUSIC, 50)'),
+            ('getDriverTemp', 'getGlobalInt(KEY_STR_CAR_1409, 24)'),
+            ('getPassengerTemp', 'getGlobalInt(KEY_STR_CAR_1410, 24)'),
+            ('isAmbientLightEnabled', 'getGlobalInt(KEY_STR_CAR_1800, 0) == 1'),
+            ('getAmbientLightColor', 'getGlobalInt(KEY_STR_CAR_8867, 0)'),
+            ('isSecondaryScreenEnabled', 'getGlobalInt(KEY_DISPLAY_1_STATE, 1) == 1'),
+            ('isSpeechEnabled', 'getGlobalInt(KEY_SPEECH_SPEAK, 1) == 1'),
+            ('isScreenOn', 'getGlobalInt(KEY_LEAP_SCREEN_STATE, 0) == 0'),
+        ]
+        for method_name, expected_impl in getter_methods:
+            self.assertIn(method_name + '(', self.source_code)
+            self.assertIn(expected_impl, self.source_code)
+    
+    def test_setter_method_delegation(self):
+        """测试setter方法委托给setGlobalInt"""
+        setter_methods = [
+            ('setCameraOverspeedLimit', 'KEY_CAMERA_OVERSPEED'),
+            ('setVideoWhileDriving', 'KEY_C11_VIDEO_ENABLE'),
+            ('setCallVolume', 'KEY_C11_CALL'),
+            ('setNaviVolume', 'KEY_C11_NAVI'),
+            ('setMusicVolume', 'KEY_C11_MUSIC'),
+            ('setDriverTemp', 'KEY_STR_CAR_1409'),
+            ('setPassengerTemp', 'KEY_STR_CAR_1410'),
+            ('setAmbientLightEnabled', 'KEY_STR_CAR_1800'),
+            ('setSecondaryScreenEnabled', 'KEY_DISPLAY_1_STATE'),
+            ('setSpeechEnabled', 'KEY_SPEECH_SPEAK'),
+        ]
+        for method_name, key_constant in setter_methods:
+            self.assertIn(f'public boolean {method_name}', self.source_code)
+            self.assertIn(f'return setGlobalInt({key_constant},', self.source_code)
+    
+    def test_volume_parameter_clamping(self):
+        """测试音量参数范围限制"""
+        self.assertIn('Math.max(0, Math.min(100, volume))', self.source_code)
+        # 验证三个音量方法都使用了参数限制
+        volume_methods = ['setCallVolume', 'setNaviVolume', 'setMusicVolume']
+        for method in volume_methods:
+            pattern = rf'public boolean {method}\(int volume\)\s*\{{\s*return setGlobalInt\([^)]+Math\.max\(0, Math\.min\(100, volume\)\)'
+            matches = re.findall(pattern, self.source_code, re.DOTALL)
+            self.assertEqual(len(matches), 1, f"{method} 应该使用音量参数范围限制")
+    
+    def test_isVehicleLocked_implementation(self):
+        """测试车辆锁状态读取实现"""
+        self.assertIn('public boolean isVehicleLocked()', self.source_code)
+        self.assertIn('String value = getGlobalString(KEY_STR_CAR_VEHICLE_LOCK);', self.source_code)
+        self.assertIn('return "1".equals(value);', self.source_code)
+    
+    def test_method_return_types(self):
+        """测试方法返回类型一致性"""
+        # 所有控制方法应该返回boolean
+        boolean_methods = re.findall(r'public boolean (\w+)\(', self.source_code)
+        self.assertGreaterEqual(len(boolean_methods), 35, "应该有至少35个返回boolean的控制方法")
+        # getter方法返回类型
+        self.assertIn('public int getWindLevel()', self.source_code)
+        self.assertIn('public int getCallVolume()', self.source_code)
+        self.assertIn('public int getNaviVolume()', self.source_code)
+        self.assertIn('public int getMusicVolume()', self.source_code)
+        self.assertIn('public int getDriverTemp()', self.source_code)
+        self.assertIn('public int getPassengerTemp()', self.source_code)
+        self.assertIn('public int getAmbientLightColor()', self.source_code)
+    
+    def test_class_structure_comments(self):
+        """测试类结构注释完整性"""
+        self.assertIn('// ==================== 360全景控制 ====================', self.source_code)
+        self.assertIn('// ==================== 灯光控制 ====================', self.source_code)
+        self.assertIn('// ==================== 驾驶模式控制 ====================', self.source_code)
+        self.assertIn('// ==================== 场景模式控制 ====================', self.source_code)
+        self.assertIn('// ==================== 语音控制 ====================', self.source_code)
+        self.assertIn('// ==================== 空调控制 ====================', self.source_code)
+        self.assertIn('// ==================== 系统设置控制 ====================', self.source_code)
+        self.assertIn('// ==================== 方控按键模拟 ====================', self.source_code)
+        self.assertIn('// ==================== Settings.Global 读写 ====================', self.source_code)
+        self.assertIn('// ==================== 360全景超速限制 ====================', self.source_code)
+        self.assertIn('// ==================== 行驶中视频播放 ====================', self.source_code)
+        self.assertIn('// ==================== 音量控制 ====================', self.source_code)
+        self.assertIn('// ==================== 空调温度控制 ====================', self.source_code)
+        self.assertIn('// ==================== 氛围灯控制 ====================', self.source_code)
+        self.assertIn('// ==================== 副屏控制 ====================', self.source_code)
+        self.assertIn('// ==================== 语音播报控制 ====================', self.source_code)
+        self.assertIn('// ==================== 车辆锁状态读取 ====================', self.source_code)
+        self.assertIn('// ==================== 屏幕状态读取 ====================', self.source_code)
+    
+    def test_exception_handling_coverage(self):
+        """测试异常处理覆盖率"""
+        # 统计有try-catch的方法
+        try_pattern = r'public \w+ \w+\([^)]*\)\s*\{\s*try\s*\{'
+        methods_with_try = re.findall(try_pattern, self.source_code, re.DOTALL)
+        self.assertGreaterEqual(len(methods_with_try), 15, "应该有至少15个方法包含异常处理")
+    
     def test_method_return_value_consistency(self):
         """测试boolean方法返回值一致性"""
         # 所有boolean方法都应该有明确的返回true/false逻辑
