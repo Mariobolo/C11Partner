@@ -474,61 +474,48 @@ public class AppBridge extends BaseBridge {
         }
     }
     
-    // ==================== 快速启动应用相关 ====================
+    // ==================== 应用图标缓存相关 ====================
+    
+    // 应用图标Base64缓存
+    private final Map<String, String> appIconCache = new java.util.concurrent.ConcurrentHashMap<>();
+    private final Map<String, Long> cacheTimestamps = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final long CACHE_EXPIRATION_TIME = 5 * 60 * 1000; // 5分钟缓存过期时间
     
     /**
-     * 获取快速启动应用列表
-     * @return JSON格式的应用列表
+     * 清理过期的应用图标缓存
      */
-    public String getQuickAppList() {
-        try {
-            List<Map<String, Object>> quickApps = quickAppDbHelper.getAllQuickApps();
-            JSONArray jsonArray = new JSONArray();
-            for (Map<String, Object> app : quickApps) {
-                JSONObject jsonObj = new JSONObject();
-                jsonObj.put("id", app.get("id"));
-                jsonObj.put("name", app.get("name"));
-                jsonObj.put("package_name", app.get("package_name"));
-                jsonObj.put("icon", app.get("icon"));
-                jsonObj.put("order", app.get("order"));
-                jsonArray.put(jsonObj);
+    private void clearAppIconCache() {
+        long currentTime = System.currentTimeMillis();
+        java.util.Iterator<Map.Entry<String, Long>> iterator = cacheTimestamps.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Long> entry = iterator.next();
+            if (currentTime - entry.getValue() > CACHE_EXPIRATION_TIME) {
+                iterator.remove();
+                appIconCache.remove(entry.getKey());
             }
-            return jsonArray.toString();
-        } catch (Exception e) {
-            Log.e(TAG, "获取快速启动应用列表失败", e);
-            return "[]";
         }
     }
     
     /**
-     * 添加到快速启动应用
-     * @param name 应用名称
-     * @param packageName 包名
-     * @param icon 图标Base64
-     * @return 是否成功
+     * 缓存应用图标Base64数据
+     * @param packageName 应用包名
+     * @param iconBase64 图标Base64数据
      */
-    public boolean addQuickApp(String name, String packageName, String icon) {
-        try {
-            long result = quickAppDbHelper.addQuickApp(name, packageName, icon);
-            return result != -1;
-        } catch (Exception e) {
-            Log.e(TAG, "添加快速启动应用失败", e);
-            return false;
-        }
+    private void cacheAppIconBase64(String packageName, String iconBase64) {
+        appIconCache.put(packageName, iconBase64);
+        cacheTimestamps.put(packageName, System.currentTimeMillis());
     }
     
     /**
-     * 从快速启动应用中移除
-     * @param id 应用ID
-     * @return 是否成功
+     * 获取缓存的应用图标Base64数据
+     * @param packageName 应用包名
+     * @return 图标Base64数据，如果缓存不存在或过期则返回null
      */
-    public boolean removeQuickApp(int id) {
-        try {
-            int result = quickAppDbHelper.deleteQuickApp(id);
-            return result > 0;
-        } catch (Exception e) {
-            Log.e(TAG, "移除快速启动应用失败", e);
-            return false;
+    private String getCachedAppIconBase64(String packageName) {
+        Long timestamp = cacheTimestamps.get(packageName);
+        if (timestamp != null && (System.currentTimeMillis() - timestamp) < CACHE_EXPIRATION_TIME) {
+            return appIconCache.get(packageName);
         }
+        return null;
     }
 }

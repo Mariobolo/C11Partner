@@ -894,4 +894,179 @@ public class WallpaperBridge extends BaseBridge {
         Log.d(TAG, "选择本地壁纸文件夹（预留接口）");
         // TODO: 调用系统文件夹选择器
     }
+    
+    // ==================== 私有辅助方法 ====================
+    
+    /**
+     * 获取本地随机壁纸
+     * @return 壁纸文件路径，如果没有壁纸则返回null
+     */
+    private String getRandomLocalWallpaper() {
+        try {
+            // 获取壁纸设置
+            Map<String, Object> settings = wallpaperSettingsDbHelper.getAllSettings();
+            boolean isRandomMode = Boolean.TRUE.equals(settings.get("random_mode"));
+            boolean isSpecifiedMode = Boolean.TRUE.equals(settings.get("specified_mode"));
+
+            // 如果启用了随机模式，读取SD卡下fstart目录下除了00文件夹下的图片
+            if (isRandomMode) {
+                return getRandomWallpaperFromFstartExcept00();
+            }
+
+            // 如果启用了指定模式，读取SD卡下fstart目录下00文件夹下的图片
+            if (isSpecifiedMode) {
+                return getRandomWallpaperFromFstart00();
+            }
+
+            // 如果都没有启用，使用默认逻辑
+            // 获取已启用的分类
+            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
+
+            // 过滤出已启用的分类
+            List<Map<String, Object>> filteredCategories = new ArrayList<>();
+            for (Map<String, Object> category : enabledCategories) {
+                if (Boolean.TRUE.equals(category.get("enabled"))) {
+                    filteredCategories.add(category);
+                }
+            }
+
+            // 如果没有启用的分类，返回null
+            if (filteredCategories.isEmpty()) {
+                return null;
+            }
+
+            // 随机选择一个分类
+            Random random = new Random();
+            Map<String, Object> selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
+
+            // 获取分类ID
+            String categoryId = (String) selectedCategory.get("id");
+
+            // 从本地获取该分类的随机壁纸
+            return WallpaperDownloadUtils.getRandomLocalWallpaper(mContext, categoryId);
+        } catch (Exception e) {
+            Log.e(TAG, "获取本地随机壁纸时出错", e);
+            return null;
+        }
+    }
+    
+    /**
+     * 获取在线随机壁纸
+     * @return 壁纸URL或本地文件路径
+     */
+    private String getRandomOnlineWallpaper() {
+        try {
+            // 获取已启用的分类
+            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
+            List<Map<String, Object>> filteredCategories = new ArrayList<>();
+
+            // 过滤出已启用的分类
+            for (Map<String, Object> category : enabledCategories) {
+                if (Boolean.TRUE.equals(category.get("enabled"))) {
+                    filteredCategories.add(category);
+                }
+            }
+
+            // 如果没有启用的分类，返回空字符串
+            if (filteredCategories.isEmpty()) {
+                return "";
+            }
+
+            // 随机选择一个分类
+            Random random = new Random();
+            Map<String, Object> selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
+
+            // 获取分类ID和数量
+            String categoryId = (String) selectedCategory.get("id");
+            int count = (int) selectedCategory.get("count");
+
+            // 随机生成起始位置
+            int start = random.nextInt(count) + 1;
+
+            // 调用工具类获取壁纸URL
+            String wallpaperUrl = getRandomWallpaperUrl(categoryId, start);
+
+            // 如果获取到URL，下载并保存壁纸
+            if (wallpaperUrl != null && !wallpaperUrl.isEmpty()) {
+                // 先尝试下载壁纸并保存到本地
+                String savedPath = WallpaperDownloadUtils.downloadAndSaveWallpaper(
+                        mContext, wallpaperUrl, categoryId);
+
+                if (savedPath != null) {
+                    Log.d(TAG, "壁纸已保存到: " + savedPath);
+                    // 返回本地文件路径而不是网络URL
+                    return "file://" + savedPath;
+                }
+            }
+
+            return wallpaperUrl;
+        } catch (Exception e) {
+            Log.e(TAG, "获取在线随机壁纸时出错", e);
+            return "";
+        }
+    }
+    
+    /**
+     * 获取在线随机壁纸的Base64编码数据
+     * @return Base64编码的图片数据
+     */
+    private String getRandomOnlineWallpaperBase64() {
+        try {
+            // 获取已启用的分类
+            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
+            List<Map<String, Object>> filteredCategories = new ArrayList<>();
+
+            // 过滤出已启用的分类
+            for (Map<String, Object> category : enabledCategories) {
+                if (Boolean.TRUE.equals(category.get("enabled"))) {
+                    filteredCategories.add(category);
+                }
+            }
+
+            // 如果没有启用的分类，返回空字符串
+            if (filteredCategories.isEmpty()) {
+                return "";
+            }
+
+            // 随机选择一个分类
+            Random random = new Random();
+            Map<String, Object> selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
+
+            // 获取分类ID和数量
+            String categoryId = (String) selectedCategory.get("id");
+            int count = (int) selectedCategory.get("count");
+
+            // 随机生成起始位置
+            int start = random.nextInt(count) + 1;
+
+            // 调用工具类获取壁纸URL
+            String wallpaperUrl = getRandomWallpaperUrl(categoryId, start);
+
+            // 如果获取到URL，下载并转换为Base64
+            if (wallpaperUrl != null && !wallpaperUrl.isEmpty()) {
+                // 下载壁纸并转换为Base64
+                return WallpaperDownloadUtils.downloadAndEncodeToBase64(wallpaperUrl);
+            }
+
+            return "";
+        } catch (Exception e) {
+            Log.e(TAG, "获取在线随机壁纸Base64时出错", e);
+            return "";
+        }
+    }
+    
+    /**
+     * 获取随机壁纸URL
+     * @param categoryId 分类ID
+     * @param start 起始位置
+     * @return 壁纸URL
+     */
+    private String getRandomWallpaperUrl(String categoryId, int start) {
+        try {
+            return WallpaperCategoryApiUtils.fetchWallpaperUrl(categoryId, start);
+        } catch (Exception e) {
+            Log.e(TAG, "获取随机壁纸URL时出错", e);
+            return "";
+        }
+    }
 }
