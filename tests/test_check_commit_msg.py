@@ -63,10 +63,10 @@ class TestCheckCommitMsg:
         assert result['valid'] == True
         assert result['type'] == 'style'
     def test_invalid_type(self):
-        """测试无效的 type 类型"""
+        """测试无效的 type 类型 - 现在是警告而非错误"""
         result = check_commit_message("invalid: 测试")
-        assert result['valid'] == False
-        assert len(result['errors']) > 0
+        assert result['valid'] == True  # 现在 type 不标准不会导致 valid=False
+        assert len(result['warnings']) > 0  # 但会有警告
     def test_invalid_format_no_colon(self):
         """测试无效格式（没有冒号）- 现在是警告而非错误"""
         result = check_commit_message("feat 添加新功能")

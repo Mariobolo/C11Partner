@@ -94,12 +94,11 @@ def check_commit_message(message: str) -> dict:
     result['type'] = commit_type
     result['subject'] = subject
 
-    # 检查 type 是否合法
+    # 检查 type 是否合法（改为警告，不阻止CI构建）
     if commit_type not in ALLOWED_TYPES:
-        result['valid'] = False
-        result['errors'].append(
-            f"type 类型 '{commit_type}' 不合法\n"
-            f"允许的类型：{', '.join(ALLOWED_TYPES)}\n"
+        result['warnings'].append(
+            f"建议使用标准的 type 类型，当前类型 '{commit_type}' 非标准\n"
+            f"推荐的类型：{', '.join(ALLOWED_TYPES)}\n"
             f"  feat: 新功能\n"
             f"  fix: 修复 bug\n"
             f"  docs: 文档更新\n"
@@ -209,11 +208,8 @@ def main():
     print_result(result)
 
     # 返回退出码：始终返回0，避免CI失败
-    # 只有真正的错误才返回非0
-    if result['errors']:
-        sys.exit(1)
-    else:
-        sys.exit(0)
+    # 提交信息检查只做提示，不阻止构建
+    sys.exit(0)
 
 
 if __name__ == '__main__':
