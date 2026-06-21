@@ -406,7 +406,53 @@ chore: 构建/工具链变动
 
 ---
 ## 🤖 夜间自动推进记录（2026-06-22）
-### 本次完成工作（第七轮 - 测试覆盖率大幅提升）
+### 本次完成工作（第九轮 - 编译错误修复 + 测试覆盖率提升）
+#### ✅ 1. GitHub Actions编译错误修复（最高优先级）
+**问题发现**: GitHub Actions最新构建（ID: 27911090308）失败，共6个编译错误：
+- **WebViewBridge.java第45行**: 缺少MainActivity和Context的import语句
+- **AdbBridge.java第298、307、316、324行**: logE方法调用参数不匹配（需要3个参数：String, String, Exception，但只传了2个）
+
+**修复内容**:
+1. **WebViewBridge.java修复**:
+   - 添加: `import android.content.Context;`
+   - 添加: `import com.c11partner.desktop.MainActivity;`
+
+2. **AdbBridge.java修复**:
+   - 第298行: `logE(TAG, "READ_LOGS权限授权失败");` → `logE(TAG, "READ_LOGS权限授权失败", null);`
+   - 第307行: `logE(TAG, "DUMP权限授权失败");` → `logE(TAG, "DUMP权限授权失败", null);`
+   - 第316行: `logE(TAG, "WRITE_SECURE_SETTINGS权限授权失败");` → `logE(TAG, "WRITE_SECURE_SETTINGS权限授权失败", null);`
+   - 第324行: `logE(TAG, "部分权限授权失败");` → `logE(TAG, "部分权限授权失败", null);`
+
+#### ✅ 2. 测试覆盖率大幅提升
+**CarControlManager测试增强**:
+- 新增10个测试用例，从57个增加到67个
+- 测试总数: 241个测试全部通过 ✓
+- 运行时间: 6.54秒
+
+**新增测试用例**:
+1. `test_broadcast_flag_consistency` - 测试广播Intent标志一致性
+2. `test_all_scene_modes_have_logging` - 测试所有场景模式都有日志记录
+3. `test_getter_method_consistency` - 测试所有getter方法的一致性
+4. `test_setter_method_consistency` - 测试所有setter方法的一致性
+5. `test_private_constructor` - 测试私有构造函数实现单例模式
+6. `test_synchronized_getinstance` - 测试getInstance方法使用synchronized保证线程安全
+7. `test_all_intent_actions_use_constants` - 测试所有Intent Action都使用常量而不是硬编码
+8. `test_exception_logging_consistency` - 测试异常日志记录一致性
+9. `test_boolean_return_pattern` - 测试boolean返回方法的模式一致性
+10. `test_method_javadoc_coverage_enhanced` - 增强版Javadoc覆盖率测试
+
+#### ✅ 3. 代码索引更新
+- 输出文件: docs/CODE_INDEX.md
+- 文档行数: 1028行
+- 总计: 523个函数/方法
+
+#### ✅ 4. 代码提交
+- 提交ID: be88ca6
+- 提交信息: "修复编译错误: WebViewBridge缺失import, AdbBridge logE参数不匹配; 增强CarControlManager测试覆盖率"
+- 已推送到GitHub主分支
+
+---
+### 上一轮完成工作（第八轮）
 #### ✅ 1. GitHub Actions编译状态检查
 - 最新构建 #156 状态：**success（成功）**
 - 最近两次构建均成功，无需修复
