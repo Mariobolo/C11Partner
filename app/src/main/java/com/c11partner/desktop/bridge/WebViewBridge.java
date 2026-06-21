@@ -1,7 +1,9 @@
 package com.c11partner.desktop.bridge;
+
 import android.content.Context;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.database.AppDatabaseHelper;
 import com.c11partner.desktop.database.ComponentConfigDatabaseHelper;
@@ -10,8 +12,11 @@ import com.c11partner.desktop.database.QuickAppDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
 import com.c11partner.desktop.service.MediaSessionService;
+
 import org.json.JSONObject;
+
 import java.util.Map;
+
 /**
  * WebView与原生代码交互的桥梁类 - 主入口
  * 
@@ -21,9 +26,9 @@ import java.util.Map;
  * 3. 可维护：代码精简，便于扩展和维护
  * 
  * 功能模块：
+ * - CarControlBridge: 车控功能相关（50+方法）
  * - AppBridge: 应用管理相关
  * - WallpaperBridge: 壁纸管理相关
- * - CarControlBridge: 车控功能相关
  * - MusicBridge: 音乐功能相关
  * - SystemBridge: 系统设置相关
  * - AdbBridge: ADB授权相关
@@ -32,6 +37,7 @@ public class WebViewBridge {
     private static final String TAG = "WebViewBridge";
     private Context mContext;
     private MainActivity mActivity;
+
     // 数据库帮助类（仅保留核心引用）
     private AppDatabaseHelper dbHelper;
     private QuickAppDatabaseHelper quickAppDbHelper;
@@ -39,6 +45,7 @@ public class WebViewBridge {
     private WallpaperSettingsDatabaseHelper wallpaperSettingsDbHelper;
     private ConfigAppDatabaseHelper configAppDbHelper;
     private ComponentConfigDatabaseHelper componentConfigDbHelper;
+
     // 模块化Bridge - 所有具体功能委托给这些Bridge处理
     private CarControlBridge mCarControlBridge;
     private WallpaperBridge mWallpaperBridge;
@@ -46,6 +53,7 @@ public class WebViewBridge {
     private MusicBridge mMusicBridge;
     private SystemBridge mSystemBridge;
     private AdbBridge mAdbBridge;
+
     /**
      * 构造函数 - 初始化所有Bridge模块
      *
@@ -74,6 +82,7 @@ public class WebViewBridge {
         
         Log.d(TAG, "WebViewBridge初始化完成，所有功能模块已加载");
     }
+
     /**
      * 设置媒体会话服务 - 传递给MusicBridge
      *
@@ -85,6 +94,7 @@ public class WebViewBridge {
             mMusicBridge.setMediaSessionService(service, isBound);
         }
     }
+
     /**
      * 通知前端更新壁纸 - 传递给WallpaperBridge
      */
@@ -99,6 +109,248 @@ public class WebViewBridge {
             }
         });
     }
+
+    // ==================== CarControlBridge 委托方法 ====================
+    
+    // 360全景相关
+    @JavascriptInterface
+    public boolean startCamera360() { return mCarControlBridge.startCamera360(); }
+    
+    @JavascriptInterface
+    public boolean setCameraOverspeedLimit(boolean enabled) { 
+        return mCarControlBridge.setCameraOverspeedLimit(enabled); 
+    }
+    
+    @JavascriptInterface
+    public boolean isCameraOverspeedLimitEnabled() { 
+        return mCarControlBridge.isCameraOverspeedLimitEnabled(); 
+    }
+    
+    // 灯光控制
+    @JavascriptInterface
+    public boolean setLowBeamLight(boolean on) { 
+        return mCarControlBridge.setLowBeamLight(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setRearFogLight(boolean on) { 
+        return mCarControlBridge.setRearFogLight(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setPositionLight(boolean on) { 
+        return mCarControlBridge.setPositionLight(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setPedestrianAlert(boolean on) { 
+        return mCarControlBridge.setPedestrianAlert(on); 
+    }
+    
+    // 驾驶/场景模式
+    @JavascriptInterface
+    public boolean setDriveMode(int mode) { 
+        return mCarControlBridge.setDriveMode(mode); 
+    }
+    
+    @JavascriptInterface
+    public boolean setGuardMode(boolean on) { 
+        return mCarControlBridge.setGuardMode(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setRestMode(boolean on) { 
+        return mCarControlBridge.setRestMode(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setCampingMode(boolean on) { 
+        return mCarControlBridge.setCampingMode(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setPowerSaveMode(boolean on) { 
+        return mCarControlBridge.setPowerSaveMode(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setSentinelMode(boolean on) { 
+        return mCarControlBridge.setSentinelMode(on); 
+    }
+    
+    // 空调控制
+    @JavascriptInterface
+    public boolean setMaxCooling(boolean on) { 
+        return mCarControlBridge.setMaxCooling(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setAcEnabled(boolean enabled) { 
+        return mCarControlBridge.setAcEnabled(enabled); 
+    }
+    
+    @JavascriptInterface
+    public boolean isAcEnabled() { 
+        return mCarControlBridge.isAcEnabled(); 
+    }
+    
+    @JavascriptInterface
+    public boolean setWindLevel(int level) { 
+        return mCarControlBridge.setWindLevel(level); 
+    }
+    
+    @JavascriptInterface
+    public int getWindLevel() { 
+        return mCarControlBridge.getWindLevel(); 
+    }
+    
+    @JavascriptInterface
+    public boolean setDriverTemp(int temp) { 
+        return mCarControlBridge.setDriverTemp(temp); 
+    }
+    
+    @JavascriptInterface
+    public int getDriverTemp() { 
+        return mCarControlBridge.getDriverTemp(); 
+    }
+    
+    @JavascriptInterface
+    public boolean setPassengerTemp(int temp) { 
+        return mCarControlBridge.setPassengerTemp(temp); 
+    }
+    
+    @JavascriptInterface
+    public int getPassengerTemp() { 
+        return mCarControlBridge.getPassengerTemp(); 
+    }
+    
+    // 音量控制
+    @JavascriptInterface
+    public boolean setCallVolume(int volume) { 
+        return mCarControlBridge.setCallVolume(volume); 
+    }
+    
+    @JavascriptInterface
+    public int getCallVolume() { 
+        return mCarControlBridge.getCallVolume(); 
+    }
+    
+    @JavascriptInterface
+    public boolean setNaviVolume(int volume) { 
+        return mCarControlBridge.setNaviVolume(volume); 
+    }
+    
+    @JavascriptInterface
+    public int getNaviVolume() { 
+        return mCarControlBridge.getNaviVolume(); 
+    }
+    
+    @JavascriptInterface
+    public boolean setMusicVolume(int volume) { 
+        return mCarControlBridge.setMusicVolume(volume); 
+    }
+    
+    @JavascriptInterface
+    public int getMusicVolume() { 
+        return mCarControlBridge.getMusicVolume(); 
+    }
+    
+    // 氛围灯控制
+    @JavascriptInterface
+    public boolean setAmbientLightEnabled(boolean enabled) { 
+        return mCarControlBridge.setAmbientLightEnabled(enabled); 
+    }
+    
+    @JavascriptInterface
+    public boolean isAmbientLightEnabled() { 
+        return mCarControlBridge.isAmbientLightEnabled(); 
+    }
+    
+    @JavascriptInterface
+    public boolean setAmbientLightColor(int color) { 
+        return mCarControlBridge.setAmbientLightColor(color); 
+    }
+    
+    @JavascriptInterface
+    public int getAmbientLightColor() { 
+        return mCarControlBridge.getAmbientLightColor(); 
+    }
+    
+    // 系统设置
+    @JavascriptInterface
+    public boolean setNightMode(boolean on) { 
+        return mCarControlBridge.setNightMode(on); 
+    }
+    
+    @JavascriptInterface
+    public boolean setWifiEnabled(boolean enabled) { 
+        return mCarControlBridge.setWifiEnabled(enabled); 
+    }
+    
+    @JavascriptInterface
+    public boolean setBluetoothEnabled(boolean enabled) { 
+        return mCarControlBridge.setBluetoothEnabled(enabled); 
+    }
+    
+    @JavascriptInterface
+    public boolean setVideoWhileDriving(boolean enabled) { 
+        return mCarControlBridge.setVideoWhileDriving(enabled); 
+    }
+    
+    @JavascriptInterface
+    public boolean isVideoWhileDrivingEnabled() { 
+        return mCarControlBridge.isVideoWhileDrivingEnabled(); 
+    }
+    
+    // 副屏控制
+    @JavascriptInterface
+    public boolean setSecondaryScreenEnabled(boolean enabled) { 
+        return mCarControlBridge.setSecondaryScreenEnabled(enabled); 
+    }
+    
+    @JavascriptInterface
+    public boolean isSecondaryScreenEnabled() { 
+        return mCarControlBridge.isSecondaryScreenEnabled(); 
+    }
+    
+    // 语音控制
+    @JavascriptInterface
+    public boolean setSpeechEnabled(boolean enabled) { 
+        return mCarControlBridge.setSpeechEnabled(enabled); 
+    }
+    
+    @JavascriptInterface
+    public boolean isSpeechEnabled() { 
+        return mCarControlBridge.isSpeechEnabled(); 
+    }
+    
+    @JavascriptInterface
+    public boolean sendVoiceCommand(String command) { 
+        return mCarControlBridge.sendVoiceCommand(command); 
+    }
+    
+    // 方控按键
+    @JavascriptInterface
+    public boolean sendPrevTrack() { 
+        return mCarControlBridge.sendPrevTrack(); 
+    }
+    
+    @JavascriptInterface
+    public boolean sendNextTrack() { 
+        return mCarControlBridge.sendNextTrack(); 
+    }
+    
+    // 状态读取
+    @JavascriptInterface
+    public boolean isVehicleLocked() { 
+        return mCarControlBridge.isVehicleLocked(); 
+    }
+    
+    @JavascriptInterface
+    public boolean isScreenOn() { 
+        return mCarControlBridge.isScreenOn(); 
+    }
+
     // ==================== AppBridge 委托方法 ====================
     @JavascriptInterface
     public String getAppList() { return mAppBridge.getAppList(); }
@@ -148,6 +400,7 @@ public class WebViewBridge {
     
     @JavascriptInterface
     public String getConfigApp(String buttonId) { return mAppBridge.getConfigApp(buttonId); }
+
     // ==================== WallpaperBridge 委托方法 ====================
     @JavascriptInterface
     public boolean saveWallpaperCarouselSetting(boolean enabled) {
@@ -224,6 +477,7 @@ public class WebViewBridge {
     
     @JavascriptInterface
     public boolean deleteCurrentWallpaper() { return mWallpaperBridge.deleteCurrentWallpaper(); }
+
     // ==================== MusicBridge 委托方法 ====================
     @JavascriptInterface
     public void startMusicVisualizer() { mMusicBridge.startMusicVisualizer(); }
@@ -270,6 +524,7 @@ public class WebViewBridge {
     public void openNotificationListenerSettings() {
         mMusicBridge.openNotificationListenerSettings();
     }
+
     // ==================== SystemBridge 委托方法 ====================
     @JavascriptInterface
     public boolean isWifiConnected() { return mSystemBridge.isWifiConnected(); }
@@ -304,6 +559,7 @@ public class WebViewBridge {
     
     @JavascriptInterface
     public String getLunarCalendar() { return mSystemBridge.getLunarCalendar(); }
+
     // ==================== AdbBridge 委托方法 ====================
     @JavascriptInterface
     public void triggerUsbDebugAuthorization() { mAdbBridge.triggerUsbDebugAuthorization(); }
@@ -322,6 +578,7 @@ public class WebViewBridge {
     
     @JavascriptInterface
     public void setDefaultDesktopViaAdb() { mAdbBridge.setDefaultDesktopViaAdb(); }
+
     // ==================== 组件配置方法（保留在主Bridge） ====================
     @JavascriptInterface
     public boolean saveComponentConfig(String componentName, boolean isEnabled) {
@@ -364,7 +621,7 @@ public class WebViewBridge {
         }
         return "{}";
     }
-    // ==================== 私有辅助方法 ====================
+
     // ==================== MainActivity 调用的UI更新方法 ====================
     
     /**

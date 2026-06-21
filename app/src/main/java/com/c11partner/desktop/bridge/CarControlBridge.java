@@ -2,6 +2,7 @@ package com.c11partner.desktop.bridge;
 
 import android.content.Context;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.LeapMotorCamera360;
@@ -51,6 +52,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否启动成功
      */
+    @JavascriptInterface
     public boolean startCamera360() {
         try {
             LeapMotorCamera360.startCamera360(mContext, "手动触发");
@@ -68,6 +70,7 @@ public class CarControlBridge extends BaseBridge {
      * @param enabled 是否启用
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setCameraOverspeedLimit(boolean enabled) {
         try {
             return getCarControlManager().setCameraOverspeedLimit(enabled);
@@ -82,6 +85,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否启用
      */
+    @JavascriptInterface
     public boolean isCameraOverspeedLimitEnabled() {
         try {
             return getCarControlManager().isCameraOverspeedLimitEnabled();
@@ -99,6 +103,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setLowBeamLight(boolean on) {
         try {
             return getCarControlManager().setLowBeamLight(on);
@@ -114,6 +119,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setRearFogLight(boolean on) {
         try {
             return getCarControlManager().setRearFogLight(on);
@@ -129,6 +135,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setPositionLight(boolean on) {
         try {
             return getCarControlManager().setPositionLight(on);
@@ -144,6 +151,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setPedestrianAlert(boolean on) {
         try {
             return getCarControlManager().setPedestrianAlert(on);
@@ -161,6 +169,7 @@ public class CarControlBridge extends BaseBridge {
      * @param mode 模式 0=舒适,1=运动,2=自定义,3=极致,4=经济,5=零跑模式
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setDriveMode(int mode) {
         try {
             return getCarControlManager().setDriveMode(mode);
@@ -176,6 +185,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setGuardMode(boolean on) {
         try {
             return getCarControlManager().setGuardMode(on);
@@ -191,6 +201,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setRestMode(boolean on) {
         try {
             return getCarControlManager().setRestMode(on);
@@ -206,6 +217,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setCampingMode(boolean on) {
         try {
             return getCarControlManager().setCampingMode(on);
@@ -221,6 +233,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setPowerSaveMode(boolean on) {
         try {
             return getCarControlManager().setPowerSaveMode(on);
@@ -236,6 +249,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setSentinelMode(boolean on) {
         try {
             return getCarControlManager().setSentinelMode(on);
@@ -253,6 +267,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setMaxCooling(boolean on) {
         try {
             return getCarControlManager().setMaxCooling(on);
@@ -268,6 +283,7 @@ public class CarControlBridge extends BaseBridge {
      * @param enabled 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setAcEnabled(boolean enabled) {
         try {
             return getCarControlManager().setAcEnabled(enabled);
@@ -282,6 +298,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否开启
      */
+    @JavascriptInterface
     public boolean isAcEnabled() {
         try {
             return getCarControlManager().isAcEnabled();
@@ -297,6 +314,7 @@ public class CarControlBridge extends BaseBridge {
      * @param level 风量等级
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setWindLevel(int level) {
         try {
             return getCarControlManager().setWindLevel(level);
@@ -311,6 +329,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 风量等级
      */
+    @JavascriptInterface
     public int getWindLevel() {
         try {
             return getCarControlManager().getWindLevel();
@@ -326,6 +345,7 @@ public class CarControlBridge extends BaseBridge {
      * @param temp 温度
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setDriverTemp(int temp) {
         try {
             return getCarControlManager().setDriverTemp(temp);
@@ -340,6 +360,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 温度
      */
+    @JavascriptInterface
     public int getDriverTemp() {
         try {
             return getCarControlManager().getDriverTemp();
@@ -355,6 +376,7 @@ public class CarControlBridge extends BaseBridge {
      * @param temp 温度
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setPassengerTemp(int temp) {
         try {
             return getCarControlManager().setPassengerTemp(temp);
@@ -369,6 +391,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 温度
      */
+    @JavascriptInterface
     public int getPassengerTemp() {
         try {
             return getCarControlManager().getPassengerTemp();
@@ -386,6 +409,7 @@ public class CarControlBridge extends BaseBridge {
      * @param volume 音量值
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setCallVolume(int volume) {
         try {
             return getCarControlManager().setCallVolume(volume);
@@ -400,6 +424,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 音量值
      */
+    @JavascriptInterface
     public int getCallVolume() {
         try {
             return getCarControlManager().getCallVolume();
@@ -415,6 +440,7 @@ public class CarControlBridge extends BaseBridge {
      * @param volume 音量值
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setNaviVolume(int volume) {
         try {
             return getCarControlManager().setNaviVolume(volume);
@@ -429,6 +455,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 音量值
      */
+    @JavascriptInterface
     public int getNaviVolume() {
         try {
             return getCarControlManager().getNaviVolume();
@@ -444,6 +471,7 @@ public class CarControlBridge extends BaseBridge {
      * @param volume 音量值
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setMusicVolume(int volume) {
         try {
             return getCarControlManager().setMusicVolume(volume);
@@ -458,6 +486,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 音量值
      */
+    @JavascriptInterface
     public int getMusicVolume() {
         try {
             return getCarControlManager().getMusicVolume();
@@ -475,6 +504,7 @@ public class CarControlBridge extends BaseBridge {
      * @param enabled 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setAmbientLightEnabled(boolean enabled) {
         try {
             return getCarControlManager().setAmbientLightEnabled(enabled);
@@ -489,6 +519,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否开启
      */
+    @JavascriptInterface
     public boolean isAmbientLightEnabled() {
         try {
             return getCarControlManager().isAmbientLightEnabled();
@@ -504,6 +535,7 @@ public class CarControlBridge extends BaseBridge {
      * @param color 颜色值
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setAmbientLightColor(int color) {
         try {
             return getCarControlManager().setAmbientLightColor(color);
@@ -518,6 +550,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 颜色值
      */
+    @JavascriptInterface
     public int getAmbientLightColor() {
         try {
             return getCarControlManager().getAmbientLightColor();
@@ -535,6 +568,7 @@ public class CarControlBridge extends BaseBridge {
      * @param on 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setNightMode(boolean on) {
         try {
             return getCarControlManager().setNightMode(on);
@@ -550,6 +584,7 @@ public class CarControlBridge extends BaseBridge {
      * @param enabled 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setWifiEnabled(boolean enabled) {
         try {
             return getCarControlManager().setWifiEnabled(enabled);
@@ -565,6 +600,7 @@ public class CarControlBridge extends BaseBridge {
      * @param enabled 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setBluetoothEnabled(boolean enabled) {
         try {
             return getCarControlManager().setBluetoothEnabled(enabled);
@@ -580,6 +616,7 @@ public class CarControlBridge extends BaseBridge {
      * @param enabled 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setVideoWhileDriving(boolean enabled) {
         try {
             return getCarControlManager().setVideoWhileDriving(enabled);
@@ -594,6 +631,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否开启
      */
+    @JavascriptInterface
     public boolean isVideoWhileDrivingEnabled() {
         try {
             return getCarControlManager().isVideoWhileDrivingEnabled();
@@ -611,6 +649,7 @@ public class CarControlBridge extends BaseBridge {
      * @param enabled 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setSecondaryScreenEnabled(boolean enabled) {
         try {
             return getCarControlManager().setSecondaryScreenEnabled(enabled);
@@ -625,6 +664,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否开启
      */
+    @JavascriptInterface
     public boolean isSecondaryScreenEnabled() {
         try {
             return getCarControlManager().isSecondaryScreenEnabled();
@@ -642,6 +682,7 @@ public class CarControlBridge extends BaseBridge {
      * @param enabled 是否开启
      * @return 是否设置成功
      */
+    @JavascriptInterface
     public boolean setSpeechEnabled(boolean enabled) {
         try {
             return getCarControlManager().setSpeechEnabled(enabled);
@@ -656,6 +697,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否开启
      */
+    @JavascriptInterface
     public boolean isSpeechEnabled() {
         try {
             return getCarControlManager().isSpeechEnabled();
@@ -671,6 +713,7 @@ public class CarControlBridge extends BaseBridge {
      * @param command 指令内容
      * @return 是否发送成功
      */
+    @JavascriptInterface
     public boolean sendVoiceCommand(String command) {
         try {
             return getCarControlManager().sendVoiceCommand(command);
@@ -687,6 +730,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否发送成功
      */
+    @JavascriptInterface
     public boolean sendPrevTrack() {
         try {
             return getCarControlManager().sendPrevTrack();
@@ -701,6 +745,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否发送成功
      */
+    @JavascriptInterface
     public boolean sendNextTrack() {
         try {
             return getCarControlManager().sendNextTrack();
@@ -717,6 +762,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否上锁
      */
+    @JavascriptInterface
     public boolean isVehicleLocked() {
         try {
             return getCarControlManager().isVehicleLocked();
@@ -731,6 +777,7 @@ public class CarControlBridge extends BaseBridge {
      * 
      * @return 是否开启
      */
+    @JavascriptInterface
     public boolean isScreenOn() {
         try {
             return getCarControlManager().isScreenOn();
