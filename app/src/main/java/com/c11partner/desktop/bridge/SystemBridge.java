@@ -4,7 +4,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Build;
-import android.util.Log;
+
 import android.webkit.JavascriptInterface;
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.database.ComponentConfigDatabaseHelper;
@@ -80,7 +80,7 @@ public class SystemBridge extends BaseBridge {
     public boolean isBluetoothConnected() {
         try {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                Log.d(TAG, "Android版本过低，无法准确检测蓝牙连接状态");
+                logD("Android版本过低，无法准确检测蓝牙连接状态");
                 return false;
             }
             
@@ -105,11 +105,11 @@ public class SystemBridge extends BaseBridge {
                 try {
                     List<android.bluetooth.BluetoothDevice> connectedDevices = bluetoothManager.getConnectedDevices(profile);
                     if (connectedDevices != null && !connectedDevices.isEmpty()) {
-                        Log.d(TAG, "检测到已连接的蓝牙设备，配置文件: " + profile);
+                        logD("检测到已连接的蓝牙设备，配置文件: " + profile);
                         return true;
                     }
                 } catch (Exception e) {
-                    Log.d(TAG, "检查配置文件 " + profile + " 时出错: " + e.getMessage());
+                    logD("检查配置文件 " + profile + " 时出错: " + e.getMessage());
                 }
             }
             
@@ -117,11 +117,11 @@ public class SystemBridge extends BaseBridge {
             try {
                 List<android.bluetooth.BluetoothDevice> gattDevices = bluetoothManager.getConnectedDevices(android.bluetooth.BluetoothProfile.GATT);
                 if (gattDevices != null && !gattDevices.isEmpty()) {
-                    Log.d(TAG, "检测到已连接的GATT蓝牙设备");
+                    logD("检测到已连接的GATT蓝牙设备");
                     return true;
                 }
             } catch (Exception e) {
-                Log.d(TAG, "检查GATT配置文件时出错: " + e.getMessage());
+                logD("检查GATT配置文件时出错: " + e.getMessage());
             }
             
             // 通过反射检查已配对设备的连接状态
@@ -132,7 +132,7 @@ public class SystemBridge extends BaseBridge {
                         Method isConnectedMethod = android.bluetooth.BluetoothDevice.class.getMethod("isConnected");
                         boolean isConnected = (boolean) isConnectedMethod.invoke(device);
                         if (isConnected) {
-                            Log.d(TAG, "检测到已连接的配对设备: " + device.getName());
+                            logD("检测到已连接的配对设备: " + device.getName());
                             return true;
                         }
                     } catch (Exception e) {
@@ -141,10 +141,10 @@ public class SystemBridge extends BaseBridge {
                 }
             }
             
-            Log.d(TAG, "没有检测到已连接的蓝牙设备");
+            logD("没有检测到已连接的蓝牙设备");
             return false;
         } catch (Exception e) {
-            Log.e(TAG, "检查蓝牙连接状态时出错", e);
+            logE("检查蓝牙连接状态时出错", e);
             return false;
         }
     }
@@ -161,7 +161,7 @@ public class SystemBridge extends BaseBridge {
             wallpaperSettingsDbHelper.updateSystemLauncher(enabled);
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "保存原桌面自启设置时出错", e);
+            logE("保存原桌面自启设置时出错", e);
             return false;
         }
     }
@@ -173,38 +173,29 @@ public class SystemBridge extends BaseBridge {
      */
     @JavascriptInterface
     public void saveSystemLauncherSettingAsync(final boolean enabled, final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    wallpaperSettingsDbHelper.updateSystemLauncher(enabled);
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleSaveSystemLauncherSettingCallback('%s', %s)",
-                                        callbackId, "true");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "保存原桌面自启设置时出错", e);
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleSaveSystemLauncherSettingCallback('%s', %s)",
-                                        callbackId, "false");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                }
+        new Thread(() -> {
+            try {
+                wallpaperSettingsDbHelper.updateSystemLauncher(enabled);
+                // 在UI线程中执行JavaScript回调
+                mActivity.runOnUiThread(() -> {
+                    if (mActivity.webView != null) {
+                        String javascript = String.format(
+                                "javascript:window.handleSaveSystemLauncherSettingCallback('%s', %s)",
+                                callbackId, "true");
+                        mActivity.webView.loadUrl(javascript);
+                    }
+                });
+            } catch (Exception e) {
+                logE("保存原桌面自启设置时出错", e);
+                // 在UI线程中执行JavaScript回调
+                mActivity.runOnUiThread(() -> {
+                    if (mActivity.webView != null) {
+                        String javascript = String.format(
+                                "javascript:window.handleSaveSystemLauncherSettingCallback('%s', %s)",
+                                callbackId, "false");
+                        mActivity.webView.loadUrl(javascript);
+                    }
+                });
             }
         }).start();
     }
@@ -220,7 +211,7 @@ public class SystemBridge extends BaseBridge {
             wallpaperSettingsDbHelper.updateBootGreeting(enabled);
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "保存开机问候语设置时出错", e);
+            logE("保存开机问候语设置时出错", e);
             return false;
         }
     }
@@ -236,7 +227,7 @@ public class SystemBridge extends BaseBridge {
             wallpaperSettingsDbHelper.updateRandomMode(enabled);
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "保存随机模式设置时出错", e);
+            logE("保存随机模式设置时出错", e);
             return false;
         }
     }
@@ -252,7 +243,7 @@ public class SystemBridge extends BaseBridge {
             wallpaperSettingsDbHelper.updateSpecifiedMode(enabled);
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "保存指定模式设置时出错", e);
+            logE("保存指定模式设置时出错", e);
             return false;
         }
     }
@@ -267,7 +258,7 @@ public class SystemBridge extends BaseBridge {
         try {
             return LunarCalendarUtils.lunarCalendar();
         } catch (Exception e) {
-            Log.e(TAG, "获取农历日期时出错", e);
+            logE("获取农历日期时出错", e);
             return "农历日期获取失败";
         }
     }
@@ -288,7 +279,7 @@ public class SystemBridge extends BaseBridge {
                 return result != -1;
             }
         } catch (Exception e) {
-            Log.e(TAG, "保存组件配置时出错", e);
+            logE("保存组件配置时出错", e);
         }
         return false;
     }
@@ -306,7 +297,7 @@ public class SystemBridge extends BaseBridge {
                 return componentConfigDbHelper.isComponentEnabled(componentName);
             }
         } catch (Exception e) {
-            Log.e(TAG, "获取组件配置时出错", e);
+            logE("获取组件配置时出错", e);
         }
         return true;
     }
@@ -328,7 +319,7 @@ public class SystemBridge extends BaseBridge {
                 return configObj.toString();
             }
         } catch (Exception e) {
-            Log.e(TAG, "获取所有组件配置时出错", e);
+            logE("获取所有组件配置时出错", e);
         }
         return "{}";
     }

@@ -2,7 +2,7 @@ package com.c11partner.desktop.bridge;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.KeyEvent;
 import android.webkit.JavascriptInterface;
 import com.c11partner.desktop.MainActivity;
@@ -54,18 +54,22 @@ public class MusicBridge extends BaseBridge {
      */
     @JavascriptInterface
     public void startMusicVisualizer() {
-        Log.d(TAG, "收到启动音乐可视化的JavaScript调用");
+        logD("收到启动音乐可视化的JavaScript调用");
+        if (!isActivityValid()) {
+            logD("Activity无效，无法启动音乐可视化");
+            return;
+        }
         mActivity.runOnUiThread(() -> {
             if (mActivity.musicVisualizer != null) {
                 try {
-                    Log.d(TAG, "正在启动音乐可视化");
+                    logD("正在启动音乐可视化");
                     mActivity.musicVisualizer.startVisualizer();
-                    Log.d(TAG, "音乐可视化启动完成");
+                    logD("音乐可视化启动完成");
                 } catch (Exception e) {
-                    Log.e(TAG, "启动音乐可视化时出错", e);
+                    logE("启动音乐可视化时出错", e);
                 }
             } else {
-                Log.d(TAG, "musicVisualizer对象为空");
+                logD("musicVisualizer对象为空");
             }
         });
     }
@@ -74,14 +78,18 @@ public class MusicBridge extends BaseBridge {
      */
     @JavascriptInterface
     public void stopMusicVisualizer() {
-        Log.d(TAG, "收到停止音乐可视化的JavaScript调用");
+        logD("收到停止音乐可视化的JavaScript调用");
+        if (!isActivityValid()) {
+            logD("Activity无效，无法停止音乐可视化");
+            return;
+        }
         mActivity.runOnUiThread(() -> {
             if (mActivity.musicVisualizer != null) {
                 try {
                     mActivity.musicVisualizer.stopVisualizer();
-                    Log.d(TAG, "音乐可视化已停止");
+                    logD("音乐可视化已停止");
                 } catch (Exception e) {
-                    Log.e(TAG, "停止音乐可视化时出错", e);
+                    logE("停止音乐可视化时出错", e);
                 }
             }
         });
@@ -138,7 +146,7 @@ public class MusicBridge extends BaseBridge {
                 return progressInfo.toString();
             }
         } catch (Exception e) {
-            Log.e(TAG, "获取音乐进度信息失败", e);
+            logE("获取音乐进度信息失败", e);
         }
         try {
             JSONObject defaultInfo = new JSONObject();
@@ -172,7 +180,7 @@ public class MusicBridge extends BaseBridge {
             
             return musicInfo.toString();
         } catch (Exception e) {
-            Log.e(TAG, "获取系统音乐信息失败", e);
+            logE("获取系统音乐信息失败", e);
             try {
                 JSONObject defaultInfo = new JSONObject();
                 defaultInfo.put("title", "");
@@ -198,7 +206,7 @@ public class MusicBridge extends BaseBridge {
             // 注意：零跑C11方控可能没有播放暂停键，尝试使用媒体按钮广播
             sendMediaButton(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
         } catch (Exception e) {
-            Log.e(TAG, "播放/暂停音乐失败", e);
+            logE("播放/暂停音乐失败", e);
         }
     }
     /**
@@ -210,7 +218,7 @@ public class MusicBridge extends BaseBridge {
             CarControlManager carControl = CarControlManager.getInstance(mContext);
             carControl.sendNextTrack();
         } catch (Exception e) {
-            Log.e(TAG, "下一首失败", e);
+            logE("下一首失败", e);
             // 降级方案：发送媒体按钮广播
             sendMediaButton(KeyEvent.KEYCODE_MEDIA_NEXT);
         }
@@ -224,7 +232,7 @@ public class MusicBridge extends BaseBridge {
             CarControlManager carControl = CarControlManager.getInstance(mContext);
             carControl.sendPrevTrack();
         } catch (Exception e) {
-            Log.e(TAG, "上一首失败", e);
+            logE("上一首失败", e);
             // 降级方案：发送媒体按钮广播
             sendMediaButton(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
         }
@@ -236,7 +244,7 @@ public class MusicBridge extends BaseBridge {
     @Deprecated
     @JavascriptInterface
     public void playPause() {
-        Log.d(TAG, "playPause()已废弃，建议使用playPauseMusic()");
+        logD("playPause()已废弃，建议使用playPauseMusic()");
         playPauseMusic();
     }
     /**
@@ -246,7 +254,7 @@ public class MusicBridge extends BaseBridge {
     @Deprecated
     @JavascriptInterface
     public void playNext() {
-        Log.d(TAG, "playNext()已废弃，建议使用nextMusic()");
+        logD("playNext()已废弃，建议使用nextMusic()");
         nextMusic();
     }
     /**
@@ -256,7 +264,7 @@ public class MusicBridge extends BaseBridge {
     @Deprecated
     @JavascriptInterface
     public void playPrevious() {
-        Log.d(TAG, "playPrevious()已废弃，建议使用prevMusic()");
+        logD("playPrevious()已废弃，建议使用prevMusic()");
         prevMusic();
     }
     /**
@@ -281,9 +289,9 @@ public class MusicBridge extends BaseBridge {
             intentUp.putExtras(extrasUp);
             mContext.sendBroadcast(intentUp);
             
-            Log.d(TAG, "发送媒体按钮: " + keyCode);
+            logD("发送媒体按钮: " + keyCode);
         } catch (Exception e) {
-            Log.e(TAG, "发送媒体按钮失败", e);
+            logE("发送媒体按钮失败", e);
         }
     }
     // ==================== 通知监听权限相关方法 ====================
@@ -304,7 +312,7 @@ public class MusicBridge extends BaseBridge {
             }
             return false;
         } catch (Exception e) {
-            Log.e(TAG, "检查通知监听权限失败", e);
+            logE("检查通知监听权限失败", e);
             return false;
         }
     }
@@ -318,7 +326,7 @@ public class MusicBridge extends BaseBridge {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
         } catch (Exception e) {
-            Log.e(TAG, "打开通知监听设置失败", e);
+            logE("打开通知监听设置失败", e);
         }
     }
 }
