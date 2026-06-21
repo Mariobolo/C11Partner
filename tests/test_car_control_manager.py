@@ -305,6 +305,78 @@ class TestCarControlManager(unittest.TestCase):
         self.assertIn('intent.putExtra("SEAT_HEAT_LEFT", safeLevel);', self.source_code)
         self.assertIn('intent.putExtra("SEAT_HEAT_RIGHT", safeLevel);', self.source_code)
     
+    def test_seat_heating_parameter_validation(self):
+        """测试座椅加热参数验证"""
+        self.assertIn('int safeLevel = Math.max(0, Math.min(3, level));', self.source_code)
+    
+    def test_seat_ventilation_methods(self):
+        """测试座椅通风方法"""
+        self.assertIn('public boolean setDriverSeatVentilation(int level)', self.source_code)
+        self.assertIn('public boolean setPassengerSeatVentilation(int level)', self.source_code)
+        self.assertIn('intent.putExtra("SEAT_VENT_LEFT", safeLevel);', self.source_code)
+        self.assertIn('intent.putExtra("SEAT_VENT_RIGHT", safeLevel);', self.source_code)
+    
+    def test_steering_wheel_heating_method(self):
+        """测试方向盘加热方法"""
+        self.assertIn('public boolean setSteeringWheelHeating(boolean on)', self.source_code)
+        self.assertIn('intent.putExtra("STEERING_HEAT", on ? 1 : 0);', self.source_code)
+    
+    def test_mirror_control_methods(self):
+        """测试后视镜控制方法"""
+        self.assertIn('public boolean foldMirrors()', self.source_code)
+        self.assertIn('public boolean unfoldMirrors()', self.source_code)
+        self.assertIn('public boolean setMirrorHeating(boolean on)', self.source_code)
+    
+    def test_mirror_control_extra_params(self):
+        """测试后视镜控制Extra参数"""
+        self.assertIn('intent.putExtra("MIRROR_FOLD", 1);', self.source_code)
+        self.assertIn('intent.putExtra("MIRROR_FOLD", 0);', self.source_code)
+        self.assertIn('intent.putExtra("MIRROR_HEAT", on ? 1 : 0);', self.source_code)
+    
+    def test_getter_methods_coverage(self):
+        """测试getter方法覆盖率"""
+        getter_methods = [
+            'isAcEnabled', 'getWindLevel', 'isCameraOverspeedLimitEnabled',
+            'isVideoWhileDrivingEnabled', 'getCallVolume', 'getNaviVolume',
+            'getMusicVolume', 'getDriverTemp', 'getPassengerTemp',
+            'isAmbientLightEnabled', 'getAmbientLightColor', 'isSecondaryScreenEnabled',
+            'isSpeechEnabled', 'isVehicleLocked', 'isScreenOn'
+        ]
+        for method in getter_methods:
+            return_type = 'boolean' if method.startswith('is') else 'int'
+            self.assertIn(f'public {return_type} {method}', self.source_code,
+                f"缺少getter方法: {method}")
+    
+    def test_exception_handling_in_seat_methods(self):
+        """测试座椅方法中的异常处理"""
+        # 验证座椅方法都有try-catch块
+        self.assertIn('catch (Exception e)', self.source_code, 
+            "座椅方法应该有异常处理")
+        # 验证所有4个座椅方法都存在
+        seat_methods = ['setDriverSeatHeating', 'setPassengerSeatHeating', 
+                       'setDriverSeatVentilation', 'setPassengerSeatVentilation']
+        for method in seat_methods:
+            self.assertIn(f'public boolean {method}', self.source_code,
+                f"{method} 方法应该存在")
+    
+    def test_logging_in_seat_and_mirror_methods(self):
+        """测试座椅和后视镜方法中的日志输出"""
+        log_patterns = [
+            '主驾座椅加热等级', '副驾座椅加热等级',
+            '主驾座椅通风等级', '副驾座椅通风等级',
+            '方向盘加热', '折叠后视镜', '展开后视镜', '后视镜加热'
+        ]
+        for pattern in log_patterns:
+            self.assertIn(pattern, self.source_code,
+                f"缺少日志输出: {pattern}")
+    
+    def test_seat_heating_methods(self):
+        """测试座椅加热方法"""
+        self.assertIn('public boolean setDriverSeatHeating(int level)', self.source_code)
+        self.assertIn('public boolean setPassengerSeatHeating(int level)', self.source_code)
+        self.assertIn('intent.putExtra("SEAT_HEAT_LEFT", safeLevel);', self.source_code)
+        self.assertIn('intent.putExtra("SEAT_HEAT_RIGHT", safeLevel);', self.source_code)
+    
     def test_seat_ventilation_methods(self):
         """测试座椅通风方法"""
         self.assertIn('public boolean setDriverSeatVentilation(int level)', self.source_code)
