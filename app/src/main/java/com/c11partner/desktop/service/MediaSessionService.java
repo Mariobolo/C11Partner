@@ -988,18 +988,69 @@ public class MediaSessionService extends Service {
      * 循环模式常量（兼容低版本）
      */
     private static final int REPEAT_MODE_INVALID = -1;
+    // 兼容常量定义（API 26+）
     private static final int REPEAT_MODE_NONE = 0;
     private static final int REPEAT_MODE_ONE = 1;
     private static final int REPEAT_MODE_ALL = 2;
-    private static final int REPEAT_MODE_GROUP = 3;
-    
-    /**
-     * 随机播放模式常量（兼容低版本）
-     */
-    private static final int SHUFFLE_MODE_INVALID = -1;
     private static final int SHUFFLE_MODE_NONE = 0;
     private static final int SHUFFLE_MODE_ALL = 1;
     private static final int SHUFFLE_MODE_GROUP = 2;
+    
+    /**
+     * 通过反射调用setRepeatMode（兼容API 26+）
+     */
+    private void invokeSetRepeatMode(MediaController.TransportControls controls, int mode) {
+        try {
+            java.lang.reflect.Method method = controls.getClass().getMethod("setRepeatMode", int.class);
+            method.invoke(controls, mode);
+        } catch (Exception e) {
+            Log.w(TAG, "反射调用setRepeatMode失败: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 通过反射调用getRepeatMode（兼容API 26+）
+     */
+    private int invokeGetRepeatMode(MediaController controller) {
+        try {
+            java.lang.reflect.Method method = controller.getClass().getMethod("getRepeatMode");
+            Object result = method.invoke(controller);
+            if (result instanceof Integer) {
+                return (Integer) result;
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "反射调用getRepeatMode失败: " + e.getMessage());
+        }
+        return REPEAT_MODE_NONE;
+    }
+    
+    /**
+     * 通过反射调用setShuffleMode（兼容API 26+）
+     */
+    private void invokeSetShuffleMode(MediaController.TransportControls controls, int mode) {
+        try {
+            java.lang.reflect.Method method = controls.getClass().getMethod("setShuffleMode", int.class);
+            method.invoke(controls, mode);
+        } catch (Exception e) {
+            Log.w(TAG, "反射调用setShuffleMode失败: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 通过反射调用getShuffleMode（兼容API 26+）
+     */
+    private int invokeGetShuffleMode(MediaController controller) {
+        try {
+            java.lang.reflect.Method method = controller.getClass().getMethod("getShuffleMode");
+            Object result = method.invoke(controller);
+            if (result instanceof Integer) {
+                return (Integer) result;
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "反射调用getShuffleMode失败: " + e.getMessage());
+        }
+        return SHUFFLE_MODE_NONE;
+    }
     
     /**
      * 设置循环模式
@@ -1015,7 +1066,7 @@ public class MediaSessionService extends Service {
                     if (controllers != null && !controllers.isEmpty()) {
                         for (MediaController controller : controllers) {
                             try {
-                                controller.getTransportControls().setRepeatMode(mode);
+                                invokeSetRepeatMode(controller.getTransportControls(), mode);
                                 Log.d(TAG, "已发送setRepeatMode命令到: " + controller.getPackageName());
                             } catch (Exception e) {
                                 Log.w(TAG, "发送setRepeatMode到 " + controller.getPackageName() + " 失败: " + e.getMessage());
@@ -1044,7 +1095,7 @@ public class MediaSessionService extends Service {
                     if (controllers != null && !controllers.isEmpty()) {
                         for (MediaController controller : controllers) {
                             try {
-                                return controller.getRepeatMode();
+                                return invokeGetRepeatMode(controller);
                             } catch (Exception e) {
                                 Log.w(TAG, "获取循环模式失败: " + e.getMessage());
                             }
@@ -1073,7 +1124,7 @@ public class MediaSessionService extends Service {
                     if (controllers != null && !controllers.isEmpty()) {
                         for (MediaController controller : controllers) {
                             try {
-                                controller.getTransportControls().setShuffleMode(shuffleMode);
+                                invokeSetShuffleMode(controller.getTransportControls(), shuffleMode);
                                 Log.d(TAG, "已发送setShuffleMode命令到: " + controller.getPackageName());
                             } catch (Exception e) {
                                 Log.w(TAG, "发送setShuffleMode到 " + controller.getPackageName() + " 失败: " + e.getMessage());
@@ -1102,7 +1153,7 @@ public class MediaSessionService extends Service {
                     if (controllers != null && !controllers.isEmpty()) {
                         for (MediaController controller : controllers) {
                             try {
-                                int shuffleMode = controller.getShuffleMode();
+                                int shuffleMode = invokeGetShuffleMode(controller);
                                 return shuffleMode != SHUFFLE_MODE_NONE;
                             } catch (Exception e) {
                                 Log.w(TAG, "获取随机播放状态失败: " + e.getMessage());
