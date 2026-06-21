@@ -889,3 +889,64 @@ class TestCarControlManager(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+    def test_rear_fog_light_method(self):
+        """测试后雾灯控制方法存在"""
+        self.assertIn('public boolean setRearFogLight(boolean on)', self.source_code)
+        self.assertIn('CARLIGHT_REARFOGCTL', self.source_code)
+        
+    def test_position_light_method(self):
+        """测试示廓灯控制方法存在"""
+        self.assertIn('public boolean setPositionLight(boolean on)', self.source_code)
+        self.assertIn('CARLIGHT_SHEKUODENG', self.source_code)
+        
+    def test_pedestrian_alert_method(self):
+        """测试行人警示音控制方法存在"""
+        self.assertIn('public boolean setPedestrianAlert(boolean on)', self.source_code)
+        self.assertIn('PEDESTRIANS_ALERT', self.source_code)
+        
+    def test_exception_handling_pattern(self):
+        """测试异常处理模式"""
+        # 检查try-catch模式
+        try_catch_count = self.source_code.count('try {')
+        catch_count = self.source_code.count('catch (Exception e)')
+        self.assertGreater(try_catch_count, 5, "应该有足够的异常处理")
+        self.assertEqual(try_catch_count, catch_count, "try和catch数量应该匹配")
+        
+    def test_logging_pattern(self):
+        """测试日志输出模式"""
+        log_d_count = self.source_code.count('Log.d(TAG,')
+        log_e_count = self.source_code.count('Log.e(TAG,')
+        self.assertGreater(log_d_count, 10, "应该有调试日志")
+        self.assertGreater(log_e_count, 5, "应该有错误日志")
+        
+    def test_context_usage(self):
+        """测试Context使用模式"""
+        self.assertIn('context.getApplicationContext()', self.source_code)
+        self.assertIn('context.sendBroadcast(intent)', self.source_code)
+        
+    def test_return_value_consistency(self):
+        """测试返回值一致性（所有车控方法都返回boolean）"""
+        method_pattern = r'public boolean (\w+)\(boolean'
+        boolean_methods = re.findall(method_pattern, self.source_code)
+        self.assertGreater(len(boolean_methods), 10, "应该有多个返回boolean的车控方法")
+        
+    def test_intent_creation_pattern(self):
+        """测试Intent创建模式"""
+        intent_count = self.source_code.count('new Intent(ACTION_TO_CAR_CONTROL)')
+        self.assertGreater(intent_count, 10, "应该使用统一的Action创建Intent")
+        
+    def test_ambient_light_constants_complete(self):
+        """测试氛围灯颜色常量完整性"""
+        colors = ['AMBIENT_RED', 'AMBIENT_ORANGE', 'AMBIENT_YELLOW', 'AMBIENT_GREEN', 
+                 'AMBIENT_CYAN', 'AMBIENT_BLUE', 'AMBIENT_PURPLE']
+        for color in colors:
+            self.assertIn(f'{color} =', self.source_code, f"缺少{color}常量")
+            
+    def test_drive_mode_constants_complete(self):
+        """测试驾驶模式常量完整性"""
+        modes = ['DRIVE_MODE_COMFORT', 'DRIVE_MODE_SPORT', 'DRIVE_MODE_CUSTOM',
+                'DRIVE_MODE_EXTREME', 'DRIVE_MODE_ECO', 'DRIVE_MODE_LEAPMOTOR']
+        for mode in modes:
+            self.assertIn(f'{mode} =', self.source_code, f"缺少{mode}常量")
+

@@ -216,6 +216,55 @@ public class TestClass {
         assert os.path.exists(output_path), "生成的 JS_API_REFERENCE.md 文件不存在"
 
 
+    def test_method_info_class_extended(self):
+        """测试 MethodInfo 类的功能"""
+        method = MethodInfo()
+        method.name = "testMethod"
+        method.return_type = "String"
+        method.params = [("int", "a"), ("String", "b")]
+        method.description = "测试描述"
+        method.line_num = 42
+        method.category = "测试分类"
+        
+        assert method.name == "testMethod"
+        assert method.return_type == "String"
+        assert len(method.params) == 2
+        assert method.description == "测试描述"
+        assert method.line_num == 42
+        assert method.category == "测试分类"
+
+    def test_method_info_default_values(self):
+        """测试 MethodInfo 类的默认值"""
+        method = MethodInfo()
+        assert method.name == ""
+        assert method.return_type == ""
+        assert method.params == []
+        assert method.description == ""
+        assert method.line_num == 0
+        assert method.category == "其他"
+
+    def test_categorize_method_edge_cases(self):
+        """测试方法分类的边界情况"""
+        # 创建空MethodInfo
+        empty_method = MethodInfo()
+        category = categorize_method(empty_method)
+        assert category != ""
+        # 创建未知方法名的MethodInfo
+        unknown_method = MethodInfo()
+        unknown_method.name = "unknownMethodXYZ"
+        category = categorize_method(unknown_method)
+        assert category != ""
+        """测试方法分类的边界情况"""
+        assert category != ""
+        assert category != ""
+
+    def test_parse_method_signature_edge_cases(self):
+        """测试解析方法签名的边界情况"""
+        result = parse_method_signature("")
+        assert result is None
+        result = parse_method_signature("not a method")
+        assert result is None
+
 def run_tests():
     """运行所有测试"""
     import traceback
@@ -227,25 +276,3 @@ def run_tests():
     failed = 0
     
     print(f"运行 {len(test_methods)} 个测试...")
-    print()
-    
-    for method_name in test_methods:
-        try:
-            getattr(test_class, method_name)()
-            print(f"✅ {method_name}")
-            passed += 1
-        except Exception as e:
-            print(f"❌ {method_name}")
-            print(f"   错误: {e}")
-            traceback.print_exc()
-            failed += 1
-    
-    print()
-    print(f"结果：{passed} 通过，{failed} 失败")
-    
-    return failed == 0
-
-
-if __name__ == '__main__':
-    success = run_tests()
-    sys.exit(0 if success else 1)

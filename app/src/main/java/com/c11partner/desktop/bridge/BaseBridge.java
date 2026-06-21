@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 import com.c11partner.desktop.MainActivity;
+import java.lang.FunctionalInterface;
 
 /**
  * Bridge 基类
@@ -152,5 +153,117 @@ public class BaseBridge {
      */
     protected boolean isActivityValid() {
         return mActivity != null && !mActivity.isFinishing();
+    }
+}
+    /**
+     * 安全执行带返回值的操作
+     * 
+     * @param action 要执行的操作
+     * @param defaultValue 出错时的默认返回值
+     * @param <T> 返回值类型
+     * @return 操作结果或默认值
+     */
+    protected <T> T safeExecute(Supplier<T> action, T defaultValue) {
+        if (action == null) {
+            return defaultValue;
+        }
+        try {
+            return action.get();
+        } catch (Exception e) {
+            logE(TAG, "执行操作时出错", e);
+            return defaultValue;
+        }
+    }
+    
+    /**
+     * 安全执行无返回值的操作
+     * 
+     * @param action 要执行的操作
+     */
+    protected void safeExecute(Runnable action) {
+        if (action == null) {
+            return;
+        }
+        try {
+            action.run();
+        } catch (Exception e) {
+            logE(TAG, "执行操作时出错", e);
+        }
+    }
+    
+    /**
+     * 带条件检查的UI线程执行
+     * 
+     * @param condition 执行条件
+     * @param action 要执行的操作
+     */
+    protected void runOnUiThreadIf(boolean condition, Runnable action) {
+        if (condition && action != null) {
+            runOnUiThread(action);
+        }
+    }
+    
+    /**
+     * 函数式接口：支持带返回值的操作
+     */
+    @FunctionalInterface
+    protected interface Supplier<T> {
+        T get() throws Exception;
+    }
+
+    /**
+     * 安全执行带返回值的操作
+     * 
+     * @param action 要执行的操作
+     * @param defaultValue 出错时的默认返回值
+     * @param <T> 返回值类型
+     * @return 操作结果或默认值
+     */
+    protected <T> T safeExecute(Supplier<T> action, T defaultValue) {
+        if (action == null) {
+            return defaultValue;
+        }
+        try {
+            return action.get();
+        } catch (Exception e) {
+            logE(TAG, "执行操作时出错", e);
+            return defaultValue;
+        }
+    }
+    
+    /**
+     * 安全执行无返回值的操作
+     * 
+     * @param action 要执行的操作
+     */
+    protected void safeExecute(Runnable action) {
+        if (action == null) {
+            return;
+        }
+        try {
+            action.run();
+        } catch (Exception e) {
+            logE(TAG, "执行操作时出错", e);
+        }
+    }
+    
+    /**
+     * 带条件检查的UI线程执行
+     * 
+     * @param condition 执行条件
+     * @param action 要执行的操作
+     */
+    protected void runOnUiThreadIf(boolean condition, Runnable action) {
+        if (condition && action != null) {
+            runOnUiThread(action);
+        }
+    }
+    
+    /**
+     * 函数式接口：支持带返回值的操作
+     */
+    @FunctionalInterface
+    protected interface Supplier<T> {
+        T get() throws Exception;
     }
 }
