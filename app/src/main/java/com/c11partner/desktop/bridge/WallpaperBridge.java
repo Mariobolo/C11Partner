@@ -743,4 +743,89 @@ public class WallpaperBridge extends BaseBridge {
             return "";
         }
     }
+    
+    // ==================== 壁纸轮播控制 ====================
+    
+    /**
+     * 设置是否启用轮播
+     * @param enabled 是否启用
+     */
+    public void setWallpaperCarouselEnabled(boolean enabled) {
+        try {
+            wallpaperManager.setCarouselEnabled(enabled);
+            // 重启轮播
+            if (mActivity != null) {
+                mActivity.restartWallpaperCarousel();
+            }
+            Log.d(TAG, "设置壁纸轮播: " + enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "设置壁纸轮播失败", e);
+        }
+    }
+    
+    /**
+     * 设置轮播间隔
+     * @param intervalMs 间隔毫秒
+     */
+    public void setWallpaperCarouselInterval(int intervalMs) {
+        try {
+            wallpaperManager.setCarouselInterval(intervalMs);
+            // 重启轮播
+            if (mActivity != null) {
+                mActivity.restartWallpaperCarousel();
+            }
+            Log.d(TAG, "设置轮播间隔: " + intervalMs + "ms");
+        } catch (Exception e) {
+            Log.e(TAG, "设置轮播间隔失败", e);
+        }
+    }
+    
+    /**
+     * 设置填充模式
+     * @param mode 0=填充,1=包含,2=拉伸
+     */
+    public void setWallpaperFillMode(int mode) {
+        try {
+            wallpaperManager.setFillMode(mode);
+            Log.d(TAG, "设置填充模式: " + mode);
+        } catch (Exception e) {
+            Log.e(TAG, "设置填充模式失败", e);
+        }
+    }
+    
+    /**
+     * 刷新必应壁纸
+     */
+    public void refreshBingWallpaper() {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // 直接调用会触发刷新
+                    wallpaperManager.getNextWallpaperUrl();
+                }
+            }).start();
+            Log.d(TAG, "刷新必应壁纸");
+        } catch (Exception e) {
+            Log.e(TAG, "刷新必应壁纸失败", e);
+        }
+    }
+    
+    /**
+     * 选择本地壁纸文件（调用系统文件选择器）
+     * 预留接口，后续实现
+     */
+    public void pickLocalWallpaperFile() {
+        Log.d(TAG, "选择本地壁纸文件（预留接口）");
+        // TODO: 调用系统文件选择器
+    }
+    
+    /**
+     * 选择本地壁纸文件夹（调用系统文件夹选择器）
+     * 预留接口，后续实现
+     */
+    public void pickLocalWallpaperFolder() {
+        Log.d(TAG, "选择本地壁纸文件夹（预留接口）");
+        // TODO: 调用系统文件夹选择器
+    }
 }

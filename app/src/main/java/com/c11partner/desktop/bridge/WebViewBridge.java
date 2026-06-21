@@ -1410,16 +1410,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void saveConfigApp(String buttonId, String appName, String packageName, String appIcon) {
-        try {
-            long result = configAppDbHelper.saveOrUpdateConfigApp(buttonId, appName, packageName, appIcon);
-            if (result != -1) {
-                Log.d(TAG, "配置应用保存成功: " + buttonId + " -> " + packageName);
-            } else {
-                Log.e(TAG, "配置应用保存失败: " + buttonId);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "保存配置应用时出错", e);
-        }
+        mAppBridge.saveConfigApp(buttonId, appName, packageName, appIcon);
     }
 
     /**
@@ -4157,12 +4148,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public String getNextWallpaperUrl() {
-        try {
-            return getWallpaperManager().getNextWallpaperUrl();
-        } catch (Exception e) {
-            Log.e(TAG, "获取下一张壁纸URL失败", e);
-            return "images/default_bg_1.jpg";
-        }
+        return mWallpaperBridge.getNextWallpaperUrl();
     }
 
     /**
@@ -4170,16 +4156,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void setWallpaperCarouselEnabled(boolean enabled) {
-        try {
-            getWallpaperManager().setCarouselEnabled(enabled);
-            // 重启轮播
-            if (mActivity != null) {
-                mActivity.restartWallpaperCarousel();
-            }
-            Log.d(TAG, "设置壁纸轮播: " + enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "设置壁纸轮播失败", e);
-        }
+        mWallpaperBridge.setWallpaperCarouselEnabled(enabled);
     }
 
     /**
@@ -4188,16 +4165,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void setWallpaperCarouselInterval(int intervalMs) {
-        try {
-            getWallpaperManager().setCarouselInterval(intervalMs);
-            // 重启轮播
-            if (mActivity != null) {
-                mActivity.restartWallpaperCarousel();
-            }
-            Log.d(TAG, "设置轮播间隔: " + intervalMs + "ms");
-        } catch (Exception e) {
-            Log.e(TAG, "设置轮播间隔失败", e);
-        }
+        mWallpaperBridge.setWallpaperCarouselInterval(intervalMs);
     }
 
     /**
@@ -4206,12 +4174,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void setWallpaperFillMode(int mode) {
-        try {
-            getWallpaperManager().setFillMode(mode);
-            Log.d(TAG, "设置填充模式: " + mode);
-        } catch (Exception e) {
-            Log.e(TAG, "设置填充模式失败", e);
-        }
+        mWallpaperBridge.setWallpaperFillMode(mode);
     }
 
     /**
@@ -4219,18 +4182,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void refreshBingWallpaper() {
-        try {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // 直接调用会触发刷新
-                    getWallpaperManager().getNextWallpaperUrl();
-                }
-            }).start();
-            Log.d(TAG, "刷新必应壁纸");
-        } catch (Exception e) {
-            Log.e(TAG, "刷新必应壁纸失败", e);
-        }
+        mWallpaperBridge.refreshBingWallpaper();
     }
 
     /**
@@ -4239,8 +4191,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void pickLocalWallpaperFile() {
-        Log.d(TAG, "选择本地壁纸文件（预留接口）");
-        // TODO: 调用系统文件选择器
+        mWallpaperBridge.pickLocalWallpaperFile();
     }
 
     /**
@@ -4249,8 +4200,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void pickLocalWallpaperFolder() {
-        Log.d(TAG, "选择本地壁纸文件夹（预留接口）");
-        // TODO: 调用系统文件夹选择器
+        mWallpaperBridge.pickLocalWallpaperFolder(); 调用系统文件夹选择器
     }
 
 }
