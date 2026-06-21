@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.KeyEvent;
 
 /**
@@ -132,5 +133,39 @@ public class MusicUtils {
         
         // 返回标准检查结果
         return isMusicActive;
+    }
+    
+    /**
+     * 设置音乐音量
+     *
+     * @param volume 音量值（0-15）
+     */
+    public void setMusicVolume(int volume) {
+        try {
+            // 确保音量在有效范围内
+            int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+            int safeVolume = Math.max(0, Math.min(volume, maxVolume));
+            audioManager.setStreamVolume(
+                AudioManager.STREAM_MUSIC,
+                safeVolume,
+                AudioManager.FLAG_SHOW_UI
+            );
+        } catch (Exception e) {
+            Log.e("MusicUtils", "设置音乐音量失败", e);
+        }
+    }
+    
+    /**
+     * 获取当前音乐音量
+     *
+     * @return 当前音量值
+     */
+    public int getMusicVolume() {
+        try {
+            return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        } catch (Exception e) {
+            Log.e("MusicUtils", "获取音乐音量失败", e);
+            return 7; // 默认中间音量
+        }
     }
 }

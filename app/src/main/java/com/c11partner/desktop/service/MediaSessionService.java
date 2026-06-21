@@ -872,6 +872,68 @@ public class MediaSessionService extends Service {
         return 0; // API方法无法获取时长
     }
     
+    /**
+     * 跳转到指定播放位置
+     *
+     * @param position 播放位置（毫秒）
+     */
+    public void seekTo(long position) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+                if (mediaSessionManager != null) {
+                    List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
+                    if (controllers != null && !controllers.isEmpty()) {
+                        for (MediaController controller : controllers) {
+                            try {
+                                controller.getTransportControls().seekTo(position);
+                                Log.d(TAG, "已发送seekTo命令到: " + controller.getPackageName());
+                            } catch (Exception e) {
+                                Log.w(TAG, "发送seekTo到 " + controller.getPackageName() + " 失败: " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+            // 更新本地状态
+            currentPosition = position;
+            Log.d(TAG, "跳转到播放位置: " + position + "ms");
+        } catch (Exception e) {
+            Log.e(TAG, "跳转播放位置失败", e);
+        }
+    }
+    
+    /**
+     * 设置播放速度
+     *
+     * @param speed 播放速度（0.5-2.0）
+     */
+    public void setPlaybackSpeed(float speed) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+                if (mediaSessionManager != null) {
+                    List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
+                    if (controllers != null && !controllers.isEmpty()) {
+                        for (MediaController controller : controllers) {
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    controller.getTransportControls().setPlaybackSpeed(speed);
+                                    Log.d(TAG, "已发送setPlaybackSpeed命令到: " + controller.getPackageName());
+                                }
+                            } catch (Exception e) {
+                                Log.w(TAG, "发送setPlaybackSpeed到 " + controller.getPackageName() + " 失败: " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+            Log.d(TAG, "设置播放速度: " + speed);
+        } catch (Exception e) {
+            Log.e(TAG, "设置播放速度失败", e);
+        }
+    }
+    
     private void closeQuietly(Closeable closable) {
         if (closable != null) {
             try {
