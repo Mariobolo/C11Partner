@@ -83,10 +83,14 @@ jobs:
       run: ./gradlew clean --no-build-cache
 
     - name: Build debug APK
-      run: ./gradlew assembleDebug --stacktrace 2>&1 | tee build-debug.log
+      run: |
+        set -o pipefail
+        ./gradlew assembleDebug --stacktrace 2>&1 | tee build-debug.log
 
     - name: Build release APK
-      run: ./gradlew assembleRelease --stacktrace 2>&1 | tee build-release.log
+      run: |
+        set -o pipefail
+        ./gradlew assembleRelease --stacktrace 2>&1 | tee build-release.log
 
     - name: Upload build error log
       if: failure()
@@ -102,8 +106,27 @@ jobs:
       id: find_apk
       run: |
         echo "=== 查找APK文件 ==="
-        DEBUG_APK=$(find app/build/outputs/apk/debug -name "*.apk" -type f | head -1)
-        RELEASE_APK=$(find app/build/outputs/apk/release -name "*.apk" -type f | head -1)
+        echo ""
+        echo "--- 列出 build/outputs 目录 ---"
+        ls -la app/build/outputs/ 2>/dev/null || echo "outputs 目录不存在"
+        echo ""
+        echo "--- 列出所有 APK 文件 ---"
+        find app/build -name "*.apk" -type f 2>/dev/null || echo "未找到任何 APK 文件"
+        echo ""
+        
+        # 查找 Debug APK
+        DEBUG_APK=$(find app/build/outputs/apk/debug -name "*.apk" -type f 2>/dev/null | head -1)
+        if [ -z "$DEBUG_APK" ]; then
+            # 扩大范围查找
+            DEBUG_APK=$(find app/build -name "*debug*.apk" -type f 2>/dev/null | head -1)
+        fi
+        
+        # 查找 Release APK
+        RELEASE_APK=$(find app/build/outputs/apk/release -name "*.apk" -type f 2>/dev/null | head -1)
+        if [ -z "$RELEASE_APK" ]; then
+            # 扩大范围查找
+            RELEASE_APK=$(find app/build -name "*release*.apk" -type f 2>/dev/null | head -1)
+        fi
         
         echo "debug_apk=$DEBUG_APK" >> $GITHUB_OUTPUT
         echo "release_apk=$RELEASE_APK" >> $GITHUB_OUTPUT
