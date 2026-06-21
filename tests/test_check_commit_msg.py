@@ -320,6 +320,8 @@ class TestCheckCommitMsg:
 def run_tests():
     """运行所有测试"""
     import traceback
+    import tempfile
+    from pathlib import Path
     
     test_class = TestCheckCommitMsg()
     test_methods = [m for m in dir(test_class) if m.startswith('test_')]
@@ -330,16 +332,27 @@ def run_tests():
     print(f"运行 {len(test_methods)} 个测试...")
     print()
     
-    for method_name in test_methods:
-        try:
-            getattr(test_class, method_name)()
-            print(f"✅ {method_name}")
-            passed += 1
-        except Exception as e:
-            print(f"❌ {method_name}")
-            print(f"   错误: {e}")
-            traceback.print_exc()
-            failed += 1
+    # 创建临时目录用于测试
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp_path = Path(tmp_dir)
+        
+        for method_name in test_methods:
+            try:
+                method = getattr(test_class, method_name)
+                # 检查方法是否需要 tmp_path 参数
+                import inspect
+                sig = inspect.signature(method)
+                if 'tmp_path' in sig.parameters:
+                    method(tmp_path)
+                else:
+                    method()
+                print(f"✅ {method_name}")
+                passed += 1
+            except Exception as e:
+                print(f"❌ {method_name}")
+                print(f"   错误: {e}")
+                traceback.print_exc()
+                failed += 1
     
     print()
     print(f"结果：{passed} 通过，{failed} 失败")
