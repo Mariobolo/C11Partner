@@ -1563,6 +1563,15 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void updateWallpaperCategories() {
+        mWallpaperBridge.updateWallpaperCategories();
+    }
+    
+    /**
+     * 已废弃：使用 updateWallpaperCategories() 代替
+     * 原方法体已迁移到 WallpaperBridge
+     */
+    @Deprecated
+    private void old_updateWallpaperCategories() {
         new Thread(() -> {
             try {
                 // 从网络获取壁纸分类数据
@@ -1600,11 +1609,16 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void updateCategoryEnabled(String categoryId, boolean enabled) {
-        try {
-            wallpaperDbHelper.updateCategoryEnabled(categoryId, enabled);
-        } catch (Exception e) {
-            Log.e(TAG, "更新分类启用状态时出错", e);
-        }
+        mWallpaperBridge.updateCategoryEnabled(categoryId, enabled);
+    }
+    /**
+     * 获取已启用的分类ID列表
+     *
+     * @return JSON格式的分类ID列表
+     */
+    @JavascriptInterface
+    public String getEnabledCategories() {
+        return mWallpaperBridge.getEnabledCategories();
     }
 
     /**

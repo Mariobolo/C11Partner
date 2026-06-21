@@ -821,6 +821,72 @@ public class WallpaperBridge extends BaseBridge {
     }
     
     /**
+     * 更新壁纸分类
+     * 从网络获取壁纸分类数据并保存到数据库
+     */
+    public void updateWallpaperCategories() {
+        new Thread(() -> {
+            try {
+                // 从网络获取壁纸分类数据
+                List<Map<String, Object>> categories = WallpaperCategoryApiUtils.fetchCategoriesFromApi();
+                if (!categories.isEmpty()) {
+                    // 清空数据库中的分类数据
+                    wallpaperDbHelper.clearCategories();
+                    // 将分类数据保存到数据库
+                    wallpaperDbHelper.bulkInsertOrUpdateCategories(categories);
+                    runOnUiThread(() -> {
+                        Toast.makeText(mContext, "壁纸分类已更新", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        Toast.makeText(mContext, "无法获取壁纸分类数据", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "更新壁纸分类时出错", e);
+                runOnUiThread(() -> {
+                    Toast.makeText(mContext, "更新壁纸分类时出错: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
+    }
+    
+    /**
+     * 更新壁纸分类启用状态
+     *
+     * @param categoryId 分类ID
+     * @param enabled    是否启用
+     */
+    public void updateCategoryEnabled(String categoryId, boolean enabled) {
+        try {
+            wallpaperDbHelper.updateCategoryEnabled(categoryId, enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "更新分类启用状态时出错", e);
+        }
+    }
+    
+    /**
+     * 获取已启用的分类ID列表
+     *
+     * @return JSON格式的分类ID列表
+     */
+    public String getEnabledCategories() {
+        try {
+            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
+            JSONArray enabledCategoriesArray = new JSONArray();
+            for (Map<String, Object> category : enabledCategories) {
+                if ((boolean) category.get("enabled")) {
+                    enabledCategoriesArray.put(category.get("id"));
+                }
+            }
+            return enabledCategoriesArray.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "获取已启用分类时出错", e);
+            return "[]";
+        }
+    }
+    
+    /**
      * 选择本地壁纸文件夹（调用系统文件夹选择器）
      * 预留接口，后续实现
      */
