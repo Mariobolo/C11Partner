@@ -398,13 +398,18 @@ chore: 构建/工具链变动
 |------|------|------|--------|
 | **基类** | `BaseBridge.java` | ✅ 完成 | - |
 | **车控功能** | `CarControlBridge.java` | ✅ 完成 | 50+ |
-| **壁纸功能** | `WallpaperBridge.java` | ✅ 完成 | 30/30 已实现 |
-| **应用管理** | `AppBridge.java` | ✅ 完成 | 18/18 已实现 |
+| **壁纸功能** | `WallpaperBridge.java` | ✅ 完成 | 38/38 已实现 |
+| **应用管理** | `AppBridge.java` | ✅ 完成 | 19/19 已实现 |
 
 - **车控模块迁移**：42/46 方法（~91%）
-- **WallpaperBridge**：100% 完成（31个方法，新增 sendWallpaperSettingsChangedBroadcast、getRandomLocalWallpaper、getRandomOnlineWallpaper、getRandomOnlineWallpaperBase64、getRandomWallpaperUrl 五个方法）
-- **AppBridge**：100% 完成（18个方法，新增应用图标缓存机制 clearAppIconCache、cacheAppIconBase64、getCachedAppIconBase64，修复重复方法问题）
-- **WebViewBridge 委托**：已完成 getAllApps、getUserApps、getSystemApps、getAppInfo、getAppIcon、isAppInstalled、launchApp、openAppInfo、saveConfigApp、getConfigApp、getQuickAppList、addQuickApp、removeQuickApp、isQuickApp 委托调用
+- **WallpaperBridge**：100% 完成（38个方法，31个同步 + 7个异步方法，所有壁纸功能完整迁移）
+- **AppBridge**：100% 完成（19个方法，18个同步 + 1个异步方法，所有应用管理功能完整迁移）
+- **WebViewBridge 委托**：已完成所有壁纸和应用管理方法的委托调用，包括异步方法
+  - 壁纸同步方法：31个 ✅
+  - 壁纸异步方法：7个 ✅（saveWallpaperCarouselSettingAsync、saveWallpaperSwitchIntervalAsync、updateCategoryEnabledAsync、getEnabledCategoriesAsync、getWallpaperSettingsAsync、getRandomWallpaperAsync、getRandomWallpaperBase64Async）
+  - 应用管理同步方法：18个 ✅
+  - 应用管理异步方法：1个 ✅（getAppListAsync，已修复残留代码问题）
+- **本次更新（2026-06-21）**：完成3个壁纸异步方法委托调用，修复getAppListAsync残留代码
 - **剩余 4 个**：UI 相关高级方法（建议保留在 WebViewBridge）
 - **拆分模式**：委托模式（Facade），前端不用改
 
