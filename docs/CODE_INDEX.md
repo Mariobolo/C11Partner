@@ -1,7 +1,7 @@
 # C11Partner 代码索引文档
 > 📌 **快速定位代码的神器** - 修改代码前先看本文档，找到对应函数行号再精准读取，避免读取大文件占用上下文
 >
-> 自动生成时间：2026-06-21 22:06:04
+> 自动生成时间：2026-06-21 22:23:00
 > 生成脚本：`tools/generate_code_index.py`
 
 ---
@@ -30,9 +30,9 @@ python3 tools/generate_code_index.py
 
 | 类型 | 文件数 | 函数/方法数 |
 |------|--------|------------|
-| Java后端 | 8 | 381 |
+| Java后端 | 8 | 382 |
 | JS前端 | 3 | 145 |
-| **总计** | **11** | **526** |
+| **总计** | **11** | **527** |
 
 ---
 
@@ -231,212 +231,213 @@ python3 tools/generate_code_index.py
 
 ### WebViewBridge.java ⭐
 **路径**：`app/src/main/java/com/c11partner/desktop/bridge/WebViewBridge.java`  
-**行数**：约 676 行  
+**行数**：约 662 行  
 **职责**：JS桥接层，提供50+个JS接口给前端调用
 
 #### 保存/设置
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `setMediaSessionService()` | 88 | public |
+| `setMediaSessionService()` | 72 | public |
 
 #### 壁纸相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `notifyWallpaperUpdate()` | 97 | public |
-| `saveWallpaperCarouselSetting()` | 402 | public |
-| `saveWallpaperCarouselSettingAsync()` | 407 | public |
-| `saveWallpaperSwitchInterval()` | 412 | public |
-| `saveWallpaperSwitchIntervalAsync()` | 417 | public |
-| `sendWallpaperSettingsChangedBroadcast()` | 422 | public |
-| `getRandomWallpaper()` | 427 | public |
-| `getRandomWallpaperAsync()` | 430 | public |
-| `getRandomWallpaperBase64()` | 435 | public |
-| `getRandomWallpaperBase64Async()` | 440 | public |
-| `updateWallpaperCategories()` | 445 | public |
-| `getWallpaperSettings()` | 461 | public |
-| `getWallpaperSettingsAsync()` | 464 | public |
-| `pauseWallpaperCarousel()` | 469 | public |
-| `resumeWallpaperCarousel()` | 472 | public |
-| `deleteCurrentWallpaper()` | 475 | public |
+| `notifyWallpaperUpdate()` | 81 | public |
+| `saveWallpaperCarouselSetting()` | 386 | public |
+| `saveWallpaperCarouselSettingAsync()` | 391 | public |
+| `saveWallpaperSwitchInterval()` | 396 | public |
+| `saveWallpaperSwitchIntervalAsync()` | 401 | public |
+| `sendWallpaperSettingsChangedBroadcast()` | 406 | public |
+| `getRandomWallpaper()` | 411 | public |
+| `getRandomWallpaperAsync()` | 414 | public |
+| `getRandomWallpaperBase64()` | 419 | public |
+| `getRandomWallpaperBase64Async()` | 424 | public |
+| `updateWallpaperCategories()` | 429 | public |
+| `getWallpaperSettings()` | 445 | public |
+| `getWallpaperSettingsAsync()` | 448 | public |
+| `pauseWallpaperCarousel()` | 453 | public |
+| `resumeWallpaperCarousel()` | 456 | public |
+| `deleteCurrentWallpaper()` | 459 | public |
 
 #### 匿名内部类
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `run()` | 100 | public |
-| `run()` | 606 | public |
-| `run()` | 628 | public |
-| `run()` | 667 | public |
+| `run()` | 84 | public |
+| `run()` | 593 | public |
+| `run()` | 615 | public |
+| `run()` | 654 | public |
 
 #### 初始化
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `startCamera360()` | 113 | public |
-| `startMusicVisualizer()` | 479 | public |
-| `initializeAcStatus()` | 664 | public |
+| `startCamera360()` | 97 | public |
+| `startMusicVisualizer()` | 463 | public |
+| `initializeAcStatus()` | 651 | public |
 
 #### 车控功能
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `setCameraOverspeedLimit()` | 116 | public |
-| `setLowBeamLight()` | 127 | public |
-| `setRearFogLight()` | 132 | public |
-| `setPositionLight()` | 137 | public |
-| `setPedestrianAlert()` | 142 | public |
-| `setDriveMode()` | 148 | public |
-| `setGuardMode()` | 153 | public |
-| `setRestMode()` | 158 | public |
-| `setCampingMode()` | 163 | public |
-| `setPowerSaveMode()` | 168 | public |
-| `setSentinelMode()` | 173 | public |
-| `setMaxCooling()` | 179 | public |
-| `setAcEnabled()` | 184 | public |
-| `setWindLevel()` | 194 | public |
-| `setDriverTemp()` | 204 | public |
-| `setPassengerTemp()` | 214 | public |
-| `setCallVolume()` | 225 | public |
-| `setNaviVolume()` | 235 | public |
-| `setMusicVolume()` | 245 | public |
-| `setAmbientLightEnabled()` | 256 | public |
-| `setAmbientLightColor()` | 266 | public |
-| `setNightMode()` | 277 | public |
-| `setWifiEnabled()` | 282 | public |
-| `setBluetoothEnabled()` | 287 | public |
-| `setVideoWhileDriving()` | 292 | public |
-| `setSecondaryScreenEnabled()` | 303 | public |
-| `sendVoiceCommand()` | 324 | public |
-| `sendPrevTrack()` | 330 | public |
-| `sendNextTrack()` | 335 | public |
+| `setCameraOverspeedLimit()` | 100 | public |
+| `setLowBeamLight()` | 111 | public |
+| `setRearFogLight()` | 116 | public |
+| `setPositionLight()` | 121 | public |
+| `setPedestrianAlert()` | 126 | public |
+| `setDriveMode()` | 132 | public |
+| `setGuardMode()` | 137 | public |
+| `setRestMode()` | 142 | public |
+| `setCampingMode()` | 147 | public |
+| `setPowerSaveMode()` | 152 | public |
+| `setSentinelMode()` | 157 | public |
+| `setMaxCooling()` | 163 | public |
+| `setAcEnabled()` | 168 | public |
+| `setWindLevel()` | 178 | public |
+| `setDriverTemp()` | 188 | public |
+| `setPassengerTemp()` | 198 | public |
+| `setCallVolume()` | 209 | public |
+| `setNaviVolume()` | 219 | public |
+| `setMusicVolume()` | 229 | public |
+| `setAmbientLightEnabled()` | 240 | public |
+| `setAmbientLightColor()` | 250 | public |
+| `setNightMode()` | 261 | public |
+| `setWifiEnabled()` | 266 | public |
+| `setBluetoothEnabled()` | 271 | public |
+| `setVideoWhileDriving()` | 276 | public |
+| `setSecondaryScreenEnabled()` | 287 | public |
+| `sendVoiceCommand()` | 308 | public |
+| `sendPrevTrack()` | 314 | public |
+| `sendNextTrack()` | 319 | public |
 
 #### 状态获取
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `isCameraOverspeedLimitEnabled()` | 121 | public |
-| `isAcEnabled()` | 189 | public |
-| `isVideoWhileDrivingEnabled()` | 297 | public |
-| `isVehicleLocked()` | 341 | public |
-| `isScreenOn()` | 346 | public |
-| `getAllApps()` | 355 | public |
-| `getUserApps()` | 358 | public |
-| `getSystemApps()` | 361 | public |
-| `getAppInfo()` | 364 | public |
-| `getAppIcon()` | 367 | public |
-| `isAppInstalled()` | 370 | public |
-| `getEnabledCategories()` | 453 | public |
-| `isNotificationListenerEnabled()` | 515 | public |
-| `isWifiConnected()` | 526 | public |
-| `isBluetoothConnected()` | 529 | public |
+| `isCameraOverspeedLimitEnabled()` | 105 | public |
+| `isAcEnabled()` | 173 | public |
+| `isVideoWhileDrivingEnabled()` | 281 | public |
+| `isVehicleLocked()` | 325 | public |
+| `isScreenOn()` | 330 | public |
+| `getAllApps()` | 339 | public |
+| `getUserApps()` | 342 | public |
+| `getSystemApps()` | 345 | public |
+| `getAppInfo()` | 348 | public |
+| `getAppIcon()` | 351 | public |
+| `isAppInstalled()` | 354 | public |
+| `getEnabledCategories()` | 437 | public |
+| `isNotificationListenerEnabled()` | 502 | public |
+| `isWifiConnected()` | 513 | public |
+| `isBluetoothConnected()` | 516 | public |
 
 #### 空调控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getWindLevel()` | 199 | public |
-| `getDriverTemp()` | 209 | public |
-| `getPassengerTemp()` | 219 | public |
+| `getWindLevel()` | 183 | public |
+| `getDriverTemp()` | 193 | public |
+| `getPassengerTemp()` | 203 | public |
 
 #### 音量控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getCallVolume()` | 230 | public |
-| `getNaviVolume()` | 240 | public |
-| `getMusicVolume()` | 250 | public |
+| `getCallVolume()` | 214 | public |
+| `getNaviVolume()` | 224 | public |
+| `getMusicVolume()` | 234 | public |
 
 #### 灯光控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `isAmbientLightEnabled()` | 261 | public |
-| `getAmbientLightColor()` | 271 | public |
+| `isAmbientLightEnabled()` | 245 | public |
+| `getAmbientLightColor()` | 255 | public |
 
 #### 副屏相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `isSecondaryScreenEnabled()` | 308 | public |
-| `updatePresentationCarState()` | 625 | public |
+| `isSecondaryScreenEnabled()` | 292 | public |
+| `updatePresentationCarState()` | 612 | public |
 
 #### 语音控制
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `setSpeechEnabled()` | 314 | public |
-| `isSpeechEnabled()` | 319 | public |
+| `setSpeechEnabled()` | 298 | public |
+| `isSpeechEnabled()` | 303 | public |
 
 #### 应用管理
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `getAppList()` | 352 | public |
-| `launchApp()` | 373 | public |
-| `getQuickAppList()` | 379 | public |
-| `addQuickApp()` | 382 | public |
-| `removeQuickApp()` | 387 | public |
-| `isQuickApp()` | 390 | public |
-| `saveConfigApp()` | 393 | public |
-| `getConfigApp()` | 398 | public |
-| `saveSystemLauncherSetting()` | 532 | public |
-| `saveSystemLauncherSettingAsync()` | 537 | public |
-| `saveComponentConfig()` | 580 | public |
-| `isComponentEnabled()` | 585 | public |
-| `getAllComponentConfigs()` | 590 | public |
+| `getAppList()` | 336 | public |
+| `launchApp()` | 357 | public |
+| `getQuickAppList()` | 363 | public |
+| `addQuickApp()` | 366 | public |
+| `removeQuickApp()` | 371 | public |
+| `isQuickApp()` | 374 | public |
+| `saveConfigApp()` | 377 | public |
+| `getConfigApp()` | 382 | public |
+| `saveSystemLauncherSetting()` | 519 | public |
+| `saveSystemLauncherSettingAsync()` | 524 | public |
+| `saveComponentConfig()` | 567 | public |
+| `isComponentEnabled()` | 572 | public |
+| `getAllComponentConfigs()` | 577 | public |
 
 #### 其他
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `openAppInfo()` | 376 | public |
-| `openRecentTasks()` | 570 | public |
-| `openRecents()` | 573 | public |
+| `openAppInfo()` | 360 | public |
+| `openRecentTasks()` | 557 | public |
+| `openRecents()` | 560 | public |
 
 #### 时间日期
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `updateCategoryEnabled()` | 448 | public |
-| `updateCategoryEnabledAsync()` | 456 | public |
-| `getLunarCalendar()` | 557 | public |
-| `updateTimeDisplay()` | 603 | public |
+| `updateCategoryEnabled()` | 432 | public |
+| `updateCategoryEnabledAsync()` | 440 | public |
+| `getLunarCalendar()` | 544 | public |
+| `updateTimeDisplay()` | 590 | public |
 
 #### 音乐相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `stopMusicVisualizer()` | 482 | public |
-| `isMusicPlaying()` | 485 | public |
-| `getCurrentMusicName()` | 488 | public |
-| `getMusicProgressInfo()` | 491 | public |
-| `getSystemMusicInfo()` | 494 | public |
-| `playPauseMusic()` | 497 | public |
-| `nextMusic()` | 500 | public |
-| `prevMusic()` | 503 | public |
-| `playPause()` | 506 | public |
-| `playNext()` | 509 | public |
-| `playPrevious()` | 512 | public |
+| `stopMusicVisualizer()` | 466 | public |
+| `isMusicPlaying()` | 469 | public |
+| `getCurrentMusicName()` | 472 | public |
+| `getCurrentMusicArtist()` | 475 | public |
+| `getMusicProgressInfo()` | 478 | public |
+| `getSystemMusicInfo()` | 481 | public |
+| `playPauseMusic()` | 484 | public |
+| `nextMusic()` | 487 | public |
+| `prevMusic()` | 490 | public |
+| `playPause()` | 493 | public |
+| `playNext()` | 496 | public |
+| `playPrevious()` | 499 | public |
 
 #### 系统设置
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `openNotificationListenerSettings()` | 520 | public |
-| `saveBootGreetingSetting()` | 542 | public |
-| `saveRandomModeSetting()` | 547 | public |
-| `saveSpecifiedModeSetting()` | 552 | public |
+| `openNotificationListenerSettings()` | 507 | public |
+| `saveBootGreetingSetting()` | 529 | public |
+| `saveRandomModeSetting()` | 534 | public |
+| `saveSpecifiedModeSetting()` | 539 | public |
 
 #### ADB相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `triggerUsbDebugAuthorization()` | 561 | public |
-| `triggerWirelessAdbAuthorization()` | 564 | public |
-| `executeAdbPermissionGrant()` | 567 | public |
-| `setDefaultDesktopViaAdb()` | 576 | public |
+| `triggerUsbDebugAuthorization()` | 548 | public |
+| `triggerWirelessAdbAuthorization()` | 551 | public |
+| `executeAdbPermissionGrant()` | 554 | public |
+| `setDefaultDesktopViaAdb()` | 563 | public |
 
 ---
 

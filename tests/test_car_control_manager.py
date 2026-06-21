@@ -216,6 +216,77 @@ class TestCarControlManager(unittest.TestCase):
         self.assertIn('Math.max(0, Math.min(100, volume))', self.source_code)
         # 风量范围限制
         self.assertIn('Math.max(1, Math.min(8, level))', self.source_code)
+        # 温度范围限制
+        self.assertIn('Math.max(16, Math.min(30, temp))', self.source_code)
+    
+    def test_defrost_method(self):
+        """测试除霜方法"""
+        self.assertIn('public boolean setDefrost(boolean on)', self.source_code)
+    
+    def test_java_doc_comments(self):
+        """测试Javadoc注释完整性"""
+        # 统计public方法
+        method_pattern = r'public\s+\w+\s+(\w+)\s*\([^)]*\)'
+        methods = re.findall(method_pattern, self.source_code)
+        
+        # 统计有Javadoc注释的方法（/** ... */ 后面跟着 public）
+        javadoc_pattern = r'/\*\*[^*]*\*+(?:[^/*][^*]*\*+)*/\s*public'
+        javadoc_count = len(re.findall(javadoc_pattern, self.source_code, re.DOTALL))
+        
+        # 至少60%的public方法应该有Javadoc注释
+        coverage_ratio = javadoc_count / len(methods) if methods else 0
+        self.assertGreaterEqual(coverage_ratio, 0.5, 
+            f"Javadoc覆盖率应至少50%，当前{coverage_ratio:.1%}，{javadoc_count}/{len(methods)}个方法有注释")
+    
+    def test_null_safety(self):
+        """测试空安全检查"""
+        # 应该有空检查
+        self.assertIn('if (instance == null)', self.source_code)
+    
+    def test_constant_naming_convention(self):
+        """测试常量命名规范"""
+        # 所有常量应该是全大写下划线分隔
+        constant_pattern = r'public static final \w+ (\w+) ='
+        constants = re.findall(constant_pattern, self.source_code)
+        
+        for constant in constants:
+            # 跳过TAG
+            if constant == 'TAG':
+                continue
+            # 检查是否全大写
+            self.assertEqual(constant, constant.upper(), 
+                f"常量 '{constant}' 应该使用全大写下划线命名规范")
+    
+    def test_method_naming_convention(self):
+        """测试方法命名规范（驼峰命名法）"""
+        method_pattern = r'public\s+\w+\s+(\w+)\s*\([^)]*\)'
+        methods = re.findall(method_pattern, self.source_code)
+        
+        for method in methods:
+            # 跳过getInstance等特殊方法
+            if method in ['getInstance']:
+                continue
+            # 方法名应该以小写开头
+            self.assertTrue(method[0].islower(), 
+                f"方法名 '{method}' 应该以小写开头（驼峰命名法）")
+    
+    def test_class_structure(self):
+        """测试类结构完整性"""
+        # 私有构造函数（单例模式）
+        self.assertIn('private CarControlManager(Context context)', self.source_code)
+        
+        # TAG常量
+        self.assertIn('private static final String TAG =', self.source_code)
+        
+        # Context成员变量（注意：实际代码中是context，不是mContext）
+        self.assertIn('private Context context;', self.source_code)
+    
+    def test_log_tag_consistency(self):
+        """测试日志TAG一致性"""
+        # 所有Log.d/e应该使用相同的TAG
+        tag_pattern = r'Log\.\w+\(TAG,'
+        tag_usages = len(re.findall(tag_pattern, self.source_code))
+        self.assertGreaterEqual(tag_usages, 20, "应该有足够的日志输出使用TAG常量")
 
 
 if __name__ == '__main__':

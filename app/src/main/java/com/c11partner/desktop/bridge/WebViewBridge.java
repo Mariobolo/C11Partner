@@ -5,15 +5,10 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.c11partner.desktop.MainActivity;
-import com.c11partner.desktop.database.AppDatabaseHelper;
-
-import com.c11partner.desktop.database.ConfigAppDatabaseHelper;
-import com.c11partner.desktop.database.QuickAppDatabaseHelper;
-import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
-import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
+import com.c11partner.desktop.LeapMotorCarState;
 import com.c11partner.desktop.service.MediaSessionService;
 
-
+import org.json.JSONObject;
 
 /**
  * WebView与原生代码交互的桥梁类 - 主入口
@@ -36,14 +31,9 @@ public class WebViewBridge {
     private Context mContext;
     private MainActivity mActivity;
 
-    // 数据库帮助类（仅保留核心引用）
-    private AppDatabaseHelper dbHelper;
-    private QuickAppDatabaseHelper quickAppDbHelper;
-    private WallpaperCategoryDatabaseHelper wallpaperDbHelper;
-    private WallpaperSettingsDatabaseHelper wallpaperSettingsDbHelper;
-    private ConfigAppDatabaseHelper configAppDbHelper;
-
     // 模块化Bridge - 所有具体功能委托给这些Bridge处理
+    // 设计原则：WebViewBridge仅作为调度入口，不持有具体业务数据
+    // 各子Bridge内部自行管理所需的数据库和资源依赖
     private CarControlBridge mCarControlBridge;
     private WallpaperBridge mWallpaperBridge;
     private AppBridge mAppBridge;
@@ -61,14 +51,8 @@ public class WebViewBridge {
         this.mActivity = activity;
         this.mContext = context;
         
-        // 初始化数据库帮助类
-        this.dbHelper = AppDatabaseHelper.getInstance(context);
-        this.quickAppDbHelper = QuickAppDatabaseHelper.getInstance(context);
-        this.wallpaperDbHelper = WallpaperCategoryDatabaseHelper.getInstance(context);
-        this.wallpaperSettingsDbHelper = WallpaperSettingsDatabaseHelper.getInstance(context);
-        this.configAppDbHelper = ConfigAppDatabaseHelper.getInstance(context);
-        
         // 初始化所有功能Bridge模块
+        // 各子Bridge内部自行管理数据库依赖（单例模式）
         this.mCarControlBridge = new CarControlBridge(context, activity);
         this.mWallpaperBridge = new WallpaperBridge(context, activity);
         this.mAppBridge = new AppBridge(context, activity);
@@ -488,6 +472,9 @@ public class WebViewBridge {
     public String getCurrentMusicName() { return mMusicBridge.getCurrentMusicName(); }
     
     @JavascriptInterface
+    public String getCurrentMusicArtist() { return mMusicBridge.getCurrentMusicArtist(); }
+    
+    @JavascriptInterface
     public String getMusicProgressInfo() { return mMusicBridge.getMusicProgressInfo(); }
     
     @JavascriptInterface
@@ -607,9 +594,9 @@ public class WebViewBridge {
                 if (mActivity.webView != null) {
                     String javascript = String.format(
                         "javascript:window.updateTimeDisplay(%s, %s, %s)",
-                        org.json.JSONObject.quote(time),
-                        org.json.JSONObject.quote(date),
-                        org.json.JSONObject.quote(lunarDate)
+                        JSONObject.quote(time),
+                        JSONObject.quote(date),
+                        JSONObject.quote(lunarDate)
                     );
                     mActivity.webView.loadUrl(javascript);
                 }
@@ -622,13 +609,13 @@ public class WebViewBridge {
      * 
      * @param state 车辆状态对象
      */
-    public void updatePresentationCarState(final com.c11partner.desktop.LeapMotorCarState state) {
+    public void updatePresentationCarState(final LeapMotorCarState state) {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (mActivity.webView != null && state != null) {
                     try {
-                        org.json.JSONObject stateJson = new org.json.JSONObject();
+                        JSONObject stateJson = new JSONObject();
                         stateJson.put("speed", state.getSpeed());
                         stateJson.put("gear", state.getGear());
                         stateJson.put("gearText", state.getGearText());
@@ -672,5 +659,4 @@ public class WebViewBridge {
             }
         });
     }
-    
 }
