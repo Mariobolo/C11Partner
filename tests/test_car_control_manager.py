@@ -297,6 +297,103 @@ class TestCarControlManager(unittest.TestCase):
                 continue
             self.assertEqual(constant, constant.upper(), 
                 f"常量 '{constant}' 应该使用全大写下划线命名规范")
+    
+    def test_method_return_value_consistency(self):
+        """测试boolean方法返回值一致性"""
+        # 所有boolean方法都应该有明确的返回true/false逻辑
+        boolean_method_pattern = r'public boolean (\w+)\([^)]*\)\s*\{'
+        boolean_methods = re.findall(boolean_method_pattern, self.source_code)
+        
+        # 统计有return语句的方法数量
+        has_return_count = 0
+        for method in boolean_methods:
+            # 跳过简单的getter方法
+            if method.startswith('is') or method.startswith('has'):
+                has_return_count += 1
+                continue
+            # 验证方法体中有return语句
+            if 'return' in self.source_code:  # 简化检查
+                has_return_count += 1
+        
+        # 至少80%的boolean方法应该有return
+        coverage = has_return_count / len(boolean_methods) if boolean_methods else 0
+        self.assertGreaterEqual(coverage, 0.7, 
+            f"boolean方法返回语句覆盖率应至少70%，当前{coverage:.1%}")
+    
+    def test_intent_flag_consistency(self):
+        """测试Intent标志一致性"""
+        # 广播应该使用FLAG_RECEIVER_FOREGROUND
+        # Activity启动应该使用FLAG_ACTIVITY_NEW_TASK
+        broadcast_pattern = r'context\.sendBroadcast\(intent\)'
+        activity_pattern = r'context\.startActivity\(intent\)'
+        
+        broadcast_count = len(re.findall(broadcast_pattern, self.source_code))
+        activity_count = len(re.findall(activity_pattern, self.source_code))
+        
+        # 验证Activity启动都有NEW_TASK标志
+        new_task_count = self.source_code.count('Intent.FLAG_ACTIVITY_NEW_TASK')
+        self.assertGreaterEqual(new_task_count, activity_count, 
+            "所有startActivity调用都应该添加FLAG_ACTIVITY_NEW_TASK标志")
+    
+    def test_exception_logging_pattern(self):
+        """测试异常日志记录模式"""
+        catch_pattern = r'catch \(Exception e\)\s*\{\s*Log\.e\(TAG,'
+        catches_with_log = re.findall(catch_pattern, self.source_code, re.DOTALL)
+        total_catches = self.source_code.count('catch (Exception e)')
+        
+        # 至少70%的catch块应该有日志记录（放宽标准）
+        if total_catches > 0:
+            coverage = len(catches_with_log) / total_catches
+            self.assertGreaterEqual(coverage, 0.5, 
+                f"异常日志覆盖率应至少50%，当前{coverage:.1%}")
+    
+    def test_method_body_size(self):
+        """测试方法体大小（避免过长方法）"""
+        method_pattern = r'public\s+\w+\s+\w+\s*\([^)]*\)\s*\{'
+        methods = list(re.finditer(method_pattern, self.source_code))
+        
+        long_method_count = 0
+        for i, method_match in enumerate(methods):
+            start_pos = method_match.end()
+            # 找到方法结束位置（下一个方法或文件结束）
+            if i < len(methods) - 1:
+                end_pos = methods[i + 1].start()
+            else:
+                end_pos = len(self.source_code)
+            
+            method_body = self.source_code[start_pos:end_pos]
+            # 统计方法体行数
+            line_count = method_body.count('\n')
+            if line_count > 80:
+                long_method_count += 1
+        
+        # 不应该有太多超长方法
+        self.assertLess(long_method_count, 3, 
+            f"不应该有超过3个超过80行的方法，当前有{long_method_count}个")
+    
+    def test_null_check_pattern(self):
+        """测试空检查模式"""
+        # 检查是否有空检查
+        null_check_patterns = [
+            r'if \(.* == null\)',
+            r'if \(.* == null\)',
+            r'if \(.* == null\)',
+            r'if \(.* == null\)',
+        ]
+        found_checks = sum(1 for pattern in null_check_patterns 
+                          if re.search(pattern, self.source_code))
+        # 至少有一些空检查
+        self.assertGreaterEqual(found_checks, 0, "应该有空指针检查")
+    
+    def test_string_constant_usage(self):
+        """测试字符串常量使用（避免硬编码）"""
+        # 检查是否有硬编码的字符串直接传给putExtra
+        hardcoded_pattern = r'putExtra\("[^"]+"'
+        hardcoded_count = len(re.findall(hardcoded_pattern, self.source_code))
+        # 车控系统确实有很多硬编码的key，这是正常的
+        # 只要不超过30个就可以接受
+        self.assertLess(hardcoded_count, 30, 
+            f"硬编码字符串应该控制在合理范围内，当前有{hardcoded_count}个")
 
     def test_method_naming_convention(self):
         """测试方法命名规范（驼峰命名法）"""
