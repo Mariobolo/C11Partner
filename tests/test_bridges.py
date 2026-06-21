@@ -235,10 +235,11 @@ class TestWebViewBridge(unittest.TestCase):
             self.source_code = f.read()
     def test_class_structure(self):
         """测试类结构是否正确"""
-        self.assertIn('public class WebViewBridge', self.source_code)
+        self.assertIn('public class WebViewBridge extends BaseBridge', self.source_code)
         self.assertIn('private static final String TAG = "WebViewBridge";', self.source_code)
-        self.assertIn('private Context mContext;', self.source_code)
-        self.assertIn('private MainActivity mActivity;', self.source_code)
+        # 成员变量由父类BaseBridge提供，子类不再重复定义
+        self.assertNotIn('private Context mContext;', self.source_code)
+        self.assertNotIn('private MainActivity mActivity;', self.source_code)
     def test_bridge_delegation_fields(self):
         """测试Bridge委托字段定义"""
         bridge_fields = [
@@ -254,8 +255,10 @@ class TestWebViewBridge(unittest.TestCase):
     def test_constructor(self):
         """测试构造函数"""
         self.assertIn('public WebViewBridge(MainActivity activity, Context context)', self.source_code)
-        self.assertIn('this.mActivity = activity;', self.source_code)
-        self.assertIn('this.mContext = context;', self.source_code)
+        # 使用父类构造函数，不再重复赋值
+        self.assertIn('super(context, activity);', self.source_code)
+        self.assertNotIn('this.mActivity = activity;', self.source_code)
+        self.assertNotIn('this.mContext = context;', self.source_code)
         # 测试所有Bridge初始化
         self.assertIn('new CarControlBridge(context, activity)', self.source_code)
         self.assertIn('new WallpaperBridge(context, activity)', self.source_code)
@@ -271,7 +274,9 @@ class TestWebViewBridge(unittest.TestCase):
         """测试壁纸更新通知方法"""
         self.assertIn('public void notifyWallpaperUpdate()', self.source_code)
         self.assertIn('handleWallpaperUpdateNotification()', self.source_code)
-        self.assertIn('mActivity.runOnUiThread', self.source_code)
+        # 使用父类的safeEvaluateJavascript方法，不再手动处理UI线程
+        self.assertIn('safeEvaluateJavascript(', self.source_code)
+        self.assertNotIn('mActivity.runOnUiThread', self.source_code)
     def test_delegation_pattern(self):
         """测试委托模式实现"""
         # 验证CarControlBridge委托
@@ -296,6 +301,21 @@ class TestWebViewBridge(unittest.TestCase):
         self.assertIn('window.updateTimeDisplay', self.source_code)
         self.assertIn('window.updateCarState', self.source_code)
         self.assertIn('window.initializeAcStatus()', self.source_code)
+        # 使用父类的safeEvaluateJavascript方法
+        self.assertIn('safeEvaluateJavascript(javascript)', self.source_code)
+        
+    def test_logging_methods(self):
+        """测试日志方法使用父类工具方法"""
+        self.assertIn('logD(TAG,', self.source_code)
+        self.assertIn('logE(TAG,', self.source_code)
+        # 不再直接使用Android Log类
+        self.assertNotIn('Log.d(TAG,', self.source_code)
+        self.assertNotIn('Log.e(TAG,', self.source_code)
+        
+    def test_null_safety_in_car_state_update(self):
+        """测试车辆状态更新中的空安全检查"""
+        self.assertIn('if (state == null)', self.source_code)
+        self.assertIn('return;', self.source_code)
     def test_method_count(self):
         """测试方法数量（验证模块化程度）"""
         method_pattern = r'@JavascriptInterface\s*\n\s*public'
@@ -347,7 +367,7 @@ class TestAdbBridge(unittest.TestCase):
         """测试异常处理"""
         catch_count = self.source_code.count('catch (Exception e)')
         self.assertGreaterEqual(catch_count, 5, "应该有足够的异常处理")
-        self.assertIn('Log.e(TAG,', self.source_code)
+        self.assertIn('logE(TAG,', self.source_code)
     def test_javascript_interface(self):
         """测试JavascriptInterface注解"""
         js_interface_count = self.source_code.count('@JavascriptInterface')

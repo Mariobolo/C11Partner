@@ -1,10 +1,7 @@
 package com.c11partner.desktop.bridge;
 
-import android.content.Context;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.LeapMotorCarState;
 import com.c11partner.desktop.service.MediaSessionService;
 
@@ -26,10 +23,8 @@ import org.json.JSONObject;
  * - SystemBridge: 系统设置相关
  * - AdbBridge: ADB授权相关
  */
-public class WebViewBridge {
+public class WebViewBridge extends BaseBridge {
     private static final String TAG = "WebViewBridge";
-    private Context mContext;
-    private MainActivity mActivity;
 
     // 模块化Bridge - 所有具体功能委托给这些Bridge处理
     // 设计原则：WebViewBridge仅作为调度入口，不持有具体业务数据
@@ -48,8 +43,7 @@ public class WebViewBridge {
      * @param context  应用上下文
      */
     public WebViewBridge(MainActivity activity, Context context) {
-        this.mActivity = activity;
-        this.mContext = context;
+        super(context, activity);
         
         // 初始化所有功能Bridge模块
         // 各子Bridge内部自行管理数据库依赖（单例模式）
@@ -60,7 +54,7 @@ public class WebViewBridge {
         this.mSystemBridge = new SystemBridge(context, activity);
         this.mAdbBridge = new AdbBridge(context, activity);
         
-        Log.d(TAG, "WebViewBridge初始化完成，所有功能模块已加载");
+        logD(TAG, "WebViewBridge初始化完成，所有功能模块已加载");
     }
 
     /**
@@ -79,15 +73,7 @@ public class WebViewBridge {
      * 通知前端更新壁纸 - 传递给WallpaperBridge
      */
     public void notifyWallpaperUpdate() {
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mActivity.webView != null) {
-                    String javascript = "javascript:window.handleWallpaperUpdateNotification()";
-                    mActivity.webView.loadUrl(javascript);
-                }
-            }
-        });
+        safeEvaluateJavascript("javascript:window.handleWallpaperUpdateNotification()");
     }
 
     // ==================== CarControlBridge 委托方法 ====================
@@ -588,20 +574,13 @@ public class WebViewBridge {
      * @param lunarDate 农历日期
      */
     public void updateTimeDisplay(final String time, final String date, final String lunarDate) {
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mActivity.webView != null) {
-                    String javascript = String.format(
-                        "javascript:window.updateTimeDisplay(%s, %s, %s)",
-                        JSONObject.quote(time),
-                        JSONObject.quote(date),
-                        JSONObject.quote(lunarDate)
-                    );
-                    mActivity.webView.loadUrl(javascript);
-                }
-            }
-        });
+        String javascript = String.format(
+            "javascript:window.updateTimeDisplay(%s, %s, %s)",
+            JSONObject.quote(time),
+            JSONObject.quote(date),
+            JSONObject.quote(lunarDate)
+        );
+        safeEvaluateJavascript(javascript);
     }
     
     /**
@@ -610,53 +589,41 @@ public class WebViewBridge {
      * @param state 车辆状态对象
      */
     public void updatePresentationCarState(final LeapMotorCarState state) {
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mActivity.webView != null && state != null) {
-                    try {
-                        JSONObject stateJson = new JSONObject();
-                        stateJson.put("speed", state.getSpeed());
-                        stateJson.put("gear", state.getGear());
-                        stateJson.put("gearText", state.getGearText());
-                        stateJson.put("leftTurnLight", state.getLeftTurnLight());
-                        stateJson.put("rightTurnLight", state.getRightTurnLight());
-                        stateJson.put("lowBeamLight", state.getLowBeamLight());
-                        stateJson.put("lockState", state.getLockState());
-                        stateJson.put("isLocked", state.isLocked());
-                        stateJson.put("openDoorCount", state.getOpenDoorCount());
-                        stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
-                        stateJson.put("sunroof", state.getSunroof());
-                        stateJson.put("bluetoothConnected", state.isBluetoothConnected());
-                        stateJson.put("acPageOpen", state.isAcPageOpen());
-                        stateJson.put("camera360Visible", state.isCamera360Visible());
-                        stateJson.put("frontLeftTirePressure", state.getFrontLeftTirePressure());
-                        stateJson.put("frontRightTirePressure", state.getFrontRightTirePressure());
-                        stateJson.put("rearLeftTirePressure", state.getRearLeftTirePressure());
-                        stateJson.put("rearRightTirePressure", state.getRearRightTirePressure());
-                        
-                        String javascript = "javascript:window.updateCarState(" + stateJson.toString() + ")";
-                        mActivity.webView.loadUrl(javascript);
-                    } catch (Exception e) {
-                        Log.e(TAG, "更新车辆状态失败", e);
-                    }
-                }
-            }
-        });
+        if (state == null) {
+            return;
+        }
+        try {
+            JSONObject stateJson = new JSONObject();
+            stateJson.put("speed", state.getSpeed());
+            stateJson.put("gear", state.getGear());
+            stateJson.put("gearText", state.getGearText());
+            stateJson.put("leftTurnLight", state.getLeftTurnLight());
+            stateJson.put("rightTurnLight", state.getRightTurnLight());
+            stateJson.put("lowBeamLight", state.getLowBeamLight());
+            stateJson.put("lockState", state.getLockState());
+            stateJson.put("isLocked", state.isLocked());
+            stateJson.put("openDoorCount", state.getOpenDoorCount());
+            stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
+            stateJson.put("sunroof", state.getSunroof());
+            stateJson.put("bluetoothConnected", state.isBluetoothConnected());
+            stateJson.put("acPageOpen", state.isAcPageOpen());
+            stateJson.put("camera360Visible", state.isCamera360Visible());
+            stateJson.put("frontLeftTirePressure", state.getFrontLeftTirePressure());
+            stateJson.put("frontRightTirePressure", state.getFrontRightTirePressure());
+            stateJson.put("rearLeftTirePressure", state.getRearLeftTirePressure());
+            stateJson.put("rearRightTirePressure", state.getRearRightTirePressure());
+            
+            String javascript = "javascript:window.updateCarState(" + stateJson.toString() + ")";
+            safeEvaluateJavascript(javascript);
+        } catch (Exception e) {
+            logE(TAG, "更新车辆状态失败", e);
+        }
     }
     
     /**
      * 初始化空调状态（MainActivity调用）
      */
     public void initializeAcStatus() {
-        mActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mActivity.webView != null) {
-                    // 调用前端初始化空调状态
-                    mActivity.webView.loadUrl("javascript:window.initializeAcStatus()");
-                }
-            }
-        });
+        safeEvaluateJavascript("javascript:window.initializeAcStatus()");
     }
 }
