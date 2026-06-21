@@ -533,6 +533,25 @@ public class WebViewBridge extends BaseBridge {
     public void openNotificationListenerSettings() {
         mMusicBridge.openNotificationListenerSettings();
     }
+    
+    // 音乐播放列表与收藏控制
+    @JavascriptInterface
+    public String getPlaylist() { return mMusicBridge.getPlaylist(); }
+    
+    @JavascriptInterface
+    public void playSongAtIndex(int index) { mMusicBridge.playSongAtIndex(index); }
+    
+    @JavascriptInterface
+    public void setRepeatMode(int mode) { mMusicBridge.setRepeatMode(mode); }
+    
+    @JavascriptInterface
+    public int getRepeatMode() { return mMusicBridge.getRepeatMode(); }
+    
+    @JavascriptInterface
+    public void setShuffleMode(boolean enabled) { mMusicBridge.setShuffleMode(enabled); }
+    
+    @JavascriptInterface
+    public boolean isShuffleEnabled() { return mMusicBridge.isShuffleEnabled(); }
 
     // ==================== SystemBridge 委托方法 ====================
     @JavascriptInterface
@@ -623,6 +642,29 @@ public class WebViewBridge extends BaseBridge {
     public String getAllComponentConfigs() {
         return mSystemBridge.getAllComponentConfigs();
     }
+    
+    // 系统信息获取
+    @JavascriptInterface
+    public String getSystemVersionInfo() { return mSystemBridge.getSystemVersionInfo(); }
+    
+    @JavascriptInterface
+    public String getAppVersionInfo() { return mSystemBridge.getAppVersionInfo(); }
+    
+    @JavascriptInterface
+    public String getMemoryInfo() { return mSystemBridge.getMemoryInfo(); }
+    
+    @JavascriptInterface
+    public String getBatteryInfo() { return mSystemBridge.getBatteryInfo(); }
+    
+    // 系统操作
+    @JavascriptInterface
+    public void restartApp() { mSystemBridge.restartApp(); }
+    
+    @JavascriptInterface
+    public void openSystemSettings() { mSystemBridge.openSystemSettings(); }
+    
+    @JavascriptInterface
+    public void openAppSettings() { mSystemBridge.openAppSettings(); }
 
     // ==================== MainActivity 调用的UI更新方法 ====================
     

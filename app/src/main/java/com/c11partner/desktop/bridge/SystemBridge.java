@@ -1,5 +1,7 @@
 package com.c11partner.desktop.bridge;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -445,5 +447,162 @@ public class SystemBridge extends BaseBridge {
             logE(TAG, "获取所有组件配置时出错", e);
         }
         return "{}";
+    }
+    
+    // ==================== 系统信息获取方法 ====================
+    /**
+     * 获取系统版本信息
+     *
+     * @return 系统版本信息JSON字符串
+     */
+    @JavascriptInterface
+    public String getSystemVersionInfo() {
+        try {
+            JSONObject info = new JSONObject();
+            info.put("androidVersion", Build.VERSION.RELEASE);
+            info.put("sdkVersion", Build.VERSION.SDK_INT);
+            info.put("deviceModel", Build.MODEL);
+            info.put("deviceManufacturer", Build.MANUFACTURER);
+            info.put("deviceBrand", Build.BRAND);
+            info.put("deviceProduct", Build.PRODUCT);
+            info.put("buildNumber", Build.DISPLAY);
+            return info.toString();
+        } catch (Exception e) {
+            logE(TAG, "获取系统版本信息失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
+     * 获取应用版本信息
+     *
+     * @return 应用版本信息JSON字符串
+     */
+    @JavascriptInterface
+    public String getAppVersionInfo() {
+        try {
+            android.content.pm.PackageInfo pInfo = mContext.getPackageManager()
+                .getPackageInfo(mContext.getPackageName(), 0);
+            JSONObject info = new JSONObject();
+            info.put("versionName", pInfo.versionName);
+            info.put("versionCode", pInfo.versionCode);
+            info.put("packageName", mContext.getPackageName());
+            return info.toString();
+        } catch (Exception e) {
+            logE(TAG, "获取应用版本信息失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
+     * 获取可用内存信息
+     *
+     * @return 内存信息JSON字符串
+     */
+    @JavascriptInterface
+    public String getMemoryInfo() {
+        try {
+            android.app.ActivityManager activityManager = 
+                (android.app.ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+            android.app.ActivityManager.MemoryInfo memoryInfo = 
+                new android.app.ActivityManager.MemoryInfo();
+            activityManager.getMemoryInfo(memoryInfo);
+            
+            JSONObject info = new JSONObject();
+            info.put("availableMem", memoryInfo.availMem);
+            info.put("totalMem", memoryInfo.totalMem);
+            info.put("lowMemory", memoryInfo.lowMemory);
+            info.put("threshold", memoryInfo.threshold);
+            return info.toString();
+        } catch (Exception e) {
+            logE(TAG, "获取内存信息失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
+     * 获取电池信息
+     *
+     * @return 电池信息JSON字符串
+     */
+    @JavascriptInterface
+    public String getBatteryInfo() {
+        try {
+            Intent batteryIntent = mContext.registerReceiver(null,
+                new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+            
+            if (batteryIntent != null) {
+                int level = batteryIntent.getIntExtra("level", -1);
+                int scale = batteryIntent.getIntExtra("scale", -1);
+                int status = batteryIntent.getIntExtra("status", -1);
+                int plugged = batteryIntent.getIntExtra("plugged", -1);
+                float batteryPct = level * 100 / (float) scale;
+                
+                JSONObject info = new JSONObject();
+                info.put("level", batteryPct);
+                info.put("isCharging", plugged > 0);
+                info.put("status", status);
+                info.put("plugged", plugged);
+                return info.toString();
+            }
+        } catch (Exception e) {
+            logE(TAG, "获取电池信息失败", e);
+        }
+        return "{}";
+    }
+    
+    // ==================== 系统操作方法 ====================
+    /**
+     * 重启应用
+     */
+    @JavascriptInterface
+    public void restartApp() {
+        try {
+            android.content.pm.PackageManager pm = mContext.getPackageManager();
+            Intent intent = pm.getLaunchIntentForPackage(mContext.getPackageName());
+            if (intent != null) {
+                android.app.PendingIntent pendingIntent = android.app.PendingIntent.getActivity(
+                    mContext, 0, intent,
+                    android.app.PendingIntent.FLAG_CANCEL_CURRENT | 
+                    android.app.PendingIntent.FLAG_IMMUTABLE);
+                android.app.AlarmManager alarmManager = 
+                    (android.app.AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(android.app.AlarmManager.RTC, 
+                    System.currentTimeMillis() + 100, pendingIntent);
+                System.exit(0);
+            }
+        } catch (Exception e) {
+            logE(TAG, "重启应用失败", e);
+        }
+    }
+    
+    /**
+     * 打开系统设置
+     */
+    @JavascriptInterface
+    public void openSystemSettings() {
+        try {
+            Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+        } catch (Exception e) {
+            logE(TAG, "打开系统设置失败", e);
+        }
+    }
+    
+    /**
+     * 打开应用设置
+     */
+    @JavascriptInterface
+    public void openAppSettings() {
+        try {
+            Intent intent = new Intent(
+                android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(android.net.Uri.parse("package:" + mContext.getPackageName()));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+        } catch (Exception e) {
+            logE(TAG, "打开应用设置失败", e);
+        }
     }
 }

@@ -415,4 +415,107 @@ public class MusicBridge extends BaseBridge {
             logE(TAG, "打开通知监听设置失败", e);
         }
     }
+    
+    // ==================== 音乐收藏与播放列表方法 ====================
+    /**
+     * 获取当前播放列表
+     *
+     * @return 播放列表JSON字符串
+     */
+    @JavascriptInterface
+    public String getPlaylist() {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                return mediaSessionService.getPlaylist();
+            }
+        } catch (Exception e) {
+            logE(TAG, "获取播放列表失败", e);
+        }
+        return "[]";
+    }
+    
+    /**
+     * 播放指定索引的歌曲
+     *
+     * @param index 歌曲索引
+     */
+    @JavascriptInterface
+    public void playSongAtIndex(int index) {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                mediaSessionService.playSongAtIndex(index);
+                logD(TAG, "播放第 " + index + " 首歌曲");
+            }
+        } catch (Exception e) {
+            logE(TAG, "播放指定歌曲失败", e);
+        }
+    }
+    
+    /**
+     * 切换循环模式
+     *
+     * @param mode 循环模式：0-不循环，1-单曲循环，2-列表循环
+     */
+    @JavascriptInterface
+    public void setRepeatMode(int mode) {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                mediaSessionService.setRepeatMode(mode);
+                logD(TAG, "设置循环模式: " + mode);
+            }
+        } catch (Exception e) {
+            logE(TAG, "设置循环模式失败", e);
+        }
+    }
+    
+    /**
+     * 获取当前循环模式
+     *
+     * @return 循环模式
+     */
+    @JavascriptInterface
+    public int getRepeatMode() {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                return mediaSessionService.getRepeatMode();
+            }
+        } catch (Exception e) {
+            logE(TAG, "获取循环模式失败", e);
+        }
+        return 0;
+    }
+    
+    /**
+     * 切换随机播放模式
+     *
+     * @param enabled 是否启用随机播放
+     */
+    @JavascriptInterface
+    public void setShuffleMode(boolean enabled) {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                mediaSessionService.setShuffleMode(enabled);
+                logD(TAG, "设置随机播放: " + enabled);
+            }
+        } catch (Exception e) {
+            logE(TAG, "设置随机播放失败", e);
+        }
+    }
+    
+    /**
+     * 获取随机播放状态
+     *
+     * @return 是否启用随机播放
+     */
+    @JavascriptInterface
+    public boolean isShuffleEnabled() {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                return mediaSessionService.isShuffleEnabled();
+            }
+        } catch (Exception e) {
+            logE(TAG, "获取随机播放状态失败", e);
+        }
+        return false;
+    }
 }
