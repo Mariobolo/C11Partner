@@ -403,7 +403,8 @@ chore: 构建/工具链变动
 
 - **车控模块迁移**：42/46 方法（~91%）
 - **WallpaperBridge**：100% 完成（新增 getRandomWallpaperBase64、encodeImageToBase64、setWallpaperCarouselEnabled、setWallpaperCarouselInterval、setWallpaperFillMode、refreshBingWallpaper、pickLocalWallpaperFile、pickLocalWallpaperFolder 方法）
-- **AppBridge**：100% 完成（完善 getAllApps/getUserApps/getSystemApps、getAppInfo、getAppIcon、getConfigApp、saveConfigApp、getQuickAppList 等）
+- **AppBridge**：100% 完成（完善 getAllApps/getUserApps/getSystemApps、getAppInfo、getAppIcon、getConfigApp、saveConfigApp、getQuickAppList、isAppInstalled 等）
+- **WebViewBridge 委托**：已完成 getAllApps、getUserApps、getSystemApps、getAppInfo、getAppIcon、isAppInstalled 委托调用
 - **剩余 4 个**：UI 相关高级方法（建议保留在 WebViewBridge）
 - **拆分模式**：委托模式（Facade），前端不用改
 
