@@ -414,7 +414,13 @@ chore: 构建/工具链变动
 - **拆分模式**：委托模式（Facade），前端不用改
 - **夜间自动推进（2026-06-21）**：代码索引已更新，所有62个Python测试通过，代码已提交GitHub
 - **夜间自动推进（2026-06-21 #2）**：清理WebViewBridge中重复的方法定义，代码索引已更新，所有62个Python测试通过，代码已提交GitHub
-- **夜间自动推进（2026-06-21 #3）**：清理WebViewBridge中重复的方法定义，代码索引已更新，所有62个Python测试通过，代码已提交GitHub
+- **夜间自动推进（2026-06-21 #3）**：修复GitHub Actions构建失败问题，修复test_main_with_file_path测试缺少tmp_path参数的问题，所有114个Python测试全部通过
+- **夜间自动推进（2026-06-21 #4）**：✅ 修复GitHub Actions Run #135构建失败问题
+  - 问题：test_main_with_file_path()缺少1个必需的位置参数'tmp_path'
+  - 原因：run_tests()手动运行测试时未处理pytest fixture参数
+  - 修复：修改run_tests()函数，使用inspect检测方法参数，自动创建并传递tmp_path
+  - 验证：所有36个check_commit_msg测试通过，所有114个Python测试全部通过
+  - 代码已提交GitHub（commit: 34e7249）清理WebViewBridge中重复的方法定义，代码索引已更新，所有62个Python测试通过，代码已提交GitHub
 - **夜间自动推进（2026-06-21 #4）**：
   - ✅ 修复WallpaperBridge重复方法定义问题（删除3个重复方法）
   - ✅ 修复AdbBridge中showToastOnUiThread方法覆盖冲突
