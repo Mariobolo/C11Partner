@@ -227,6 +227,96 @@ class TestCheckCommitMsg:
         """测试 TYPE_DESCRIPTIONS 覆盖所有类型"""
         for t in ALLOWED_TYPES:
             assert t in TYPE_DESCRIPTIONS, f"Type {t} 应该在 TYPE_DESCRIPTIONS 中"
+    
+    def test_print_result_with_long_body_truncated(self):
+        """测试打印长正文时被截断的情况"""
+        long_body = "这是非常长的正文描述内容，超过50个字符就会被截断显示省略号" * 2
+        result = {
+            'valid': True,
+            'type': 'feat',
+            'subject': '添加新功能',
+            'body': long_body,
+            'errors': [],
+            'warnings': []
+        }
+        captured_output = io.StringIO()
+        old_stdout = sys.stdout
+        sys.stdout = captured_output
+        
+        try:
+            print_result(result)
+            output = captured_output.getvalue()
+            assert '...' in output  # 应该包含省略号表示被截断
+        finally:
+            sys.stdout = old_stdout
+    
+    def test_main_no_args(self):
+        """测试 main 函数不带参数的情况（显示帮助）"""
+        captured_output = io.StringIO()
+        old_stdout = sys.stdout
+        old_argv = sys.argv
+        sys.argv = ['check_commit_msg.py']
+        sys.stdout = captured_output
+        
+        try:
+            main()
+            output = captured_output.getvalue()
+            assert '用法' in output
+            assert '示例' in output
+        finally:
+            sys.stdout = old_stdout
+            sys.argv = old_argv
+    
+    def test_main_with_valid_message(self):
+        """测试 main 函数带有效提交信息"""
+        captured_output = io.StringIO()
+        old_stdout = sys.stdout
+        old_argv = sys.argv
+        sys.argv = ['check_commit_msg.py', 'feat: 添加新功能']
+        sys.stdout = captured_output
+        
+        try:
+            main()
+        except SystemExit as e:
+            assert e.code == 0  # 应该退出码为0
+        finally:
+            output = captured_output.getvalue()
+            assert '格式正确' in output
+            sys.stdout = old_stdout
+            sys.argv = old_argv
+    
+    def test_main_with_invalid_message(self):
+        """测试 main 函数带无效提交信息"""
+        old_argv = sys.argv
+        sys.argv = ['check_commit_msg.py', 'invalid message']
+        
+        try:
+            main()
+        except SystemExit as e:
+            assert e.code == 1  # 应该退出码为1
+        finally:
+            sys.argv = old_argv
+    
+    def test_main_with_file_path(self, tmp_path):
+        """测试 main 函数从文件读取提交信息"""
+        commit_file = tmp_path / "COMMIT_EDITMSG"
+        commit_file.write_text("feat: 从文件读取的提交信息", encoding='utf-8')
+        
+        captured_output = io.StringIO()
+        old_stdout = sys.stdout
+        old_argv = sys.argv
+        sys.argv = ['check_commit_msg.py', str(commit_file)]
+        sys.stdout = captured_output
+        
+        try:
+            main()
+        except SystemExit as e:
+            assert e.code == 0  # 应该退出码为0
+        finally:
+            output = captured_output.getvalue()
+            assert '格式正确' in output
+            sys.stdout = old_stdout
+            sys.argv = old_argv
 def run_tests():
     """运行所有测试"""
     import traceback

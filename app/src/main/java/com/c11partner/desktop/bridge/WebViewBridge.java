@@ -315,45 +315,13 @@ public class WebViewBridge {
     public void executeAdbPermissionGrant() { mAdbBridge.executeAdbPermissionGrant(); }
     
     @JavascriptInterface
-    public void openRecentTasks() {
-        // 多任务功能也委托给AdbBridge
-        new Thread(() -> {
-            try {
-                com.c11partner.desktop.adb.AdbCommandProcessor processor = 
-                    new com.c11partner.desktop.adb.AdbCommandProcessor(mContext);
-                processor.executeCommand("input keyevent 187");
-            } catch (Exception e) {
-                Log.e(TAG, "打开多任务时出错", e);
-            }
-        }).start();
-    }
+    public void openRecentTasks() { mAdbBridge.openRecentTasks(); }
     
     @JavascriptInterface
-    public void openRecents() { openRecentTasks(); }
+    public void openRecents() { mAdbBridge.openRecents(); }
     
     @JavascriptInterface
-    public void setDefaultDesktopViaAdb() {
-        Log.d(TAG, "setDefaultDesktopViaAdb方法被调用");
-        new Thread(() -> {
-            try {
-                com.c11partner.desktop.adb.AdbManager.setAppContext(mContext);
-                com.c11partner.desktop.adb.AdbManager.initCrypto();
-                
-                String deviceIp = getDeviceIpAddress();
-                if (deviceIp == null) return;
-                
-                int[] commonPorts = {5555, 5554, 5556};
-                for (int port : commonPorts) {
-                    if (com.c11partner.desktop.adb.AdbManager.connectAndExecute(
-                            deviceIp, port, "pm clear-defaults android.intent.category.HOME")) {
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "设置默认桌面时出错", e);
-            }
-        }).start();
-    }
+    public void setDefaultDesktopViaAdb() { mAdbBridge.setDefaultDesktopViaAdb(); }
     // ==================== 组件配置方法（保留在主Bridge） ====================
     @JavascriptInterface
     public boolean saveComponentConfig(String componentName, boolean isEnabled) {
@@ -479,25 +447,4 @@ public class WebViewBridge {
         });
     }
     
-    // ==================== 私有辅助方法 ====================
-    
-    private String getDeviceIpAddress() {
-        try {
-            java.net.NetworkInterface networkInterface = java.net.NetworkInterface.getByName("wlan0");
-            if (networkInterface == null) networkInterface = java.net.NetworkInterface.getByName("eth0");
-            
-            if (networkInterface != null && networkInterface.isUp()) {
-                java.util.Enumeration<java.net.InetAddress> addresses = networkInterface.getInetAddresses();
-                while (addresses.hasMoreElements()) {
-                    java.net.InetAddress address = addresses.nextElement();
-                    if (!address.isLoopbackAddress() && address instanceof java.net.Inet4Address) {
-                        return address.getHostAddress();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "获取设备IP地址失败", e);
-        }
-        return null;
-    }
 }

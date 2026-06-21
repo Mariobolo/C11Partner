@@ -1,7 +1,7 @@
 # C11Partner 代码索引文档
 > 📌 **快速定位代码的神器** - 修改代码前先看本文档，找到对应函数行号再精准读取，避免读取大文件占用上下文
 >
-> 自动生成时间：2026-06-21 21:08:57
+> 自动生成时间：2026-06-21 21:21:34
 > 生成脚本：`tools/generate_code_index.py`
 
 ---
@@ -30,9 +30,9 @@ python3 tools/generate_code_index.py
 
 | 类型 | 文件数 | 函数/方法数 |
 |------|--------|------------|
-| Java后端 | 8 | 336 |
+| Java后端 | 8 | 335 |
 | JS前端 | 3 | 145 |
-| **总计** | **11** | **481** |
+| **总计** | **11** | **480** |
 
 ---
 
@@ -231,7 +231,7 @@ python3 tools/generate_code_index.py
 
 ### WebViewBridge.java ⭐
 **路径**：`app/src/main/java/com/c11partner/desktop/bridge/WebViewBridge.java`  
-**行数**：约 503 行  
+**行数**：约 450 行  
 **职责**：JS桥接层，提供50+个JS接口给前端调用
 
 #### 保存/设置
@@ -266,9 +266,9 @@ python3 tools/generate_code_index.py
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `run()` | 94 | public |
-| `run()` | 412 | public |
-| `run()` | 434 | public |
-| `run()` | 473 | public |
+| `run()` | 380 | public |
+| `run()` | 402 | public |
+| `run()` | 441 | public |
 
 #### 应用管理
 
@@ -284,9 +284,9 @@ python3 tools/generate_code_index.py
 | `getConfigApp()` | 150 | public |
 | `saveSystemLauncherSetting()` | 281 | public |
 | `saveSystemLauncherSettingAsync()` | 286 | public |
-| `saveComponentConfig()` | 359 | public |
-| `isComponentEnabled()` | 372 | public |
-| `getAllComponentConfigs()` | 384 | public |
+| `saveComponentConfig()` | 327 | public |
+| `isComponentEnabled()` | 340 | public |
+| `getAllComponentConfigs()` | 352 | public |
 
 #### 状态获取
 
@@ -302,7 +302,6 @@ python3 tools/generate_code_index.py
 | `isNotificationListenerEnabled()` | 265 | public |
 | `isWifiConnected()` | 275 | public |
 | `isBluetoothConnected()` | 278 | public |
-| `getDeviceIpAddress()` | 484 | private |
 
 #### 其他
 
@@ -310,7 +309,7 @@ python3 tools/generate_code_index.py
 |--------|------|-----------|
 | `openAppInfo()` | 128 | public |
 | `openRecentTasks()` | 318 | public |
-| `openRecents()` | 332 | public |
+| `openRecents()` | 321 | public |
 
 #### 时间日期
 
@@ -319,14 +318,14 @@ python3 tools/generate_code_index.py
 | `updateCategoryEnabled()` | 199 | public |
 | `updateCategoryEnabledAsync()` | 207 | public |
 | `getLunarCalendar()` | 306 | public |
-| `updateTimeDisplay()` | 409 | public |
+| `updateTimeDisplay()` | 377 | public |
 
 #### 初始化
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `startMusicVisualizer()` | 229 | public |
-| `initializeAcStatus()` | 470 | public |
+| `initializeAcStatus()` | 438 | public |
 
 #### 音乐相关
 
@@ -360,13 +359,13 @@ python3 tools/generate_code_index.py
 | `triggerUsbDebugAuthorization()` | 309 | public |
 | `triggerWirelessAdbAuthorization()` | 312 | public |
 | `executeAdbPermissionGrant()` | 315 | public |
-| `setDefaultDesktopViaAdb()` | 335 | public |
+| `setDefaultDesktopViaAdb()` | 324 | public |
 
 #### 副屏相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `updatePresentationCarState()` | 431 | public |
+| `updatePresentationCarState()` | 399 | public |
 
 ---
 

@@ -526,3 +526,45 @@ chore: 构建/工具链变动
 - **WebViewBridge优化**: 已精简，所有功能委托到专门Bridge
 - **测试覆盖率**: 88% ✅（目标达成）
 - **CI构建**: 正常运行
+
+---
+
+## 🔄 夜间自动推进记录（2026-06-21 #8）
+
+### ✅ GitHub Actions 构建状态
+- **最新构建 Run #134**: ✅ **成功** (completed - success)
+- **最新构建 Run #133**: ✅ **成功** (completed - success)
+- **构建状态**: 连续成功，无编译错误
+
+### ✅ 测试覆盖率大幅提升
+- **整体测试覆盖率**: **93%** ✅（目标80%+，大幅超额完成）
+- **check_commit_msg.py**: **97%**（从72%大幅提升）
+  - 新增6个main函数测试用例
+  - 覆盖无参数、有效消息、无效消息、文件读取等场景
+  - 覆盖长正文截断显示
+- **generate_api_docs.py**: 87%
+- **generate_code_index.py**: 96%
+- **总测试数**: 114个（全部通过）
+
+### ✅ WebViewBridge 进一步精简优化
+1. ✅ 将 `openRecentTasks()` 方法迁移到 AdbBridge
+2. ✅ 将 `openRecents()` 方法迁移到 AdbBridge
+3. ✅ 将 `setDefaultDesktopViaAdb()` 方法迁移到 AdbBridge
+4. ✅ 删除 WebViewBridge 中重复的 `getDeviceIpAddress()` 私有方法
+5. ✅ AdbBridge 新增 3 个系统操作方法
+6. ✅ WebViewBridge 所有 Adb 功能完全委托调用
+
+### ✅ 完成工作
+1. ✅ GitHub Actions构建状态验证（Run #134成功）
+2. ✅ check_commit_msg测试覆盖率大幅提升（72%→97%）
+3. ✅ 整体测试覆盖率提升（88%→93%）
+4. ✅ WebViewBridge进一步精简优化
+5. ✅ AdbBridge功能增强（新增3个系统操作方法）
+6. ✅ 代码索引更新（480个函数/方法）
+7. ✅ 所有Python测试通过（114/114）
+
+### 📊 当前状态
+- **模块化拆分**: 100% 完成（6个功能Bridge全部就位）
+- **WebViewBridge优化**: 深度精简，单一职责，仅作为调度入口
+- **测试覆盖率**: 93% ✅（大幅超额完成目标）
+- **AdbBridge功能**: 完整覆盖ADB授权+系统操作
