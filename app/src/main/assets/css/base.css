@@ -1,0 +1,305 @@
+/* ============================================
+   Base - 基础重置 & 全局样式
+   重置浏览器默认样式，设置全局基础
+   ============================================ */
+
+/* ========== CSS Reset ========== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 禁用文本选择和点击高亮 */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-normal);
+    color: var(--text-primary);
+    background-color: #000000;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* ========== 图片和媒体 ========== */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* ========== 表单元素 ========== */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+/* ========== 列表 ========== */
+ul,
+ol {
+    list-style: none;
+}
+
+/* ========== 链接 ========== */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ========== 主容器 ========== */
+.main-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-base);
+    pointer-events: none;
+}
+
+/* 需要交互的子元素启用指针事件 */
+.top-status-bar,
+.layout-left,
+.card-view,
+.status-bar,
+.modal,
+#app {
+    pointer-events: auto;
+}
+
+/* ========== 背景容器 ========== */
+.background-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.background-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+    pointer-events: auto;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+    contain: layout style paint;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+/* 背景渐变遮罩 */
+.background-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.15) 25%,
+        rgba(0, 0, 0, 0.15) 50%,
+        rgba(0, 0, 0, 0.35) 75%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* 壁纸预览层 */
+.wallpaper-preview {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    display: none;
+}
+
+/* ========== 壁纸切换动画 ========== */
+.wallpaper-fade-enter {
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.wallpaper-fade-enter-active {
+    opacity: 1;
+}
+
+.wallpaper-fade-exit {
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.wallpaper-fade-exit-active {
+    opacity: 0;
+}
+
+/* ========== 滚动条美化 ========== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+/* 横向滚动条 */
+.horizontal-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 弹窗滚动条 */
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ========== 无障碍支持 ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #ffffff;
+        --text-secondary: #e0e0e0;
+        --border-color: rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* ========== 工具类 ========== */
+.hidden {
+    display: none !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,603 @@
+/* ============================================
+   Components - 通用组件样式
+   按钮、卡片、弹窗、Toast、表单等通用组件
+   ============================================ */
+
+/* ========== 按钮组件 ========== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: var(--surface-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    background: var(--surface-hover);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: rgba(var(--primary-color-rgb), 0.2);
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background: rgba(var(--primary-color-rgb), 0.3);
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.btn-icon img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+}
+
+/* ========== 卡片组件 ========== */
+.card {
+    background: var(--bg-card);
+    backdrop-filter: var(--blur-medium);
+    -webkit-backdrop-filter: var(--blur-medium);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg), var(--shadow-inner);
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        transparent);
+}
+
+.card-header {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(30, 30, 30, 0.5);
+    backdrop-filter: var(--blur-light);
+}
+
+.card-header h2,
+.card-header h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.card-body {
+    padding: var(--spacing-xl);
+}
+
+.card-footer {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+}
+
+/* ========== 弹窗/模态框 ========== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-overlay);
+    backdrop-filter: var(--blur-light);
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: var(--blur-strong);
+    -webkit-backdrop-filter: var(--blur-strong);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl), var(--shadow-inner);
+    color: var(--text-primary);
+    overflow: hidden;
+    max-width: 90%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95) translateY(20px);
+    transition: transform var(--transition-normal);
+}
+
+.modal.active .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: rgba(30, 30, 30, 0.5);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: var(--blur-light);
+    flex-shrink: 0;
+}
+
+.modal-header h2 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.modal-close {
+    color: var(--text-tertiary);
+    font-size: 28px;
+    font-weight: var(--font-weight-light);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+    background: var(--surface-color);
+}
+
+.modal-body {
+    padding: var(--spacing-xl);
+    overflow-y: auto;
+    flex: 1;
+    background: transparent;
+}
+
+.modal-footer {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: flex-end;
+    flex-shrink: 0;
+}
+
+/* ========== Tab 导航 ========== */
+.tab-navigation {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    background: transparent;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tab-button:hover {
+    background: var(--surface-color);
+    color: var(--text-primary);
+}
+
+.tab-button.active {
+    background: var(--surface-color);
+    color: var(--primary-color);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ========== 表单组件 ========== */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.form-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+}
+
+.form-checkbox {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+    border-radius: var(--radius-xs);
+}
+
+/* ========== 设置项 ========== */
+.setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface-color);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    transition: all var(--transition-fast);
+}
+
+.setting-item:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-color);
+}
+
+.setting-item label {
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+.setting-section {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.setting-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.setting-section h3 {
+    font-size: var(--font-size-md);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-md);
+}
+
+.setting-hint {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+}
+
+/* ========== Toast 提示 ========== */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 120px;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: var(--blur-medium);
+    -webkit-backdrop-filter: var(--blur-medium);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    padding: 12px 24px;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-lg);
+    z-index: var(--z-toast);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ========== 确认对话框 ========== */
+.confirm-dialog {
+    max-width: 400px;
+}
+
+.confirm-dialog-content {
+    background: rgba(20, 20, 20, 0.98);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-xl), var(--shadow-inner);
+    overflow: hidden;
+}
+
+.confirm-dialog-header {
+    background: rgba(30, 30, 30, 0.5);
+    padding: var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.confirm-dialog-header h2 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.confirm-dialog-body {
+    padding: 32px var(--spacing-xl);
+    text-align: center;
+}
+
+.confirm-dialog-body .app-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.confirm-dialog-body .app-name {
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    margin: var(--spacing-md) 0;
+}
+
+.confirm-dialog-body .confirm-message {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    margin: var(--spacing-lg) 0 0;
+}
+
+.confirm-dialog-footer {
+    padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-xl);
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+}
+
+.dialog-button {
+    padding: 12px 32px;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-fast);
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background: var(--surface-color);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.cancel-button:hover {
+    background: var(--surface-hover);
+}
+
+.cancel-button:active {
+    transform: scale(0.98);
+}
+
+.confirm-button {
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 16px rgba(var(--primary-color-rgb), 0.4);
+}
+
+.confirm-button:hover {
+    box-shadow: 0 6px 20px rgba(var(--primary-color-rgb), 0.5);
+    transform: translateY(-1px);
+}
+
+.confirm-button:active {
+    transform: scale(0.98);
+}
+
+/* ========== 加载动画 ========== */
+.loading-spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid var(--surface-color);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.loading-spinner.large {
+    width: 48px;
+    height: 48px;
+    border-width: 4px;
+}
+
+.loading-spinner.small {
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+}
+
+/* ========== 开关组件 ========== */
+.switch {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    background: var(--surface-color);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border: 1px solid var(--border-color);
+}
+
+.switch.active {
+    background: var(--accent-gradient);
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.4);
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform var(--transition-normal);
+}
+
+.switch.active::after {
+    transform: translateX(20px);
+}
+
+/* ========== 标签/徽章 ========== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+    background: var(--surface-color);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+
+.badge-primary {
+    background: rgba(var(--primary-color-rgb), 0.15);
+    color: var(--primary-color);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+}
+
+.badge-success {
+    background: rgba(0, 255, 136, 0.15);
+    color: #00ff88;
+    border-color: rgba(0, 255, 136, 0.3);
+}
+
+.badge-warning {
+    background: rgba(255, 215, 64, 0.15);
+    color: #ffd740;
+    border-color: rgba(255, 215, 64, 0.3);
+}
+
+.badge-error {
+    background: rgba(255, 82, 82, 0.15);
+    color: #ff5252;
+    border-color: rgba(255, 82, 82, 0.3);
+}
+
+/* ========== 分割线 ========== */
+.divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: var(--spacing-lg) 0;
+}
+
+.divider-light {
+    background: var(--border-light);
+}
+
+/* ========== 搜索框 ========== */
+.search-input {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.search-input::placeholder {
+    color: var(--text-tertiary);
+}

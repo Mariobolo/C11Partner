@@ -1,0 +1,638 @@
+/* ============================================
+   Responsive - 响应式断点
+   适配不同分辨率和屏幕尺寸
+   ============================================ */
+
+/* ========== 大屏适配 (1920px+) ========== */
+@media screen and (min-width: 1920px) {
+    :root {
+        --widget-height: 120px;
+        --status-bar-height: 56px;
+        --dock-height: 88px;
+        --font-size-4xl: 160px;
+    }
+
+    .time-text#timeDisplay {
+        font-size: 160px;
+    }
+
+    .card-view {
+        bottom: 100px;
+        left: 60px;
+        right: 60px;
+    }
+
+    .widget {
+        min-width: 200px;
+    }
+}
+
+/* ========== 标准屏 (1280px - 1919px) ========== */
+@media screen and (max-width: 1919px) and (min-width: 1280px) {
+    /* 默认样式，无需额外调整 */
+}
+
+/* ========== 中小屏 (1024px - 1279px) ========== */
+@media screen and (max-width: 1279px) and (min-width: 1024px) {
+    :root {
+        --widget-height: 100px;
+        --status-bar-height: 48px;
+        --dock-height: 72px;
+        --font-size-4xl: 120px;
+        --font-size-3xl: 40px;
+        --font-size-2xl: 24px;
+    }
+
+    .time-text#timeDisplay {
+        font-size: 120px;
+        letter-spacing: -3px;
+    }
+
+    .date-text {
+        font-size: 24px;
+    }
+
+    .lunar-calendar-text {
+        font-size: 14px;
+    }
+
+    .card-view {
+        bottom: 82px;
+        left: 40px;
+        right: 40px;
+    }
+
+    .widget {
+        min-width: 160px;
+        padding: 14px 18px;
+    }
+
+    .top-status-bar {
+        padding: 0 24px;
+    }
+
+    .status-bar {
+        padding: 0 24px;
+    }
+
+    .center-controls {
+        padding: 6px 16px;
+    }
+
+    .air-text {
+        font-size: 18px;
+        min-width: 40px;
+    }
+
+    .control-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .ac-control,
+    .ac-hcs {
+        width: 24px;
+        height: 24px;
+        margin: 0 6px;
+    }
+
+    .wind-display {
+        width: 28px;
+        height: 28px;
+        margin: 0 6px;
+    }
+
+    /* 音乐组件 */
+    .music-widget {
+        min-width: 320px;
+    }
+
+    .vinyl-record-container {
+        width: 56px;
+        height: 56px;
+    }
+
+    .control-buttons button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .control-buttons .btn-play {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* 天气组件 */
+    .weather-widget {
+        min-width: 200px;
+    }
+
+    .temperature {
+        font-size: 40px;
+    }
+
+    .weather-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* 弹窗尺寸 */
+    .settings-modal {
+        width: 640px;
+    }
+
+    .apps-modal {
+        width: 720px;
+    }
+
+    .quick-switch-panel {
+        width: 540px;
+    }
+
+    .automation-panel {
+        width: 460px;
+    }
+}
+
+/* ========== 小屏 (768px - 1023px) ========== */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+    :root {
+        --widget-height: 90px;
+        --status-bar-height: 44px;
+        --dock-height: 64px;
+        --font-size-4xl: 100px;
+        --font-size-3xl: 36px;
+        --font-size-2xl: 20px;
+        --font-size-xl: 18px;
+    }
+
+    .time-text#timeDisplay {
+        font-size: 100px;
+        letter-spacing: -2px;
+    }
+
+    .date-text {
+        font-size: 20px;
+    }
+
+    .lunar-calendar-text {
+        font-size: 13px;
+    }
+
+    .card-view {
+        bottom: 74px;
+        left: 30px;
+        right: 30px;
+    }
+
+    .widget {
+        min-width: 140px;
+        padding: 12px 16px;
+        border-radius: 16px;
+    }
+
+    .top-status-bar {
+        padding: 0 20px;
+    }
+
+    .car-status-indicators {
+        padding: 5px 12px;
+        gap: 8px;
+    }
+
+    .gear-indicator {
+        font-size: 16px;
+        min-width: 32px;
+    }
+
+    .status-indicator {
+        font-size: 12px;
+        min-width: 24px;
+        height: 24px;
+    }
+
+    .status-bar {
+        padding: 0 20px;
+    }
+
+    .left-buttons,
+    .right-buttons {
+        gap: 12px;
+    }
+
+    .center-controls {
+        padding: 6px 14px;
+        gap: 4px;
+    }
+
+    .air-text {
+        font-size: 16px;
+        min-width: 36px;
+        margin: 0 6px;
+    }
+
+    .control-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .ac-control,
+    .ac-hcs {
+        width: 22px;
+        height: 22px;
+        margin: 0 5px;
+    }
+
+    .wind-display {
+        width: 24px;
+        height: 24px;
+        margin: 0 5px;
+    }
+
+    /* 音乐组件 */
+    .music-widget {
+        min-width: 280px;
+    }
+
+    .vinyl-record-container {
+        width: 50px;
+        height: 50px;
+        margin-right: 12px;
+    }
+
+    .music-name {
+        font-size: 14px;
+        width: 160px;
+    }
+
+    .control-buttons {
+        gap: 10px;
+    }
+
+    .control-buttons button {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+    }
+
+    .control-buttons button:last-child {
+        margin-right: 0;
+    }
+
+    .control-buttons .btn-play {
+        width: 40px;
+        height: 40px;
+    }
+
+    .control-buttons button img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .control-buttons .btn-play img {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* 天气组件 */
+    .weather-widget {
+        min-width: 180px;
+        padding: 16px 20px;
+        gap: 12px;
+    }
+
+    .temperature {
+        font-size: 36px;
+    }
+
+    .condition {
+        font-size: 14px;
+    }
+
+    .weather-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* 快捷应用 */
+    .quick-apps-widget {
+        min-width: 260px;
+    }
+
+    .quick-app-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .quick-app-name {
+        font-size: 11px;
+        max-width: 50px;
+    }
+
+    /* 快捷开关 */
+    .quick-switches-widget {
+        min-width: 240px;
+    }
+
+    .quick-switch-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
+
+    .quick-switch-name {
+        font-size: 10px;
+    }
+
+    /* 地图组件 */
+    .map-widget {
+        min-width: 180px;
+    }
+
+    .nav-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .nav-text {
+        font-size: 11px;
+    }
+
+    /* 弹窗尺寸 */
+    .settings-modal {
+        width: 560px;
+    }
+
+    .apps-modal {
+        width: 640px;
+    }
+
+    .quick-switch-panel {
+        width: 480px;
+    }
+
+    .automation-panel {
+        width: 420px;
+    }
+
+    .switch-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .scene-mode-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ========== 超小屏 (< 768px) ========== */
+@media screen and (max-width: 767px) {
+    :root {
+        --widget-height: 80px;
+        --status-bar-height: 40px;
+        --dock-height: 56px;
+        --font-size-4xl: 80px;
+        --font-size-3xl: 32px;
+        --font-size-2xl: 18px;
+        --font-size-xl: 16px;
+    }
+
+    .time-text#timeDisplay {
+        font-size: 80px;
+        letter-spacing: -1px;
+    }
+
+    .date-text {
+        font-size: 18px;
+    }
+
+    .lunar-calendar-text {
+        font-size: 12px;
+    }
+
+    .card-view {
+        bottom: 66px;
+        left: 20px;
+        right: 20px;
+    }
+
+    .widget {
+        min-width: 120px;
+        padding: 10px 14px;
+        border-radius: 14px;
+    }
+
+    .top-status-bar {
+        padding: 0 16px;
+    }
+
+    .car-status-indicators {
+        padding: 4px 10px;
+        gap: 6px;
+    }
+
+    .gear-indicator {
+        font-size: 14px;
+        min-width: 28px;
+    }
+
+    .status-indicator {
+        font-size: 11px;
+        min-width: 22px;
+        height: 22px;
+    }
+
+    .status-bar {
+        padding: 0 16px;
+    }
+
+    .left-buttons,
+    .right-buttons {
+        gap: 10px;
+    }
+
+    .center-controls {
+        padding: 5px 12px;
+        gap: 2px;
+    }
+
+    .air-text {
+        font-size: 14px;
+        min-width: 32px;
+        margin: 0 4px;
+    }
+
+    .control-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .ac-control,
+    .ac-hcs {
+        width: 20px;
+        height: 20px;
+        margin: 0 4px;
+    }
+
+    .wind-display {
+        width: 22px;
+        height: 22px;
+        margin: 0 4px;
+    }
+
+    /* 音乐组件 */
+    .music-widget {
+        min-width: 240px;
+    }
+
+    .vinyl-record-container {
+        width: 44px;
+        height: 44px;
+        margin-right: 10px;
+    }
+
+    .music-name {
+        font-size: 13px;
+        width: 120px;
+    }
+
+    .control-buttons {
+        gap: 8px;
+        margin-top: 6px;
+    }
+
+    .control-buttons button {
+        width: 28px;
+        height: 28px;
+        margin-right: 6px;
+    }
+
+    .control-buttons button:last-child {
+        margin-right: 0;
+    }
+
+    .control-buttons .btn-play {
+        width: 36px;
+        height: 36px;
+    }
+
+    .control-buttons button img {
+        width: 14px;
+        height: 14px;
+    }
+
+    .control-buttons .btn-play img {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* 天气组件 */
+    .weather-widget {
+        min-width: 160px;
+        padding: 14px 16px;
+        gap: 10px;
+    }
+
+    .temperature {
+        font-size: 32px;
+    }
+
+    .condition {
+        font-size: 13px;
+    }
+
+    .weather-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* 弹窗尺寸 */
+    .settings-modal,
+    .apps-modal,
+    .quick-switch-panel,
+    .automation-panel {
+        width: 95vw;
+        max-width: 95vw;
+    }
+
+    .switch-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .drive-mode-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .scene-mode-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .apps-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .app-item .app-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .app-item .app-name {
+        font-size: 10px;
+        max-width: 60px;
+    }
+}
+
+/* ========== 横屏/竖屏适配 ========== */
+@media screen and (orientation: portrait) {
+    .layout-left {
+        top: 30%;
+    }
+
+    .card-view {
+        bottom: 100px;
+    }
+}
+
+/* ========== 高DPI屏幕适配 ========== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* 高DPI屏幕优化 */
+    .widget,
+    .card,
+    .modal-content {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* ========== 触控设备优化 ========== */
+@media (hover: none) and (pointer: coarse) {
+    /* 触控设备禁用悬停效果 */
+    .widget:hover,
+    .btn:hover,
+    .app-item:hover,
+    .switch-item:hover,
+    .nav-button:hover,
+    .quick-app-item:hover,
+    .quick-switch-item:hover {
+        transform: none;
+        box-shadow: var(--shadow-lg), var(--shadow-inner);
+    }
+
+    /* 增大触控目标 */
+    .control-icon,
+    .ac-control,
+    .ac-hcs {
+        min-width: 40px;
+        min-height: 40px;
+    }
+}
+
+/* ========== 暗色模式增强 ========== */
+@media (prefers-color-scheme: dark) {
+    /* 确保暗色模式下对比度足够 */
+    :root {
+        --text-primary: rgba(255, 255, 255, 0.95);
+        --text-secondary: rgba(255, 255, 255, 0.75);
+    }
+}
