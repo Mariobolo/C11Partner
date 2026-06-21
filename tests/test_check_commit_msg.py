@@ -68,13 +68,15 @@ class TestCheckCommitMsg:
         assert result['valid'] == False
         assert len(result['errors']) > 0
     def test_invalid_format_no_colon(self):
-        """测试无效格式（没有冒号）"""
+        """测试无效格式（没有冒号）- 现在是警告而非错误"""
         result = check_commit_message("feat 添加新功能")
-        assert result['valid'] == False
+        assert result['valid'] == True  # 现在格式不匹配不会导致valid=False
+        assert len(result['warnings']) > 0  # 但会有警告
     def test_empty_subject(self):
-        """测试空的描述"""
+        """测试空的描述 - 现在是警告而非错误"""
         result = check_commit_message("feat: ")
-        assert result['valid'] == False
+        assert result['valid'] == True  # 现在格式不匹配不会导致valid=False
+        assert len(result['warnings']) > 0  # 但会有警告
     def test_empty_message(self):
         """测试空的提交信息"""
         result = check_commit_message("")
@@ -286,14 +288,14 @@ class TestCheckCommitMsg:
             sys.argv = old_argv
     
     def test_main_with_invalid_message(self):
-        """测试 main 函数带无效提交信息"""
+        """测试 main 函数带格式不匹配的提交信息 - 现在退出码为0（警告而非错误）"""
         old_argv = sys.argv
         sys.argv = ['check_commit_msg.py', 'invalid message']
         
         try:
             main()
         except SystemExit as e:
-            assert e.code == 1  # 应该退出码为1
+            assert e.code == 0  # 现在格式不匹配退出码为0（只有真正错误才返回1）
         finally:
             sys.argv = old_argv
     
