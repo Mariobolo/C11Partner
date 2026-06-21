@@ -304,22 +304,6 @@ public class WebViewBridge {
     @JavascriptInterface
     public void getAppListAsync(final String callbackId) {
         mAppBridge.getAppListAsync(callbackId);
-
-                // 在UI线程中执行JavaScript回调
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mActivity.webView != null) {
-                            // 使用JSONObject.quote()方法正确转义JSON字符串
-                            String javascript = String.format(
-                                    "javascript:window.handleGetAppListCallback('%s', %s)",
-                                    callbackId, org.json.JSONObject.quote(result));
-                            mActivity.webView.loadUrl(javascript);
-                        }
-                    }
-                });
-            }
-        }).start();
     }
 
     /**
@@ -1719,54 +1703,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void getWallpaperSettingsAsync(final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Map<String, Object> settings = wallpaperSettingsDbHelper.getAllSettings();
-                    JSONObject settingsObj = new JSONObject();
-
-                    settingsObj.put("wallpaper_carousel", settings.get("wallpaper_carousel"));
-                    settingsObj.put("local_wallpaper", settings.get("local_wallpaper"));
-                    settingsObj.put("online_wallpaper", settings.get("online_wallpaper"));
-                    settingsObj.put("switch_interval", settings.get("switch_interval"));
-                    settingsObj.put("random_mode", settings.get("random_mode"));
-                    settingsObj.put("specified_mode", settings.get("specified_mode"));
-                    settingsObj.put("boot_greeting", settings.get("boot_greeting"));
-
-                    final String result = settingsObj.toString();
-
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleGetWallpaperSettingsCallback('%s', %s)",
-                                        callbackId, org.json.JSONObject.quote(result));
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "获取壁纸设置时出错", e);
-                    final String result = "{}";
-
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleGetWallpaperSettingsCallback('%s', %s)",
-                                        callbackId, org.json.JSONObject.quote(result));
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
+        mWallpaperBridge.getWallpaperSettingsAsync(callbackId);
     }
 
     /**
@@ -1776,102 +1713,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void getRandomWallpaperAsync(final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // 检查是否启用了本地壁纸分类模式
-                    boolean isRandomMode = wallpaperSettingsDbHelper.getAllSettings().get("random_mode").equals(true);
-                    boolean isSpecifiedMode = wallpaperSettingsDbHelper.getAllSettings().get("specified_mode").equals(true);
-
-                    // 如果启用了随机模式，读取SD卡下fstart目录下除了00文件夹下的图片
-                    String result;
-                    if (isRandomMode) {
-                        result = getRandomWallpaperFromFstartExcept00();
-                    }
-                    // 如果启用了指定模式，读取SD卡下fstart目录下00文件夹下的图片
-                    else if (isSpecifiedMode) {
-                        result = getRandomWallpaperFromFstart00();
-                    }
-                    // 如果都没有启用，获取已启用的分类
-                    else {
-                        // 获取已启用的分类
-                        List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
-                        Log.d(TAG, "获取到的所有分类数量: " + enabledCategories.size());
-
-                        // 过滤出已启用的分类
-                        List<Map<String, Object>> filteredCategories = new ArrayList<>();
-                        for (Map<String, Object> category : enabledCategories) {
-                            if ((boolean) category.get("enabled")) {
-                                filteredCategories.add(category);
-                                Log.d(TAG, "已启用的分类: " + category.get("id"));
-                            }
-                        }
-
-                        // 如果没有启用的分类，返回null
-                        if (filteredCategories.isEmpty()) {
-                            Log.d(TAG, "没有已启用的分类");
-                            result = null;
-                        } else {
-                            // 随机选择一个分类
-                            Random random = new Random();
-                            Map<String, Object> selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
-
-                            // 获取分类ID
-                            String categoryId = (String) selectedCategory.get("id");
-                            Log.d(TAG, "随机选择的分类ID: " + categoryId);
-
-                            // 从本地获取该分类的随机壁纸
-                            result = WallpaperDownloadUtils.getRandomLocalWallpaper(mContext, categoryId);
-                            Log.d(TAG, "获取到的壁纸路径: " + result);
-                            
-                            // 如果该分类没有壁纸，尝试其他分类
-                            if (result == null && filteredCategories.size() > 1) {
-                                Log.d(TAG, "该分类没有壁纸，尝试其他分类");
-                                // 移除当前分类
-                                filteredCategories.remove(selectedCategory);
-                                // 重新随机选择
-                                selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
-                                categoryId = (String) selectedCategory.get("id");
-                                Log.d(TAG, "尝试其他分类ID: " + categoryId);
-                                result = WallpaperDownloadUtils.getRandomLocalWallpaper(mContext, categoryId);
-                                Log.d(TAG, "尝试其他分类获取到的壁纸路径: " + result);
-                            }
-                        }
-                    }
-
-                    final String finalResult = result;
-
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleGetRandomWallpaperCallback('%s', %s)",
-                                        callbackId, org.json.JSONObject.quote(finalResult != null ? finalResult : ""));
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "获取随机壁纸时出错", e);
-
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleGetRandomWallpaperCallback('%s', %s)",
-                                        callbackId, org.json.JSONObject.quote(""));
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
+        mWallpaperBridge.getRandomWallpaperAsync(callbackId);
     }
 
     /**
@@ -1891,119 +1733,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void getRandomWallpaperBase64Async(final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // 检查是否启用了本地壁纸分类模式
-                    boolean isRandomMode = wallpaperSettingsDbHelper.getAllSettings().get("random_mode").equals(true);
-                    boolean isSpecifiedMode = wallpaperSettingsDbHelper.getAllSettings().get("specified_mode").equals(true);
-
-                    String result;
-                    // 如果启用了随机模式，读取SD卡下fstart目录下除了00文件夹下的图片
-                    if (isRandomMode) {
-                        String localWallpaper = getRandomWallpaperFromFstartExcept00();
-                        if (localWallpaper != null) {
-                            // 更新MainActivity中的壁纸状态
-                            if (mActivity != null) {
-                                mActivity.isUsingDefaultWallpaper = false;
-                                mActivity.currentWallpaperPath = localWallpaper;
-                            }
-                            result = encodeImageToBase64(localWallpaper);
-                        } else {
-                            result = "";
-                        }
-                    }
-                    // 如果启用了指定模式，读取SD卡下fstart目录下00文件夹下的图片
-                    else if (isSpecifiedMode) {
-                        String localWallpaper = getRandomWallpaperFromFstart00();
-                        if (localWallpaper != null) {
-                            // 更新MainActivity中的壁纸状态
-                            if (mActivity != null) {
-                                mActivity.isUsingDefaultWallpaper = false;
-                                mActivity.currentWallpaperPath = localWallpaper;
-                            }
-                            result = encodeImageToBase64(localWallpaper);
-                        } else {
-                            result = "";
-                        }
-                    }
-                    // 如果都没有启用，获取已启用的分类
-                    else {
-                        // 获取已启用的分类
-                        List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
-
-                        // 过滤出已启用的分类
-                        List<Map<String, Object>> filteredCategories = new ArrayList<>();
-                        for (Map<String, Object> category : enabledCategories) {
-                            if ((boolean) category.get("enabled")) {
-                                filteredCategories.add(category);
-                            }
-                        }
-
-                        // 如果没有启用的分类，返回默认壁纸
-                        if (filteredCategories.isEmpty()) {
-                            // 更新MainActivity中的壁纸状态
-                            if (mActivity != null) {
-                                mActivity.isUsingDefaultWallpaper = true;
-                                mActivity.currentWallpaperPath = "";
-                            }
-                            result = encodeImageToBase64("file:///android_asset/images/nav_car.png");
-                        } else {
-                            // 随机选择一个分类
-                            Random random = new Random();
-                            Map<String, Object> selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
-
-                            // 获取分类ID
-                            String categoryId = (String) selectedCategory.get("id");
-
-                            // 从本地获取该分类的随机壁纸
-                            String localWallpaper = WallpaperDownloadUtils.getRandomLocalWallpaper(mContext, categoryId);
-                            if (localWallpaper != null) {
-                                // 更新MainActivity中的壁纸状态
-                                if (mActivity != null) {
-                                    mActivity.isUsingDefaultWallpaper = false;
-                                    mActivity.currentWallpaperPath = localWallpaper;
-                                }
-                                result = encodeImageToBase64(localWallpaper);
-                            } else {
-                                result = "";
-                            }
-                        }
-                    }
-
-                    final String finalResult = result;
-
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleGetRandomWallpaperBase64Callback('%s', %s)",
-                                        callbackId, org.json.JSONObject.quote(finalResult != null ? finalResult : ""));
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "获取随机壁纸Base64数据时出错", e);
-
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleGetRandomWallpaperBase64Callback('%s', %s)",
-                                        callbackId, org.json.JSONObject.quote(""));
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
+        mWallpaperBridge.getRandomWallpaperBase64Async(callbackId);
     }
 
     // ==================== 快速启动应用相关方法 ====================

@@ -2,7 +2,7 @@
 
 > 📋 本文档由工具自动生成，请勿手动修改
 > 
-> 生成时间：2026-06-21 16:15:42
+> 生成时间：2026-06-21 17:05:56
 > 
 > 接口总数：4 个
 
@@ -293,7 +293,7 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3439 行
+- **行号**：第 3169 行
 
 ### 灯光控制
 
@@ -301,55 +301,55 @@
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 3806 行
+- **行号**：第 3536 行
 
 #### `isAmbientLightEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3789 行
+- **行号**：第 3519 行
 
 #### `setAmbientLightColor()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `color`: `int`
-- **行号**：第 3798 行
+- **行号**：第 3528 行
 
 #### `setAmbientLightEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 3781 行
+- **行号**：第 3511 行
 
 #### `setLowBeamLight()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3518 行
+- **行号**：第 3248 行
 
 #### `setPedestrianAlert()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3542 行
+- **行号**：第 3272 行
 
 #### `setPositionLight()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3534 行
+- **行号**：第 3264 行
 
 #### `setRearFogLight()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3526 行
+- **行号**：第 3256 行
 
 ### 驾驶/场景模式
 
@@ -358,42 +358,42 @@
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3579 行
+- **行号**：第 3309 行
 
 #### `setDriveMode()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `mode`: `int`
-- **行号**：第 3553 行
+- **行号**：第 3283 行
 
 #### `setGuardMode()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3563 行
+- **行号**：第 3293 行
 
 #### `setPowerSaveMode()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3587 行
+- **行号**：第 3317 行
 
 #### `setRestMode()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3571 行
+- **行号**：第 3301 行
 
 #### `setSentinelMode()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3595 行
+- **行号**：第 3325 行
 
 ### 空调控制
 
@@ -402,58 +402,58 @@
 - **返回值**：`void`
 - **参数**：
   - `delta`: `int`
-- **行号**：第 3302 行
+- **行号**：第 3032 行
 
 #### `getAcInfo()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 3267 行
+- **行号**：第 2997 行
 
 #### `getDriverTemp()`
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 3755 行
+- **行号**：第 3485 行
 
 #### `getPassengerTemp()`
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 3771 行
+- **行号**：第 3501 行
 
 #### `setDriverTemp()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `temp`: `int`
-- **行号**：第 3747 行
+- **行号**：第 3477 行
 
 #### `setMaxCooling()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `on`: `boolean`
-- **行号**：第 3605 行
+- **行号**：第 3335 行
 
 #### `setPassengerTemp()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `temp`: `int`
-- **行号**：第 3763 行
+- **行号**：第 3493 行
 
 #### `toggleAirConditioning()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 3206 行
+- **行号**：第 2936 行
 
 #### `toggleDefrost()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 3334 行
+- **行号**：第 3064 行
 
 ### 音量控制
 
@@ -461,40 +461,40 @@
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 3704 行
+- **行号**：第 3434 行
 
 #### `getMusicVolume()`
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 3736 行
+- **行号**：第 3466 行
 
 #### `getNaviVolume()`
 
 - **返回值**：`int`
 - **参数**：无
-- **行号**：第 3720 行
+- **行号**：第 3450 行
 
 #### `setCallVolume()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `volume`: `int`
-- **行号**：第 3696 行
+- **行号**：第 3426 行
 
 #### `setMusicVolume()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `volume`: `int`
-- **行号**：第 3728 行
+- **行号**：第 3458 行
 
 #### `setNaviVolume()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `volume`: `int`
-- **行号**：第 3712 行
+- **行号**：第 3442 行
 
 ### 副屏相关
 
@@ -502,44 +502,44 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 3859 行
+- **行号**：第 3589 行
 
 #### `hasSecondaryDisplay()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3846 行
+- **行号**：第 3576 行
 
 #### `hidePresentation()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3942 行
+- **行号**：第 3672 行
 
 #### `isPresentationShowing()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3970 行
+- **行号**：第 3700 行
 
 #### `isSecondaryScreenEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3838 行
+- **行号**：第 3568 行
 
 #### `setSecondaryScreenEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 3830 行
+- **行号**：第 3560 行
 
 #### `showCarStatusPresentation()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3872 行
+- **行号**：第 3602 行
 
 ### 语音控制
 
@@ -547,21 +547,21 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 4039 行
+- **行号**：第 3769 行
 
 #### `sendVoiceCommand()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `command`: `String`
-- **行号**：第 3354 行
+- **行号**：第 3084 行
 
 #### `setSpeechEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 4031 行
+- **行号**：第 3761 行
 
 ### 自动化
 
@@ -569,14 +569,14 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 4085 行
+- **行号**：第 3815 行
 
 #### `isAutomationScenarioEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `scenarioId`: `String`
-- **行号**：第 4114 行
+- **行号**：第 3844 行
 
 #### `setAutomationScenarioEnabled()`
 
@@ -584,14 +584,14 @@
 - **参数**：
   - `scenarioId`: `String`
   - `enabled`: `boolean`
-- **行号**：第 4129 行
+- **行号**：第 3859 行
 
 #### `setAutomationSettings()`
 
 - **返回值**：`void`
 - **参数**：
   - `jsonStr`: `String`
-- **行号**：第 4099 行
+- **行号**：第 3829 行
 
 ### 音乐相关
 
@@ -599,73 +599,73 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 2112 行
+- **行号**：第 1842 行
 
 #### `getMusicProgressInfo()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 2123 行
+- **行号**：第 1853 行
 
 #### `getSystemMusicInfo()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 2152 行
+- **行号**：第 1882 行
 
 #### `isMusicPlaying()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 2101 行
+- **行号**：第 1831 行
 
 #### `isNotificationListenerEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 2261 行
+- **行号**：第 1991 行
 
 #### `nextMusic()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2203 行
+- **行号**：第 1933 行
 
 #### `openNotificationListenerSettings()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2281 行
+- **行号**：第 2011 行
 
 #### `playPause()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2413 行
+- **行号**：第 2143 行
 
 #### `playPauseMusic()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2186 行
+- **行号**：第 1916 行
 
 #### `prevMusic()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2219 行
+- **行号**：第 1949 行
 
 #### `startMusicVisualizer()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2060 行
+- **行号**：第 1790 行
 
 #### `stopMusicVisualizer()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2081 行
+- **行号**：第 1811 行
 
 ### 应用管理
 
@@ -676,7 +676,7 @@
   - `name`: `String`
   - `packageName`: `String`
   - `iconBase64`: `String`
-- **行号**：第 1017 行
+- **行号**：第 1001 行
 
 #### `addQuickApp()`
 
@@ -685,33 +685,33 @@
   - `name`: `String`
   - `packageName`: `String`
   - `iconBase64`: `String`
-- **行号**：第 2029 行
+- **行号**：第 1759 行
 
 #### `getAllApps()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 922 行
+- **行号**：第 906 行
 
 #### `getAllComponentConfigs()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 1534 行
+- **行号**：第 1518 行
 
 #### `getAppIcon()`
 
 - **返回值**：`String`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 964 行
+- **行号**：第 948 行
 
 #### `getAppInfo()`
 
 - **返回值**：`String`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 953 行
+- **行号**：第 937 行
 
 #### `getAppList()`
 
@@ -731,100 +731,100 @@
 - **返回值**：`String`
 - **参数**：
   - `buttonId`: `String`
-- **行号**：第 1062 行
+- **行号**：第 1046 行
 
 #### `getConfigApp()`
 
 - **返回值**：`String`
 - **参数**：
   - `buttonId`: `String`
-- **行号**：第 1477 行
+- **行号**：第 1461 行
 
 #### `getQuickAppList()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 1005 行
+- **行号**：第 989 行
 
 #### `getQuickAppList()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 2017 行
+- **行号**：第 1747 行
 
 #### `getSystemApps()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 942 行
+- **行号**：第 926 行
 
 #### `getUserApps()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 932 行
+- **行号**：第 916 行
 
 #### `isAppInstalled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 975 行
+- **行号**：第 959 行
 
 #### `isComponentEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `componentName`: `String`
-- **行号**：第 1517 行
+- **行号**：第 1501 行
 
 #### `isQuickApp()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 1038 行
+- **行号**：第 1022 行
 
 #### `isQuickApp()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 2050 行
+- **行号**：第 1780 行
 
 #### `launchApp()`
 
 - **返回值**：`void`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 985 行
+- **行号**：第 969 行
 
 #### `openAppInfo()`
 
 - **返回值**：`void`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 995 行
+- **行号**：第 979 行
 
 #### `removeQuickApp()`
 
 - **返回值**：`void`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 1027 行
+- **行号**：第 1011 行
 
 #### `removeQuickApp()`
 
 - **返回值**：`void`
 - **参数**：
   - `packageName`: `String`
-- **行号**：第 2039 行
+- **行号**：第 1769 行
 
 #### `restartApp()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2878 行
+- **行号**：第 2608 行
 
 #### `saveComponentConfig()`
 
@@ -832,7 +832,7 @@
 - **参数**：
   - `componentName`: `String`
   - `isEnabled`: `boolean`
-- **行号**：第 1491 行
+- **行号**：第 1475 行
 
 #### `saveConfigApp()`
 
@@ -842,7 +842,7 @@
   - `appName`: `String`
   - `packageName`: `String`
   - `appIcon`: `String`
-- **行号**：第 1051 行
+- **行号**：第 1035 行
 
 #### `saveConfigApp()`
 
@@ -852,14 +852,14 @@
   - `appName`: `String`
   - `packageName`: `String`
   - `appIcon`: `String`
-- **行号**：第 1466 行
+- **行号**：第 1450 行
 
 #### `saveSystemLauncherSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 2465 行
+- **行号**：第 2195 行
 
 #### `saveSystemLauncherSettingAsync()`
 
@@ -867,7 +867,7 @@
 - **参数**：
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 2548 行
+- **行号**：第 2278 行
 
 ### 壁纸相关
 
@@ -875,101 +875,101 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 1087 行
+- **行号**：第 1071 行
 
 #### `getCurrentWallpaperUrl()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 4177 行
+- **行号**：第 3907 行
 
 #### `getNextWallpaperUrl()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 4185 行
+- **行号**：第 3915 行
 
 #### `getRandomWallpaper()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 383 行
+- **行号**：第 367 行
 
 #### `getRandomWallpaperAsync()`
 
 - **返回值**：`void`
 - **参数**：
   - `callbackId`: `final String`
-- **行号**：第 1778 行
+- **行号**：第 1715 行
 
 #### `getRandomWallpaperBase64()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 1883 行
+- **行号**：第 1725 行
 
 #### `getRandomWallpaperBase64Async()`
 
 - **返回值**：`void`
 - **参数**：
   - `callbackId`: `final String`
-- **行号**：第 1893 行
+- **行号**：第 1735 行
 
 #### `getWallpaperSettings()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 1711 行
+- **行号**：第 1695 行
 
 #### `getWallpaperSettingsAsync()`
 
 - **返回值**：`void`
 - **参数**：
   - `callbackId`: `final String`
-- **行号**：第 1721 行
+- **行号**：第 1705 行
 
 #### `getWallpaperSettingsV2()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 4152 行
+- **行号**：第 3882 行
 
 #### `pauseWallpaperCarousel()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1070 行
+- **行号**：第 1054 行
 
 #### `pickLocalWallpaperFile()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 4228 行
+- **行号**：第 3958 行
 
 #### `pickLocalWallpaperFolder()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 4237 行
+- **行号**：第 3967 行
 
 #### `refreshBingWallpaper()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 4219 行
+- **行号**：第 3949 行
 
 #### `resumeWallpaperCarousel()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1078 行
+- **行号**：第 1062 行
 
 #### `saveWallpaperCarouselSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 343 行
+- **行号**：第 327 行
 
 #### `saveWallpaperCarouselSettingAsync()`
 
@@ -977,14 +977,14 @@
 - **参数**：
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 332 行
+- **行号**：第 316 行
 
 #### `saveWallpaperSwitchInterval()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `interval`: `int`
-- **行号**：第 365 行
+- **行号**：第 349 行
 
 #### `saveWallpaperSwitchIntervalAsync()`
 
@@ -992,54 +992,54 @@
 - **参数**：
   - `interval`: `final int`
   - `callbackId`: `final String`
-- **行号**：第 354 行
+- **行号**：第 338 行
 
 #### `sendWallpaperSettingsChangedBroadcast()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 373 行
+- **行号**：第 357 行
 
 #### `setWallpaperCarouselEnabled()`
 
 - **返回值**：`void`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 4193 行
+- **行号**：第 3923 行
 
 #### `setWallpaperCarouselInterval()`
 
 - **返回值**：`void`
 - **参数**：
   - `intervalMs`: `int`
-- **行号**：第 4202 行
+- **行号**：第 3932 行
 
 #### `setWallpaperFillMode()`
 
 - **返回值**：`void`
 - **参数**：
   - `mode`: `int`
-- **行号**：第 4211 行
+- **行号**：第 3941 行
 
 #### `setWallpaperPath()`
 
 - **返回值**：`void`
 - **参数**：
   - `path`: `String`
-- **行号**：第 4169 行
+- **行号**：第 3899 行
 
 #### `setWallpaperType()`
 
 - **返回值**：`void`
 - **参数**：
   - `type`: `int`
-- **行号**：第 4161 行
+- **行号**：第 3891 行
 
 #### `updateWallpaperCategories()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1556 行
+- **行号**：第 1540 行
 
 ### ADB相关
 
@@ -1047,25 +1047,25 @@
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1307 行
+- **行号**：第 1291 行
 
 #### `setDefaultDesktopViaAdb()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1403 行
+- **行号**：第 1387 行
 
 #### `triggerUsbDebugAuthorization()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1096 行
+- **行号**：第 1080 行
 
 #### `triggerWirelessAdbAuthorization()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1135 行
+- **行号**：第 1119 行
 
 ### 权限相关
 
@@ -1073,25 +1073,25 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3491 行
+- **行号**：第 3221 行
 
 #### `hasNotificationAccess()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3364 行
+- **行号**：第 3094 行
 
 #### `hasReadLogsPermission()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3459 行
+- **行号**：第 3189 行
 
 #### `hasWriteSecureSettingsPermission()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3475 行
+- **行号**：第 3205 行
 
 ### 导航相关
 
@@ -1099,13 +1099,13 @@
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2940 行
+- **行号**：第 2670 行
 
 #### `navigateToHome()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2904 行
+- **行号**：第 2634 行
 
 ### 时间日期
 
@@ -1113,7 +1113,7 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 2515 行
+- **行号**：第 2245 行
 
 #### `updateCategoryEnabled()`
 
@@ -1121,7 +1121,7 @@
 - **参数**：
   - `categoryId`: `String`
   - `enabled`: `boolean`
-- **行号**：第 1602 行
+- **行号**：第 1586 行
 
 #### `updateCategoryEnabledAsync()`
 
@@ -1130,7 +1130,7 @@
   - `categoryId`: `final String`
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 1623 行
+- **行号**：第 1607 行
 
 #### `updateTimeDisplay()`
 
@@ -1139,14 +1139,14 @@
   - `time`: `String`
   - `date`: `String`
   - `lunarDate`: `String`
-- **行号**：第 2726 行
+- **行号**：第 2456 行
 
 #### `updateTimeDisplayAsync()`
 
 - **返回值**：`void`
 - **参数**：
   - `callbackId`: `final String`
-- **行号**：第 2765 行
+- **行号**：第 2495 行
 
 ### 系统设置
 
@@ -1154,20 +1154,20 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 2325 行
+- **行号**：第 2055 行
 
 #### `isWifiConnected()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 2295 行
+- **行号**：第 2025 行
 
 #### `saveBootGreetingSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 2482 行
+- **行号**：第 2212 行
 
 #### `saveBootGreetingSettingAsync()`
 
@@ -1175,14 +1175,14 @@
 - **参数**：
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 2592 行
+- **行号**：第 2322 行
 
 #### `saveRandomModeSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 2499 行
+- **行号**：第 2229 行
 
 #### `saveRandomModeSettingAsync()`
 
@@ -1190,14 +1190,14 @@
 - **参数**：
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 2636 行
+- **行号**：第 2366 行
 
 #### `saveSpecifiedModeSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 2531 行
+- **行号**：第 2261 行
 
 #### `saveSpecifiedModeSettingAsync()`
 
@@ -1205,28 +1205,28 @@
 - **参数**：
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 2680 行
+- **行号**：第 2410 行
 
 #### `setBluetoothEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 3632 行
+- **行号**：第 3362 行
 
 #### `setNightMode()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `night`: `boolean`
-- **行号**：第 3616 行
+- **行号**：第 3346 行
 
 #### `setWifiEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 3624 行
+- **行号**：第 3354 行
 
 ### 状态获取
 
@@ -1234,56 +1234,56 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 3402 行
+- **行号**：第 3132 行
 
 #### `getEnabledCategories()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 1611 行
+- **行号**：第 1595 行
 
 #### `getEnabledCategories()`
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 1633 行
+- **行号**：第 1617 行
 
 #### `getEnabledCategoriesAsync()`
 
 - **返回值**：`void`
 - **参数**：
   - `callbackId`: `final String`
-- **行号**：第 1657 行
+- **行号**：第 1641 行
 
 #### `isCameraOverspeedLimitEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3669 行
+- **行号**：第 3399 行
 
 #### `isLogServiceRunning()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3449 行
+- **行号**：第 3179 行
 
 #### `isScreenOn()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 4059 行
+- **行号**：第 3789 行
 
 #### `isVehicleLocked()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 4050 行
+- **行号**：第 3780 行
 
 #### `isVideoWhileDrivingEnabled()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3686 行
+- **行号**：第 3416 行
 
 ### 保存/设置
 
@@ -1292,20 +1292,20 @@
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 3661 行
+- **行号**：第 3391 行
 
 #### `setDefaultDesktop()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2975 行
+- **行号**：第 2705 行
 
 #### `setVideoWhileDriving()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 3678 行
+- **行号**：第 3408 行
 
 ### 其他
 
@@ -1314,49 +1314,49 @@
 - **返回值**：`void`
 - **参数**：
   - `delta`: `int`
-- **行号**：第 3277 行
+- **行号**：第 3007 行
 
 #### `initializeAcStatus()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2848 行
+- **行号**：第 2578 行
 
 #### `openRecentTasks()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1353 行
+- **行号**：第 1337 行
 
 #### `openRecents()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 1379 行
+- **行号**：第 1363 行
 
 #### `playNext()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2431 行
+- **行号**：第 2161 行
 
 #### `playPrevious()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 2443 行
+- **行号**：第 2173 行
 
 #### `sendNextTrack()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3650 行
+- **行号**：第 3380 行
 
 #### `sendPrevTrack()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 3642 行
+- **行号**：第 3372 行
 
 ---
 
