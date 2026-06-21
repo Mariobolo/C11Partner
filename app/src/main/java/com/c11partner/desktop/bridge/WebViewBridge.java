@@ -6,16 +6,14 @@ import android.webkit.JavascriptInterface;
 
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.database.AppDatabaseHelper;
-import com.c11partner.desktop.database.ComponentConfigDatabaseHelper;
+
 import com.c11partner.desktop.database.ConfigAppDatabaseHelper;
 import com.c11partner.desktop.database.QuickAppDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
 import com.c11partner.desktop.service.MediaSessionService;
 
-import org.json.JSONObject;
 
-import java.util.Map;
 
 /**
  * WebView与原生代码交互的桥梁类 - 主入口
@@ -44,7 +42,6 @@ public class WebViewBridge {
     private WallpaperCategoryDatabaseHelper wallpaperDbHelper;
     private WallpaperSettingsDatabaseHelper wallpaperSettingsDbHelper;
     private ConfigAppDatabaseHelper configAppDbHelper;
-    private ComponentConfigDatabaseHelper componentConfigDbHelper;
 
     // 模块化Bridge - 所有具体功能委托给这些Bridge处理
     private CarControlBridge mCarControlBridge;
@@ -70,7 +67,6 @@ public class WebViewBridge {
         this.wallpaperDbHelper = WallpaperCategoryDatabaseHelper.getInstance(context);
         this.wallpaperSettingsDbHelper = WallpaperSettingsDatabaseHelper.getInstance(context);
         this.configAppDbHelper = ConfigAppDatabaseHelper.getInstance(context);
-        this.componentConfigDbHelper = ComponentConfigDatabaseHelper.getInstance(context);
         
         // 初始化所有功能Bridge模块
         this.mCarControlBridge = new CarControlBridge(context, activity);
@@ -579,47 +575,20 @@ public class WebViewBridge {
     @JavascriptInterface
     public void setDefaultDesktopViaAdb() { mAdbBridge.setDefaultDesktopViaAdb(); }
 
-    // ==================== 组件配置方法（保留在主Bridge） ====================
+    // ==================== SystemBridge 委托方法（组件配置） ====================
     @JavascriptInterface
     public boolean saveComponentConfig(String componentName, boolean isEnabled) {
-        try {
-            if (componentConfigDbHelper != null) {
-                long result = componentConfigDbHelper.saveOrUpdateComponentConfig(componentName, isEnabled);
-                return result != -1;
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "保存组件配置时出错", e);
-        }
-        return false;
+        return mSystemBridge.saveComponentConfig(componentName, isEnabled);
     }
     
     @JavascriptInterface
     public boolean isComponentEnabled(String componentName) {
-        try {
-            if (componentConfigDbHelper != null) {
-                return componentConfigDbHelper.isComponentEnabled(componentName);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "获取组件配置时出错", e);
-        }
-        return true;
+        return mSystemBridge.isComponentEnabled(componentName);
     }
     
     @JavascriptInterface
     public String getAllComponentConfigs() {
-        try {
-            if (componentConfigDbHelper != null) {
-                Map<String, Boolean> configs = componentConfigDbHelper.getAllComponentConfigs();
-                JSONObject configObj = new JSONObject();
-                for (Map.Entry<String, Boolean> entry : configs.entrySet()) {
-                    configObj.put(entry.getKey(), entry.getValue());
-                }
-                return configObj.toString();
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "获取所有组件配置时出错", e);
-        }
-        return "{}";
+        return mSystemBridge.getAllComponentConfigs();
     }
 
     // ==================== MainActivity 调用的UI更新方法 ====================

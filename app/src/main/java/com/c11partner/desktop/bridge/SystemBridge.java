@@ -7,11 +7,14 @@ import android.os.Build;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import com.c11partner.desktop.MainActivity;
+import com.c11partner.desktop.database.ComponentConfigDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
 import com.c11partner.desktop.utils.LunarCalendarUtils;
+import org.json.JSONObject;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Set
 /**
  * 系统设置Bridge类
  * 处理所有系统设置相关的JavaScript交互接口
@@ -20,11 +23,13 @@ import java.util.Set;
  * 1. 网络状态检测（WiFi、蓝牙）
  * 2. 系统设置保存（原桌面自启、开机问候语等）
  * 3. 农历日期获取
+ * 4. 组件配置管理（桌面组件启用/禁用）
  */
 public class SystemBridge extends BaseBridge {
     private static final String TAG = "SystemBridge";
     private MainActivity mActivity;
     private WallpaperSettingsDatabaseHelper wallpaperSettingsDbHelper;
+    private ComponentConfigDatabaseHelper componentConfigDbHelper;
     /**
      * 构造函数
      *
@@ -35,6 +40,7 @@ public class SystemBridge extends BaseBridge {
         super(context, activity);
         this.mActivity = activity;
         this.wallpaperSettingsDbHelper = WallpaperSettingsDatabaseHelper.getInstance(context);
+        this.componentConfigDbHelper = ComponentConfigDatabaseHelper.getInstance(context);
     }
     // ==================== 网络状态检测方法 ====================
     /**
@@ -273,5 +279,66 @@ public class SystemBridge extends BaseBridge {
             Log.e(TAG, "获取农历日期时出错", e);
             return "农历日期获取失败";
         }
+    }
+
+    // ==================== 组件配置方法 ====================
+    /**
+     * 保存组件配置
+     *
+     * @param componentName 组件名称
+     * @param isEnabled     是否启用
+     * @return 是否保存成功
+     */
+    @JavascriptInterface
+    public boolean saveComponentConfig(String componentName, boolean isEnabled) {
+        try {
+            if (componentConfigDbHelper != null) {
+                long result = componentConfigDbHelper.saveOrUpdateComponentConfig(componentName, isEnabled);
+                return result != -1;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "保存组件配置时出错", e);
+        }
+        return false;
+    }
+
+    /**
+     * 检查组件是否启用
+     *
+     * @param componentName 组件名称
+     * @return 是否启用
+     */
+    @JavascriptInterface
+    public boolean isComponentEnabled(String componentName) {
+        try {
+            if (componentConfigDbHelper != null) {
+                return componentConfigDbHelper.isComponentEnabled(componentName);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "获取组件配置时出错", e);
+        }
+        return true;
+    }
+
+    /**
+     * 获取所有组件配置
+     *
+     * @return JSON格式的所有组件配置
+     */
+    @JavascriptInterface
+    public String getAllComponentConfigs() {
+        try {
+            if (componentConfigDbHelper != null) {
+                Map<String, Boolean> configs = componentConfigDbHelper.getAllComponentConfigs();
+                JSONObject configObj = new JSONObject();
+                for (Map.Entry<String, Boolean> entry : configs.entrySet()) {
+                    configObj.put(entry.getKey(), entry.getValue());
+                }
+                return configObj.toString();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "获取所有组件配置时出错", e);
+        }
+        return "{}";
     }
 }
