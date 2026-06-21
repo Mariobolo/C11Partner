@@ -943,4 +943,173 @@ public class MediaSessionService extends Service {
             }
         }
     }
+    
+    // ==================== 播放列表与播放模式控制方法 ====================
+    
+    /**
+     * 获取当前播放列表
+     *
+     * @return 播放列表JSON字符串
+     */
+    public String getPlaylist() {
+        // 当前系统API不支持直接获取播放列表
+        // 返回空列表作为默认实现
+        Log.d(TAG, "getPlaylist() - 当前系统不支持获取播放列表");
+        return "[]";
+    }
+    
+    /**
+     * 播放指定索引的歌曲
+     *
+     * @param index 歌曲索引
+     */
+    public void playSongAtIndex(int index) {
+        // 当前系统API不支持直接跳转到指定歌曲
+        // 通过skipToQueueItem尝试实现（如果支持）
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+                if (mediaSessionManager != null) {
+                    List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
+                    if (controllers != null && !controllers.isEmpty()) {
+                        for (MediaController controller : controllers) {
+                            try {
+                                controller.getTransportControls().skipToQueueItem(index);
+                                Log.d(TAG, "已发送skipToQueueItem命令到: " + controller.getPackageName());
+                            } catch (Exception e) {
+                                Log.w(TAG, "发送skipToQueueItem到 " + controller.getPackageName() + " 失败: " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+            Log.d(TAG, "播放第 " + index + " 首歌曲");
+        } catch (Exception e) {
+            Log.e(TAG, "播放指定歌曲失败", e);
+        }
+    }
+    
+    /**
+     * 设置循环模式
+     *
+     * @param mode 循环模式：0-不循环，1-单曲循环，2-列表循环
+     */
+    public void setRepeatMode(int mode) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+                if (mediaSessionManager != null) {
+                    List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
+                    if (controllers != null && !controllers.isEmpty()) {
+                        for (MediaController controller : controllers) {
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    controller.getTransportControls().setRepeatMode(mode);
+                                    Log.d(TAG, "已发送setRepeatMode命令到: " + controller.getPackageName());
+                                }
+                            } catch (Exception e) {
+                                Log.w(TAG, "发送setRepeatMode到 " + controller.getPackageName() + " 失败: " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+            Log.d(TAG, "设置循环模式: " + mode);
+        } catch (Exception e) {
+            Log.e(TAG, "设置循环模式失败", e);
+        }
+    }
+    
+    /**
+     * 获取当前循环模式
+     *
+     * @return 循环模式
+     */
+    public int getRepeatMode() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+                if (mediaSessionManager != null) {
+                    List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
+                    if (controllers != null && !controllers.isEmpty()) {
+                        for (MediaController controller : controllers) {
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    return controller.getRepeatMode();
+                                }
+                            } catch (Exception e) {
+                                Log.w(TAG, "获取循环模式失败: " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "获取循环模式失败", e);
+        }
+        return 0; // 默认不循环
+    }
+    
+    /**
+     * 设置随机播放模式
+     *
+     * @param enabled 是否启用随机播放
+     */
+    public void setShuffleMode(boolean enabled) {
+        try {
+            int shuffleMode = enabled ? MediaController.SHUFFLE_MODE_ALL : MediaController.SHUFFLE_MODE_NONE;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+                if (mediaSessionManager != null) {
+                    List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
+                    if (controllers != null && !controllers.isEmpty()) {
+                        for (MediaController controller : controllers) {
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    controller.getTransportControls().setShuffleMode(shuffleMode);
+                                    Log.d(TAG, "已发送setShuffleMode命令到: " + controller.getPackageName());
+                                }
+                            } catch (Exception e) {
+                                Log.w(TAG, "发送setShuffleMode到 " + controller.getPackageName() + " 失败: " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+            Log.d(TAG, "设置随机播放: " + enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "设置随机播放失败", e);
+        }
+    }
+    
+    /**
+     * 获取随机播放状态
+     *
+     * @return 是否启用随机播放
+     */
+    public boolean isShuffleEnabled() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
+                if (mediaSessionManager != null) {
+                    List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
+                    if (controllers != null && !controllers.isEmpty()) {
+                        for (MediaController controller : controllers) {
+                            try {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    int shuffleMode = controller.getShuffleMode();
+                                    return shuffleMode != MediaController.SHUFFLE_MODE_NONE;
+                                }
+                            } catch (Exception e) {
+                                Log.w(TAG, "获取随机播放状态失败: " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "获取随机播放状态失败", e);
+        }
+        return false; // 默认不随机
+    }
 }
