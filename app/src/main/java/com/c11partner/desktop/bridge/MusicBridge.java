@@ -34,7 +34,7 @@ public class MusicBridge extends BaseBridge {
      * @param activity MainActivity实例
      */
     public MusicBridge(Context context, MainActivity activity) {
-        super(context);
+        super(context, activity);
         this.mActivity = activity;
         this.musicUtils = new MusicUtils(context);
     }

@@ -435,14 +435,24 @@ public class WebViewBridge {
                 if (mActivity.webView != null && state != null) {
                     try {
                         org.json.JSONObject stateJson = new org.json.JSONObject();
-                        stateJson.put("speed", state.speed);
-                        stateJson.put("batteryLevel", state.batteryLevel);
-                        stateJson.put("range", state.range);
-                        stateJson.put("gear", state.gear);
-                        stateJson.put("doorStatus", state.doorStatus);
-                        stateJson.put("lightStatus", state.lightStatus);
-                        stateJson.put("acStatus", state.acStatus);
-                        stateJson.put("temperature", state.temperature);
+                        stateJson.put("speed", state.getSpeed());
+                        stateJson.put("gear", state.getGear());
+                        stateJson.put("gearText", state.getGearText());
+                        stateJson.put("leftTurnLight", state.getLeftTurnLight());
+                        stateJson.put("rightTurnLight", state.getRightTurnLight());
+                        stateJson.put("lowBeamLight", state.getLowBeamLight());
+                        stateJson.put("lockState", state.getLockState());
+                        stateJson.put("isLocked", state.isLocked());
+                        stateJson.put("openDoorCount", state.getOpenDoorCount());
+                        stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
+                        stateJson.put("sunroof", state.getSunroof());
+                        stateJson.put("bluetoothConnected", state.isBluetoothConnected());
+                        stateJson.put("acPageOpen", state.isAcPageOpen());
+                        stateJson.put("camera360Visible", state.isCamera360Visible());
+                        stateJson.put("frontLeftTirePressure", state.getFrontLeftTirePressure());
+                        stateJson.put("frontRightTirePressure", state.getFrontRightTirePressure());
+                        stateJson.put("rearLeftTirePressure", state.getRearLeftTirePressure());
+                        stateJson.put("rearRightTirePressure", state.getRearRightTirePressure());
                         
                         String javascript = "javascript:window.updateCarState(" + stateJson.toString() + ")";
                         mActivity.webView.loadUrl(javascript);

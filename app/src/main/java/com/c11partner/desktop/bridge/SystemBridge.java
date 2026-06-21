@@ -32,7 +32,7 @@ public class SystemBridge extends BaseBridge {
      * @param activity MainActivity实例
      */
     public SystemBridge(Context context, MainActivity activity) {
-        super(context);
+        super(context, activity);
         this.mActivity = activity;
         this.wallpaperSettingsDbHelper = WallpaperSettingsDatabaseHelper.getInstance(context);
     }
