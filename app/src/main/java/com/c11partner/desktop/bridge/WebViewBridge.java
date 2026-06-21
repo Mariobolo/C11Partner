@@ -1,6 +1,8 @@
 package com.c11partner.desktop.bridge;
 
+import android.content.Context;
 import android.webkit.JavascriptInterface;
+import com.c11partner.desktop.MainActivity;
 
 import com.c11partner.desktop.LeapMotorCarState;
 import com.c11partner.desktop.service.MediaSessionService;

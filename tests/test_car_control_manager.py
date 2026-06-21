@@ -514,5 +514,88 @@ class TestCarControlManager(unittest.TestCase):
         self.assertIn('import android.util.Log;', self.source_code)
 
 
+    # ==================== 新增测试：提升覆盖率 ====================
+    
+    def test_broadcast_flag_consistency(self):
+        """测试广播Intent标志一致性"""
+        # 360全景应该添加NEW_TASK标志
+        self.assertIn('intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);', self.source_code)
+    
+    def test_all_scene_modes_have_logging(self):
+        """测试所有场景模式都有日志记录"""
+        scene_modes = ['守护', '小憩', '露营', '省电', '哨兵']
+        for mode in scene_modes:
+            self.assertIn(f'Log.d(TAG, "{mode}模式:', self.source_code,
+                f"{mode}模式缺少日志记录")
+    
+    def test_getter_method_consistency(self):
+        """测试所有getter方法的一致性"""
+        getter_pattern = r'public (int|boolean|String) get(\w+)\(\)'
+        getters = re.findall(getter_pattern, self.source_code)
+        # 应该至少有7个getter方法
+        self.assertGreaterEqual(len(getters), 7, 
+            f"应该至少有7个getter方法，当前有{len(getters)}个")
+    
+    def test_setter_method_consistency(self):
+        """测试所有setter方法的一致性"""
+        setter_pattern = r'public boolean set(\w+)\([^)]+\)'
+        setters = re.findall(setter_pattern, self.source_code)
+        # 应该至少有29个setter方法
+        self.assertGreaterEqual(len(setters), 29, 
+            f"应该至少有29个setter方法，当前有{len(setters)}个")
+    
+    def test_private_constructor(self):
+        """测试私有构造函数实现单例模式"""
+        self.assertIn('private CarControlManager(Context context) {', self.source_code)
+        # 构造函数中应该初始化context
+        self.assertIn('this.context = context.getApplicationContext();', self.source_code)
+    
+    def test_synchronized_getinstance(self):
+        """测试getInstance方法使用synchronized保证线程安全"""
+        self.assertIn('public static synchronized CarControlManager getInstance', self.source_code)
+    
+    def test_all_intent_actions_use_constants(self):
+        """测试所有Intent Action都使用常量而不是硬编码"""
+        # 查找所有intent = new Intent(...)
+        intent_pattern = r'new Intent\(([^)]+)\)'
+        intent_calls = re.findall(intent_pattern, self.source_code)
+        for call in intent_calls:
+            # 应该使用常量而不是硬编码字符串
+            if '"' in call and 'ACTION_' not in call:
+                # 排除ACTION_VOICE_HAND_MESSAGE这种特殊情况
+                if 'ACTION_VOICE_HAND_MESSAGE' not in call:
+                    self.fail(f"发现硬编码的Intent Action: {call}")
+    
+    def test_exception_logging_consistency(self):
+        """测试异常日志记录一致性"""
+        # 所有catch块都应该记录异常
+        catch_pattern = r'catch \(Exception e\) \{\s*Log\.e\(TAG,'
+        catch_blocks = re.findall(catch_pattern, self.source_code, re.MULTILINE)
+        self.assertGreaterEqual(len(catch_blocks), 10,
+            f"应该至少有10个异常日志记录，当前有{len(catch_blocks)}个")
+    
+    def test_boolean_return_pattern(self):
+        """测试boolean返回方法的模式一致性"""
+        # 大部分方法应该返回true/false或result变量
+        return_true_pattern = r'return true;'
+        return_false_pattern = r'return false;'
+        return_true_count = len(re.findall(return_true_pattern, self.source_code))
+        return_false_count = len(re.findall(return_false_pattern, self.source_code))
+        total_returns = return_true_count + return_false_count
+        self.assertGreaterEqual(total_returns, 25,
+            f"应该至少有25个boolean返回语句，当前有{total_returns}个")
+    
+    def test_method_javadoc_coverage_enhanced(self):
+        """增强版Javadoc覆盖率测试 - 要求更高"""
+        method_pattern = r'public\s+\w+\s+(\w+)\s*\([^)]*\)'
+        methods = re.findall(method_pattern, self.source_code)
+        javadoc_pattern = r'/\*\*[^*]*\*+(?:[^/*][^*]*\*+)*/\s*public'
+        javadoc_count = len(re.findall(javadoc_pattern, self.source_code, re.DOTALL))
+        
+        # 要求至少60%的public方法有Javadoc注释
+        coverage_ratio = javadoc_count / len(methods) if methods else 0
+        self.assertGreaterEqual(coverage_ratio, 0.6, 
+            f"Javadoc覆盖率应至少60%，当前{coverage_ratio:.1%}，{javadoc_count}/{len(methods)}个方法有注释")
+
 if __name__ == '__main__':
     unittest.main()

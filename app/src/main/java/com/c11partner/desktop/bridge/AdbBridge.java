@@ -295,7 +295,7 @@ public class AdbBridge extends BaseBridge {
                 logD(TAG, "尝试通过ADB授予权限: " + command1);
                 boolean result1 = com.c11partner.desktop.adb.AdbManager.connectAndExecute("127.0.0.1", port, command1);
                 if (!result1) {
-                    logE(TAG, "READ_LOGS权限授权失败");
+                    logE(TAG, "READ_LOGS权限授权失败", null);
                     allSuccess = false;
                 }
                 
@@ -304,7 +304,7 @@ public class AdbBridge extends BaseBridge {
                 logD(TAG, "尝试通过ADB授予权限: " + command2);
                 boolean result2 = com.c11partner.desktop.adb.AdbManager.connectAndExecute("127.0.0.1", port, command2);
                 if (!result2) {
-                    logE(TAG, "DUMP权限授权失败");
+                    logE(TAG, "DUMP权限授权失败", null);
                     allSuccess = false;
                 }
                 
@@ -313,7 +313,7 @@ public class AdbBridge extends BaseBridge {
                 logD(TAG, "尝试通过ADB授予权限: " + command3);
                 boolean result3 = com.c11partner.desktop.adb.AdbManager.connectAndExecute("127.0.0.1", port, command3);
                 if (!result3) {
-                    logE(TAG, "WRITE_SECURE_SETTINGS权限授权失败");
+                    logE(TAG, "WRITE_SECURE_SETTINGS权限授权失败", null);
                     allSuccess = false;
                 }
                 
@@ -321,7 +321,7 @@ public class AdbBridge extends BaseBridge {
                     logD(TAG, "三大核心权限授权成功");
                     showToastOnUiThread("三大核心权限授权成功！\nREAD_LOGS + DUMP + WRITE_SECURE_SETTINGS");
                 } else {
-                    logE(TAG, "部分权限授权失败");
+                    logE(TAG, "部分权限授权失败", null);
                     String msg = "ADB权限授权结果：\n";
                     msg += "READ_LOGS: " + (result1 ? "✅" : "❌") + " ";
                     msg += "DUMP: " + (result2 ? "✅" : "❌") + " ";
