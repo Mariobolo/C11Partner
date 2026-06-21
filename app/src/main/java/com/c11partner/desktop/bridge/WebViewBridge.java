@@ -281,18 +281,26 @@ public class WebViewBridge extends BaseBridge {
         return mCarControlBridge.sendVoiceCommand(command); 
     }
     
-    // 方控按键
+    // ==================== 车控功能快捷方法（已移至CarControlBridge，保留兼容） ====================
+    /**
+     * @deprecated 建议直接通过 CarControlBridge 调用，此处仅为向后兼容保留
+     */
+    @Deprecated
     @JavascriptInterface
     public boolean sendPrevTrack() { 
         return mCarControlBridge.sendPrevTrack(); 
     }
     
+    /**
+     * @deprecated 建议直接通过 CarControlBridge 调用，此处仅为向后兼容保留
+     */
+    @Deprecated
     @JavascriptInterface
     public boolean sendNextTrack() { 
         return mCarControlBridge.sendNextTrack(); 
     }
     
-    // 状态读取
+    // ==================== 状态读取（CarControlBridge） ====================
     @JavascriptInterface
     public boolean isVehicleLocked() { 
         return mCarControlBridge.isVehicleLocked(); 

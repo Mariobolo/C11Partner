@@ -267,6 +267,47 @@ public class MusicBridge extends BaseBridge {
         logD(TAG, "playPrevious()已废弃，建议使用prevMusic()");
         prevMusic();
     }
+    // ==================== 辅助方法 ====================
+    
+    /**
+     * 安全执行媒体会话操作（统一错误处理）
+     *
+     * @param action 要执行的操作
+     * @param actionName 操作名称（用于日志）
+     */
+    private void safeMediaSessionAction(Runnable action, String actionName) {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                action.run();
+                logD(TAG, actionName + " 执行成功");
+            } else {
+                logD(TAG, actionName + " 跳过：媒体会话服务未绑定");
+            }
+        } catch (Exception e) {
+            logE(TAG, actionName + " 失败", e);
+        }
+    }
+    
+    /**
+     * 安全获取媒体会话数据（统一错误处理）
+     *
+     * @param supplier 数据提供者
+     * @param defaultValue 默认值
+     * @param actionName 操作名称（用于日志）
+     * @param <T> 返回值类型
+     * @return 获取到的数据或默认值
+     */
+    private <T> T safeMediaSessionGet(java.util.function.Supplier<T> supplier, T defaultValue, String actionName) {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                return supplier.get();
+            }
+        } catch (Exception e) {
+            logE(TAG, actionName + " 失败", e);
+        }
+        return defaultValue;
+    }
+    
     /**
      * 发送媒体按钮广播
      *

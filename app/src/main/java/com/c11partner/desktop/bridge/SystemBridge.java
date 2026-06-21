@@ -44,6 +44,26 @@ public class SystemBridge extends BaseBridge {
         this.wallpaperSettingsDbHelper = WallpaperSettingsDatabaseHelper.getInstance(context);
         this.componentConfigDbHelper = ComponentConfigDatabaseHelper.getInstance(context);
     }
+    // ==================== 辅助方法 ====================
+    
+    /**
+     * 安全执行数据库操作（统一错误处理）
+     *
+     * @param operation 数据库操作
+     * @param operationName 操作名称（用于日志）
+     * @return 操作是否成功
+     */
+    private boolean safeDbOperation(java.util.function.Supplier<Boolean> operation, String operationName) {
+        try {
+            boolean result = operation.get();
+            logD(TAG, operationName + " 成功");
+            return result;
+        } catch (Exception e) {
+            logE(TAG, operationName + " 失败", e);
+            return false;
+        }
+    }
+    
     // ==================== 网络状态检测方法 ====================
     /**
      * 检查WiFi是否已连接
