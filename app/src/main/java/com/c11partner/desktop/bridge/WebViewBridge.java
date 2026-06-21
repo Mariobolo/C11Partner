@@ -2118,10 +2118,6 @@ public class WebViewBridge {
     @JavascriptInterface
     public boolean isQuickApp(String packageName) {
         return mAppBridge.isQuickApp(packageName);
-        } catch (Exception e) {
-            Log.e(TAG, "检查快速启动应用时出错", e);
-            return false;
-        }
     }
 
     // ==================== 音乐可视化相关方法 ====================
