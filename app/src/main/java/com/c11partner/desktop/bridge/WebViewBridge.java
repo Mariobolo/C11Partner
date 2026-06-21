@@ -397,6 +397,80 @@ public class WebViewBridge {
         return "{}";
     }
     // ==================== 私有辅助方法 ====================
+    // ==================== MainActivity 调用的UI更新方法 ====================
+    
+    /**
+     * 更新时间显示（MainActivity调用）
+     * 
+     * @param time 时间字符串
+     * @param date 日期字符串
+     * @param lunarDate 农历日期
+     */
+    public void updateTimeDisplay(final String time, final String date, final String lunarDate) {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mActivity.webView != null) {
+                    String javascript = String.format(
+                        "javascript:window.updateTimeDisplay(%s, %s, %s)",
+                        org.json.JSONObject.quote(time),
+                        org.json.JSONObject.quote(date),
+                        org.json.JSONObject.quote(lunarDate)
+                    );
+                    mActivity.webView.loadUrl(javascript);
+                }
+            }
+        });
+    }
+    
+    /**
+     * 更新车辆状态显示（MainActivity调用）
+     * 
+     * @param state 车辆状态对象
+     */
+    public void updatePresentationCarState(final com.c11partner.desktop.LeapMotorCarState state) {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mActivity.webView != null && state != null) {
+                    try {
+                        org.json.JSONObject stateJson = new org.json.JSONObject();
+                        stateJson.put("speed", state.speed);
+                        stateJson.put("batteryLevel", state.batteryLevel);
+                        stateJson.put("range", state.range);
+                        stateJson.put("gear", state.gear);
+                        stateJson.put("doorStatus", state.doorStatus);
+                        stateJson.put("lightStatus", state.lightStatus);
+                        stateJson.put("acStatus", state.acStatus);
+                        stateJson.put("temperature", state.temperature);
+                        
+                        String javascript = "javascript:window.updateCarState(" + stateJson.toString() + ")";
+                        mActivity.webView.loadUrl(javascript);
+                    } catch (Exception e) {
+                        Log.e(TAG, "更新车辆状态失败", e);
+                    }
+                }
+            }
+        });
+    }
+    
+    /**
+     * 初始化空调状态（MainActivity调用）
+     */
+    public void initializeAcStatus() {
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mActivity.webView != null) {
+                    // 调用前端初始化空调状态
+                    mActivity.webView.loadUrl("javascript:window.initializeAcStatus()");
+                }
+            }
+        });
+    }
+    
+    // ==================== 私有辅助方法 ====================
+    
     private String getDeviceIpAddress() {
         try {
             java.net.NetworkInterface networkInterface = java.net.NetworkInterface.getByName("wlan0");

@@ -25,7 +25,7 @@ public class AdbBridge extends BaseBridge {
      * @param activity MainActivity实例
      */
     public AdbBridge(Context context, MainActivity activity) {
-        super(context);
+        super(context, activity);
         this.mActivity = activity;
         this.usbDebugConnection = new com.c11partner.desktop.adb.UsbDebugConnection(context);
     }
@@ -227,14 +227,7 @@ public class AdbBridge extends BaseBridge {
         return null;
     }
     
-    /**
-     * 在UI线程显示Toast消息
-     */
-    private void showToastOnUiThread(final String message) {
-        mActivity.runOnUiThread(() -> {
-            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
-        });
-    }
+
     
     /**
      * 执行本地ADB授权命令
