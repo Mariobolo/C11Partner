@@ -414,7 +414,14 @@ chore: 构建/工具链变动
 - **拆分模式**：委托模式（Facade），前端不用改
 - **夜间自动推进（2026-06-21）**：代码索引已更新，所有62个Python测试通过，代码已提交GitHub
 - **夜间自动推进（2026-06-21 #2）**：清理WebViewBridge中重复的方法定义，代码索引已更新，所有62个Python测试通过，代码已提交GitHub
-- **夜间自动推进（2026-06-21 #3）**：
+- **夜间自动推进（2026-06-21 #3）**：清理WebViewBridge中重复的方法定义，代码索引已更新，所有62个Python测试通过，代码已提交GitHub
+- **夜间自动推进（2026-06-21 #4）**：
+  - ✅ 修复WallpaperBridge重复方法定义问题（删除3个重复方法）
+  - ✅ 修复AdbBridge中showToastOnUiThread方法覆盖冲突
+  - ✅ 为WebViewBridge添加3个缺失方法（MainActivity调用）
+  - ✅ 所有103个Python测试全部通过
+  - ✅ 代码索引已更新
+  - ✅ 代码已提交GitHub，等待CI构建验证
   - ✅ **测试覆盖率提升**：从72%提升到 **86%**（超过80%目标），新增CarControlManager和MusicUtils单元测试，共103个测试用例全部通过
   - ✅ **模块化拆分**：新增 `AdbBridge.java`，封装10个ADB相关方法（USB授权、无线授权、权限授予、多任务等）
   - ✅ **WebViewBridge深度优化**：
