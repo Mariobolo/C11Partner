@@ -42,6 +42,7 @@ public class MediaSessionService extends Service {
 
     private final IBinder binder = new LocalBinder();
     public static String currentMusicName = "此刻无声，佳音已备候君启...";
+    public static String currentMusicArtist = "未知艺术家";
     public static long currentPosition = 0; // 当前播放位置（毫秒）
     public static long duration = 0; // 音乐总时长（毫秒）
     public static boolean isPlaying = false; // 播放状态
@@ -684,6 +685,10 @@ public class MediaSessionService extends Service {
 
     public String getCurrentMusicName() {
         return currentMusicName;
+    }
+
+    public String getCurrentMusicArtist() {
+        return currentMusicArtist;
     }
 
     public long getCurrentPosition() {

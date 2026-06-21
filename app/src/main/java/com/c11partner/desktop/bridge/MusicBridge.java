@@ -109,6 +109,19 @@ public class MusicBridge extends BaseBridge {
         }
         return "此刻无声，佳音已备候君启...";
     }
+
+    /**
+     * 获取当前音乐艺术家
+     *
+     * @return 当前音乐艺术家名称
+     */
+    @JavascriptInterface
+    public String getCurrentMusicArtist() {
+        if (isMediaSessionServiceBound && mediaSessionService != null) {
+            return mediaSessionService.getCurrentMusicArtist();
+        }
+        return "未知艺术家";
+    }
     /**
      * 获取音乐播放进度信息
      *
@@ -217,38 +230,34 @@ public class MusicBridge extends BaseBridge {
         }
     }
     /**
-     * 播放/暂停音乐（兼容旧接口）
+     * 播放/暂停音乐（兼容旧接口 - 已废弃，请使用playPauseMusic）
+     * @deprecated 建议使用 playPauseMusic() 替代
      */
+    @Deprecated
     @JavascriptInterface
     public void playPause() {
-        Log.d(TAG, "playPause方法被调用");
-        boolean isPlaying = musicUtils.isMusicPlaying();
-        Log.d(TAG, "当前音乐播放状态: " + isPlaying);
-        if(isPlaying){
-            Log.d(TAG, "调用pause方法");
-            musicUtils.pause();
-        }else {
-            Log.d(TAG, "调用play方法");
-            musicUtils.play();
-        }
+        Log.d(TAG, "playPause()已废弃，建议使用playPauseMusic()");
+        playPauseMusic();
     }
     /**
-     * 下一首（兼容旧接口）
+     * 下一首（兼容旧接口 - 已废弃，请使用nextMusic）
+     * @deprecated 建议使用 nextMusic() 替代
      */
+    @Deprecated
     @JavascriptInterface
     public void playNext() {
-        Log.d(TAG, "playNext方法被调用");
-        Log.d(TAG, "调用next方法");
-        musicUtils.next();
+        Log.d(TAG, "playNext()已废弃，建议使用nextMusic()");
+        nextMusic();
     }
     /**
-     * 上一首（兼容旧接口）
+     * 上一首（兼容旧接口 - 已废弃，请使用prevMusic）
+     * @deprecated 建议使用 prevMusic() 替代
      */
+    @Deprecated
     @JavascriptInterface
     public void playPrevious() {
-        Log.d(TAG, "playPrevious方法被调用");
-        Log.d(TAG, "调用previous方法");
-        musicUtils.previous();
+        Log.d(TAG, "playPrevious()已废弃，建议使用prevMusic()");
+        prevMusic();
     }
     /**
      * 发送媒体按钮广播

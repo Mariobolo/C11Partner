@@ -79,83 +79,74 @@ public class SystemBridge extends BaseBridge {
     @JavascriptInterface
     public boolean isBluetoothConnected() {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                android.bluetooth.BluetoothManager bluetoothManager =
-                        (android.bluetooth.BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
-                if (bluetoothManager != null) {
-                    android.bluetooth.BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
-                    // 检查蓝牙是否启用
-                    if (bluetoothAdapter != null) {
-                        if (bluetoothAdapter.isEnabled()) {
-                            // 检查所有可能的蓝牙配置文件连接
-                            int[] profiles = { 
-                                android.bluetooth.BluetoothProfile.GATT,
-                                android.bluetooth.BluetoothProfile.GATT_SERVER,
-                                android.bluetooth.BluetoothProfile.A2DP,
-                                android.bluetooth.BluetoothProfile.HEADSET,
-                                android.bluetooth.BluetoothProfile.HEALTH
-                            };
-                            
-                            for (int profile : profiles) {
-                                try {
-                                    List<android.bluetooth.BluetoothDevice> connectedDevices = 
-                                            bluetoothManager.getConnectedDevices(profile);
-                                    if (connectedDevices != null && !connectedDevices.isEmpty()) {
-                                        Log.d(TAG, "检测到已连接的设备，配置文件: " + profile + ", 数量: " + connectedDevices.size());
-                                        for (android.bluetooth.BluetoothDevice device : connectedDevices) {
-                                            Log.d(TAG, "已连接设备: " + device.getName() + " (" + device.getAddress() + ")");
-                                        }
-                                        return true;
-                                    } else {
-                                        Log.d(TAG, "配置文件 " + profile + " 没有已连接的设备");
-                                    }
-                                } catch (Exception e) {
-                                    Log.d(TAG, "检查配置文件 " + profile + " 时出错: " + e.getMessage());
-                                }
-                            }
-                            
-                            // 尝试使用传统方法检查已配对设备的连接状态
-                            try {
-                                Set<android.bluetooth.BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
-                                Log.d(TAG, "已配对设备数量: " + (bondedDevices != null ? bondedDevices.size() : 0));
-                                
-                                if (bondedDevices != null) {
-                                    for (android.bluetooth.BluetoothDevice device : bondedDevices) {
-                                        Log.d(TAG, "已配对设备: " + device.getName() + " (" + device.getAddress() + "), 状态: " + device.getBondState());
-                                        
-                                        // 尝试检查设备是否处于连接状态
-                                        try {
-                                            Method isConnectedMethod = android.bluetooth.BluetoothDevice.class.getMethod("isConnected");
-                                            boolean isConnected = (boolean) isConnectedMethod.invoke(device);
-                                            Log.d(TAG, "设备 " + device.getName() + " 连接状态: " + isConnected);
-                                            if (isConnected) {
-                                                return true;
-                                            }
-                                        } catch (Exception e) {
-                                            Log.d(TAG, "无法检查设备连接状态: " + e.getMessage());
-                                        }
-                                    }
-                                }
-                            } catch (Exception e) {
-                                Log.d(TAG, "检查已配对设备时出错: " + e.getMessage());
-                            }
-                            
-                            // 如果没有检测到任何连接的设备，返回false
-                            Log.d(TAG, "没有检测到已连接的蓝牙设备");
-                            return false;
-                        }
-                    }
-                }
-            } else {
-                // 对于较老的Android版本，返回false，因为无法准确检测连接状态
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 Log.d(TAG, "Android版本过低，无法准确检测蓝牙连接状态");
                 return false;
             }
+            
+            android.bluetooth.BluetoothManager bluetoothManager =
+                    (android.bluetooth.BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
+            if (bluetoothManager == null) {
+                return false;
+            }
+            
+            android.bluetooth.BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
+            if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+                return false;
+            }
+            
+            // 优先检查A2DP和HEADSET配置文件（最常用的音频设备）
+            int[] priorityProfiles = {
+                android.bluetooth.BluetoothProfile.A2DP,
+                android.bluetooth.BluetoothProfile.HEADSET
+            };
+            
+            for (int profile : priorityProfiles) {
+                try {
+                    List<android.bluetooth.BluetoothDevice> connectedDevices = bluetoothManager.getConnectedDevices(profile);
+                    if (connectedDevices != null && !connectedDevices.isEmpty()) {
+                        Log.d(TAG, "检测到已连接的蓝牙设备，配置文件: " + profile);
+                        return true;
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, "检查配置文件 " + profile + " 时出错: " + e.getMessage());
+                }
+            }
+            
+            // 检查GATT配置文件
+            try {
+                List<android.bluetooth.BluetoothDevice> gattDevices = bluetoothManager.getConnectedDevices(android.bluetooth.BluetoothProfile.GATT);
+                if (gattDevices != null && !gattDevices.isEmpty()) {
+                    Log.d(TAG, "检测到已连接的GATT蓝牙设备");
+                    return true;
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "检查GATT配置文件时出错: " + e.getMessage());
+            }
+            
+            // 通过反射检查已配对设备的连接状态
+            Set<android.bluetooth.BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
+            if (bondedDevices != null) {
+                for (android.bluetooth.BluetoothDevice device : bondedDevices) {
+                    try {
+                        Method isConnectedMethod = android.bluetooth.BluetoothDevice.class.getMethod("isConnected");
+                        boolean isConnected = (boolean) isConnectedMethod.invoke(device);
+                        if (isConnected) {
+                            Log.d(TAG, "检测到已连接的配对设备: " + device.getName());
+                            return true;
+                        }
+                    } catch (Exception e) {
+                        // 反射失败，继续检查下一个设备
+                    }
+                }
+            }
+            
+            Log.d(TAG, "没有检测到已连接的蓝牙设备");
+            return false;
         } catch (Exception e) {
             Log.e(TAG, "检查蓝牙连接状态时出错", e);
+            return false;
         }
-        Log.d(TAG, "蓝牙连接状态检查完成，返回false");
-        return false;
     }
     // ==================== 系统设置保存方法 ====================
     /**
