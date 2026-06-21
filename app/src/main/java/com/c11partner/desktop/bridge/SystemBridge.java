@@ -97,6 +97,49 @@ public class SystemBridge extends BaseBridge {
         }
     }
     
+    /**
+     * 安全启动Activity（统一错误处理）
+     *
+     * @param intent 启动Intent
+     * @param activityName Activity名称（用于日志）
+     */
+    private void safeStartActivity(Intent intent, String activityName) {
+        try {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+            logD(TAG, "启动" + activityName + "成功");
+        } catch (Exception e) {
+            logE(TAG, "启动" + activityName + "失败", e);
+        }
+    }
+    
+    /**
+     * 检查数据库Helper是否可用
+     *
+     * @return 数据库Helper是否可用
+     */
+    private boolean isDatabaseAvailable() {
+        return wallpaperSettingsDbHelper != null && componentConfigDbHelper != null;
+    }
+    
+    /**
+     * 安全执行UI线程操作
+     *
+     * @param action 要执行的操作
+     * @param actionName 操作名称（用于日志）
+     */
+    private void safeUiThreadAction(Runnable action, String actionName) {
+        if (!isActivityValid()) {
+            logD(TAG, actionName + " 跳过：Activity无效");
+            return;
+        }
+        try {
+            mActivity.runOnUiThread(action);
+        } catch (Exception e) {
+            logE(TAG, actionName + " 失败", e);
+        }
+    }
+    
     // ==================== 网络状态检测方法 ====================
     /**
      * 检查WiFi是否已连接
@@ -622,13 +665,8 @@ public class SystemBridge extends BaseBridge {
      */
     @JavascriptInterface
     public void openSystemSettings() {
-        try {
-            Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
-        } catch (Exception e) {
-            logE(TAG, "打开系统设置失败", e);
-        }
+        Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
+        safeStartActivity(intent, "系统设置");
     }
     
     /**
@@ -636,14 +674,9 @@ public class SystemBridge extends BaseBridge {
      */
     @JavascriptInterface
     public void openAppSettings() {
-        try {
-            Intent intent = new Intent(
-                android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(android.net.Uri.parse("package:" + mContext.getPackageName()));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intent);
-        } catch (Exception e) {
-            logE(TAG, "打开应用设置失败", e);
-        }
+        Intent intent = new Intent(
+            android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(android.net.Uri.parse("package:" + mContext.getPackageName()));
+        safeStartActivity(intent, "应用设置");
     }
 }

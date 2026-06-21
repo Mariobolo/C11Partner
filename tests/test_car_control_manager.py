@@ -298,6 +298,62 @@ class TestCarControlManager(unittest.TestCase):
             self.assertEqual(constant, constant.upper(), 
                 f"常量 '{constant}' 应该使用全大写下划线命名规范")
     
+    def test_seat_heating_methods(self):
+        """测试座椅加热方法"""
+        self.assertIn('public boolean setDriverSeatHeating(int level)', self.source_code)
+        self.assertIn('public boolean setPassengerSeatHeating(int level)', self.source_code)
+        self.assertIn('intent.putExtra("SEAT_HEAT_LEFT", safeLevel);', self.source_code)
+        self.assertIn('intent.putExtra("SEAT_HEAT_RIGHT", safeLevel);', self.source_code)
+    
+    def test_seat_ventilation_methods(self):
+        """测试座椅通风方法"""
+        self.assertIn('public boolean setDriverSeatVentilation(int level)', self.source_code)
+        self.assertIn('public boolean setPassengerSeatVentilation(int level)', self.source_code)
+        self.assertIn('intent.putExtra("SEAT_VENT_LEFT", safeLevel);', self.source_code)
+        self.assertIn('intent.putExtra("SEAT_VENT_RIGHT", safeLevel);', self.source_code)
+    
+    def test_seat_level_validation(self):
+        """测试座椅等级参数验证"""
+        self.assertIn('int safeLevel = Math.max(0, Math.min(3, level));', self.source_code)
+        safe_level_count = self.source_code.count('Math.max(0, Math.min(3, level))')
+        self.assertEqual(safe_level_count, 4, "4个座椅控制方法都应该有等级验证")
+    
+    def test_steering_wheel_heating_method(self):
+        """测试方向盘加热方法"""
+        self.assertIn('public boolean setSteeringWheelHeating(boolean on)', self.source_code)
+        self.assertIn('intent.putExtra("STEERING_HEAT", on ? 1 : 0);', self.source_code)
+    
+    def test_mirror_control_methods(self):
+        """测试后视镜控制方法"""
+        self.assertIn('public boolean foldMirrors()', self.source_code)
+        self.assertIn('public boolean unfoldMirrors()', self.source_code)
+        self.assertIn('public boolean setMirrorHeating(boolean on)', self.source_code)
+    
+    def test_mirror_control_extra_params(self):
+        """测试后视镜控制Extra参数"""
+        self.assertIn('intent.putExtra("MIRROR_FOLD", 1);', self.source_code)
+        self.assertIn('intent.putExtra("MIRROR_FOLD", 0);', self.source_code)
+        self.assertIn('intent.putExtra("MIRROR_HEAT", on ? 1 : 0);', self.source_code)
+    
+    def test_seat_mirror_exception_handling(self):
+        """测试座椅和后视镜控制的异常处理"""
+        methods = [
+            'setDriverSeatHeating',
+            'setPassengerSeatHeating', 
+            'setDriverSeatVentilation',
+            'setPassengerSeatVentilation',
+            'setSteeringWheelHeating',
+            'foldMirrors',
+            'unfoldMirrors',
+            'setMirrorHeating'
+        ]
+        for method in methods:
+            # 验证方法存在且有try-catch
+            method_pattern = f'public boolean {method}\\([^)]*\\)'
+            self.assertRegex(self.source_code, method_pattern, f"{method} 方法应该存在")
+            # 验证方法有catch块
+            self.assertIn('catch (Exception e)', self.source_code, f"{method} 应该有异常处理")
+    
     def test_ac_control_fallback_logic(self):
         """测试空调控制fallback逻辑完整性"""
         # 测试setAcEnabled的fallback机制

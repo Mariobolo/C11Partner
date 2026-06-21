@@ -309,6 +309,33 @@ public class MusicBridge extends BaseBridge {
     }
     
     /**
+     * 安全执行UI线程操作
+     *
+     * @param action 要执行的操作
+     * @param actionName 操作名称（用于日志）
+     */
+    private void safeUiThreadAction(Runnable action, String actionName) {
+        if (!isActivityValid()) {
+            logD(TAG, actionName + " 跳过：Activity无效");
+            return;
+        }
+        try {
+            mActivity.runOnUiThread(action);
+        } catch (Exception e) {
+            logE(TAG, actionName + " 失败", e);
+        }
+    }
+    
+    /**
+     * 检查媒体会话服务是否可用
+     *
+     * @return 媒体会话服务是否可用
+     */
+    private boolean isMediaSessionAvailable() {
+        return isMediaSessionServiceBound && mediaSessionService != null;
+    }
+    
+    /**
      * 发送媒体按钮广播
      *
      * @param keyCode 按键代码
