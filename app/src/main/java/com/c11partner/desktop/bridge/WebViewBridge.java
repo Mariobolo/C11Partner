@@ -213,16 +213,6 @@ public class WebViewBridge extends BaseBridge {
         return mCarControlBridge.getNaviVolume(); 
     }
     
-    @JavascriptInterface
-    public boolean setMusicVolume(int volume) { 
-        return mCarControlBridge.setMusicVolume(volume); 
-    }
-    
-    @JavascriptInterface
-    public int getMusicVolume() { 
-        return mCarControlBridge.getMusicVolume(); 
-    }
-    
     // 氛围灯控制
     @JavascriptInterface
     public boolean setAmbientLightEnabled(boolean enabled) { 
