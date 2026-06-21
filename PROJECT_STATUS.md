@@ -409,10 +409,10 @@ chore: 构建/工具链变动
   - 壁纸异步方法：7个 ✅（saveWallpaperCarouselSettingAsync、saveWallpaperSwitchIntervalAsync、updateCategoryEnabledAsync、getEnabledCategoriesAsync、getWallpaperSettingsAsync、getRandomWallpaperAsync、getRandomWallpaperBase64Async）
   - 应用管理同步方法：18个 ✅
   - 应用管理异步方法：1个 ✅（getAppListAsync）
-- **本次更新（2026-06-21）**：完成全部5个壁纸异步方法委托调用，模块化拆分全部完成
+- **本次更新（2026-06-21）**：模块化拆分工作全部完成，代码索引已更新，所有62个测试通过
 - **剩余 4 个**：UI 相关高级方法（建议保留在 WebViewBridge）
 - **拆分模式**：委托模式（Facade），前端不用改
-- **代码提交**：76fd1b2 - refactor: 完成模块化拆分，壁纸和应用管理方法全部委托调用
+- **最新代码提交**：3a86ddf - docs: 更新代码索引和API参考文档
 - **测试状态**：所有 62 个 Python 测试全部通过 ✅
 
 ### 测试覆盖
