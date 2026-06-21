@@ -467,73 +467,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public String getRandomWallpaper() {
-        try {
-            // 检查是否启用了本地壁纸分类模式
-            boolean isRandomMode = wallpaperSettingsDbHelper.getAllSettings().get("random_mode").equals(true);
-            boolean isSpecifiedMode = wallpaperSettingsDbHelper.getAllSettings().get("specified_mode").equals(true);
-
-            // 如果启用了随机模式，读取SD卡下fstart目录下除了00文件夹下的图片
-            if (isRandomMode) {
-                String wallpaperPath = getRandomWallpaperFromFstartExcept00();
-                // 更新MainActivity中的壁纸状态
-                if (mActivity != null && wallpaperPath != null) {
-                    mActivity.isUsingDefaultWallpaper = false;
-                    mActivity.currentWallpaperPath = wallpaperPath;
-                }
-                return wallpaperPath;
-            }
-
-            // 如果启用了指定模式，读取SD卡下fstart目录下00文件夹下的图片
-            if (isSpecifiedMode) {
-                String wallpaperPath = getRandomWallpaperFromFstart00();
-                // 更新MainActivity中的壁纸状态
-                if (mActivity != null && wallpaperPath != null) {
-                    mActivity.isUsingDefaultWallpaper = false;
-                    mActivity.currentWallpaperPath = wallpaperPath;
-                }
-                return wallpaperPath;
-            }
-
-            // 如果都没有启用，获取已启用的分类
-            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
-            Log.d(TAG, "获取到的所有分类数量: " + enabledCategories.size());
-
-            // 过滤出已启用的分类
-            List<Map<String, Object>> filteredCategories = new ArrayList<>();
-            for (Map<String, Object> category : enabledCategories) {
-                if ((boolean) category.get("enabled")) {
-                    filteredCategories.add(category);
-                    Log.d(TAG, "已启用的分类: " + category.get("id"));
-                }
-            }
-
-            // 如果没有启用的分类，返回null
-            if (filteredCategories.isEmpty()) {
-                Log.d(TAG, "没有已启用的分类");
-                return null;
-            }
-
-            // 随机选择一个分类
-            Random random = new Random();
-            Map<String, Object> selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
-
-            // 获取分类ID
-            String categoryId = (String) selectedCategory.get("id");
-            Log.d(TAG, "随机选择的分类ID: " + categoryId);
-
-            // 从本地获取该分类的随机壁纸
-            String wallpaperPath = WallpaperDownloadUtils.getRandomLocalWallpaper(mContext, categoryId);
-            Log.d(TAG, "获取到的壁纸路径: " + wallpaperPath);
-            // 更新MainActivity中的壁纸状态
-            if (mActivity != null && wallpaperPath != null) {
-                mActivity.isUsingDefaultWallpaper = false;
-                mActivity.currentWallpaperPath = wallpaperPath;
-            }
-            return wallpaperPath;
-        } catch (Exception e) {
-            Log.e(TAG, "获取随机壁纸时出错", e);
-            return null;
-        }
+        return mWallpaperBridge.getRandomWallpaper();
     }
 
     /**
@@ -1496,20 +1430,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public String getConfigApp(String buttonId) {
-        try {
-            Map<String, String> appInfo = configAppDbHelper.getConfigAppByButtonId(buttonId);
-            if (appInfo != null) {
-                JSONObject appObj = new JSONObject();
-                appObj.put("button_id", appInfo.get("button_id"));
-                appObj.put("app_name", appInfo.get("app_name"));
-                appObj.put("package_name", appInfo.get("package_name"));
-                appObj.put("app_icon", appInfo.get("app_icon"));
-                return appObj.toString();
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "获取配置应用时出错", e);
-        }
-        return "{}";
+        return mAppBridge.getConfigApp(buttonId);
     }
 
     // ==================== 组件配置相关方法 ====================
@@ -2068,23 +1989,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public String getQuickAppList() {
-        try {
-            List<Map<String, Object>> quickApps = quickAppDbHelper.getAllQuickApps();
-            JSONArray quickAppsArray = new JSONArray();
-
-            for (Map<String, Object> app : quickApps) {
-                JSONObject appObj = new JSONObject();
-                appObj.put("name", app.get("name"));
-                appObj.put("packageName", app.get("packageName"));
-                appObj.put("icon", app.get("icon"));
-                quickAppsArray.put(appObj);
-            }
-
-            return quickAppsArray.toString();
-        } catch (Exception e) {
-            Log.e(TAG, "获取快速启动应用列表时出错", e);
-            return "[]";
-        }
+        return mAppBridge.getQuickAppList();
     }
 
     /**
