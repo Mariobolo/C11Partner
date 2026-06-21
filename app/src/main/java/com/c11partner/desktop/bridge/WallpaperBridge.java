@@ -1405,7 +1405,5 @@ public class WallpaperBridge extends BaseBridge {
                 }
             }
         }).start();
-            return "";
-        }
     }
 }

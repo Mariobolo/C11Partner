@@ -4028,7 +4028,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void pickLocalWallpaperFolder() {
-        mWallpaperBridge.pickLocalWallpaperFolder(); 调用系统文件夹选择器
+        mWallpaperBridge.pickLocalWallpaperFolder();
     }
 
 }
