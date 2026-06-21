@@ -294,6 +294,92 @@ public class MusicBridge extends BaseBridge {
             logE(TAG, "发送媒体按钮失败", e);
         }
     }
+    // ==================== 音乐音量控制方法 ====================
+    /**
+     * 设置音乐音量
+     *
+     * @param volume 音量值（0-15）
+     */
+    @JavascriptInterface
+    public void setMusicVolume(int volume) {
+        try {
+            musicUtils.setMusicVolume(volume);
+            logD(TAG, "设置音乐音量: " + volume);
+        } catch (Exception e) {
+            logE(TAG, "设置音乐音量失败", e);
+        }
+    }
+    /**
+     * 获取当前音乐音量
+     *
+     * @return 当前音量值
+     */
+    @JavascriptInterface
+    public int getMusicVolume() {
+        try {
+            return musicUtils.getMusicVolume();
+        } catch (Exception e) {
+            logE(TAG, "获取音乐音量失败", e);
+            return 7; // 默认中间音量
+        }
+    }
+    /**
+     * 音乐音量增加
+     */
+    @JavascriptInterface
+    public void volumeUp() {
+        try {
+            int current = getMusicVolume();
+            setMusicVolume(Math.min(current + 1, 15));
+        } catch (Exception e) {
+            logE(TAG, "音量增加失败", e);
+        }
+    }
+    /**
+     * 音乐音量减少
+     */
+    @JavascriptInterface
+    public void volumeDown() {
+        try {
+            int current = getMusicVolume();
+            setMusicVolume(Math.max(current - 1, 0));
+        } catch (Exception e) {
+            logE(TAG, "音量减少失败", e);
+        }
+    }
+    // ==================== 播放进度控制方法 ====================
+    /**
+     * 跳转到指定播放位置
+     *
+     * @param position 播放位置（毫秒）
+     */
+    @JavascriptInterface
+    public void seekTo(long position) {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                mediaSessionService.seekTo(position);
+                logD(TAG, "跳转到播放位置: " + position);
+            }
+        } catch (Exception e) {
+            logE(TAG, "跳转播放位置失败", e);
+        }
+    }
+    /**
+     * 设置播放速度
+     *
+     * @param speed 播放速度（0.5-2.0）
+     */
+    @JavascriptInterface
+    public void setPlaybackSpeed(float speed) {
+        try {
+            if (isMediaSessionServiceBound && mediaSessionService != null) {
+                mediaSessionService.setPlaybackSpeed(speed);
+                logD(TAG, "设置播放速度: " + speed);
+            }
+        } catch (Exception e) {
+            logE(TAG, "设置播放速度失败", e);
+        }
+    }
     // ==================== 通知监听权限相关方法 ====================
     /**
      * 检查通知监听权限是否开启

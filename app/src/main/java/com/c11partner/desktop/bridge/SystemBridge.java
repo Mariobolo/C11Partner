@@ -262,6 +262,129 @@ public class SystemBridge extends BaseBridge {
             return "农历日期获取失败";
         }
     }
+    // ==================== 屏幕亮度控制方法 ====================
+    /**
+     * 设置屏幕亮度
+     *
+     * @param brightness 亮度值（0-255）
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setScreenBrightness(int brightness) {
+        try {
+            // 限制亮度范围
+            int safeBrightness = Math.max(0, Math.min(255, brightness));
+            
+            // 设置系统亮度
+            android.provider.Settings.System.putInt(
+                mContext.getContentResolver(),
+                android.provider.Settings.System.SCREEN_BRIGHTNESS,
+                safeBrightness
+            );
+            
+            logD(TAG, "设置屏幕亮度: " + safeBrightness);
+            return true;
+        } catch (Exception e) {
+            logE(TAG, "设置屏幕亮度失败", e);
+            return false;
+        }
+    }
+    /**
+     * 获取当前屏幕亮度
+     *
+     * @return 亮度值（0-255）
+     */
+    @JavascriptInterface
+    public int getScreenBrightness() {
+        try {
+            return android.provider.Settings.System.getInt(
+                mContext.getContentResolver(),
+                android.provider.Settings.System.SCREEN_BRIGHTNESS
+            );
+        } catch (Exception e) {
+            logE(TAG, "获取屏幕亮度失败", e);
+            return 128; // 默认中间亮度
+        }
+    }
+    /**
+     * 设置自动亮度调节
+     *
+     * @param enabled 是否启用自动亮度
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setAutoBrightness(boolean enabled) {
+        try {
+            android.provider.Settings.System.putInt(
+                mContext.getContentResolver(),
+                android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE,
+                enabled ? 1 : 0
+            );
+            logD(TAG, "设置自动亮度: " + enabled);
+            return true;
+        } catch (Exception e) {
+            logE(TAG, "设置自动亮度失败", e);
+            return false;
+        }
+    }
+    /**
+     * 检查是否启用自动亮度
+     *
+     * @return 是否启用自动亮度
+     */
+    @JavascriptInterface
+    public boolean isAutoBrightnessEnabled() {
+        try {
+            int mode = android.provider.Settings.System.getInt(
+                mContext.getContentResolver(),
+                android.provider.Settings.System.SCREEN_BRIGHTNESS_MODE
+            );
+            return mode == 1;
+        } catch (Exception e) {
+            logE(TAG, "检查自动亮度状态失败", e);
+            return false;
+        }
+    }
+    // ==================== 屏幕超时设置方法 ====================
+    /**
+     * 设置屏幕超时时间
+     *
+     * @param seconds 超时时间（秒）
+     * @return 是否设置成功
+     */
+    @JavascriptInterface
+    public boolean setScreenTimeout(int seconds) {
+        try {
+            android.provider.Settings.System.putInt(
+                mContext.getContentResolver(),
+                android.provider.Settings.System.SCREEN_OFF_TIMEOUT,
+                seconds * 1000 // 转换为毫秒
+            );
+            logD(TAG, "设置屏幕超时: " + seconds + "秒");
+            return true;
+        } catch (Exception e) {
+            logE(TAG, "设置屏幕超时失败", e);
+            return false;
+        }
+    }
+    /**
+     * 获取屏幕超时时间
+     *
+     * @return 超时时间（秒）
+     */
+    @JavascriptInterface
+    public int getScreenTimeout() {
+        try {
+            int timeoutMs = android.provider.Settings.System.getInt(
+                mContext.getContentResolver(),
+                android.provider.Settings.System.SCREEN_OFF_TIMEOUT
+            );
+            return timeoutMs / 1000; // 转换为秒
+        } catch (Exception e) {
+            logE(TAG, "获取屏幕超时失败", e);
+            return 60; // 默认60秒
+        }
+    }
 
     // ==================== 组件配置方法 ====================
     /**

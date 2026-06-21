@@ -477,14 +477,25 @@ public class WebViewBridge extends BaseBridge {
     @JavascriptInterface
     public void prevMusic() { mMusicBridge.prevMusic(); }
     
+    // 音乐音量控制
     @JavascriptInterface
-    public void playPause() { mMusicBridge.playPause(); }
+    public void setMusicVolume(int volume) { mMusicBridge.setMusicVolume(volume); }
     
     @JavascriptInterface
-    public void playNext() { mMusicBridge.playNext(); }
+    public int getMusicVolume() { return mMusicBridge.getMusicVolume(); }
     
     @JavascriptInterface
-    public void playPrevious() { mMusicBridge.playPrevious(); }
+    public void volumeUp() { mMusicBridge.volumeUp(); }
+    
+    @JavascriptInterface
+    public void volumeDown() { mMusicBridge.volumeDown(); }
+    
+    // 播放进度控制
+    @JavascriptInterface
+    public void seekTo(long position) { mMusicBridge.seekTo(position); }
+    
+    @JavascriptInterface
+    public void setPlaybackSpeed(float speed) { mMusicBridge.setPlaybackSpeed(speed); }
     
     @JavascriptInterface
     public boolean isNotificationListenerEnabled() {
@@ -530,6 +541,26 @@ public class WebViewBridge extends BaseBridge {
     
     @JavascriptInterface
     public String getLunarCalendar() { return mSystemBridge.getLunarCalendar(); }
+    
+    // 屏幕亮度控制
+    @JavascriptInterface
+    public boolean setScreenBrightness(int brightness) { return mSystemBridge.setScreenBrightness(brightness); }
+    
+    @JavascriptInterface
+    public int getScreenBrightness() { return mSystemBridge.getScreenBrightness(); }
+    
+    @JavascriptInterface
+    public boolean setAutoBrightness(boolean enabled) { return mSystemBridge.setAutoBrightness(enabled); }
+    
+    @JavascriptInterface
+    public boolean isAutoBrightnessEnabled() { return mSystemBridge.isAutoBrightnessEnabled(); }
+    
+    // 屏幕超时设置
+    @JavascriptInterface
+    public boolean setScreenTimeout(int seconds) { return mSystemBridge.setScreenTimeout(seconds); }
+    
+    @JavascriptInterface
+    public int getScreenTimeout() { return mSystemBridge.getScreenTimeout(); }
 
     // ==================== AdbBridge 委托方法 ====================
     @JavascriptInterface

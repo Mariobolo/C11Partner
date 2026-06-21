@@ -1,7 +1,7 @@
 # C11Partner 代码索引文档
 > 📌 **快速定位代码的神器** - 修改代码前先看本文档，找到对应函数行号再精准读取，避免读取大文件占用上下文
 >
-> 自动生成时间：2026-06-22 01:26:23
+> 自动生成时间：2026-06-22 01:33:08
 > 生成脚本：`tools/generate_code_index.py`
 
 ---
@@ -30,9 +30,9 @@ python3 tools/generate_code_index.py
 
 | 类型 | 文件数 | 函数/方法数 |
 |------|--------|------------|
-| Java后端 | 8 | 378 |
+| Java后端 | 8 | 387 |
 | JS前端 | 3 | 145 |
-| **总计** | **11** | **523** |
+| **总计** | **11** | **532** |
 
 ---
 
@@ -231,7 +231,7 @@ python3 tools/generate_code_index.py
 
 ### WebViewBridge.java ⭐
 **路径**：`app/src/main/java/com/c11partner/desktop/bridge/WebViewBridge.java`  
-**行数**：约 631 行  
+**行数**：约 662 行  
 **职责**：JS桥接层，提供50+个JS接口给前端调用
 
 #### 保存/设置
@@ -239,6 +239,9 @@ python3 tools/generate_code_index.py
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `setMediaSessionService()` | 68 | public |
+| `setPlaybackSpeed()` | 498 | public |
+| `setScreenBrightness()` | 547 | public |
+| `setAutoBrightness()` | 553 | public |
 
 #### 壁纸相关
 
@@ -267,7 +270,7 @@ python3 tools/generate_code_index.py
 |--------|------|-----------|
 | `startCamera360()` | 85 | public |
 | `startMusicVisualizer()` | 451 | public |
-| `initializeAcStatus()` | 628 | public |
+| `initializeAcStatus()` | 659 | public |
 
 #### 车控功能
 
@@ -302,6 +305,7 @@ python3 tools/generate_code_index.py
 | `sendVoiceCommand()` | 296 | public |
 | `sendPrevTrack()` | 302 | public |
 | `sendNextTrack()` | 307 | public |
+| `setMusicVolume()` | 482 | public |
 
 #### 状态获取
 
@@ -319,9 +323,11 @@ python3 tools/generate_code_index.py
 | `getAppIcon()` | 339 | public |
 | `isAppInstalled()` | 342 | public |
 | `getEnabledCategories()` | 425 | public |
-| `isNotificationListenerEnabled()` | 490 | public |
-| `isWifiConnected()` | 501 | public |
-| `isBluetoothConnected()` | 504 | public |
+| `isNotificationListenerEnabled()` | 501 | public |
+| `isWifiConnected()` | 512 | public |
+| `isBluetoothConnected()` | 515 | public |
+| `getScreenBrightness()` | 550 | public |
+| `isAutoBrightnessEnabled()` | 556 | public |
 
 #### 空调控制
 
@@ -338,6 +344,7 @@ python3 tools/generate_code_index.py
 | `getCallVolume()` | 202 | public |
 | `getNaviVolume()` | 212 | public |
 | `getMusicVolume()` | 222 | public |
+| `getMusicVolume()` | 485 | public |
 
 #### 灯光控制
 
@@ -351,7 +358,7 @@ python3 tools/generate_code_index.py
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `isSecondaryScreenEnabled()` | 280 | public |
-| `updatePresentationCarState()` | 593 | public |
+| `updatePresentationCarState()` | 624 | public |
 
 #### 语音控制
 
@@ -372,19 +379,22 @@ python3 tools/generate_code_index.py
 | `isQuickApp()` | 362 | public |
 | `saveConfigApp()` | 365 | public |
 | `getConfigApp()` | 370 | public |
-| `saveSystemLauncherSetting()` | 507 | public |
-| `saveSystemLauncherSettingAsync()` | 512 | public |
-| `saveComponentConfig()` | 555 | public |
-| `isComponentEnabled()` | 560 | public |
-| `getAllComponentConfigs()` | 565 | public |
+| `saveSystemLauncherSetting()` | 518 | public |
+| `saveSystemLauncherSettingAsync()` | 523 | public |
+| `saveComponentConfig()` | 586 | public |
+| `isComponentEnabled()` | 591 | public |
+| `getAllComponentConfigs()` | 596 | public |
 
 #### 其他
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `openAppInfo()` | 348 | public |
-| `openRecentTasks()` | 545 | public |
-| `openRecents()` | 548 | public |
+| `volumeUp()` | 488 | public |
+| `volumeDown()` | 491 | public |
+| `seekTo()` | 495 | public |
+| `openRecentTasks()` | 576 | public |
+| `openRecents()` | 579 | public |
 
 #### 时间日期
 
@@ -392,8 +402,10 @@ python3 tools/generate_code_index.py
 |--------|------|-----------|
 | `updateCategoryEnabled()` | 420 | public |
 | `updateCategoryEnabledAsync()` | 428 | public |
-| `getLunarCalendar()` | 532 | public |
-| `updateTimeDisplay()` | 578 | public |
+| `getLunarCalendar()` | 543 | public |
+| `setScreenTimeout()` | 560 | public |
+| `getScreenTimeout()` | 563 | public |
+| `updateTimeDisplay()` | 609 | public |
 
 #### 音乐相关
 
@@ -408,27 +420,24 @@ python3 tools/generate_code_index.py
 | `playPauseMusic()` | 472 | public |
 | `nextMusic()` | 475 | public |
 | `prevMusic()` | 478 | public |
-| `playPause()` | 481 | public |
-| `playNext()` | 484 | public |
-| `playPrevious()` | 487 | public |
 
 #### 系统设置
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `openNotificationListenerSettings()` | 495 | public |
-| `saveBootGreetingSetting()` | 517 | public |
-| `saveRandomModeSetting()` | 522 | public |
-| `saveSpecifiedModeSetting()` | 527 | public |
+| `openNotificationListenerSettings()` | 506 | public |
+| `saveBootGreetingSetting()` | 528 | public |
+| `saveRandomModeSetting()` | 533 | public |
+| `saveSpecifiedModeSetting()` | 538 | public |
 
 #### ADB相关
 
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
-| `triggerUsbDebugAuthorization()` | 536 | public |
-| `triggerWirelessAdbAuthorization()` | 539 | public |
-| `executeAdbPermissionGrant()` | 542 | public |
-| `setDefaultDesktopViaAdb()` | 551 | public |
+| `triggerUsbDebugAuthorization()` | 567 | public |
+| `triggerWirelessAdbAuthorization()` | 570 | public |
+| `executeAdbPermissionGrant()` | 573 | public |
+| `setDefaultDesktopViaAdb()` | 582 | public |
 
 ---
 

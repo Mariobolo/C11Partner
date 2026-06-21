@@ -2,7 +2,7 @@
 
 > 📋 本文档由工具自动生成，请勿手动修改
 > 
-> 生成时间：2026-06-22 01:10:56
+> 生成时间：2026-06-22 01:33:06
 > 
 > 接口总数：4 个
 
@@ -79,10 +79,14 @@
 |--------|------|--------|------|
 | `getCallVolume()` | - | `int` | - |
 | `getMusicVolume()` | - | `int` | - |
+| `getMusicVolume()` | - | `int` | - |
 | `getNaviVolume()` | - | `int` | - |
 | `setCallVolume()` | - | `boolean` | `volume`: int |
 | `setMusicVolume()` | - | `boolean` | `volume`: int |
+| `setMusicVolume()` | - | `void` | `volume`: int |
 | `setNaviVolume()` | - | `boolean` | `volume`: int |
+| `volumeDown()` | - | `void` | - |
+| `volumeUp()` | - | `void` | - |
 
 ## 副屏相关
 
@@ -111,7 +115,6 @@
 | `isNotificationListenerEnabled()` | - | `boolean` | - |
 | `nextMusic()` | - | `void` | - |
 | `openNotificationListenerSettings()` | - | `void` | - |
-| `playPause()` | - | `void` | - |
 | `playPauseMusic()` | - | `void` | - |
 | `prevMusic()` | - | `void` | - |
 | `startMusicVisualizer()` | - | `void` | - |
@@ -176,6 +179,8 @@
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
 | `getLunarCalendar()` | - | `String` | - |
+| `getScreenTimeout()` | - | `int` | - |
+| `setScreenTimeout()` | - | `boolean` | `seconds`: int |
 | `updateCategoryEnabled()` | - | `void` | `categoryId`: String, `enabled`: boolean |
 | `updateCategoryEnabledAsync()` | - | `void` | `categoryId`: final String, `enabled`: final boolean, `callbackId`: final String |
 
@@ -197,6 +202,8 @@
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
 | `getEnabledCategories()` | - | `String` | - |
+| `getScreenBrightness()` | - | `int` | - |
+| `isAutoBrightnessEnabled()` | - | `boolean` | - |
 | `isCameraOverspeedLimitEnabled()` | - | `boolean` | - |
 | `isScreenOn()` | - | `boolean` | - |
 | `isVehicleLocked()` | - | `boolean` | - |
@@ -206,7 +213,10 @@
 
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
+| `setAutoBrightness()` | - | `boolean` | `enabled`: boolean |
 | `setCameraOverspeedLimit()` | - | `boolean` | `enabled`: boolean |
+| `setPlaybackSpeed()` | - | `void` | `speed`: float |
+| `setScreenBrightness()` | - | `boolean` | `brightness`: int |
 | `setVideoWhileDriving()` | - | `boolean` | `enabled`: boolean |
 
 ## 其他
@@ -215,8 +225,7 @@
 |--------|------|--------|------|
 | `openRecentTasks()` | - | `void` | - |
 | `openRecents()` | - | `void` | - |
-| `playNext()` | - | `void` | - |
-| `playPrevious()` | - | `void` | - |
+| `seekTo()` | - | `void` | `position`: long |
 | `sendNextTrack()` | - | `boolean` | - |
 | `sendPrevTrack()` | - | `boolean` | - |
 
@@ -407,6 +416,12 @@
 - **参数**：无
 - **行号**：第 222 行
 
+#### `getMusicVolume()`
+
+- **返回值**：`int`
+- **参数**：无
+- **行号**：第 485 行
+
 #### `getNaviVolume()`
 
 - **返回值**：`int`
@@ -427,12 +442,31 @@
   - `volume`: `int`
 - **行号**：第 217 行
 
+#### `setMusicVolume()`
+
+- **返回值**：`void`
+- **参数**：
+  - `volume`: `int`
+- **行号**：第 482 行
+
 #### `setNaviVolume()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `volume`: `int`
 - **行号**：第 207 行
+
+#### `volumeDown()`
+
+- **返回值**：`void`
+- **参数**：无
+- **行号**：第 491 行
+
+#### `volumeUp()`
+
+- **返回值**：`void`
+- **参数**：无
+- **行号**：第 488 行
 
 ### 副屏相关
 
@@ -507,7 +541,7 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 490 行
+- **行号**：第 501 行
 
 #### `nextMusic()`
 
@@ -519,13 +553,7 @@
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 495 行
-
-#### `playPause()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 481 行
+- **行号**：第 506 行
 
 #### `playPauseMusic()`
 
@@ -572,7 +600,7 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 565 行
+- **行号**：第 596 行
 
 #### `getAppIcon()`
 
@@ -631,7 +659,7 @@
 - **返回值**：`boolean`
 - **参数**：
   - `componentName`: `String`
-- **行号**：第 560 行
+- **行号**：第 591 行
 
 #### `isQuickApp()`
 
@@ -667,7 +695,7 @@
 - **参数**：
   - `componentName`: `String`
   - `isEnabled`: `boolean`
-- **行号**：第 555 行
+- **行号**：第 586 行
 
 #### `saveConfigApp()`
 
@@ -684,7 +712,7 @@
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 507 行
+- **行号**：第 518 行
 
 #### `saveSystemLauncherSettingAsync()`
 
@@ -692,7 +720,7 @@
 - **参数**：
   - `enabled`: `final boolean`
   - `callbackId`: `final String`
-- **行号**：第 512 行
+- **行号**：第 523 行
 
 ### 壁纸相关
 
@@ -801,25 +829,25 @@
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 542 行
+- **行号**：第 573 行
 
 #### `setDefaultDesktopViaAdb()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 551 行
+- **行号**：第 582 行
 
 #### `triggerUsbDebugAuthorization()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 536 行
+- **行号**：第 567 行
 
 #### `triggerWirelessAdbAuthorization()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 539 行
+- **行号**：第 570 行
 
 ### 时间日期
 
@@ -827,7 +855,20 @@
 
 - **返回值**：`String`
 - **参数**：无
-- **行号**：第 532 行
+- **行号**：第 543 行
+
+#### `getScreenTimeout()`
+
+- **返回值**：`int`
+- **参数**：无
+- **行号**：第 563 行
+
+#### `setScreenTimeout()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `seconds`: `int`
+- **行号**：第 560 行
 
 #### `updateCategoryEnabled()`
 
@@ -852,34 +893,34 @@
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 504 行
+- **行号**：第 515 行
 
 #### `isWifiConnected()`
 
 - **返回值**：`boolean`
 - **参数**：无
-- **行号**：第 501 行
+- **行号**：第 512 行
 
 #### `saveBootGreetingSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 517 行
+- **行号**：第 528 行
 
 #### `saveRandomModeSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 522 行
+- **行号**：第 533 行
 
 #### `saveSpecifiedModeSetting()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
-- **行号**：第 527 行
+- **行号**：第 538 行
 
 #### `setBluetoothEnabled()`
 
@@ -910,6 +951,18 @@
 - **参数**：无
 - **行号**：第 425 行
 
+#### `getScreenBrightness()`
+
+- **返回值**：`int`
+- **参数**：无
+- **行号**：第 550 行
+
+#### `isAutoBrightnessEnabled()`
+
+- **返回值**：`boolean`
+- **参数**：无
+- **行号**：第 556 行
+
 #### `isCameraOverspeedLimitEnabled()`
 
 - **返回值**：`boolean`
@@ -936,12 +989,33 @@
 
 ### 保存/设置
 
+#### `setAutoBrightness()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `enabled`: `boolean`
+- **行号**：第 553 行
+
 #### `setCameraOverspeedLimit()`
 
 - **返回值**：`boolean`
 - **参数**：
   - `enabled`: `boolean`
 - **行号**：第 88 行
+
+#### `setPlaybackSpeed()`
+
+- **返回值**：`void`
+- **参数**：
+  - `speed`: `float`
+- **行号**：第 498 行
+
+#### `setScreenBrightness()`
+
+- **返回值**：`boolean`
+- **参数**：
+  - `brightness`: `int`
+- **行号**：第 547 行
 
 #### `setVideoWhileDriving()`
 
@@ -956,25 +1030,20 @@
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 545 行
+- **行号**：第 576 行
 
 #### `openRecents()`
 
 - **返回值**：`void`
 - **参数**：无
-- **行号**：第 548 行
+- **行号**：第 579 行
 
-#### `playNext()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 484 行
-
-#### `playPrevious()`
+#### `seekTo()`
 
 - **返回值**：`void`
-- **参数**：无
-- **行号**：第 487 行
+- **参数**：
+  - `position`: `long`
+- **行号**：第 495 行
 
 #### `sendNextTrack()`
 
