@@ -268,4 +268,64 @@ public class CarControlManagerTest {
         // 只是验证方法可以正常调用
         assertTrue("方法应该可以正常调用", true);
     }
+    
+    // ==================== 空调温度边界测试 ====================
+    
+    @Test
+    public void testSetDriverTemp_minValue() {
+        // 测试设置最低空调温度
+        boolean result = carControlManager.setDriverTemp(16);
+        assertNotNull("结果不应该为 null", result);
+    }
+    
+    @Test
+    public void testSetDriverTemp_maxValue() {
+        // 测试设置最高空调温度
+        boolean result = carControlManager.setDriverTemp(30);
+        assertNotNull("结果不应该为 null", result);
+    }
+    
+    @Test
+    public void testSetPassengerTemp_minValue() {
+        // 测试设置副驾最低空调温度
+        boolean result = carControlManager.setPassengerTemp(16);
+        assertNotNull("结果不应该为 null", result);
+    }
+    
+    @Test
+    public void testSetPassengerTemp_maxValue() {
+        // 测试设置副驾最高空调温度
+        boolean result = carControlManager.setPassengerTemp(30);
+        assertNotNull("结果不应该为 null", result);
+    }
+    
+    // ==================== 音量边界测试 ====================
+    
+    @Test
+    public void testSetCallVolume_minValue() {
+        // 测试设置最小通话音量
+        boolean result = carControlManager.setCallVolume(0);
+        assertNotNull("结果不应该为 null", result);
+    }
+    
+    @Test
+    public void testSetCallVolume_maxValue() {
+        // 测试设置最大通话音量
+        boolean result = carControlManager.setCallVolume(100);
+        assertNotNull("结果不应该为 null", result);
+    }
+    
+    @Test
+    public void testSetNaviVolume_minValue() {
+        // 测试设置最小导航音量
+        boolean result = carControlManager.setNaviVolume(0);
+        assertNotNull("结果不应该为 null", result);
+    }
+    
+    @Test
+    public void testSetNaviVolume_maxValue() {
+        // 测试设置最大导航音量
+        boolean result = carControlManager.setNaviVolume(100);
+        assertNotNull("结果不应该为 null", result);
+    }
 }
