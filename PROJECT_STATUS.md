@@ -398,12 +398,12 @@ chore: 构建/工具链变动
 |------|------|------|--------|
 | **基类** | `BaseBridge.java` | ✅ 完成 | - |
 | **车控功能** | `CarControlBridge.java` | ✅ 完成 | 50+ |
-| **壁纸功能** | `WallpaperBridge.java` | ✅ 完成 | 17/17 已实现 |
-| **应用管理** | `AppBridge.java` | ✅ 完成 | 14/14 已实现 |
+| **壁纸功能** | `WallpaperBridge.java` | ✅ 完成 | 23/23 已实现 |
+| **应用管理** | `AppBridge.java` | ✅ 完成 | 15/15 已实现 |
 
 - **车控模块迁移**：42/46 方法（~91%）
-- **WallpaperBridge**：100% 完成（新增 getRandomWallpaperBase64、encodeImageToBase64 方法）
-- **AppBridge**：100% 完成（完善 getAllApps/getUserApps/getSystemApps、getAppInfo、getAppIcon 等）
+- **WallpaperBridge**：100% 完成（新增 getRandomWallpaperBase64、encodeImageToBase64、setWallpaperCarouselEnabled、setWallpaperCarouselInterval、setWallpaperFillMode、refreshBingWallpaper、pickLocalWallpaperFile、pickLocalWallpaperFolder 方法）
+- **AppBridge**：100% 完成（完善 getAllApps/getUserApps/getSystemApps、getAppInfo、getAppIcon、getConfigApp、saveConfigApp、getQuickAppList 等）
 - **剩余 4 个**：UI 相关高级方法（建议保留在 WebViewBridge）
 - **拆分模式**：委托模式（Facade），前端不用改
 
