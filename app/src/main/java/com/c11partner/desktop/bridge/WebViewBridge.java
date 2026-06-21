@@ -1000,6 +1000,69 @@ public class WebViewBridge {
     }
 
     /**
+     * 获取所有已安装应用列表
+     *
+     * @return JSON格式的应用列表
+     */
+    @JavascriptInterface
+    public String getAllApps() {
+        return mAppBridge.getAllApps();
+    }
+    
+    /**
+     * 获取用户安装的应用列表
+     *
+     * @return JSON格式的应用列表
+     */
+    @JavascriptInterface
+    public String getUserApps() {
+        return mAppBridge.getUserApps();
+    }
+    
+    /**
+     * 获取系统应用列表
+     *
+     * @return JSON格式的应用列表
+     */
+    @JavascriptInterface
+    public String getSystemApps() {
+        return mAppBridge.getSystemApps();
+    }
+    
+    /**
+     * 获取应用信息
+     *
+     * @param packageName 应用包名
+     * @return JSON格式的应用信息
+     */
+    @JavascriptInterface
+    public String getAppInfo(String packageName) {
+        return mAppBridge.getAppInfo(packageName);
+    }
+    
+    /**
+     * 获取应用图标Base64
+     *
+     * @param packageName 应用包名
+     * @return 图标Base64编码
+     */
+    @JavascriptInterface
+    public String getAppIcon(String packageName) {
+        return mAppBridge.getAppIcon(packageName);
+    }
+    
+    /**
+     * 检查应用是否已安装
+     *
+     * @param packageName 应用包名
+     * @return 是否已安装
+     */
+    @JavascriptInterface
+    public boolean isAppInstalled(String packageName) {
+        return mAppBridge.isAppInstalled(packageName);
+    }
+    
+    /**
      * 启动应用
      *
      * @param packageName 应用包名
