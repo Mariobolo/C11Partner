@@ -1,7 +1,7 @@
 # C11Partner 代码索引文档
 > 📌 **快速定位代码的神器** - 修改代码前先看本文档，找到对应函数行号再精准读取，避免读取大文件占用上下文
 >
-> 自动生成时间：2026-06-21 20:54:14
+> 自动生成时间：2026-06-21 21:08:20
 > 生成脚本：`tools/generate_code_index.py`
 
 ---
@@ -231,7 +231,7 @@ python3 tools/generate_code_index.py
 
 ### WebViewBridge.java ⭐
 **路径**：`app/src/main/java/com/c11partner/desktop/bridge/WebViewBridge.java`  
-**行数**：约 493 行  
+**行数**：约 503 行  
 **职责**：JS桥接层，提供50+个JS接口给前端调用
 
 #### 保存/设置
@@ -268,7 +268,7 @@ python3 tools/generate_code_index.py
 | `run()` | 94 | public |
 | `run()` | 412 | public |
 | `run()` | 434 | public |
-| `run()` | 463 | public |
+| `run()` | 473 | public |
 
 #### 应用管理
 
@@ -302,7 +302,7 @@ python3 tools/generate_code_index.py
 | `isNotificationListenerEnabled()` | 265 | public |
 | `isWifiConnected()` | 275 | public |
 | `isBluetoothConnected()` | 278 | public |
-| `getDeviceIpAddress()` | 474 | private |
+| `getDeviceIpAddress()` | 484 | private |
 
 #### 其他
 
@@ -326,7 +326,7 @@ python3 tools/generate_code_index.py
 | 函数名 | 行号 | 访问修饰符 |
 |--------|------|-----------|
 | `startMusicVisualizer()` | 229 | public |
-| `initializeAcStatus()` | 460 | public |
+| `initializeAcStatus()` | 470 | public |
 
 #### 音乐相关
 

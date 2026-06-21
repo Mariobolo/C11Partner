@@ -3,128 +3,121 @@
 """
 提交信息检查工具的单元测试
 """
-
 import sys
 import os
 import io
-
 # 添加 tools 目录到路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'tools'))
-
 # 直接 import 模块
-from check_commit_msg import check_commit_message, print_result, main
-
-
+from check_commit_msg import check_commit_message, print_result, main, ALLOWED_TYPES, TYPE_DESCRIPTIONS
 class TestCheckCommitMsg:
     """提交信息检查工具测试类"""
-
     def test_valid_feat_commit(self):
         """测试有效的 feat 提交"""
         result = check_commit_message("feat: 添加新功能")
         assert result['valid'] == True
         assert result['type'] == 'feat'
-
     def test_valid_fix_commit(self):
         """测试有效的 fix 提交"""
         result = check_commit_message("fix: 修复bug")
         assert result['valid'] == True
         assert result['type'] == 'fix'
-
     def test_valid_docs_commit(self):
         """测试有效的 docs 提交"""
         result = check_commit_message("docs: 更新文档")
         assert result['valid'] == True
         assert result['type'] == 'docs'
-
     def test_valid_refactor_commit(self):
         """测试有效的 refactor 提交"""
         result = check_commit_message("refactor: 重构代码")
         assert result['valid'] == True
         assert result['type'] == 'refactor'
-
     def test_valid_perf_commit(self):
         """测试有效的 perf 提交"""
         result = check_commit_message("perf: 优化性能")
         assert result['valid'] == True
         assert result['type'] == 'perf'
-
     def test_valid_test_commit(self):
         """测试有效的 test 提交"""
         result = check_commit_message("test: 添加测试")
         assert result['valid'] == True
         assert result['type'] == 'test'
-
     def test_valid_chore_commit(self):
         """测试有效的 chore 提交"""
         result = check_commit_message("chore: 更新依赖")
         assert result['valid'] == True
         assert result['type'] == 'chore'
-
     def test_valid_ci_commit(self):
         """测试有效的 ci 提交"""
         result = check_commit_message("ci: 更新CI配置")
         assert result['valid'] == True
         assert result['type'] == 'ci'
-
     def test_valid_revert_commit(self):
         """测试有效的 revert 提交"""
         result = check_commit_message("revert: 回滚提交")
         assert result['valid'] == True
         assert result['type'] == 'revert'
-
     def test_valid_style_commit(self):
         """测试有效的 style 提交"""
         result = check_commit_message("style: 格式化代码")
         assert result['valid'] == True
         assert result['type'] == 'style'
-
     def test_invalid_type(self):
         """测试无效的 type 类型"""
         result = check_commit_message("invalid: 测试")
         assert result['valid'] == False
         assert len(result['errors']) > 0
-
     def test_invalid_format_no_colon(self):
         """测试无效格式（没有冒号）"""
         result = check_commit_message("feat 添加新功能")
         assert result['valid'] == False
-
     def test_empty_subject(self):
         """测试空的描述"""
         result = check_commit_message("feat: ")
         assert result['valid'] == False
-
     def test_empty_message(self):
         """测试空的提交信息"""
         result = check_commit_message("")
         assert result['valid'] == False
-
     def test_subject_too_long_warning(self):
         """测试描述过长的警告"""
-        long_subject = "a" * 100
+        long_subject = "a" * 60
         result = check_commit_message(f"feat: {long_subject}")
         assert 'warnings' in result
-
+        assert len(result['warnings']) > 0
+    def test_subject_too_short_warning(self):
+        """测试描述过短的警告"""
+        result = check_commit_message("feat: 测")
+        assert len(result['warnings']) > 0
+    def test_subject_not_verb_start_warning(self):
+        """测试不以动词开头的警告"""
+        result = check_commit_message("feat: 新功能")
+        assert len(result['warnings']) > 0
+    def test_subject_ends_with_period_warning(self):
+        """测试以句号结尾的警告"""
+        result = check_commit_message("feat: 添加新功能。")
+        assert len(result['warnings']) > 0
+    def test_body_line_too_long_warning(self):
+        """测试正文行过长的警告"""
+        long_line = "a" * 80
+        message = f"feat: 添加新功能\n\n{long_line}"
+        result = check_commit_message(message)
+        assert len(result['warnings']) > 0
     def test_with_body(self):
         """测试带正文的提交信息"""
         message = "feat: 添加新功能\n\n这是详细的描述\n多行内容"
         result = check_commit_message(message)
         assert result['valid'] == True
         assert result['type'] == 'feat'
-
     def test_case_insensitive_type(self):
         """测试 type 大小写不敏感"""
         result = check_commit_message("Feat: 添加新功能")
         assert 'valid' in result
-
     def test_all_types(self):
         """测试所有合法的 type 类型"""
-        valid_types = ['feat', 'fix', 'docs', 'style', 'refactor', 
-                       'perf', 'test', 'chore', 'ci', 'revert']
-        for t in valid_types:
+        for t in ALLOWED_TYPES:
             result = check_commit_message(f"{t}: 测试")
             assert result['valid'] == True, f"Type {t} 应该是有效的"
-
     def test_print_result_valid(self):
         """测试打印有效结果"""
         result = {
@@ -145,7 +138,6 @@ class TestCheckCommitMsg:
             assert len(output) > 0
         finally:
             sys.stdout = old_stdout
-
     def test_print_result_invalid(self):
         """测试打印无效结果"""
         result = {
@@ -166,7 +158,6 @@ class TestCheckCommitMsg:
             assert len(output) > 0
         finally:
             sys.stdout = old_stdout
-
     def test_print_result_with_warnings(self):
         """测试打印带警告的结果"""
         result = {
@@ -187,11 +178,29 @@ class TestCheckCommitMsg:
             assert len(output) > 0
         finally:
             sys.stdout = old_stdout
-
+    def test_print_result_with_body(self):
+        """测试打印带正文的结果"""
+        result = {
+            'valid': True,
+            'type': 'feat',
+            'subject': '添加新功能',
+            'body': '这是详细的正文描述内容',
+            'errors': [],
+            'warnings': []
+        }
+        captured_output = io.StringIO()
+        old_stdout = sys.stdout
+        sys.stdout = captured_output
+        
+        try:
+            print_result(result)
+            output = captured_output.getvalue()
+            assert len(output) > 0
+        finally:
+            sys.stdout = old_stdout
     def test_main_function_is_callable(self):
         """测试 main 函数是可调用的"""
         assert callable(main), "main 函数应该是可调用的"
-
     def test_check_commit_message_returns_dict(self):
         """测试返回值是字典"""
         result = check_commit_message("feat: 测试")
@@ -201,24 +210,23 @@ class TestCheckCommitMsg:
         assert 'subject' in result
         assert 'errors' in result
         assert 'warnings' in result
-
     def test_multiline_body(self):
         """测试多行正文"""
         message = """feat: 添加新功能
-
 第一行详细描述
 第二行详细描述
 """
         result = check_commit_message(message)
         assert result['valid'] == True
         assert result['type'] == 'feat'
-
     def test_whitespace_only_message(self):
         """测试只有空白字符的提交信息"""
         result = check_commit_message("   \n\t  ")
         assert result['valid'] == False
-
-
+    def test_type_descriptions_coverage(self):
+        """测试 TYPE_DESCRIPTIONS 覆盖所有类型"""
+        for t in ALLOWED_TYPES:
+            assert t in TYPE_DESCRIPTIONS, f"Type {t} 应该在 TYPE_DESCRIPTIONS 中"
 def run_tests():
     """运行所有测试"""
     import traceback
@@ -247,8 +255,6 @@ def run_tests():
     print(f"结果：{passed} 通过，{failed} 失败")
     
     return failed == 0
-
-
 if __name__ == '__main__':
     success = run_tests()
     sys.exit(0 if success else 1)
