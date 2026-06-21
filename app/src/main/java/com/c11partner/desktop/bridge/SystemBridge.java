@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
-import java.util.Set
+import java.util.Set;
 /**
  * 系统设置Bridge类
  * 处理所有系统设置相关的JavaScript交互接口
