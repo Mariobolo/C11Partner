@@ -29,14 +29,12 @@ public class WebViewBridge extends BaseBridge {
     private static final String TAG = "WebViewBridge";
 
     // 模块化Bridge - 所有具体功能委托给这些Bridge处理
-    // 设计原则：WebViewBridge仅作为调度入口，不持有具体业务数据
-    // 各子Bridge内部自行管理所需的数据库和资源依赖
-    private CarControlBridge mCarControlBridge;
-    private WallpaperBridge mWallpaperBridge;
-    private AppBridge mAppBridge;
-    private MusicBridge mMusicBridge;
-    private SystemBridge mSystemBridge;
-    private AdbBridge mAdbBridge;
+    private final CarControlBridge mCarControlBridge;
+    private final WallpaperBridge mWallpaperBridge;
+    private final AppBridge mAppBridge;
+    private final MusicBridge mMusicBridge;
+    private final SystemBridge mSystemBridge;
+    private final AdbBridge mAdbBridge;
 
     /**
      * 构造函数 - 初始化所有Bridge模块
@@ -46,16 +44,12 @@ public class WebViewBridge extends BaseBridge {
      */
     public WebViewBridge(MainActivity activity, Context context) {
         super(context, activity);
-        
-        // 初始化所有功能Bridge模块
-        // 各子Bridge内部自行管理数据库依赖（单例模式）
-        this.mCarControlBridge = new CarControlBridge(context, activity);
-        this.mWallpaperBridge = new WallpaperBridge(context, activity);
-        this.mAppBridge = new AppBridge(context, activity);
-        this.mMusicBridge = new MusicBridge(context, activity);
-        this.mSystemBridge = new SystemBridge(context, activity);
-        this.mAdbBridge = new AdbBridge(context, activity);
-        
+        mCarControlBridge = new CarControlBridge(context, activity);
+        mWallpaperBridge = new WallpaperBridge(context, activity);
+        mAppBridge = new AppBridge(context, activity);
+        mMusicBridge = new MusicBridge(context, activity);
+        mSystemBridge = new SystemBridge(context, activity);
+        mAdbBridge = new AdbBridge(context, activity);
         logD(TAG, "WebViewBridge初始化完成，所有功能模块已加载");
     }
 

@@ -243,12 +243,12 @@ class TestWebViewBridge(unittest.TestCase):
     def test_bridge_delegation_fields(self):
         """测试Bridge委托字段定义"""
         bridge_fields = [
-            'private CarControlBridge mCarControlBridge;',
-            'private WallpaperBridge mWallpaperBridge;',
-            'private AppBridge mAppBridge;',
-            'private MusicBridge mMusicBridge;',
-            'private SystemBridge mSystemBridge;',
-            'private AdbBridge mAdbBridge;'
+            'private final CarControlBridge mCarControlBridge;',
+            'private final WallpaperBridge mWallpaperBridge;',
+            'private final AppBridge mAppBridge;',
+            'private final MusicBridge mMusicBridge;',
+            'private final SystemBridge mSystemBridge;',
+            'private final AdbBridge mAdbBridge;'
         ]
         for field in bridge_fields:
             self.assertIn(field, self.source_code, f"缺少Bridge字段: {field}")
