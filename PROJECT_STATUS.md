@@ -398,13 +398,13 @@ chore: 构建/工具链变动
 |------|------|------|--------|
 | **基类** | `BaseBridge.java` | ✅ 完成 | - |
 | **车控功能** | `CarControlBridge.java` | ✅ 完成 | 50+ |
-| **壁纸功能** | `WallpaperBridge.java` | ✅ 完成 | 26/26 已实现 |
+| **壁纸功能** | `WallpaperBridge.java` | ✅ 完成 | 30/30 已实现 |
 | **应用管理** | `AppBridge.java` | ✅ 完成 | 18/18 已实现 |
 
 - **车控模块迁移**：42/46 方法（~91%）
-- **WallpaperBridge**：100% 完成（新增 getRandomWallpaperBase64、encodeImageToBase64、setWallpaperCarouselEnabled、setWallpaperCarouselInterval、setWallpaperFillMode、refreshBingWallpaper、pickLocalWallpaperFile、pickLocalWallpaperFolder 方法）
-- **AppBridge**：100% 完成（完善 getAllApps/getUserApps/getSystemApps、getAppInfo、getAppIcon、getConfigApp、saveConfigApp、getQuickAppList、isAppInstalled 等）
-- **WebViewBridge 委托**：已完成 getAllApps、getUserApps、getSystemApps、getAppInfo、getAppIcon、isAppInstalled 委托调用
+- **WallpaperBridge**：100% 完成（30个方法，新增 getRandomLocalWallpaper、getRandomOnlineWallpaper、getRandomOnlineWallpaperBase64、getRandomWallpaperUrl 四个私有辅助方法）
+- **AppBridge**：100% 完成（18个方法，新增应用图标缓存机制 clearAppIconCache、cacheAppIconBase64、getCachedAppIconBase64，修复重复方法问题）
+- **WebViewBridge 委托**：已完成 getAllApps、getUserApps、getSystemApps、getAppInfo、getAppIcon、isAppInstalled、launchApp、saveConfigApp、getConfigApp、getQuickAppList、addQuickApp、removeQuickApp、isQuickApp 委托调用
 - **剩余 4 个**：UI 相关高级方法（建议保留在 WebViewBridge）
 - **拆分模式**：委托模式（Facade），前端不用改
 
