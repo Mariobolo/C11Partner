@@ -958,11 +958,6 @@ public class MediaSessionService extends Service {
         return "[]";
     }
     
-    /**
-     * 播放指定索引的歌曲
-     *
-     * @param index 歌曲索引
-     */
     public void playSongAtIndex(int index) {
         // 当前系统API不支持直接跳转到指定歌曲
         // 通过skipToQueueItem尝试实现（如果支持）
@@ -990,23 +985,38 @@ public class MediaSessionService extends Service {
     }
     
     /**
+     * 循环模式常量（兼容低版本）
+     */
+    private static final int REPEAT_MODE_INVALID = -1;
+    private static final int REPEAT_MODE_NONE = 0;
+    private static final int REPEAT_MODE_ONE = 1;
+    private static final int REPEAT_MODE_ALL = 2;
+    private static final int REPEAT_MODE_GROUP = 3;
+    
+    /**
+     * 随机播放模式常量（兼容低版本）
+     */
+    private static final int SHUFFLE_MODE_INVALID = -1;
+    private static final int SHUFFLE_MODE_NONE = 0;
+    private static final int SHUFFLE_MODE_ALL = 1;
+    private static final int SHUFFLE_MODE_GROUP = 2;
+    
+    /**
      * 设置循环模式
      *
      * @param mode 循环模式：0-不循环，1-单曲循环，2-列表循环
      */
     public void setRepeatMode(int mode) {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
                 if (mediaSessionManager != null) {
                     List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
                     if (controllers != null && !controllers.isEmpty()) {
                         for (MediaController controller : controllers) {
                             try {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    controller.getTransportControls().setRepeatMode(mode);
-                                    Log.d(TAG, "已发送setRepeatMode命令到: " + controller.getPackageName());
-                                }
+                                controller.getTransportControls().setRepeatMode(mode);
+                                Log.d(TAG, "已发送setRepeatMode命令到: " + controller.getPackageName());
                             } catch (Exception e) {
                                 Log.w(TAG, "发送setRepeatMode到 " + controller.getPackageName() + " 失败: " + e.getMessage());
                             }
@@ -1027,16 +1037,14 @@ public class MediaSessionService extends Service {
      */
     public int getRepeatMode() {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
                 if (mediaSessionManager != null) {
                     List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
                     if (controllers != null && !controllers.isEmpty()) {
                         for (MediaController controller : controllers) {
                             try {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    return controller.getRepeatMode();
-                                }
+                                return controller.getRepeatMode();
                             } catch (Exception e) {
                                 Log.w(TAG, "获取循环模式失败: " + e.getMessage());
                             }
@@ -1047,7 +1055,7 @@ public class MediaSessionService extends Service {
         } catch (Exception e) {
             Log.e(TAG, "获取循环模式失败", e);
         }
-        return 0; // 默认不循环
+        return REPEAT_MODE_NONE; // 默认不循环
     }
     
     /**
@@ -1057,18 +1065,16 @@ public class MediaSessionService extends Service {
      */
     public void setShuffleMode(boolean enabled) {
         try {
-            int shuffleMode = enabled ? MediaController.SHUFFLE_MODE_ALL : MediaController.SHUFFLE_MODE_NONE;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int shuffleMode = enabled ? SHUFFLE_MODE_ALL : SHUFFLE_MODE_NONE;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
                 if (mediaSessionManager != null) {
                     List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
                     if (controllers != null && !controllers.isEmpty()) {
                         for (MediaController controller : controllers) {
                             try {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    controller.getTransportControls().setShuffleMode(shuffleMode);
-                                    Log.d(TAG, "已发送setShuffleMode命令到: " + controller.getPackageName());
-                                }
+                                controller.getTransportControls().setShuffleMode(shuffleMode);
+                                Log.d(TAG, "已发送setShuffleMode命令到: " + controller.getPackageName());
                             } catch (Exception e) {
                                 Log.w(TAG, "发送setShuffleMode到 " + controller.getPackageName() + " 失败: " + e.getMessage());
                             }
@@ -1089,17 +1095,15 @@ public class MediaSessionService extends Service {
      */
     public boolean isShuffleEnabled() {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 MediaSessionManager mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
                 if (mediaSessionManager != null) {
                     List<MediaController> controllers = mediaSessionManager.getActiveSessions(null);
                     if (controllers != null && !controllers.isEmpty()) {
                         for (MediaController controller : controllers) {
                             try {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    int shuffleMode = controller.getShuffleMode();
-                                    return shuffleMode != MediaController.SHUFFLE_MODE_NONE;
-                                }
+                                int shuffleMode = controller.getShuffleMode();
+                                return shuffleMode != SHUFFLE_MODE_NONE;
                             } catch (Exception e) {
                                 Log.w(TAG, "获取随机播放状态失败: " + e.getMessage());
                             }
