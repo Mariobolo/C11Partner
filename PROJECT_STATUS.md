@@ -402,9 +402,9 @@ chore: 构建/工具链变动
 | **应用管理** | `AppBridge.java` | ✅ 完成 | 18/18 已实现 |
 
 - **车控模块迁移**：42/46 方法（~91%）
-- **WallpaperBridge**：100% 完成（30个方法，新增 getRandomLocalWallpaper、getRandomOnlineWallpaper、getRandomOnlineWallpaperBase64、getRandomWallpaperUrl 四个私有辅助方法）
+- **WallpaperBridge**：100% 完成（31个方法，新增 sendWallpaperSettingsChangedBroadcast、getRandomLocalWallpaper、getRandomOnlineWallpaper、getRandomOnlineWallpaperBase64、getRandomWallpaperUrl 五个方法）
 - **AppBridge**：100% 完成（18个方法，新增应用图标缓存机制 clearAppIconCache、cacheAppIconBase64、getCachedAppIconBase64，修复重复方法问题）
-- **WebViewBridge 委托**：已完成 getAllApps、getUserApps、getSystemApps、getAppInfo、getAppIcon、isAppInstalled、launchApp、saveConfigApp、getConfigApp、getQuickAppList、addQuickApp、removeQuickApp、isQuickApp 委托调用
+- **WebViewBridge 委托**：已完成 getAllApps、getUserApps、getSystemApps、getAppInfo、getAppIcon、isAppInstalled、launchApp、openAppInfo、saveConfigApp、getConfigApp、getQuickAppList、addQuickApp、removeQuickApp、isQuickApp 委托调用
 - **剩余 4 个**：UI 相关高级方法（建议保留在 WebViewBridge）
 - **拆分模式**：委托模式（Facade），前端不用改
 
