@@ -5,13 +5,26 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.c11partner.desktop.MainActivity;
+import com.c11partner.desktop.utils.AppUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.c11partner.desktop.database.AppDatabaseHelper;
 import com.c11partner.desktop.database.QuickAppDatabaseHelper;
@@ -55,18 +68,17 @@ public class AppBridge extends BaseBridge {
     // ==================== 应用列表相关 ====================
     
     /**
-     * 获取所有已安装应用列表
+     * 获取所有已安装应用列表（按字母分组）
      * @return 应用列表 JSON
      */
     public String getAllApps() {
         try {
-            PackageManager pm = mContext.getPackageManager();
-            List<PackageInfo> packages = pm.getInstalledPackages(0);
-            // TODO: 转换为 JSON 格式
-            return "[]";
+            // 使用 AppUtils 获取所有已安装应用
+            List<Map<String, Object>> allApps = AppUtils.getInstalledApps(mContext);
+            return buildGroupedAppListJson(allApps);
         } catch (Exception e) {
             Log.e(TAG, "获取应用列表失败", e);
-            return "[]";
+            return "{}";
         }
     }
     
@@ -76,20 +88,20 @@ public class AppBridge extends BaseBridge {
      */
     public String getUserApps() {
         try {
-            PackageManager pm = mContext.getPackageManager();
-            List<PackageInfo> packages = pm.getInstalledPackages(0);
-            List<PackageInfo> userApps = new ArrayList<>();
+            List<Map<String, Object>> allApps = AppUtils.getInstalledApps(mContext);
+            List<Map<String, Object>> userApps = new ArrayList<>();
             
-            for (PackageInfo pkg : packages) {
-                if ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                    userApps.add(pkg);
+            for (Map<String, Object> app : allApps) {
+                Boolean isSystem = (Boolean) app.get("isSystemApp");
+                if (isSystem == null || !isSystem) {
+                    userApps.add(app);
                 }
             }
-            // TODO: 转换为 JSON 格式
-            return "[]";
+            
+            return buildGroupedAppListJson(userApps);
         } catch (Exception e) {
             Log.e(TAG, "获取用户应用列表失败", e);
-            return "[]";
+            return "{}";
         }
     }
     
@@ -99,20 +111,106 @@ public class AppBridge extends BaseBridge {
      */
     public String getSystemApps() {
         try {
-            PackageManager pm = mContext.getPackageManager();
-            List<PackageInfo> packages = pm.getInstalledPackages(0);
-            List<PackageInfo> systemApps = new ArrayList<>();
+            List<Map<String, Object>> allApps = AppUtils.getInstalledApps(mContext);
+            List<Map<String, Object>> systemApps = new ArrayList<>();
             
-            for (PackageInfo pkg : packages) {
-                if ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-                    systemApps.add(pkg);
+            for (Map<String, Object> app : allApps) {
+                Boolean isSystem = (Boolean) app.get("isSystemApp");
+                if (isSystem != null && isSystem) {
+                    systemApps.add(app);
                 }
             }
-            // TODO: 转换为 JSON 格式
-            return "[]";
+            
+            return buildGroupedAppListJson(systemApps);
         } catch (Exception e) {
             Log.e(TAG, "获取系统应用列表失败", e);
-            return "[]";
+            return "{}";
+        }
+    }
+    
+    /**
+     * 构建按字母分组的应用列表JSON
+     * @param apps 应用列表
+     * @return JSON字符串
+     */
+    private String buildGroupedAppListJson(List<Map<String, Object>> apps) {
+        try {
+            // 按首字母分组应用
+            Map<String, List<Map<String, Object>>> groupedApps = new HashMap<>();
+            
+            for (Map<String, Object> app : apps) {
+                String name = (String) app.get("name");
+                String letter = getFirstLetter(name);
+                
+                if (!groupedApps.containsKey(letter)) {
+                    groupedApps.put(letter, new ArrayList<Map<String, Object>>());
+                }
+                groupedApps.get(letter).add(app);
+            }
+            
+            // 对每个分组内的应用按名称排序
+            for (List<Map<String, Object>> appList : groupedApps.values()) {
+                Collections.sort(appList, new Comparator<Map<String, Object>>() {
+                    @Override
+                    public int compare(Map<String, Object> app1, Map<String, Object> app2) {
+                        String name1 = (String) app1.get("name");
+                        String name2 = (String) app2.get("name");
+                        return name1.compareToIgnoreCase(name2);
+                    }
+                });
+            }
+            
+            // 构建JSON结果
+            JSONObject result = new JSONObject();
+            JSONArray lettersArray = new JSONArray();
+            JSONObject appsObj = new JSONObject();
+            
+            // 获取排序后的字母
+            List<String> sortedLetters = new ArrayList<>(groupedApps.keySet());
+            Collections.sort(sortedLetters);
+            
+            for (String letter : sortedLetters) {
+                lettersArray.put(letter);
+                JSONArray appArray = new JSONArray();
+                for (Map<String, Object> app : groupedApps.get(letter)) {
+                    JSONObject appObj = new JSONObject();
+                    appObj.put("name", app.get("name"));
+                    appObj.put("packageName", app.get("packageName"));
+                    appObj.put("icon", app.get("icon"));
+                    appObj.put("isSystemApp", app.get("isSystemApp"));
+                    appArray.put(appObj);
+                }
+                appsObj.put(letter, appArray);
+            }
+            
+            result.put("letters", lettersArray);
+            result.put("apps", appsObj);
+            result.put("total", apps.size());
+            
+            return result.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "构建应用列表JSON失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
+     * 获取名称的首字母
+     * @param name 应用名称
+     * @return 首字母（大写）
+     */
+    private String getFirstLetter(String name) {
+        if (name == null || name.isEmpty()) {
+            return "#";
+        }
+        
+        char firstChar = Character.toUpperCase(name.charAt(0));
+        if (Character.isLetter(firstChar)) {
+            return String.valueOf(firstChar);
+        } else if (firstChar >= '0' && firstChar <= '9') {
+            return "#";
+        } else {
+            return "#";
         }
     }
     
@@ -296,8 +394,16 @@ public class AppBridge extends BaseBridge {
         try {
             PackageManager pm = mContext.getPackageManager();
             PackageInfo pkgInfo = pm.getPackageInfo(packageName, 0);
-            // TODO: 转换为 JSON 格式
-            return "{}";
+            ApplicationInfo appInfo = pkgInfo.applicationInfo;
+            
+            JSONObject result = new JSONObject();
+            result.put("name", appInfo.loadLabel(pm).toString());
+            result.put("packageName", packageName);
+            result.put("versionName", pkgInfo.versionName);
+            result.put("versionCode", pkgInfo.versionCode);
+            result.put("isSystemApp", (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
+            
+            return result.toString();
         } catch (Exception e) {
             Log.e(TAG, "获取应用信息失败: " + packageName, e);
             return "{}";
@@ -311,10 +417,41 @@ public class AppBridge extends BaseBridge {
      */
     public String getAppIcon(String packageName) {
         try {
-            // TODO: 获取应用图标并转换为 Base64
-            return "";
+            PackageManager pm = mContext.getPackageManager();
+            Drawable icon = pm.getApplicationIcon(packageName);
+            return drawableToBase64(icon);
         } catch (Exception e) {
             Log.e(TAG, "获取应用图标失败: " + packageName, e);
+            return "";
+        }
+    }
+    
+    /**
+     * 将Drawable转换为Base64编码
+     * @param drawable Drawable对象
+     * @return Base64字符串
+     */
+    private String drawableToBase64(Drawable drawable) {
+        if (drawable == null) {
+            return "";
+        }
+        
+        try {
+            Bitmap bitmap = Bitmap.createBitmap(
+                drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888
+            );
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            return Base64.encodeToString(byteArray, Base64.NO_WRAP);
+        } catch (Exception e) {
+            Log.e(TAG, "Drawable转Base64失败", e);
             return "";
         }
     }

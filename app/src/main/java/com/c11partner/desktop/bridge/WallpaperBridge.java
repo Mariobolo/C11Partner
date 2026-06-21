@@ -639,4 +639,108 @@ public class WallpaperBridge extends BaseBridge {
             return false;
         }
     }
+    
+    // ==================== Base64编码相关 ====================
+    
+    /**
+     * 获取随机壁纸的Base64编码数据
+     * @return Base64编码的图片数据
+     */
+    public String getRandomWallpaperBase64() {
+        try {
+            // 检查是否启用了本地壁纸分类模式
+            Map<String, Object> allSettings = wallpaperSettingsDbHelper.getAllSettings();
+            boolean isRandomMode = Boolean.TRUE.equals(allSettings.get("random_mode"));
+            boolean isSpecifiedMode = Boolean.TRUE.equals(allSettings.get("specified_mode"));
+            
+            // 如果启用了随机模式，读取SD卡下fstart目录下除了00文件夹下的图片
+            if (isRandomMode) {
+                String localWallpaper = getRandomWallpaperFromFstartExcept00();
+                if (localWallpaper != null) {
+                    // 更新MainActivity中的壁纸状态
+                    if (mActivity != null) {
+                        mActivity.isUsingDefaultWallpaper = false;
+                        mActivity.currentWallpaperPath = localWallpaper;
+                    }
+                    return encodeImageToBase64(localWallpaper);
+                }
+            }
+            
+            // 如果启用了指定模式，读取SD卡下fstart目录下00文件夹下的图片
+            if (isSpecifiedMode) {
+                String localWallpaper = getRandomWallpaperFromFstart00();
+                if (localWallpaper != null) {
+                    // 更新MainActivity中的壁纸状态
+                    if (mActivity != null) {
+                        mActivity.isUsingDefaultWallpaper = false;
+                        mActivity.currentWallpaperPath = localWallpaper;
+                    }
+                    return encodeImageToBase64(localWallpaper);
+                }
+            }
+            
+            // 如果都没有启用，获取已启用的分类
+            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
+            
+            // 过滤出已启用的分类
+            List<Map<String, Object>> filteredCategories = new ArrayList<>();
+            for (Map<String, Object> category : enabledCategories) {
+                if (Boolean.TRUE.equals(category.get("enabled"))) {
+                    filteredCategories.add(category);
+                }
+            }
+            
+            // 如果没有启用的分类，返回默认壁纸
+            if (filteredCategories.isEmpty()) {
+                // 更新MainActivity中的壁纸状态
+                if (mActivity != null) {
+                    mActivity.isUsingDefaultWallpaper = true;
+                    mActivity.currentWallpaperPath = "";
+                }
+                return encodeImageToBase64("file:///android_asset/images/nav_car.png");
+            }
+            
+            // 随机选择一个分类
+            Random random = new Random();
+            Map<String, Object> selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
+            
+            // 获取分类ID
+            String categoryId = (String) selectedCategory.get("id");
+            
+            // 从本地获取该分类的随机壁纸
+            String localWallpaper = WallpaperDownloadUtils.getRandomLocalWallpaper(mContext, categoryId);
+            if (localWallpaper != null) {
+                // 更新MainActivity中的壁纸状态
+                if (mActivity != null) {
+                    mActivity.isUsingDefaultWallpaper = false;
+                    mActivity.currentWallpaperPath = localWallpaper;
+                }
+                return encodeImageToBase64(localWallpaper);
+            }
+            
+            // 如果没有找到壁纸，返回默认壁纸
+            if (mActivity != null) {
+                mActivity.isUsingDefaultWallpaper = true;
+                mActivity.currentWallpaperPath = "";
+            }
+            return encodeImageToBase64("file:///android_asset/images/nav_car.png");
+        } catch (Exception e) {
+            Log.e(TAG, "获取随机壁纸Base64数据时出错", e);
+            return "";
+        }
+    }
+    
+    /**
+     * 将图片转换为Base64编码
+     * @param imagePath 图片路径
+     * @return Base64编码字符串
+     */
+    private String encodeImageToBase64(String imagePath) {
+        try {
+            return WallpaperDownloadUtils.encodeImageToBase64(imagePath);
+        } catch (Exception e) {
+            Log.e(TAG, "将图片转换为Base64时出错", e);
+            return "";
+        }
+    }
 }
