@@ -2,12 +2,21 @@ package com.c11partner.desktop.bridge;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.utils.WallpaperManager;
+import com.c11partner.desktop.utils.WallpaperCategoryApiUtils;
+import com.c11partner.desktop.utils.WallpaperDownloadUtils;
 import com.c11partner.desktop.database.WallpaperCategoryDatabaseHelper;
 import com.c11partner.desktop.database.WallpaperSettingsDatabaseHelper;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import android.os.Environment;
 /**
  * 壁纸功能模块 Bridge
  * 
@@ -223,13 +232,88 @@ public class WallpaperBridge extends BaseBridge {
     // ==================== 壁纸分类相关 ====================
     
     /**
+     * 更新壁纸分类
+     * 从网络获取壁纸分类数据并保存到数据库
+     */
+    public void updateWallpaperCategories() {
+        new Thread(() -> {
+            try {
+                // 从网络获取壁纸分类数据
+                List<Map<String, Object>> categories = WallpaperCategoryApiUtils.fetchCategoriesFromApi();
+                if (!categories.isEmpty()) {
+                    // 清空数据库中的分类数据
+                    wallpaperDbHelper.clearCategories();
+                    // 将分类数据保存到数据库
+                    wallpaperDbHelper.bulkInsertOrUpdateCategories(categories);
+                    runOnUiThread(() -> {
+                        Toast.makeText(mContext, "壁纸分类已更新", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    runOnUiThread(() -> {
+                        Toast.makeText(mContext, "无法获取壁纸分类数据", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "更新壁纸分类时出错", e);
+                runOnUiThread(() -> {
+                    Toast.makeText(mContext, "更新壁纸分类时出错: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
+    }
+    
+    /**
+     * 更新壁纸分类启用状态
+     *
+     * @param categoryId 分类ID
+     * @param enabled    是否启用
+     */
+    public void updateCategoryEnabled(String categoryId, boolean enabled) {
+        try {
+            wallpaperDbHelper.updateCategoryEnabled(categoryId, enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "更新分类启用状态时出错", e);
+        }
+    }
+    
+    /**
+     * 获取已启用的分类ID列表
+     *
+     * @return JSON格式的分类ID列表
+     */
+    public String getEnabledCategories() {
+        try {
+            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
+            JSONArray enabledCategoriesArray = new JSONArray();
+            for (Map<String, Object> category : enabledCategories) {
+                if ((boolean) category.get("enabled")) {
+                    enabledCategoriesArray.put(category.get("id"));
+                }
+            }
+            return enabledCategoriesArray.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "获取已启用分类时出错", e);
+            return "[]";
+        }
+    }
+    
+    /**
      * 获取壁纸分类列表
      * @return 分类列表 JSON
      */
     public String getWallpaperCategories() {
         try {
-            // TODO: 实现获取壁纸分类逻辑
-            return "[]";
+            List<Map<String, Object>> categories = wallpaperDbHelper.getAllCategories();
+            JSONArray categoriesArray = new JSONArray();
+            for (Map<String, Object> category : categories) {
+                JSONObject categoryObj = new JSONObject();
+                categoryObj.put("id", category.get("id"));
+                categoryObj.put("name", category.get("name"));
+                categoryObj.put("enabled", category.get("enabled"));
+                categoryObj.put("count", category.get("count"));
+                categoriesArray.put(categoryObj);
+            }
+            return categoriesArray.toString();
         } catch (Exception e) {
             Log.e(TAG, "获取壁纸分类失败", e);
             return "[]";
@@ -340,11 +424,172 @@ public class WallpaperBridge extends BaseBridge {
      */
     public String getRandomWallpaper() {
         try {
-            // TODO: 实现随机壁纸逻辑
-            return "";
+            // 检查是否启用了本地壁纸分类模式
+            boolean isRandomMode = wallpaperSettingsDbHelper.getAllSettings().get("random_mode").equals(true);
+            boolean isSpecifiedMode = wallpaperSettingsDbHelper.getAllSettings().get("specified_mode").equals(true);
+            
+            // 如果启用了随机模式，读取SD卡下fstart目录下除了00文件夹下的图片
+            if (isRandomMode) {
+                String wallpaperPath = getRandomWallpaperFromFstartExcept00();
+                // 更新MainActivity中的壁纸状态
+                if (mActivity != null && wallpaperPath != null) {
+                    mActivity.isUsingDefaultWallpaper = false;
+                    mActivity.currentWallpaperPath = wallpaperPath;
+                }
+                return wallpaperPath;
+            }
+            
+            // 如果启用了指定模式，读取SD卡下fstart目录下00文件夹下的图片
+            if (isSpecifiedMode) {
+                String wallpaperPath = getRandomWallpaperFromFstart00();
+                // 更新MainActivity中的壁纸状态
+                if (mActivity != null && wallpaperPath != null) {
+                    mActivity.isUsingDefaultWallpaper = false;
+                    mActivity.currentWallpaperPath = wallpaperPath;
+                }
+                return wallpaperPath;
+            }
+            
+            // 如果都没有启用，获取已启用的分类
+            List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
+            Log.d(TAG, "获取到的所有分类数量: " + enabledCategories.size());
+            
+            // 过滤出已启用的分类
+            List<Map<String, Object>> filteredCategories = new ArrayList<>();
+            for (Map<String, Object> category : enabledCategories) {
+                if ((boolean) category.get("enabled")) {
+                    filteredCategories.add(category);
+                    Log.d(TAG, "已启用的分类: " + category.get("id"));
+                }
+            }
+            
+            // 如果没有启用的分类，返回null
+            if (filteredCategories.isEmpty()) {
+                Log.d(TAG, "没有已启用的分类");
+                return null;
+            }
+            
+            // 随机选择一个分类
+            Random random = new Random();
+            Map<String, Object> selectedCategory = filteredCategories.get(random.nextInt(filteredCategories.size()));
+            
+            // 获取分类ID
+            String categoryId = (String) selectedCategory.get("id");
+            Log.d(TAG, "随机选择的分类ID: " + categoryId);
+            
+            // 从本地获取该分类的随机壁纸
+            String wallpaperPath = WallpaperDownloadUtils.getRandomLocalWallpaper(mContext, categoryId);
+            Log.d(TAG, "获取到的壁纸路径: " + wallpaperPath);
+            
+            // 更新MainActivity中的壁纸状态
+            if (mActivity != null && wallpaperPath != null) {
+                mActivity.isUsingDefaultWallpaper = false;
+                mActivity.currentWallpaperPath = wallpaperPath;
+            }
+            
+            return wallpaperPath;
         } catch (Exception e) {
-            Log.e(TAG, "获取随机壁纸失败", e);
-            return "";
+            Log.e(TAG, "获取随机壁纸时出错", e);
+            return null;
+        }
+    }
+    
+    /**
+     * 从SD卡下fstart目录下除了00文件夹下的图片中随机选择一张
+     *
+     * @return 壁纸文件路径，如果没有壁纸则返回null
+     */
+    private String getRandomWallpaperFromFstartExcept00() {
+        try {
+            File rootDir = Environment.getExternalStorageDirectory();
+            File fstartDir = new File(rootDir, "c11partner");
+            
+            // 检查fstart目录是否存在
+            if (!fstartDir.exists() || !fstartDir.isDirectory()) {
+                return null;
+            }
+            
+            // 获取所有子目录，除了00
+            File[] subDirs = fstartDir.listFiles(File::isDirectory);
+            List<File> validDirs = new ArrayList<>();
+            if (subDirs != null) {
+                for (File dir : subDirs) {
+                    // 排除00文件夹
+                    if (!"00".equals(dir.getName())) {
+                        validDirs.add(dir);
+                    }
+                }
+            }
+            
+            // 如果没有有效的目录，返回null
+            if (validDirs.isEmpty()) {
+                return null;
+            }
+            
+            // 收集所有有效的图片文件
+            List<String> wallpaperPaths = new ArrayList<>();
+            for (File dir : validDirs) {
+                File[] files = dir.listFiles((fileDir, name) ->
+                        name.toLowerCase().endsWith(".jpg") ||
+                                name.toLowerCase().endsWith(".png") ||
+                                name.toLowerCase().endsWith(".jpeg"));
+                if (files != null) {
+                    for (File file : files) {
+                        wallpaperPaths.add(file.getAbsolutePath());
+                    }
+                }
+            }
+            
+            // 如果没有图片文件，返回null
+            if (wallpaperPaths.isEmpty()) {
+                return null;
+            }
+            
+            // 随机选择一张壁纸
+            Random random = new Random();
+            return wallpaperPaths.get(random.nextInt(wallpaperPaths.size()));
+        } catch (Exception e) {
+            Log.e(TAG, "从fstart目录获取随机壁纸时出错", e);
+            return null;
+        }
+    }
+    
+    /**
+     * 从SD卡下fstart目录下00文件夹下的图片中随机选择一张
+     *
+     * @return 壁纸文件路径，如果没有壁纸则返回null
+     */
+    private String getRandomWallpaperFromFstart00() {
+        try {
+            File rootDir = Environment.getExternalStorageDirectory();
+            File fstartDir = new File(rootDir, "c11partner");
+            File zeroDir = new File(fstartDir, "00");
+            
+            // 检查00目录是否存在
+            if (!zeroDir.exists() || !zeroDir.isDirectory()) {
+                return null;
+            }
+            
+            // 获取00目录下的所有图片文件
+            File[] files = zeroDir.listFiles((fileDir, name) ->
+                    name.toLowerCase().endsWith(".jpg") ||
+                            name.toLowerCase().endsWith(".png") ||
+                            name.toLowerCase().endsWith(".jpeg") ||
+                            name.toLowerCase().endsWith(".png_bak")
+            );
+            
+            // 如果没有图片文件，返回null
+            if (files == null || files.length == 0) {
+                return null;
+            }
+            
+            // 随机选择一个文件
+            Random random = new Random();
+            File selectedFile = files[random.nextInt(files.length)];
+            return selectedFile.getAbsolutePath();
+        } catch (Exception e) {
+            Log.e(TAG, "从fstart/00目录获取随机壁纸时出错", e);
+            return null;
         }
     }
     

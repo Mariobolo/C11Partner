@@ -16,6 +16,7 @@ import java.util.List;
 import com.c11partner.desktop.database.AppDatabaseHelper;
 import com.c11partner.desktop.database.QuickAppDatabaseHelper;
 import com.c11partner.desktop.database.ComponentConfigDatabaseHelper;
+import com.c11partner.desktop.database.ConfigAppDatabaseHelper;
 
 /**
  * 应用管理模块 Bridge
@@ -34,6 +35,7 @@ public class AppBridge extends BaseBridge {
     private AppDatabaseHelper appDbHelper;
     private QuickAppDatabaseHelper quickAppDbHelper;
     private ComponentConfigDatabaseHelper componentConfigDbHelper;
+    private ConfigAppDatabaseHelper configAppDbHelper;
     private PackageManager packageManager;
     
     /**
@@ -46,6 +48,7 @@ public class AppBridge extends BaseBridge {
         this.appDbHelper = AppDatabaseHelper.getInstance(context);
         this.quickAppDbHelper = QuickAppDatabaseHelper.getInstance(context);
         this.componentConfigDbHelper = ComponentConfigDatabaseHelper.getInstance(context);
+        this.configAppDbHelper = ConfigAppDatabaseHelper.getInstance(context);
         this.packageManager = context.getPackageManager();
     }
     
@@ -156,12 +159,22 @@ public class AppBridge extends BaseBridge {
      * 获取快捷应用列表
      * @return 快捷应用列表 JSON
      */
-    public String getQuickApps() {
+    public String getQuickAppList() {
         try {
-            // TODO: 从数据库读取快捷应用列表
-            return "[]";
+            List<Map<String, Object>> quickApps = quickAppDbHelper.getAllQuickApps();
+            JSONArray quickAppsArray = new JSONArray();
+            
+            for (Map<String, Object> app : quickApps) {
+                JSONObject appObj = new JSONObject();
+                appObj.put("name", app.get("name"));
+                appObj.put("packageName", app.get("packageName"));
+                appObj.put("icon", app.get("icon"));
+                quickAppsArray.put(appObj);
+            }
+            
+            return quickAppsArray.toString();
         } catch (Exception e) {
-            Log.e(TAG, "获取快捷应用列表失败", e);
+            Log.e(TAG, "获取快速启动应用列表时出错", e);
             return "[]";
         }
     }
@@ -224,6 +237,52 @@ public class AppBridge extends BaseBridge {
             Log.e(TAG, "检查快速启动应用时出错", e);
             return false;
         }
+    }
+    
+    // ==================== 配置应用相关 ====================
+    
+    /**
+     * 保存或更新配置的应用信息
+     *
+     * @param buttonId    按钮ID
+     * @param appName     应用名称
+     * @param packageName 应用包名
+     * @param appIcon     应用图标Base64编码
+     */
+    public void saveConfigApp(String buttonId, String appName, String packageName, String appIcon) {
+        try {
+            long result = configAppDbHelper.saveOrUpdateConfigApp(buttonId, appName, packageName, appIcon);
+            if (result != -1) {
+                Log.d(TAG, "配置应用保存成功: " + buttonId + " -> " + packageName);
+            } else {
+                Log.e(TAG, "配置应用保存失败: " + buttonId);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "保存配置应用时出错", e);
+        }
+    }
+    
+    /**
+     * 根据按钮ID获取配置的应用信息
+     *
+     * @param buttonId 按钮ID
+     * @return JSON格式的应用信息
+     */
+    public String getConfigApp(String buttonId) {
+        try {
+            Map<String, String> appInfo = configAppDbHelper.getConfigAppByButtonId(buttonId);
+            if (appInfo != null) {
+                JSONObject appObj = new JSONObject();
+                appObj.put("button_id", appInfo.get("button_id"));
+                appObj.put("app_name", appInfo.get("app_name"));
+                appObj.put("package_name", appInfo.get("package_name"));
+                appObj.put("app_icon", appInfo.get("app_icon"));
+                return appObj.toString();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "获取配置应用时出错", e);
+        }
+        return "{}";
     }
     
     // ==================== 应用信息相关 ====================
