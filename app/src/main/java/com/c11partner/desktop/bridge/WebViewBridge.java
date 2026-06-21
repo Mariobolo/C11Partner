@@ -303,11 +303,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void getAppListAsync(final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // 获取应用列表数据
-                final String result = getAppList();
+        mAppBridge.getAppListAsync(callbackId);
 
                 // 在UI线程中执行JavaScript回调
                 mActivity.runOnUiThread(new Runnable() {
@@ -334,45 +330,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void saveWallpaperCarouselSettingAsync(final boolean enabled, final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    wallpaperSettingsDbHelper.updateWallpaperCarousel(enabled);
-                    // 重启壁纸轮播
-                    mActivity.restartWallpaperCarousel();
-                    // 发送壁纸设置更改广播
-                    Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
-                    mActivity.sendBroadcast(intent);
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleSaveWallpaperCarouselSettingCallback('%s', %s)",
-                                        callbackId, "true");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "保存壁纸轮播设置时出错", e);
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleSaveWallpaperCarouselSettingCallback('%s', %s)",
-                                        callbackId, "false");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
+        mWallpaperBridge.saveWallpaperCarouselSettingAsync(enabled, callbackId);
     }
 
     /**
@@ -394,45 +352,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void saveWallpaperSwitchIntervalAsync(final int interval, final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    wallpaperSettingsDbHelper.updateSwitchInterval(interval);
-                    // 重启壁纸轮播
-                    mActivity.restartWallpaperCarousel();
-                    // 发送壁纸设置更改广播
-                    Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
-                    mActivity.sendBroadcast(intent);
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleSaveWallpaperSwitchIntervalCallback('%s', %s)",
-                                        callbackId, "true");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "保存壁纸轮播时间间隔时出错", e);
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleSaveWallpaperSwitchIntervalCallback('%s', %s)",
-                                        callbackId, "false");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
+        mWallpaperBridge.saveWallpaperSwitchIntervalAsync(interval, callbackId);
     }
 
     /**
@@ -1701,40 +1621,7 @@ public class WebViewBridge {
      */
     @JavascriptInterface
     public void updateCategoryEnabledAsync(final String categoryId, final boolean enabled, final String callbackId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    wallpaperDbHelper.updateCategoryEnabled(categoryId, enabled);
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleUpdateCategoryEnabledCallback('%s', '%s')",
-                                        callbackId, "true");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    Log.e(TAG, "更新分类启用状态时出错", e);
-                    // 在UI线程中执行JavaScript回调
-                    mActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mActivity.webView != null) {
-                                String javascript = String.format(
-                                        "javascript:window.handleUpdateCategoryEnabledCallback('%s', '%s')",
-                                        callbackId, "false");
-                                mActivity.webView.loadUrl(javascript);
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
+        mWallpaperBridge.updateCategoryEnabledAsync(categoryId, enabled, callbackId);
     }
 
     /**

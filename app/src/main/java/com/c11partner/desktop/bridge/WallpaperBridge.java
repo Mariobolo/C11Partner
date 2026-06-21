@@ -1082,4 +1082,330 @@ public class WallpaperBridge extends BaseBridge {
             return "";
         }
     }
+    
+    // ==================== 异步方法 ====================
+    
+    /**
+     * 异步保存壁纸轮播设置
+     * @param enabled 是否启用
+     * @param callbackId 回调ID
+     */
+    public void saveWallpaperCarouselSettingAsync(final boolean enabled, final String callbackId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    wallpaperSettingsDbHelper.updateWallpaperCarousel(enabled);
+                    // 重启壁纸轮播
+                    if (mActivity != null) {
+                        mActivity.restartWallpaperCarousel();
+                        // 发送壁纸设置更改广播
+                        Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
+                        mActivity.sendBroadcast(intent);
+                    }
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleSaveWallpaperCarouselSettingCallback('%s', %s)",
+                                        callbackId, "true");
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "保存壁纸轮播设置时出错", e);
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleSaveWallpaperCarouselSettingCallback('%s', %s)",
+                                        callbackId, "false");
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * 异步保存壁纸轮播时间间隔
+     * @param interval 时间间隔(毫秒)
+     * @param callbackId 回调ID
+     */
+    public void saveWallpaperSwitchIntervalAsync(final int interval, final String callbackId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    wallpaperSettingsDbHelper.updateSwitchInterval(interval);
+                    // 重启壁纸轮播
+                    if (mActivity != null) {
+                        mActivity.restartWallpaperCarousel();
+                        // 发送壁纸设置更改广播
+                        Intent intent = new Intent(MainActivity.ACTION_WALLPAPER_SETTINGS_CHANGED);
+                        mActivity.sendBroadcast(intent);
+                    }
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleSaveWallpaperSwitchIntervalCallback('%s', %s)",
+                                        callbackId, "true");
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "保存壁纸轮播时间间隔时出错", e);
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleSaveWallpaperSwitchIntervalCallback('%s', %s)",
+                                        callbackId, "false");
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * 异步更新壁纸分类启用状态
+     * @param categoryId 分类ID
+     * @param enabled 是否启用
+     * @param callbackId 回调ID
+     */
+    public void updateCategoryEnabledAsync(final String categoryId, final boolean enabled, final String callbackId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    wallpaperDbHelper.updateCategoryEnabled(categoryId, enabled);
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleUpdateCategoryEnabledCallback('%s', '%s')",
+                                        callbackId, "true");
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "更新分类启用状态时出错", e);
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleUpdateCategoryEnabledCallback('%s', '%s')",
+                                        callbackId, "false");
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * 异步获取已启用的分类ID列表
+     * @param callbackId 回调ID
+     */
+    public void getEnabledCategoriesAsync(final String callbackId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<Map<String, Object>> enabledCategories = wallpaperDbHelper.getAllCategories();
+                    JSONArray enabledCategoriesArray = new JSONArray();
+                    for (Map<String, Object> category : enabledCategories) {
+                        if ((boolean) category.get("enabled")) {
+                            enabledCategoriesArray.put(category.get("id"));
+                        }
+                    }
+                    final String result = enabledCategoriesArray.toString();
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetEnabledCategoriesCallback('%s', '%s')",
+                                        callbackId, result);
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "获取已启用分类时出错", e);
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetEnabledCategoriesCallback('%s', '%s')",
+                                        callbackId, "[]");
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * 异步获取所有壁纸设置
+     * @param callbackId 回调ID
+     */
+    public void getWallpaperSettingsAsync(final String callbackId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Map<String, Object> settings = wallpaperSettingsDbHelper.getAllSettings();
+                    JSONObject settingsObj = new JSONObject();
+                    settingsObj.put("wallpaper_carousel", settings.get("wallpaper_carousel"));
+                    settingsObj.put("local_wallpaper", settings.get("local_wallpaper"));
+                    settingsObj.put("online_wallpaper", settings.get("online_wallpaper"));
+                    settingsObj.put("switch_interval", settings.get("switch_interval"));
+                    settingsObj.put("random_mode", settings.get("random_mode"));
+                    settingsObj.put("specified_mode", settings.get("specified_mode"));
+                    settingsObj.put("boot_greeting", settings.get("boot_greeting"));
+                    final String result = settingsObj.toString();
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetWallpaperSettingsCallback('%s', %s)",
+                                        callbackId, org.json.JSONObject.quote(result));
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "获取壁纸设置时出错", e);
+                    final String result = "{}";
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetWallpaperSettingsCallback('%s', %s)",
+                                        callbackId, org.json.JSONObject.quote(result));
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * 异步获取随机壁纸URL
+     * @param callbackId 回调ID
+     */
+    public void getRandomWallpaperAsync(final String callbackId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final String result = getRandomWallpaper();
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetRandomWallpaperCallback('%s', %s)",
+                                        callbackId, org.json.JSONObject.quote(result != null ? result : ""));
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "获取随机壁纸时出错", e);
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetRandomWallpaperCallback('%s', %s)",
+                                        callbackId, org.json.JSONObject.quote(""));
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * 异步获取随机壁纸的Base64编码数据
+     * @param callbackId 回调ID
+     */
+    public void getRandomWallpaperBase64Async(final String callbackId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final String result = getRandomWallpaperBase64();
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetRandomWallpaperBase64Callback('%s', %s)",
+                                        callbackId, org.json.JSONObject.quote(result));
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "获取随机壁纸Base64时出错", e);
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetRandomWallpaperBase64Callback('%s', %s)",
+                                        callbackId, org.json.JSONObject.quote(""));
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+            return "";
+        }
+    }
 }

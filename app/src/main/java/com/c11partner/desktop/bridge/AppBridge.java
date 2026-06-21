@@ -518,4 +518,50 @@ public class AppBridge extends BaseBridge {
         }
         return null;
     }
+    
+    // ==================== 异步方法 ====================
+    
+    /**
+     * 异步获取应用列表（按字母分组）
+     * @param callbackId 回调ID
+     */
+    public void getAppListAsync(final String callbackId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // 使用 AppUtils 获取所有已安装应用
+                    List<Map<String, Object>> allApps = AppUtils.getInstalledApps(mContext);
+                    final String result = buildGroupedAppListJson(allApps);
+                    
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetAppListCallback('%s', %s)",
+                                        callbackId, org.json.JSONObject.quote(result));
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "异步获取应用列表时出错", e);
+                    // 在UI线程中执行JavaScript回调
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mActivity != null && mActivity.webView != null) {
+                                String javascript = String.format(
+                                        "javascript:window.handleGetAppListCallback('%s', %s)",
+                                        callbackId, org.json.JSONObject.quote("{}"));
+                                mActivity.webView.loadUrl(javascript);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
 }
