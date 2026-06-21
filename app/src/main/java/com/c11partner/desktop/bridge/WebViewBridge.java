@@ -338,6 +338,69 @@ public class WebViewBridge {
     public void saveWallpaperSwitchIntervalAsync(final int interval, final String callbackId) {
         mWallpaperBridge.saveWallpaperSwitchIntervalAsync(interval, callbackId);
     }
+    
+    /**
+     * 异步更新壁纸分类启用状态
+     *
+     * @param categoryId 分类ID
+     * @param enabled    是否启用
+     * @param callbackId 回调ID，用于JavaScript端识别回调
+     */
+    @JavascriptInterface
+    public void updateCategoryEnabledAsync(final String categoryId, final boolean enabled, final String callbackId) {
+        mWallpaperBridge.updateCategoryEnabledAsync(categoryId, enabled, callbackId);
+    }
+    
+    /**
+     * 异步获取已启用的分类ID列表
+     *
+     * @param callbackId 回调ID，用于JavaScript端识别回调
+     */
+    @JavascriptInterface
+    public void getEnabledCategoriesAsync(final String callbackId) {
+        mWallpaperBridge.getEnabledCategoriesAsync(callbackId);
+    }
+    
+    /**
+     * 异步获取所有壁纸设置
+     *
+     * @param callbackId 回调ID，用于JavaScript端识别回调
+     */
+    @JavascriptInterface
+    public void getWallpaperSettingsAsync(final String callbackId) {
+        mWallpaperBridge.getWallpaperSettingsAsync(callbackId);
+    }
+    
+    /**
+     * 异步获取随机壁纸
+     *
+     * @param callbackId 回调ID，用于JavaScript端识别回调
+     */
+    @JavascriptInterface
+    public void getRandomWallpaperAsync(final String callbackId) {
+        mWallpaperBridge.getRandomWallpaperAsync(callbackId);
+    }
+    
+    /**
+     * 异步获取随机壁纸的Base64编码数据
+     *
+     * @param callbackId 回调ID，用于JavaScript端识别回调
+     */
+    @JavascriptInterface
+    public void getRandomWallpaperBase64Async(final String callbackId) {
+        mWallpaperBridge.getRandomWallpaperBase64Async(callbackId);
+    }
+    
+    /**
+     * 保存壁纸轮播时间间隔
+     *
+     * @param interval 时间间隔(毫秒)
+     * @return 是否保存成功
+     */
+    @JavascriptInterface
+    public boolean saveWallpaperSwitchInterval(int interval) {
+        mWallpaperBridge.saveWallpaperSwitchIntervalAsync(interval, callbackId);
+    }
 
     /**
      * 保存壁纸轮播时间间隔
