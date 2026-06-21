@@ -97,6 +97,10 @@ public class WebViewBridge {
     private WallpaperBridge mWallpaperBridge;
     // 应用管理 Bridge
     private AppBridge mAppBridge;
+    // 音乐功能 Bridge
+    private MusicBridge mMusicBridge;
+    // 系统设置 Bridge
+    private SystemBridge mSystemBridge;
 
     // USB调试连接
     private com.c11partner.desktop.adb.UsbDebugConnection usbDebugConnection;
@@ -138,6 +142,10 @@ public class WebViewBridge {
         this.mWallpaperBridge = new WallpaperBridge(context, activity);
         // 初始化应用管理 Bridge
         this.mAppBridge = new AppBridge(context, activity);
+        // 初始化音乐功能 Bridge
+        this.mMusicBridge = new MusicBridge(context, activity);
+        // 初始化系统设置 Bridge
+        this.mSystemBridge = new SystemBridge(context, activity);
         
         // 初始化USB调试连接
         this.usbDebugConnection = new com.c11partner.desktop.adb.UsbDebugConnection(context);
@@ -152,6 +160,10 @@ public class WebViewBridge {
     public void setMediaSessionService(MediaSessionService service, boolean isBound) {
         this.mediaSessionService = service;
         this.isMediaSessionServiceBound = isBound;
+        // 同时设置MusicBridge的媒体会话服务
+        if (mMusicBridge != null) {
+            mMusicBridge.setMediaSessionService(service, isBound);
+        }
     }
 
     // ==================== 应用管理相关方法 ====================
