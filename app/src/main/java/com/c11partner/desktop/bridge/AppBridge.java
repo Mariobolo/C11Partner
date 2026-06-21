@@ -51,6 +51,11 @@ public class AppBridge extends BaseBridge {
     private ConfigAppDatabaseHelper configAppDbHelper;
     private PackageManager packageManager;
     
+    // 应用列表缓存
+    private String cachedAppList = null;
+    private long cachedAppListTime = 0;
+    private static final long CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+    
     /**
      * 构造函数
      * @param context 上下文
@@ -66,6 +71,133 @@ public class AppBridge extends BaseBridge {
     }
     
     // ==================== 应用列表相关 ====================
+    
+    /**
+     * 获取应用列表（按字母分组）
+     * 使用缓存机制提高性能，缓存有效期为5分钟
+     * 
+     * @return JSON格式的应用列表，按字母分组
+     */
+    public String getAppList() {
+        // 检查缓存，如果缓存未过期则直接返回
+        if (cachedAppList != null && (System.currentTimeMillis() - cachedAppListTime) < CACHE_DURATION) {
+            Log.d(TAG, "使用缓存的应用列表");
+            return cachedAppList;
+        }
+        
+        // 添加耗时统计
+        long startTime = System.currentTimeMillis();
+        Log.d(TAG, "开始获取应用列表");
+        
+        // 获取应用列表（包含图标）
+        long startGetAppsTime = System.currentTimeMillis();
+        List<Map<String, Object>> allApps = AppUtils.getInstalledApps(mContext);
+        long endGetAppsTime = System.currentTimeMillis();
+        Log.d(TAG, "获取到 " + allApps.size() + " 个应用，耗时: " + (endGetAppsTime - startGetAppsTime) + "ms");
+        
+        // 创建按字母分组的应用列表
+        JSONObject appsData = new JSONObject();
+        
+        try {
+            // 按首字母分组应用
+            long startGroupTime = System.currentTimeMillis();
+            Map<String, List<Map<String, Object>>> groupedApps = new java.util.HashMap<>();
+            
+            for (Map<String, Object> app : allApps) {
+                String name = (String) app.get("name");
+                String letter = getFirstLetter(name);  // 获取首字母
+                
+                if (!groupedApps.containsKey(letter)) {
+                    groupedApps.put(letter, new java.util.ArrayList<Map<String, Object>>());
+                }
+                groupedApps.get(letter).add(app);
+            }
+            long endGroupTime = System.currentTimeMillis();
+            Log.d(TAG, "分组完成，耗时: " + (endGroupTime - startGroupTime) + "ms");
+            
+            // 对每个分组内的应用按名称排序
+            long startSortTime = System.currentTimeMillis();
+            for (List<Map<String, Object>> appList : groupedApps.values()) {
+                Collections.sort(appList, new Comparator<Map<String, Object>>() {
+                    @Override
+                    public int compare(Map<String, Object> app1, Map<String, Object> app2) {
+                        String name1 = (String) app1.get("name");
+                        String name2 = (String) app2.get("name");
+                        return name1.compareToIgnoreCase(name2);
+                    }
+                });
+            }
+            long endSortTime = System.currentTimeMillis();
+            Log.d(TAG, "排序完成，耗时: " + (endSortTime - startSortTime) + "ms");
+            
+            // 创建排序后的字母列表，确保#排在第一位，然后是A-Z
+            long startLetterSortTime = System.currentTimeMillis();
+            List<String> sortedLetters = new ArrayList<>(groupedApps.keySet());
+            Collections.sort(sortedLetters, (letter1, letter2) -> {
+                // 如果letter1是#，排在前面
+                if ("#".equals(letter1)) {
+                    return -1;
+                }
+                // 如果letter2是#，排在后面
+                if ("#".equals(letter2)) {
+                    return 1;
+                }
+                // 其他情况按字母顺序排序
+                return letter1.compareTo(letter2);
+            });
+            long endLetterSortTime = System.currentTimeMillis();
+            Log.d(TAG, "字母排序完成，耗时: " + (endLetterSortTime - startLetterSortTime) + "ms");
+            
+            // 转换为JSON格式（按排序后的顺序）
+            long startJsonTime = System.currentTimeMillis();
+            for (String letter : sortedLetters) {
+                List<Map<String, Object>> apps = groupedApps.get(letter);
+                
+                // 转换为JSON数组
+                JSONArray appArray = new JSONArray();
+                for (Map<String, Object> app : apps) {
+                    JSONObject appObj = new JSONObject();
+                    appObj.put("name", app.get("name"));
+                    appObj.put("packageName", app.get("packageName"));
+                    appObj.put("isSystemApp", app.get("isSystemApp"));
+                    
+                    // 优化：使用缓存的图标Base64数据，避免重复转换
+                    String iconBase64 = getCachedAppIconBase64((String) app.get("packageName"));
+                    if (iconBase64 != null && !iconBase64.isEmpty()) {
+                        appObj.put("icon", "data:image/png;base64," + iconBase64);
+                    } else {
+                        // 获取应用图标并转换为Base64
+                        Drawable icon = (Drawable) app.get("icon");
+                        iconBase64 = drawableToBase64(icon);
+                        if (!iconBase64.isEmpty()) {
+                            appObj.put("icon", "data:image/png;base64," + iconBase64);
+                            // 缓存图标数据
+                            cacheAppIconBase64((String) app.get("packageName"), iconBase64);
+                        } else {
+                            appObj.put("icon", "images/ic_launcher.png"); // 使用默认图标
+                        }
+                    }
+                    appArray.put(appObj);
+                }
+                appsData.put(letter, appArray);
+            }
+            long endJsonTime = System.currentTimeMillis();
+            Log.d(TAG, "JSON转换完成，耗时: " + (endJsonTime - startJsonTime) + "ms");
+            
+            // 缓存结果
+            String result = appsData.toString();
+            cachedAppList = result;
+            cachedAppListTime = System.currentTimeMillis();
+            
+            long endTime = System.currentTimeMillis();
+            Log.d(TAG, "获取应用列表总耗时: " + (endTime - startTime) + "ms");
+            
+            return result;
+        } catch (Exception e) {
+            Log.e(TAG, "获取应用列表时出错", e);
+            return "{}";
+        }
+    }
     
     /**
      * 获取所有已安装应用列表（按字母分组）
