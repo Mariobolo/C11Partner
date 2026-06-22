@@ -573,15 +573,36 @@
 }
 /* ========== 天气组件 ========== */
 .weather-widget {
-    min-width: 220px;
+    min-width: 240px;
     padding: var(--spacing-xl) var(--spacing-2xl);
     gap: var(--spacing-lg);
     display: flex;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+/* 【优化点1】天气组件视觉增强 - 渐变背景+光影效果 */
+.weather-widget::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 20% 20%, 
+            rgba(100, 200, 255, 0.08) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 80% 80%, 
+            rgba(255, 180, 100, 0.06) 0%, 
+            transparent 50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.weather-widget:hover::before {
+    opacity: 1;
 }
 .weather-icon {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     opacity: 0.95;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
     margin-right: 0;
@@ -589,14 +610,37 @@
     background-position: center;
     background-repeat: no-repeat;
     flex-shrink: 0;
-    transition: all var(--transition-normal);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+/* 天气图标发光效果 */
+.weather-icon::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: radial-gradient(circle,
+        rgba(100, 200, 255, 0.25) 0%,
+        transparent 70%);
+    opacity: 0;
+    border-radius: 50%;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 .weather-widget:hover .weather-icon {
-    transform: scale(1.1);
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+    transform: scale(1.15) translateY(-4px);
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4));
+}
+.weather-widget:hover .weather-icon::after {
+    opacity: 1;
+    animation: weatherGlow 2.5s ease-in-out infinite;
+}
+@keyframes weatherGlow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
 }
 .weather-info {
     margin-left: 0;
+    flex: 1;
 }
 .temperature {
     font-size: var(--font-size-3xl);
@@ -605,17 +649,46 @@
     line-height: 1;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
     letter-spacing: -1px;
-    transition: all var(--transition-fast);
+    transition: all 0.3s ease;
+    position: relative;
+}
+/* 温度数字渐变效果 */
+.temperature {
+    background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        #e0f0ff 50%, 
+        #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 .weather-widget:hover .temperature {
     text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5),
-                 0 0 20px rgba(var(--primary-color-rgb), 0.2);
+                 0 0 30px rgba(100, 200, 255, 0.3);
+    transform: scale(1.05);
 }
 .condition {
     font-size: var(--font-size-md);
     color: var(--text-secondary);
     margin-top: 4px;
     line-height: 1.2;
+    transition: color 0.3s ease;
+}
+.weather-widget:hover .condition {
+    color: var(--text-primary);
+}
+/* 天气详情提示 */
+.weather-detail {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.3s ease;
+}
+.weather-widget:hover .weather-detail {
+    opacity: 1;
+    transform: translateY(0);
 }
 /* ========== 胎压组件 ========== */
 .car-widget {
@@ -994,12 +1067,47 @@
 }
 /* ========== 地图导航组件 ========== */
 .map-widget {
-    min-width: 220px;
+    min-width: 240px;
     padding: var(--spacing-lg);
     justify-content: center;
     gap: var(--spacing-xl);
     display: flex;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+/* 【优化点2】地图组件视觉增强 - 渐变背景+地图纹理 */
+.map-widget::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 30% 30%, 
+            rgba(100, 200, 100, 0.06) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 70% 70%, 
+            rgba(100, 150, 255, 0.04) 0%, 
+            transparent 50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.map-widget:hover::before {
+    opacity: 1;
+}
+.map-icon {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.4s ease;
+    filter: blur(1px);
+}
+.map-widget:hover .map-icon {
+    opacity: 0.12;
+    transform: scale(1.05);
+    filter: blur(0);
 }
 .nav-button {
     display: flex;
@@ -1007,14 +1115,16 @@
     align-items: center;
     background: var(--surface-color);
     border-radius: var(--radius-lg);
-    padding: 12px 16px;
-    transition: all var(--transition-fast);
+    padding: 14px 18px;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     border: 1px solid var(--border-light);
     margin: 0;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    z-index: 1;
 }
+/* 导航按钮光泽效果 */
 .nav-button::before {
     content: '';
     position: absolute;
@@ -1024,7 +1134,7 @@
     height: 100%;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.12) 50%,
         transparent 100%);
     transition: left 0.6s ease;
     pointer-events: none;
@@ -1032,37 +1142,95 @@
 .nav-button:hover::before {
     left: 100%;
 }
+/* 导航按钮点击波纹 */
+.nav-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(100, 200, 100, 0.4);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+}
+.nav-button:active::after {
+    animation: navRipple 0.4s ease-out;
+}
+@keyframes navRipple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.6;
+    }
+    100% {
+        width: 150%;
+        height: 150%;
+        opacity: 0;
+    }
+}
 .nav-button:hover {
     background: var(--surface-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(100, 200, 100, 0.2),
+                0 0 20px rgba(100, 200, 100, 0.15);
+    border-color: rgba(100, 200, 100, 0.35);
 }
 .nav-button:active {
-    transform: scale(0.95);
+    transform: translateY(0) scale(0.96);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 .nav-icon {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     opacity: 0.9;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transition: all var(--transition-fast);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+/* 导航图标发光效果 */
+.nav-icon::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: radial-gradient(circle,
+        rgba(100, 200, 100, 0.3) 0%,
+        transparent 70%);
+    opacity: 0;
+    border-radius: 50%;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 .nav-button:hover .nav-icon {
-    transform: scale(1.1);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    transform: scale(1.15) translateY(-3px);
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+}
+.nav-button:hover .nav-icon::after {
+    opacity: 1;
+    animation: navGlow 2s ease-in-out infinite;
+}
+@keyframes navGlow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
 }
 .nav-text {
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
     font-weight: var(--font-weight-medium);
-    margin-top: 6px;
-    transition: color var(--transition-fast);
+    margin-top: 8px;
+    transition: all 0.3s ease;
+    position: relative;
 }
 .nav-button:hover .nav-text {
     color: var(--text-primary);
+    text-shadow: 0 0 10px rgba(100, 200, 100, 0.3);
+    transform: scale(1.05);
 }
 /* ========== 底部 Dock 栏 ========== */
 .status-bar {
