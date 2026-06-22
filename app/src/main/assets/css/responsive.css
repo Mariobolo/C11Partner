@@ -774,3 +774,230 @@
         --text-secondary: rgba(255, 255, 255, 0.75);
     }
 }
+
+
+/* ============================================
+   【新增】响应式优化 - 增强版
+   更多断点适配和精细调整
+   ============================================ */
+
+/* ========== 超高清屏优化 (3440px+ 带鱼屏) ========== */
+@media screen and (min-width: 3440px) {
+    :root {
+        --widget-height: 160px;
+        --status-bar-height: 72px;
+        --dock-height: 112px;
+        --font-size-4xl: 220px;
+        --font-size-3xl: 56px;
+        --font-size-2xl: 32px;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 220px;
+    }
+    
+    .card-view {
+        bottom: 140px;
+        left: 100px;
+        right: 100px;
+    }
+    
+    .widget {
+        min-width: 280px;
+        padding: 28px 32px;
+    }
+    
+    .music-widget {
+        min-width: 520px;
+    }
+    
+    .weather-widget {
+        min-width: 280px;
+    }
+}
+
+/* ========== 中等超宽屏 (2560px - 3439px) ========== */
+@media screen and (min-width: 2560px) and (max-width: 3439px) {
+    .apps-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 16px;
+    }
+    
+    .app-item .app-icon {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .switch-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* ========== 车机专用分辨率优化 (1920x720 等特殊比例) ========== */
+@media screen and (max-height: 800px) and (min-width: 1280px) {
+    :root {
+        --widget-height: 95px;
+        --status-bar-height: 44px;
+        --dock-height: 70px;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 110px;
+    }
+    
+    .card-view {
+        bottom: 80px;
+    }
+    
+    .widget {
+        padding: 14px 18px;
+    }
+}
+
+/* ========== 垂直方向空间优化 ========== */
+@media screen and (max-height: 720px) {
+    :root {
+        --widget-height: 85px;
+        --status-bar-height: 40px;
+        --dock-height: 60px;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 90px;
+    }
+    
+    .date-text {
+        font-size: 18px;
+    }
+    
+    .card-view {
+        bottom: 70px;
+    }
+}
+
+/* ========== 极窄高度优化 (600px以下) ========== */
+@media screen and (max-height: 600px) {
+    :root {
+        --widget-height: 75px;
+        --status-bar-height: 36px;
+        --dock-height: 52px;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 72px;
+    }
+    
+    .layout-left {
+        top: 25%;
+    }
+    
+    .card-view {
+        bottom: 62px;
+    }
+    
+    .widget {
+        padding: 10px 14px;
+    }
+}
+
+/* ========== 横竖屏精细适配 ========== */
+/* 横屏 - 宽高比 > 16:9 */
+@media screen and (min-aspect-ratio: 16/9) {
+    .layout-left {
+        transform: translateX(-50%);
+    }
+    
+    /* 横屏下卡片间距优化 */
+    .cards-container {
+        gap: 16px;
+    }
+}
+
+/* 方屏 - 宽高比 1:1 ~ 4:3 */
+@media screen and (max-aspect-ratio: 4/3) and (min-aspect-ratio: 1/1) {
+    .layout-left {
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .card-view {
+        left: 30px;
+        right: 30px;
+    }
+}
+
+/* ========== 暗色模式对比度增强 ========== */
+@media (prefers-color-scheme: dark) {
+    /* 确保暗色模式下所有文本对比度达标 */
+    .widget-title,
+    .music-name,
+    .temperature,
+    .air-text,
+    .date-text,
+    .time-text {
+        color: rgba(255, 255, 255, 0.95);
+    }
+    
+    .widget-subtitle,
+    .artist-name,
+    .condition,
+    .lunar-calendar-text {
+        color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* ========== 低透明度模式 ========== */
+@media (prefers-reduced-transparency: reduce) {
+    .widget,
+    .modal-content,
+    .top-status-bar,
+    .status-bar {
+        background: rgba(0, 0, 0, 0.9) !important;
+        backdrop-filter: none !important;
+    }
+}
+
+/* ========== 强制色彩模式 ========== */
+@media (forced-colors: active) {
+    .widget {
+        border: 1px solid CanvasText;
+    }
+    
+    .quick-app-icon,
+    .quick-switch-icon {
+        forced-color-adjust: none;
+    }
+}
+
+/* ========== 大文本模式适配 ========== */
+@media screen and (min-width: 1024px) {
+    /* 确保大字体下布局不溢出 */
+    .music-name,
+    .artist-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* ========== 触摸目标最小尺寸保障 (无障碍) ========== */
+@media (pointer: coarse) {
+    /* WCAG 2.1 - 触摸目标至少 48x48px */
+    .control-icon,
+    .ac-control,
+    .ac-hcs,
+    .wind-display,
+    .quick-app-icon,
+    .quick-switch-icon,
+    .control-buttons button,
+    .nav-button {
+        min-width: 48px !important;
+        min-height: 48px !important;
+    }
+    
+    .control-buttons .btn-play {
+        min-width: 56px !important;
+        min-height: 56px !important;
+    }
+}

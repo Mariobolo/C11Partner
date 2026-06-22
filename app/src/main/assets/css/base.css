@@ -498,3 +498,145 @@ a {
         transform: translateY(0);
     }
 }
+
+
+/* ========== 【新增】无障碍支持 - 增强版 ========== */
+/* 键盘焦点可见性 */
+*:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: var(--radius-md);
+}
+
+/* 跳过导航链接 - 屏幕阅读器 */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    z-index: 1000;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ARIA 状态样式 */
+[aria-disabled="true"] {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+[aria-hidden="true"] {
+    display: none !important;
+}
+
+[aria-expanded="true"] .expand-icon {
+    transform: rotate(180deg);
+}
+
+/* 选中状态 */
+[aria-selected="true"] {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* 加载状态 */
+[aria-busy="true"] {
+    cursor: wait;
+    position: relative;
+}
+
+[aria-busy="true"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* 只读状态 */
+[aria-readonly="true"] {
+    background: var(--surface-color);
+    cursor: default;
+}
+
+/* ========== 【新增】性能优化 - 渲染优化 ========== */
+/* 硬件加速层 */
+.hw-accelerated {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+}
+
+/* 内容隔离优化 */
+.contain-strict {
+    contain: strict;
+}
+
+.contain-layout {
+    contain: layout;
+}
+
+.contain-paint {
+    contain: paint;
+}
+
+.contain-size {
+    contain: size;
+}
+
+.contain-style {
+    contain: style;
+}
+
+/* will-change 优化 */
+.will-change-transform {
+    will-change: transform;
+}
+
+.will-change-opacity {
+    will-change: opacity;
+}
+
+.will-change-scroll {
+    will-change: scroll-position;
+}
+
+/* ========== 【新增】高对比度文本增强 ========== */
+.text-high-contrast {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8),
+                 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.text-outline {
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.5);
+    paint-order: stroke fill;
+}
+
+/* ========== 【新增】打印样式 ========== */
+@media print {
+    * {
+        background: transparent !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+}
