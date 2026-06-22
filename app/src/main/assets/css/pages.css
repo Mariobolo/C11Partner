@@ -1059,23 +1059,28 @@
 /* Tab导航容器视觉增强 */
 .tab-navigation {
     display: flex;
-    gap: 8px;
-    padding: 8px;
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.05) 0%,
-        rgba(0, 0, 0, 0.1) 100%
-    );
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    margin-bottom: 20px;
+    gap: 10px;
+    padding: 10px;
+    background: 
+        linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(0, 0, 0, 0.15) 100%),
+        rgba(15, 15, 20, 0.5);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 24px;
     position: relative;
     overflow: hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
-
-/* Tab导航光泽效果 */
+/* Tab导航顶部光泽线 */
 .tab-navigation::before {
     content: '';
     position: absolute;
@@ -1085,46 +1090,80 @@
     height: 1px;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.15) 30%,
-        rgba(255, 255, 255, 0.25) 50%,
-        rgba(255, 255, 255, 0.15) 70%,
+        rgba(138, 43, 226, 0.3) 20%,
+        rgba(255, 105, 180, 0.4) 50%,
+        rgba(138, 43, 226, 0.3) 80%,
         transparent 100%);
     pointer-events: none;
     z-index: 2;
 }
-
-/* Tab按钮基础样式增强 */
+/* Tab导航底部渐变装饰 */
+.tab-navigation::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(var(--primary-color-rgb), 0.3) 50%,
+        transparent 100%);
+    pointer-events: none;
+}
+/* Tab按钮3D终极增强 */
 .tab-button {
     flex: 1;
-    padding: 12px 20px;
+    padding: 14px 24px;
     font-size: 14px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
     background: transparent;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
     cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
     transform-style: preserve-3d;
     perspective: 800px;
+    letter-spacing: 0.5px;
+}
+/* Tab按钮渐变发光边框 */
+.tab-button::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 14px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(138, 43, 226, 0.2) 0%,
+        rgba(var(--primary-color-rgb), 0.15) 50%,
+        rgba(255, 105, 180, 0.15) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 /* Tab按钮光泽扫过效果 */
-.tab-button::before {
+.tab-button::after {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
-    width: 60%;
+    width: 70%;
     height: 100%;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.08) 40%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.08) 60%,
+        rgba(255, 255, 255, 0.1) 30%,
+        rgba(255, 255, 255, 0.18) 50%,
+        rgba(255, 255, 255, 0.1) 70%,
         transparent 100%);
-    transform: skewX(-12deg);
+    transform: skewX(-15deg);
     pointer-events: none;
     opacity: 0;
     transition: all 0.6s ease;
@@ -1133,54 +1172,117 @@
 /* Tab按钮悬停3D效果 */
 .tab-button:hover {
     background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.03) 100%);
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(138, 43, 226, 0.08) 50%,
+        rgba(255, 255, 255, 0.05) 100%);
     color: rgba(255, 255, 255, 0.95);
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transform: translateY(-4px) scale(1.04) rotateX(6deg);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 0 30px rgba(138, 43, 226, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .tab-button:hover::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(138, 43, 226, 0.35) 0%,
+        rgba(var(--primary-color-rgb), 0.25) 50%,
+        rgba(255, 105, 180, 0.25) 100%
+    );
+}
+.tab-button:hover::after {
     left: 150%;
     opacity: 1;
 }
-/* Tab按钮激活状态 - 终极发光效果 */
+/* Tab按钮激活状态 - 3D发光终极增强 */
 .tab-button.active {
     background: linear-gradient(135deg,
-        rgba(var(--primary-color-rgb), 0.25) 0%,
-        rgba(var(--secondary-color-rgb), 0.15) 100%);
+        rgba(138, 43, 226, 0.35) 0%,
+        rgba(var(--primary-color-rgb), 0.25) 40%,
+        rgba(255, 105, 180, 0.2) 70%,
+        rgba(138, 43, 226, 0.15) 100%);
     color: #ffffff;
-    transform: translateY(-3px) scale(1.03);
+    transform: translateY(-6px) scale(1.06) rotateX(8deg) translateZ(20px);
     box-shadow: 
-        0 12px 32px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
-        0 0 40px rgba(var(--primary-color-rgb), 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    animation: tabActiveGlow 2.5s ease-in-out infinite;
+        0 20px 50px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(138, 43, 226, 0.4),
+        0 0 60px rgba(138, 43, 226, 0.35),
+        0 0 100px rgba(255, 105, 180, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    animation: tabActive3DGlow 2.5s ease-in-out infinite;
 }
-@keyframes tabActiveGlow {
-    0%, 100% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(var(--primary-color-rgb), 0.25); }
-    50% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(var(--primary-color-rgb), 0.35); }
+@keyframes tabActive3DGlow {
+    0%, 100% { 
+        box-shadow: 
+            0 20px 50px rgba(0, 0, 0, 0.45),
+            0 0 0 1px rgba(138, 43, 226, 0.4),
+            0 0 60px rgba(138, 43, 226, 0.35),
+            0 0 100px rgba(255, 105, 180, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 20px 50px rgba(0, 0, 0, 0.45),
+            0 0 0 1px rgba(138, 43, 226, 0.5),
+            0 0 80px rgba(138, 43, 226, 0.45),
+            0 0 120px rgba(255, 105, 180, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
 }
-/* Tab按钮文字渐变效果 */
-.tab-button.active {
-    background: linear-gradient(135deg,
-        rgba(var(--primary-color-rgb), 0.3) 0%,
-        rgba(var(--secondary-color-rgb), 0.18) 100%);
+.tab-button.active::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(138, 43, 226, 0.6) 0%,
+        rgba(var(--primary-color-rgb), 0.45) 50%,
+        rgba(255, 105, 180, 0.45) 100%
+    );
 }
+/* Tab按钮文字渐变发光 */
 .tab-button.active span {
-    background: linear-gradient(135deg, #ffffff 0%, rgba(100, 255, 200, 0.95) 100%);
+    background: linear-gradient(135deg,
+        #ffffff 0%,
+        #e6e6ff 40%,
+        #ffe6f2 70%,
+        #ffffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.4);
+    text-shadow: 0 0 20px rgba(138, 43, 226, 0.5), 0 0 40px rgba(255, 105, 180, 0.3);
+    filter: brightness(1.2);
 }
-/* Tab内容切换动画 */
+/* Tab内容3D切换动画 */
 .tab-content {
-    animation: tabContentFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: none;
+    opacity: 0;
+    transform: translateY(20px) rotateX(-10deg) scale(0.98);
+    transition: 
+        opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
-@keyframes tabContentFadeIn {
-    0% { opacity: 0; transform: translateY(15px) scale(0.98); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+.tab-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+    animation: tabContent3DFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes tabContent3DFadeIn {
+    0% { 
+        opacity: 0; 
+        transform: translateY(25px) rotateX(-12deg) scale(0.96);
+    }
+    50% {
+        transform: translateY(-5px) rotateX(3deg) scale(1.01);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0) rotateX(0deg) scale(1);
+    }
 }
 /* ============================================
    【优化点3】快捷开关面板视觉细节终极增强

@@ -437,6 +437,214 @@
         }
     };
 
+    // ==================== 【第49轮优化点2】应用卡片鼠标跟随3D视差动效 ====================
+    /**
+     * 3D视差效果管理器
+     * 实现鼠标位置跟踪的3D倾斜、深度阴影、光效跟随
+     */
+    const Parallax3D = {
+        // 配置参数
+        config: {
+            maxRotateX: 8,        // X轴最大旋转角度
+            maxRotateY: 12,       // Y轴最大旋转角度
+            perspective: 1000,    // 透视距离
+            scale: 1.05,          // 悬停缩放比例
+            shadowIntensity: 1,   // 阴影强度
+            transitionSpeed: 0.4, // 过渡动画速度
+            easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)', // 缓动函数
+            enableGlow: true,     // 是否启用发光效果
+            enableShadow: true    // 是否启用深度阴影
+        },
+        // 已激活的元素
+        activeElements: new Map(),
+        // 鼠标位置
+        mousePos: { x: 0, y: 0 },
+        /**
+         * 初始化3D视差效果
+         * 
+         * @param {string} selector - CSS选择器
+         * @param {object} customConfig - 自定义配置
+         */
+        init: function(selector = '.app-card, .widget-card, .setting-item, .switch-item', customConfig = {}) {
+            // 合并配置
+            this.config = { ...this.config, ...customConfig };
+            // 绑定全局鼠标移动事件
+            document.addEventListener('mousemove', this.handleMouseMove.bind(this), { passive: true });
+            // 为匹配的元素添加效果
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => this.activateElement(el));
+            console.log(`Parallax3D: 已为 ${elements.length} 个元素激活3D视差效果`);
+        },
+        /**
+         * 激活单个元素的3D视差效果
+         * 
+         * @param {HTMLElement} element - DOM元素
+         */
+        activateElement: function(element) {
+            if (!element || this.activeElements.has(element)) {
+                return;
+            }
+            // 存储元素初始状态
+            const elementData = {
+                rect: null,
+                centerX: 0,
+                centerY: 0,
+                isHovering: false
+            };
+            this.activeElements.set(element, elementData);
+            // 添加鼠标进入事件
+            element.addEventListener('mouseenter', (e) => {
+                this.handleMouseEnter(e, element);
+            }, { passive: true });
+            // 添加鼠标离开事件
+            element.addEventListener('mouseleave', (e) => {
+                this.handleMouseLeave(e, element);
+            }, { passive: true });
+            // 设置元素初始3D样式
+            this.setupElementStyle(element);
+        },
+        /**
+         * 设置元素初始3D样式
+         * 
+         * @param {HTMLElement} element - DOM元素
+         */
+        setupElementStyle: function(element) {
+            element.style.transformStyle = 'preserve-3d';
+            element.style.perspective = `${this.config.perspective}px`;
+            element.style.backfaceVisibility = 'hidden';
+            element.style.willChange = 'transform, box-shadow';
+            element.style.transition = `transform ${this.config.transitionSpeed}s ${this.config.easing}, box-shadow ${this.config.transitionSpeed}s ${this.config.easing}`;
+        },
+        /**
+         * 处理鼠标移动
+         * 
+         * @param {MouseEvent} e - 鼠标事件
+         */
+        handleMouseMove: function(e) {
+            this.mousePos.x = e.clientX;
+            this.mousePos.y = e.clientY;
+            // 更新所有悬停中的元素
+            this.activeElements.forEach((data, element) => {
+                if (data.isHovering) {
+                    this.updateElementTransform(element, data);
+                }
+            });
+        },
+        /**
+         * 处理鼠标进入
+         * 
+         * @param {MouseEvent} e - 鼠标事件
+         * @param {HTMLElement} element - DOM元素
+         */
+        handleMouseEnter: function(e, element) {
+            const data = this.activeElements.get(element);
+            if (!data) return;
+            // 更新元素位置信息
+            data.rect = element.getBoundingClientRect();
+            data.centerX = data.rect.left + data.rect.width / 2;
+            data.centerY = data.rect.top + data.rect.height / 2;
+            data.isHovering = true;
+            // 立即更新一次变换
+            this.updateElementTransform(element, data);
+        },
+        /**
+         * 处理鼠标离开
+         * 
+         * @param {MouseEvent} e - 鼠标事件
+         * @param {HTMLElement} element - DOM元素
+         */
+        handleMouseLeave: function(e, element) {
+            const data = this.activeElements.get(element);
+            if (!data) return;
+            data.isHovering = false;
+            // 重置元素变换
+            this.resetElementTransform(element);
+        },
+        /**
+         * 更新元素3D变换
+         * 
+         * @param {HTMLElement} element - DOM元素
+         * @param {object} data - 元素数据
+         */
+        updateElementTransform: function(element, data) {
+            if (!data.rect) return;
+            // 计算鼠标相对于元素中心的位置（-1到1范围）
+            const relativeX = (this.mousePos.x - data.centerX) / (data.rect.width / 2);
+            const relativeY = (this.mousePos.y - data.centerY) / (data.rect.height / 2);
+            // 限制范围在-1到1之间
+            const clampedX = Math.max(-1, Math.min(1, relativeX));
+            const clampedY = Math.max(-1, Math.min(1, relativeY));
+            // 计算旋转角度（Y轴旋转对应X方向移动，X轴旋转对应Y方向移动且反向）
+            const rotateY = clampedX * this.config.maxRotateY;
+            const rotateX = -clampedY * this.config.maxRotateX;
+            // 计算阴影偏移
+            const shadowOffsetX = -clampedX * 15;
+            const shadowOffsetY = -clampedY * 15;
+            // 应用3D变换
+            element.style.transform = `
+                perspective(${this.config.perspective}px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+                scale(${this.config.scale})
+                translateZ(20px)
+            `;
+            // 应用深度阴影
+            if (this.config.enableShadow) {
+                const shadowBlur = 30 + Math.abs(clampedX + clampedY) * 20;
+                const shadowOpacity = 0.3 + Math.abs(clampedX + clampedY) * 0.15;
+                element.style.boxShadow = `
+                    ${shadowOffsetX}px ${shadowOffsetY + 20}px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity}),
+                    0 0 0 1px rgba(255, 255, 255, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1)
+                `;
+            }
+            // 应用发光效果
+            if (this.config.enableGlow) {
+                const glowIntensity = (Math.abs(clampedX) + Math.abs(clampedY)) / 2;
+                element.style.filter = `
+                    drop-shadow(0 0 ${10 + glowIntensity * 20}px rgba(var(--primary-color-rgb), ${0.15 + glowIntensity * 0.2}))
+                `;
+            }
+        },
+        /**
+         * 重置元素变换
+         * 
+         * @param {HTMLElement} element - DOM元素
+         */
+        resetElementTransform: function(element) {
+            element.style.transform = `
+                perspective(${this.config.perspective}px)
+                rotateX(0deg)
+                rotateY(0deg)
+                scale(1)
+                translateZ(0)
+            `;
+            element.style.boxShadow = '';
+            element.style.filter = '';
+        },
+        /**
+         * 销毁3D视差效果
+         */
+        destroy: function() {
+            document.removeEventListener('mousemove', this.handleMouseMove);
+            this.activeElements.forEach((data, element) => {
+                element.style.transform = '';
+                element.style.boxShadow = '';
+                element.style.filter = '';
+                element.style.transformStyle = '';
+                element.style.perspective = '';
+                element.style.backfaceVisibility = '';
+                element.style.willChange = '';
+                element.style.transition = '';
+            });
+            this.activeElements.clear();
+            console.log('Parallax3D: 已销毁所有3D视差效果');
+        }
+    };
+
+    // 暴露到全局
+    window.Parallax3D = Parallax3D;
+
     // 暴露到全局
     window.Widgets = Widgets;
 

@@ -2180,10 +2180,124 @@
     0%, 100% { opacity: 0.5; }
     50% { opacity: 0.9; }
 }
-/* ========== 音乐组件 ========== */
+/* ========== 音乐组件 - 【第49轮优化点1】3D透视与发光终极增强 ========== */
 .music-widget {
-    min-width: 360px;
-    padding: var(--spacing-lg) var(--spacing-xl);
+    min-width: 380px;
+    padding: 18px 24px;
+    position: relative;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    background: 
+        linear-gradient(135deg, 
+            rgba(138, 43, 226, 0.08) 0%, 
+            rgba(255, 255, 255, 0.06) 30%, 
+            rgba(255, 105, 180, 0.05) 60%, 
+            rgba(0, 0, 0, 0.12) 100%),
+        var(--bg-card);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    overflow: hidden;
+}
+/* 音乐Widget渐变发光边框 */
+.music-widget::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(138, 43, 226, 0.3) 0%,
+        rgba(var(--primary-color-rgb), 0.2) 30%,
+        rgba(255, 105, 180, 0.2) 60%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 音乐Widget双径向渐变氛围光 */
+.music-widget::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 20% 20%, 
+            rgba(138, 43, 226, 0.15) 0%, 
+            transparent 60%),
+        radial-gradient(ellipse at 80% 80%, 
+            rgba(255, 105, 180, 0.12) 0%, 
+            transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    border-radius: 20px;
+}
+/* 光泽扫过效果 */
+.music-widget .music-shimmer {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 30%,
+        rgba(255, 255, 255, 0.18) 50%,
+        rgba(255, 255, 255, 0.1) 70%,
+        transparent 100%);
+    transform: skewX(-15deg);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1;
+}
+/* 悬停3D透视效果增强 */
+.music-widget:hover {
+    transform: translateY(-10px) scale(1.04) rotateX(4deg);
+    box-shadow: 
+        0 36px 90px rgba(0, 0, 0, 0.55),
+        0 14px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.18),
+        0 0 100px rgba(138, 43, 226, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+.music-widget:hover::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(138, 43, 226, 0.45) 0%,
+        rgba(var(--primary-color-rgb), 0.3) 30%,
+        rgba(255, 105, 180, 0.3) 60%,
+        transparent 100%
+    );
+}
+.music-widget:hover::after {
+    opacity: 1;
+}
+.music-widget:hover .music-shimmer {
+    opacity: 1;
+    animation: musicShimmer 2.5s ease-in-out infinite;
+}
+@keyframes musicShimmer {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+/* 音乐Widget呼吸浮动动画 */
+.music-widget {
+    animation: musicFloat 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+.music-widget:hover {
+    animation-play-state: running;
+}
+@keyframes musicFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
 }
 .music-player {
     display: flex;
@@ -2191,14 +2305,441 @@
     padding: 0;
     width: 100%;
     gap: var(--spacing-lg);
+    transform-style: preserve-3d;
 }
-/* 黑胶唱片 */
+/* 黑胶唱片容器 - 3D透视增强 */
 .vinyl-record-container {
     position: relative;
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     margin-right: var(--spacing-lg);
     flex-shrink: 0;
+    perspective: 800px;
+    transform-style: preserve-3d;
+}
+/* 黑胶唱片 - 3D旋转终极增强 */
+.vinyl-record {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: 
+        radial-gradient(circle at 30% 30%, 
+            rgba(255, 255, 255, 0.15) 0%, 
+            transparent 40%),
+        radial-gradient(circle, 
+            #1a1a1f 0%, 
+            #0d0d12 30%, 
+            #1a1a1f 50%, 
+            #2a2a35 70%, 
+            #1a1a1f 100%);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 0 40px rgba(138, 43, 226, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    animation: vinylSpin 8s linear infinite;
+    animation-play-state: paused;
+}
+/* 黑胶唱片播放时旋转 */
+.vinyl-record.playing {
+    animation-play-state: running;
+}
+@keyframes vinylSpin {
+    0% { transform: rotate(0deg) rotateX(8deg); }
+    100% { transform: rotate(360deg) rotateX(8deg); }
+}
+/* 黑胶唱片3D边缘厚度效果 */
+.vinyl-record::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: 
+        repeating-radial-gradient(circle at center,
+            transparent 0px,
+            transparent 2px,
+            rgba(0, 0, 0, 0.3) 2px,
+            rgba(0, 0, 0, 0.3) 4px);
+    pointer-events: none;
+}
+/* 黑胶唱片中心标签 */
+.vinyl-record::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border-radius: 50%;
+    background: 
+        radial-gradient(circle,
+            rgba(138, 43, 226, 0.8) 0%,
+            rgba(255, 105, 180, 0.6) 50%,
+            #1a1a1f 100%);
+    box-shadow: 
+        0 0 12px rgba(138, 43, 226, 0.6),
+        0 0 24px rgba(255, 105, 180, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    animation: centerGlow 2s ease-in-out infinite;
+}
+@keyframes centerGlow {
+    0%, 100% { 
+        box-shadow: 
+            0 0 12px rgba(138, 43, 226, 0.6),
+            0 0 24px rgba(255, 105, 180, 0.4);
+    }
+    50% { 
+        box-shadow: 
+            0 0 20px rgba(138, 43, 226, 0.8),
+            0 0 40px rgba(255, 105, 180, 0.6);
+    }
+}
+/* 唱片中心点 */
+.vinyl-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    z-index: 2;
+}
+/* 唱针 - 3D光影追踪 */
+.tonearm {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    width: 40px;
+    height: 50px;
+    background: linear-gradient(135deg,
+        #4a4a5a 0%,
+        #2a2a35 50%,
+        #1a1a1f 100%);
+    transform-origin: top right;
+    transform: rotate(-30deg);
+    border-radius: 2px 2px 4px 4px;
+    box-shadow: 
+        2px 4px 12px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 3;
+}
+/* 唱针播放时落下 */
+.tonearm.playing {
+    transform: rotate(-10deg);
+}
+/* 唱针头部 */
+.tonearm::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 8px;
+    height: 12px;
+    margin-left: -4px;
+    background: linear-gradient(180deg,
+        #6a6a7a 0%,
+        #3a3a4a 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+/* 唱针针尖 */
+.tonearm::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 3px;
+    height: 6px;
+    margin-left: -1.5px;
+    background: linear-gradient(180deg,
+        #d4af37 0%,
+        #b8941f 100%);
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+/* 悬停时唱片3D增强 */
+.music-widget:hover .vinyl-record {
+    transform: scale(1.1) rotateX(12deg) translateY(-4px);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 0 60px rgba(138, 43, 226, 0.35),
+        inset 0 2px 6px rgba(255, 255, 255, 0.15),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+}
+/* 音乐控制区域 */
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transform-style: preserve-3d;
+}
+/* 音乐标题 - 渐变发光 */
+.music-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+    background: linear-gradient(135deg,
+        #ffffff 0%,
+        #e6e6ff 50%,
+        #ffe6f2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    transition: all 0.3s ease;
+}
+.music-name::before {
+    content: attr(title);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        rgba(138, 43, 226, 0.5) 0%,
+        rgba(255, 105, 180, 0.4) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: blur(8px);
+    opacity: 0.4;
+    z-index: -1;
+}
+.music-widget:hover .music-name {
+    transform: scale(1.02);
+}
+/* 进度条容器 */
+.music-progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform-style: preserve-3d;
+}
+.music-current-time,
+.music-total-time {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+    min-width: 36px;
+    text-align: center;
+    font-weight: 500;
+}
+/* 进度条 - 3D视觉增强 */
+.music-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: 
+        linear-gradient(90deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.04) 100%);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.music-progress-bar:hover {
+    height: 8px;
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 12px rgba(138, 43, 226, 0.2);
+}
+/* 进度条填充 - 渐变发光 */
+.music-progress-filled {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,
+        rgba(138, 43, 226, 0.9) 0%,
+        rgba(var(--primary-color-rgb), 0.95) 50%,
+        rgba(255, 105, 180, 0.9) 100%);
+    border-radius: 3px;
+    position: relative;
+    transition: width 0.3s ease;
+    box-shadow: 
+        0 0 8px rgba(138, 43, 226, 0.6),
+        0 0 16px rgba(255, 105, 180, 0.4);
+}
+/* 进度条滑块 */
+.music-progress-filled::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 
+        0 0 8px rgba(255, 255, 255, 0.8),
+        0 0 16px rgba(138, 43, 226, 0.6);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.music-progress-bar:hover .music-progress-filled::after {
+    opacity: 1;
+    transform: scale(1);
+}
+/* 控制按钮区域 */
+.control-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    transform-style: preserve-3d;
+}
+/* 控制按钮 - 3D弹性效果 */
+.btn-prev,
+.btn-play,
+.btn-next {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: 
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.04) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+/* 按钮渐变发光边框 */
+.btn-prev::before,
+.btn-play::before,
+.btn-next::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    padding: 1px;
+    background: linear-gradient(135deg,
+        rgba(138, 43, 226, 0.2) 0%,
+        rgba(255, 105, 180, 0.15) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+/* 按钮光泽效果 */
+.btn-prev::after,
+.btn-play::after,
+.btn-next::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%);
+    transform: skewX(-15deg);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+.btn-prev:hover,
+.btn-play:hover,
+.btn-next:hover {
+    transform: translateY(-4px) scale(1.1);
+    background: 
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(138, 43, 226, 0.1) 100%);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(138, 43, 226, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(138, 43, 226, 0.3);
+}
+.btn-prev:hover::before,
+.btn-play:hover::before,
+.btn-next:hover::before {
+    opacity: 1;
+}
+.btn-prev:hover::after,
+.btn-play:hover::after,
+.btn-next:hover::after {
+    left: 100%;
+}
+.btn-prev:active,
+.btn-play:active,
+.btn-next:active {
+    transform: translateY(-1px) scale(0.95);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.35),
+        0 0 10px rgba(138, 43, 226, 0.2),
+        inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+/* 播放按钮特殊样式 */
+.btn-play {
+    width: 48px;
+    height: 48px;
+    background: 
+        linear-gradient(135deg,
+            rgba(138, 43, 226, 0.4) 0%,
+            rgba(var(--primary-color-rgb), 0.5) 50%,
+            rgba(255, 105, 180, 0.4) 100%);
+    border-color: rgba(138, 43, 226, 0.5);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(138, 43, 226, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.btn-play:hover {
+    background: 
+        linear-gradient(135deg,
+            rgba(138, 43, 226, 0.5) 0%,
+            rgba(var(--primary-color-rgb), 0.6) 50%,
+            rgba(255, 105, 180, 0.5) 100%);
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.45),
+        0 0 30px rgba(138, 43, 226, 0.5),
+        0 0 50px rgba(255, 105, 180, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.btn-play img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(1.2) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+.btn-prev img,
+.btn-next img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 /* 【优化点1】黑胶唱片动效增强 - 平滑旋转+发光效果+纹理 */
 .vinyl-record {
