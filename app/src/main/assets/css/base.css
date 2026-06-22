@@ -1913,3 +1913,243 @@ textarea:focus-visible,
     color: var(--info-color);
     text-shadow: 0 0 8px rgba(0, 204, 255, 0.4);
 }
+
+/* ============================================
+   【第39轮优化点3】全局无障碍支持与动画性能终极优化
+   WCAG 2.1 AA级、减少动画偏好、高对比度、性能优化、硬件加速
+   ============================================ */
+/* ========== 减少动画偏好 - 更精细控制 ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* 完全禁用会引起眩晕的3D动画 */
+    .weather-widget,
+    .clock-widget,
+    .setting-item,
+    .wallpaper-type-card,
+    .app-item,
+    .tab-button.active,
+    .switch-item.active,
+    .drive-mode-item.active {
+        animation: none !important;
+        transform: none !important;
+    }
+    
+    /* 禁用悬停3D变换效果 */
+    .weather-widget:hover,
+    .setting-item:hover,
+    .wallpaper-type-card:hover,
+    .app-item:hover {
+        transform: none !important;
+        perspective: none !important;
+    }
+    
+    /* 禁用呼吸、发光、浮动动画 */
+    .weather-widget,
+    .weather-icon,
+    .weather-temp,
+    .tab-button.active,
+    .setting-toggle.active,
+    .wallpaper-type-card.active {
+        animation: none !important;
+    }
+}
+
+/* ========== 高对比度模式 - 全面增强 ========== */
+@media (prefers-contrast: high), (prefers-contrast: more) {
+    :root {
+        --text-primary: #ffffff !important;
+        --text-secondary: #f0f0f0 !important;
+        --text-tertiary: #d0d0d0 !important;
+        --border-color: rgba(255, 255, 255, 0.6) !important;
+        --border-light: rgba(255, 255, 255, 0.5) !important;
+        --surface-color: rgba(0, 0, 0, 0.95) !important;
+        --surface-hover: rgba(40, 40, 40, 0.98) !important;
+    }
+    
+    /* 增强边框对比度 */
+    .widget,
+    .setting-item,
+    .wallpaper-type-card,
+    .app-item,
+    .modal-content,
+    .card-view {
+        border-width: 2px !important;
+        border-color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    /* 增强文字对比度和字重 */
+    .widget-title,
+    .weather-temp,
+    .weather-desc,
+    .clock-time,
+    .clock-date,
+    .setting-item label,
+    .tab-button {
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.9) !important;
+        font-weight: 700 !important;
+    }
+    
+    /* 激活状态高对比度指示 */
+    .tab-button.active,
+    .wallpaper-type-card.active,
+    .switch-item.active,
+    .drive-mode-item.active {
+        border-width: 3px !important;
+        border-color: #ffffff !important;
+        box-shadow: 0 0 0 3px var(--primary-color) !important;
+        background: rgba(var(--primary-color-rgb), 0.3) !important;
+    }
+}
+
+/* ========== 焦点可见性终极增强 ========== */
+*:focus-visible {
+    outline: 3px solid var(--primary-color) !important;
+    outline-offset: 3px !important;
+    box-shadow: 
+        0 0 0 5px rgba(var(--primary-color-rgb), 0.3),
+        0 0 30px rgba(var(--primary-color-rgb), 0.5) !important;
+    border-radius: 8px;
+}
+
+/* 交互元素焦点增强 */
+button:focus-visible,
+.setting-toggle:focus-visible,
+.wallpaper-type-card:focus-visible,
+.app-item:focus-visible,
+.tab-button:focus-visible {
+    outline: 3px solid #ffffff !important;
+    outline-offset: 2px !important;
+    box-shadow: 
+        0 0 0 4px var(--primary-color),
+        0 0 40px rgba(var(--primary-color-rgb), 0.6) !important;
+}
+
+/* ========== 屏幕阅读器专用样式 ========== */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+}
+
+/* ========== 动画性能终极优化 ========== */
+/* 全局硬件加速 - GPU渲染 */
+.widget,
+.setting-item,
+.wallpaper-type-card,
+.app-item,
+.tab-button,
+.modal,
+.background-image,
+.clock-widget,
+.quick-app-item {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+
+/* 使用contain减少重绘重排 */
+.widget,
+.modal-content,
+.card-view,
+.setting-item,
+.wallpaper-type-card,
+.app-item,
+.quick-app-grid {
+    contain: layout style paint;
+}
+
+/* 滚动性能优化 */
+.widgets-container,
+.apps-grid,
+.modal-body,
+.quick-app-grid {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+}
+
+/* 默认使用flat渲染模式 */
+* {
+    transform-style: flat;
+}
+
+/* 只对需要3D效果的元素启用preserve-3d */
+.weather-widget,
+.setting-item,
+.wallpaper-type-card,
+.app-item,
+.quick-app-item {
+    transform-style: preserve-3d;
+}
+
+/* 低性能设备降级处理 */
+@media (max-resolution: 1dppx), (max-width: 720px) {
+    .weather-widget::before,
+    .weather-widget::after,
+    .setting-item::before,
+    .setting-item::after {
+        display: none !important;
+    }
+    
+    .weather-widget:hover,
+    .setting-item:hover,
+    .wallpaper-type-card:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+    }
+    
+    .weather-widget,
+    .setting-item,
+    .wallpaper-type-card {
+        animation: none !important;
+    }
+}
+
+/* 悬停效果只在支持的设备上启用 */
+@media (hover: hover) and (pointer: fine) {
+    .weather-widget:hover,
+    .setting-item:hover,
+    .wallpaper-type-card:hover,
+    .app-item:hover {
+        transform: translateY(-8px) scale(1.04);
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .weather-widget:active,
+    .setting-item:active,
+    .wallpaper-type-card:active,
+    .app-item:active {
+        transform: scale(0.96);
+        transition: transform 0.15s ease;
+    }
+}
