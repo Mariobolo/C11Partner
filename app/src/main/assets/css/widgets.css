@@ -2,7 +2,6 @@
    Widgets - 桌面小组件样式
    状态栏、时间、卡片、Dock栏等桌面组件
    ============================================ */
-
 /* ========== 顶部状态栏 ========== */
 .top-status-bar {
     position: absolute;
@@ -21,33 +20,28 @@
     -webkit-backdrop-filter: var(--blur-medium);
     border-bottom: 1px solid var(--border-light);
 }
-
 .top-left-section {
     display: flex;
     align-items: center;
     gap: var(--spacing-xl);
 }
-
 .top-left-time {
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
     color: var(--text-primary);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
-
 .top-left-time .time-text {
     font-size: 14px;
     color: var(--text-primary);
     display: block !important;
     font-weight: var(--font-weight-semibold);
 }
-
 .top-right-info {
     display: flex;
     align-items: center;
     gap: var(--spacing-lg);
 }
-
 /* 车辆状态指示器 */
 .car-status-indicators {
     display: flex;
@@ -61,7 +55,6 @@
     border-radius: var(--radius-full);
     box-shadow: var(--shadow-sm);
 }
-
 .status-indicator {
     display: inline-flex;
     align-items: center;
@@ -73,11 +66,9 @@
     min-width: 28px;
     height: 28px;
 }
-
 .status-indicator.active {
     color: var(--text-primary);
 }
-
 .gear-indicator {
     font-size: 18px;
     font-weight: var(--font-weight-bold);
@@ -86,52 +77,42 @@
     min-width: 36px;
     text-align: center;
 }
-
 .gear-indicator.gear-r {
     color: var(--error-color);
     text-shadow: 0 0 12px rgba(255, 82, 82, 0.5);
 }
-
 .gear-indicator.gear-n {
     color: var(--warning-color);
     text-shadow: 0 0 12px rgba(255, 215, 64, 0.5);
 }
-
 .door-indicator {
     color: var(--error-color);
     font-size: var(--font-size-sm);
 }
-
 .turn-indicator {
     font-size: var(--font-size-sm);
     color: var(--text-tertiary);
 }
-
 .turn-indicator.active {
     color: #ffcc00;
     animation: turnBlink 0.7s ease-in-out infinite;
     text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
 }
-
 @keyframes turnBlink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
 }
-
 .lock-indicator {
     font-size: var(--font-size-sm);
     color: var(--primary-color);
 }
-
 .lock-indicator.unlocked {
     color: #ff9800;
 }
-
 .camera-indicator {
     font-size: var(--font-size-sm);
     color: var(--info-color);
 }
-
 /* 网络和蓝牙图标 */
 .network-status-icon,
 .bluetooth-status-icon,
@@ -145,25 +126,21 @@
     filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
     transition: all var(--transition-fast);
 }
-
 .network-status-icon:first-child,
 .bluetooth-status-icon:first-child,
 .network-5g-icon:first-child {
     margin-left: 0;
 }
-
 .network-status-icon:hover,
 .bluetooth-status-icon:hover {
     opacity: 1;
     transform: scale(1.1);
 }
-
 .network-status-icon.connected,
 .bluetooth-status-icon.connected {
     opacity: 0.9;
     animation: none;
 }
-
 /* ========== 时间日期显示 ========== */
 .layout-left {
     position: absolute;
@@ -175,7 +152,6 @@
     padding: 0;
     pointer-events: auto;
 }
-
 .time-text#timeDisplay {
     font-size: var(--font-size-4xl);
     font-weight: var(--font-weight-light);
@@ -187,7 +163,6 @@
     margin-bottom: var(--spacing-lg);
     padding-top: 0;
 }
-
 .date-text {
     font-size: var(--font-size-2xl);
     color: var(--text-secondary);
@@ -196,7 +171,6 @@
     margin-bottom: var(--spacing-sm);
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
-
 .lunar-calendar-text {
     font-size: var(--font-size-md);
     color: var(--text-tertiary);
@@ -204,7 +178,6 @@
     margin-top: 0;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
-
 /* ========== 底部卡片容器 ========== */
 .card-view {
     position: absolute;
@@ -218,7 +191,6 @@
     overflow: hidden;
     padding: 0 0 var(--spacing-xl) 0;
 }
-
 .horizontal-scroll {
     width: 100%;
     height: 100%;
@@ -233,12 +205,10 @@
     scroll-behavior: smooth;
     position: relative;
 }
-
 /* 隐藏横向滚动条 */
 .horizontal-scroll::-webkit-scrollbar {
     display: none;
 }
-
 /* ========== Widget 卡片基础样式 ========== */
 .widget {
     display: inline-flex;
@@ -267,7 +237,6 @@
     position: relative;
     overflow: hidden;
 }
-
 .widget::before {
     content: '';
     position: absolute;
@@ -280,57 +249,67 @@
         rgba(255, 255, 255, 0.15),
         transparent);
 }
-
-/* 渐变光泽效果 */
+/* 增强版渐变光泽效果 - 优化视觉细节 */
 .widget::after {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
-    width: 50%;
+    width: 60%;
     height: 100%;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.08) 30%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 70%,
         transparent 100%);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
 }
 .widget:hover::after {
     opacity: 1;
-    animation: shimmer 1.5s ease-out;
+    animation: shimmer 2s ease-out;
 }
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+/* 卡片悬停效果增强 - 优化阴影层次 */
 .widget:hover {
-    transform: translateY(-3px) scale(1.01);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.05),
+    transform: translateY(-4px) scale(1.015);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.08),
+                0 0 40px rgba(var(--primary-color-rgb), 0.08),
                 var(--shadow-inner);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.25);
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.04) 50%,
+        rgba(255, 255, 255, 0.02) 100%);
 }
+/* 卡片点击反馈优化 */
 .widget:active {
     transform: translateY(0) scale(0.985);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), var(--shadow-inner);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(var(--primary-color-rgb), 0.2),
+                var(--shadow-inner);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
 }
-
-
 .widget:last-child {
     margin-right: 0;
 }
-
 /* ========== 快捷应用模块 ========== */
 .quick-apps-widget {
     min-width: 300px;
     padding: var(--spacing-lg);
 }
-
 .quick-apps-container {
     display: flex;
     gap: var(--spacing-md);
     padding: 0;
     width: 100%;
 }
-
 .quick-app-item {
     display: flex;
     flex-direction: column;
@@ -343,19 +322,39 @@
     min-width: 60px;
     margin: 0;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
-
+/* 快捷应用光泽扫过效果 */
+.quick-app-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+.quick-app-item:hover::before {
+    left: 100%;
+}
 .quick-app-item:hover {
     background: var(--surface-hover);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     border-color: var(--border-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
 }
-
 .quick-app-item:active {
     background: var(--surface-active);
     transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
-
 .quick-app-icon {
     width: 44px;
     height: 44px;
@@ -365,8 +364,12 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    transition: all var(--transition-fast);
 }
-
+.quick-app-item:hover .quick-app-icon {
+    transform: scale(1.08) translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
 .quick-app-name {
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
@@ -376,21 +379,22 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
+    transition: color var(--transition-fast);
 }
-
+.quick-app-item:hover .quick-app-name {
+    color: var(--text-primary);
+}
 /* ========== 快捷开关模块 ========== */
 .quick-switches-widget {
     min-width: 280px;
     padding: var(--spacing-lg);
 }
-
 .quick-switches-container {
     display: flex;
     gap: var(--spacing-sm);
     padding: 0;
     width: 100%;
 }
-
 .quick-switch-item {
     display: flex;
     flex-direction: column;
@@ -403,24 +407,42 @@
     min-width: 56px;
     margin: 0;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
-
+/* 快捷开关光泽效果 */
+.quick-switch-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        transparent 100%);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+.quick-switch-item:hover::before {
+    left: 100%;
+}
 .quick-switch-item:hover {
     background: var(--surface-hover);
     transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
-
 .quick-switch-item:active {
     transform: scale(0.95);
 }
-
 .quick-switch-item.active .quick-switch-icon {
     background: rgba(var(--primary-color-rgb), 0.2);
     color: var(--primary-color);
     border-color: rgba(var(--primary-color-rgb), 0.4);
-    box-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.3);
+    box-shadow: 0 0 16px rgba(var(--primary-color-rgb), 0.35),
+                inset 0 0 8px rgba(var(--primary-color-rgb), 0.1);
 }
-
 .quick-switch-icon {
     width: 40px;
     height: 40px;
@@ -433,25 +455,31 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
-
+.quick-switch-item:hover .quick-switch-icon {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.2);
+}
 .quick-switch-name {
     font-size: var(--font-size-xs);
     color: var(--text-secondary);
     font-weight: var(--font-weight-medium);
     text-shadow: none;
+    transition: color var(--transition-fast);
 }
-
 .quick-switch-item.active .quick-switch-name {
     color: var(--primary-color);
 }
-
+.quick-switch-item:hover .quick-switch-name {
+    color: var(--text-primary);
+}
 .quick-switch-item.more .quick-switch-icon {
     background: var(--surface-color);
     font-size: 20px;
     color: var(--text-tertiary);
 }
-
 /* ========== 天气组件 ========== */
 .weather-widget {
     min-width: 220px;
@@ -460,7 +488,6 @@
     display: flex;
     align-items: center;
 }
-
 .weather-icon {
     width: 56px;
     height: 56px;
@@ -471,12 +498,15 @@
     background-position: center;
     background-repeat: no-repeat;
     flex-shrink: 0;
+    transition: all var(--transition-normal);
 }
-
+.weather-widget:hover .weather-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
 .weather-info {
     margin-left: 0;
 }
-
 .temperature {
     font-size: var(--font-size-3xl);
     font-weight: 300;
@@ -484,22 +514,24 @@
     line-height: 1;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
     letter-spacing: -1px;
+    transition: all var(--transition-fast);
 }
-
+.weather-widget:hover .temperature {
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5),
+                 0 0 20px rgba(var(--primary-color-rgb), 0.2);
+}
 .condition {
     font-size: var(--font-size-md);
     color: var(--text-secondary);
     margin-top: 4px;
     line-height: 1.2;
 }
-
 /* ========== 胎压组件 ========== */
 .car-widget {
     min-width: 240px;
     padding: var(--spacing-xl);
     position: relative;
 }
-
 .car-image {
     width: 100%;
     height: 100%;
@@ -508,8 +540,13 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    transition: all var(--transition-normal);
 }
-
+.car-widget:hover .car-image {
+    opacity: 0.75;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
+    transform: scale(1.02);
+}
 .tire-pressure {
     position: absolute;
     font-size: var(--font-size-xs);
@@ -521,30 +558,31 @@
     backdrop-filter: var(--blur-light);
     box-shadow: var(--shadow-sm);
     text-align: center;
+    transition: all var(--transition-fast);
 }
-
+.car-widget:hover .tire-pressure {
+    background: rgba(var(--primary-color-rgb), 0.25);
+    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.2);
+    transform: scale(1.05);
+}
 .tire-pressure-value {
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
 }
-
 .tire-temp-value {
     font-size: 11px;
     color: var(--text-tertiary);
 }
-
 .tire-loading-tip {
     font-size: var(--font-size-xs);
     color: var(--text-tertiary);
     text-align: center;
 }
-
 /* ========== 音乐组件 ========== */
 .music-widget {
     min-width: 360px;
     padding: var(--spacing-lg) var(--spacing-xl);
 }
-
 .music-player {
     display: flex;
     align-items: center;
@@ -552,7 +590,6 @@
     width: 100%;
     gap: var(--spacing-lg);
 }
-
 /* 黑胶唱片 */
 .vinyl-record-container {
     position: relative;
@@ -561,7 +598,6 @@
     margin-right: var(--spacing-lg);
     flex-shrink: 0;
 }
-
 .vinyl-record {
     width: 100%;
     height: 100%;
@@ -572,18 +608,22 @@
     animation: spin 3s linear infinite;
     animation-play-state: paused;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
-                inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+                inset 0 0 0 2px rgba(255, 255, 255, 0.05),
+                0 0 20px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-normal);
 }
-
+.music-widget:hover .vinyl-record {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.08),
+                0 0 30px rgba(var(--primary-color-rgb), 0.15);
+}
 .vinyl-record.spinning {
     animation-play-state: running;
 }
-
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-
 /* 黑胶纹路 */
 .vinyl-record::before {
     content: '';
@@ -598,7 +638,6 @@
             rgba(255, 255, 255, 0.15) 2px,
             rgba(255, 255, 255, 0.15) 4px);
 }
-
 /* 黑胶标记 */
 .vinyl-record::after {
     content: '';
@@ -617,7 +656,6 @@
         0 15px 0 0 rgba(255, 90, 95, 0.4),
         0 -15px 0 0 rgba(255, 90, 95, 0.4);
 }
-
 /* 黑胶中心 */
 .vinyl-record .vinyl-center {
     position: absolute;
@@ -631,7 +669,6 @@
     z-index: 1;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
-
 .vinyl-record .vinyl-dot {
     position: absolute;
     top: 50%;
@@ -644,7 +681,6 @@
     z-index: 2;
     box-shadow: inset 0 -2px 0 0 rgba(255, 255, 255, 0.3);
 }
-
 /* 唱针 */
 .tonearm {
     position: absolute;
@@ -659,7 +695,6 @@
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
 }
-
 .tonearm::before {
     content: '';
     position: absolute;
@@ -671,7 +706,6 @@
     background-color: #999;
     border-radius: 50%;
 }
-
 /* 音乐控制区 */
 .controls {
     flex: 1;
@@ -679,11 +713,9 @@
     flex-direction: column;
     gap: var(--spacing-sm);
 }
-
 .music-header {
     margin-bottom: 4px;
 }
-
 .music-name {
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-medium);
@@ -692,8 +724,11 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: all var(--transition-fast);
 }
-
+.music-widget:hover .music-name {
+    text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
+}
 /* 进度条 */
 .music-progress-container {
     display: flex;
@@ -701,7 +736,6 @@
     padding: 4px 0;
     gap: var(--spacing-sm);
 }
-
 .music-current-time,
 .music-total-time {
     font-size: var(--font-size-xs);
@@ -709,15 +743,12 @@
     font-variant-numeric: tabular-nums;
     min-width: 36px;
 }
-
 .music-current-time {
     margin-right: var(--spacing-sm);
 }
-
 .music-total-time {
     margin-left: var(--spacing-sm);
 }
-
 .music-progress-bar {
     flex: 1;
     height: 6px;
@@ -725,8 +756,12 @@
     border-radius: var(--radius-full);
     overflow: visible;
     cursor: pointer;
+    transition: all var(--transition-fast);
 }
-
+.music-progress-bar:hover {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+}
 .music-progress-filled {
     height: 100%;
     background: var(--accent-gradient);
@@ -734,7 +769,6 @@
     transition: width 0.1s linear;
     position: relative;
 }
-
 .music-progress-filled::after {
     content: '';
     position: absolute;
@@ -745,15 +779,15 @@
     height: 12px;
     background: white;
     border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 10px rgba(var(--primary-color-rgb), 0.5);
     opacity: 0;
-    transition: opacity var(--transition-fast);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
-
 .music-progress-bar:hover .music-progress-filled::after {
     opacity: 1;
+    transform: translateY(-50%) scale(1.2);
 }
-
 /* 控制按钮 */
 .control-buttons {
     display: flex;
@@ -761,7 +795,6 @@
     margin-top: 8px;
     gap: var(--spacing-md);
 }
-
 .control-buttons button {
     background: var(--surface-color);
     border-radius: 50%;
@@ -775,30 +808,54 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
-
+.control-buttons button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.control-buttons button:hover::before {
+    opacity: 1;
+}
 .control-buttons button:last-child {
     margin-right: 0;
 }
-
 .control-buttons button:hover {
     background: var(--surface-hover);
-    transform: scale(1.08);
+    transform: scale(1.1);
     border-color: var(--border-color);
     opacity: 1;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35),
+                0 0 12px rgba(var(--primary-color-rgb), 0.2);
 }
-
 .control-buttons button:active {
     background: var(--surface-active);
-    transform: scale(0.92);
+    transform: scale(0.93);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
-
 .control-buttons button img {
     width: 20px;
     height: 20px;
     opacity: 0.8;
+    transition: all var(--transition-fast);
 }
-
+.control-buttons button:hover img {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(var(--primary-color-rgb), 0.5));
+}
 .control-buttons .btn-play {
     width: 48px;
     height: 48px;
@@ -807,24 +864,21 @@
     box-shadow: 0 4px 16px rgba(var(--primary-color-rgb), 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-
 .control-buttons .btn-play:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(var(--primary-color-rgb), 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: scale(1.12);
+    box-shadow: 0 8px 24px rgba(var(--primary-color-rgb), 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 0 20px rgba(var(--primary-color-rgb), 0.3);
 }
-
 .control-buttons .btn-play:active {
     transform: scale(0.95);
 }
-
 .control-buttons .btn-play img {
     width: 22px;
     height: 22px;
     opacity: 1;
     filter: brightness(0) invert(1);
 }
-
 /* ========== 地图导航组件 ========== */
 .map-widget {
     min-width: 220px;
@@ -834,7 +888,6 @@
     display: flex;
     align-items: center;
 }
-
 .nav-button {
     display: flex;
     flex-direction: column;
@@ -846,17 +899,34 @@
     border: 1px solid var(--border-light);
     margin: 0;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
-
+.nav-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+.nav-button:hover::before {
+    left: 100%;
+}
 .nav-button:hover {
     background: var(--surface-hover);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
-
 .nav-button:active {
     transform: scale(0.95);
 }
-
 .nav-icon {
     width: 32px;
     height: 32px;
@@ -865,15 +935,22 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    transition: all var(--transition-fast);
 }
-
+.nav-button:hover .nav-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
 .nav-text {
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
     font-weight: var(--font-weight-medium);
     margin-top: 6px;
+    transition: color var(--transition-fast);
 }
-
+.nav-button:hover .nav-text {
+    color: var(--text-primary);
+}
 /* ========== 底部 Dock 栏 ========== */
 .status-bar {
     position: absolute;
@@ -892,14 +969,12 @@
     z-index: var(--z-fixed);
     pointer-events: auto;
 }
-
 .left-buttons,
 .right-buttons {
     display: flex;
     align-items: center;
     gap: var(--spacing-lg);
 }
-
 .control-icon {
     width: 32px;
     height: 32px;
@@ -913,18 +988,36 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    position: relative;
 }
-
+.control-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    pointer-events: none;
+    border-radius: 50%;
+}
+.control-icon:hover::after {
+    opacity: 1;
+}
 .control-icon:hover {
     opacity: 1;
     transform: scale(1.15);
+    filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.4));
 }
-
 .control-icon:active {
     opacity: 1;
     transform: scale(0.9);
 }
-
 /* 中间空调控制区 */
 .center-controls {
     display: flex;
@@ -936,8 +1029,13 @@
     gap: var(--spacing-sm);
     height: auto;
     box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
 }
-
+.center-controls:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(0, 204, 255, 0.1);
+    border-color: rgba(0, 204, 255, 0.3);
+}
 .ac-control {
     width: 28px;
     height: 28px;
@@ -949,18 +1047,36 @@
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
+    position: relative;
 }
-
+.ac-control::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle,
+        rgba(0, 204, 255, 0.3) 0%,
+        transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    pointer-events: none;
+    border-radius: 50%;
+}
+.ac-control:hover::after {
+    opacity: 1;
+}
 .ac-control:hover {
     opacity: 1;
     transform: scale(1.15);
+    filter: drop-shadow(0 0 8px rgba(0, 204, 255, 0.6));
 }
-
 .ac-control:active {
     opacity: 1;
     transform: scale(0.9);
 }
-
 .air-text {
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-semibold);
@@ -970,15 +1086,17 @@
     font-variant-numeric: tabular-nums;
     margin: 0 8px;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-fast);
 }
-
+.center-controls:hover .air-text {
+    text-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
+}
 .wind-display {
     position: relative;
     width: 32px;
     height: 32px;
     margin: 0 8px;
 }
-
 .wind-background,
 .wind-level {
     position: absolute;
@@ -991,7 +1109,6 @@
     background-repeat: no-repeat;
     opacity: 0.8;
 }
-
 .ac-hcs {
     width: 28px;
     height: 28px;
@@ -1003,16 +1120,13 @@
     background-repeat: no-repeat;
     cursor: pointer;
 }
-
 .ac-hcs:hover {
     opacity: 1;
     transform: scale(1.15);
 }
-
 .ac-hcs:active {
     transform: scale(0.9);
 }
-
 /* ========== 律动效果 ========== */
 .music-rhythm {
     position: absolute;
@@ -1031,7 +1145,6 @@
     pointer-events: none;
     z-index: 5;
 }
-
 .rhythm-bar {
     width: 4px;
     background: var(--accent-gradient);
@@ -1040,7 +1153,6 @@
     border-radius: 2px 2px 0 0;
     transition: height 0.1s ease;
 }
-
 /* ========== 图标视觉细节优化 ========== */
 /* 图标基础样式 */
 .widget-icon {
@@ -1050,7 +1162,6 @@
     justify-content: center;
     transition: all var(--transition-normal);
 }
-
 /* 图标渐变发光效果 */
 .widget-icon::before {
     content: '';
@@ -1070,28 +1181,23 @@
     border-radius: 50%;
     pointer-events: none;
 }
-
 .widget-icon:hover::before {
     opacity: 1;
 }
-
 /* 图标阴影增强 */
 .icon-with-shadow {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
             drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     transition: filter var(--transition-fast);
 }
-
 .icon-with-shadow:hover {
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4))
             drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
 }
-
 /* 图标渐变叠加 */
 .icon-gradient {
     position: relative;
 }
-
 .icon-gradient::after {
     content: '';
     position: absolute;
@@ -1106,16 +1212,13 @@
     border-radius: inherit;
     pointer-events: none;
 }
-
 .icon-gradient:hover::after {
     opacity: 0.3;
 }
-
 /* 图标外发光 */
 .icon-glow {
     position: relative;
 }
-
 .icon-glow::after {
     content: '';
     position: absolute;
@@ -1134,29 +1237,23 @@
     filter: blur(8px);
     pointer-events: none;
 }
-
 .icon-glow:hover::after {
     opacity: 1;
 }
-
 /* 图标缩放动画 */
 .icon-scale {
     transition: transform var(--transition-normal);
 }
-
 .icon-scale:hover {
     transform: scale(1.1);
 }
-
 .icon-scale:active {
     transform: scale(0.95);
 }
-
 /* 图标弹跳效果 */
 .icon-bounce:hover {
     animation: iconBounce 0.6s ease-out;
 }
-
 @keyframes iconBounce {
     0% { transform: scale(1); }
     30% { transform: scale(1.15); }
@@ -1164,22 +1261,18 @@
     70% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
-
 /* 图标旋转效果 */
 .icon-rotate:hover {
     animation: iconRotate 0.4s ease-out;
 }
-
 @keyframes iconRotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-
 /* 图标脉冲效果 */
 .icon-pulse:hover {
     animation: iconPulse 1s ease-in-out infinite;
 }
-
 @keyframes iconPulse {
     0%, 100% {
         transform: scale(1);
@@ -1190,13 +1283,11 @@
         filter: drop-shadow(0 0 12px rgba(var(--primary-color-rgb), 0.5));
     }
 }
-
 /* 快捷开关图标优化 */
 .quick-switch-icon {
     position: relative;
     overflow: hidden;
 }
-
 .quick-switch-icon::before {
     content: '';
     position: absolute;
@@ -1212,22 +1303,18 @@
     );
     transition: left 0.5s ease;
 }
-
 .quick-switch-item:hover .quick-switch-icon::before {
     left: 100%;
 }
-
 .quick-switch-item.active .quick-switch-icon {
     box-shadow: 0 0 16px rgba(var(--primary-color-rgb), 0.4),
                 inset 0 0 8px rgba(var(--primary-color-rgb), 0.1);
 }
-
 /* 应用图标优化 */
 .quick-app-icon {
     position: relative;
     transition: all var(--transition-normal);
 }
-
 .quick-app-icon::before {
     content: '';
     position: absolute;
@@ -1245,23 +1332,19 @@
     transition: opacity var(--transition-fast);
     pointer-events: none;
 }
-
 .quick-app-item:hover .quick-app-icon::before {
     opacity: 1;
 }
-
 .quick-app-item:hover .quick-app-icon {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
                 0 0 0 1px rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
 }
-
 /* 天气图标优化 */
 .weather-icon {
     position: relative;
     transition: all var(--transition-normal);
 }
-
 .weather-icon::after {
     content: '';
     position: absolute;
@@ -1279,11 +1362,9 @@
     transition: opacity var(--transition-normal);
     pointer-events: none;
 }
-
 .weather-widget:hover .weather-icon::after {
     opacity: 1;
 }
-
 /* 状态栏图标优化 */
 .network-status-icon,
 .bluetooth-status-icon,
@@ -1291,7 +1372,6 @@
     position: relative;
     transition: all var(--transition-fast);
 }
-
 .network-status-icon::after,
 .bluetooth-status-icon::after,
 .network-5g-icon::after {
@@ -1311,24 +1391,20 @@
     transition: opacity var(--transition-fast);
     pointer-events: none;
 }
-
 .network-status-icon:hover::after,
 .bluetooth-status-icon:hover::after,
 .network-5g-icon:hover::after {
     opacity: 1;
 }
-
 .network-status-icon.connected,
 .bluetooth-status-icon.connected {
     filter: drop-shadow(0 0 6px rgba(var(--primary-color-rgb), 0.5));
 }
-
 /* 音乐控制图标优化 */
 .music-control-btn {
     position: relative;
     transition: all var(--transition-fast);
 }
-
 .music-control-btn::before {
     content: '';
     position: absolute;
@@ -1347,26 +1423,21 @@
     border-radius: 50%;
     pointer-events: none;
 }
-
 .music-control-btn:hover::before {
     opacity: 1;
 }
-
 .music-control-btn:hover {
     transform: scale(1.15);
     filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.5));
 }
-
 .music-control-btn:active {
     transform: scale(0.95);
 }
-
 /* 空调控制图标优化 */
 .ac-icon {
     position: relative;
     transition: all var(--transition-fast);
 }
-
 .ac-icon::after {
     content: '';
     position: absolute;
@@ -1384,47 +1455,38 @@
     transition: opacity var(--transition-fast);
     pointer-events: none;
 }
-
 .ac-control:hover .ac-icon::after {
     opacity: 1;
 }
-
 .ac-control:hover .ac-icon {
     filter: drop-shadow(0 0 8px rgba(0, 204, 255, 0.6));
 }
-
 /* 图标颜色覆盖 */
 .icon-primary {
     filter: brightness(0) saturate(100%)
             invert(62%) sepia(98%) saturate(1837%) hue-rotate(106deg) brightness(103%) contrast(102%);
 }
-
 .icon-secondary {
     filter: brightness(0) saturate(100%)
             invert(57%) sepia(99%) saturate(2624%) hue-rotate(160deg) brightness(101%) contrast(107%);
 }
-
 .icon-accent {
     filter: drop-shadow(0 0 4px rgba(var(--primary-color-rgb), 0.5));
 }
-
 /* 图标灰度效果 */
 .icon-grayscale {
     filter: grayscale(100%);
     opacity: 0.5;
 }
-
 .icon-grayscale:hover {
     filter: grayscale(0%);
     opacity: 1;
 }
-
 /* 图标模糊效果 */
 .icon-blur {
     filter: blur(2px);
     transition: filter var(--transition-fast);
 }
-
 .icon-blur:hover {
     filter: blur(0);
 }
