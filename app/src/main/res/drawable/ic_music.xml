@@ -12,9 +12,7 @@
         android:fillColor="#FFE91E63"
         android:pathData="M12,5v2l4,-1V5h-4z"/>
     <!-- 低音点 -->
-    <circle
+    <path
         android:fillColor="#FFE91E63"
-        android:cx="10"
-        android:cy="19"
-        android:r="1.5"/>
+        android:pathData="M8.5,19m1.5,0a1.5,1.5 0,1 1,-3 0a1.5,1.5 0,1 1,3 0"/>
 </vector>
