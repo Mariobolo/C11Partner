@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 音符主体 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M12,3v10.55c-0.59,-0.34 -1.27,-0.55 -2,-0.55 -2.21,0 -4,1.79 -4,4s1.79,4 4,4 4,-1.79 4,-4V7h4V3h-6z"/>
+    <!-- 装饰渐变效果 -->
+    <path
+        android:fillColor="#FFE91E63"
+        android:pathData="M12,5v2l4,-1V5h-4z"/>
+    <!-- 低音点 -->
+    <circle
+        android:fillColor="#FFE91E63"
+        android:cx="10"
+        android:cy="19"
+        android:r="1.5"/>
+</vector>

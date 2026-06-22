@@ -50,4 +50,51 @@
         <item name="android:minHeight">4dp</item>
         <item name="android:maxHeight">4dp</item>
     </style>
+    
+    <!-- 美化的SeekBar样式 -->
+    <style name="CustomSeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:thumb">@drawable/seekbar_thumb_selector</item>
+        <item name="android:progressDrawable">@drawable/progress_bar_horizontal</item>
+        <item name="android:minHeight">6dp</item>
+        <item name="android:maxHeight">6dp</item>
+        <item name="android:thumbOffset">8dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+    </style>
+    
+    <!-- 文字阴影样式 - 标题 -->
+    <style name="TextShadow.Title">
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+    
+    <!-- 文字阴影样式 - 副标题 -->
+    <style name="TextShadow.Subtitle">
+        <item name="android:shadowColor">#60000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    
+    <!-- 文字阴影样式 - 发光效果 -->
+    <style name="TextShadow.Glow">
+        <item name="android:shadowColor">#402196F3</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">8</item>
+    </style>
+    
+    <!-- 现代化对话框样式 -->
+    <style name="ModernDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/dialog_background_modern</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
 </resources>
