@@ -640,3 +640,932 @@ a {
         display: none !important;
     }
 }
+
+/* ============================================
+   【第29轮优化点2】字体排版与文字动效系统优化
+   文字渐变、发光效果、打字机动画、滚动文字、数字计数、强调动效
+   ============================================ */
+/* ========== 文字渐变效果 ========== */
+.text-gradient {
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        rgba(255, 255, 255, 0.9) 50%,
+        rgba(255, 255, 255, 0.8) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-primary {
+    background: linear-gradient(
+        135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 50%,
+        var(--primary-color) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradientShift 4s ease-in-out infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes textGradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* 彩虹文字渐变 */
+.text-gradient-rainbow {
+    background: linear-gradient(
+        90deg,
+        #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowShift 6s linear infinite;
+    background-size: 400% 100%;
+}
+
+@keyframes rainbowShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* ========== 文字发光效果 ========== */
+.text-glow {
+    text-shadow: 
+        0 0 10px rgba(var(--primary-color-rgb), 0.5),
+        0 0 20px rgba(var(--primary-color-rgb), 0.3),
+        0 0 30px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.text-glow-strong {
+    text-shadow: 
+        0 0 15px rgba(var(--primary-color-rgb), 0.7),
+        0 0 30px rgba(var(--primary-color-rgb), 0.5),
+        0 0 45px rgba(var(--primary-color-rgb), 0.3),
+        0 0 60px rgba(var(--primary-color-rgb), 0.2);
+    animation: textGlowPulse 2s ease-in-out infinite;
+}
+
+@keyframes textGlowPulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 15px rgba(var(--primary-color-rgb), 0.7),
+            0 0 30px rgba(var(--primary-color-rgb), 0.5);
+    }
+    50% {
+        text-shadow: 
+            0 0 20px rgba(var(--primary-color-rgb), 0.9),
+            0 0 40px rgba(var(--primary-color-rgb), 0.7),
+            0 0 60px rgba(var(--primary-color-rgb), 0.4);
+    }
+}
+
+/* 多色发光 */
+.text-glow-multi {
+    animation: textGlowMulti 4s ease-in-out infinite;
+}
+
+@keyframes textGlowMulti {
+    0%, 100% {
+        text-shadow: 
+            0 0 15px rgba(var(--primary-color-rgb), 0.7),
+            0 0 30px rgba(var(--primary-color-rgb), 0.5);
+    }
+    33% {
+        text-shadow: 
+            0 0 15px rgba(var(--secondary-color-rgb), 0.7),
+            0 0 30px rgba(var(--secondary-color-rgb), 0.5);
+    }
+    66% {
+        text-shadow: 
+            0 0 15px rgba(255, 215, 64, 0.7),
+            0 0 30px rgba(255, 215, 64, 0.5);
+    }
+}
+
+/* ========== 打字机效果 ========== */
+.text-typewriter {
+    overflow: hidden;
+    border-right: 2px solid var(--primary-color);
+    white-space: nowrap;
+    animation: 
+        typing 3.5s steps(40, end),
+        blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary-color); }
+}
+
+/* ========== 滚动/跑马灯文字 ========== */
+.text-marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.text-marquee span {
+    display: inline-block;
+    animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* 双向滚动 */
+.text-marquee-alternate span {
+    animation: marqueeAlt 10s ease-in-out infinite alternate;
+}
+
+@keyframes marqueeAlt {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-100% + 100vw)); }
+}
+
+/* ========== 数字计数动画 ========== */
+.text-count-up {
+    font-variant-numeric: tabular-nums;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.text-count-up.change {
+    animation: countPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ============================================
+   【第30轮优化点1】阴影系统全面升级与光影层次优化
+   多层次阴影、光影分层、内发光外阴影、深度感增强
+   ============================================ */
+/* ========== 阴影层级系统 ========== */
+/* 基础阴影 - 轻微悬浮感 */
+.shadow-sm {
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.12),
+        0 1px 2px rgba(0, 0, 0, 0.24);
+}
+/* 中等阴影 - 标准悬浮 */
+.shadow-md {
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.16),
+        0 3px 6px rgba(0, 0, 0, 0.23);
+}
+/* 大阴影 - 深度悬浮 */
+.shadow-lg {
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.19),
+        0 6px 6px rgba(0, 0, 0, 0.23);
+}
+/* 超大阴影 - 强调悬浮 */
+.shadow-xl {
+    box-shadow: 
+        0 14px 28px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
+}
+/* 2x超大阴影 - 极致深度 */
+.shadow-2xl {
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.35),
+        0 15px 15px rgba(0, 0, 0, 0.25);
+}
+/* ========== 主题色发光阴影 ========== */
+.shadow-glow {
+    box-shadow: 
+        0 0 10px rgba(var(--primary-color-rgb), 0.3),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.shadow-glow-strong {
+    box-shadow: 
+        0 0 20px rgba(var(--primary-color-rgb), 0.5),
+        0 0 40px rgba(var(--primary-color-rgb), 0.3),
+        0 0 60px rgba(var(--primary-color-rgb), 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.shadow-glow-secondary {
+    box-shadow: 
+        0 0 15px rgba(var(--secondary-color-rgb), 0.4),
+        0 0 30px rgba(var(--secondary-color-rgb), 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+/* ========== 内发光阴影系统 ========== */
+.shadow-inner {
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.shadow-inner-glow {
+    box-shadow: 
+        inset 0 0 20px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.shadow-inner-strong {
+    box-shadow: 
+        inset 0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.05);
+}
+/* ========== 光影分层阴影 - 3D深度增强 ========== */
+.shadow-layered {
+    box-shadow: 
+        0 1px 1px rgba(0, 0, 0, 0.12),
+        0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12),
+        0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+}
+.shadow-3d {
+    box-shadow: 
+        0 1px 1px rgba(0, 0, 0, 0.08),
+        0 2px 4px rgba(0, 0, 0, 0.12),
+        0 4px 8px rgba(0, 0, 0, 0.16),
+        0 8px 16px rgba(0, 0, 0, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+/* ========== 软阴影 - 毛玻璃质感 ========== */
+.shadow-soft {
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        0 2px 8px rgba(0, 0, 0, 0.25);
+}
+.shadow-soft-glow {
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+/* ========== 阴影动画效果 ========== */
+.shadow-hover {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.shadow-hover:hover {
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+.shadow-pulse {
+    animation: shadowPulse 2s ease-in-out infinite;
+}
+@keyframes shadowPulse {
+    0%, 100% {
+        box-shadow: 
+            0 4px 12px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    50% {
+        box-shadow: 
+            0 8px 24px rgba(0, 0, 0, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.12),
+            0 0 20px rgba(var(--primary-color-rgb), 0.2);
+    }
+}
+/* ========== 长投影效果 ========== */
+.shadow-long {
+    box-shadow: 
+        120px 120px 0 rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.shadow-diagonal {
+    box-shadow: 
+        6px 6px 0 rgba(var(--primary-color-rgb), 0.3),
+        12px 12px 0 rgba(0, 0, 0, 0.1);
+}
+/* ============================================
+   【第30轮优化点2】无障碍支持与高对比度模式增强
+   WCAG 2.1 AA级标准、屏幕阅读器优化、键盘导航、高对比度
+   ============================================ */
+/* ========== WCAG 对比度增强 - 基础优化 ========== */
+/* 确保文本对比度 ≥ 4.5:1 (AA级) */
+.text-wcag-aa {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.text-wcag-large {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+/* 高对比度模式 - 系统偏好 */
+@media (prefers-contrast: more) {
+    :root {
+        --text-primary: #ffffff !important;
+        --text-secondary: #f0f0f0 !important;
+        --text-tertiary: #e0e0e0 !important;
+        --border-color: rgba(255, 255, 255, 0.4) !important;
+        --border-light: rgba(255, 255, 255, 0.25) !important;
+        --surface-color: rgba(255, 255, 255, 0.15) !important;
+        --surface-hover: rgba(255, 255, 255, 0.25) !important;
+        --bg-card: rgba(0, 0, 0, 0.9) !important;
+    }
+    
+    * {
+        border-width: 2px !important;
+    }
+    
+    .widget {
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        background: rgba(0, 0, 0, 0.9) !important;
+    }
+}
+/* ========== 强制高对比度模式类 ========== */
+.high-contrast-mode {
+    --text-primary: #ffffff !important;
+    --text-secondary: #ffffff !important;
+    --text-tertiary: #f0f0f0 !important;
+    --border-color: #ffffff !important;
+    --surface-color: rgba(255, 255, 255, 0.2) !important;
+    --bg-card: #000000 !important;
+}
+.high-contrast-mode * {
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+}
+.high-contrast-mode .widget {
+    border: 2px solid #ffffff !important;
+    outline: 1px solid #000000 !important;
+}
+/* ========== 大文本模式 - 无障碍 ========== */
+.large-text-mode {
+    font-size: 125% !important;
+}
+.large-text-mode .time-text#timeDisplay {
+    font-size: 180px !important;
+}
+.large-text-mode .date-text {
+    font-size: 40px !important;
+}
+/* ========== 屏幕阅读器优化 ========== */
+/* 仅屏幕阅读器可见 */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+/* 屏幕阅读器可聚焦 */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+}
+/* ========== 键盘导航增强 ========== */
+/* 焦点环样式 */
+.focus-ring:focus-visible {
+    outline: 3px solid var(--primary-color) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 6px rgba(var(--primary-color-rgb), 0.3) !important;
+}
+/* 所有可交互元素焦点样式 */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid var(--primary-color) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 6px rgba(var(--primary-color-rgb), 0.3) !important;
+}
+/* 焦点指示器动画 */
+@keyframes focusRing {
+    0% { box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.7); }
+    100% { box-shadow: 0 0 0 8px rgba(var(--primary-color-rgb), 0); }
+}
+*:focus-visible {
+    animation: focusRing 0.4s ease-out !important;
+}
+/* ========== 减少动画模式增强 ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .widget {
+        animation: none !important;
+    }
+    
+    .widget:hover {
+        transform: none !important;
+    }
+}
+/* ========== 减少透明度模式 ========== */
+@media (prefers-reduced-transparency: reduce) {
+    *,
+    *::before,
+    *::after {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    
+    .widget {
+        background: rgba(0, 0, 0, 0.95) !important;
+    }
+    
+    .modal-content {
+        background: rgba(0, 0, 0, 0.98) !important;
+    }
+}
+/* ========== 色盲友好配色 ========== */
+/* 红绿色盲友好 - 使用图案区分 */
+.colorblind-friendly .success {
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        rgba(255, 255, 255, 0.1) 5px,
+        rgba(255, 255, 255, 0.1) 10px
+    );
+}
+.colorblind-friendly .error {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 5px,
+        rgba(255, 255, 255, 0.1) 5px,
+        rgba(255, 255, 255, 0.1) 10px
+    );
+}
+/* ========== 触摸目标尺寸保障 (WCAG 2.1) ========== */
+.touch-target {
+    min-width: 48px !important;
+    min-height: 48px !important;
+    padding: 12px !important;
+}
+.touch-target-large {
+    min-width: 56px !important;
+    min-height: 56px !important;
+    padding: 16px !important;
+}
+/* ========== ARIA 状态视觉反馈 ========== */
+[aria-live] {
+    position: relative;
+}
+[aria-live="polite"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--info-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+[aria-live="polite"].updated::before {
+    opacity: 1;
+    animation: liveUpdate 1s ease-out;
+}
+@keyframes liveUpdate {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+/* ============================================
+   【第30轮优化点3】性能优化与CSS渲染优化
+   硬件加速、渲染优化、选择器优化、重绘重排减少
+   ============================================ */
+/* ========== 硬件加速优化 ========== */
+/* GPU加速层 - 动画元素专用 */
+.gpu-accelerated {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+/* 3D变换强制GPU加速 */
+.gpu-force {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+/* ========== 渲染性能优化 ========== */
+/* 内容隔离 - 独立渲染层 */
+.contain-all {
+    contain: layout paint size style;
+}
+.contain-layout-paint {
+    contain: layout paint;
+}
+.contain-strict {
+    contain: strict;
+}
+.contain-content {
+    contain: content;
+}
+/* will-change 优化提示 */
+.will-change-all {
+    will-change: transform opacity;
+}
+.will-change-transform {
+    will-change: transform;
+}
+.will-change-opacity {
+    will-change: opacity;
+}
+.will-change-scroll {
+    will-change: scroll-position;
+}
+/* ========== 避免重绘重排 ========== */
+/* 使用transform替代top/left */
+.animate-transform {
+    transition: transform 0.3s ease;
+}
+/* 使用opacity替代visibility/display */
+.animate-opacity {
+    transition: opacity 0.3s ease;
+}
+/* 避免同步布局 */
+.avoid-layout-thrashing {
+    transform: translateZ(0);
+}
+/* ========== 滚动性能优化 ========== */
+/* 平滑滚动 */
+.scroll-smooth {
+    scroll-behavior: smooth;
+}
+/* 触摸滚动优化 */
+.scroll-touch {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+}
+/* 滚动捕捉 */
+.scroll-snap {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+.scroll-snap-item {
+    scroll-snap-align: center;
+}
+/* 滚动性能优化 */
+.scroll-performance {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+    will-change: scroll-position;
+}
+/* ========== 图片性能优化 ========== */
+/* 图片懒加载占位 */
+.img-placeholder {
+    background: var(--surface-color);
+    aspect-ratio: attr(width) / attr(height);
+}
+/* 响应式图片优化 */
+.img-responsive {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+/* ========== CSS 选择器优化 ========== */
+/* 避免深层嵌套选择器 - 使用类优先 */
+.optimized-selector {
+    /* 使用直接子选择器替代后代选择器 */
+}
+/* ========== 字体渲染优化 ========== */
+.font-optimized {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-synthesis: none;
+}
+/* ========== 动画性能优化 ========== */
+/* 仅使用GPU友好属性 */
+.animate-gpu {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+/* 避免动画期间的重绘 */
+.animation-no-repaint {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+/* 动画分层 */
+.animation-layer {
+    position: absolute;
+    transform: translateZ(0);
+}
+/* ========== 内存优化 ========== */
+/* 避免大阴影 */
+.shadow-optimized {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+/* ========== 批量更新优化 ========== */
+.batch-update {
+    visibility: hidden;
+}
+.batch-update.ready {
+    visibility: visible;
+}
+@keyframes countPop {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 数字变化高亮 */
+.text-number-highlight {
+    position: relative;
+    display: inline-block;
+}
+
+.text-number-highlight.change::before {
+    content: '';
+    position: absolute;
+    inset: -4px -8px;
+    background: rgba(var(--primary-color-rgb), 0.2);
+    border-radius: 4px;
+    animation: numberHighlight 1s ease-out forwards;
+}
+
+@keyframes numberHighlight {
+    0% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0; transform: scale(1); }
+}
+
+/* ========== 文字强调动效 ========== */
+.text-pop {
+    display: inline-block;
+    animation: textPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes textPop {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 弹跳文字 */
+.text-bounce {
+    display: inline-block;
+    animation: textBounce 0.6s ease;
+}
+
+@keyframes textBounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    70% {
+        transform: translateY(-10px);
+    }
+    90% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 逐字弹跳 */
+.text-bounce-letters span {
+    display: inline-block;
+    animation: letterBounce 0.6s ease both;
+}
+
+.text-bounce-letters span:nth-child(1) { animation-delay: 0s; }
+.text-bounce-letters span:nth-child(2) { animation-delay: 0.05s; }
+.text-bounce-letters span:nth-child(3) { animation-delay: 0.1s; }
+.text-bounce-letters span:nth-child(4) { animation-delay: 0.15s; }
+.text-bounce-letters span:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes letterBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* ========== 文字淡入效果 ========== */
+.text-fade-in {
+    animation: textFadeIn 0.6s ease-out;
+}
+
+@keyframes textFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 逐字淡入 */
+.text-fade-in-letters span {
+    display: inline-block;
+    opacity: 0;
+    animation: letterFadeIn 0.5s ease forwards;
+}
+
+.text-fade-in-letters span:nth-child(1) { animation-delay: 0s; }
+.text-fade-in-letters span:nth-child(2) { animation-delay: 0.05s; }
+.text-fade-in-letters span:nth-child(3) { animation-delay: 0.1s; }
+.text-fade-in-letters span:nth-child(4) { animation-delay: 0.15s; }
+.text-fade-in-letters span:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes letterFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== 文字滑动效果 ========== */
+.text-slide-up {
+    animation: textSlideUp 0.5s ease-out;
+}
+
+@keyframes textSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.text-slide-left {
+    animation: textSlideLeft 0.5s ease-out;
+}
+
+@keyframes textSlideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========== 文字缩放效果 ========== */
+.text-scale-in {
+    animation: textScaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes textScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========== 文字翻转效果 ========== */
+.text-flip-in {
+    animation: textFlipIn 0.6s ease-out;
+    backface-visibility: hidden;
+}
+
+@keyframes textFlipIn {
+    from {
+        opacity: 0;
+        transform: perspective(400px) rotateX(90deg);
+    }
+    to {
+        opacity: 1;
+        transform: perspective(400px) rotateX(0);
+    }
+}
+
+/* ========== 文字震动效果 ========== */
+.text-shake {
+    animation: textShake 0.5s ease-in-out;
+}
+
+@keyframes textShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+/* ========== 文字呼吸效果 ========== */
+.text-breathe {
+    animation: textBreathe 3s ease-in-out infinite;
+}
+
+@keyframes textBreathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+/* ========== 字体排版优化 ========== */
+/* 字体渲染优化 */
+.text-smooth {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* 字间距优化 */
+.text-tracking-tight { letter-spacing: -0.02em; }
+.text-tracking-normal { letter-spacing: 0; }
+.text-tracking-wide { letter-spacing: 0.02em; }
+.text-tracking-wider { letter-spacing: 0.05em; }
+.text-tracking-widest { letter-spacing: 0.1em; }
+
+/* 行高优化 */
+.text-leading-tight { line-height: 1.25; }
+.text-leading-normal { line-height: 1.5; }
+.text-leading-relaxed { line-height: 1.625; }
+.text-leading-loose { line-height: 2; }
+
+/* 文字截断 */
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ========== 文字选中样式 ========== */
+::selection {
+    background: rgba(var(--primary-color-rgb), 0.3);
+    color: #ffffff;
+}
+
+::-moz-selection {
+    background: rgba(var(--primary-color-rgb), 0.3);
+    color: #ffffff;
+}
+
+/* ========== 空状态文字 ========== */
+.text-empty {
+    color: var(--text-tertiary);
+    font-style: italic;
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+/* ========== 成功/警告/错误文字状态 ========== */
+.text-success {
+    color: var(--success-color);
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+}
+
+.text-warning {
+    color: var(--warning-color);
+    text-shadow: 0 0 8px rgba(255, 215, 64, 0.4);
+}
+
+.text-error {
+    color: var(--error-color);
+    text-shadow: 0 0 8px rgba(255, 82, 82, 0.4);
+}
+
+.text-info {
+    color: var(--info-color);
+    text-shadow: 0 0 8px rgba(0, 204, 255, 0.4);
+}
