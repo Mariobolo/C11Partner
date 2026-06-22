@@ -1595,3 +1595,319 @@ textarea:focus:not(:focus-visible),
 .curve-accelerate {
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
+
+/* ============================================
+   【第47轮UI美化 - 优化点3】动画性能优化与无障碍支持
+   减少动画模式、硬件加速、性能优化、无障碍支持
+   ============================================ */
+/* ========== 无障碍 - 减少动画模式支持 ========== */
+@media (prefers-reduced-motion: reduce) {
+    /* 禁用所有动画和过渡 */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* 禁用无限循环动画 */
+    .animate-spin,
+    .animate-pulse,
+    .animate-blink,
+    .animate-glow,
+    .animate-breathe,
+    .animate-breathe-subtle,
+    .animate-float,
+    .animate-float-slow,
+    .dock-btn.ac-btn.active img,
+    .dock-btn.ac-btn.active,
+    .settings-tab.active,
+    .weather-widget,
+    .weather-icon::before {
+        animation: none !important;
+        animation-play-state: paused !important;
+    }
+    
+    /* 禁用悬停缩放和3D变换，保留基础颜色变化 */
+    .hover-scale:hover,
+    .hover-lift:hover,
+    .interactive-hover:hover,
+    .dock-btn:hover,
+    .setting-item:hover,
+    .weather-widget:hover,
+    .settings-tab:hover {
+        transform: none !important;
+    }
+    
+    /* 禁用波纹和光泽效果 */
+    .ripple-container::after,
+    .shimmer-effect,
+    .weather-shimmer,
+    .settings-tab::after {
+        display: none !important;
+    }
+    
+    /* 简化阴影效果 */
+    .hover-glow:hover,
+    .dock-btn:hover,
+    .setting-item:hover {
+        box-shadow: var(--shadow-md) !important;
+    }
+}
+
+/* ========== 性能优化 - 硬件加速提示 ========== */
+/* 3D变换元素启用硬件加速 */
+.hardware-accelerate,
+.weather-icon,
+.dock-btn img,
+.setting-item,
+.settings-tab,
+.widget,
+.card {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* 动画元素性能优化 */
+.animate-spin,
+.animate-breathe,
+.animate-float,
+.dock-btn.ac-btn.active img {
+    will-change: transform;
+}
+
+.animate-glow,
+.dock-btn.ac-btn.active {
+    will-change: box-shadow;
+}
+
+/* ========== 动画帧率优化 ========== */
+/* 高优先级动画 - 60fps */
+.high-priority-animation {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+/* 低优先级动画 - 30fps */
+.low-priority-animation {
+    animation-timing-function: steps(30);
+}
+
+/* ========== 动画时长优化 ========== */
+/* 快速动画 - 150ms */
+.animation-very-fast {
+    animation-duration: 150ms;
+    transition-duration: 150ms;
+}
+
+/* 标准动画 - 250ms */
+.animation-fast {
+    animation-duration: 250ms;
+    transition-duration: 250ms;
+}
+
+/* 正常动画 - 350ms */
+.animation-normal {
+    animation-duration: 350ms;
+    transition-duration: 350ms;
+}
+
+/* 慢速动画 - 500ms */
+.animation-slow {
+    animation-duration: 500ms;
+    transition-duration: 500ms;
+}
+
+/* ========== 动画防抖优化 ========== */
+/* 防止快速连续触发动画 */
+.animation-debounce {
+    transition-delay: 50ms;
+}
+
+/* ========== 滚动性能优化 ========== */
+/* 滚动时暂停非关键动画 */
+.scroll-pause-animations {
+    animation-play-state: paused;
+}
+
+html.is-scrolling .scroll-pause-animations {
+    animation-play-state: paused;
+}
+
+html:not(.is-scrolling) .scroll-pause-animations {
+    animation-play-state: running;
+}
+
+/* ========== 内存优化 ========== */
+/* 离屏元素禁用动画 */
+.offscreen-animate {
+    animation-play-state: paused;
+}
+
+.offscreen-animate.onscreen {
+    animation-play-state: running;
+}
+
+/* ========== 无障碍焦点动画 ========== */
+/* 键盘焦点可见性增强 */
+.focus-visible:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.3);
+    animation: focusRing 0.3s ease-out;
+}
+
+@keyframes focusRing {
+    0% {
+        outline-offset: 0;
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.5);
+    }
+    50% {
+        outline-offset: 4px;
+        box-shadow: 0 0 0 8px rgba(var(--primary-color-rgb), 0.2);
+    }
+    100% {
+        outline-offset: 2px;
+        box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.3);
+    }
+}
+
+/* 移除默认焦点样式，使用自定义 */
+.focus-visible:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+/* ========== 高对比度模式支持 ========== */
+@media (prefers-contrast: high) {
+    /* 增强边框对比度 */
+    .widget,
+    .card,
+    .btn,
+    .setting-item,
+    .settings-tab {
+        border-width: 2px !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+    
+    /* 增强文字对比度 */
+    .text-secondary,
+    .text-tertiary {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    /* 增强阴影对比度 */
+    .shadow-lg,
+    .shadow-xl {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+    }
+}
+
+/* ========== 反色模式支持 ========== */
+@media (inverted-colors: inverted) {
+    /* 调整渐变以适应反色 */
+    .gradient-primary,
+    .gradient-accent {
+        filter: invert(1) hue-rotate(180deg);
+    }
+}
+
+/* ========== 减少透明度模式支持 ========== */
+@media (prefers-reduced-transparency: reduce) {
+    /* 降低毛玻璃效果，使用实色背景 */
+    .widget,
+    .card,
+    .modal,
+    .dock-bar,
+    .settings-tabs {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: rgba(20, 20, 25, 0.95) !important;
+    }
+    
+    /* 移除半透明叠加层 */
+    .glass-effect,
+    .backdrop-blur {
+        background-color: rgba(20, 20, 25, 0.95) !important;
+    }
+}
+
+/* ========== 性能监控类 ========== */
+/* 开发环境动画性能标记 */
+.dev-animation-warning {
+    outline: 3px solid #ff6b6b;
+}
+
+/* 触发重排的属性警告 */
+.layout-thrashing-warning {
+    outline: 3px solid #ffa502;
+}
+
+/* ========== 动画优化工具类 ========== */
+/* 使用transform而非top/left/right/bottom */
+.use-transform {
+    transform: translate(0, 0);
+}
+
+/* 使用opacity而非visibility/display */
+.use-opacity {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 合成层提升 */
+.promote-layer {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 防止图层过大 */
+.contain-paint {
+    contain: layout paint size;
+}
+
+.contain-strict {
+    contain: strict;
+}
+
+/* ========== 动画队列控制 ========== */
+/* 防止动画叠加 */
+.animation-queue-serial {
+    animation-composition: accumulate;
+}
+
+/* 动画替换模式 */
+.animation-replace {
+    animation-composition: replace;
+}
+
+/* ========== 响应式动画调整 ========== */
+/* 小屏幕减少动画幅度 */
+@media (max-width: 768px) {
+    .hover-scale:hover {
+        transform: scale(1.02);
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-2px);
+    }
+    
+    .animate-breathe {
+        animation-duration: 4s;
+    }
+}
+
+/* 大屏幕增强动画效果 */
+@media (min-width: 1200px) {
+    .hover-scale:hover {
+        transform: scale(1.06);
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-6px);
+    }
+}
