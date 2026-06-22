@@ -222,104 +222,354 @@
     transform: scale(0.9);
 }
 
-/* ========== 按钮组件 ========== */
+/* ============================================
+   【UI美化优化点1】按钮组件视觉与交互动效全面升级
+   渐变背景、光泽效果、弹性动画、波纹点击、多层次阴影
+   ============================================ */
+/* ========== 按钮组件 - 增强版 ========== */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 18px;
+    padding: 12px 22px;
     font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-color);
-    background: var(--surface-color);
+    font-weight: var(--font-weight-semibold);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.06) 50%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
     color: var(--text-primary);
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: 
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
     text-decoration: none;
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
 }
-
+/* 按钮顶部光泽效果 */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 100%
+    );
+    border-radius: 14px 14px 0 0;
+    pointer-events: none;
+    opacity: 0.6;
+}
+/* 波纹点击效果 */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+}
 .btn:hover {
-    background: var(--surface-hover);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.12) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.12) inset,
+        0 0 0 1px rgba(255, 255, 255, 0.05);
 }
-
 .btn:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.97);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
 }
-
+.btn:active::after {
+    animation: buttonRipple 0.4s ease-out;
+}
+@keyframes buttonRipple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
+}
+/* 主按钮 - 渐变增强版 */
 .btn-primary {
-    background: rgba(var(--primary-color-rgb), 0.2);
-    border-color: rgba(var(--primary-color-rgb), 0.4);
-    color: var(--primary-color);
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.3) 50%,
+        rgba(var(--primary-color-rgb), 0.35) 100%
+    );
+    border: 1px solid rgba(var(--primary-color-rgb), 0.5);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset,
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.1);
 }
-
+.btn-primary::before {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        transparent 100%
+    );
+}
 .btn-primary:hover {
-    background: rgba(var(--primary-color-rgb), 0.3);
-    border-color: rgba(var(--primary-color-rgb), 0.5);
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.4) 50%,
+        rgba(var(--primary-color-rgb), 0.45) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.6);
+    box-shadow: 
+        0 8px 32px rgba(var(--primary-color-rgb), 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.25) inset,
+        0 0 20px rgba(var(--primary-color-rgb), 0.2);
 }
-
+.btn-primary:active {
+    box-shadow: 
+        0 2px 8px rgba(var(--primary-color-rgb), 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+/* 图标按钮 - 圆形增强版 */
 .btn-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     border-radius: 50%;
 }
-
 .btn-icon img {
-    width: 20px;
-    height: 20px;
-    opacity: 0.8;
+    width: 22px;
+    height: 22px;
+    opacity: 0.9;
+    filter: brightness(1.1);
+    transition: all 0.25s ease;
+}
+.btn-icon:hover img {
+    opacity: 1;
+    filter: brightness(1.2) drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+.btn-icon.btn-primary img {
+    filter: brightness(1.2) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+/* 按钮尺寸变体 */
+.btn-sm {
+    padding: 8px 16px;
+    font-size: var(--font-size-sm);
+    border-radius: 10px;
+}
+.btn-lg {
+    padding: 14px 28px;
+    font-size: var(--font-size-md);
+    border-radius: 16px;
+}
+/* 按钮禁用状态 */
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+.btn:disabled::after,
+.btn.disabled::after {
+    display: none;
 }
 
-/* ========== 卡片组件 ========== */
+/* ============================================
+   【UI美化优化点2】卡片组件视觉深度与光泽增强
+   渐变背景、多层次边框、顶部光泽、悬停动效、3D阴影
+   ============================================ */
+/* ========== 卡片组件 - 视觉增强版 ========== */
 .card {
-    background: var(--bg-card);
-    backdrop-filter: var(--blur-medium);
-    -webkit-backdrop-filter: var(--blur-medium);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg), var(--shadow-inner);
+    background: linear-gradient(
+        180deg,
+        rgba(30, 30, 35, 0.7) 0%,
+        rgba(15, 15, 20, 0.7) 50%,
+        rgba(10, 10, 15, 0.75) 100%
+    );
+    backdrop-filter: blur(25px) saturate(150%);
+    -webkit-backdrop-filter: blur(25px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
     color: var(--text-primary);
     position: relative;
     overflow: hidden;
+    transition: 
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+    transform-style: preserve-3d;
 }
-
+/* 卡片顶部光泽效果 - 增强版 */
 .card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(255, 255, 255, 0.15),
-        transparent);
+    height: 100px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
 }
-
+/* 卡片边框渐变发光效果 */
+.card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 24px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        rgba(var(--secondary-color-rgb), 0.1) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+/* 卡片悬停效果 */
+.card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 12px 32px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 1px 0 rgba(255, 255, 255, 0.12) inset,
+        0 0 40px rgba(var(--primary-color-rgb), 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+.card:hover::after {
+    opacity: 0.8;
+}
+/* 卡片头部 - 视觉增强 */
 .card-header {
-    padding: var(--spacing-lg) var(--spacing-xl);
-    border-bottom: 1px solid var(--border-color);
-    background: rgba(30, 30, 30, 0.5);
-    backdrop-filter: var(--blur-light);
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(
+        180deg,
+        rgba(40, 40, 50, 0.4) 0%,
+        rgba(30, 30, 40, 0.2) 100%
+    );
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    position: relative;
+    z-index: 2;
 }
-
 .card-header h2,
 .card-header h3 {
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.2px;
 }
-
+/* 卡片内容区 */
 .card-body {
-    padding: var(--spacing-xl);
+    padding: 24px;
+    position: relative;
+    z-index: 2;
 }
-
+/* 卡片底部 */
 .card-footer {
-    padding: var(--spacing-lg) var(--spacing-xl);
-    border-top: 1px solid var(--border-color);
+    padding: 16px 24px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(
+        0deg,
+        rgba(25, 25, 30, 0.3) 0%,
+        transparent 100%
+    );
+    position: relative;
+    z-index: 2;
+}
+/* 卡片变体 - 紧凑版 */
+.card-compact .card-header {
+    padding: 16px 20px 12px;
+}
+.card-compact .card-body {
+    padding: 16px 20px;
+}
+.card-compact .card-footer {
+    padding: 12px 20px 16px;
+}
+/* 卡片变体 - 无边框 */
+.card-borderless {
+    border: none;
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.35),
+        0 6px 16px rgba(0, 0, 0, 0.25);
+}
+.card-borderless::after {
+    display: none;
+}
+/* 卡片变体 - 高亮主题色 */
+.card-accent {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        rgba(15, 15, 20, 0.7) 50%,
+        rgba(10, 10, 15, 0.75) 100%
+    );
+}
+.card-accent::after {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 50%,
+        transparent 100%
+    );
+    opacity: 0.7;
 }
 
 /* ============================================
@@ -1345,76 +1595,228 @@
     border-width: 2px;
 }
 
-/* ========== 开关组件 ========== */
+/* ============================================
+   【UI美化优化点3】开关与徽章组件视觉交互增强
+   3D开关动效、弹性动画、发光效果、徽章渐变美化
+   ============================================ */
+/* ========== 开关组件 - 3D增强版 ========== */
 .switch {
     position: relative;
-    width: 48px;
-    height: 28px;
-    background: var(--surface-color);
-    border-radius: var(--radius-full);
+    width: 52px;
+    height: 30px;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    border-radius: 15px;
     cursor: pointer;
-    transition: all var(--transition-normal);
-    border: 1px solid var(--border-color);
+    transition: 
+        background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset;
+    overflow: hidden;
 }
-
+/* 开关背景光泽层 */
+.switch::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 100%
+    );
+    border-radius: 15px 15px 0 0;
+    pointer-events: none;
+    z-index: 1;
+}
+/* 开关激活状态 */
 .switch.active {
-    background: var(--accent-gradient);
-    border-color: transparent;
-    box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.4);
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.4) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.35),
+        0 0 20px rgba(var(--primary-color-rgb), 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
 }
-
+/* 开关滑块 - 3D效果 */
 .switch::after {
     content: '';
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 22px;
-    height: 22px;
-    background: white;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(
+        145deg,
+        #ffffff 0%,
+        #f0f0f0 50%,
+        #e8e8e8 100%
+    );
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: transform var(--transition-normal);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.8) inset,
+        0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 2;
 }
-
+/* 开关滑块激活状态 */
 .switch.active::after {
-    transform: translateX(20px);
+    transform: translateX(22px);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        0 0 10px rgba(var(--primary-color-rgb), 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+/* 开关悬停效果 */
+.switch:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+}
+.switch:hover::after {
+    box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+.switch.active:hover {
+    box-shadow: 
+        0 6px 20px rgba(var(--primary-color-rgb), 0.45),
+        0 0 30px rgba(var(--primary-color-rgb), 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+/* 开关点击反馈 */
+.switch:active::after {
+    transform: translateX(22px) scale(0.92);
+}
+.switch:not(.active):active::after {
+    transform: translateX(0) scale(0.92);
 }
 
-/* ========== 标签/徽章 ========== */
+/* ========== 标签/徽章 - 渐变增强版 ========== */
 .badge {
     display: inline-flex;
     align-items: center;
-    padding: 4px 10px;
+    padding: 5px 12px;
     font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-medium);
-    border-radius: var(--radius-full);
-    background: var(--surface-color);
+    font-weight: var(--font-weight-semibold);
+    border-radius: 12px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.06) 100%
+    );
     color: var(--text-secondary);
-    border: 1px solid var(--border-light);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
 }
-
+/* 徽章顶部光泽 */
+.badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 100%
+    );
+    border-radius: 12px 12px 0 0;
+    pointer-events: none;
+}
+.badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
 .badge-primary {
-    background: rgba(var(--primary-color-rgb), 0.15);
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--primary-color-rgb), 0.15) 100%
+    );
     color: var(--primary-color);
-    border-color: rgba(var(--primary-color-rgb), 0.3);
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    box-shadow: 
+        0 2px 10px rgba(var(--primary-color-rgb), 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
 }
-
 .badge-success {
-    background: rgba(0, 255, 136, 0.15);
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.25) 0%,
+        rgba(0, 255, 136, 0.15) 100%
+    );
     color: #00ff88;
-    border-color: rgba(0, 255, 136, 0.3);
+    border-color: rgba(0, 255, 136, 0.4);
+    box-shadow: 
+        0 2px 10px rgba(0, 255, 136, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
 }
-
 .badge-warning {
-    background: rgba(255, 215, 64, 0.15);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 215, 64, 0.25) 0%,
+        rgba(255, 215, 64, 0.15) 100%
+    );
     color: #ffd740;
-    border-color: rgba(255, 215, 64, 0.3);
+    border-color: rgba(255, 215, 64, 0.4);
+    box-shadow: 
+        0 2px 10px rgba(255, 215, 64, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
 }
-
 .badge-error {
-    background: rgba(255, 82, 82, 0.15);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.25) 0%,
+        rgba(255, 82, 82, 0.15) 100%
+    );
     color: #ff5252;
-    border-color: rgba(255, 82, 82, 0.3);
+    border-color: rgba(255, 82, 82, 0.4);
+    box-shadow: 
+        0 2px 10px rgba(255, 82, 82, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+/* 徽章尺寸变体 */
+.badge-sm {
+    padding: 3px 8px;
+    font-size: 10px;
+    border-radius: 8px;
+}
+.badge-lg {
+    padding: 7px 16px;
+    font-size: var(--font-size-sm);
+    border-radius: 16px;
+}
+/* 徽章点状变体 */
+.badge-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    min-width: 8px;
+    border-radius: 50%;
+}
+.badge-dot::before {
+    display: none;
 }
 
 /* ========== 分割线 ========== */
