@@ -11941,3 +11941,618 @@ input[type="range"]::-moz-range-thumb:hover {
 .toast-ultra.sm .toast-ultra-message {
     font-size: 12px;
 }
+
+/* ============================================
+   【第44轮优化点1】Tooltip工具提示组件视觉增强
+   渐变边框、3D深度、弹性动画、箭头发光、多方向支持
+   ============================================ */
+/* ========== Tooltip工具提示 - 3D水晶版 ========== */
+.tooltip-crystal {
+    position: relative;
+    display: inline-block;
+}
+.tooltip-crystal-trigger {
+    cursor: help;
+}
+.tooltip-crystal-content {
+    position: absolute;
+    padding: 12px 18px;
+    background: linear-gradient(
+        180deg,
+        rgba(30, 30, 38, 0.98) 0%,
+        rgba(20, 20, 28, 0.98) 100%
+    );
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    color: var(--text-primary);
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 
+        opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 1px 0 rgba(255, 255, 255, 0.1) inset,
+        0 0 30px rgba(var(--primary-color-rgb), 0.1);
+    min-width: 120px;
+    max-width: 280px;
+    transform-style: preserve-3d;
+}
+/* Tooltip渐变发光边框 */
+.tooltip-crystal-content::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 14px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.35) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+/* Tooltip顶部光泽效果 */
+.tooltip-crystal-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 100%
+    );
+    border-radius: 14px 14px 0 0;
+    pointer-events: none;
+}
+/* Tooltip显示状态 */
+.tooltip-crystal:hover .tooltip-crystal-content {
+    opacity: 1;
+    visibility: visible;
+}
+/* Tooltip方向 - 上方 */
+.tooltip-crystal[data-position="top"] .tooltip-crystal-content {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px) scale(0.9);
+    margin-bottom: 10px;
+}
+.tooltip-crystal[data-position="top"]:hover .tooltip-crystal-content {
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+/* Tooltip方向 - 下方 */
+.tooltip-crystal[data-position="bottom"] .tooltip-crystal-content {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px) scale(0.9);
+    margin-top: 10px;
+}
+.tooltip-crystal[data-position="bottom"]:hover .tooltip-crystal-content {
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+/* Tooltip方向 - 左侧 */
+.tooltip-crystal[data-position="left"] .tooltip-crystal-content {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(8px) scale(0.9);
+    margin-right: 10px;
+}
+.tooltip-crystal[data-position="left"]:hover .tooltip-crystal-content {
+    transform: translateY(-50%) translateX(0) scale(1);
+}
+/* Tooltip方向 - 右侧 */
+.tooltip-crystal[data-position="right"] .tooltip-crystal-content {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-8px) scale(0.9);
+    margin-left: 10px;
+}
+.tooltip-crystal[data-position="right"]:hover .tooltip-crystal-content {
+    transform: translateY(-50%) translateX(0) scale(1);
+}
+/* Tooltip箭头 - 通用 */
+.tooltip-crystal-content .tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+/* 上方箭头 */
+.tooltip-crystal[data-position="top"] .tooltip-arrow {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0;
+    border-color: rgba(30, 30, 38, 0.98) transparent transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+/* 下方箭头 */
+.tooltip-crystal[data-position="bottom"] .tooltip-arrow {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 8px 8px;
+    border-color: transparent transparent rgba(30, 30, 38, 0.98);
+    filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.3));
+}
+/* 左侧箭头 */
+.tooltip-crystal[data-position="left"] .tooltip-arrow {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 8px 0 8px 8px;
+    border-color: transparent transparent transparent rgba(30, 30, 38, 0.98);
+    filter: drop-shadow(2px 0 4px rgba(0, 0, 0, 0.3));
+}
+/* 右侧箭头 */
+.tooltip-crystal[data-position="right"] .tooltip-arrow {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 8px 8px 8px 0;
+    border-color: transparent rgba(30, 30, 38, 0.98) transparent transparent;
+    filter: drop-shadow(-2px 0 4px rgba(0, 0, 0, 0.3));
+}
+/* Tooltip标题样式 */
+.tooltip-crystal-title {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.tooltip-crystal-desc {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+/* Tooltip变体 - 主题色高亮 */
+.tooltip-crystal-accent .tooltip-crystal-content {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        rgba(30, 30, 38, 0.95) 50%,
+        rgba(20, 20, 28, 0.98) 100%
+    );
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 40px rgba(var(--primary-color-rgb), 0.2);
+}
+.tooltip-crystal-accent .tooltip-crystal-content::before {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.3) 50%,
+        transparent 100%
+    );
+}
+
+/* ============================================
+   【第44轮优化点2】Loading加载指示器组件视觉增强
+   多种动画变体、渐变色彩、脉冲发光、3D旋转效果
+   ============================================ */
+/* ========== 加载指示器 - 水晶旋转版 ========== */
+.loading-spinner-crystal {
+    width: 48px;
+    height: 48px;
+    position: relative;
+    display: inline-block;
+}
+.loading-spinner-crystal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--primary-color);
+    border-right-color: var(--secondary-color);
+    animation: spinCrystal 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    box-shadow: 
+        0 0 20px rgba(var(--primary-color-rgb), 0.3),
+        0 0 40px rgba(var(--secondary-color-rgb), 0.2);
+}
+.loading-spinner-crystal::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.4);
+    border-left-color: rgba(255, 255, 255, 0.2);
+    animation: spinCrystal 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse;
+}
+@keyframes spinCrystal {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* 加载指示器 - 脉冲圆点版 */
+.loading-pulse-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.loading-pulse-dots span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(
+        135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    animation: pulseDot 1.4s ease-in-out infinite;
+    box-shadow: 
+        0 0 10px rgba(var(--primary-color-rgb), 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2);
+}
+.loading-pulse-dots span:nth-child(1) { animation-delay: 0s; }
+.loading-pulse-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-pulse-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes pulseDot {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1.2);
+        opacity: 1;
+        box-shadow: 
+            0 0 15px rgba(var(--primary-color-rgb), 0.6),
+            0 0 30px rgba(var(--primary-color-rgb), 0.4);
+    }
+}
+/* 加载指示器 - 波纹扩散版 */
+.loading-ripple {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    display: inline-block;
+}
+.loading-ripple span {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+    animation: rippleExpand 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    opacity: 0;
+}
+.loading-ripple span:nth-child(1) { animation-delay: 0s; }
+.loading-ripple span:nth-child(2) { animation-delay: 0.5s; }
+.loading-ripple span:nth-child(3) { animation-delay: 1s; }
+@keyframes rippleExpand {
+    0% {
+        transform: scale(0.3);
+        opacity: 1;
+        border-color: var(--primary-color);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+        border-color: transparent;
+    }
+}
+/* 加载指示器 - 弹跳条版 */
+.loading-bounce-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 40px;
+}
+.loading-bounce-bars span {
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    border-radius: 3px;
+    animation: bounceBar 1s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
+}
+.loading-bounce-bars span:nth-child(1) { animation-delay: 0s; }
+.loading-bounce-bars span:nth-child(2) { animation-delay: 0.1s; }
+.loading-bounce-bars span:nth-child(3) { animation-delay: 0.2s; }
+.loading-bounce-bars span:nth-child(4) { animation-delay: 0.3s; }
+.loading-bounce-bars span:nth-child(5) { animation-delay: 0.4s; }
+@keyframes bounceBar {
+    0%, 100% {
+        height: 30%;
+    }
+    50% {
+        height: 100%;
+        box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.5);
+    }
+}
+/* 加载遮罩层 */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.9) 100%
+    );
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+.loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.loading-overlay-text {
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.loading-overlay-subtext {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+/* ============================================
+   【第44轮优化点3】Badge徽章组件视觉增强
+   3D效果、弹性动画、发光边框、多状态变体、渐变色彩
+   ============================================ */
+/* ========== 徽章组件 - 3D水晶版 ========== */
+.badge-crystal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    border-radius: 12px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.06) 50%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset,
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+/* 徽章顶部光泽效果 */
+.badge-crystal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        transparent 100%
+    );
+    border-radius: 12px 12px 0 0;
+    pointer-events: none;
+}
+/* 徽章悬停效果 */
+.badge-crystal:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset,
+        0 0 20px rgba(var(--primary-color-rgb), 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+.badge-crystal:active {
+    transform: translateY(0) scale(0.98);
+}
+/* 徽章变体 - 主色 */
+.badge-crystal-primary {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.35) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    color: #fff;
+    box-shadow: 
+        0 4px 15px rgba(var(--primary-color-rgb), 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset,
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.1);
+}
+.badge-crystal-primary:hover {
+    box-shadow: 
+        0 8px 25px rgba(var(--primary-color-rgb), 0.45),
+        0 1px 0 rgba(255, 255, 255, 0.25) inset,
+        0 0 30px rgba(var(--primary-color-rgb), 0.25);
+}
+/* 徽章变体 - 成功 */
+.badge-crystal-success {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.5) 0%,
+        rgba(0, 200, 100, 0.35) 100%
+    );
+    border-color: rgba(0, 255, 136, 0.5);
+    color: #fff;
+    box-shadow: 
+        0 4px 15px rgba(0, 255, 136, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+.badge-crystal-success:hover {
+    box-shadow: 
+        0 8px 25px rgba(0, 255, 136, 0.45),
+        0 0 30px rgba(0, 255, 136, 0.25);
+}
+/* 徽章变体 - 警告 */
+.badge-crystal-warning {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 215, 64, 0.5) 0%,
+        rgba(255, 152, 0, 0.35) 100%
+    );
+    border-color: rgba(255, 215, 64, 0.5);
+    color: #1a1a1a;
+    box-shadow: 
+        0 4px 15px rgba(255, 215, 64, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    text-shadow: none;
+}
+.badge-crystal-warning:hover {
+    box-shadow: 
+        0 8px 25px rgba(255, 215, 64, 0.45),
+        0 0 30px rgba(255, 215, 64, 0.25);
+}
+/* 徽章变体 - 错误 */
+.badge-crystal-error {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.5) 0%,
+        rgba(220, 53, 69, 0.35) 100%
+    );
+    border-color: rgba(255, 82, 82, 0.5);
+    color: #fff;
+    box-shadow: 
+        0 4px 15px rgba(255, 82, 82, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+.badge-crystal-error:hover {
+    box-shadow: 
+        0 8px 25px rgba(255, 82, 82, 0.45),
+        0 0 30px rgba(255, 82, 82, 0.25);
+}
+/* 徽章变体 - 信息 */
+.badge-crystal-info {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 204, 255, 0.5) 0%,
+        rgba(0, 150, 200, 0.35) 100%
+    );
+    border-color: rgba(0, 204, 255, 0.5);
+    color: #fff;
+    box-shadow: 
+        0 4px 15px rgba(0, 204, 255, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+.badge-crystal-info:hover {
+    box-shadow: 
+        0 8px 25px rgba(0, 204, 255, 0.45),
+        0 0 30px rgba(0, 204, 255, 0.25);
+}
+/* 徽章尺寸变体 */
+.badge-crystal-sm {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 8px;
+    font-size: 11px;
+    border-radius: 10px;
+}
+.badge-crystal-lg {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 14px;
+    font-size: 13px;
+    border-radius: 16px;
+}
+/* 圆点徽章 */
+.badge-dot {
+    width: 10px;
+    height: 10px;
+    min-width: auto;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--primary-color);
+    box-shadow: 
+        0 0 8px rgba(var(--primary-color-rgb), 0.6),
+        0 0 16px rgba(var(--primary-color-rgb), 0.3);
+    animation: badgePulse 2s ease-in-out infinite;
+}
+@keyframes badgePulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 8px rgba(var(--primary-color-rgb), 0.6),
+            0 0 16px rgba(var(--primary-color-rgb), 0.3);
+    }
+    50% {
+        box-shadow: 
+            0 0 12px rgba(var(--primary-color-rgb), 0.8),
+            0 0 24px rgba(var(--primary-color-rgb), 0.5);
+    }
+}
+.badge-dot-success { background: #00ff88; }
+.badge-dot-warning { background: #ffd740; }
+.badge-dot-error { background: #ff5252; }
+.badge-dot-info { background: #00ccff; }
+/* 带数字的徽章 */
+.badge-with-count {
+    position: relative;
+}
+.badge-with-count .badge-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 10px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.9) 0%,
+        rgba(220, 53, 69, 0.8) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 2px 8px rgba(255, 82, 82, 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    animation: badgeCountPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes badgeCountPop {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
