@@ -7247,3 +7247,715 @@ input[type="range"]::-moz-range-thumb:hover {
     opacity: 0.3;
 }
 
+/* ============================================
+   【第32轮优化点1】徽章/标签组件视觉美化系统
+   渐变背景、发光效果、弹性动画、多状态变体
+   ============================================ */
+/* ========== 徽章基础样式 ========== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    border-radius: 20px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+/* 徽章顶部光泽效果 */
+.badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 100%
+    );
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* 徽章悬停效果 */
+.badge:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 0 15px rgba(var(--primary-color-rgb), 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.badge:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* ========== 主题色徽章 ========== */
+.badge-primary {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.25) 100%
+    );
+    border: 1px solid rgba(var(--primary-color-rgb), 0.5);
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 4px 15px rgba(var(--primary-color-rgb), 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.badge-primary::before {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        transparent 100%
+    );
+}
+
+.badge-primary:hover {
+    box-shadow: 
+        0 8px 25px rgba(var(--primary-color-rgb), 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+        0 0 30px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* ========== 成功徽章 ========== */
+.badge-success {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.35) 0%,
+        rgba(0, 200, 100, 0.2) 100%
+    );
+    border: 1px solid rgba(0, 255, 136, 0.45);
+    color: #a8ffd4;
+    box-shadow: 
+        0 4px 15px rgba(0, 255, 136, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.badge-success:hover {
+    box-shadow: 
+        0 8px 25px rgba(0, 255, 136, 0.35),
+        0 0 25px rgba(0, 255, 136, 0.15);
+}
+
+/* ========== 警告徽章 ========== */
+.badge-warning {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 215, 64, 0.35) 0%,
+        rgba(255, 180, 0, 0.2) 100%
+    );
+    border: 1px solid rgba(255, 215, 64, 0.45);
+    color: #fff3cd;
+    box-shadow: 
+        0 4px 15px rgba(255, 215, 64, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.badge-warning:hover {
+    box-shadow: 
+        0 8px 25px rgba(255, 215, 64, 0.35),
+        0 0 25px rgba(255, 215, 64, 0.15);
+}
+
+/* ========== 错误徽章 ========== */
+.badge-error {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.35) 0%,
+        rgba(239, 68, 68, 0.2) 100%
+    );
+    border: 1px solid rgba(255, 82, 82, 0.45);
+    color: #ffd4d4;
+    box-shadow: 
+        0 4px 15px rgba(255, 82, 82, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.badge-error:hover {
+    box-shadow: 
+        0 8px 25px rgba(255, 82, 82, 0.35),
+        0 0 25px rgba(255, 82, 82, 0.15);
+}
+
+/* ========== 信息徽章 ========== */
+.badge-info {
+    background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.35) 0%,
+        rgba(37, 99, 235, 0.2) 100%
+    );
+    border: 1px solid rgba(59, 130, 246, 0.45);
+    color: #bfdbfe;
+    box-shadow: 
+        0 4px 15px rgba(59, 130, 246, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.badge-info:hover {
+    box-shadow: 
+        0 8px 25px rgba(59, 130, 246, 0.35),
+        0 0 25px rgba(59, 130, 246, 0.15);
+}
+
+/* ========== 徽章发光脉冲动画 ========== */
+.badge-pulse {
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        box-shadow: 
+            0 4px 15px rgba(var(--primary-color-rgb), 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    }
+    50% {
+        box-shadow: 
+            0 4px 15px rgba(var(--primary-color-rgb), 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+            0 0 30px rgba(var(--primary-color-rgb), 0.4);
+    }
+}
+
+/* ========== 徽章尺寸变体 ========== */
+.badge-sm {
+    padding: 4px 10px;
+    font-size: 10px;
+}
+
+.badge-lg {
+    padding: 8px 18px;
+    font-size: 14px;
+}
+
+/* ========== 圆点徽章 ========== */
+.badge-dot {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.badge-dot.badge-pulse {
+    animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.7);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 8px rgba(var(--primary-color-rgb), 0);
+    }
+}
+
+/* ============================================
+   【第32轮优化点2】工具提示/气泡提示交互动效增强
+   3D气泡效果、弹性动画、箭头指示器、多方向定位
+   ============================================ */
+/* ========== 工具提示基础样式 ========== */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-trigger {
+    cursor: help;
+}
+
+.tooltip-content {
+    position: absolute;
+    z-index: var(--z-tooltip);
+    padding: 10px 16px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #fff;
+    background: linear-gradient(
+        180deg,
+        rgba(30, 30, 35, 0.98) 0%,
+        rgba(20, 20, 25, 0.98) 100%
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.9) translateY(8px);
+    transition: 
+        opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 工具提示顶部光泽 */
+.tooltip-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 100%
+    );
+    border-radius: 12px 12px 0 0;
+    pointer-events: none;
+}
+
+/* 工具提示箭头 */
+.tooltip-content::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(
+        135deg,
+        rgba(30, 30, 35, 0.98) 0%,
+        rgba(25, 25, 30, 0.98) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+/* 工具提示显示状态 */
+.tooltip:hover .tooltip-content,
+.tooltip.active .tooltip-content {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+/* ========== 工具提示位置变体 ========== */
+/* 顶部提示 */
+.tooltip-top .tooltip-content {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9) translateY(8px);
+    margin-bottom: 10px;
+}
+
+.tooltip-top:hover .tooltip-content,
+.tooltip-top.active .tooltip-content {
+    transform: translateX(-50%) scale(1) translateY(0);
+}
+
+.tooltip-top .tooltip-content::after {
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    margin-top: -6px;
+}
+
+/* 底部提示 */
+.tooltip-bottom .tooltip-content {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9) translateY(-8px);
+    margin-top: 10px;
+}
+
+.tooltip-bottom:hover .tooltip-content,
+.tooltip-bottom.active .tooltip-content {
+    transform: translateX(-50%) scale(1) translateY(0);
+}
+
+.tooltip-bottom .tooltip-content::after {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -6px;
+    margin-bottom: -6px;
+    transform: rotate(225deg);
+}
+
+/* 左侧提示 */
+.tooltip-left .tooltip-content {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%) scale(0.9) translateX(8px);
+    margin-right: 10px;
+}
+
+.tooltip-left:hover .tooltip-content,
+.tooltip-left.active .tooltip-content {
+    transform: translateY(-50%) scale(1) translateX(0);
+}
+
+.tooltip-left .tooltip-content::after {
+    left: 100%;
+    top: 50%;
+    margin-top: -6px;
+    margin-left: -6px;
+    transform: rotate(-45deg);
+}
+
+/* 右侧提示 */
+.tooltip-right .tooltip-content {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) scale(0.9) translateX(-8px);
+    margin-left: 10px;
+}
+
+.tooltip-right:hover .tooltip-content,
+.tooltip-right.active .tooltip-content {
+    transform: translateY(-50%) scale(1) translateX(0);
+}
+
+.tooltip-right .tooltip-content::after {
+    right: 100%;
+    top: 50%;
+    margin-top: -6px;
+    margin-right: -6px;
+    transform: rotate(135deg);
+}
+
+/* ========== 工具提示主题变体 ========== */
+.tooltip-primary .tooltip-content {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.25) 50%,
+        rgba(20, 20, 25, 0.95) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* ========== 工具提示多行文本 ========== */
+.tooltip-multiline .tooltip-content {
+    white-space: normal;
+    max-width: 280px;
+    text-align: left;
+}
+
+/* ============================================
+   【第32轮优化点3】列表项/菜单项视觉与交互动效优化
+   3D悬停效果、渐变背景、弹性动画、选中高亮状态
+   ============================================ */
+/* ========== 列表项基础样式 ========== */
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: 
+        all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    gap: 14px;
+}
+
+/* 列表项悬停光泽效果 */
+.list-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.06) 50%,
+        transparent 100%
+    );
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.list-item:hover::before {
+    left: 100%;
+}
+
+/* 列表项悬停效果 */
+.list-item:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateX(4px);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+}
+
+.list-item:active {
+    transform: translateX(2px) scale(0.99);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 100%
+    );
+}
+
+/* ========== 列表项选中状态 ========== */
+.list-item.active {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.12) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.35);
+    box-shadow: 
+        0 8px 24px rgba(var(--primary-color-rgb), 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 0 20px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.list-item.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* ========== 列表项图标区域 ========== */
+.list-item-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.list-item-icon img {
+    width: 22px;
+    height: 22px;
+    opacity: 0.85;
+    transition: all 0.25s ease;
+}
+
+.list-item:hover .list-item-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        rgba(var(--secondary-color-rgb), 0.1) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.list-item:hover .list-item-icon img {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(var(--primary-color-rgb), 0.4));
+}
+
+.list-item.active .list-item-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.35) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.45);
+    box-shadow: 0 4px 16px rgba(var(--primary-color-rgb), 0.3);
+}
+
+/* ========== 列表项内容区域 ========== */
+.list-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.list-item-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+    transition: color 0.2s ease;
+}
+
+.list-item:hover .list-item-title {
+    color: #fff;
+}
+
+.list-item-subtitle {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    transition: color 0.2s ease;
+}
+
+.list-item:hover .list-item-subtitle {
+    color: var(--text-secondary);
+}
+
+/* ========== 列表项右侧操作区 ========== */
+.list-item-action {
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.list-item:hover .list-item-action {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.list-item.active .list-item-action {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ========== 列表项分隔线 ========== */
+.list-divider {
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 20%,
+        rgba(255, 255, 255, 0.08) 80%,
+        transparent 100%
+    );
+    margin: 4px 0;
+}
+
+/* ========== 列表组容器 ========== */
+.list-group {
+    background: linear-gradient(
+        180deg,
+        rgba(25, 25, 30, 0.5) 0%,
+        rgba(15, 15, 20, 0.5) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 8px;
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+}
+
+/* ========== 菜单项专用样式 ========== */
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.menu-item:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.menu-item:hover::before {
+    opacity: 1;
+}
+
+.menu-item-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.menu-item:hover .menu-item-icon {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(var(--primary-color-rgb), 0.4));
+}
+
+.menu-item-label {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.menu-item-shortcut {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ========== 菜单项分隔线 ========== */
+.menu-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 6px 0;
+}
+
