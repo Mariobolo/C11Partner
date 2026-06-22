@@ -119,3 +119,225 @@
     --dock-height: 80px;
     --card-padding: 16px 20px;
 }
+
+/* ============================================
+   【第35轮优化点3】CSS变量系统完善与设计令牌统一
+   动画曲线、增强阴影、颜色语义化、组件尺寸、透明度层级
+   ============================================ */
+:root {
+    /* ========== 动画曲线系统 - 完整贝塞尔曲线库 ========== */
+    /* 弹性曲线 - 用于按钮、开关、弹窗等交互元素 */
+    --easing-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --easing-elastic-soft: cubic-bezier(0.34, 1.3, 0.64, 1);
+    --easing-elastic-strong: cubic-bezier(0.34, 1.8, 0.64, 1);
+    
+    /* 标准曲线 - 用于页面过渡、淡入淡出 */
+    --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --easing-standard-accelerate: cubic-bezier(0.4, 0, 1, 1);
+    --easing-standard-decelerate: cubic-bezier(0, 0, 0.2, 1);
+    
+    /* 快速曲线 - 用于微交互、tooltip、hover效果 */
+    --easing-fast: cubic-bezier(0.4, 0, 0.4, 1);
+    --easing-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1);
+    --easing-slow-out-fast-in: cubic-bezier(0.2, 0, 0.4, 1);
+    
+    /* 弹跳曲线 - 用于加载、成功状态、通知动画 */
+    --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --easing-bounce-soft: cubic-bezier(0.68, -0.3, 0.265, 1.3);
+    
+    /* ========== 增强阴影系统 - 6级深度 + 主题色发光 ========== */
+    /* 基础阴影层级 */
+    --shadow-level-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --shadow-level-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    --shadow-level-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    --shadow-level-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    --shadow-level-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+    --shadow-level-6: 0 50px 100px -20px rgba(0, 0, 0, 0.5), 0 30px 60px -30px rgba(0, 0, 0, 0.5);
+    
+    /* 主题色发光阴影 */
+    --shadow-glow-sm: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
+    --shadow-glow-md: 0 0 20px rgba(var(--primary-color-rgb), 0.4), 0 0 40px rgba(var(--primary-color-rgb), 0.2);
+    --shadow-glow-lg: 0 0 30px rgba(var(--primary-color-rgb), 0.5), 0 0 60px rgba(var(--primary-color-rgb), 0.3);
+    --shadow-glow-xl: 0 0 40px rgba(var(--primary-color-rgb), 0.6), 0 0 80px rgba(var(--primary-color-rgb), 0.4);
+    
+    /* 二级色发光阴影 */
+    --shadow-glow-secondary: 0 0 20px rgba(var(--secondary-color-rgb), 0.4), 0 0 40px rgba(var(--secondary-color-rgb), 0.2);
+    
+    /* 内发光阴影 */
+    --shadow-inner-glow: inset 0 0 20px rgba(var(--primary-color-rgb), 0.15);
+    --shadow-inner-light: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    --shadow-inner-dark: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    
+    /* 3D分层阴影 */
+    --shadow-3d-card: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    --shadow-3d-button:
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    --shadow-3d-button-hover:
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.12) inset,
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    
+    /* 软阴影 - 毛玻璃质感 */
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.15);
+    --shadow-soft-glow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 0 30px rgba(var(--primary-color-rgb), 0.15);
+    
+    /* ========== 颜色语义化命名规范 ========== */
+    /* 品牌色 */
+    --color-brand-primary: var(--primary-color);
+    --color-brand-primary-rgb: var(--primary-color-rgb);
+    --color-brand-secondary: var(--secondary-color);
+    --color-brand-secondary-rgb: var(--secondary-color-rgb);
+    --color-brand-gradient: var(--accent-gradient);
+    
+    /* 功能色 - 状态反馈 */
+    --color-success: #00ff88;
+    --color-success-rgb: 0, 255, 136;
+    --color-success-light: rgba(0, 255, 136, 0.15);
+    --color-warning: #ffd740;
+    --color-warning-rgb: 255, 215, 64;
+    --color-warning-light: rgba(255, 215, 64, 0.15);
+    --color-error: #ff5252;
+    --color-error-rgb: 255, 82, 82;
+    --color-error-light: rgba(255, 82, 82, 0.15);
+    --color-info: #00ccff;
+    --color-info-rgb: 0, 204, 255;
+    --color-info-light: rgba(0, 204, 255, 0.15);
+    
+    /* 中性色 - 文本系统 */
+    --color-text-white: #ffffff;
+    --color-text-primary: rgba(255, 255, 255, 0.95);
+    --color-text-secondary: rgba(255, 255, 255, 0.7);
+    --color-text-tertiary: rgba(255, 255, 255, 0.5);
+    --color-text-disabled: rgba(255, 255, 255, 0.3);
+    --color-text-placeholder: rgba(255, 255, 255, 0.35);
+    
+    /* 中性色 - 背景系统 */
+    --color-bg-page: #0a0a0f;
+    --color-bg-card: rgba(20, 20, 28, 0.7);
+    --color-bg-surface: rgba(255, 255, 255, 0.06);
+    --color-bg-surface-hover: rgba(255, 255, 255, 0.1);
+    --color-bg-surface-active: rgba(255, 255, 255, 0.14);
+    --color-bg-overlay: rgba(0, 0, 0, 0.7);
+    --color-bg-backdrop: rgba(0, 0, 0, 0.85);
+    
+    /* 中性色 - 边框系统 */
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-border-light: rgba(255, 255, 255, 0.05);
+    --color-border-strong: rgba(255, 255, 255, 0.15);
+    --color-border-focus: rgba(var(--primary-color-rgb), 0.5);
+    --color-border-brand: rgba(var(--primary-color-rgb), 0.3);
+    
+    /* ========== 组件尺寸变体系统 ========== */
+    /* 按钮尺寸 */
+    --size-btn-sm: 32px;
+    --size-btn-md: 40px;
+    --size-btn-lg: 48px;
+    --size-btn-xl: 56px;
+    
+    /* 输入框尺寸 */
+    --size-input-sm: 32px;
+    --size-input-md: 40px;
+    --size-input-lg: 48px;
+    
+    /* 图标尺寸 */
+    --size-icon-xs: 12px;
+    --size-icon-sm: 16px;
+    --size-icon-md: 20px;
+    --size-icon-lg: 24px;
+    --size-icon-xl: 32px;
+    --size-icon-2xl: 48px;
+    
+    /* 头像尺寸 */
+    --size-avatar-sm: 28px;
+    --size-avatar-md: 40px;
+    --size-avatar-lg: 56px;
+    --size-avatar-xl: 80px;
+    
+    /* 圆角尺寸扩展 */
+    --radius-2xs: 2px;
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --radius-3xl: 32px;
+    
+    /* ========== 透明度层级系统 ========== */
+    --opacity-level-0: 1;
+    --opacity-level-1: 0.9;
+    --opacity-level-2: 0.75;
+    --opacity-level-3: 0.6;
+    --opacity-level-4: 0.45;
+    --opacity-level-5: 0.3;
+    --opacity-level-6: 0.15;
+    --opacity-level-7: 0.08;
+    --opacity-level-8: 0.04;
+    
+    /* ========== 间距系统扩展 - 8px网格 ========== */
+    --space-0: 0;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-20: 80px;
+    
+    /* ========== 毛玻璃效果系统 ========== */
+    --backdrop-blur-xs: blur(4px);
+    --backdrop-blur-sm: blur(8px);
+    --backdrop-blur-md: blur(16px);
+    --backdrop-blur-lg: blur(24px);
+    --backdrop-blur-xl: blur(32px);
+    --backdrop-blur-2xl: blur(40px);
+    
+    --backdrop-saturate-low: saturate(120%);
+    --backdrop-saturate-md: saturate(160%);
+    --backdrop-saturate-high: saturate(200%);
+    
+    /* 标准毛玻璃组合 */
+    --backdrop-glass-xs: var(--backdrop-blur-xs) var(--backdrop-saturate-low);
+    --backdrop-glass-sm: var(--backdrop-blur-sm) var(--backdrop-saturate-md);
+    --backdrop-glass-md: var(--backdrop-blur-md) var(--backdrop-saturate-md);
+    --backdrop-glass-lg: var(--backdrop-blur-lg) var(--backdrop-saturate-high);
+    --backdrop-glass-xl: var(--backdrop-blur-xl) var(--backdrop-saturate-high);
+    --backdrop-glass-ultra: var(--backdrop-blur-2xl) var(--backdrop-saturate-high);
+}
+
+/* ========== 设计令牌工具类 ========== */
+/* 弹性动画工具类 */
+.transition-elastic { transition: all 0.3s var(--easing-elastic); }
+.transition-elastic-soft { transition: all 0.3s var(--easing-elastic-soft); }
+.transition-standard { transition: all 0.25s var(--easing-standard); }
+.transition-fast { transition: all 0.15s var(--easing-fast); }
+
+/* 阴影工具类 */
+.shadow-level-1 { box-shadow: var(--shadow-level-1); }
+.shadow-level-2 { box-shadow: var(--shadow-level-2); }
+.shadow-level-3 { box-shadow: var(--shadow-level-3); }
+.shadow-level-4 { box-shadow: var(--shadow-level-4); }
+.shadow-level-5 { box-shadow: var(--shadow-level-5); }
+.shadow-level-6 { box-shadow: var(--shadow-level-6); }
+.shadow-glow { box-shadow: var(--shadow-glow-md); }
+.shadow-glow-lg { box-shadow: var(--shadow-glow-lg); }
+.shadow-3d { box-shadow: var(--shadow-3d-card); }
+.shadow-soft { box-shadow: var(--shadow-soft); }
+
+/* 毛玻璃工具类 */
+.glass-xs { backdrop-filter: var(--backdrop-glass-xs); -webkit-backdrop-filter: var(--backdrop-glass-xs); }
+.glass-sm { backdrop-filter: var(--backdrop-glass-sm); -webkit-backdrop-filter: var(--backdrop-glass-sm); }
+.glass-md { backdrop-filter: var(--backdrop-glass-md); -webkit-backdrop-filter: var(--backdrop-glass-md); }
+.glass-lg { backdrop-filter: var(--backdrop-glass-lg); -webkit-backdrop-filter: var(--backdrop-glass-lg); }
+.glass-xl { backdrop-filter: var(--backdrop-glass-xl); -webkit-backdrop-filter: var(--backdrop-glass-xl); }
+.glass-ultra { backdrop-filter: var(--backdrop-glass-ultra); -webkit-backdrop-filter: var(--backdrop-glass-ultra); }
+
