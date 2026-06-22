@@ -1052,3 +1052,248 @@
 .animation-running {
     animation-play-state: running;
 }
+
+/* ============================================
+   【本次优化】交互动效精细化增强
+   按钮波纹扩散、卡片微浮动、状态弹性过渡
+   ============================================ */
+/* ========== 按钮波纹扩散效果增强 ========== */
+@keyframes rippleExpand {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(4);
+        opacity: 0;
+    }
+}
+.ripple-click {
+    position: relative;
+    overflow: hidden;
+}
+.ripple-click::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, 
+        rgba(255, 255, 255, 0.35) 0%, 
+        rgba(255, 255, 255, 0.1) 40%,
+        transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+}
+.ripple-click:active::after {
+    animation: rippleExpand 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========== 卡片微浮动动画增强 ========== */
+@keyframes cardFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        box-shadow: var(--shadow-lg), var(--shadow-inner);
+    }
+    50% {
+        transform: translateY(-4px) scale(1.005);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35),
+                    0 0 0 1px rgba(255, 255, 255, 0.06),
+                    var(--shadow-inner);
+    }
+}
+.card-micro-float {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.card-micro-float:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.08),
+                var(--shadow-inner);
+}
+.card-micro-float:active {
+    transform: translateY(-2px) scale(0.995);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
+                var(--shadow-inner);
+}
+
+/* ========== 状态切换弹性过渡 ========== */
+@keyframes elasticSwitch {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(0.9);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+.state-elastic {
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.state-elastic.active {
+    animation: elasticSwitch 0.4s ease-out;
+}
+
+/* ========== 悬停光泽扫过增强 ========== */
+@keyframes shimmerSweep {
+    0% {
+        transform: translateX(-100%) skewX(-15deg);
+    }
+    100% {
+        transform: translateX(200%) skewX(-15deg);
+    }
+}
+.shimmer-hover {
+    position: relative;
+    overflow: hidden;
+}
+.shimmer-hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 30%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 70%,
+        transparent 100%
+    );
+    transform: translateX(-100%) skewX(-15deg);
+    pointer-events: none;
+}
+.shimmer-hover:hover::before {
+    animation: shimmerSweep 0.8s ease-out;
+}
+
+/* ========== 数字变化滚动动画 ========== */
+@keyframes numberRoll {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    51% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.number-change {
+    display: inline-block;
+    animation: numberRoll 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========== 成功打勾动画 ========== */
+@keyframes successCheck {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+.success-animation {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: successCheck 0.5s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+/* ========== 错误抖动动画增强 ========== */
+@keyframes errorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+.error-shake {
+    animation: errorShake 0.5s ease-in-out;
+}
+
+/* ========== 加载脉冲点动画 ========== */
+@keyframes loadingDots {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.loading-dot {
+    animation: loadingDots 1.4s ease-in-out infinite;
+}
+.loading-dot:nth-child(1) { animation-delay: 0s; }
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ========== 骨架屏闪烁动画 ========== */
+@keyframes skeletonPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+.skeleton-loading {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+/* ========== 统一动画曲线工具类 ========== */
+/* 弹性曲线 - 用于按钮、开关等交互元素 */
+.curve-elastic {
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 标准曲线 - 用于页面、卡片等大型元素 */
+.curve-standard {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* 快速曲线 - 用于小型装饰元素 */
+.curve-snappy {
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+/* 减速曲线 - 用于入场动画 */
+.curve-decelerate {
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+/* 加速曲线 - 用于退场动画 */
+.curve-accelerate {
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
