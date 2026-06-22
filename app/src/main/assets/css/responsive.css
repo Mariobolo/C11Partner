@@ -1332,3 +1332,274 @@ body.orientation-changing {
         min-height: 56px !important;
     }
 }
+/* ============================================
+   【优化点3】响应式布局全面优化
+   车载屏幕专用断点、动态间距、弹性布局、安全区域适配
+   ============================================ */
+/* ========== 零跑车机专用分辨率 (1920x1080) - 主流配置 ========== */
+@media screen and (width: 1920px) and (height: 1080px) {
+    :root {
+        --widget-height: 110px;
+        --status-bar-height: 52px;
+        --dock-height: 84px;
+        --font-size-4xl: 148px;
+        --font-size-3xl: 48px;
+        --font-size-2xl: 28px;
+    }
+    
+    .layout-left {
+        top: 36%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 148px;
+        letter-spacing: -3px;
+        margin-bottom: 12px;
+    }
+    
+    .date-text {
+        font-size: 28px;
+        margin-bottom: 6px;
+    }
+    
+    .lunar-calendar-text {
+        font-size: 16px;
+    }
+    
+    .card-view {
+        bottom: 94px;
+        left: 56px;
+        right: 56px;
+    }
+    
+    .widget {
+        min-width: 190px;
+        padding: 18px 22px;
+        margin-right: 18px;
+        border-radius: 18px;
+    }
+    
+    .music-widget {
+        min-width: 380px;
+    }
+    
+    .weather-widget {
+        min-width: 220px;
+    }
+    
+    .quick-apps-widget {
+        min-width: 280px;
+    }
+    
+    .quick-switches-widget {
+        min-width: 260px;
+    }
+    
+    .map-widget {
+        min-width: 200px;
+    }
+    
+    .car-widget {
+        min-width: 260px;
+    }
+    
+    .top-status-bar {
+        padding: 0 32px;
+    }
+    
+    .status-bar {
+        padding: 0 32px;
+    }
+}
+/* ========== 零跑车机专用分辨率 (1280x720) - 入门配置 ========== */
+@media screen and (width: 1280px) and (height: 720px) {
+    :root {
+        --widget-height: 92px;
+        --status-bar-height: 44px;
+        --dock-height: 70px;
+        --font-size-4xl: 108px;
+        --font-size-3xl: 36px;
+        --font-size-2xl: 22px;
+    }
+    
+    .layout-left {
+        top: 35%;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 108px;
+        letter-spacing: -2px;
+        margin-bottom: 8px;
+    }
+    
+    .date-text {
+        font-size: 22px;
+    }
+    
+    .lunar-calendar-text {
+        font-size: 13px;
+    }
+    
+    .card-view {
+        bottom: 80px;
+        left: 40px;
+        right: 40px;
+    }
+    
+    .widget {
+        min-width: 160px;
+        padding: 14px 18px;
+        margin-right: 14px;
+        border-radius: 16px;
+    }
+    
+    .music-widget {
+        min-width: 320px;
+    }
+    
+    .weather-widget {
+        min-width: 190px;
+    }
+    
+    .quick-apps-widget {
+        min-width: 250px;
+    }
+    
+    .quick-switches-widget {
+        min-width: 230px;
+    }
+    
+    .top-status-bar {
+        padding: 0 24px;
+    }
+    
+    .status-bar {
+        padding: 0 24px;
+    }
+    
+    .center-controls {
+        gap: 4px;
+    }
+    
+    .air-text {
+        font-size: 18px;
+        min-width: 38px;
+    }
+}
+/* ========== 车载横屏通用优化 (宽高比 > 16:9) ========== */
+@media screen and (min-aspect-ratio: 16/9) {
+    /* 时间显示居中优化 */
+    .layout-left {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    /* 卡片区域左右边距动态调整 */
+    .card-view {
+        left: clamp(24px, 4vw, 64px);
+        right: clamp(24px, 4vw, 64px);
+    }
+    
+    /* Widget间距动态调整 */
+    .widget {
+        margin-right: clamp(12px, 1.5vw, 20px);
+    }
+    
+    /* 状态栏边距优化 */
+    .top-status-bar,
+    .status-bar {
+        padding-left: clamp(16px, 3vw, 40px);
+        padding-right: clamp(16px, 3vw, 40px);
+    }
+}
+/* ========== 车载竖屏/方屏优化 (宽高比 <= 16:9) ========== */
+@media screen and (max-aspect-ratio: 16/9) {
+    .layout-left {
+        top: 32%;
+    }
+    
+    .card-view {
+        bottom: clamp(64px, 10vh, 100px);
+    }
+    
+    /* 方屏下减小Widget最小宽度 */
+    .widget {
+        min-width: 150px;
+    }
+}
+/* ========== 动态间距系统 - 使用clamp实现响应式 ========== */
+.card-view {
+    left: clamp(20px, 3vw, 60px);
+    right: clamp(20px, 3vw, 60px);
+    bottom: clamp(70px, 10vh, 100px);
+}
+.widget {
+    margin-right: clamp(12px, 1.2vw, 18px);
+    padding: clamp(14px, 2vh, 22px) clamp(16px, 2vw, 26px);
+    border-radius: clamp(14px, 1.5vw, 20px);
+}
+.time-text#timeDisplay {
+    font-size: clamp(80px, 12vw, 160px);
+    letter-spacing: clamp(-1px, -0.1vw, -4px);
+}
+.date-text {
+    font-size: clamp(16px, 2.5vw, 28px);
+}
+.lunar-calendar-text {
+    font-size: clamp(11px, 1.5vw, 16px);
+}
+/* ========== 安全区域完整适配 - 刘海屏/挖孔屏 ========== */
+@supports (padding: env(safe-area-inset-top)) {
+    .top-status-bar {
+        padding-top: max(8px, env(safe-area-inset-top));
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+    
+    .status-bar {
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+    
+    .card-view {
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+        padding-left: max(8px, env(safe-area-inset-left));
+        padding-right: max(8px, env(safe-area-inset-right));
+    }
+    
+    .layout-left {
+        padding-top: max(0px, env(safe-area-inset-top));
+    }
+}
+/* ========== 车载夜间模式增强 ========== */
+@media screen and (prefers-color-scheme: dark) {
+    .widget {
+        background: 
+            linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%, 
+                rgba(0, 0, 0, 0.15) 100%),
+            rgba(10, 10, 15, 0.85);
+    }
+    
+    .widget:hover {
+        background: 
+            linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.08) 0%, 
+                rgba(var(--primary-color-rgb), 0.04) 100%),
+            rgba(10, 10, 15, 0.9);
+    }
+}
+/* ========== 低亮度环境优化 ========== */
+@media screen and (max-brightness: 0.5) {
+    :root {
+        --text-primary: rgba(255, 255, 255, 0.98);
+        --text-secondary: rgba(255, 255, 255, 0.85);
+    }
+    
+    .widget {
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+}
