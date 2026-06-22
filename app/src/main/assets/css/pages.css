@@ -892,3 +892,284 @@
 .music-page .list-wrapper .list::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.25);
 }
+
+/* ============================================
+   【第33轮优化点3】设置页面Tab组件视觉全面升级
+   Tab切换弹性动画、选中状态发光、内容淡入淡出、毛玻璃增强
+   ============================================ */
+/* Tab导航容器视觉增强 */
+.tab-navigation {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Tab导航光泽效果 */
+.tab-navigation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0.15) 70%,
+        transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Tab按钮基础样式增强 */
+.tab-button {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.3px;
+}
+
+/* Tab按钮光泽扫过效果 */
+.tab-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.tab-button:hover::before {
+    left: 100%;
+}
+
+/* Tab按钮悬停效果 */
+.tab-button:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
+}
+
+/* Tab按钮选中状态 - 发光渐变 */
+.tab-button.active {
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.35) 0%,
+        rgba(var(--secondary-color-rgb), 0.25) 50%,
+        rgba(var(--primary-color-rgb), 0.3) 100%
+    );
+    box-shadow: 
+        0 4px 20px rgba(var(--primary-color-rgb), 0.4),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) scale(1.02);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Tab选中状态呼吸发光动画 */
+.tab-button.active {
+    animation: tabGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes tabGlow {
+    0%, 100% {
+        box-shadow: 
+            0 4px 20px rgba(var(--primary-color-rgb), 0.4),
+            0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 6px 28px rgba(var(--primary-color-rgb), 0.5),
+            0 0 0 1px rgba(var(--primary-color-rgb), 0.4),
+            0 0 30px rgba(var(--primary-color-rgb), 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+}
+
+/* Tab内容区域淡入淡出动画 */
+.tab-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: tabContentFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes tabContentFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 设置项卡片视觉增强 */
+.setting-section {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(0, 0, 0, 0.08) 100%
+    );
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* 设置项顶部光泽 */
+.setting-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        transparent 100%);
+    pointer-events: none;
+}
+
+.setting-section:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.setting-section h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.2px;
+}
+
+/* 壁纸类型选择卡片3D效果 */
+.wallpaper-type-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.wallpaper-type-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%);
+    pointer-events: none;
+}
+
+.wallpaper-type-item:hover {
+    transform: translateX(4px) scale(1.01);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(var(--primary-color-rgb), 0.05) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.wallpaper-type-item input:checked + span + .type-icon + .type-name + .type-desc,
+.wallpaper-type-item:has(input:checked) {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        rgba(var(--secondary-color-rgb), 0.1) 50%,
+        rgba(var(--primary-color-rgb), 0.15) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.3),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.15);
+}
+
+.wallpaper-type-item .type-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.wallpaper-type-item .type-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    flex: 1;
+}
+
+.wallpaper-type-item .type-desc {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.wallpaper-type-item:has(input:checked) .type-name {
+    color: #fff;
+    text-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.5);
+}
