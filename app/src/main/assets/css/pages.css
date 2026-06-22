@@ -815,71 +815,234 @@
     margin-top: 0;
 }
 
+/* ============================================
+   【优化点2】自动化场景配置卡片 - 3D视觉与交互动效终极增强
+   毛玻璃背景、渐变发光边框、3D悬停透视、弹性动画、光泽扫过
+   ============================================ */
 .automation-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--surface-color);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md) var(--spacing-lg);
-    margin-bottom: var(--spacing-sm);
-    transition: all var(--transition-fast);
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.07) 0%, 
+            rgba(255, 255, 255, 0.02) 50%, 
+            rgba(0, 0, 0, 0.1) 100%),
+        var(--surface-color);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 800px;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.28),
+        0 2px 6px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
-
+/* 自动化卡片渐变发光边框 */
+.automation-item::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.12) 0%,
+        rgba(var(--secondary-color-rgb), 0.06) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 自动化卡片光泽扫过效果 */
+.automation-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.09) 30%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.09) 70%,
+        transparent 100%);
+    transform: skewX(-15deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.6s ease;
+    z-index: 1;
+}
+/* 自动化卡片悬停3D透视效果 */
 .automation-item:hover {
-    background: var(--surface-hover);
-    border-color: var(--border-color);
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.11) 0%, 
+            rgba(255, 255, 255, 0.04) 50%, 
+            rgba(var(--primary-color-rgb), 0.05) 100%),
+        var(--surface-hover);
+    transform: translateY(-5px) scale(1.02) translateX(4px);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+    box-shadow: 
+        0 16px 44px rgba(0, 0, 0, 0.4),
+        0 6px 18px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 35px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
-
+.automation-item:hover::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        transparent 100%
+    );
+}
+.automation-item:hover::after {
+    left: 150%;
+    opacity: 1;
+}
+/* 自动化卡片点击3D按压反馈 */
+.automation-item:active {
+    transform: translateY(-1px) scale(0.99) translateX(2px);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 3px 10px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 3px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+/* 自动化信息区域 */
 .automation-info {
     flex: 1;
+    position: relative;
+    z-index: 2;
 }
-
+/* 自动化名称 - 渐变文字增强 */
 .automation-name {
-    font-size: var(--font-size-base);
+    font-size: 15px;
     color: var(--text-primary);
-    font-weight: var(--font-weight-medium);
-    margin-bottom: 2px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+    position: relative;
 }
-
+.automation-item:hover .automation-name {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.35);
+    transform: translateX(2px);
+}
+/* 自动化描述文字 */
 .automation-desc {
-    font-size: var(--font-size-xs);
+    font-size: 12px;
     color: var(--text-tertiary);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    letter-spacing: 0.2px;
 }
-
+.automation-item:hover .automation-desc {
+    color: var(--text-secondary);
+    transform: translateX(2px);
+}
+/* 自动化开关 - 3D终极增强版 */
 .automation-toggle {
     position: relative;
-    width: 44px;
-    height: 24px;
-    background: var(--surface-color);
-    border-radius: var(--radius-full);
+    width: 52px;
+    height: 28px;
+    background: 
+        linear-gradient(135deg, 
+            rgba(0, 0, 0, 0.3) 0%, 
+            rgba(0, 0, 0, 0.15) 100%);
+    border-radius: 14px;
     cursor: pointer;
-    transition: all var(--transition-normal);
-    border: 1px solid var(--border-color);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 2px 6px rgba(0, 0, 0, 0.2);
     flex-shrink: 0;
+    overflow: hidden;
+    z-index: 2;
 }
-
+/* 开关激活状态 - 渐变发光 */
 .automation-toggle.active {
-    background: var(--accent-gradient);
+    background: 
+        linear-gradient(135deg, 
+            rgba(var(--primary-color-rgb), 0.65) 0%, 
+            rgba(var(--secondary-color-rgb), 0.45) 100%);
     border-color: transparent;
-    box-shadow: 0 2px 8px rgba(var(--primary-color-rgb), 0.4);
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.45),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.25),
+        0 0 35px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    animation: automationToggleGlow 2s ease-in-out infinite;
 }
-
+@keyframes automationToggleGlow {
+    0%, 100% { box-shadow: 0 4px 16px rgba(var(--primary-color-rgb), 0.45), 0 0 35px rgba(var(--primary-color-rgb), 0.3); }
+    50% { box-shadow: 0 6px 24px rgba(var(--primary-color-rgb), 0.55), 0 0 55px rgba(var(--primary-color-rgb), 0.4); }
+}
+/* 开关滑块 - 3D质感增强 */
 .automation-toggle .toggle-dot {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 18px;
-    height: 18px;
-    background: white;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: 
+        linear-gradient(135deg, 
+            #ffffff 0%, 
+            #f5f5f5 50%, 
+            #e8e8e8 100%);
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: transform var(--transition-normal);
+    box-shadow: 
+        0 3px 10px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-
+/* 开关滑块激活状态 */
 .automation-toggle.active .toggle-dot {
-    transform: translateX(20px);
+    transform: translateX(24px);
+    background: 
+        linear-gradient(135deg, 
+            #ffffff 0%, 
+            #f8fff8 50%, 
+            #f0fff0 100%);
+    box-shadow: 
+        0 4px 14px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
+        0 0 20px rgba(var(--primary-color-rgb), 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+/* 开关悬停效果 */
+.automation-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.35),
+        0 3px 10px rgba(0, 0, 0, 0.28);
+}
+.automation-toggle.active:hover {
+    box-shadow: 
+        0 6px 24px rgba(var(--primary-color-rgb), 0.55),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
+        0 0 50px rgba(var(--primary-color-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 /* ========== 音乐页面 ========== */
