@@ -1180,3 +1180,247 @@ a:focus-visible {
 .scroll-defer {
     content-visibility: auto;
 }
+
+/* ============================================
+   【优化点2】按钮状态精细化
+   按压深度感、键盘导航、禁用状态、加载/成功状态
+   ============================================ */
+/* 按钮光泽扫过效果 */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+.btn:hover::before {
+    left: 100%;
+}
+/* 按钮悬停弹性缩放效果 */
+.btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+/* 按钮按压深度感 */
+.btn:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25),
+                inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+/* 键盘导航焦点可见性 */
+.btn:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px rgba(var(--primary-color-rgb), 0.2);
+}
+/* 按钮禁用状态 */
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+    filter: grayscale(0.5);
+}
+.btn:disabled::before,
+.btn.disabled::before {
+    display: none;
+}
+/* 按钮加载状态 */
+.btn.loading {
+    pointer-events: none;
+    color: transparent !important;
+}
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    color: var(--text-primary);
+}
+.btn-primary.loading::after {
+    color: var(--primary-color);
+}
+/* 按钮成功状态 */
+.btn.success {
+    background: rgba(76, 175, 80, 0.2) !important;
+    border-color: rgba(76, 175, 80, 0.4) !important;
+    color: #4CAF50 !important;
+}
+.btn.success::after {
+    content: '✓';
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    animation: successPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes successPop {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+/* 按钮呼吸浮动动画 */
+.btn-breathe {
+    animation: buttonBreathe 3s ease-in-out infinite;
+}
+@keyframes buttonBreathe {
+    0%, 100% { 
+        transform: translateY(0); 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    50% { 
+        transform: translateY(-3px); 
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* ============================================
+   【优化点3】微交互动画优化
+   弹性曲线、过渡动画、微交互反馈
+   ============================================ */
+/* 统一弹性动画曲线 */
+.elastic-transition {
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 标准减速曲线 */
+.smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* 快速进入，慢速离开 */
+.snappy-transition {
+    transition: all 0.15s cubic-bezier(0.4, 0, 1, 1);
+}
+/* 微弹跳效果 */
+.micro-bounce:hover {
+    animation: microBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes microBounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.08); }
+    50% { transform: scale(0.97); }
+    70% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+/* 微抖动效果 - 错误反馈 */
+.micro-shake {
+    animation: microShake 0.4s ease-in-out;
+}
+@keyframes microShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+}
+/* 微脉冲效果 */
+.micro-pulse:hover {
+    animation: microPulse 0.6s ease-in-out;
+}
+@keyframes microPulse {
+    0% { box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(var(--primary-color-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0); }
+}
+/* 渐入效果 */
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+/* 上滑渐入 */
+.slide-up-in {
+    animation: slideUpIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes slideUpIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+/* 缩放渐入 */
+.scale-in {
+    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes scaleIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.9); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1); 
+    }
+}
+/* 点击波纹效果 */
+.ripple-effect {
+    position: relative;
+    overflow: hidden;
+}
+.ripple-effect::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
+.ripple-effect:active::after {
+    animation: ripple 0.6s ease-out;
+}
+@keyframes ripple {
+    0% { 
+        transform: translate(-50%, -50%) scale(0); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(2); 
+        opacity: 0; 
+    }
+}
+/* 悬停高亮效果 */
+.highlight-hover {
+    position: relative;
+}
+.highlight-hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: inherit;
+}
+.highlight-hover:hover::before {
+    opacity: 1;
+}

@@ -249,7 +249,7 @@
         rgba(255, 255, 255, 0.15),
         transparent);
 }
-/* 增强版渐变光泽效果 - 优化视觉细节 */
+/* 【优化点1】增强版渐变光泽效果 - 视觉深度增强 */
 .widget::after {
     content: '';
     position: absolute;
@@ -275,26 +275,63 @@
     0% { left: -100%; }
     100% { left: 150%; }
 }
-/* 卡片悬停效果增强 - 优化阴影层次 */
-.widget:hover {
-    transform: translateY(-4px) scale(1.015);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.08),
-                0 0 40px rgba(var(--primary-color-rgb), 0.08),
-                var(--shadow-inner);
-    border-color: rgba(255, 255, 255, 0.25);
-    background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.04) 50%,
-        rgba(255, 255, 255, 0.02) 100%);
+/* 【优化点1】卡片3D视觉深度增强 - 多层次阴影+内发光 */
+.widget {
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.06) 0%, 
+            rgba(255, 255, 255, 0.02) 50%, 
+            rgba(0, 0, 0, 0.1) 100%),
+        var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
-/* 卡片点击反馈优化 */
-.widget:active {
-    transform: translateY(0) scale(0.985);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(var(--primary-color-rgb), 0.2),
-                var(--shadow-inner);
+/* 【优化点1】卡片悬停3D效果增强 - 透视+发光边框 */
+.widget:hover {
+    transform: translateY(-6px) scale(1.02) rotateX(2deg);
+    box-shadow: 
+        0 28px 80px rgba(0, 0, 0, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 0 60px rgba(var(--primary-color-rgb), 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
     border-color: rgba(var(--primary-color-rgb), 0.3);
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.05) 50%, 
+            rgba(var(--primary-color-rgb), 0.03) 100%),
+        var(--bg-card);
+}
+/* 【优化点1】卡片点击3D按压效果 - 深度反馈 */
+.widget:active {
+    transform: translateY(-2px) scale(0.99) rotateX(-1deg);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.25),
+        0 0 20px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+}
+/* 【优化点1】卡片呼吸浮动动画 - 微交互增强 */
+@keyframes widgetFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+.widget {
+    animation: widgetFloat 4s ease-in-out infinite;
+    animation-play-state: paused;
+}
+.widget:hover {
+    animation-play-state: running;
 }
 .widget:last-child {
     margin-right: 0;
