@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 基础间距系统 (8px网格) -->
+    <dimen name="spacing_1">2dp</dimen>
+    <dimen name="spacing_2">4dp</dimen>
+    <dimen name="spacing_3">6dp</dimen>
+    <dimen name="spacing_4">8dp</dimen>
+    <dimen name="spacing_5">10dp</dimen>
+    <dimen name="spacing_6">12dp</dimen>
+    <dimen name="spacing_8">16dp</dimen>
+    <dimen name="spacing_10">20dp</dimen>
+    <dimen name="spacing_12">24dp</dimen>
+    <dimen name="spacing_16">32dp</dimen>
+    <dimen name="spacing_20">40dp</dimen>
+    <dimen name="spacing_24">48dp</dimen>
+    
+    <!-- 圆角尺寸 -->
+    <dimen name="radius_sm">4dp</dimen>
+    <dimen name="radius_md">8dp</dimen>
+    <dimen name="radius_lg">12dp</dimen>
+    <dimen name="radius_xl">16dp</dimen>
+    <dimen name="radius_2xl">24dp</dimen>
+    <dimen name="radius_full">9999dp</dimen>
+    
+    <!-- 阴影高度 -->
+    <dimen name="elevation_sm">1dp</dimen>
+    <dimen name="elevation_md">2dp</dimen>
+    <dimen name="elevation_lg">4dp</dimen>
+    <dimen name="elevation_xl">8dp</dimen>
+    
+    <!-- 边框宽度 -->
+    <dimen name="border_thin">0.5dp</dimen>
+    <dimen name="border_normal">1dp</dimen>
+    <dimen name="border_thick">2dp</dimen>
+    
+    <!-- 字体大小 -->
+    <dimen name="text_xs">10sp</dimen>
+    <dimen name="text_sm">12sp</dimen>
+    <dimen name="text_base">14sp</dimen>
+    <dimen name="text_lg">16sp</dimen>
+    <dimen name="text_xl">18sp</dimen>
+    <dimen name="text_2xl">20sp</dimen>
+    <dimen name="text_3xl">24sp</dimen>
+    <dimen name="text_4xl">30sp</dimen>
+    <dimen name="text_5xl">36sp</dimen>
+    
+    <!-- 行高 -->
+    <dimen name="leading_tight">1.0</dimen>
+    <dimen name="leading_normal">1.25</dimen>
+    <dimen name="leading_relaxed">1.5</dimen>
+    
+    <!-- 按钮尺寸 -->
+    <dimen name="button_height_sm">32dp</dimen>
+    <dimen name="button_height_md">40dp</dimen>
+    <dimen name="button_height_lg">48dp</dimen>
+    <dimen name="button_height_xl">56dp</dimen>
+    
+    <!-- 图标尺寸 -->
+    <dimen name="icon_xs">16dp</dimen>
+    <dimen name="icon_sm">20dp</dimen>
+    <dimen name="icon_md">24dp</dimen>
+    <dimen name="icon_lg">32dp</dimen>
+    <dimen name="icon_xl">48dp</dimen>
+    
+    <!-- 车机专用大尺寸 -->
+    <dimen name="car_touch_target">56dp</dimen>
+    <dimen name="car_padding">20dp</dimen>
+    <dimen name="car_margin">16dp</dimen>
+    
+    <!-- 兼容旧命名 -->
     <dimen name="_5dp">5dp</dimen>
     <dimen name="_8dp">8dp</dimen>
     <dimen name="_10dp">10dp</dimen>
     <dimen name="_12dp">12dp</dimen>
     <dimen name="_16dp">16dp</dimen>
-    <!-- 添加其他需要的尺寸值 -->
 </resources>

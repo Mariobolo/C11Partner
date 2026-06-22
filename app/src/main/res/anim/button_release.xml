@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/overshoot">
+    <!-- 释放时回弹放大 -->
+    <scale
+        android:duration="150"
+        android:fromXScale="0.95"
+        android:fromYScale="0.95"
+        android:toXScale="1.05"
+        android:pivotX="50%"
+        android:pivotY="50%" />
+    <scale
+        android:duration="100"
+        android:startOffset="150"
+        android:fromXScale="1.05"
+        android:fromYScale="1.05"
+        android:toXScale="1.0"
+        android:toYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%" />
+    <!-- 恢复不透明 -->
+    <alpha
+        android:duration="150"
+        android:fromAlpha="0.85"
+        android:toAlpha="1.0" />
+</set>
