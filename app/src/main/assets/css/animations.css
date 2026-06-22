@@ -2,57 +2,47 @@
    Animations - 动画和过渡效果
    关键帧动画、过渡效果、动效类
    ============================================ */
-
 /* ========== 旋转动画 ========== */
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-
 /* ========== 脉冲动画 ========== */
 @keyframes pulse {
     0%, 100% { opacity: 0.6; }
     50% { opacity: 1; }
 }
-
 @keyframes pulse-fast {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
 }
-
 @keyframes pulse-slow {
     0%, 100% { opacity: 0.7; }
     50% { opacity: 1; }
 }
-
 /* ========== 闪烁动画 ========== */
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.2; }
 }
-
 @keyframes blink-fast {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
 }
-
 /* 转向灯闪烁 */
 @keyframes turnBlink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
 }
-
 /* ========== 淡入淡出动画 ========== */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
 @keyframes fadeOut {
     from { opacity: 1; }
     to { opacity: 0; }
 }
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -63,7 +53,6 @@
         transform: translateY(0);
     }
 }
-
 @keyframes fadeInDown {
     from {
         opacity: 0;
@@ -74,7 +63,6 @@
         transform: translateY(0);
     }
 }
-
 /* ========== 缩放动画 ========== */
 @keyframes scaleIn {
     from {
@@ -86,7 +74,6 @@
         transform: scale(1);
     }
 }
-
 @keyframes scaleOut {
     from {
         opacity: 1;
@@ -97,7 +84,6 @@
         transform: scale(0.9);
     }
 }
-
 /* ========== 滑入滑出动画 ========== */
 @keyframes slideInLeft {
     from {
@@ -109,7 +95,6 @@
         transform: translateX(0);
     }
 }
-
 @keyframes slideInRight {
     from {
         opacity: 0;
@@ -120,7 +105,6 @@
         transform: translateX(0);
     }
 }
-
 @keyframes slideInUp {
     from {
         opacity: 0;
@@ -131,7 +115,6 @@
         transform: translateY(0);
     }
 }
-
 @keyframes slideInDown {
     from {
         opacity: 0;
@@ -142,7 +125,6 @@
         transform: translateY(0);
     }
 }
-
 /* ========== 弹跳动画 ========== */
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
@@ -155,14 +137,12 @@
         transform: translateY(-5px);
     }
 }
-
 /* ========== 震动动画 ========== */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
     20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
-
 /* ========== 发光动画 ========== */
 @keyframes glow {
     0%, 100% {
@@ -172,7 +152,6 @@
         box-shadow: 0 0 25px rgba(var(--primary-color-rgb), 0.6);
     }
 }
-
 @keyframes glow-pulse {
     0%, 100% {
         text-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.5);
@@ -181,7 +160,6 @@
         text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.8);
     }
 }
-
 /* ========== 律动条动画 ========== */
 @keyframes rhythm {
     0%, 100% { height: 20%; }
@@ -189,20 +167,17 @@
     50% { height: 40%; }
     75% { height: 80%; }
 }
-
 @keyframes rhythm-alt {
     0%, 100% { height: 50%; }
     25% { height: 30%; }
     50% { height: 70%; }
     75% { height: 20%; }
 }
-
 /* ========== 加载动画 ========== */
 @keyframes loading-spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
 @keyframes loading-dots {
     0%, 80%, 100% {
         transform: scale(0);
@@ -213,13 +188,11 @@
         opacity: 1;
     }
 }
-
 /* ========== 进度条动画 ========== */
 @keyframes progress-stripes {
     from { background-position: 40px 0; }
     to { background-position: 0 0; }
 }
-
 /* ========== 波纹动画 ========== */
 @keyframes ripple {
     0% {
@@ -232,69 +205,210 @@
     }
 }
 
+/* ========== 【新增】呼吸浮动动画 ========== */
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+@keyframes breathe-subtle {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: var(--shadow-lg), var(--shadow-inner);
+    }
+    50% {
+        transform: scale(1.01);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), var(--shadow-inner);
+    }
+}
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+@keyframes float-slow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+/* ========== 【新增】按钮点击反馈 ========== */
+@keyframes buttonPress {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes rippleEffect {
+    0% {
+        transform: scale(0);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+/* ========== 【新增】光泽扫过动画 ========== */
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+/* ========== 【新增】渐入序列动画 ========== */
+@keyframes staggerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* ========== 【新增】弹性缩放 ========== */
+@keyframes elasticPop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 /* ========== 动画工具类 ========== */
 .animate-spin {
     animation: spin 1s linear infinite;
 }
-
 .animate-pulse {
     animation: pulse 2s ease-in-out infinite;
 }
-
 .animate-blink {
     animation: blink 1s ease-in-out infinite;
 }
-
 .animate-fade-in {
     animation: fadeIn 0.3s ease-out;
 }
-
 .animate-fade-in-up {
     animation: fadeInUp 0.3s ease-out;
 }
-
 .animate-scale-in {
     animation: scaleIn 0.25s ease-out;
 }
-
 .animate-slide-in-up {
     animation: slideInUp 0.3s ease-out;
 }
-
 .animate-glow {
     animation: glow 2s ease-in-out infinite;
+}
+
+/* ========== 【新增】动画工具类 - 新增动效 ========== */
+.animate-breathe {
+    animation: breathe 3s ease-in-out infinite;
+}
+.animate-breathe-subtle {
+    animation: breathe-subtle 4s ease-in-out infinite;
+}
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+.animate-float-slow {
+    animation: float-slow 4s ease-in-out infinite;
+}
+.animate-button-press {
+    animation: buttonPress 0.2s ease-out;
+}
+.animate-elastic-pop {
+    animation: elasticPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.animate-shimmer {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
 }
 
 /* ========== 过渡效果类 ========== */
 .transition-fast {
     transition: all var(--transition-fast);
 }
-
 .transition-normal {
     transition: all var(--transition-normal);
 }
-
 .transition-slow {
     transition: all var(--transition-slow);
 }
-
 /* 特定属性过渡 */
 .transition-opacity {
     transition: opacity var(--transition-normal);
 }
-
 .transition-transform {
     transition: transform var(--transition-normal);
 }
-
 .transition-color {
     transition: color var(--transition-fast),
                 background-color var(--transition-fast),
                 border-color var(--transition-fast);
 }
-
 .transition-shadow {
     transition: box-shadow var(--transition-normal);
+}
+
+/* ========== 【新增】交互动效增强 ========== */
+.interactive-hover {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.2s ease,
+                background-color 0.2s ease;
+}
+.interactive-hover:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+.interactive-hover:active {
+    transform: translateY(0) scale(0.98);
+}
+/* ========== 【新增】波纹点击效果容器 ========== */
+.ripple-container {
+    position: relative;
+    overflow: hidden;
+}
+.ripple-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+}
+.ripple-container:active::after {
+    animation: rippleEffect 0.4s ease-out;
 }
 
 /* ========== 动画延迟类 ========== */
@@ -302,30 +416,24 @@
 .animation-delay-200 { animation-delay: 0.2s; }
 .animation-delay-300 { animation-delay: 0.3s; }
 .animation-delay-500 { animation-delay: 0.5s; }
-
 /* ========== 动画时长类 ========== */
 .animation-duration-fast { animation-duration: 0.3s; }
 .animation-duration-normal { animation-duration: 0.6s; }
 .animation-duration-slow { animation-duration: 1s; }
-
 /* ========== 动画填充模式 ========== */
 .animation-fill-forwards {
     animation-fill-mode: forwards;
 }
-
 .animation-fill-backwards {
     animation-fill-mode: backwards;
 }
-
 .animation-fill-both {
     animation-fill-mode: both;
 }
-
 /* ========== 动画次数 ========== */
 .animation-iteration-1 {
     animation-iteration-count: 1;
 }
-
 .animation-iteration-infinite {
     animation-iteration-count: infinite;
 }

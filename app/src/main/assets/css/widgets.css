@@ -281,15 +281,38 @@
         transparent);
 }
 
+/* 渐变光泽效果 */
+.widget::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.widget:hover::after {
+    opacity: 1;
+    animation: shimmer 1.5s ease-out;
+}
 .widget:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), var(--shadow-inner);
-    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                var(--shadow-inner);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+.widget:active {
+    transform: translateY(0) scale(0.985);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), var(--shadow-inner);
 }
 
-.widget:active {
-    transform: translateY(0) scale(0.98);
-}
 
 .widget:last-child {
     margin-right: 0;
