@@ -3786,3 +3786,356 @@
         inset 0 3px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
+/* ============================================
+   【优化点1】天气Widget - 3D视觉与交互动效终极增强
+   ============================================ */
+.weather-widget {
+    min-width: 270px;
+    padding: 22px 30px;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    background: 
+        linear-gradient(135deg, 
+            rgba(100, 210, 255, 0.08) 0%, 
+            rgba(255, 255, 255, 0.07) 25%, 
+            rgba(255, 190, 110, 0.05) 60%, 
+            rgba(0, 0, 0, 0.12) 100%),
+        var(--bg-card);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.4),
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 天气Widget终极渐变发光边框 */
+.weather-widget::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: 20px;
+    padding: 1.5px;
+    background: linear-gradient(
+        135deg,
+        rgba(100, 210, 255, 0.35) 0%,
+        rgba(var(--primary-color-rgb), 0.2) 25%,
+        rgba(255, 190, 110, 0.15) 55%,
+        rgba(255, 255, 255, 0.1) 80%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 天气Widget三径向渐变氛围光 */
+.weather-widget::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 20% 10%, 
+            rgba(100, 210, 255, 0.15) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 80% 90%, 
+            rgba(255, 190, 110, 0.12) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 50% 50%, 
+            rgba(var(--primary-color-rgb), 0.06) 0%, 
+            transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    border-radius: 20px;
+}
+
+/* 增强版光泽扫过效果 */
+.weather-widget .weather-shimmer {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.18) 45%,
+        rgba(255, 255, 255, 0.12) 65%,
+        transparent 100%);
+    transform: skewX(-18deg);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* 悬停终极3D透视效果 */
+.weather-widget:hover {
+    transform: translateY(-12px) scale(1.05) rotateX(5deg) rotateY(-2deg);
+    box-shadow: 
+        0 40px 100px rgba(0, 0, 0, 0.6),
+        0 16px 48px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        0 0 120px rgba(100, 210, 255, 0.25),
+        0 0 60px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    border-color: rgba(100, 210, 255, 0.3);
+}
+
+.weather-widget:hover::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(100, 210, 255, 0.5) 0%,
+        rgba(var(--primary-color-rgb), 0.3) 25%,
+        rgba(255, 190, 110, 0.25) 55%,
+        rgba(255, 255, 255, 0.15) 80%,
+        transparent 100%
+    );
+}
+
+.weather-widget:hover::after {
+    opacity: 1;
+}
+
+.weather-widget:hover .weather-shimmer {
+    opacity: 1;
+    animation: weatherShimmer 2.2s ease-in-out infinite;
+}
+
+@keyframes weatherShimmer {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+
+/* 天气Widget增强呼吸浮动动画 */
+.weather-widget {
+    animation: weatherFloat 4.5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.weather-widget:hover {
+    animation-play-state: running;
+}
+
+@keyframes weatherFloat {
+    0%, 100% { transform: translateY(0) rotateX(0); }
+    25% { transform: translateY(-3px) rotateX(1deg); }
+    50% { transform: translateY(-5px) rotateX(0); }
+    75% { transform: translateY(-2px) rotateX(-1deg); }
+}
+
+/* ========== 天气图标 - 终极3D增强 ========== */
+.weather-icon {
+    width: 76px;
+    height: 76px;
+    opacity: 1;
+    filter: 
+        drop-shadow(0 6px 20px rgba(0, 0, 0, 0.45))
+        drop-shadow(0 0 25px rgba(100, 210, 255, 0.2));
+    margin-right: 0;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+/* 天气图标3D底座光晕 */
+.weather-icon::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: 
+        radial-gradient(circle,
+            rgba(100, 210, 255, 0.2) 0%,
+            rgba(var(--primary-color-rgb), 0.08) 50%,
+            transparent 75%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+/* 天气图标终极发光光晕 */
+.weather-icon::after {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    background: 
+        radial-gradient(circle,
+            rgba(100, 210, 255, 0.45) 0%,
+            rgba(var(--primary-color-rgb), 0.2) 40%,
+            transparent 70%);
+    opacity: 0;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    pointer-events: none;
+    animation: weatherIconPulse 3s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+@keyframes weatherIconPulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+.weather-widget:hover .weather-icon {
+    transform: scale(1.28) translateY(-10px) rotateY(15deg) rotateX(-5deg);
+    filter: 
+        drop-shadow(0 16px 40px rgba(0, 0, 0, 0.55))
+        drop-shadow(0 0 50px rgba(100, 210, 255, 0.4));
+}
+
+.weather-widget:hover .weather-icon::before {
+    opacity: 1;
+    animation: weatherIconBase 1.8s ease-in-out infinite;
+}
+
+.weather-widget:hover .weather-icon::after {
+    opacity: 1;
+    animation-play-state: running;
+}
+
+@keyframes weatherIconBase {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 0.9; }
+}
+
+/* ========== 温度数字 - 终极渐变发光效果 ========== */
+.temperature {
+    font-size: 58px;
+    font-weight: 100;
+    line-height: 1;
+    letter-spacing: -2.5px;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        #e0f0ff 20%,
+        #c8e6ff 45%, 
+        #fff0d8 70%,
+        #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-variant-numeric: tabular-nums;
+    transform-style: preserve-3d;
+}
+
+/* 温度数字终极发光光晕 */
+.temperature::before {
+    content: attr(data-temp);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(100, 210, 255, 0.6) 0%, 
+        rgba(255, 190, 110, 0.35) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: blur(15px);
+    opacity: 0.35;
+    z-index: -1;
+    animation: tempGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes tempGlow {
+    0% { opacity: 0.25; filter: blur(10px); }
+    100% { opacity: 0.6; filter: blur(20px); }
+}
+
+.weather-widget:hover .temperature {
+    transform: scale(1.1) translateZ(20px) rotateX(-2deg);
+}
+
+.weather-widget:hover .temperature::before {
+    opacity: 0.7;
+}
+
+/* ========== 天气状态文字 - 终极美化 ========== */
+.condition {
+    font-size: 17px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    line-height: 1.2;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    position: relative;
+}
+
+.condition::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg,
+        rgba(100, 210, 255, 0.7) 0%,
+        rgba(var(--primary-color-rgb), 0.5) 100%);
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.weather-widget:hover .condition {
+    color: #ffffff;
+    transform: translateY(-3px) scale(1.03);
+    text-shadow: 0 0 15px rgba(100, 210, 255, 0.3);
+}
+
+.weather-widget:hover .condition::after {
+    width: 100%;
+}
+
+/* ========== 天气详情提示 - 终极增强 ========== */
+.weather-detail {
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.weather-detail span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.weather-detail span:hover {
+    background: rgba(100, 210, 255, 0.1);
+    border-color: rgba(100, 210, 255, 0.2);
+}
+
+.weather-widget:hover .weather-detail {
+    opacity: 1;
+    transform: translateY(0);
+}
