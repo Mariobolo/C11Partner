@@ -9,6 +9,6 @@
     <!-- 向下滑出 -->
     <translate
         android:duration="200"
-        android:fromYDelta="0dp"
-        android:toYDelta="20dp" />
+        android:fromYDelta="0"
+        android:toYDelta="20" />
 </set>
