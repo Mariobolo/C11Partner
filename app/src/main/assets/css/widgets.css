@@ -141,7 +141,7 @@
     opacity: 0.9;
     animation: none;
 }
-/* ========== 时间日期显示 ========== */
+/* ========== 时间日期显示 - 【优化点1】终极视觉美化 ========== */
 .layout-left {
     position: absolute;
     top: 38%;
@@ -151,32 +151,112 @@
     width: auto;
     padding: 0;
     pointer-events: auto;
+    perspective: 1000px;
 }
 .time-text#timeDisplay {
     font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-light);
-    color: var(--text-primary);
-    text-shadow: 0 4px 60px rgba(0, 0, 0, 0.6);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-    letter-spacing: -4px;
-    line-height: 1;
+    font-weight: 100;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', sans-serif;
+    letter-spacing: -6px;
+    line-height: 0.9;
     margin-bottom: var(--spacing-lg);
     padding-top: 0;
+    background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        #f0f8ff 25%,
+        #e6f7ff 50%,
+        #f0fff4 75%,
+        #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 
+        0 0 80px rgba(255, 255, 255, 0.15),
+        0 8px 40px rgba(0, 0, 0, 0.5),
+        0 4px 20px rgba(0, 0, 0, 0.35);
+    filter: drop-shadow(0 0 30px rgba(var(--primary-color-rgb), 0.15));
+    position: relative;
+    animation: timeBreath 4s ease-in-out infinite;
+    transform-style: preserve-3d;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 时间文字发光光晕效果 */
+.time-text#timeDisplay::before {
+    content: attr(data-time);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+        rgba(var(--primary-color-rgb), 0.4) 0%, 
+        rgba(var(--secondary-color-rgb), 0.3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: blur(20px);
+    opacity: 0.5;
+    z-index: -1;
+    animation: timeGlow 3s ease-in-out infinite alternate;
+}
+@keyframes timeBreath {
+    0%, 100% { 
+        transform: scale(1) translateZ(0);
+        filter: drop-shadow(0 0 30px rgba(var(--primary-color-rgb), 0.15));
+    }
+    50% { 
+        transform: scale(1.015) translateZ(10px);
+        filter: drop-shadow(0 0 50px rgba(var(--primary-color-rgb), 0.25));
+    }
+}
+@keyframes timeGlow {
+    0% { opacity: 0.3; filter: blur(15px); }
+    100% { opacity: 0.6; filter: blur(25px); }
+}
+/* 悬停增强效果 */
+.layout-left:hover .time-text#timeDisplay {
+    transform: scale(1.03) translateZ(20px) rotateX(2deg);
+    text-shadow: 
+        0 0 100px rgba(255, 255, 255, 0.2),
+        0 12px 50px rgba(0, 0, 0, 0.55),
+        0 6px 30px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(0 0 60px rgba(var(--primary-color-rgb), 0.35));
 }
 .date-text {
     font-size: var(--font-size-2xl);
-    color: var(--text-secondary);
-    font-weight: var(--font-weight-normal);
+    font-weight: 300;
     margin-top: 0;
     margin-bottom: var(--spacing-sm);
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(255, 255, 255, 0.75) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, 0.45);
+    letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+.layout-left:hover .date-text {
+    transform: scale(1.05) translateY(-2px);
+    text-shadow: 0 6px 35px rgba(0, 0, 0, 0.55);
 }
 .lunar-calendar-text {
     font-size: var(--font-size-md);
-    color: var(--text-tertiary);
-    font-weight: var(--font-weight-normal);
+    font-weight: 400;
     margin-top: 0;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.7) 0%, 
+        rgba(255, 255, 255, 0.5) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.35);
+    letter-spacing: 2px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0.85;
+}
+.layout-left:hover .lunar-calendar-text {
+    transform: scale(1.03);
+    opacity: 1;
 }
 /* ========== 底部卡片容器 ========== */
 .card-view {
@@ -391,7 +471,7 @@
 .widget:last-child {
     margin-right: 0;
 }
-/* ========== 快捷应用模块 ========== */
+/* ========== 快捷应用模块 - 【优化点2】图标3D视觉终极增强 ========== */
 .quick-apps-widget {
     min-width: 300px;
     padding: var(--spacing-lg);
@@ -401,80 +481,183 @@
     gap: var(--spacing-md);
     padding: 0;
     width: 100%;
+    perspective: 800px;
 }
 .quick-app-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--surface-color);
-    border-radius: var(--radius-lg);
-    padding: 12px 10px;
-    transition: all var(--transition-fast);
-    border: 1px solid var(--border-light);
-    min-width: 60px;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.08) 0%, 
+            rgba(255, 255, 255, 0.03) 50%, 
+            rgba(0, 0, 0, 0.08) 100%),
+        var(--surface-color);
+    border-radius: 16px;
+    padding: 14px 12px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    min-width: 64px;
     margin: 0;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
-/* 快捷应用光泽扫过效果 */
+/* 快捷应用渐变边框发光 */
 .quick-app-item::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.1) 0%,
+        rgba(var(--secondary-color-rgb), 0.05) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+/* 快捷应用光泽扫过效果增强 */
+.quick-app-item::after {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
-    width: 100%;
+    width: 70%;
     height: 100%;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.12) 30%,
+        rgba(255, 255, 255, 0.18) 50%,
+        rgba(255, 255, 255, 0.12) 70%,
         transparent 100%);
-    transition: left 0.6s ease;
+    transform: skewX(-15deg);
+    transition: left 0.7s ease;
     pointer-events: none;
+    opacity: 0;
 }
 .quick-app-item:hover::before {
-    left: 100%;
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        transparent 100%
+    );
+}
+.quick-app-item:hover::after {
+    left: 150%;
+    opacity: 1;
 }
 .quick-app-item:hover {
-    background: var(--surface-hover);
-    transform: translateY(-3px);
-    border-color: var(--border-color);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35),
-                0 0 0 1px rgba(255, 255, 255, 0.05);
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.12) 0%, 
+            rgba(255, 255, 255, 0.06) 50%, 
+            rgba(var(--primary-color-rgb), 0.06) 100%),
+        var(--surface-hover);
+    transform: translateY(-6px) scale(1.04) rotateX(5deg);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+/* 点击波纹扩散效果 */
 .quick-app-item:active {
-    background: var(--surface-active);
-    transform: scale(0.95);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px) scale(0.97) rotateX(-2deg);
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 3px 8px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .quick-app-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-md);
-    margin-bottom: var(--spacing-sm);
-    box-shadow: var(--shadow-sm);
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    margin-bottom: 10px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transition: all var(--transition-fast);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+/* 图标顶部高光 */
+.quick-app-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 100%);
+    border-radius: 12px 12px 0 0;
+    pointer-events: none;
+}
+/* 图标发光光晕 */
+.quick-app-icon::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        transparent 70%);
+    opacity: 0;
+    border-radius: 50%;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 .quick-app-item:hover .quick-app-icon {
-    transform: scale(1.08) translateY(-1px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.18) translateY(-5px) rotateY(8deg);
+    box-shadow: 
+        0 10px 28px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        0 0 25px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.quick-app-item:hover .quick-app-icon::after {
+    opacity: 1;
+    animation: iconGlowPulse 2s ease-in-out infinite;
+}
+@keyframes iconGlowPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
 }
 .quick-app-name {
-    font-size: var(--font-size-sm);
+    font-size: 11px;
     color: var(--text-secondary);
-    font-weight: var(--font-weight-medium);
-    max-width: 60px;
+    font-weight: 500;
+    max-width: 64px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
-    transition: color var(--transition-fast);
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
 }
 .quick-app-item:hover .quick-app-name {
     color: var(--text-primary);
+    transform: translateY(-1px);
+    text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
 }
 /* ========== 快捷开关模块 ========== */
 .quick-switches-widget {
@@ -745,57 +928,195 @@
     opacity: 1;
     transform: translateY(0);
 }
-/* ========== 胎压组件 ========== */
+/* ========== 胎压组件 - 【优化点3】3D视觉终极美化 ========== */
 .car-widget {
-    min-width: 240px;
+    min-width: 260px;
     padding: var(--spacing-xl);
     position: relative;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+/* 胎压卡片渐变背景 */
+.car-widget::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 50% 30%, 
+            rgba(var(--primary-color-rgb), 0.06) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 20% 80%, 
+            rgba(var(--secondary-color-rgb), 0.04) 0%, 
+            transparent 50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 20px;
+}
+.car-widget:hover::before {
+    opacity: 1;
 }
 .car-image {
     width: 100%;
     height: 100%;
-    opacity: 0.6;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    opacity: 0.65;
+    filter: 
+        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))
+        drop-shadow(0 0 20px rgba(var(--primary-color-rgb), 0.1));
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transition: all var(--transition-normal);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
 }
 .car-widget:hover .car-image {
-    opacity: 0.75;
-    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
-    transform: scale(1.02);
+    opacity: 0.8;
+    filter: 
+        drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5))
+        drop-shadow(0 0 40px rgba(var(--primary-color-rgb), 0.2));
+    transform: scale(1.06) rotateX(4deg) translateY(-4px);
 }
 .tire-pressure {
     position: absolute;
-    font-size: var(--font-size-xs);
+    font-size: 10px;
     color: var(--text-secondary);
-    background: rgba(var(--primary-color-rgb), 0.15);
-    border: 1px solid rgba(var(--primary-color-rgb), 0.3);
-    border-radius: var(--radius-sm);
-    padding: 4px 8px;
-    backdrop-filter: var(--blur-light);
-    box-shadow: var(--shadow-sm);
+    background: 
+        linear-gradient(135deg, 
+            rgba(var(--primary-color-rgb), 0.2) 0%, 
+            rgba(var(--primary-color-rgb), 0.1) 100%);
+    border: 1px solid rgba(var(--primary-color-rgb), 0.4);
+    border-radius: 10px;
+    padding: 6px 10px;
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-align: center;
-    transition: all var(--transition-fast);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 52px;
+    transform-style: preserve-3d;
+    overflow: hidden;
+}
+/* 胎压指示器顶部高光 */
+.tire-pressure::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.12) 0%,
+        transparent 100%);
+    border-radius: 10px 10px 0 0;
+    pointer-events: none;
+}
+/* 胎压异常警告状态 */
+.tire-pressure.warning {
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 152, 0, 0.3) 0%, 
+            rgba(255, 152, 0, 0.15) 100%);
+    border-color: rgba(255, 152, 0, 0.5);
+    box-shadow: 
+        0 4px 16px rgba(255, 152, 0, 0.3),
+        0 0 0 1px rgba(255, 152, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: tireWarning 1.5s ease-in-out infinite;
+}
+@keyframes tireWarning {
+    0%, 100% { 
+        box-shadow: 
+            0 4px 16px rgba(255, 152, 0, 0.3),
+            0 0 0 1px rgba(255, 152, 0, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 6px 24px rgba(255, 152, 0, 0.5),
+            0 0 20px rgba(255, 152, 0, 0.4),
+            0 0 0 1px rgba(255, 152, 0, 0.3);
+    }
+}
+/* 胎压危险状态 */
+.tire-pressure.danger {
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 82, 82, 0.35) 0%, 
+            rgba(255, 82, 82, 0.15) 100%);
+    border-color: rgba(255, 82, 82, 0.6);
+    box-shadow: 
+        0 4px 16px rgba(255, 82, 82, 0.4),
+        0 0 0 1px rgba(255, 82, 82, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: tireDanger 1s ease-in-out infinite;
+}
+@keyframes tireDanger {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 
+            0 4px 16px rgba(255, 82, 82, 0.4),
+            0 0 0 1px rgba(255, 82, 82, 0.2);
+    }
+    50% { 
+        transform: scale(1.08);
+        box-shadow: 
+            0 8px 32px rgba(255, 82, 82, 0.6),
+            0 0 30px rgba(255, 82, 82, 0.5),
+            0 0 0 1px rgba(255, 82, 82, 0.4);
+    }
 }
 .car-widget:hover .tire-pressure {
-    background: rgba(var(--primary-color-rgb), 0.25);
-    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.2);
-    transform: scale(1.05);
+    background: 
+        linear-gradient(135deg, 
+            rgba(var(--primary-color-rgb), 0.3) 0%, 
+            rgba(var(--primary-color-rgb), 0.15) 100%);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.25),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: scale(1.1) translateZ(10px);
+    border-color: rgba(var(--primary-color-rgb), 0.5);
 }
 .tire-pressure-value {
-    font-weight: var(--font-weight-semibold);
+    font-weight: 600;
     color: var(--text-primary);
+    font-size: 12px;
+    display: block;
+    letter-spacing: 0.5px;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+.tire-pressure.warning .tire-pressure-value,
+.tire-pressure.danger .tire-pressure-value {
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 .tire-temp-value {
-    font-size: 11px;
+    font-size: 9px;
     color: var(--text-tertiary);
+    display: block;
+    margin-top: 2px;
+    opacity: 0.8;
+    font-variant-numeric: tabular-nums;
+}
+.tire-pressure.warning .tire-temp-value,
+.tire-pressure.danger .tire-temp-value {
+    color: rgba(255, 255, 255, 0.8);
 }
 .tire-loading-tip {
     font-size: var(--font-size-xs);
     color: var(--text-tertiary);
     text-align: center;
+    opacity: 0.7;
+    animation: loadingPulse 2s ease-in-out infinite;
+}
+@keyframes loadingPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
 }
 /* ========== 音乐组件 ========== */
 .music-widget {
