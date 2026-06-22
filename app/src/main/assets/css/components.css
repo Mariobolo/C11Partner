@@ -4384,4 +4384,441 @@ html {
 .list-item-trailing {
     margin-left: 12px;
     color: var(--text-tertiary);
-} 32px); }
+}
+
+/* ============================================
+   【第28轮UI美化优化点1】进度条/滑块组件视觉与交互动效增强
+   渐变轨道、发光填充、弹性动画、悬停缩放、3D深度效果
+   ============================================ */
+/* ========== 进度条组件 - 视觉增强版 ========== */
+.progress {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.15) 100%
+    );
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+/* 进度条轨道光泽 */
+.progress::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 100%
+    );
+    border-radius: 4px 4px 0 0;
+    pointer-events: none;
+}
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 50%,
+        var(--primary-color) 100%
+    );
+    background-size: 200% 100%;
+    border-radius: 4px;
+    position: relative;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 0 12px rgba(var(--primary-color-rgb), 0.5),
+        0 0 24px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    animation: progressShine 3s linear infinite;
+}
+@keyframes progressShine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+/* 进度条末端发光圆点 */
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(
+        circle,
+        #fff 0%,
+        var(--primary-color) 40%,
+        transparent 70%
+    );
+    border-radius: 50%;
+    box-shadow: 
+        0 0 8px rgba(var(--primary-color-rgb), 0.8),
+        0 0 16px rgba(var(--primary-color-rgb), 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.progress:hover .progress-bar::after {
+    opacity: 1;
+    animation: progressDotPulse 1.5s ease-in-out infinite;
+}
+@keyframes progressDotPulse {
+    0%, 100% { 
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: translateY(-50%) scale(1.3);
+        opacity: 0.8;
+    }
+}
+/* 进度条变体 */
+.progress-lg { height: 12px; border-radius: 6px; }
+.progress-lg .progress-bar { border-radius: 6px; }
+.progress-sm { height: 4px; border-radius: 2px; }
+.progress-sm .progress-bar { border-radius: 2px; }
+
+/* ========== 滑块组件 - 视觉增强版 ========== */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.15) 100%
+    );
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+input[type="range"]:hover {
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.3);
+}
+/* Webkit滑块 */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(
+        135deg,
+        #fff 0%,
+        var(--primary-color) 50%,
+        var(--secondary-color) 100%
+    );
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        0 0 0 4px rgba(var(--primary-color-rgb), 0.2),
+        0 0 20px rgba(var(--primary-color-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 
+        0 6px 24px rgba(0, 0, 0, 0.5),
+        0 0 0 6px rgba(var(--primary-color-rgb), 0.3),
+        0 0 32px rgba(var(--primary-color-rgb), 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(0.95);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        0 0 0 3px rgba(var(--primary-color-rgb), 0.4),
+        0 0 16px rgba(var(--primary-color-rgb), 0.5);
+}
+/* Firefox滑块 */
+input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(
+        135deg,
+        #fff 0%,
+        var(--primary-color) 50%,
+        var(--secondary-color) 100%
+    );
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        0 0 0 4px rgba(var(--primary-color-rgb), 0.2),
+        0 0 20px rgba(var(--primary-color-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 
+        0 6px 24px rgba(0, 0, 0, 0.5),
+        0 0 0 6px rgba(var(--primary-color-rgb), 0.3),
+        0 0 32px rgba(var(--primary-color-rgb), 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ============================================
+   【第28轮UI美化优化点2】滚动条美化与交互动效
+   自定义样式、渐变轨道、悬停发光、平滑过渡
+   ============================================ */
+/* ========== 自定义滚动条 - 增强版 ========== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    border-radius: 4px;
+    margin: 4px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.4) 50%,
+        rgba(var(--primary-color-rgb), 0.45) 100%
+    );
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 0 12px rgba(var(--primary-color-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: scale(1.15);
+}
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.6) 0%,
+        rgba(var(--secondary-color-rgb), 0.5) 50%,
+        rgba(var(--primary-color-rgb), 0.55) 100%
+    );
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.3),
+        0 0 16px rgba(var(--primary-color-rgb), 0.5);
+}
+/* 滚动条角落 */
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+/* Firefox滚动条 */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   【第28轮UI美化优化点3】加载状态与骨架屏动画优化
+   渐变脉冲、波纹扩散、骨架屏光泽、多层次动画
+   ============================================ */
+/* ========== 加载动画 - 增强版 ========== */
+.loader {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+/* 环形加载器 */
+.loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--primary-color);
+    border-right-color: var(--secondary-color);
+    border-radius: 50%;
+    animation: spinnerRotate 1s linear infinite;
+    position: relative;
+}
+.loader-spinner::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border: 3px solid transparent;
+    border-top-color: rgba(var(--primary-color-rgb), 0.3);
+    border-right-color: rgba(var(--secondary-color-rgb), 0.2);
+    border-radius: 50%;
+    animation: spinnerRotate 1.5s linear infinite reverse;
+}
+@keyframes spinnerRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* 脉冲加载器 */
+.loader-pulse {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(
+        circle,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    border-radius: 50%;
+    animation: pulseBounce 1.5s ease-in-out infinite;
+    box-shadow: 
+        0 0 20px rgba(var(--primary-color-rgb), 0.5),
+        0 0 40px rgba(var(--primary-color-rgb), 0.3);
+}
+@keyframes pulseBounce {
+    0%, 100% { 
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    50% { 
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+/* 圆点跳动加载器 */
+.loader-dots {
+    display: flex;
+    gap: 8px;
+}
+.loader-dots span {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(
+        135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    border-radius: 50%;
+    animation: dotsBounce 1.4s ease-in-out infinite;
+    box-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.4);
+}
+.loader-dots span:nth-child(1) { animation-delay: 0s; }
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotsBounce {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+/* ========== 骨架屏 - 增强版 ========== */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.12) 25%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.12) 75%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    background-size: 200% 100%;
+    border-radius: 8px;
+    animation: skeletonShimmer 2s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+/* 骨架屏光泽扫过效果 */
+.skeleton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%
+    );
+    animation: skeletonGlow 2.5s ease-in-out infinite;
+}
+@keyframes skeletonGlow {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+/* 骨架屏变体 */
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 8px;
+}
+.skeleton-text:last-child {
+    width: 60%;
+    margin-bottom: 0;
+}
+.skeleton-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+.skeleton-card {
+    height: 120px;
+    border-radius: 16px;
+}
+/* 页面加载遮罩 */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.9) 100%
+    );
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-loading);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+.loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.loading-overlay .loader-spinner {
+    width: 60px;
+    height: 60px;
+    border-width: 4px;
+}
