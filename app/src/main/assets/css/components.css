@@ -1828,3 +1828,778 @@ input[type="range"]::-moz-range-thumb:hover {
 .highlight-hover:hover::before {
     opacity: 1;
 }
+
+
+/* ============================================
+   【UI美化优化1】增强组件悬停和点击反馈效果
+   - 按钮发光悬停效果
+   - 点击涟漪动画增强
+   - 卡片悬浮3D效果
+   ============================================ */
+
+/* ========== 增强按钮悬停发光效果 ========== */
+.btn-glow-hover {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-glow-hover::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(
+        circle,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        transparent 70%
+    );
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.btn-glow-hover:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-glow-hover:hover {
+    box-shadow: 
+        0 0 20px rgba(var(--primary-color-rgb), 0.3),
+        0 0 40px rgba(var(--primary-color-rgb), 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+}
+
+.btn-glow-hover:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 
+        0 0 10px rgba(var(--primary-color-rgb), 0.2),
+        0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== 增强涟漪点击效果 ========== */
+.btn-ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-ripple .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(var(--primary-color-rgb), 0.3) 50%,
+        transparent 100%
+    );
+    transform: scale(0);
+    animation: ripple-expand 0.6s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes ripple-expand {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* ========== 卡片悬浮3D效果 ========== */
+.card-3d-hover {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-3d-hover:hover {
+    transform: 
+        translateY(-8px) 
+        rotateX(2deg) 
+        rotateY(-2deg);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(var(--primary-color-rgb), 0.1),
+        0 0 60px rgba(var(--primary-color-rgb), 0.05);
+}
+
+.card-3d-hover:hover::before {
+    opacity: 1;
+}
+
+.card-3d-hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ========== 图标按钮脉冲效果 ========== */
+.btn-icon-pulse {
+    position: relative;
+}
+
+.btn-icon-pulse::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: rgba(var(--primary-color-rgb), 0.2);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.btn-icon-pulse:hover::before {
+    transform: scale(1.2);
+    opacity: 1;
+    animation: pulse-ring 1.5s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.btn-icon-pulse:hover {
+    background: rgba(var(--primary-color-rgb), 0.25);
+    box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.3);
+}
+
+.btn-icon-pulse:active {
+    transform: scale(0.92);
+}
+
+/* ========== 滑动条悬停效果 ========== */
+.slider-hover {
+    position: relative;
+}
+
+.slider-hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent-gradient);
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.slider-hover:hover::after {
+    width: 100%;
+}
+
+/* ========== 边框流动动画 ========== */
+.border-flow {
+    position: relative;
+    overflow: hidden;
+}
+
+.border-flow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(var(--primary-color-rgb), 0.5),
+        transparent
+    );
+    background-size: 200% 100%;
+    animation: border-flow 3s linear infinite;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.border-flow:hover::before {
+    opacity: 1;
+}
+
+@keyframes border-flow {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+
+
+/* ============================================
+   【UI美化优化2】精致加载状态和骨架屏动画
+   - 多种加载Spinner样式
+   - 骨架屏闪烁动画
+   - 进度条渐变动画
+   ============================================ */
+
+/* ========== 经典旋转加载器 ========== */
+.loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spinner-rotate 1s linear infinite;
+}
+
+.loader-spinner.sm { width: 24px; height: 24px; border-width: 2px; }
+.loader-spinner.lg { width: 56px; height: 56px; border-width: 4px; }
+
+@keyframes spinner-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ========== 双环旋转加载器 ========== */
+.loader-double-ring {
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.loader-double-ring::before,
+.loader-double-ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px solid transparent;
+    border-radius: 50%;
+}
+
+.loader-double-ring::before {
+    border-top-color: var(--primary-color);
+    animation: spinner-rotate 0.8s linear infinite;
+}
+
+.loader-double-ring::after {
+    border-bottom-color: rgba(var(--primary-color-rgb), 0.5);
+    animation: spinner-rotate 1.2s linear infinite reverse;
+    inset: 4px;
+}
+
+/* ========== 脉冲圆点加载器 ========== */
+.loader-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.loader-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    animation: dots-pulse 1.4s ease-in-out infinite both;
+}
+
+.loader-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.loader-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+.loader-dots .dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes dots-pulse {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ========== 弹跳圆点加载器 ========== */
+.loader-bounce {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+    height: 30px;
+}
+
+.loader-bounce .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    animation: bounce-dot 0.6s ease-in-out infinite alternate;
+}
+
+.loader-bounce .dot:nth-child(1) { animation-delay: -0.4s; }
+.loader-bounce .dot:nth-child(2) { animation-delay: -0.2s; }
+.loader-bounce .dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes bounce-dot {
+    0% {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-15px);
+        opacity: 1;
+    }
+}
+
+/* ========== 渐变圆环加载器 ========== */
+.loader-gradient-ring {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        var(--primary-color) 360deg
+    );
+    animation: spinner-rotate 1s linear infinite;
+    position: relative;
+}
+
+.loader-gradient-ring::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: var(--bg-card);
+    border-radius: 50%;
+}
+
+/* ========== 骨架屏基础样式 ========== */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+@keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ========== 骨架屏变体 - 彩色渐变 ========== */
+.skeleton-gradient {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 25%,
+        rgba(var(--primary-color-rgb), 0.15) 50%,
+        rgba(255, 255, 255, 0.03) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 2s ease-in-out infinite;
+}
+
+/* ========== 骨架屏组件 ========== */
+.skeleton-text {
+    height: 14px;
+    margin-bottom: 8px;
+}
+
+.skeleton-text.short { width: 60%; }
+.skeleton-text.medium { width: 80%; }
+.skeleton-text.long { width: 100%; }
+
+.skeleton-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.skeleton-avatar.lg { width: 64px; height: 64px; }
+.skeleton-avatar.sm { width: 32px; height: 32px; }
+
+.skeleton-card {
+    height: 120px;
+    border-radius: 12px;
+}
+
+.skeleton-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+}
+
+.skeleton-button {
+    height: 36px;
+    width: 100px;
+    border-radius: 8px;
+}
+
+/* ========== 骨架屏脉冲效果 ========== */
+.skeleton-pulse {
+    background: rgba(255, 255, 255, 0.08);
+    animation: skeleton-pulse 2s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ========== 进度条渐变动画 ========== */
+.progress-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar .progress-fill {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    transition: width 0.5s ease;
+}
+
+.progress-bar .progress-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: progress-shine 2s ease-in-out infinite;
+}
+
+@keyframes progress-shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* ========== 不确定进度条 ========== */
+.progress-indeterminate .progress-fill {
+    width: 30% !important;
+    animation: progress-indeterminate 1.5s ease-in-out infinite;
+}
+
+@keyframes progress-indeterminate {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(400%); }
+}
+
+/* ========== 页面加载遮罩 ========== */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+}
+
+.loading-overlay .loading-content {
+    text-align: center;
+}
+
+.loading-overlay .loading-text {
+    margin-top: 16px;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+/* ========== 内容加载占位容器 ========== */
+.loading-container {
+    position: relative;
+    min-height: 100px;
+}
+
+.loading-container.loading > *:not(.loading-spinner-wrapper) {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.loading-container .loading-spinner-wrapper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+
+
+/* ============================================
+   【UI美化优化3】优化滚动条和滚动体验
+   - 精致滚动条样式
+   - 平滑滚动行为
+   - 滚动渐隐效果
+   - 滚动触发动画
+   ============================================ */
+
+/* ========== 全局滚动条优化 ========== */
+::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+    background: transparent !important;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 4px !important;
+    margin: 4px !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--primary-color-rgb), 0.2) 100%
+    ) !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 
+        0 0 4px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.2s ease !important;
+    min-height: 40px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--primary-color-rgb), 0.35) 100%
+    ) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.2) !important;
+    box-shadow: 
+        0 0 12px rgba(var(--primary-color-rgb), 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.6) 0%,
+        rgba(var(--primary-color-rgb), 0.45) 100%
+    ) !important;
+    box-shadow: 
+        0 0 16px rgba(var(--primary-color-rgb), 0.4) !important;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent !important;
+}
+
+/* ========== 平滑滚动行为 ========== */
+html {
+    scroll-behavior: smooth !important;
+}
+
+.smooth-scroll {
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* ========== 滚动渐隐边缘效果 ========== */
+.scroll-fade {
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+}
+
+.scroll-fade-horizontal {
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+}
+
+/* ========== 滚动触发动画类 ========== */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal-left.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-reveal-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal-right.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-reveal-scale {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal-scale.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 动画延迟变体 */
+.scroll-reveal.delay-1 { transition-delay: 0.1s; }
+.scroll-reveal.delay-2 { transition-delay: 0.2s; }
+.scroll-reveal.delay-3 { transition-delay: 0.3s; }
+.scroll-reveal.delay-4 { transition-delay: 0.4s; }
+
+/* ========== 滚动条隐藏但可滚动 ========== */
+.scrollbar-hide {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* ========== 滚动停靠对齐 ========== */
+.scroll-snap {
+    scroll-snap-type: y mandatory !important;
+}
+
+.scroll-snap-x {
+    scroll-snap-type: x mandatory !important;
+}
+
+.scroll-snap-item {
+    scroll-snap-align: start !important;
+}
+
+.scroll-snap-item-center {
+    scroll-snap-align: center !important;
+}
+
+/* ========== 滚动条悬停显示 ========== */
+.scrollbar-auto-hide::-webkit-scrollbar-thumb {
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+.scrollbar-auto-hide:hover::-webkit-scrollbar-thumb {
+    opacity: 1 !important;
+}
+
+/* ========== 自定义滚动容器 ========== */
+.custom-scroll-container {
+    position: relative;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.custom-scroll-container::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(0, 0, 0, 0.1)
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ========== 滚动进度指示器 ========== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent-gradient);
+    z-index: 9999;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* ========== Firefox 滚动条优化 ========== */
+* {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(var(--primary-color-rgb), 0.3) rgba(255, 255, 255, 0.02) !important;
+}
+
+*:hover {
+    scrollbar-color: rgba(var(--primary-color-rgb), 0.4) rgba(255, 255, 255, 0.05) !important;
+}
+
