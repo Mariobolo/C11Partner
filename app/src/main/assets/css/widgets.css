@@ -7310,3 +7310,646 @@
    【第48轮UI美化 - 优化点2】设置页面分类标签页3D视觉增强
    透视效果、渐变发光、选中状态动画、弹性过渡
    ============================================ */
+
+
+/* ============================================
+   【第50轮UI美化 - 优化点1】快捷开关面板视觉与交互动效终极增强
+   粒子光效、鼠标跟随3D视差、多层次发光、状态切换动画
+   ============================================ */
+/* 快捷开关面板粒子光效背景 */
+.quick-switches-widget {
+    position: relative;
+    overflow: hidden;
+}
+
+.quick-switches-widget .particle-glow {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        rgba(var(--secondary-color-rgb), 0.08) 40%,
+        transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.3s ease;
+    filter: blur(30px);
+    z-index: 0;
+}
+
+.quick-switches-widget:hover .particle-glow {
+    opacity: 1;
+}
+
+/* 快捷开关项目粒子跟随效果 */
+.quick-switch-item {
+    position: relative;
+}
+
+.quick-switch-item .item-glow {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.2s ease;
+    filter: blur(20px);
+    z-index: 0;
+}
+
+.quick-switch-item:hover .item-glow {
+    opacity: 1;
+}
+
+/* 快捷开关状态切换弹性动画 */
+.quick-switch-item.active {
+    animation: switchActiveBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes switchActiveBounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(0.92); }
+    50% { transform: scale(1.06); }
+    70% { transform: scale(0.98); }
+    100% { transform: scale(1); }
+}
+
+/* 快捷开关取消激活动画 */
+.quick-switch-item:not(.active) {
+    animation: switchInactiveShrink 0.3s ease-out;
+}
+
+@keyframes switchInactiveShrink {
+    0% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* ============================================
+   【第50轮UI美化 - 优化点2】导航按钮与控制图标3D视觉终极美化
+   3D深度渲染、渐变发光、弹性悬停动效、点击波纹反馈
+   ============================================ */
+/* 导航按钮终极3D增强 */
+.nav-button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 18px;
+    min-width: 70px;
+    background: 
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.04) 50%,
+            rgba(0, 0, 0, 0.1) 100%),
+        var(--surface-color);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    perspective: 800px;
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+/* 导航按钮顶部高光 */
+.nav-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        transparent 100%);
+    border-radius: 18px 18px 0 0;
+    pointer-events: none;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+/* 导航按钮渐变发光边框 */
+.nav-button::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        rgba(var(--secondary-color-rgb), 0.1) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 导航按钮光泽扫过效果 */
+.nav-button .nav-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 30%,
+        rgba(255, 255, 255, 0.16) 50%,
+        rgba(255, 255, 255, 0.1) 70%,
+        transparent 100%);
+    transform: skewX(-15deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: left 0.8s ease;
+    z-index: 2;
+}
+
+/* 导航按钮点击波纹效果 */
+.nav-button .nav-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--primary-color-rgb), 0.15) 50%,
+        transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 3;
+}
+
+/* 导航按钮悬停终极3D效果 */
+.nav-button:hover {
+    transform: translateY(-8px) scale(1.06) rotateX(5deg);
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.06) 50%,
+            rgba(var(--primary-color-rgb), 0.06) 100%),
+        var(--surface-hover);
+    border-color: rgba(var(--primary-color-rgb), 0.35);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.45),
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.25),
+        0 0 50px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.nav-button:hover::after {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 50%,
+        transparent 100%
+    );
+}
+
+.nav-button:hover .nav-shimmer {
+    left: 150%;
+    opacity: 1;
+}
+
+/* 导航按钮点击3D按压反馈 */
+.nav-button:active {
+    transform: translateY(-2px) scale(0.96) rotateX(-2deg);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
+        0 0 30px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 3px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nav-button:active .nav-ripple {
+    animation: navRippleExpand 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes navRippleExpand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+    }
+}
+
+/* 导航图标终极3D增强 */
+.nav-icon {
+    width: 36px;
+    height: 36px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 6px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: brightness(0.9) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    transform-style: preserve-3d;
+}
+
+.nav-button:hover .nav-icon {
+    transform: scale(1.2) translateY(-4px) rotateY(15deg) translateZ(10px);
+    filter: brightness(1.15) drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4))
+            drop-shadow(0 0 12px rgba(var(--primary-color-rgb), 0.4));
+}
+
+/* 导航文字渐变效果 */
+.nav-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.3px;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 1;
+}
+
+.nav-button:hover .nav-text {
+    transform: scale(1.08) translateY(-1px);
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.4);
+}
+
+/* 控制图标终极3D视觉增强 */
+.control-icon {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    perspective: 600px;
+    filter: brightness(0.85) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+    cursor: pointer;
+}
+
+/* 控制图标发光光晕 */
+.control-icon::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    filter: blur(8px);
+    transform: scale(0.5);
+}
+
+/* 控制图标悬停终极3D效果 */
+.control-icon:hover {
+    transform: scale(1.3) rotateY(10deg) translateZ(15px);
+    filter: brightness(1.2) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))
+            drop-shadow(0 0 16px rgba(var(--primary-color-rgb), 0.5));
+}
+
+.control-icon:hover::before {
+    opacity: 1;
+    transform: scale(1);
+    animation: controlIconGlow 2s ease-in-out infinite;
+}
+
+@keyframes controlIconGlow {
+    0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+/* 控制图标点击3D按压反馈 */
+.control-icon:active {
+    transform: scale(0.95) rotateY(-5deg) translateZ(5px);
+    filter: brightness(1.0) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))
+            drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.4));
+    transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+/* ============================================
+   【第50轮UI美化 - 优化点3】车辆状态指示器视觉与动画增强
+   发光指示器、状态切换动画、呼吸效果、3D深度渲染
+   ============================================ */
+/* 车辆状态指示器容器终极增强 */
+.car-status-indicators {
+    position: relative;
+    padding: 8px 20px;
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 50%,
+            rgba(0, 0, 0, 0.1) 100%),
+        var(--surface-color);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform-style: preserve-3d;
+    perspective: 800px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 状态指示器容器渐变发光边框 */
+.car-status-indicators::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.12) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: all 0.4s ease;
+}
+
+.car-status-indicators:hover::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 50%,
+        transparent 100%
+    );
+}
+
+.car-status-indicators:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 12px 36px rgba(0, 0, 0, 0.45),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.2),
+        0 0 30px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+}
+
+/* 档位指示器终极视觉增强 */
+.gear-indicator {
+    position: relative;
+    font-size: 20px;
+    font-weight: 700;
+    min-width: 42px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    border-radius: 10px;
+    background:
+        radial-gradient(circle,
+            rgba(var(--primary-color-rgb), 0.2) 0%,
+            transparent 70%);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+}
+
+/* 档位指示器发光效果 */
+.gear-indicator::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 12px;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    filter: blur(8px);
+    transition: opacity 0.4s ease;
+}
+
+.gear-indicator::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 100%);
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.gear-indicator:hover::before {
+    opacity: 1;
+    animation: gearGlowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes gearGlowPulse {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+.gear-indicator:hover {
+    transform: scale(1.15) translateZ(10px);
+    text-shadow:
+        0 0 20px rgba(var(--primary-color-rgb), 0.7),
+        0 0 40px rgba(var(--primary-color-rgb), 0.4);
+}
+
+/* R档特殊红色发光 */
+.gear-indicator.gear-r {
+    background:
+        radial-gradient(circle,
+            rgba(255, 82, 82, 0.25) 0%,
+            transparent 70%);
+}
+
+.gear-indicator.gear-r::before {
+    background: radial-gradient(circle,
+        rgba(255, 82, 82, 0.4) 0%,
+        transparent 70%);
+}
+
+.gear-indicator.gear-r:hover {
+    text-shadow:
+        0 0 20px rgba(255, 82, 82, 0.8),
+        0 0 40px rgba(255, 82, 82, 0.5);
+}
+
+/* N档特殊黄色发光 */
+.gear-indicator.gear-n {
+    background:
+        radial-gradient(circle,
+            rgba(255, 215, 64, 0.25) 0%,
+            transparent 70%);
+}
+
+.gear-indicator.gear-n::before {
+    background: radial-gradient(circle,
+        rgba(255, 215, 64, 0.4) 0%,
+        transparent 70%);
+}
+
+.gear-indicator.gear-n:hover {
+    text-shadow:
+        0 0 20px rgba(255, 215, 64, 0.8),
+        0 0 40px rgba(255, 215, 64, 0.5);
+}
+
+/* 转向灯指示器终极闪烁动画 */
+.turn-indicator.active {
+    position: relative;
+    color: #ffdd00;
+    font-weight: 600;
+    animation: turnIndicatorBlink 0.6s ease-in-out infinite;
+}
+
+.turn-indicator.active::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 8px;
+    background: radial-gradient(circle,
+        rgba(255, 221, 0, 0.5) 0%,
+        transparent 70%);
+    pointer-events: none;
+    filter: blur(6px);
+    animation: turnGlowBlink 0.6s ease-in-out infinite;
+}
+
+@keyframes turnIndicatorBlink {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+        text-shadow: 0 0 15px rgba(255, 221, 0, 0.8);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(0.95);
+        text-shadow: 0 0 5px rgba(255, 221, 0, 0.4);
+    }
+}
+
+@keyframes turnGlowBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* 车门指示器警告效果 */
+.door-indicator {
+    position: relative;
+    color: #ff5252;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background:
+        radial-gradient(circle,
+            rgba(255, 82, 82, 0.3) 0%,
+            transparent 70%);
+    animation: doorWarningPulse 1.2s ease-in-out infinite;
+}
+
+.door-indicator::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 10px;
+    background: radial-gradient(circle,
+        rgba(255, 82, 82, 0.5) 0%,
+        transparent 70%);
+    pointer-events: none;
+    filter: blur(8px);
+    animation: doorGlowPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes doorWarningPulse {
+    0%, 100% {
+        transform: scale(1);
+        text-shadow: 0 0 12px rgba(255, 82, 82, 0.7);
+    }
+    50% {
+        transform: scale(1.08);
+        text-shadow: 0 0 20px rgba(255, 82, 82, 1);
+    }
+}
+
+@keyframes doorGlowPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* 锁车指示器状态切换 */
+.lock-indicator {
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lock-indicator::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 8px;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    filter: blur(6px);
+    transition: opacity 0.4s ease, background 0.4s ease;
+}
+
+.lock-indicator.unlocked::before {
+    background: radial-gradient(circle,
+        rgba(255, 152, 0, 0.4) 0%,
+        transparent 70%);
+}
+
+.lock-indicator:hover::before {
+    opacity: 1;
+}
+
+.lock-indicator:hover {
+    transform: scale(1.15);
+}
+
