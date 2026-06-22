@@ -105,4 +105,24 @@
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
     </style>
+    
+    <!-- 现代化按钮样式 -->
+    <style name="ModernButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_modern_selector</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/text_base</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:minHeight">@dimen/button_height_lg</item>
+        <item name="android:minWidth">120dp</item>
+        <item name="android:paddingLeft">@dimen/spacing_6</item>
+        <item name="android:paddingRight">@dimen/spacing_6</item>
+        <item name="android:stateListAnimator">@anim/button_state_animator</item>
+    </style>
+    
+    <!-- 卡片样式 -->
+    <style name="ModernCard">
+        <item name="android:background">@drawable/card_elevation_background</item>
+        <item name="android:padding">@dimen/spacing_6</item>
+        <item name="android:layout_margin">@dimen/spacing_4</item>
+    </style>
 </resources>
