@@ -6007,5 +6007,1243 @@ input[type="range"]::-moz-range-thumb:hover {
     transform: none;
     box-shadow: none;
 }
-    border-width: 4px;
+
+/* ============================================
+   【第29轮优化点1】分割线/分隔符视觉美化系统
+   渐变分割线、发光分割线、装饰性分割线、图标分割线
+   ============================================ */
+/* ========== 基础分割线 ========== */
+.divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border-color);
+    margin: var(--spacing-lg) 0;
+    position: relative;
+    border: none;
 }
+
+/* ========== 渐变分割线 - 增强版 ========== */
+.divider-gradient {
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 20%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 80%,
+        transparent 100%
+    );
+    margin: var(--spacing-xl) 0;
+    position: relative;
+    border: none;
+}
+
+/* 主题色渐变分割线 */
+.divider-gradient-primary {
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(var(--primary-color-rgb), 0.15) 25%,
+        rgba(var(--primary-color-rgb), 0.35) 50%,
+        rgba(var(--secondary-color-rgb), 0.25) 75%,
+        transparent 100%
+    );
+    margin: var(--spacing-xl) 0;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.1);
+}
+
+/* 双渐变分割线 */
+.divider-double-gradient {
+    height: 2px;
+    background: 
+        linear-gradient(90deg, transparent, rgba(var(--primary-color-rgb), 0.4), transparent),
+        linear-gradient(90deg, transparent, rgba(var(--secondary-color-rgb), 0.3), transparent);
+    background-size: 100% 1px, 100% 1px;
+    background-position: 0 0, 0 1px;
+    background-repeat: no-repeat;
+    margin: var(--spacing-xl) 0;
+    border: none;
+}
+
+/* ========== 发光分割线 ========== */
+.divider-glow {
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(var(--primary-color-rgb), 0.5) 50%,
+        transparent 100%
+    );
+    margin: var(--spacing-xl) 0;
+    position: relative;
+    border: none;
+    box-shadow: 
+        0 0 10px rgba(var(--primary-color-rgb), 0.3),
+        0 0 20px rgba(var(--primary-color-rgb), 0.15),
+        0 0 30px rgba(var(--primary-color-rgb), 0.1);
+    animation: dividerGlow 3s ease-in-out infinite;
+}
+
+@keyframes dividerGlow {
+    0%, 100% {
+        opacity: 0.8;
+        box-shadow: 
+            0 0 10px rgba(var(--primary-color-rgb), 0.3),
+            0 0 20px rgba(var(--primary-color-rgb), 0.15);
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 
+            0 0 15px rgba(var(--primary-color-rgb), 0.4),
+            0 0 30px rgba(var(--primary-color-rgb), 0.25),
+            0 0 45px rgba(var(--primary-color-rgb), 0.1);
+    }
+}
+
+/* ========== 装饰性分割线 - 带圆点 ========== */
+.divider-dot {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: var(--spacing-xl) 0;
+    gap: var(--spacing-md);
+}
+
+.divider-dot::before,
+.divider-dot::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+}
+
+.divider-dot::before {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.15) 100%
+    );
+}
+
+.divider-dot .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
+    }
+    50% {
+        transform: scale(1.2);
+        box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.7),
+                    0 0 25px rgba(var(--primary-color-rgb), 0.3);
+    }
+}
+
+/* 多圆点分割线 */
+.divider-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: var(--spacing-xl) 0;
+    gap: 8px;
+}
+
+.divider-dots .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.divider-dots .dot.active {
+    background: var(--primary-color);
+    box-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.5);
+    animation: dotsBreathe 1.5s ease-in-out infinite;
+}
+
+.divider-dots .dot:nth-child(1) { animation-delay: 0s; }
+.divider-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.divider-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+.divider-dots .dot:nth-child(4) { animation-delay: 0.6s; }
+.divider-dots .dot:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes dotsBreathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+}
+
+/* ========== 图标分割线 ========== */
+.divider-icon {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: var(--spacing-xl) 0;
+    gap: var(--spacing-md);
+}
+
+.divider-icon::before,
+.divider-icon::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 100%
+    );
+}
+
+.divider-icon::after {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 100%
+    );
+}
+
+.divider-icon .icon-wrapper {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--primary-color-rgb), 0.1);
+    border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.divider-icon .icon-wrapper img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 4px rgba(var(--primary-color-rgb), 0.5));
+}
+
+/* ========== 垂直分割线 ========== */
+.divider-vertical {
+    width: 1px;
+    height: 100%;
+    min-height: 24px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.15) 70%,
+        transparent 100%
+    );
+    margin: 0 var(--spacing-md);
+}
+
+/* 垂直发光分割线 */
+.divider-vertical-glow {
+    width: 1px;
+    height: 100%;
+    min-height: 24px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(var(--primary-color-rgb), 0.4) 50%,
+        transparent 100%
+    );
+    margin: 0 var(--spacing-md);
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
+}
+
+/* ========== 粗分割线 - 区块分隔 ========== */
+.divider-thick {
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 20%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 80%,
+        transparent 100%
+    );
+    border-radius: 2px;
+    margin: var(--spacing-2xl) 0;
+    border: none;
+}
+
+/* ========== 波浪分割线 ========== */
+.divider-wave {
+    height: 8px;
+    margin: var(--spacing-xl) 0;
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+.divider-wave::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        rgba(var(--primary-color-rgb), 0.2) 10px,
+        transparent 20px,
+        rgba(var(--secondary-color-rgb), 0.15) 30px,
+        transparent 40px
+    );
+    animation: waveMove 3s linear infinite;
+}
+
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ========== 分割线尺寸变体 ========== */
+.divider-sm { margin: var(--spacing-md) 0; }
+.divider-lg { margin: var(--spacing-2xl) 0; }
+.divider-none { margin: 0; }
+
+/* ========== 分割线文字装饰 ========== */
+.divider-text {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: var(--spacing-xl) 0;
+    gap: var(--spacing-md);
+}
+
+.divider-text::before,
+.divider-text::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 100%
+    );
+}
+
+.divider-text::after {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 100%
+    );
+}
+
+.divider-text .text-content {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   【第31轮UI美化优化点1】滑动切换与页面过渡动效系统升级
+   页面切换、标签页滑动、视图转场的流畅动画与视觉反馈
+   ============================================ */
+/* ========== 页面切换容器 ========== */
+.page-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    will-change: transform, opacity;
+    contain: layout style paint;
+}
+/* ========== 页面切换动画 - 滑动效果 ========== */
+/* 从右侧滑入 */
+.page-slide-in-right {
+    animation: slideInRightPage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.page-slide-out-left {
+    animation: slideOutLeftPage 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes slideInRightPage {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slideOutLeftPage {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-30%);
+        opacity: 0;
+    }
+}
+/* 从左侧滑入 */
+.page-slide-in-left {
+    animation: slideInLeftPage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.page-slide-out-right {
+    animation: slideOutRightPage 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes slideInLeftPage {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slideOutRightPage {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(30%);
+        opacity: 0;
+    }
+}
+/* ========== 页面切换动画 - 淡入淡出 ========== */
+.page-fade-in {
+    animation: fadeInPage 0.35s ease forwards;
+}
+.page-fade-out {
+    animation: fadeOutPage 0.35s ease forwards;
+}
+@keyframes fadeInPage {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeOutPage {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+/* ========== 页面切换动画 - 缩放效果 ========== */
+.page-scale-in {
+    animation: scaleInPage 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.page-scale-out {
+    animation: scaleOutPage 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes scaleInPage {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+@keyframes scaleOutPage {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+}
+/* ========== 标签页切换动效 ========== */
+.tab-container {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    position: relative;
+}
+.tab-indicator {
+    position: absolute;
+    height: calc(100% - 8px);
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.3) 100%
+    );
+    border-radius: 12px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3),
+                0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    z-index: 0;
+}
+.tab-item {
+    position: relative;
+    z-index: 1;
+    padding: 10px 20px;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: color 0.25s ease,
+                transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+}
+.tab-item:hover {
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+.tab-item.active {
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.tab-item:active {
+    transform: scale(0.97);
+}
+/* ========== 视图转场动效 ========== */
+.view-transition {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.3s ease;
+}
+.view-enter {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+}
+.view-enter-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.view-exit {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.view-exit-active {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.98);
+}
+/* ========== 滑动指示器 ========== */
+.swipe-indicator {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 12px;
+}
+.swipe-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+}
+.swipe-dot:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.2);
+}
+.swipe-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
+    box-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* ============================================
+   【第31轮UI美化优化点2】进度条与滑块组件视觉系统升级
+   渐变轨道、发光滑块、实时反馈动画、多状态样式
+   ============================================ */
+/* ========== 进度条基础样式 - 增强版 ========== */
+.progress-track {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.04) 100%
+    );
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3),
+                0 1px 0 rgba(255, 255, 255, 0.05);
+}
+/* 进度条填充 - 渐变发光 */
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--primary-color),
+        var(--secondary-color),
+        var(--primary-color)
+    );
+    background-size: 200% 100%;
+    border-radius: 4px;
+    position: relative;
+    transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.5),
+                0 0 4px rgba(var(--primary-color-rgb), 0.8) inset;
+    animation: progressGradient 3s linear infinite;
+    overflow: hidden;
+}
+@keyframes progressGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+/* 进度条光泽效果 */
+.progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: 4px 4px 0 0;
+    pointer-events: none;
+}
+/* ========== 滑块组件 - 增强视觉版 ========== */
+.slider-container {
+    position: relative;
+    padding: 16px 0;
+}
+.slider-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border-radius: 3px;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.slider-fill {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--primary-color),
+        var(--secondary-color)
+    );
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.4);
+}
+/* 滑块手柄 - 3D发光效果 */
+.slider-thumb {
+    position: absolute;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.6) 30%,
+        var(--primary-color) 100%
+    );
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.2s ease,
+                width 0.2s ease,
+                height 0.2s ease;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 0 0 4px rgba(var(--primary-color-rgb), 0.2),
+        0 0 20px rgba(var(--primary-color-rgb), 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    z-index: 2;
+}
+.slider-thumb::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+}
+.slider-thumb:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.5),
+        0 0 0 6px rgba(var(--primary-color-rgb), 0.3),
+        0 0 30px rgba(var(--primary-color-rgb), 0.6),
+        0 1px 0 rgba(255, 255, 255, 0.6) inset;
+}
+.slider-thumb:active {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        0 0 0 4px rgba(var(--primary-color-rgb), 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.5);
+}
+/* ========== 音量滑块特殊样式 ========== */
+.volume-slider .slider-fill {
+    background: linear-gradient(
+        90deg,
+        #4ade80,
+        #22c55e,
+        #16a34a
+    );
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+}
+.volume-slider .slider-thumb {
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.6) 30%,
+        #22c55e 100%
+    );
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 0 0 4px rgba(74, 222, 128, 0.2),
+        0 0 20px rgba(74, 222, 128, 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+.volume-slider .slider-thumb:hover {
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.5),
+        0 0 0 6px rgba(74, 222, 128, 0.3),
+        0 0 30px rgba(74, 222, 128, 0.6);
+}
+/* ========== 亮度滑块特殊样式 ========== */
+.brightness-slider .slider-fill {
+    background: linear-gradient(
+        90deg,
+        #fbbf24,
+        #f59e0b,
+        #d97706
+    );
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+}
+.brightness-slider .slider-thumb {
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.6) 30%,
+        #f59e0b 100%
+    );
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 0 0 4px rgba(251, 191, 36, 0.2),
+        0 0 20px rgba(251, 191, 36, 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+/* ========== 圆形进度条 ========== */
+.circular-progress {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.circular-progress svg {
+    transform: rotate(-90deg);
+}
+.circular-progress-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 6;
+}
+.circular-progress-fill {
+    fill: none;
+    stroke: url(#progressGradient);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    transition: stroke-dashoffset 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.5));
+}
+.circular-progress-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+/* ========== 步骤进度指示器 ========== */
+.steps-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-secondary);
+}
+.step-item.completed .step-circle {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(var(--primary-color-rgb), 0.4);
+    animation: stepComplete 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes stepComplete {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+.step-item.active .step-circle {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.5);
+    animation: stepActive 2s ease-in-out infinite;
+}
+@keyframes stepActive {
+    0%, 100% { box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.5); }
+    50% { box-shadow: 0 0 32px rgba(var(--primary-color-rgb), 0.7); }
+}
+.step-line {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+.step-line-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+.step-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    transition: color 0.3s ease;
+}
+.step-item.completed .step-label,
+.step-item.active .step-label {
+    color: var(--text-primary);
+}
+
+/* ============================================
+   【第31轮UI美化优化点3】Toast提示与通知系统视觉升级
+   毛玻璃背景、渐变边框、弹性动画、多类型通知样式
+   ============================================ */
+/* ========== Toast容器 ========== */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: var(--z-toast);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+    max-width: 360px;
+}
+.toast-container.bottom {
+    top: auto;
+    bottom: 20px;
+}
+.toast-container.center {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+}
+/* ========== Toast基础样式 - 增强版 ========== */
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: linear-gradient(
+        135deg,
+        rgba(30, 30, 35, 0.95) 0%,
+        rgba(20, 20, 25, 0.95) 100%
+    );
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset,
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+    animation: toastEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    will-change: transform, opacity;
+}
+/* Toast顶部光泽效果 */
+.toast::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+    border-radius: 18px 18px 0 0;
+}
+/* Toast边框渐变发光 */
+.toast::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+@keyframes toastEnter {
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+.toast.exit {
+    animation: toastExit 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes toastExit {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(40px) scale(0.9);
+    }
+}
+/* Toast图标 */
+.toast-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+}
+.toast-icon img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.95;
+}
+/* Toast内容 */
+.toast-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+.toast-title {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    margin-bottom: 2px;
+}
+.toast-message {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+/* Toast关闭按钮 */
+.toast-close {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+.toast-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.1);
+}
+.toast-close:active {
+    transform: scale(0.95);
+}
+.toast-close img {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+}
+/* ========== Toast类型变体 ========== */
+/* 成功Toast */
+.toast-success {
+    border-color: rgba(74, 222, 128, 0.3);
+}
+.toast-success::after {
+    background: linear-gradient(
+        135deg,
+        rgba(74, 222, 128, 0.4) 0%,
+        transparent 50%,
+        rgba(34, 197, 94, 0.2) 100%
+    );
+}
+.toast-success .toast-icon {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    box-shadow: 0 0 16px rgba(74, 222, 128, 0.4);
+}
+/* 警告Toast */
+.toast-warning {
+    border-color: rgba(251, 191, 36, 0.3);
+}
+.toast-warning::after {
+    background: linear-gradient(
+        135deg,
+        rgba(251, 191, 36, 0.4) 0%,
+        transparent 50%,
+        rgba(245, 158, 11, 0.2) 100%
+    );
+}
+.toast-warning .toast-icon {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 0 16px rgba(251, 191, 36, 0.4);
+}
+/* 错误Toast */
+.toast-error {
+    border-color: rgba(255, 82, 82, 0.3);
+}
+.toast-error::after {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.4) 0%,
+        transparent 50%,
+        rgba(239, 68, 68, 0.2) 100%
+    );
+}
+.toast-error .toast-icon {
+    background: linear-gradient(135deg, #ff5252, #ef4444);
+    box-shadow: 0 0 16px rgba(255, 82, 82, 0.4);
+}
+/* 信息Toast */
+.toast-info {
+    border-color: rgba(59, 130, 246, 0.3);
+}
+.toast-info::after {
+    background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.4) 0%,
+        transparent 50%,
+        rgba(37, 99, 235, 0.2) 100%
+    );
+}
+.toast-info .toast-icon {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
+}
+/* ========== 通知横幅样式 ========== */
+.notification-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        rgba(30, 30, 35, 0.95) 50%,
+        rgba(20, 20, 25, 0.95) 100%
+    );
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(var(--primary-color-rgb), 0.25);
+    border-radius: 20px;
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 0 40px rgba(var(--primary-color-rgb), 0.1);
+    position: relative;
+    overflow: hidden;
+    animation: bannerEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes bannerEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.notification-banner-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(var(--primary-color-rgb), 0.4);
+}
+.notification-banner-icon img {
+    width: 24px;
+    height: 24px;
+}
+.notification-banner-content {
+    flex: 1;
+}
+.notification-banner-title {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+.notification-banner-message {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+.notification-banner-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+.notification-banner-actions .btn {
+    padding: 8px 16px;
+    font-size: var(--font-size-sm);
+}
+/* ========== Toast尺寸变体 ========== */
+.toast-sm {
+    padding: 12px 16px;
+    gap: 10px;
+}
+.toast-sm .toast-icon {
+    width: 24px;
+    height: 24px;
+}
+.toast-sm .toast-icon img {
+    width: 14px;
+    height: 14px;
+}
+.toast-lg {
+    padding: 20px 24px;
+    gap: 16px;
+}
+.toast-lg .toast-icon {
+    width: 36px;
+    height: 36px;
+}
+.toast-lg .toast-icon img {
+    width: 22px;
+    height: 22px;
+}
+/* ========== Toast进度条 ========== */
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+.toast-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 0 0 18px 18px;
+    animation: toastProgress linear forwards;
+}
+@keyframes toastProgress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+/* ========== 静默通知样式 ========== */
+.toast-silent {
+    background: rgba(20, 20, 25, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.toast-silent::after {
+    opacity: 0.3;
+}
+
