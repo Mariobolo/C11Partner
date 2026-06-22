@@ -62,6 +62,14 @@
         <item name="android:paddingEnd">12dp</item>
     </style>
     
+    <!-- 基础文字阴影样式 -->
+    <style name="TextShadow">
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    
     <!-- 文字阴影样式 - 标题 -->
     <style name="TextShadow.Title">
         <item name="android:shadowColor">#80000000</item>
