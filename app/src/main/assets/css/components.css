@@ -9510,3 +9510,1062 @@ input[type="range"]::-moz-range-thumb:hover {
     cursor: not-allowed;
 }
 
+
+/* ============================================
+   【第34轮优化点1】徽章/标签/指示器视觉美化与动效增强
+   3D毛玻璃、渐变发光、弹性动画、多状态变体、微交互增强
+   ============================================ */
+/* ========== 徽章组件 - 3D终极增强版 ========== */
+.badge-ultra {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--primary-color-rgb), 0.3) 50%,
+        rgba(var(--secondary-color-rgb), 0.35) 100%
+    );
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(var(--primary-color-rgb), 0.5);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.3),
+        0 0 20px rgba(var(--primary-color-rgb), 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset,
+        0 -1px 0 rgba(0, 0, 0, 0.2) inset;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    letter-spacing: 0.3px;
+}
+
+/* 徽章3D顶部光泽层 */
+.badge-ultra::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    border-radius: 12px 12px 0 0;
+    pointer-events: none;
+}
+
+/* 徽章光泽扫过动效 */
+.badge-ultra::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 100%
+    );
+    transform: skewX(-25deg);
+    pointer-events: none;
+}
+
+/* 徽章悬停3D动效 */
+.badge-ultra:hover {
+    transform: translateY(-4px) scale(1.15) rotateX(5deg);
+    box-shadow: 
+        0 8px 28px rgba(var(--primary-color-rgb), 0.45),
+        0 0 40px rgba(var(--primary-color-rgb), 0.25),
+        0 2px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+.badge-ultra:hover::after {
+    animation: badgeShimmerSweep 0.8s ease-out;
+}
+
+@keyframes badgeShimmerSweep {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+
+/* 徽章点击按压效果 */
+.badge-ultra:active {
+    transform: translateY(-1px) scale(1.05) rotateX(0deg);
+    box-shadow: 
+        0 3px 12px rgba(var(--primary-color-rgb), 0.35),
+        0 0 25px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* ========== 徽章状态变体 - 3D增强版 ========== */
+.badge-ultra-success {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.55) 0%,
+        rgba(0, 200, 100, 0.35) 50%,
+        rgba(0, 180, 90, 0.4) 100%
+    );
+    border-color: rgba(0, 255, 136, 0.55);
+    box-shadow: 
+        0 4px 16px rgba(0, 255, 136, 0.35),
+        0 0 25px rgba(0, 255, 136, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.badge-ultra-success:hover {
+    box-shadow: 
+        0 8px 28px rgba(0, 255, 136, 0.5),
+        0 0 50px rgba(0, 255, 136, 0.3);
+}
+
+.badge-ultra-warning {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 215, 64, 0.6) 0%,
+        rgba(255, 180, 0, 0.4) 50%,
+        rgba(255, 150, 0, 0.45) 100%
+    );
+    border-color: rgba(255, 215, 64, 0.6);
+    color: #1a1a1a;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 4px 16px rgba(255, 215, 64, 0.4),
+        0 0 25px rgba(255, 215, 64, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.3) inset;
+}
+
+.badge-ultra-warning:hover {
+    box-shadow: 
+        0 8px 28px rgba(255, 215, 64, 0.55),
+        0 0 50px rgba(255, 215, 64, 0.35);
+}
+
+.badge-ultra-error {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.55) 0%,
+        rgba(220, 53, 69, 0.35) 50%,
+        rgba(200, 40, 50, 0.4) 100%
+    );
+    border-color: rgba(255, 82, 82, 0.55);
+    box-shadow: 
+        0 4px 16px rgba(255, 82, 82, 0.35),
+        0 0 25px rgba(255, 82, 82, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+.badge-ultra-error:hover {
+    box-shadow: 
+        0 8px 28px rgba(255, 82, 82, 0.5),
+        0 0 50px rgba(255, 82, 82, 0.3);
+}
+
+.badge-ultra-info {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 204, 255, 0.5) 0%,
+        rgba(0, 150, 200, 0.3) 50%,
+        rgba(0, 130, 180, 0.35) 100%
+    );
+    border-color: rgba(0, 204, 255, 0.5);
+    box-shadow: 
+        0 4px 16px rgba(0, 204, 255, 0.3),
+        0 0 25px rgba(0, 204, 255, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.badge-ultra-info:hover {
+    box-shadow: 
+        0 8px 28px rgba(0, 204, 255, 0.45),
+        0 0 50px rgba(0, 204, 255, 0.25);
+}
+
+/* ========== 徽章脉冲动画变体 ========== */
+.badge-pulse {
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        box-shadow: 
+            0 4px 16px rgba(var(--primary-color-rgb), 0.3),
+            0 0 20px rgba(var(--primary-color-rgb), 0.15),
+            0 0 0 0 rgba(var(--primary-color-rgb), 0.4);
+    }
+    50% {
+        box-shadow: 
+            0 4px 16px rgba(var(--primary-color-rgb), 0.3),
+            0 0 30px rgba(var(--primary-color-rgb), 0.25),
+            0 0 0 10px rgba(var(--primary-color-rgb), 0);
+    }
+}
+
+/* ========== 标签组件 - 3D终极增强版 ========== */
+.tag-ultra {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.06) 50%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.25),
+        0 1px 0 rgba(255, 255, 255, 0.12) inset;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* 标签顶部光泽 */
+.tag-ultra::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 100%
+    );
+    border-radius: 24px 24px 0 0;
+    pointer-events: none;
+}
+
+/* 标签光泽扫过 */
+.tag-ultra::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.18) 50%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    pointer-events: none;
+}
+
+/* 标签悬停3D效果 */
+.tag-ultra:hover {
+    transform: translateY(-3px) scale(1.05);
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 30px rgba(var(--primary-color-rgb), 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+.tag-ultra:hover::after {
+    animation: tagShimmer 0.7s ease-out;
+}
+
+@keyframes tagShimmer {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+
+/* 标签选中状态 */
+.tag-ultra.active {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.35) 0%,
+        rgba(var(--primary-color-rgb), 0.2) 50%,
+        rgba(var(--secondary-color-rgb), 0.25) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    color: #fff;
+    box-shadow: 
+        0 4px 20px rgba(var(--primary-color-rgb), 0.35),
+        0 0 30px rgba(var(--primary-color-rgb), 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+.tag-ultra.active:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 8px 28px rgba(var(--primary-color-rgb), 0.45),
+        0 0 50px rgba(var(--primary-color-rgb), 0.3);
+}
+
+/* ========== 状态指示器 - 3D增强版 ========== */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* 状态点发光效果 */
+.status-dot::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: statusGlow 2s ease-in-out infinite;
+}
+
+.status-dot::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+}
+
+@keyframes statusGlow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.1;
+    }
+}
+
+/* 状态变体 */
+.status-online .status-dot {
+    background: radial-gradient(
+        circle at 30% 30%,
+        #00ff88 0%,
+        #00cc66 100%
+    );
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+}
+
+.status-online .status-dot::before {
+    background: rgba(0, 255, 136, 0.5);
+}
+
+.status-offline .status-dot {
+    background: radial-gradient(
+        circle at 30% 30%,
+        #888 0%,
+        #666 100%
+    );
+    box-shadow: 0 0 6px rgba(136, 136, 136, 0.3);
+}
+
+.status-offline .status-dot::before {
+    background: rgba(136, 136, 136, 0.3);
+    animation: none;
+}
+
+.status-busy .status-dot {
+    background: radial-gradient(
+        circle at 30% 30%,
+        #ff5252 0%,
+        #dc3545 100%
+    );
+    box-shadow: 0 0 10px rgba(255, 82, 82, 0.6);
+}
+
+.status-busy .status-dot::before {
+    background: rgba(255, 82, 82, 0.5);
+}
+
+.status-away .status-dot {
+    background: radial-gradient(
+        circle at 30% 30%,
+        #ffc107 0%,
+        #ff9800 100%
+    );
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+}
+
+.status-away .status-dot::before {
+    background: rgba(255, 193, 7, 0.5);
+}
+
+/* ============================================
+   【第34轮优化点2】工具提示/气泡提示视觉与交互动效优化
+   增强毛玻璃、3D弹出、发光箭头、弹性动画、多主题变体
+   ============================================ */
+/* ========== 工具提示 - 终极增强版 ========== */
+.tooltip-ultra {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-ultra-content {
+    position: absolute;
+    z-index: var(--z-tooltip);
+    padding: 12px 18px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #fff;
+    background: linear-gradient(
+        145deg,
+        rgba(35, 35, 45, 0.98) 0%,
+        rgba(25, 25, 35, 0.98) 50%,
+        rgba(20, 20, 30, 0.98) 100%
+    );
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.85) translateY(12px) perspective(500px) rotateX(-10deg);
+    transform-origin: center bottom;
+    transition: 
+        opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        visibility 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 40px rgba(0, 0, 0, 0.25),
+        0 1px 0 rgba(255, 255, 255, 0.12) inset;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 工具提示内部3D层次 */
+.tooltip-ultra-content::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 50%
+    );
+    border-radius: 13px;
+    pointer-events: none;
+}
+
+/* 工具提示发光边框渐变 */
+.tooltip-ultra-content::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        transparent 30%,
+        transparent 70%,
+        rgba(var(--secondary-color-rgb), 0.2) 100%
+    );
+    border-radius: 15px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ========== 工具提示箭头 - 3D增强版 ========== */
+.tooltip-ultra-arrow {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(
+        135deg,
+        rgba(30, 30, 40, 0.98) 0%,
+        rgba(25, 25, 35, 0.98) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.tooltip-ultra-arrow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        transparent 50%
+    );
+}
+
+/* ========== 工具提示显示状态 ========== */
+.tooltip-ultra:hover .tooltip-ultra-content,
+.tooltip-ultra.active .tooltip-ultra-content {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0) perspective(500px) rotateX(0deg);
+}
+
+/* ========== 工具提示位置变体 ========== */
+/* 底部提示（默认） */
+.tooltip-ultra-bottom .tooltip-ultra-content {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.85) translateY(12px) perspective(500px) rotateX(-10deg);
+    margin-top: 12px;
+}
+
+.tooltip-ultra-bottom:hover .tooltip-ultra-content,
+.tooltip-ultra-bottom.active .tooltip-ultra-content {
+    transform: translateX(-50%) scale(1) translateY(0) perspective(500px) rotateX(0deg);
+}
+
+.tooltip-ultra-bottom .tooltip-ultra-arrow {
+    top: 100%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+}
+
+/* 顶部提示 */
+.tooltip-ultra-top .tooltip-ultra-content {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.85) translateY(-12px) perspective(500px) rotateX(10deg);
+    transform-origin: center top;
+    margin-bottom: 12px;
+}
+
+.tooltip-ultra-top:hover .tooltip-ultra-content,
+.tooltip-ultra-top.active .tooltip-ultra-content {
+    transform: translateX(-50%) scale(1) translateY(0) perspective(500px) rotateX(0deg);
+}
+
+.tooltip-ultra-top .tooltip-ultra-arrow {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -8px;
+    margin-bottom: -8px;
+    transform: rotate(225deg);
+}
+
+/* 左侧提示 */
+.tooltip-ultra-left .tooltip-ultra-content {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%) scale(0.85) translateX(12px) perspective(500px) rotateY(10deg);
+    transform-origin: right center;
+    margin-right: 12px;
+}
+
+.tooltip-ultra-left:hover .tooltip-ultra-content,
+.tooltip-ultra-left.active .tooltip-ultra-content {
+    transform: translateY(-50%) scale(1) translateX(0) perspective(500px) rotateY(0deg);
+}
+
+.tooltip-ultra-left .tooltip-ultra-arrow {
+    right: 100%;
+    top: 50%;
+    margin-top: -8px;
+    margin-right: -8px;
+    transform: rotate(-45deg);
+}
+
+/* 右侧提示 */
+.tooltip-ultra-right .tooltip-ultra-content {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) scale(0.85) translateX(-12px) perspective(500px) rotateY(-10deg);
+    transform-origin: left center;
+    margin-left: 12px;
+}
+
+.tooltip-ultra-right:hover .tooltip-ultra-content,
+.tooltip-ultra-right.active .tooltip-ultra-content {
+    transform: translateY(-50%) scale(1) translateX(0) perspective(500px) rotateY(0deg);
+}
+
+.tooltip-ultra-right .tooltip-ultra-arrow {
+    left: 100%;
+    top: 50%;
+    margin-top: -8px;
+    margin-left: -8px;
+    transform: rotate(135deg);
+}
+
+/* ========== 工具提示主题变体 ========== */
+.tooltip-ultra-primary .tooltip-ultra-content {
+    background: linear-gradient(
+        145deg,
+        rgba(var(--primary-color-rgb), 0.45) 0%,
+        rgba(var(--primary-color-rgb), 0.3) 50%,
+        rgba(25, 25, 35, 0.95) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 50px rgba(var(--primary-color-rgb), 0.25),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+.tooltip-ultra-primary .tooltip-ultra-content::after {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        transparent 50%
+    );
+}
+
+.tooltip-ultra-dark .tooltip-ultra-content {
+    background: linear-gradient(
+        145deg,
+        rgba(15, 15, 20, 0.99) 0%,
+        rgba(10, 10, 15, 0.99) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ========== 工具提示尺寸与多行变体 ========== */
+.tooltip-ultra-sm .tooltip-ultra-content {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 10px;
+}
+
+.tooltip-ultra-lg .tooltip-ultra-content {
+    padding: 16px 24px;
+    font-size: 14px;
+    border-radius: 18px;
+}
+
+.tooltip-ultra-multiline .tooltip-ultra-content {
+    white-space: normal;
+    max-width: 320px;
+    text-align: left;
+    line-height: 1.6;
+}
+
+/* ============================================
+   【第34轮优化点3】骨架屏/加载状态视觉细节与动画优化
+   增强光泽流动、脉冲动画、渐变效果、3D深度层次
+   ============================================ */
+/* ========== 骨架屏 - 终极增强版 ========== */
+.skeleton-ultra {
+    position: relative;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.06) 50%,
+        rgba(255, 255, 255, 0.1) 75%,
+        rgba(255, 255, 255, 0.04) 100%
+    );
+    background-size: 400% 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    animation: ultraShimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes ultraShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* 骨架屏3D深度光泽层 */
+.skeleton-ultra::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 40%,
+        rgba(0, 0, 0, 0.05) 100%
+    );
+    pointer-events: none;
+}
+
+/* 骨架屏主光泽扫过 */
+.skeleton-ultra::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0.15) 70%,
+        transparent 100%
+    );
+    transform: skewX(-25deg);
+    animation: ultraShimmerSweep 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes ultraShimmerSweep {
+    0% { left: -150%; }
+    100% { left: 150%; }
+}
+
+/* ========== 主题色渐变骨架屏 ========== */
+.skeleton-ultra-gradient {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(var(--primary-color-rgb), 0.12) 25%,
+        rgba(var(--secondary-color-rgb), 0.1) 50%,
+        rgba(var(--primary-color-rgb), 0.12) 75%,
+        rgba(255, 255, 255, 0.03) 100%
+    );
+    background-size: 400% 100%;
+    animation: gradientShimmer 3s ease-in-out infinite;
+}
+
+@keyframes gradientShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-ultra-gradient::after {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(var(--primary-color-rgb), 0.15) 30%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(var(--secondary-color-rgb), 0.15) 70%,
+        transparent 100%
+    );
+}
+
+/* ========== 骨架屏组件变体 ========== */
+/* 文本骨架 */
+.skeleton-ultra-text {
+    height: 16px;
+    margin-bottom: 10px;
+}
+
+.skeleton-ultra-text.short { width: 55%; }
+.skeleton-ultra-text.medium { width: 75%; }
+.skeleton-ultra-text.long { width: 100%; }
+.skeleton-ultra-text:last-child { margin-bottom: 0; width: 40%; }
+
+/* 头像骨架 */
+.skeleton-ultra-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+}
+
+.skeleton-ultra-avatar.lg { width: 72px; height: 72px; }
+.skeleton-ultra-avatar.sm { width: 40px; height: 40px; }
+
+/* 卡片骨架 */
+.skeleton-ultra-card {
+    height: 140px;
+    border-radius: 16px;
+}
+
+.skeleton-ultra-card::before {
+    border-radius: 16px;
+}
+
+/* 图片骨架 */
+.skeleton-ultra-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+}
+
+/* 按钮骨架 */
+.skeleton-ultra-button {
+    height: 42px;
+    width: 120px;
+    border-radius: 12px;
+}
+
+/* 圆形骨架 */
+.skeleton-ultra-circle {
+    border-radius: 50%;
+}
+
+/* ========== 脉冲骨架屏变体 ========== */
+.skeleton-ultra-pulse {
+    background: rgba(255, 255, 255, 0.08);
+    animation: ultraPulse 2s ease-in-out infinite;
+}
+
+.skeleton-ultra-pulse::before {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        transparent 50%
+    );
+}
+
+.skeleton-ultra-pulse::after {
+    display: none;
+}
+
+@keyframes ultraPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(0.98);
+    }
+}
+
+/* ========== 波浪骨架屏变体 ========== */
+.skeleton-ultra-wave {
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+}
+
+.skeleton-ultra-wave::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 20%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0.15) 80%,
+        transparent 100%
+    );
+    animation: waveMove 2s linear infinite;
+    transform: translateX(-100%);
+}
+
+@keyframes waveMove {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ========== 加载容器 - 增强版 ========== */
+.loading-container-ultra {
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-spinner-ultra {
+    width: 48px;
+    height: 48px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--primary-color);
+    border-right-color: var(--secondary-color);
+    border-radius: 50%;
+    animation: spinUltra 1s linear infinite;
+    box-shadow: 
+        0 0 20px rgba(var(--primary-color-rgb), 0.3),
+        0 0 40px rgba(var(--primary-color-rgb), 0.15);
+}
+
+@keyframes spinUltra {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 双环加载动画 */
+.loading-double-ring {
+    position: relative;
+    width: 48px;
+    height: 48px;
+}
+
+.loading-double-ring::before,
+.loading-double-ring::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid transparent;
+}
+
+.loading-double-ring::before {
+    inset: 0;
+    border-top-color: var(--primary-color);
+    animation: spinUltra 1s linear infinite;
+}
+
+.loading-double-ring::after {
+    inset: 6px;
+    border-bottom-color: var(--secondary-color);
+    animation: spinUltra 0.8s linear infinite reverse;
+}
+
+/* 三点跳动加载 */
+.loading-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.loading-dot {
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(
+        135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    border-radius: 50%;
+    animation: dotBounce 1.4s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
+}
+
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* ========== 页面加载遮罩 - 终极增强版 ========== */
+.loading-overlay-ultra {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.85) 0%,
+        rgba(0, 0, 0, 0.92) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    animation: fadeInUltra 0.4s ease;
+}
+
+@keyframes fadeInUltra {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.loading-overlay-content {
+    text-align: center;
+}
+
+.loading-overlay-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 24px;
+    background: linear-gradient(
+        135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 20px 60px rgba(var(--primary-color-rgb), 0.4),
+        0 0 80px rgba(var(--primary-color-rgb), 0.2);
+    animation: logoPulse 2s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 
+            0 20px 60px rgba(var(--primary-color-rgb), 0.4),
+            0 0 80px rgba(var(--primary-color-rgb), 0.2);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 
+            0 25px 80px rgba(var(--primary-color-rgb), 0.5),
+            0 0 100px rgba(var(--primary-color-rgb), 0.3);
+    }
+}
+
+.loading-overlay-text {
+    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 20px;
+    letter-spacing: 0.5px;
+}
+
+.loading-overlay-progress {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-top: 16px;
+    overflow: hidden;
+}
+
+.loading-overlay-progress-bar {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 50%,
+        var(--primary-color) 100%
+    );
+    background-size: 200% 100%;
+    border-radius: 2px;
+    animation: progressFlow 2s linear infinite;
+    width: 60%;
+}
+
+@keyframes progressFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
