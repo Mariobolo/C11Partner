@@ -2327,39 +2327,117 @@
    ============================================ */
 
 /* ========== 设置分组标题 - 终极美化 ========== */
+/* ========== 设置分组标题 - 【优化点1】视觉终极美化 ========== */
 .settings-group-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.92);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin: 24px 0 14px;
-    padding: 0 4px;
+    letter-spacing: 2px;
+    margin: 30px 0 18px;
+    padding: 0 6px;
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
+    background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        rgba(var(--primary-color-rgb), 0.8) 50%,
+        rgba(var(--secondary-color-rgb), 0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.3);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    perspective: 800px;
 }
-
+/* 分组标题左侧装饰条 - 3D增强版 */
 .settings-group-title::before {
     content: '';
     flex: 0;
-    width: 4px;
-    height: 18px;
+    width: 5px;
+    height: 22px;
     background: linear-gradient(180deg,
         var(--primary-color) 0%,
-        var(--secondary-color) 100%);
-    border-radius: 2px;
-    box-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.5);
+        var(--secondary-color) 50%,
+        rgba(255, 215, 0, 0.8) 100%);
+    border-radius: 3px;
+    box-shadow: 
+        0 0 15px rgba(var(--primary-color-rgb), 0.6),
+        0 0 30px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 0 6px rgba(255, 255, 255, 0.4);
+    position: relative;
+    animation: groupTitleGlow 3s ease-in-out infinite alternate;
 }
-
+/* 分组标题装饰条发光光晕 */
+.settings-group-title::before::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: radial-gradient(circle, 
+        rgba(var(--primary-color-rgb), 0.4) 0%, 
+        transparent 70%);
+    filter: blur(6px);
+    border-radius: 50%;
+}
+/* 分组标题右侧分隔线 - 渐变增强版 */
 .settings-group-title::after {
     content: '';
     flex: 1;
-    height: 1px;
+    height: 2px;
     background: linear-gradient(90deg,
-        rgba(255, 255, 255, 0.15) 0%,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.3) 40%,
+        rgba(255, 255, 255, 0.15) 70%,
         transparent 100%);
+    position: relative;
+    overflow: hidden;
+    border-radius: 1px;
+}
+/* 分隔线光泽流动效果 */
+.settings-group-title::after::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%);
+    animation: groupLineShimmer 4s ease-in-out infinite;
+}
+@keyframes groupTitleGlow {
+    0% { 
+        box-shadow: 
+            0 0 12px rgba(var(--primary-color-rgb), 0.5),
+            0 0 24px rgba(var(--primary-color-rgb), 0.25);
+        transform: scaleY(0.95);
+    }
+    100% { 
+        box-shadow: 
+            0 0 20px rgba(var(--primary-color-rgb), 0.7),
+            0 0 40px rgba(var(--primary-color-rgb), 0.4);
+        transform: scaleY(1.05);
+    }
+}
+@keyframes groupLineShimmer {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+/* 分组标题悬停增强效果 */
+.settings-group-title:hover {
+    transform: translateX(4px) scale(1.02);
+    letter-spacing: 2.5px;
+    text-shadow: 0 0 30px rgba(var(--primary-color-rgb), 0.5);
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+.settings-group-title:hover::before {
+    animation: groupTitleGlow 1.5s ease-in-out infinite alternate;
+    transform: scaleY(1.15) scaleX(1.2);
 }
 
 /* ========== 设置项 - 终极3D增强 ========== */

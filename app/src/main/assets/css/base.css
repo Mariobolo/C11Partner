@@ -2153,3 +2153,252 @@ button:focus-visible,
         transition: transform 0.15s ease;
     }
 }
+
+/* ============================================
+   【优化点3】无障碍支持终极增强
+   焦点样式、键盘导航、对比度、减少动画
+   ============================================ */
+
+/* ========== 焦点可见性增强 - WCAG 2.1 合规 ========== */
+*:focus-visible {
+    outline: 3px solid var(--primary-color) !important;
+    outline-offset: 3px !important;
+    box-shadow: 
+        0 0 0 6px rgba(var(--primary-color-rgb), 0.25),
+        0 0 20px rgba(var(--primary-color-rgb), 0.4) !important;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+/* 按钮焦点增强 */
+button:focus-visible,
+.btn:focus-visible,
+.dock-btn:focus-visible,
+.quick-app-item:focus-visible,
+.setting-item:focus-visible {
+    outline: 3px solid var(--primary-color) !important;
+    outline-offset: 4px !important;
+    box-shadow: 
+        0 0 0 8px rgba(var(--primary-color-rgb), 0.3),
+        0 0 30px rgba(var(--primary-color-rgb), 0.5) !important;
+}
+/* 输入框焦点增强 */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--primary-color) !important;
+    outline-offset: 2px !important;
+    box-shadow: 
+        0 0 0 6px rgba(var(--primary-color-rgb), 0.25),
+        0 0 25px rgba(var(--primary-color-rgb), 0.35),
+        inset 0 0 0 1px rgba(var(--primary-color-rgb), 0.5) !important;
+}
+/* 链接焦点样式 */
+a:focus-visible {
+    outline: 3px solid var(--primary-color) !important;
+    outline-offset: 2px !important;
+    border-radius: 2px;
+    box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.4) !important;
+}
+/* 移除默认焦点轮廓但保留键盘焦点 */
+*:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* ========== 键盘导航跳过链接 ========== */
+.skip-to-content {
+    position: fixed;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99999;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: #000000;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 12px;
+    box-shadow: 
+        0 8px 30px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(var(--primary-color-rgb), 0.5);
+    transition: top 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.skip-to-content:focus-visible {
+    top: 20px;
+}
+
+/* ========== 高对比度模式增强 ========== */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #ffffff !important;
+        --text-secondary: #e0e0e0 !important;
+        --border-color: rgba(255, 255, 255, 0.4) !important;
+        --border-light: rgba(255, 255, 255, 0.5) !important;
+    }
+    .widget,
+    .card,
+    .modal-content,
+    .setting-item,
+    .dock-bar,
+    .quick-app-item {
+        border-width: 2px !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+    .btn,
+    button,
+    .dock-btn {
+        border-width: 2px !important;
+    }
+    * {
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    }
+}
+
+/* ========== 减少动画模式 - 无障碍优先 ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .time-text#timeDisplay,
+    .weather-icon::before,
+    .dock-btn.active,
+    .turn-indicator.active {
+        animation: none !important;
+    }
+    .widget:hover,
+    .dock-btn:hover,
+    .quick-app-item:hover,
+    .setting-item:hover {
+        transform: none !important;
+    }
+    .widget::after,
+    .quick-app-item::after,
+    .setting-item::after {
+        animation: none !important;
+        display: none !important;
+    }
+}
+
+/* ========== 增强文本对比度 - 可读性优化 ========== */
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+/* 确保小文字可读性 */
+.text-xs,
+.font-xs,
+small {
+    font-weight: 500 !important;
+    letter-spacing: 0.3px;
+}
+/* 次要文字最小对比度保障 */
+.text-secondary,
+.text-tertiary {
+    opacity: 1 !important;
+}
+.text-secondary {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+.text-tertiary {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* ========== 触摸目标尺寸增强 - WCAG 2.1 48x48px ========== */
+button,
+.btn,
+.dock-btn,
+.quick-app-item,
+.setting-item,
+input[type="checkbox"],
+input[type="radio"],
+select {
+    min-height: 48px !important;
+    min-width: 48px !important;
+}
+/* 可点击区域扩展 */
+.clickable-expand {
+    position: relative;
+}
+.clickable-expand::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+}
+
+/* ========== 屏幕阅读器优化 ========== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+.sr-only-focusable:focus-visible {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 16px;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: var(--primary-color);
+    color: #000;
+    border-radius: 8px;
+    z-index: 9999;
+}
+
+/* ========== 颜色盲友好增强 ========== */
+/* 状态指示器不仅依赖颜色 */
+.status-indicator {
+    position: relative;
+}
+.status-indicator.success::before {
+    content: '✓';
+    position: absolute;
+    font-size: 8px;
+    top: -2px;
+    right: -2px;
+}
+.status-indicator.error::before {
+    content: '!';
+    position: absolute;
+    font-size: 8px;
+    top: -2px;
+    right: -2px;
+}
+.status-indicator.warning::before {
+    content: '⚠';
+    position: absolute;
+    font-size: 8px;
+    top: -2px;
+    right: -2px;
+}
+
+/* ========== 键盘导航焦点环动画 ========== */
+@keyframes focusRingPulse {
+    0%, 100% { 
+        box-shadow: 
+            0 0 0 3px var(--primary-color),
+            0 0 0 6px rgba(var(--primary-color-rgb), 0.25);
+    }
+    50% { 
+        box-shadow: 
+            0 0 0 3px var(--primary-color),
+            0 0 0 8px rgba(var(--primary-color-rgb), 0.35);
+    }
+}
+*:focus-visible {
+    animation: focusRingPulse 1.5s ease-in-out infinite;
+}
+
