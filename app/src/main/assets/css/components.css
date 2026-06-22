@@ -226,36 +226,39 @@
    【UI美化优化点1】按钮组件视觉与交互动效全面升级
    渐变背景、光泽效果、弹性动画、波纹点击、多层次阴影
    ============================================ */
-/* ========== 按钮组件 - 增强版 ========== */
+/* ========== 按钮组件 - 增强版【第43轮优化】 ========== */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 22px;
+    padding: 12px 24px;
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-semibold);
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
     background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0.06) 50%,
-        rgba(255, 255, 255, 0.08) 100%
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.07) 45%,
+        rgba(255, 255, 255, 0.09) 100%
     );
     color: var(--text-primary);
     cursor: pointer;
     transition: 
-        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.25s ease,
-        background 0.25s ease,
-        border-color 0.25s ease;
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease,
+        filter 0.3s ease;
     text-decoration: none;
     white-space: nowrap;
     position: relative;
     overflow: hidden;
     box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.2),
-        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+        0 6px 16px rgba(0, 0, 0, 0.25),
+        0 2px 6px rgba(0, 0, 0, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    will-change: transform, box-shadow;
 }
 /* 按钮顶部光泽效果 */
 .btn::before {
@@ -291,22 +294,28 @@
 .btn:hover {
     background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.18) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.12) 100%
+        rgba(255, 255, 255, 0.22) 0%,
+        rgba(255, 255, 255, 0.12) 45%,
+        rgba(255, 255, 255, 0.14) 100%
     );
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px) scale(1.02);
     box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.3),
-        0 1px 0 rgba(255, 255, 255, 0.12) inset,
-        0 0 0 1px rgba(255, 255, 255, 0.05);
+        0 12px 32px rgba(0, 0, 0, 0.35),
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset,
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 0 20px rgba(var(--primary-color-rgb), 0.1);
+    filter: brightness(1.05);
 }
 .btn:active {
-    transform: translateY(0) scale(0.97);
+    transform: translateY(1px) scale(0.96);
     box-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.2),
-        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+        0 2px 8px rgba(0, 0, 0, 0.25),
+        0 1px 4px rgba(0, 0, 0, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    filter: brightness(0.95);
+    transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
 }
 .btn:active::after {
     animation: buttonRipple 0.4s ease-out;
@@ -413,30 +422,32 @@
    【UI美化优化点2】卡片组件视觉深度与光泽增强
    渐变背景、多层次边框、顶部光泽、悬停动效、3D阴影
    ============================================ */
-/* ========== 卡片组件 - 视觉增强版 ========== */
+/* ========== 卡片组件 - 视觉增强版【第43轮优化】 ========== */
 .card {
     background: linear-gradient(
         180deg,
-        rgba(30, 30, 35, 0.7) 0%,
-        rgba(15, 15, 20, 0.7) 50%,
-        rgba(10, 10, 15, 0.75) 100%
+        rgba(35, 35, 42, 0.75) 0%,
+        rgba(20, 20, 26, 0.7) 40%,
+        rgba(12, 12, 18, 0.75) 100%
     );
-    backdrop-filter: blur(25px) saturate(150%);
-    -webkit-backdrop-filter: blur(25px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
     box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.4),
-        0 8px 24px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+        0 28px 80px rgba(0, 0, 0, 0.5),
+        0 12px 32px rgba(0, 0, 0, 0.35),
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+        0 1px 0 rgba(255, 255, 255, 0.12) inset;
     color: var(--text-primary);
     position: relative;
     overflow: hidden;
     transition: 
-        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease;
     transform-style: preserve-3d;
 }
 /* 卡片顶部光泽效果 - 增强版 */
@@ -476,16 +487,23 @@
     opacity: 0.5;
     transition: opacity 0.3s ease;
 }
-/* 卡片悬停效果 */
+/* 卡片悬停效果【第43轮优化】 */
 .card:hover {
-    transform: translateY(-4px) scale(1.01);
+    transform: translateY(-6px) scale(1.015);
     box-shadow: 
-        0 30px 80px rgba(0, 0, 0, 0.5),
-        0 12px 32px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-        0 1px 0 rgba(255, 255, 255, 0.12) inset,
-        0 0 40px rgba(var(--primary-color-rgb), 0.1);
-    border-color: rgba(255, 255, 255, 0.15);
+        0 40px 100px rgba(0, 0, 0, 0.55),
+        0 20px 48px rgba(0, 0, 0, 0.4),
+        0 8px 20px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+        0 1px 0 rgba(255, 255, 255, 0.15) inset,
+        0 0 60px rgba(var(--primary-color-rgb), 0.15);
+    border-color: rgba(255, 255, 255, 0.18);
+    background: linear-gradient(
+        180deg,
+        rgba(40, 40, 48, 0.8) 0%,
+        rgba(25, 25, 32, 0.75) 40%,
+        rgba(15, 15, 22, 0.8) 100%
+    );
 }
 .card:hover::after {
     opacity: 0.8;
