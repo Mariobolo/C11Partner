@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 蓝牙主体 - 白色 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M17.71,7.71L12,2H11v7.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L11,14.41V22h1l5.71,-5.71L13.41,12L17.71,7.71zM13,5.83L15.88,8.7L13,11.59V5.83zM15.88,15.3L13,18.17v-5.76L15.88,15.3z"/>
+    <!-- 蓝牙装饰 - 蓝色渐变效果 -->
+    <path
+        android:fillColor="#FF2196F3"
+        android:pathData="M12,2L17.71,7.71L13.41,12L17.71,16.29L12,22V14.41L16.59,9.83L12,5.17V2z"
+        android:alpha="0.3"/>
+</vector>

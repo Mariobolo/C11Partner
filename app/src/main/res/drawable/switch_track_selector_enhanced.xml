@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 开启状态 - 渐变+发光效果 -->
+    <item android:state_checked="true">
+        <layer-list>
+            <!-- 外发光效果 -->
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="#4000FF88" />
+                    <corners android:radius="@dimen/radius_full" />
+                    <size
+                        android:width="@dimen/switch_track_width"
+                        android:height="@dimen/switch_track_height" />
+                    <padding
+                        android:left="1dp"
+                        android:top="1dp"
+                        android:right="1dp"
+                        android:bottom="1dp" />
+                </shape>
+            </item>
+            <!-- 主背景渐变 -->
+            <item>
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="90"
+                        android:startColor="@color/primary_400"
+                        android:centerColor="@color/primary_500"
+                        android:endColor="@color/primary_600" />
+                    <corners android:radius="@dimen/radius_full" />
+                    <size
+                        android:width="@dimen/switch_track_width"
+                        android:height="@dimen/switch_track_height" />
+                </shape>
+            </item>
+            <!-- 内高光 -->
+            <item android:top="1dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="270"
+                        android:startColor="#40FFFFFF"
+                        android:endColor="#00FFFFFF" />
+                    <corners android:radius="@dimen/radius_full" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    
+    <!-- 关闭状态 - 深色质感 -->
+    <item>
+        <layer-list>
+            <!-- 底层阴影 -->
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="#40000000" />
+                    <corners android:radius="@dimen/radius_full" />
+                    <size
+                        android:width="@dimen/switch_track_width"
+                        android:height="@dimen/switch_track_height" />
+                </shape>
+            </item>
+            <!-- 主背景 -->
+            <item android:top="1dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="90"
+                        android:startColor="@color/gray_700"
+                        android:centerColor="@color/gray_600"
+                        android:endColor="@color/gray_700" />
+                    <corners android:radius="@dimen/radius_full" />
+                    <size
+                        android:width="@dimen/switch_track_width"
+                        android:height="@dimen/switch_track_height" />
+                </shape>
+            </item>
+            <!-- 内阴影 -->
+            <item android:top="2dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="270"
+                        android:startColor="#20000000"
+                        android:endColor="#00000000" />
+                    <corners android:radius="@dimen/radius_full" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

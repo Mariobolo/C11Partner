@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 铃铛主体 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,22 C13.1,22 14,21.1 14,20 L10,20 C10,21.1 10.9,22 12,22 Z M18,16 L18,11 C18,7.93 16.37,5.36 13.5,4.68 L13.5,4 C13.5,3.17 12.83,2.5 12,2.5 C11.17,2.5 10.5,3.17 10.5,4 L10.5,4.68 C7.64,5.36 6,7.92 6,11 L6,16 L4,18 L4,19 L20,19 L20,18 L18,16 Z" />
+    <!-- 橙色装饰点 -->
+    <circle
+        android:fillColor="#FF9800"
+        android:cx="18"
+        android:cy="6"
+        android:radius="4" />
+    <!-- 装饰点高光 -->
+    <circle
+        android:fillColor="#40FFFFFF"
+        android:cx="17"
+        android:cy="5"
+        android:radius="1.5" />
+</vector>

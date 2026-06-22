@@ -1,0 +1,25 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 喇叭主体 - 白色 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M3,9v6h4l5,5V4L7,9H3z"/>
+    <!-- 音量波纹1 - 绿色 -->
+    <path
+        android:fillColor="#FF00FF88"
+        android:pathData="M14,3.23v2.06c2.89,0.86 5,3.54 5,6.71s-2.11,5.85 -5,6.71v2.06c4.01,-0.91 7,-4.49 7,-8.77S18.01,4.14 14,3.23z"
+        android:alpha="0.7"/>
+    <!-- 音量波纹2 - 青色 -->
+    <path
+        android:fillColor="#FF00CCFF"
+        android:pathData="M16.5,12c0,-1.77 -1.02,-3.29 -2.5,-4.03v8.05c1.48,-0.73 2.5,-2.25 2.5,-4.02z"
+        android:alpha="0.8"/>
+    <!-- 喇叭高光 - 白色 -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M7,10l4,-3v10l-4,-3H4v-4H7z"
+        android:alpha="0.3"/>
+</vector>

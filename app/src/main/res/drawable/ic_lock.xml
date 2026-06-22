@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- 锁主体 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M18,8 L18,6 C18,2.69 15.31,0 12,0 C8.69,0 6,2.69 6,6 L6,8 C4.9,8 4,8.9 4,10 L4,20 C4,21.1 4.9,22 6,22 L18,22 C19.1,22 20,21.1 20,20 L20,10 C20,8.9 19.1,8 18,8 Z M12,17 C10.9,17 10,16.1 10,15 C10,13.9 10.9,13 12,13 C13.1,13 14,13.9 14,15 C14,16.1 13.1,17 12,17 Z" />
+    <!-- 锁扣 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8,6 C8,3.79 9.79,2 12,2 C14.21,2 16,3.79 16,6 L16,8 L8,8 L8,6 Z" />
+    <!-- 蓝色装饰 -->
+    <path
+        android:fillColor="#402196F3"
+        android:pathData="M12,17 C10.9,17 10,16.1 10,15 C10,13.9 10.9,13 12,13 C13.1,13 14,13.9 14,15 C14,16.1 13.1,17 12,17 Z" />
+</vector>

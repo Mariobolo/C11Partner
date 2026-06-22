@@ -139,4 +139,18 @@
         <item name="android:paddingBottom">@dimen/spacing_3</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
+    
+    <!-- 深色主题输入框样式（车机专用） -->
+    <style name="DarkEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/edittext_dark_background</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#80FFFFFF</item>
+        <item name="android:textSize">@dimen/text_base</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingLeft">@dimen/spacing_4</item>
+        <item name="android:paddingRight">@dimen/spacing_4</item>
+        <item name="android:paddingTop">@dimen/spacing_3</item>
+        <item name="android:paddingBottom">@dimen/spacing_3</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 </resources>
