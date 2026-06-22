@@ -4820,5 +4820,706 @@ input[type="range"]::-moz-range-thumb:hover {
 .loading-overlay .loader-spinner {
     width: 60px;
     height: 60px;
+}
+
+/* ============================================
+   【第29轮优化点1】标签页(Tabs)组件视觉与交互动效全面增强
+   3D深度效果、渐变背景、弹性切换动画、主题色发光、悬停微交互
+   ============================================ */
+/* ========== 标签页导航 - 视觉增强版 ========== */
+.tab-navigation {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+    );
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 标签页光泽效果 */
+.tab-navigation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+    border-radius: 16px 16px 0 0;
+}
+
+.tab-button {
+    position: relative;
+    flex: 1;
+    padding: 12px 20px;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 
+        all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        color 0.2s ease;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* 标签按钮光泽效果 */
+.tab-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 100%
+    );
+    border-radius: 12px 12px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* 标签按钮悬停效果 */
+.tab-button:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
+}
+
+.tab-button:hover::before {
+    opacity: 1;
+}
+
+/* 标签按钮激活状态 - 增强版 */
+.tab-button.active {
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.25) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    box-shadow: 
+        0 4px 20px rgba(var(--primary-color-rgb), 0.3),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+    transform: translateY(-2px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.tab-button.active::before {
+    opacity: 1;
+}
+
+/* 激活标签发光效果 */
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 14px;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        transparent 70%
+    );
+    opacity: 0;
+    animation: tabGlowPulse 2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes tabGlowPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* 标签内容切换动画 */
+.tab-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 
+        opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tab-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: tabContentSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tabContentSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ============================================
+   【第29轮优化点2】导航栏/侧边栏视觉与交互动效增强
+   毛玻璃背景、渐变边框、3D悬停效果、激活发光、弹性动画
+   ============================================ */
+/* ========== 导航栏 - 视觉增强版 ========== */
+.nav-bar {
+    background: linear-gradient(
+        180deg,
+        rgba(20, 20, 25, 0.85) 0%,
+        rgba(10, 10, 15, 0.9) 100%
+    );
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 导航栏顶部光泽 */
+.nav-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0.2) 80%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 导航栏渐变边框 */
+.nav-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        rgba(var(--secondary-color-rgb), 0.08) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* 导航按钮 - 增强版 */
+.nav-button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 16px;
+    color: var(--text-tertiary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 
+        all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        color 0.2s ease;
+    overflow: hidden;
+}
+
+/* 导航按钮背景渐变 */
+.nav-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 100%
+    );
+    border-radius: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* 导航按钮顶部光泽 */
+.nav-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        transparent 100%
+    );
+    border-radius: 14px 14px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* 导航按钮悬停效果 */
+.nav-button:hover {
+    color: var(--text-primary);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.nav-button:hover::before {
+    opacity: 0.5;
+}
+
+.nav-button:hover::after {
+    opacity: 1;
+}
+
+/* 导航按钮激活状态 */
+.nav-button.active {
+    color: #fff;
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    transform: translateY(-2px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.nav-button.active::before {
+    opacity: 1;
+}
+
+.nav-button.active::after {
+    opacity: 1;
+}
+
+/* 激活按钮发光效果 */
+.nav-button.active .nav-icon {
+    filter: drop-shadow(0 0 12px rgba(var(--primary-color-rgb), 0.6));
+    animation: navIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes navIconPulse {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.5)); }
+    50% { filter: drop-shadow(0 0 16px rgba(var(--primary-color-rgb), 0.7)); }
+}
+
+/* 导航按钮文字 */
+.nav-button span {
+    font-size: 11px;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.nav-button.active span {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* 侧边栏导航 */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+}
+
+.sidebar-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 
+        all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        padding-left 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar-nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 1) 0%,
+        rgba(var(--secondary-color-rgb), 1) 100%
+    );
+    border-radius: 0 2px 2px 0;
+    transition: height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
+}
+
+.sidebar-nav-item:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+    padding-left: 20px;
+}
+
+.sidebar-nav-item.active {
+    color: #fff;
+    background: linear-gradient(
+        90deg,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        rgba(var(--primary-color-rgb), 0.05) 50%,
+        transparent 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.2);
+    padding-left: 20px;
+}
+
+.sidebar-nav-item.active::before {
+    height: 24px;
+}
+
+.sidebar-nav-item-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav-item:hover .sidebar-nav-item-icon,
+.sidebar-nav-item.active .sidebar-nav-item-icon {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.4));
+}
+
+.sidebar-nav-item-text {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ============================================
+   【第29轮优化点3】徽章(Badge)与标签(Tag)组件视觉美化
+   渐变背景、发光效果、弹性动画、多类型配色、微交互
+   ============================================ */
+/* ========== 徽章组件 - 视觉增强版 ========== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    font-size: 11px;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.8) 0%,
+        rgba(var(--secondary-color-rgb), 0.6) 100%
+    );
+    border: 1px solid rgba(var(--primary-color-rgb), 0.5);
+    border-radius: 10px;
+    box-shadow: 
+        0 2px 8px rgba(var(--primary-color-rgb), 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    position: relative;
+    overflow: hidden;
+    transition: 
+        all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.2s ease;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* 徽章顶部光泽 */
+.badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        transparent 100%
+    );
+    border-radius: 10px 10px 0 0;
+    pointer-events: none;
+}
+
+/* 徽章悬停效果 */
+.badge:hover {
+    transform: scale(1.1);
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.25) inset,
+        0 0 12px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* 徽章圆点样式 */
+.badge-dot {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    padding: 0;
+    border-radius: 50%;
+    animation: badgeDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes badgeDotPulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.4);
+    }
+    50% { 
+        box-shadow: 0 0 0 6px rgba(var(--primary-color-rgb), 0);
+    }
+}
+
+/* 徽章尺寸变体 */
+.badge-sm {
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    font-size: 10px;
+    border-radius: 8px;
+}
+
+.badge-lg {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    font-size: 12px;
+    border-radius: 12px;
+}
+
+/* 徽章类型变体 */
+.badge-success {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.8) 0%, rgba(0, 200, 100, 0.6) 100%);
+    border-color: rgba(0, 255, 136, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
+}
+
+.badge-success:hover {
+    box-shadow: 
+        0 4px 16px rgba(0, 255, 136, 0.4),
+        0 0 12px rgba(0, 255, 136, 0.2);
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 152, 0, 0.7) 100%);
+    border-color: rgba(255, 193, 7, 0.5);
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+    color: #1a1a1a;
+    text-shadow: none;
+}
+
+.badge-warning:hover {
+    box-shadow: 
+        0 4px 16px rgba(255, 193, 7, 0.4),
+        0 0 12px rgba(255, 193, 7, 0.2);
+}
+
+.badge-error {
+    background: linear-gradient(135deg, rgba(255, 82, 82, 0.9) 0%, rgba(220, 53, 69, 0.7) 100%);
+    border-color: rgba(255, 82, 82, 0.5);
+    box-shadow: 0 2px 8px rgba(255, 82, 82, 0.3);
+}
+
+.badge-error:hover {
+    box-shadow: 
+        0 4px 16px rgba(255, 82, 82, 0.4),
+        0 0 12px rgba(255, 82, 82, 0.2);
+}
+
+.badge-info {
+    background: linear-gradient(135deg, rgba(0, 204, 255, 0.8) 0%, rgba(0, 150, 200, 0.6) 100%);
+    border-color: rgba(0, 204, 255, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 204, 255, 0.3);
+}
+
+.badge-info:hover {
+    box-shadow: 
+        0 4px 16px rgba(0, 204, 255, 0.4),
+        0 0 12px rgba(0, 204, 255, 0.2);
+}
+
+/* ========== 标签组件 - 视觉增强版 ========== */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.06) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 
+        all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 标签顶部光泽 */
+.tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        transparent 100%
+    );
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+}
+
+/* 标签悬停效果 */
+.tag:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* 标签激活状态 */
+.tag.active {
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.35) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.tag.active:hover {
+    box-shadow: 
+        0 6px 24px rgba(var(--primary-color-rgb), 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.25) inset,
+        0 0 20px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* 标签关闭按钮 */
+.tag-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: 14px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 2px;
+}
+
+.tag-close:hover {
+    color: #fff;
+    background: rgba(255, 82, 82, 0.3);
+    transform: scale(1.1);
+}
+
+/* 标签类型变体 */
+.tag-primary {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.4) 0%, rgba(var(--secondary-color-rgb), 0.25) 100%);
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+}
+
+.tag-success {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.4) 0%, rgba(0, 200, 100, 0.25) 100%);
+    border-color: rgba(0, 255, 136, 0.4);
+}
+
+.tag-warning {
+    color: #1a1a1a;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.5) 0%, rgba(255, 152, 0, 0.35) 100%);
+    border-color: rgba(255, 193, 7, 0.4);
+}
+
+.tag-error {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(255, 82, 82, 0.4) 0%, rgba(220, 53, 69, 0.25) 100%);
+    border-color: rgba(255, 82, 82, 0.4);
+}
+
+.tag-info {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(0, 204, 255, 0.4) 0%, rgba(0, 150, 200, 0.25) 100%);
+    border-color: rgba(0, 204, 255, 0.4);
+}
+
+/* 标签尺寸变体 */
+.tag-sm {
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 16px;
+}
+
+.tag-lg {
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 24px;
+}
     border-width: 4px;
 }
