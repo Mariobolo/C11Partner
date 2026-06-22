@@ -84,4 +84,21 @@
     <color name="gradient_start">#FF1976D2</color>
     <color name="gradient_center">#FF2196F3</color>
     <color name="gradient_end">#FF1E88E5</color>
+    
+    <!-- 现代车机主题渐变色 -->
+    <color name="gradient_blue_start">#FF1565C0</color>
+    <color name="gradient_blue_end">#FF42A5F5</color>
+    <color name="gradient_cyan_start">#FF00838F</color>
+    <color name="gradient_cyan_end">#FF26C6DA</color>
+    <color name="gradient_orange_start">#FFF57C00</color>
+    <color name="gradient_orange_end">#FFFFB74D</color>
+    
+    <!-- 玻璃拟态颜色 -->
+    <color name="glass_bg">#301E1E1E</color>
+    <color name="glass_border">#40FFFFFF</color>
+    
+    <!-- 增强发光效果 -->
+    <color name="glow_primary_strong">#4D2196F3</color>
+    <color name="glow_secondary_strong">#4D00BCD4</color>
+    <color name="glow_accent_strong">#4DFF9800</color>
 </resources>

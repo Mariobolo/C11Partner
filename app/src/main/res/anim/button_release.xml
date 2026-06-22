@@ -3,22 +3,21 @@
     android:interpolator="@android:interpolator/overshoot">
     <!-- 释放时回弹放大 -->
     <scale
-        android:duration="150"
+        android:duration="200"
         android:fromXScale="0.95"
         android:fromYScale="0.95"
-        android:toXScale="1.05"
+        android:toXScale="1.03"
         android:pivotX="50%"
         android:pivotY="50%" />
     <scale
-        android:duration="100"
         android:startOffset="150"
-        android:fromXScale="1.05"
-        android:fromYScale="1.05"
+        android:duration="100"
+        android:fromXScale="1.03"
+        android:fromYScale="1.03"
         android:toXScale="1.0"
-        android:toYScale="1.0"
         android:pivotX="50%"
         android:pivotY="50%" />
-    <!-- 恢复不透明 -->
+    <!-- 恢复透明度 -->
     <alpha
         android:duration="150"
         android:fromAlpha="0.85"

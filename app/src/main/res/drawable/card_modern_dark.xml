@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 外发光效果 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#082196F3" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+    
+    <!-- 主卡片背景 - 深色渐变 -->
+    <item
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="135"
+                android:startColor="#2A2A2A"
+                android:centerColor="#1E1E1E"
+                android:endColor="#252525" />
+            <corners android:radius="19dp" />
+            <stroke
+                android:width="0.5dp"
+                android:color="#20FFFFFF" />
+        </shape>
+    </item>
+    
+    <!-- 顶部高光 -->
+    <item
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#15FFFFFF"
+                android:centerColor="#08FFFFFF"
+                android:endColor="#00FFFFFF" />
+            <corners android:radius="19dp" />
+        </shape>
+    </item>
+</layer-list>

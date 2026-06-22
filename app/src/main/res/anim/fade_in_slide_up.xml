@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/decelerate_quint">
+    <!-- 淡入 -->
+    <alpha
+        android:duration="300"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
+    <!-- 向上滑入 -->
+    <translate
+        android:duration="300"
+        android:fromYDelta="20dp"
+        android:toYDelta="0dp" />
+</set>
