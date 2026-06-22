@@ -11293,3 +11293,633 @@ input[type="range"]::-moz-range-thumb:hover {
     transform: translateY(-50%) scale(1);
 }
 
+
+/* ============================================
+   【第37轮优化点1】输入框/表单组件视觉美化
+   渐变边框、焦点动效、输入状态反馈、标签浮动
+   ============================================ */
+/* ========== 输入框 - 3D视觉增强版 ========== */
+.input-ultra {
+    position: relative;
+    margin-bottom: 20px;
+}
+.input-ultra-field {
+    width: 100%;
+    padding: 16px 18px 16px 48px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: linear-gradient(
+        180deg,
+        rgba(30, 30, 35, 0.8) 0%,
+        rgba(20, 20, 25, 0.8) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+/* 输入框渐变边框效果 */
+.input-ultra::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 16px;
+    padding: 2px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+/* 输入框图标 */
+.input-ultra-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    opacity: 0.5;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 1;
+}
+.input-ultra-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(0.9);
+}
+/* 输入框浮动标签 */
+.input-ultra-label {
+    position: absolute;
+    left: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: var(--text-tertiary);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: transparent;
+    padding: 0 4px;
+}
+/* 输入框焦点状态 */
+.input-ultra-field:focus {
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    background: linear-gradient(
+        180deg,
+        rgba(35, 35, 40, 0.9) 0%,
+        rgba(25, 25, 30, 0.9) 100%
+    );
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 0 4px rgba(var(--primary-color-rgb), 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+.input-ultra-field:focus + .input-ultra-icon {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.15);
+    filter: drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.5));
+}
+.input-ultra-field:focus ~ .input-ultra-label,
+.input-ultra-field:not(:placeholder-shown) ~ .input-ultra-label {
+    top: 0;
+    left: 12px;
+    font-size: 12px;
+    color: var(--primary-color);
+    background: linear-gradient(
+        180deg,
+        rgba(25, 25, 30, 1) 0%,
+        rgba(20, 20, 25, 1) 100%
+    );
+    transform: translateY(-50%);
+    padding: 0 8px;
+    border-radius: 4px;
+    text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
+}
+.input-ultra-field:focus::before,
+.input-ultra-field:focus ~ .input-ultra::before {
+    opacity: 1;
+}
+/* 输入框悬停状态 */
+.input-ultra-field:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: linear-gradient(
+        180deg,
+        rgba(32, 32, 37, 0.85) 0%,
+        rgba(22, 22, 27, 0.85) 100%
+    );
+}
+/* 输入框禁用状态 */
+.input-ultra-field:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+}
+/* 输入框错误状态 */
+.input-ultra.error .input-ultra-field {
+    border-color: rgba(255, 82, 82, 0.5);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 0 0 4px rgba(255, 82, 82, 0.1);
+}
+.input-ultra.error .input-ultra-label {
+    color: #ff5252;
+}
+.input-ultra.error::before {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.5) 0%,
+        rgba(220, 53, 69, 0.3) 100%
+    );
+    opacity: 1;
+}
+/* 输入框成功状态 */
+.input-ultra.success .input-ultra-field {
+    border-color: rgba(0, 255, 136, 0.5);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 0 0 4px rgba(0, 255, 136, 0.1);
+}
+.input-ultra.success .input-ultra-label {
+    color: #00ff88;
+}
+/* 输入框帮助文字 */
+.input-ultra-help {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 6px;
+    padding-left: 4px;
+    transition: color 0.3s ease;
+}
+.input-ultra.error .input-ultra-help {
+    color: #ff5252;
+}
+.input-ultra.success .input-ultra-help {
+    color: #00ff88;
+}
+/* 输入框尺寸变体 */
+.input-ultra-sm .input-ultra-field {
+    padding: 12px 14px 12px 40px;
+    font-size: 14px;
+    border-radius: 12px;
+}
+.input-ultra-sm .input-ultra-icon {
+    left: 12px;
+    width: 18px;
+    height: 18px;
+}
+.input-ultra-sm .input-ultra-label {
+    left: 40px;
+    font-size: 14px;
+}
+.input-ultra-lg .input-ultra-field {
+    padding: 20px 22px 20px 56px;
+    font-size: 16px;
+    border-radius: 20px;
+}
+.input-ultra-lg .input-ultra-icon {
+    left: 20px;
+    width: 26px;
+    height: 26px;
+}
+.input-ultra-lg .input-ultra-label {
+    left: 56px;
+    font-size: 16px;
+}
+
+/* ============================================
+   【第37轮优化点2】滑块/进度条组件视觉终极升级
+   渐变轨道、3D拇指、发光进度、实时数值显示
+   ============================================ */
+/* ========== 终极滑块 - 3D水晶质感 ========== */
+.slider-crystal {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4) inset,
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: visible;
+}
+/* Webkit 滑块轨道 */
+.slider-crystal::-webkit-slider-runnable-track {
+    height: 10px;
+    border-radius: 5px;
+    background: transparent;
+    position: relative;
+}
+/* Firefox 滑块轨道 */
+.slider-crystal::-moz-range-track {
+    height: 10px;
+    border-radius: 5px;
+    background: transparent;
+}
+/* Webkit 滑块拇指 - 水晶3D效果 */
+.slider-crystal::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(240, 240, 240, 0.8) 30%,
+        rgba(200, 200, 200, 0.7) 100%
+    );
+    cursor: pointer;
+    margin-top: -9px;
+    border: 3px solid rgba(var(--primary-color-rgb), 0.7);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        0 0 0 5px rgba(var(--primary-color-rgb), 0.15),
+        0 0 30px rgba(var(--primary-color-rgb), 0.4),
+        0 2px 4px rgba(255, 255, 255, 0.5) inset,
+        0 -2px 4px rgba(0, 0, 0, 0.2) inset;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+/* 拇指顶部高光 */
+.slider-crystal::-webkit-slider-thumb::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 7px;
+    width: 10px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    filter: blur(1px);
+}
+/* 拇指悬停效果 */
+.slider-crystal::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+    border-color: rgba(var(--primary-color-rgb), 0.9);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        0 0 0 8px rgba(var(--primary-color-rgb), 0.2),
+        0 0 50px rgba(var(--primary-color-rgb), 0.6),
+        0 2px 6px rgba(255, 255, 255, 0.6) inset,
+        0 -2px 6px rgba(0, 0, 0, 0.25) inset;
+}
+/* 拇指激活效果 */
+.slider-crystal::-webkit-slider-thumb:active {
+    transform: scale(1.15);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.35),
+        0 0 0 6px rgba(var(--primary-color-rgb), 0.25),
+        0 0 35px rgba(var(--primary-color-rgb), 0.5);
+}
+/* Firefox 滑块拇指 */
+.slider-crystal::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(200,200,200,0.7) 100%);
+    cursor: pointer;
+    border: 3px solid rgba(var(--primary-color-rgb), 0.7);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        0 0 0 5px rgba(var(--primary-color-rgb), 0.15),
+        0 0 30px rgba(var(--primary-color-rgb), 0.4);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.slider-crystal::-moz-range-thumb:hover {
+    transform: scale(1.25);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        0 0 0 8px rgba(var(--primary-color-rgb), 0.2),
+        0 0 50px rgba(var(--primary-color-rgb), 0.6);
+}
+/* 滑块容器 - 带数值显示 */
+.slider-with-value {
+    position: relative;
+    padding-top: 10px;
+}
+.slider-value-bubble {
+    position: absolute;
+    top: -30px;
+    transform: translateX(-50%);
+    padding: 6px 12px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.9) 0%,
+        rgba(var(--secondary-color-rgb), 0.8) 100%
+    );
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 
+        0 4px 15px rgba(var(--primary-color-rgb), 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.3);
+    z-index: 10;
+}
+.slider-value-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(var(--primary-color-rgb), 0.9);
+}
+.slider-with-value:hover .slider-value-bubble {
+    opacity: 1;
+    top: -35px;
+}
+
+/* ============================================
+   【第37轮优化点3】Toast通知组件视觉增强
+   毛玻璃效果、图标动画、滑入滑出动效、多状态主题
+   ============================================ */
+/* ========== Toast通知 - 毛玻璃增强版 ========== */
+.toast-ultra {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    bottom: 80px;
+    min-width: 280px;
+    max-width: 400px;
+    padding: 16px 20px;
+    background: linear-gradient(
+        180deg,
+        rgba(35, 35, 42, 0.95) 0%,
+        rgba(25, 25, 32, 0.95) 100%
+    );
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    color: var(--text-primary);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    overflow: hidden;
+}
+/* Toast边框渐变发光 */
+.toast-ultra::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+/* Toast顶部光泽 */
+.toast-ultra::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 100%
+    );
+    border-radius: 18px 18px 0 0;
+    pointer-events: none;
+}
+/* Toast显示状态 */
+.toast-ultra.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+/* Toast隐藏动画 */
+.toast-ultra.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px) scale(0.95);
+}
+/* Toast图标区域 */
+.toast-ultra-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+.toast-ultra-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+/* Toast内容区域 */
+.toast-ultra-content {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+.toast-ultra-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    letter-spacing: 0.2px;
+}
+.toast-ultra-message {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+/* Toast关闭按钮 */
+.toast-ultra-close {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    opacity: 0.6;
+}
+.toast-ultra-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    opacity: 1;
+    transform: scale(1.1);
+}
+.toast-ultra-close:active {
+    transform: scale(0.95);
+}
+.toast-ultra-close img {
+    width: 14px;
+    height: 14px;
+    opacity: 0.8;
+}
+/* Toast变体 - 成功 */
+.toast-ultra.success .toast-ultra-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.3) 0%,
+        rgba(0, 200, 100, 0.2) 100%
+    );
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+.toast-ultra.success .toast-ultra-icon img {
+    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.6));
+}
+.toast-ultra.success::before {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.3) 0%,
+        rgba(0, 200, 100, 0.15) 50%,
+        transparent 100%
+    );
+}
+/* Toast变体 - 错误 */
+.toast-ultra.error .toast-ultra-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.3) 0%,
+        rgba(220, 53, 69, 0.2) 100%
+    );
+    box-shadow: 0 0 20px rgba(255, 82, 82, 0.3);
+}
+.toast-ultra.error .toast-ultra-icon img {
+    filter: drop-shadow(0 0 8px rgba(255, 82, 82, 0.6));
+}
+.toast-ultra.error::before {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 82, 82, 0.3) 0%,
+        rgba(220, 53, 69, 0.15) 50%,
+        transparent 100%
+    );
+}
+/* Toast变体 - 警告 */
+.toast-ultra.warning .toast-ultra-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 193, 7, 0.3) 0%,
+        rgba(255, 152, 0, 0.2) 100%
+    );
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.3);
+}
+.toast-ultra.warning .toast-ultra-icon img {
+    filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.6));
+}
+.toast-ultra.warning::before {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 193, 7, 0.3) 0%,
+        rgba(255, 152, 0, 0.15) 50%,
+        transparent 100%
+    );
+}
+/* Toast变体 - 信息 */
+.toast-ultra.info .toast-ultra-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 100%
+    );
+    box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.3);
+}
+.toast-ultra.info .toast-ultra-icon img {
+    filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.6));
+}
+/* Toast进度条 */
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%
+    );
+    border-radius: 0 0 18px 18px;
+    animation: toastProgress linear forwards;
+}
+@keyframes toastProgress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+/* Toast图标动画 */
+.toast-ultra.show .toast-ultra-icon {
+    animation: toastIconBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes toastIconBounce {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+}
+/* Toast尺寸变体 */
+.toast-ultra.sm {
+    min-width: 220px;
+    padding: 12px 16px;
+    border-radius: 14px;
+}
+.toast-ultra.sm .toast-ultra-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+}
+.toast-ultra.sm .toast-ultra-icon img {
+    width: 18px;
+    height: 18px;
+}
+.toast-ultra.sm .toast-ultra-title {
+    font-size: 14px;
+}
+.toast-ultra.sm .toast-ultra-message {
+    font-size: 12px;
+}
