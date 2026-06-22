@@ -70,4 +70,18 @@
     
     <!-- 透明色 -->
     <color name="transparent">#00000000</color>
+    
+    <!-- 发光效果颜色 -->
+    <color name="glow_primary">#332196F3</color>
+    <color name="glow_secondary">#3300BCD4</color>
+    <color name="glow_accent">#33FF9800</color>
+    
+    <!-- 半透明遮罩 -->
+    <color name="overlay_dark">#80000000</color>
+    <color name="overlay_light">#40FFFFFF</color>
+    
+    <!-- 渐变起止色 -->
+    <color name="gradient_start">#FF1976D2</color>
+    <color name="gradient_center">#FF2196F3</color>
+    <color name="gradient_end">#FF1E88E5</color>
 </resources>
