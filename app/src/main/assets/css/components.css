@@ -7959,3 +7959,582 @@ input[type="range"]::-moz-range-thumb:hover {
     margin: 6px 0;
 }
 
+
+/* ============================================
+   【第33轮优化点1】标签页/Tab组件视觉美化与交互动效全面增强
+   3D卡片式设计、渐变背景、弹性切换动画、滑动指示器
+   ============================================ */
+/* ========== Tab导航容器 - 增强版 ========== */
+.tab-navigation {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: linear-gradient(
+        180deg,
+        rgba(25, 25, 30, 0.6) 0%,
+        rgba(15, 15, 20, 0.6) 100%
+    );
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+        0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Tab容器顶部光泽 */
+.tab-navigation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+    border-radius: 16px 16px 0 0;
+}
+
+/* ========== Tab按钮 - 增强版 ========== */
+.tab-button {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    letter-spacing: 0.2px;
+}
+
+/* Tab按钮光泽效果 */
+.tab-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        transparent 100%
+    );
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.tab-button:hover::before {
+    left: 100%;
+}
+
+/* Tab按钮悬停效果 */
+.tab-button:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
+}
+
+.tab-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* ========== Tab激活状态 - 增强版 ========== */
+.tab-button.active {
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.35) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 100%
+    );
+    border: 1px solid rgba(var(--primary-color-rgb), 0.4);
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.25),
+        0 0 20px rgba(var(--primary-color-rgb), 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+    transform: translateY(-2px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.6);
+    animation: tabIndicatorGlow 2s ease-in-out infinite;
+}
+
+@keyframes tabIndicatorGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.6); }
+    50% { box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.8); }
+}
+
+/* ========== Tab内容区域 ========== */
+.tab-content {
+    display: none;
+    animation: tabContentFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes tabContentFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== Tab图标支持 ========== */
+.tab-button-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-button-icon img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+    transition: all 0.25s ease;
+}
+
+.tab-button:hover .tab-button-icon img {
+    opacity: 0.9;
+    filter: drop-shadow(0 0 4px rgba(var(--primary-color-rgb), 0.3));
+}
+
+.tab-button.active .tab-button-icon img {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(var(--primary-color-rgb), 0.5));
+}
+
+/* ============================================
+   【第33轮优化点2】设置项/开关行视觉深度增强
+   3D毛玻璃卡片、渐变边框、弹性悬停、状态指示器
+   ============================================ */
+/* ========== 设置项容器 - 增强版 ========== */
+.setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: linear-gradient(
+        180deg,
+        rgba(30, 30, 35, 0.5) 0%,
+        rgba(20, 20, 25, 0.5) 100%
+    );
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+        0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+/* 设置项顶部光泽 */
+.setting-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+    border-radius: 16px 16px 0 0;
+}
+
+/* 设置项光泽扫过效果 */
+.setting-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.setting-item:hover::after {
+    left: 100%;
+}
+
+/* ========== 设置项悬停效果 ========== */
+.setting-item:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(35, 35, 40, 0.6) 0%,
+        rgba(25, 25, 30, 0.6) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(4px) translateY(-2px);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+        0 1px 0 rgba(255, 255, 255, 0.08) inset,
+        0 0 20px rgba(var(--primary-color-rgb), 0.08);
+}
+
+.setting-item:active {
+    transform: translateX(2px) translateY(0) scale(0.99);
+}
+
+/* ========== 设置项标签区域 ========== */
+.setting-label-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+.setting-item label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+}
+
+.setting-item:hover label {
+    color: #fff;
+}
+
+.setting-description {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.setting-item:hover .setting-description {
+    color: var(--text-secondary);
+}
+
+/* ========== 设置项图标支持 ========== */
+.setting-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    margin-right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+}
+
+.setting-icon-wrapper img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.75;
+    transition: all 0.25s ease;
+}
+
+.setting-item:hover .setting-icon-wrapper {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.12) 100%
+    );
+    border-color: rgba(var(--primary-color-rgb), 0.35);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.setting-item:hover .setting-icon-wrapper img {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(var(--primary-color-rgb), 0.4));
+}
+
+/* ========== 设置项开关对齐 ========== */
+.setting-item .toggle-switch {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========== 设置分组标题 ========== */
+.setting-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.setting-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.setting-section h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding-left: 4px;
+}
+
+/* ============================================
+   【第33轮优化点3】下拉菜单/选择器视觉与交互动效
+   3D弹出动画、渐变背景、选项悬停、选中高亮
+   ============================================ */
+/* ========== 下拉选择器触发器 ========== */
+.dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    min-width: 160px;
+    position: relative;
+}
+
+.dropdown-trigger:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.45) 0%,
+        rgba(0, 0, 0, 0.35) 100%
+    );
+}
+
+.dropdown-trigger.active,
+.dropdown-trigger:focus {
+    outline: none;
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    box-shadow: 
+        0 0 0 3px rgba(var(--primary-color-rgb), 0.15),
+        0 0 20px rgba(var(--primary-color-rgb), 0.15);
+}
+
+/* 下拉箭头动画 */
+.dropdown-arrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0.6;
+}
+
+.dropdown-trigger.active .dropdown-arrow {
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
+/* ========== 下拉菜单面板 ========== */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    min-width: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(25, 25, 30, 0.98) 0%,
+        rgba(15, 15, 20, 0.98) 100%
+    );
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 8px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 10px 30px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    z-index: var(--z-dropdown);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95) translateY(-8px);
+    transition: 
+        opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top center;
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+/* 下拉菜单顶部光泽 */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+    border-radius: 16px 16px 0 0;
+}
+
+/* ========== 下拉菜单项 ========== */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.dropdown-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(var(--primary-color-rgb), 0.12) 0%,
+        transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.dropdown-item:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateX(4px);
+}
+
+.dropdown-item:hover::before {
+    opacity: 1;
+}
+
+.dropdown-item.selected {
+    color: #fff;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.12) 100%
+    );
+    border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+    box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.15);
+}
+
+.dropdown-item.selected::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 10px;
+    border: solid var(--primary-color);
+    border-width: 0 2px 2px 0;
+    transform: translateY(-50%) rotate(45deg);
+    filter: drop-shadow(0 0 4px rgba(var(--primary-color-rgb), 0.5));
+}
+
+/* 下拉菜单项图标 */
+.dropdown-item-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.dropdown-item:hover .dropdown-item-icon,
+.dropdown-item.selected .dropdown-item-icon {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(var(--primary-color-rgb), 0.4));
+}
+
+/* 下拉菜单项文本 */
+.dropdown-item-label {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 下拉菜单分隔线 */
+.dropdown-divider {
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 15%,
+        rgba(255, 255, 255, 0.08) 85%,
+        transparent 100%
+    );
+    margin: 6px 0;
+}
