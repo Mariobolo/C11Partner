@@ -875,6 +875,337 @@
     }
 }
 
+/* ============================================
+   【优化点3】响应式布局优化
+   车载屏幕特殊尺寸适配、横竖屏切换优化、安全区域增强
+   ============================================ */
+/* ========== 零跑车机专用分辨率 (1920×1200) ========== */
+@media screen and (width: 1920px) and (height: 1200px) {
+    :root {
+        --widget-height: 115px;
+        --status-bar-height: 52px;
+        --dock-height: 84px;
+        --font-size-4xl: 148px;
+        --font-size-3xl: 48px;
+        --font-size-2xl: 28px;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 148px;
+        letter-spacing: -4px;
+    }
+    
+    .date-text {
+        font-size: 28px;
+    }
+    
+    .lunar-calendar-text {
+        font-size: 16px;
+    }
+    
+    .card-view {
+        bottom: 96px;
+        left: 56px;
+        right: 56px;
+    }
+    
+    .widget {
+        min-width: 190px;
+        padding: 18px 22px;
+    }
+    
+    .music-widget {
+        min-width: 380px;
+    }
+    
+    .weather-widget {
+        min-width: 220px;
+    }
+}
+
+/* ========== 零跑车机专用分辨率 (1920×1080) ========== */
+@media screen and (width: 1920px) and (height: 1080px) {
+    :root {
+        --widget-height: 110px;
+        --status-bar-height: 50px;
+        --dock-height: 80px;
+        --font-size-4xl: 140px;
+        --font-size-3xl: 44px;
+        --font-size-2xl: 26px;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 140px;
+        letter-spacing: -3px;
+    }
+    
+    .date-text {
+        font-size: 26px;
+    }
+    
+    .card-view {
+        bottom: 92px;
+        left: 52px;
+        right: 52px;
+    }
+    
+    .widget {
+        min-width: 180px;
+        padding: 16px 20px;
+    }
+}
+
+/* ========== 车机横屏优化 (宽高比 > 2:1) ========== */
+@media screen and (min-aspect-ratio: 2/1) {
+    .layout-left {
+        left: 35%;
+        transform: translateX(-50%);
+    }
+    
+    .card-view {
+        left: 60px;
+        right: 60px;
+    }
+    
+    .horizontal-scroll {
+        gap: 20px;
+    }
+    
+    .widget {
+        flex-shrink: 0;
+    }
+}
+
+/* ========== 车机竖屏优化 (高宽比 > 1.5:1) ========== */
+@media screen and (min-aspect-ratio: 3/2) and (orientation: portrait) {
+    :root {
+        --widget-height: 100px;
+    }
+    
+    .layout-left {
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+    
+    .card-view {
+        bottom: 120px;
+        left: 30px;
+        right: 30px;
+    }
+    
+    .horizontal-scroll {
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow-y: auto;
+        max-height: 50vh;
+    }
+    
+    .widget {
+        flex: 1 1 calc(50% - 10px);
+        min-width: unset;
+    }
+}
+
+/* ========== 横竖屏切换平滑过渡 ========== */
+.main-container,
+.layout-left,
+.card-view,
+.widget,
+.status-bar,
+.top-status-bar {
+    transition: 
+        left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        right 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        min-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========== 屏幕旋转动画 ========== */
+@keyframes orientationChange {
+    0% {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+body.orientation-changing {
+    animation: orientationChange 0.5s ease-out;
+}
+
+/* ========== 安全区域增强适配 ========== */
+@supports (padding: max(0px)) {
+    /* iPhone 刘海屏适配 */
+    .top-status-bar {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        padding-top: max(8px, env(safe-area-inset-top));
+    }
+    
+    .status-bar {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+    
+    .card-view {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+    
+    .modal-content {
+        margin-left: env(safe-area-inset-left);
+        margin-right: env(safe-area-inset-right);
+    }
+}
+
+/* ========== 车机系统状态栏适配 ========== */
+/* 有系统状态栏时的顶部偏移 */
+.status-bar-offset .top-status-bar {
+    top: 30px;
+}
+
+.status-bar-offset .layout-left {
+    top: calc(15% + 30px);
+}
+
+/* ========== 夜间驾驶模式优化 ========== */
+@media screen and (prefers-color-scheme: dark) and (max-height: 800px) {
+    :root {
+        --bg-overlay: rgba(0, 0, 0, 0.85);
+    }
+    
+    .widget {
+        background: rgba(10, 10, 10, 0.8);
+    }
+    
+    .text-primary {
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* ========== 低亮度屏幕优化 ========== */
+@media screen and (max-brightness: 0.5) {
+    :root {
+        --text-primary: rgba(255, 255, 255, 1);
+        --text-secondary: rgba(255, 255, 255, 0.9);
+    }
+    
+    .widget {
+        border-width: 1.5px;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* ========== 触控反馈增强 ========== */
+@media (hover: none) and (pointer: coarse) {
+    /* 触控设备点击态增强 */
+    .widget:active,
+    .btn:active,
+    .app-item:active,
+    .quick-app-item:active,
+    .quick-switch-item:active {
+        transform: scale(0.96);
+        background: rgba(255, 255, 255, 0.15);
+    }
+    
+    /* 触控目标最小尺寸 */
+    .nav-button,
+    .quick-app-item,
+    .quick-switch-item,
+    .setting-item {
+        min-height: 56px;
+    }
+    
+    /* 增大文字便于驾驶时阅读 */
+    .nav-text,
+    .quick-app-name,
+    .quick-switch-name {
+        font-size: calc(100% + 2px);
+    }
+}
+
+/* ========== 分屏模式适配 ========== */
+@media screen and (max-width: 960px) and (min-width: 720px) {
+    :root {
+        --widget-height: 85px;
+        --font-size-4xl: 88px;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 88px;
+    }
+    
+    .card-view {
+        left: 20px;
+        right: 20px;
+    }
+    
+    .widget {
+        min-width: 130px;
+        padding: 10px 14px;
+    }
+}
+
+/* ========== 画中画模式适配 ========== */
+@media screen and (max-width: 640px) and (max-height: 480px) {
+    :root {
+        --widget-height: 60px;
+        --status-bar-height: 32px;
+        --dock-height: 48px;
+        --font-size-4xl: 56px;
+    }
+    
+    .top-status-bar,
+    .status-bar {
+        display: none;
+    }
+    
+    .time-text#timeDisplay {
+        font-size: 56px;
+    }
+    
+    .date-text,
+    .lunar-calendar-text {
+        display: none;
+    }
+    
+    .card-view {
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+    }
+    
+    .widget {
+        min-width: 100px;
+        padding: 8px 12px;
+    }
+    
+    .music-widget,
+    .weather-widget {
+        display: none;
+    }
+}
+
+/* ========== 打印模式隐藏 ========== */
+@media print {
+    .top-status-bar,
+    .status-bar,
+    .control-icon,
+    .ac-control {
+        display: none !important;
+    }
+}
+
 /* ========== 极窄高度优化 (600px以下) ========== */
 @media screen and (max-height: 600px) {
     :root {

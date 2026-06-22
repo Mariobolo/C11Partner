@@ -3,6 +3,150 @@
    按钮、卡片、弹窗、Toast、表单等通用组件
    ============================================ */
 
+/* ============================================
+   【优化点1】图标视觉优化
+   图标颜色渐变、悬停缩放效果、发光动画、多状态支持
+   ============================================ */
+/* ========== 图标基础样式 ========== */
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    transition: all var(--transition-fast);
+}
+
+.icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(0.85) contrast(1.1);
+    transition: all var(--transition-fast);
+}
+
+/* 图标颜色渐变覆盖层 */
+.icon-gradient {
+    position: relative;
+}
+.icon-gradient::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent-gradient);
+    mix-blend-mode: overlay;
+    opacity: 0;
+    border-radius: inherit;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+}
+.icon-gradient:hover::after {
+    opacity: 0.3;
+}
+
+/* 图标悬停缩放效果 */
+.icon-hover-scale {
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.icon-hover-scale:hover {
+    transform: scale(1.15);
+}
+.icon-hover-scale:active {
+    transform: scale(0.95);
+}
+
+/* 图标悬停旋转效果 */
+.icon-hover-rotate:hover {
+    animation: spin 0.6s ease-out;
+}
+
+/* 图标悬停弹跳效果 */
+.icon-hover-bounce:hover {
+    animation: bounce 0.5s ease-out;
+}
+
+/* 图标发光效果 */
+.icon-glow {
+    position: relative;
+}
+.icon-glow::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        transparent 70%
+    );
+    opacity: 0;
+    border-radius: 50%;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+}
+.icon-glow:hover::before {
+    opacity: 1;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* 图标呼吸动画 */
+.icon-breathe {
+    animation: breathe 3s ease-in-out infinite;
+}
+
+/* 图标浮动动画 */
+.icon-float {
+    animation: float 2.5s ease-in-out infinite;
+}
+
+/* 图标多状态颜色 */
+.icon-active img {
+    filter: brightness(1) contrast(1.1) drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.5));
+}
+.icon-success img {
+    filter: brightness(1) contrast(1.1) hue-rotate(80deg) saturate(1.5);
+}
+.icon-warning img {
+    filter: brightness(1) contrast(1.1) hue-rotate(30deg) saturate(1.5);
+}
+.icon-error img {
+    filter: brightness(1) contrast(1.1) hue-rotate(-50deg) saturate(1.5);
+}
+.icon-disabled img {
+    filter: grayscale(1) brightness(0.5) opacity(0.4);
+}
+
+/* 图标尺寸变体 */
+.icon-sm { width: 16px; height: 16px; }
+.icon-md { width: 24px; height: 24px; }
+.icon-lg { width: 32px; height: 32px; }
+.icon-xl { width: 48px; height: 48px; }
+
+/* 导航图标优化 */
+.nav-icon {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.nav-button:hover .nav-icon {
+    transform: scale(1.1) translateY(-2px);
+    filter: drop-shadow(0 4px 8px rgba(var(--primary-color-rgb), 0.3));
+}
+.nav-button:active .nav-icon {
+    transform: scale(0.95);
+}
+
+/* 控制图标优化 */
+.control-icon {
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.control-icon:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 12px rgba(var(--primary-color-rgb), 0.5));
+}
+.control-icon:active {
+    transform: scale(0.9);
+}
+
 /* ========== 按钮组件 ========== */
 .btn {
     display: inline-flex;
