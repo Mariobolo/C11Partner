@@ -30,10 +30,6 @@
     50% { opacity: 0.3; }
 }
 /* 转向灯闪烁 */
-@keyframes turnBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
 /* ========== 淡入淡出动画 ========== */
 @keyframes fadeIn {
     from { opacity: 0; }
