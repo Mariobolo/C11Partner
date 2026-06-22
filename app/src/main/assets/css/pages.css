@@ -1107,6 +1107,343 @@
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 800px;
+}
+/* Tab按钮光泽扫过效果 */
+.tab-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 40%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 60%,
+        transparent 100%);
+    transform: skewX(-12deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.6s ease;
+    z-index: 1;
+}
+/* Tab按钮悬停3D效果 */
+.tab-button:hover {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 100%);
+    color: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.tab-button:hover::before {
+    left: 150%;
+    opacity: 1;
+}
+/* Tab按钮激活状态 - 终极发光效果 */
+.tab-button.active {
+    background: linear-gradient(135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 100%);
+    color: #ffffff;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
+        0 0 40px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    animation: tabActiveGlow 2.5s ease-in-out infinite;
+}
+@keyframes tabActiveGlow {
+    0%, 100% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 40px rgba(var(--primary-color-rgb), 0.25); }
+    50% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(var(--primary-color-rgb), 0.35); }
+}
+/* Tab按钮文字渐变效果 */
+.tab-button.active {
+    background: linear-gradient(135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.18) 100%);
+}
+.tab-button.active span {
+    background: linear-gradient(135deg, #ffffff 0%, rgba(100, 255, 200, 0.95) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.4);
+}
+/* Tab内容切换动画 */
+.tab-content {
+    animation: tabContentFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes tabContentFadeIn {
+    0% { opacity: 0; transform: translateY(15px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* ============================================
+   【优化点3】快捷开关面板视觉细节终极增强
+   3D毛玻璃、分组标题渐变、开关按钮发光、弹性交互动效
+   ============================================ */
+/* 快捷开关面板毛玻璃终极增强 */
+.quick-switch-panel .modal-content {
+    background: 
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 40%,
+            rgba(0, 0, 0, 0.15) 100%),
+        rgba(15, 15, 20, 0.85);
+    backdrop-filter: blur(35px) saturate(200%);
+    -webkit-backdrop-filter: blur(35px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 
+        0 32px 80px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(0, 0, 0, 0.3),
+        0 0 100px rgba(var(--primary-color-rgb), 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+/* 开关分组标题视觉增强 */
+.switch-group-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 24px 0 16px 0;
+    padding-bottom: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+/* 分组标题渐变装饰线 */
+.switch-group-title::before {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 50%,
+        transparent 100%);
+}
+.switch-group-title::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.6);
+    animation: groupTitleDot 2s ease-in-out infinite;
+}
+@keyframes groupTitleDot {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+}
+/* 分组标题文字渐变 */
+.switch-group-title span {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(var(--primary-color-rgb), 0.9) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-right: 12px;
+}
+/* 开关网格3D视觉增强 */
+.switch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+    perspective: 1000px;
+}
+/* 开关按钮3D终极视觉 */
+.switch-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: 
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 50%,
+            rgba(0, 0, 0, 0.08) 100%),
+        var(--surface-color);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 18px 12px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+/* 开关按钮渐变发光边框 */
+.switch-item::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        rgba(var(--secondary-color-rgb), 0.08) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 开关按钮光泽扫过 */
+.switch-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 40%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 60%,
+        transparent 100%);
+    transform: skewX(-12deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.6s ease;
+    z-index: 1;
+}
+/* 开关按钮悬停3D效果 */
+.switch-item:hover {
+    background: 
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.04) 50%,
+            rgba(var(--primary-color-rgb), 0.06) 100%),
+        var(--surface-hover);
+    transform: translateY(-6px) scale(1.04) rotateX(4deg);
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(var(--primary-color-rgb), 0.25);
+}
+.switch-item:hover::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        transparent 100%
+    );
+}
+.switch-item:hover::after {
+    left: 150%;
+    opacity: 1;
+}
+/* 开关按钮激活状态终极发光 */
+.switch-item.active {
+    background: 
+        linear-gradient(135deg,
+            rgba(var(--primary-color-rgb), 0.2) 0%,
+            rgba(var(--secondary-color-rgb), 0.1) 50%,
+            rgba(255, 255, 255, 0.05) 100%),
+        rgba(0, 40, 20, 0.4);
+    border-color: rgba(var(--primary-color-rgb), 0.4);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
+        0 0 50px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    animation: switchActivePulse 3s ease-in-out infinite;
+}
+@keyframes switchActivePulse {
+    0%, 100% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 50px rgba(var(--primary-color-rgb), 0.25); }
+    50% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 70px rgba(var(--primary-color-rgb), 0.35); }
+}
+.switch-item.active::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.25) 50%,
+        transparent 100%
+    );
+}
+/* 开关图标3D视觉增强 */
+.switch-item .switch-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 10px;
+    opacity: 0.75;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+.switch-item:hover .switch-icon {
+    transform: scale(1.15) translateY(-3px) rotateY(8deg);
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+}
+.switch-item.active .switch-icon {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: 
+        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))
+        drop-shadow(0 0 15px rgba(var(--primary-color-rgb), 0.5));
+    animation: iconActiveGlow 2s ease-in-out infinite;
+}
+@keyframes iconActiveGlow {
+    0%, 100% { filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 15px rgba(var(--primary-color-rgb), 0.5)); }
+    50% { filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 25px rgba(var(--primary-color-rgb), 0.7)); }
+}
+/* 开关名称文字渐变优化 */
+.switch-item .switch-name {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+}
+.switch-item:hover .switch-name {
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+.switch-item.active .switch-name {
+    color: #ffffff;
+    background: linear-gradient(135deg, #ffffff 0%, rgba(var(--primary-color-rgb), 0.95) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+/* 开关状态指示器 */
+.switch-item .switch-status {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    transition: all 0.3s ease;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+}
+.switch-item.active .switch-status {
+    color: var(--primary-color);
+    background: rgba(var(--primary-color-rgb), 0.15);
+    font-weight: 600;
+}
     letter-spacing: 0.3px;
 }
 

@@ -1118,6 +1118,64 @@
     inset: 0;
     background: linear-gradient(135deg, 
         rgba(100, 200, 255, 0.5) 0%, 
+        rgba(var(--primary-color-rgb), 0.3) 50%,
+        rgba(255, 180, 100, 0.3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: blur(15px);
+    opacity: 0.5;
+    z-index: -1;
+    animation: tempGlow 3s ease-in-out infinite alternate;
+}
+@keyframes tempGlow {
+    0% { opacity: 0.3; filter: blur(12px); }
+    100% { opacity: 0.7; filter: blur(20px); }
+}
+/* 温度数字悬停3D增强 */
+.weather-widget:hover .temperature {
+    transform: scale(1.08) translateZ(15px);
+    text-shadow: 0 0 40px rgba(100, 200, 255, 0.3);
+}
+/* ========== 天气描述文字 - 渐变优化 ========== */
+.weather-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.85) 0%, 
+        rgba(255, 255, 255, 0.65) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.weather-widget:hover .weather-desc {
+    transform: scale(1.05) translateY(-1px);
+    background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        rgba(100, 200, 255, 0.9) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+/* ========== 城市名称 - 视觉优化 ========== */
+.city-name {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0.75;
+}
+.weather-widget:hover .city-name {
+    opacity: 1;
+    transform: scale(1.03);
+    color: var(--text-secondary);
+} linear-gradient(135deg, 
+        rgba(100, 200, 255, 0.5) 0%, 
         rgba(255, 180, 100, 0.3) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
