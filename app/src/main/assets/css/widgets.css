@@ -659,54 +659,121 @@
     transform: translateY(-1px);
     text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
 }
-/* ========== 快捷开关模块 ========== */
+/* ========== 快捷开关模块 - 【优化点1】视觉与交互动效终极增强 ========== */
 .quick-switches-widget {
-    min-width: 280px;
-    padding: var(--spacing-lg);
+    min-width: 300px;
+    padding: 18px 20px;
+    position: relative;
+    perspective: 800px;
+    transform-style: preserve-3d;
+}
+/* 快捷开关Widget渐变背景氛围光 */
+.quick-switches-widget::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 30% 20%, 
+            rgba(var(--primary-color-rgb), 0.08) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 70% 80%, 
+            rgba(var(--secondary-color-rgb), 0.06) 0%, 
+            transparent 50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 20px;
+}
+.quick-switches-widget:hover::before {
+    opacity: 1;
 }
 .quick-switches-container {
     display: flex;
-    gap: var(--spacing-sm);
+    gap: 12px;
     padding: 0;
     width: 100%;
+    transform-style: preserve-3d;
 }
 .quick-switch-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--surface-color);
-    border-radius: var(--radius-lg);
-    padding: 10px 8px;
-    transition: all var(--transition-fast);
-    border: 1px solid var(--border-light);
-    min-width: 56px;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.08) 0%, 
+            rgba(255, 255, 255, 0.03) 50%, 
+            rgba(0, 0, 0, 0.08) 100%),
+        var(--surface-color);
+    border-radius: 14px;
+    padding: 12px 10px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    min-width: 60px;
     margin: 0;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
-/* 【优化点2】快捷开关动效增强 - 波纹+弹性动画+发光 */
-/* 快捷开关光泽效果 */
+/* 快捷开关渐变发光边框 */
 .quick-switch-item::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 14px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        rgba(var(--secondary-color-rgb), 0.08) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* 快捷开关光泽扫过效果增强 */
+.quick-switch-item .switch-shimmer {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
-    width: 100%;
+    width: 70%;
     height: 100%;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.12) 30%,
+        rgba(255, 255, 255, 0.18) 50%,
+        rgba(255, 255, 255, 0.12) 70%,
         transparent 100%);
-    transition: left 0.5s ease;
+    transform: skewX(-15deg);
+    transition: left 0.7s ease;
     pointer-events: none;
+    opacity: 0;
+    z-index: 1;
 }
 .quick-switch-item:hover::before {
-    left: 100%;
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        transparent 100%
+    );
+}
+.quick-switch-item:hover .switch-shimmer {
+    left: 150%;
+    opacity: 1;
 }
 
-/* 点击波纹效果 */
-.quick-switch-item::after {
+/* 点击波纹扩散效果 - 增强版 */
+.quick-switch-item .switch-ripple {
     content: '';
     position: absolute;
     top: 50%;
@@ -714,37 +781,56 @@
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(var(--primary-color-rgb), 0.3);
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--primary-color-rgb), 0.2) 50%,
+        transparent 70%);
     transform: translate(-50%, -50%);
     pointer-events: none;
     opacity: 0;
+    z-index: 2;
 }
-.quick-switch-item:active::after {
-    animation: switchRipple 0.4s ease-out;
+.quick-switch-item:active .switch-ripple {
+    animation: switchRippleExpand 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
-@keyframes switchRipple {
+@keyframes switchRippleExpand {
     0% {
         width: 0;
         height: 0;
-        opacity: 0.5;
+        opacity: 1;
     }
     100% {
-        width: 150%;
-        height: 150%;
+        width: 200%;
+        height: 200%;
         opacity: 0;
     }
 }
 
+/* 悬停3D透视效果增强 */
 .quick-switch-item:hover {
-    background: var(--surface-hover);
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35),
-                0 0 0 1px rgba(255, 255, 255, 0.08);
-    border-color: rgba(var(--primary-color-rgb), 0.2);
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.12) 0%, 
+            rgba(255, 255, 255, 0.06) 50%, 
+            rgba(var(--primary-color-rgb), 0.06) 100%),
+        var(--surface-hover);
+    transform: translateY(-6px) scale(1.05) rotateX(5deg);
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
 }
+/* 点击3D按压反馈 */
 .quick-switch-item:active {
-    transform: translateY(0) scale(0.96);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px) scale(0.97) rotateX(-2deg);
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 3px 8px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 /* 状态切换弹性动画 */
