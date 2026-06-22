@@ -679,4 +679,59 @@ public class SystemBridge extends BaseBridge {
         intent.setData(android.net.Uri.parse("package:" + mContext.getPackageName()));
         safeStartActivity(intent, "应用设置");
     }
+    
+    // ==================== UI交互方法 ====================
+    
+    /**
+     * 显示Toast消息
+     *
+     * @param message 消息内容
+     */
+    @JavascriptInterface
+    public void showToast(final String message) {
+        safeUiThreadAction(() -> {
+            android.widget.Toast.makeText(mContext, message, android.widget.Toast.LENGTH_SHORT).show();
+        }, "显示Toast");
+    }
+    
+    /**
+     * 检查是否有通知访问权限
+     *
+     * @return 是否有权限
+     */
+    @JavascriptInterface
+    public boolean hasNotificationAccess() {
+        // 复用已有的通知监听器检查方法
+        return isNotificationListenerEnabled();
+    }
+    
+    /**
+     * 检查通知监听器是否已启用
+     *
+     * @return 是否启用
+     */
+    @JavascriptInterface
+    public boolean isNotificationListenerEnabled() {
+        try {
+            String flat = android.provider.Settings.Secure.getString(
+                mContext.getContentResolver(),
+                "enabled_notification_listeners");
+            if (flat != null && !flat.isEmpty()) {
+                return flat.contains(mContext.getPackageName());
+            }
+        } catch (Exception e) {
+            logE(TAG, "检查通知监听器状态失败", e);
+        }
+        return false;
+    }
+    
+    /**
+     * 打开通知监听器设置页面
+     */
+    @JavascriptInterface
+    public void openNotificationListenerSettings() {
+        Intent intent = new Intent(
+            "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+        safeStartActivity(intent, "通知监听设置");
+    }
 }

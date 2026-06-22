@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景轨道 -->
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="@color/gray_700" />
+            <corners android:radius="@dimen/radius_full" />
+        </shape>
+    </item>
+    
+    <!-- 二级进度（缓冲） -->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <solid android:color="@color/primary_300" />
+                <corners android:radius="@dimen/radius_full" />
+            </shape>
+        </clip>
+    </item>
+    
+    <!-- 主进度 -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <gradient
+                    android:angle="0"
+                    android:startColor="@color/primary_400"
+                    android:centerColor="@color/primary_500"
+                    android:endColor="@color/primary_600"
+                    android:type="linear" />
+                <corners android:radius="@dimen/radius_full" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

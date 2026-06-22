@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 开启状态 -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/primary_500" />
+            <corners android:radius="@dimen/radius_full" />
+            <size
+                android:width="@dimen/switch_track_width"
+                android:height="@dimen/switch_track_height" />
+        </shape>
+    </item>
+    
+    <!-- 关闭状态 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/gray_600" />
+            <corners android:radius="@dimen/radius_full" />
+            <size
+                android:width="@dimen/switch_track_width"
+                android:height="@dimen/switch_track_height" />
+        </shape>
+    </item>
+</selector>

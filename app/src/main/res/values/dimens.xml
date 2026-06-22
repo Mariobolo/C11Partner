@@ -67,6 +67,15 @@
     <dimen name="car_padding">20dp</dimen>
     <dimen name="car_margin">16dp</dimen>
     
+    <!-- 开关按钮尺寸 -->
+    <dimen name="switch_track_width">48dp</dimen>
+    <dimen name="switch_track_height">24dp</dimen>
+    <dimen name="switch_thumb_size">20dp</dimen>
+    
+    <!-- 进度条高度 -->
+    <dimen name="progress_bar_height">4dp</dimen>
+    <dimen name="progress_bar_height_large">8dp</dimen>
+    
     <!-- 兼容旧命名 -->
     <dimen name="_5dp">5dp</dimen>
     <dimen name="_8dp">8dp</dimen>

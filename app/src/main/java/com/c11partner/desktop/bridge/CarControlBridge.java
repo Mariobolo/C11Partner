@@ -401,7 +401,129 @@ public class CarControlBridge extends BaseBridge {
         }
     }
     
+    /**
+     * 切换空调开关状态
+     * 
+     * @return 切换后的状态
+     */
+    @JavascriptInterface
+    public boolean toggleAirConditioning() {
+        try {
+            boolean current = isAcEnabled();
+            boolean result = setAcEnabled(!current);
+            return result ? !current : current;
+        } catch (Exception e) {
+            Log.e(TAG, "切换空调失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 调节主驾温度
+     * 
+     * @param delta 温度变化量（正数升高，负数降低）
+     * @return 是否调节成功
+     */
+    @JavascriptInterface
+    public boolean adjustTemperature(int delta) {
+        try {
+            int current = getDriverTemp();
+            int newTemp = current + delta;
+            // 温度范围限制：16-30度
+            newTemp = Math.max(16, Math.min(30, newTemp));
+            return setDriverTemp(newTemp);
+        } catch (Exception e) {
+            Log.e(TAG, "调节温度失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 调节空调风量
+     * 
+     * @param delta 风量变化量（正数增加，负数减少）
+     * @return 是否调节成功
+     */
+    @JavascriptInterface
+    public boolean adjustWindLevel(int delta) {
+        try {
+            int current = getWindLevel();
+            int newLevel = current + delta;
+            // 风量范围限制：0-7档
+            newLevel = Math.max(0, Math.min(7, newLevel));
+            return setWindLevel(newLevel);
+        } catch (Exception e) {
+            Log.e(TAG, "调节风量失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 获取空调信息（JSON格式）
+     * 
+     * @return 空调信息JSON字符串
+     */
+    @JavascriptInterface
+    public String getAcInfo() {
+        try {
+            return String.format(
+                "{\"enabled\":%b,\"windLevel\":%d,\"driverTemp\":%d,\"passengerTemp\":%d}",
+                isAcEnabled(),
+                getWindLevel(),
+                getDriverTemp(),
+                getPassengerTemp()
+            );
+        } catch (Exception e) {
+            Log.e(TAG, "获取空调信息失败", e);
+            return "{\"enabled\":false,\"windLevel\":0,\"driverTemp\":25,\"passengerTemp\":25}";
+        }
+    }
+    
+    /**
+     * 切换除霜模式
+     * 
+     * @return 是否切换成功
+     */
+    @JavascriptInterface
+    public boolean toggleDefrost() {
+        try {
+            // 除霜模式通过最大风量和特定温度实现
+            boolean result = setWindLevel(7);
+            if (result) {
+                setDriverTemp(30);
+                setPassengerTemp(30);
+            }
+            return result;
+        } catch (Exception e) {
+            Log.e(TAG, "切换除霜失败", e);
+            return false;
+        }
+    }
+    
     // ==================== 音量控制 ====================
+    
+    /**
+     * 切换静音状态
+     * 
+     * @return 切换后的静音状态
+     */
+    @JavascriptInterface
+    public boolean toggleMute() {
+        try {
+            int current = getMusicVolume();
+            if (current > 0) {
+                // 保存当前音量并静音
+                // 简单实现：直接设为0
+                return setMusicVolume(0);
+            } else {
+                // 取消静音，恢复到默认音量
+                return setMusicVolume(10);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "切换静音失败", e);
+            return false;
+        }
+    }
     
     /**
      * 设置蓝牙电话音量

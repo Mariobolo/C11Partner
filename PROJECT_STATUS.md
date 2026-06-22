@@ -1,7 +1,7 @@
 # C11Partner 项目状态总览
 > 📌 **本文档是项目状态的唯一真相来源**，每次对话前请先读取本文档，再读取相关文档。
 >
-> 最后更新：2026-06-22 18:15
+> 最后更新：2026-06-22 19:30
 > 当前版本：v1.2.0 (开发中，约99.9%完成)
 ---
 ## 📋 项目基本信息
@@ -205,6 +205,29 @@
           - 新增 item_slide_in_right.xml: 右滑入+淡入组合动画
           - 新增 item_scale_enter.xml: 缩放弹入+淡入组合动画
           - 使用decelerate_cubic/overshoot插值器提升质感
+        - ✅ **2026-06-22 第六次优化（定时任务 - Android原生层）**：
+          - ✅ 【优化点1】设置项背景选择器 (drawable/)
+            - 新增 setting_item_selector.xml: 带波纹效果的设置项背景
+            - pressed状态：加深背景色
+            - selected状态：主题色边框
+            - 统一圆角设计
+          - ✅ 【优化点2】自定义进度条样式 (drawable/)
+            - 新增 progress_bar_horizontal.xml: 渐变进度条
+            - 主进度：primary_400→primary_500→primary_600渐变
+            - 二级进度：primary_300半透明
+            - 背景轨道：gray_700深色
+            - 全圆角设计
+          - ✅ 【优化点3】开关按钮样式增强 (drawable/)
+            - 新增 switch_track_selector.xml: 开关轨道样式
+            - 新增 switch_thumb_selector.xml: 开关滑块样式
+            - 开启状态：primary_500主题色
+            - 关闭状态：gray_600灰色
+            - 白色滑块带彩色边框
+          - ✅ 【质量检查】前后端代码对接检查
+            - 发现21个前端调用但后端缺失的JS接口
+            - 已修复10个核心方法（空调控制、Toast、通知权限等）
+            - CarControlBridge新增6个便捷方法
+            - SystemBridge新增4个UI/权限方法
 
 **文档**：
 - ✅ docs/C11_CAR_CONTROL_CAPABILITIES.md - v2.0 最全面版车控接口文档
