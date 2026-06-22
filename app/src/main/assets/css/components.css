@@ -1392,8 +1392,412 @@ a:focus-visible {
     opacity: 0;
     pointer-events: none;
 }
-.ripple-effect:active::after {
-    animation: ripple 0.6s ease-out;
+@keyframes ripple {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   【第25轮优化点1】Dock栏导航视觉增强
+   玻璃拟态效果、图标发光、选中状态动画
+   ============================================ */
+/* ========== Dock栏基础玻璃拟态样式 ========== */
+.status-bar {
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(20, 20, 20, 0.5) 50%,
+        rgba(30, 30, 30, 0.3) 100%
+    ) !important;
+    backdrop-filter: blur(40px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 
+        0 -8px 32px rgba(0, 0, 0, 0.4),
+        0 -1px 0 rgba(255, 255, 255, 0.05) inset,
+        0 1px 0 rgba(0, 0, 0, 0.3) inset !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Dock栏光泽效果 */
+.status-bar::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0.2) 80%,
+        transparent 100%
+    ) !important;
+    z-index: 1 !important;
+}
+
+/* ========== Dock栏按钮视觉增强 ========== */
+.dock-btn,
+.nav-button,
+.ac-control,
+.home-btn,
+.back-btn,
+.task-btn {
+    position: relative !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset !important;
+}
+
+/* 按钮悬停效果 - 发光+缩放 */
+.dock-btn:hover,
+.nav-button:hover,
+.ac-control:hover,
+.home-btn:hover,
+.back-btn:hover,
+.task-btn:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-3px) scale(1.08) !important;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(var(--primary-color-rgb), 0.25),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset !important;
+}
+
+/* 按钮激活/选中状态 */
+.dock-btn:active,
+.nav-button:active,
+.ac-control:active,
+.home-btn:active,
+.back-btn:active,
+.task-btn:active,
+.dock-btn.active,
+.nav-button.active,
+.ac-control.active {
+    transform: translateY(-1px) scale(0.96) !important;
+    background: rgba(var(--primary-color-rgb), 0.2) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.4) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 12px rgba(var(--primary-color-rgb), 0.35),
+        0 2px 4px rgba(0, 0, 0, 0.2) inset !important;
+}
+
+/* ========== Dock栏图标发光效果 ========== */
+.dock-btn img,
+.nav-button img,
+.ac-control img,
+.home-btn img,
+.back-btn img,
+.task-btn img {
+    filter: drop-shadow(0 0 0 transparent) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.dock-btn:hover img,
+.nav-button:hover img,
+.ac-control:hover img,
+.home-btn:hover img,
+.back-btn:hover img,
+.task-btn:hover img {
+    filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.6)) !important;
+    transform: scale(1.12) !important;
+}
+
+.dock-btn.active img,
+.nav-button.active img,
+.ac-control.active img {
+    filter: drop-shadow(0 0 12px rgba(var(--primary-color-rgb), 0.8)) brightness(1.2) !important;
+}
+
+/* ========== Dock栏选中指示器动画 ========== */
+.dock-btn.active::after,
+.nav-button.active::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -4px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 4px !important;
+    height: 4px !important;
+    background: var(--primary-color) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.8) !important;
+    animation: indicatorPulse 2s ease-in-out infinite !important;
+}
+
+@keyframes indicatorPulse {
+    0%, 100% { 
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: translateX(-50%) scale(1.3);
+        opacity: 0.7;
+    }
+}
+
+/* ============================================
+   【第25轮优化点2】进度条/滑块组件美化
+   渐变、发光效果、平滑过渡动画
+   ============================================ */
+/* ========== 进度条基础样式增强 ========== */
+.progress-bar,
+.music-progress-bar,
+.volume-progress-bar,
+.brightness-bar {
+    height: 6px !important;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.04) 100%
+    ) !important;
+    border-radius: 3px !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.3) inset,
+        0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 进度条填充渐变效果 */
+.progress-bar::before,
+.music-progress-filled,
+.volume-progress-filled,
+.brightness-filled {
+    background: linear-gradient(
+        90deg,
+        var(--primary-color) 0%,
+        #00ccff 50%,
+        #00ff88 100%
+    ) !important;
+    border-radius: 3px !important;
+    box-shadow: 
+        0 0 8px rgba(var(--primary-color-rgb), 0.5),
+        0 0 16px rgba(var(--primary-color-rgb), 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.3) inset !important;
+    position: relative !important;
+    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 进度条头部发光圆点 */
+.progress-bar::after,
+.music-progress-filled::after,
+.volume-progress-filled::after {
+    content: '' !important;
+    position: absolute !important;
+    right: -4px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 12px !important;
+    height: 12px !important;
+    background: white !important;
+    border-radius: 50% !important;
+    box-shadow: 
+        0 0 8px rgba(var(--primary-color-rgb), 0.8),
+        0 0 16px rgba(var(--primary-color-rgb), 0.5),
+        0 2px 6px rgba(0, 0, 0, 0.3) !important;
+    opacity: 0 !important;
+    transition: all 0.2s ease !important;
+}
+
+.progress-bar:hover::after,
+.music-progress-bar:hover .music-progress-filled::after,
+.volume-progress-bar:hover .volume-progress-filled::after {
+    opacity: 1 !important;
+    transform: translateY(-50%) scale(1.2) !important;
+}
+
+/* ========== 滑块组件美化 ========== */
+input[type="range"] {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 100% !important;
+    height: 6px !important;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.04) 100%
+    ) !important;
+    border-radius: 3px !important;
+    outline: none !important;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.3) inset !important;
+}
+
+/* 滑块轨道填充 */
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px !important;
+    border-radius: 3px !important;
+}
+
+/* 滑块拇指美化 */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%) !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    margin-top: -7px !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 12px rgba(var(--primary-color-rgb), 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.8) inset !important;
+    border: 2px solid var(--primary-color) !important;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2) !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.6),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset !important;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.1) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.35),
+        0 0 16px rgba(var(--primary-color-rgb), 0.5) !important;
+}
+
+/* Firefox 支持 */
+input[type="range"]::-moz-range-thumb {
+    width: 20px !important;
+    height: 20px !important;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%) !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    border: 2px solid var(--primary-color) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 12px rgba(var(--primary-color-rgb), 0.4) !important;
+    transition: all 0.2s ease !important;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.2) !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.6) !important;
+}
+
+/* ============================================
+   【第25轮优化点3】自定义滚动条样式优化
+   悬停效果、过渡动画、玻璃拟态
+   ============================================ */
+/* ========== 滚动条整体样式 ========== */
+::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+
+/* 滚动条轨道 - 玻璃拟态效果 */
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 4px !important;
+    margin: 4px !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    transition: background 0.2s ease !important;
+}
+
+::-webkit-scrollbar-track:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 滚动条滑块 - 渐变+发光 */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.2) 100%
+    ) !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 
+        0 0 8px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset !important;
+    transition: all 0.2s ease !important;
+    min-height: 40px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--primary-color-rgb), 0.35) 50%,
+        rgba(var(--primary-color-rgb), 0.45) 100%
+    ) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.3) !important;
+    box-shadow: 
+        0 0 12px rgba(var(--primary-color-rgb), 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    transform: scaleX(1.2) !important;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.6) 0%,
+        rgba(var(--primary-color-rgb), 0.45) 100%
+    ) !important;
+    box-shadow: 
+        0 0 16px rgba(var(--primary-color-rgb), 0.5) !important;
+}
+
+/* 滚动条角落 */
+::-webkit-scrollbar-corner {
+    background: transparent !important;
+}
+
+/* ========== 横向滚动条特殊处理 ========== */
+.horizontal-scroll::-webkit-scrollbar {
+    height: 4px !important;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+    background: transparent !important;
+    border: none !important;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-radius: 2px !important;
+    border: none !important;
+    min-height: auto !important;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--primary-color-rgb), 0.4) !important;
+    box-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.3) !important;
+}
+
+/* ========== Firefox 滚动条支持 ========== */
+* {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.03) !important;
+}
+
+*:hover {
+    scrollbar-color: rgba(var(--primary-color-rgb), 0.4) rgba(255, 255, 255, 0.05) !important;
+}
 }
 @keyframes ripple {
     0% { 
