@@ -447,6 +447,7 @@
     position: relative;
     overflow: hidden;
 }
+/* 【优化点2】快捷开关动效增强 - 波纹+弹性动画+发光 */
 /* 快捷开关光泽效果 */
 .quick-switch-item::before {
     content: '';
@@ -465,21 +466,73 @@
 .quick-switch-item:hover::before {
     left: 100%;
 }
+
+/* 点击波纹效果 */
+.quick-switch-item::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(var(--primary-color-rgb), 0.3);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+}
+.quick-switch-item:active::after {
+    animation: switchRipple 0.4s ease-out;
+}
+@keyframes switchRipple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    100% {
+        width: 150%;
+        height: 150%;
+        opacity: 0;
+    }
+}
+
 .quick-switch-item:hover {
     background: var(--surface-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.08);
+    border-color: rgba(var(--primary-color-rgb), 0.2);
 }
 .quick-switch-item:active {
-    transform: scale(0.95);
+    transform: translateY(0) scale(0.96);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
+
+/* 状态切换弹性动画 */
+.quick-switch-item.active {
+    animation: switchPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+@keyframes switchPop {
+    0% { transform: scale(0.95); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 .quick-switch-item.active .quick-switch-icon {
     background: rgba(var(--primary-color-rgb), 0.2);
     color: var(--primary-color);
     border-color: rgba(var(--primary-color-rgb), 0.4);
-    box-shadow: 0 0 16px rgba(var(--primary-color-rgb), 0.35),
-                inset 0 0 8px rgba(var(--primary-color-rgb), 0.1);
+    box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.4),
+                0 0 40px rgba(var(--primary-color-rgb), 0.2),
+                inset 0 0 12px rgba(var(--primary-color-rgb), 0.15);
+    animation: iconGlow 2s ease-in-out infinite;
 }
+@keyframes iconGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.4), 0 0 40px rgba(var(--primary-color-rgb), 0.2); }
+    50% { box-shadow: 0 0 30px rgba(var(--primary-color-rgb), 0.5), 0 0 60px rgba(var(--primary-color-rgb), 0.3); }
+}
+
 .quick-switch-icon {
     width: 40px;
     height: 40px;
@@ -488,7 +541,7 @@
     border: 1px solid var(--border-color);
     margin-bottom: 6px;
     font-size: 20px;
-    transition: all var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -496,8 +549,9 @@
     overflow: hidden;
 }
 .quick-switch-item:hover .quick-switch-icon {
-    transform: scale(1.05);
-    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1) translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 .quick-switch-name {
     font-size: var(--font-size-xs);
@@ -635,63 +689,85 @@
     margin-right: var(--spacing-lg);
     flex-shrink: 0;
 }
+/* 【优化点1】黑胶唱片动效增强 - 平滑旋转+发光效果+纹理 */
 .vinyl-record {
     width: 100%;
     height: 100%;
-    background-color: #1a1a1a;
+    background: 
+        radial-gradient(circle at center,
+            #2a2a2a 0%,
+            #1a1a1a 15%,
+            #0d0d0d 30%,
+            #1a1a1a 50%,
+            #0d0d0d 70%,
+            #1a1a1a 85%,
+            #0d0d0d 100%);
     border-radius: 50%;
     position: relative;
     overflow: hidden;
-    animation: spin 3s linear infinite;
+    animation: vinylSpin 2.8s linear infinite;
     animation-play-state: paused;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
-                inset 0 0 0 2px rgba(255, 255, 255, 0.05),
-                0 0 20px rgba(0, 0, 0, 0.3);
-    transition: all var(--transition-normal);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        inset 0 0 20px rgba(0, 0, 0, 0.8),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.05),
+        0 0 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.music-widget:hover .vinyl-record {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5),
-                inset 0 0 0 2px rgba(255, 255, 255, 0.08),
-                0 0 30px rgba(var(--primary-color-rgb), 0.15);
-}
-.vinyl-record.spinning {
-    animation-play-state: running;
-}
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-/* 黑胶纹路 */
+
+/* 唱片纹理增强 */
 .vinyl-record::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-radial-gradient(circle at center,
-            transparent 0%,
-            transparent 2px,
-            rgba(255, 255, 255, 0.15) 2px,
-            rgba(255, 255, 255, 0.15) 4px);
+    inset: 6px;
+    border-radius: 50%;
+    background: 
+        repeating-radial-gradient(
+            circle at center,
+            transparent 0px,
+            transparent 1px,
+            rgba(0, 0, 0, 0.4) 1px,
+            rgba(0, 0, 0, 0.4) 2px
+        );
+    opacity: 0.6;
+    pointer-events: none;
 }
-/* 黑胶标记 */
+
+/* 唱片边缘光泽 */
 .vinyl-record::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom,
-            rgba(255, 90, 95, 0.8) 0%,
-            rgba(255, 90, 95, 0) 100%);
-    box-shadow:
-        15px 0 0 0 rgba(255, 90, 95, 0.6),
-        -15px 0 0 0 rgba(255, 90, 95, 0.6),
-        0 15px 0 0 rgba(255, 90, 95, 0.4),
-        0 -15px 0 0 rgba(255, 90, 95, 0.4);
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.12) 0%, 
+        transparent 40%, 
+        rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+}
+
+.music-widget:hover .vinyl-record {
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(0, 0, 0, 0.8),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.08),
+        0 0 30px rgba(var(--primary-color-rgb), 0.15);
+    transform: scale(1.02);
+}
+
+.vinyl-record.spinning {
+    animation-play-state: running;
+    box-shadow: 
+        0 8px 28px rgba(0, 0, 0, 0.55),
+        inset 0 0 20px rgba(0, 0, 0, 0.8),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.1),
+        0 0 40px rgba(var(--primary-color-rgb), 0.25),
+        0 0 60px rgba(var(--primary-color-rgb), 0.1);
+}
+
+@keyframes vinylSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 /* 黑胶中心 */
 .vinyl-record .vinyl-center {
@@ -1055,29 +1131,65 @@
     opacity: 1;
     transform: scale(0.9);
 }
+/* 【优化点3】底部Dock栏AC控制按钮动效增强 - 旋转+弹性+发光 */
 /* 中间空调控制区 */
 .center-controls {
     display: flex;
     align-items: center;
-    background: var(--surface-color);
+    background: 
+        linear-gradient(135deg, 
+            rgba(0, 204, 255, 0.05) 0%, 
+            rgba(0, 100, 200, 0.02) 50%, 
+            rgba(0, 0, 0, 0.1) 100%),
+        var(--surface-color);
     border-radius: var(--radius-full);
     padding: 8px var(--spacing-xl);
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(0, 204, 255, 0.15);
     gap: var(--spacing-sm);
     height: auto;
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-normal);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.03);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
 }
+
+/* 控制区光泽效果 */
+.center-controls::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(0, 204, 255, 0.1) 50%,
+        transparent 100%);
+    transition: left 0.8s ease;
+    pointer-events: none;
+}
+.center-controls:hover::before {
+    left: 100%;
+}
+
 .center-controls:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
-                0 0 20px rgba(0, 204, 255, 0.1);
-    border-color: rgba(0, 204, 255, 0.3);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.45),
+        0 0 30px rgba(0, 204, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 0 1px rgba(0, 204, 255, 0.2);
+    border-color: rgba(0, 204, 255, 0.35);
+    transform: translateY(-2px);
 }
+
 .ac-control {
     width: 28px;
     height: 28px;
     opacity: 0.7;
-    transition: all var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     margin: 0 8px;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
     background-size: contain;
@@ -1086,19 +1198,51 @@
     cursor: pointer;
     position: relative;
 }
+
+/* AC按钮点击波纹 */
+.ac-control::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 204, 255, 0.4);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+}
+.ac-control:active::before {
+    animation: acRipple 0.35s ease-out;
+}
+@keyframes acRipple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.6;
+    }
+    100% {
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+    }
+}
+
 .ac-control::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 150%;
-    height: 150%;
+    width: 160%;
+    height: 160%;
     background: radial-gradient(circle,
-        rgba(0, 204, 255, 0.3) 0%,
+        rgba(0, 204, 255, 0.35) 0%,
+        rgba(0, 204, 255, 0.15) 40%,
         transparent 70%);
     opacity: 0;
-    transition: opacity var(--transition-fast);
+    transition: opacity 0.3s ease;
     pointer-events: none;
     border-radius: 50%;
 }
@@ -1107,13 +1251,25 @@
 }
 .ac-control:hover {
     opacity: 1;
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 8px rgba(0, 204, 255, 0.6));
+    transform: scale(1.2) rotate(15deg);
+    filter: drop-shadow(0 0 12px rgba(0, 204, 255, 0.7));
 }
 .ac-control:active {
     opacity: 1;
-    transform: scale(0.9);
+    transform: scale(0.92) rotate(-5deg);
+    filter: drop-shadow(0 0 8px rgba(0, 204, 255, 0.5));
 }
+
+/* AC激活状态旋转动画 */
+.ac-control.active {
+    animation: acSpin 3s linear infinite;
+    filter: drop-shadow(0 0 16px rgba(0, 204, 255, 0.8));
+}
+@keyframes acSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .air-text {
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-semibold);
@@ -1123,16 +1279,35 @@
     font-variant-numeric: tabular-nums;
     margin: 0 8px;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    transition: all var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
 }
 .center-controls:hover .air-text {
-    text-shadow: 0 0 15px rgba(0, 204, 255, 0.4);
+    text-shadow: 
+        0 0 20px rgba(0, 204, 255, 0.5),
+        0 0 40px rgba(0, 204, 255, 0.3);
+    transform: scale(1.05);
 }
+
+/* 温度数字变化动画 */
+.air-text.updating {
+    animation: tempPulse 0.3s ease-out;
+}
+@keyframes tempPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
 .wind-display {
     position: relative;
     width: 32px;
     height: 32px;
     margin: 0 8px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.wind-display:hover {
+    transform: scale(1.1);
 }
 .wind-background,
 .wind-level {
@@ -1145,24 +1320,59 @@
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0.8;
+    transition: all 0.3s ease;
 }
+.wind-display:hover .wind-level {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(0, 204, 255, 0.6));
+}
+
 .ac-hcs {
     width: 28px;
     height: 28px;
     opacity: 0.7;
-    transition: all var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     margin: 0 8px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
+    position: relative;
+}
+.ac-hcs::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle,
+        rgba(255, 150, 100, 0.3) 0%,
+        transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 50%;
+}
+.ac-hcs:hover::after {
+    opacity: 1;
 }
 .ac-hcs:hover {
     opacity: 1;
-    transform: scale(1.15);
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 10px rgba(255, 150, 100, 0.6));
 }
 .ac-hcs:active {
-    transform: scale(0.9);
+    transform: scale(0.92);
+}
+.ac-hcs.active {
+    filter: drop-shadow(0 0 16px rgba(255, 150, 100, 0.8));
+    animation: seatHeat 2s ease-in-out infinite;
+}
+@keyframes seatHeat {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(255, 150, 100, 0.6)); }
+    50% { filter: drop-shadow(0 0 24px rgba(255, 150, 100, 0.9)); }
 }
 /* ========== 律动效果 ========== */
 .music-rhythm {
