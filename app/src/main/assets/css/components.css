@@ -601,3 +601,221 @@
 .search-input::placeholder {
     color: var(--text-tertiary);
 }
+
+/* ========== 滚动体验优化 ========== */
+/* 平滑滚动容器 */
+.scroll-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* 惯性滚动增强 */
+.momentum-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* 滚动边界效果 */
+.scroll-container {
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 5%,
+        black 95%,
+        transparent 100%
+    );
+}
+
+/* 横向滚动容器优化 */
+.horizontal-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+    scrollbar-width: none;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.horizontal-scroll-container > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+}
+
+/* 滚动捕捉 */
+.scroll-snap-y {
+    scroll-snap-type: y mandatory;
+}
+
+.scroll-snap-x {
+    scroll-snap-type: x mandatory;
+}
+
+.scroll-snap-align-start {
+    scroll-snap-align: start;
+}
+
+.scroll-snap-align-center {
+    scroll-snap-align: center;
+}
+
+/* 滚动条高级美化 */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        to bottom,
+        rgba(var(--primary-color-rgb), 0.3),
+        rgba(var(--secondary-color-rgb), 0.3)
+    );
+    border-radius: 3px;
+    transition: all var(--transition-fast);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        to bottom,
+        rgba(var(--primary-color-rgb), 0.5),
+        rgba(var(--secondary-color-rgb), 0.5)
+    );
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(
+        to bottom,
+        rgba(var(--primary-color-rgb), 0.6),
+        rgba(var(--secondary-color-rgb), 0.6)
+    );
+}
+
+/* 超薄滚动条 */
+.thin-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* 隐藏滚动条但保留功能 */
+.hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* 滚动指示器 */
+.scroll-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 10;
+}
+
+.scroll-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all var(--transition-fast);
+}
+
+.scroll-dot.active {
+    width: 20px;
+    border-radius: 3px;
+    background: var(--primary-color);
+    box-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* 滚动进度条 */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent-gradient);
+    z-index: var(--z-sticky);
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* 滚动阴影效果 */
+.scroll-shadow-top {
+    box-shadow: inset 0 8px 16px -8px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-shadow-bottom {
+    box-shadow: inset 0 -8px 16px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* 防止滚动穿透 */
+.prevent-scroll {
+    overflow: hidden !important;
+    touch-action: none;
+}
+
+/* 滚动动画 */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 滚动视差效果 */
+.parallax-scroll {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* 滚动时的性能优化 */
+.scroll-optimize {
+    will-change: scroll-position;
+    contain: layout style paint;
+}
+
+/* 滚动结束延迟加载 */
+.scroll-defer {
+    content-visibility: auto;
+}
