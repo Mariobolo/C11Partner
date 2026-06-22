@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 聚焦状态 -->
+    <item android:state_focused="true">
+        <layer-list>
+            <!-- 外发光 -->
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="#302196F3" />
+                    <corners android:radius="12dp" />
+                </shape>
+            </item>
+            <!-- 主背景 -->
+            <item android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#FAFAFA" />
+                    <corners android:radius="11dp" />
+                    <stroke
+                        android:width="2dp"
+                        android:color="#2196F3" />
+                </shape>
+            </item>
+            <!-- 顶部高光 -->
+            <item android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="270"
+                        android:startColor="#10000000"
+                        android:centerColor="#00000000"
+                        android:endColor="#00000000" />
+                    <corners android:radius="11dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    
+    <!-- 禁用状态 -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#F5F5F5" />
+            <corners android:radius="12dp" />
+            <stroke
+                android:width="1dp"
+                android:color="#E0E0E0" />
+        </shape>
+    </item>
+    
+    <!-- 默认状态 -->
+    <item>
+        <layer-list>
+            <!-- 阴影 -->
+            <item android:left="0.5dp" android:top="1.5dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#15000000" />
+                    <corners android:radius="12dp" />
+                </shape>
+            </item>
+            <!-- 主背景 -->
+            <item android:bottom="1dp" android:right="0.5dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#FFFFFF" />
+                    <corners android:radius="12dp" />
+                    <stroke
+                        android:width="1dp"
+                        android:color="#E0E0E0" />
+                </shape>
+            </item>
+            <!-- 顶部内阴影 -->
+            <item android:bottom="1dp" android:right="0.5dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="270"
+                        android:startColor="#08000000"
+                        android:centerColor="#00000000"
+                        android:endColor="#00000000" />
+                    <corners android:radius="12dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

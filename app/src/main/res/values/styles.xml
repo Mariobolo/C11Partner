@@ -125,4 +125,18 @@
         <item name="android:padding">@dimen/spacing_6</item>
         <item name="android:layout_margin">@dimen/spacing_4</item>
     </style>
+    
+    <!-- 现代化输入框样式 -->
+    <style name="ModernEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/edittext_modern_background</item>
+        <item name="android:textColor">#212121</item>
+        <item name="android:textColorHint">#9E9E9E</item>
+        <item name="android:textSize">@dimen/text_base</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">@dimen/spacing_4</item>
+        <item name="android:paddingRight">@dimen/spacing_4</item>
+        <item name="android:paddingTop">@dimen/spacing_3</item>
+        <item name="android:paddingBottom">@dimen/spacing_3</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
 </resources>
