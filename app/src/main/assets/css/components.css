@@ -713,6 +713,223 @@
     );
 }
 
+/* ============================================
+   【优化点2】卡片视觉深度增强
+   内发光效果、渐变边框、3D透视效果
+   ============================================ */
+
+/* 卡片内发光效果 */
+.card-depth {
+    box-shadow: 
+        var(--shadow-lg),
+        var(--shadow-inner),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+/* 渐变边框效果 */
+.card-gradient-border {
+    position: relative;
+    background-clip: padding-box;
+    border: solid 1px transparent;
+}
+.card-gradient-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -1px;
+    border-radius: inherit;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.3) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+.card-gradient-border:hover::before {
+    opacity: 1;
+}
+
+/* 3D透视效果 */
+.card-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform var(--transition-normal);
+}
+.card-3d:hover {
+    transform: 
+        translateY(-6px) 
+        rotateX(2deg) 
+        scale(1.01);
+}
+
+/* 多层次阴影增强 */
+.card-shadow-deep {
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.2),
+        0 10px 20px -2px rgba(0, 0, 0, 0.3),
+        0 20px 40px -4px rgba(0, 0, 0, 0.4),
+        0 40px 80px -8px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   【优化点3】按钮状态精细化
+   active按压深度感、focus-visible键盘导航、disabled视觉反馈
+   ============================================ */
+
+/* 按钮基础状态增强 */
+.btn {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: 
+        transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* Active按压深度感 */
+.btn:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.btn-primary:active {
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 1px rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* Focus-visible键盘导航样式 */
+.btn:focus-visible,
+.setting-item:focus-visible,
+.tab-button:focus-visible,
+.quick-app-item:focus-visible,
+.quick-switch-item:focus-visible {
+    outline: none;
+    box-shadow: 
+        0 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 0 4px rgba(var(--primary-color-rgb), 0.6);
+}
+.btn-primary:focus-visible {
+    box-shadow: 
+        0 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 0 4px rgba(var(--primary-color-rgb), 0.8),
+        0 4px 12px rgba(var(--primary-color-rgb), 0.4);
+}
+
+/* Disabled状态视觉反馈 */
+.btn:disabled,
+.setting-btn:disabled,
+.quick-app-item.disabled,
+.quick-switch-item.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+    filter: grayscale(0.5);
+}
+.btn:disabled:active,
+.setting-btn:disabled:active {
+    transform: none;
+    box-shadow: none;
+}
+
+/* 按钮悬停光泽效果 */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    transition: left 0.5s ease;
+    pointer-events: none;
+    border-radius: inherit;
+}
+.btn:hover::before {
+    left: 100%;
+}
+
+/* 按钮加载状态 */
+.btn.loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    margin: -9px 0 0 -9px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    color: var(--text-primary);
+}
+.btn-primary.loading::after {
+    color: var(--primary-color);
+}
+
+/* 按钮成功状态 */
+.btn.success {
+    background: rgba(0, 255, 136, 0.2) !important;
+    border-color: rgba(0, 255, 136, 0.4) !important;
+    color: #00ff88 !important;
+}
+.btn.success::after {
+    content: '✓';
+    margin-left: 8px;
+    animation: successPop 0.3s ease-out;
+}
+@keyframes successPop {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 表单元素focus-visible支持 */
+.form-input:focus-visible,
+.form-select:focus-visible,
+.setting-input:focus-visible {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 
+        0 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 0 4px rgba(var(--primary-color-rgb), 0.4);
+}
+
+/* 链接focus-visible */
+a:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.5);
+    border-radius: 2px;
+} linear-gradient(
+        to bottom,
+        rgba(var(--primary-color-rgb), 0.6),
+        rgba(var(--secondary-color-rgb), 0.6)
+    );
+}
+
 /* 超薄滚动条 */
 .thin-scrollbar::-webkit-scrollbar {
     width: 4px;
