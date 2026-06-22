@@ -876,7 +876,114 @@
 }
 
 /* ============================================
-   【优化点3】响应式布局优化
+   【优化点3】响应式布局优化 - 增强版
+   容器查询、弹性布局优化、动态间距
+   ============================================ */
+/* ========== 容器查询支持 ========== */
+.widget-container {
+    container-type: inline-size;
+    container-name: widgets;
+}
+@container widgets (min-width: 400px) {
+    .widget {
+        padding: 20px 24px;
+    }
+}
+@container widgets (max-width: 399px) {
+    .widget {
+        padding: 14px 18px;
+    }
+}
+/* ========== 弹性布局优化 ========== */
+.flex-responsive {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(8px, 2vw, 16px);
+}
+/* ========== 动态字体大小 ========== */
+.text-responsive {
+    font-size: clamp(12px, 2vw, 16px);
+    line-height: clamp(1.4, 2vw, 1.6);
+}
+.title-responsive {
+    font-size: clamp(16px, 3vw, 24px);
+}
+/* ========== 动态间距 ========== */
+.spacing-responsive {
+    padding: clamp(8px, 2vw, 16px);
+    margin: clamp(4px, 1vw, 12px);
+}
+/* ========== 网格布局响应式 ========== */
+.grid-auto-responsive {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(80px, 15vw, 120px), 1fr));
+    gap: clamp(8px, 2vw, 16px);
+}
+/* ========== 触控目标大小优化 ========== */
+@media (pointer: coarse) {
+    .touch-target {
+        min-width: 48px;
+        min-height: 48px;
+        padding: 12px;
+    }
+}
+/* ========== 打印样式优化 ========== */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    body {
+        background: white;
+        color: black;
+    }
+}
+/* ========== 暗色模式优化 ========== */
+@media (prefers-color-scheme: dark) {
+    .auto-dark {
+        background-color: rgba(0, 0, 0, 0.8);
+        color: rgba(255, 255, 255, 0.9);
+    }
+}
+/* ========== 亮色模式优化 ========== */
+@media (prefers-color-scheme: light) {
+    .auto-light {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: rgba(0, 0, 0, 0.8);
+    }
+}
+/* ========== 横屏特殊优化 ========== */
+@media (orientation: landscape) and (max-height: 600px) {
+    .compact-landscape .widget {
+        min-height: 70px;
+        padding: 10px 14px;
+    }
+    .compact-landscape .time-text#timeDisplay {
+        font-size: 72px;
+    }
+}
+/* ========== 竖屏特殊优化 ========== */
+@media (orientation: portrait) and (min-height: 1000px) {
+    .tall-portrait .card-view {
+        bottom: 140px;
+    }
+}
+/* ========== 性能优化 - 低功耗模式 ========== */
+@media (prefers-reduced-transparency: reduce) {
+    .widget,
+    .card,
+    .modal-content {
+        backdrop-filter: none;
+        background-color: rgba(20, 20, 25, 0.95);
+    }
+}
+/* ========== 颜色方案优化 ========== */
+@media (forced-colors: active) {
+    .widget,
+    .btn,
+    .card {
+        border: 1px solid CanvasText;
+    }
+}
    车载屏幕特殊尺寸适配、横竖屏切换优化、安全区域增强
    ============================================ */
 /* ========== 零跑车机专用分辨率 (1920×1200) ========== */

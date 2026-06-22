@@ -713,7 +713,309 @@
 @keyframes pageFadeIn {
     from {
         opacity: 0;
-        transform: scale(0.98);
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes pageFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+/* 滑动切换 */
+@keyframes pageSlideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes pageSlideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+/* ========== 元素入场序列动画 ========== */
+.stagger-children > * {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: staggerFadeIn 0.5s ease-out forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+/* ========== 加载状态动效 ========== */
+/* 骨架屏加载 */
+@keyframes skeletonLoading {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+.skeleton-loading {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonLoading 1.5s ease-in-out infinite;
+    border-radius: 8px;
+}
+/* 进度条加载动画 */
+@keyframes progressIndeterminate {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(200%);
+    }
+}
+.progress-indeterminate {
+    overflow: hidden;
+    position: relative;
+}
+.progress-indeterminate::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(var(--primary-color-rgb), 0.8),
+        transparent
+    );
+    animation: progressIndeterminate 1.5s ease-in-out infinite;
+}
+/* ========== 焦点状态动效（无障碍） ========== */
+.focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.3);
+}
+/* 键盘焦点环 */
+.keyboard-focus:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.3);
+}
+/* ========== 状态切换平滑过渡 ========== */
+/* 开关切换 */
+.toggle-transition {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.toggle-transition.on {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+.toggle-transition.off {
+    background: rgba(255, 255, 255, 0.1);
+}
+/* 滑块动画 */
+.slider-thumb {
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+}
+.slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.5);
+}
+.slider-thumb:active {
+    transform: scale(0.95);
+}
+/* ========== 数据更新动效 ========== */
+/* 数值变化高亮 */
+@keyframes valueChange {
+    0% {
+        background: rgba(var(--primary-color-rgb), 0.3);
+        transform: scale(1.05);
+    }
+    100% {
+        background: transparent;
+        transform: scale(1);
+    }
+}
+.value-updated {
+    animation: valueChange 0.5s ease-out;
+}
+/* 新消息提示 */
+@keyframes newItem {
+    0% {
+        background: rgba(var(--accent-color-rgb), 0.3);
+        transform: translateX(-10px);
+    }
+    100% {
+        background: transparent;
+        transform: translateX(0);
+    }
+}
+.new-item {
+    animation: newItem 0.6s ease-out;
+}
+/* ============================================
+   【优化点3】无障碍支持增强
+   ARIA 视觉反馈、键盘导航、屏幕阅读器支持
+   ============================================ */
+/* ========== 屏幕阅读器专用文本 ========== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+/* 跳过链接 */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    z-index: 100;
+    transition: top 0.3s;
+}
+.skip-link:focus {
+    top: 0;
+}
+/* ========== ARIA 状态视觉反馈 ========== */
+/* aria-expanded */
+[aria-expanded="true"] .expand-icon {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+[aria-expanded="false"] .expand-icon {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+/* aria-checked */
+[aria-checked="true"] {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-color: var(--primary-color);
+}
+[aria-checked="false"] {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+/* aria-disabled */
+[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+/* aria-busy */
+[aria-busy="true"] {
+    position: relative;
+    pointer-events: none;
+}
+[aria-busy="true"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: loading-spin 0.8s linear infinite;
+}
+/* aria-current */
+[aria-current="page"] {
+    position: relative;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+[aria-current="page"]::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+/* ========== 高对比度模式支持 ========== */
+@media (prefers-contrast: high) {
+    .btn, .card, .modal-content {
+        border-width: 2px;
+        border-color: #fff;
+    }
+    .btn-primary {
+        border-color: var(--primary-color);
+    }
+}
+/* ========== 减少动画模式支持 ========== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .animate-spin,
+    .animate-pulse,
+    .animate-breathe,
+    .animate-float {
+        animation: none !important;
+    }
+}
+/* ========== 键盘导航焦点样式 ========== */
+/* 确保所有交互元素有清晰的焦点指示 */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.3);
+}
+/* 移除鼠标点击时的焦点样式 */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+[tabindex]:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+} scale(0.98);
     }
     to {
         opacity: 1;
