@@ -1911,3 +1911,525 @@ html:not(.is-scrolling) .scroll-pause-animations {
         transform: translateY(-6px);
     }
 }
+
+/* ============================================
+   【第52轮UI美化 - 优化点3】页面过渡与路由切换动画系统终极增强
+   3D页面切换、淡入淡出、滑动过渡、缩放旋转、弹性动画系统
+   ============================================ */
+/* ========== 页面容器基础设置 ========== */
+.page-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    perspective: 1500px;
+    transform-style: preserve-3d;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+    contain: layout paint style;
+}
+
+/* ========== 3D翻转过渡 - 终极增强 ========== */
+/* 3D翻转进入 */
+.page-flip-enter {
+    transform: rotateY(90deg) translateZ(100px);
+    opacity: 0;
+}
+
+.page-flip-enter-active {
+    transform: rotateY(0deg) translateZ(0);
+    opacity: 1;
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 3D翻转离开 */
+.page-flip-exit {
+    transform: rotateY(0deg) translateZ(0);
+    opacity: 1;
+}
+
+.page-flip-exit-active {
+    transform: rotateY(-90deg) translateZ(-100px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 3D上下翻转 */
+.page-flip-up-enter {
+    transform: rotateX(90deg) translateZ(100px);
+    opacity: 0;
+}
+
+.page-flip-up-enter-active {
+    transform: rotateX(0deg) translateZ(0);
+    opacity: 1;
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page-flip-up-exit {
+    transform: rotateX(0deg) translateZ(0);
+    opacity: 1;
+}
+
+.page-flip-up-exit-active {
+    transform: rotateX(-90deg) translateZ(-100px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ========== 缩放过渡 - 终极增强 ========== */
+/* 缩放淡入 */
+.page-scale-enter {
+    transform: scale(0.8) translateZ(-100px);
+    opacity: 0;
+}
+
+.page-scale-enter-active {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 缩放淡出 */
+.page-scale-exit {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+}
+
+.page-scale-exit-active {
+    transform: scale(1.1) translateZ(50px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 弹性缩放 */
+.page-elastic-enter {
+    transform: scale(0.5);
+    opacity: 0;
+}
+
+.page-elastic-enter-active {
+    transform: scale(1);
+    opacity: 1;
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.page-elastic-exit {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.page-elastic-exit-active {
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ========== 滑动过渡 - 终极增强 ========== */
+/* 从左滑入 */
+.page-slide-left-enter {
+    transform: translateX(-100%) translateZ(-50px) rotateY(10deg);
+    opacity: 0;
+}
+
+.page-slide-left-enter-active {
+    transform: translateX(0) translateZ(0) rotateY(0deg);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page-slide-left-exit {
+    transform: translateX(0) translateZ(0) rotateY(0deg);
+    opacity: 1;
+}
+
+.page-slide-left-exit-active {
+    transform: translateX(100%) translateZ(-50px) rotateY(-10deg);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 从右滑入 */
+.page-slide-right-enter {
+    transform: translateX(100%) translateZ(-50px) rotateY(-10deg);
+    opacity: 0;
+}
+
+.page-slide-right-enter-active {
+    transform: translateX(0) translateZ(0) rotateY(0deg);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page-slide-right-exit {
+    transform: translateX(0) translateZ(0) rotateY(0deg);
+    opacity: 1;
+}
+
+.page-slide-right-exit-active {
+    transform: translateX(-100%) translateZ(-50px) rotateY(10deg);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 从下滑入 */
+.page-slide-up-enter {
+    transform: translateY(100%) translateZ(-50px) rotateX(-10deg);
+    opacity: 0;
+}
+
+.page-slide-up-enter-active {
+    transform: translateY(0) translateZ(0) rotateX(0deg);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page-slide-up-exit {
+    transform: translateY(0) translateZ(0) rotateX(0deg);
+    opacity: 1;
+}
+
+.page-slide-up-exit-active {
+    transform: translateY(-100%) translateZ(-50px) rotateX(10deg);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 从上滑入 */
+.page-slide-down-enter {
+    transform: translateY(-100%) translateZ(-50px) rotateX(10deg);
+    opacity: 0;
+}
+
+.page-slide-down-enter-active {
+    transform: translateY(0) translateZ(0) rotateX(0deg);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========== 淡入淡出过渡 - 终极增强 ========== */
+/* 标准淡入淡出 */
+.page-fade-enter {
+    opacity: 0;
+}
+
+.page-fade-enter-active {
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+}
+
+.page-fade-exit {
+    opacity: 1;
+}
+
+.page-fade-exit-active {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+/* 深度淡入淡出 */
+.page-depth-enter {
+    opacity: 0;
+    transform: translateZ(-100px);
+    filter: blur(10px);
+}
+
+.page-depth-enter-active {
+    opacity: 1;
+    transform: translateZ(0);
+    filter: blur(0);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page-depth-exit {
+    opacity: 1;
+    transform: translateZ(0);
+    filter: blur(0);
+}
+
+.page-depth-exit-active {
+    opacity: 0;
+    transform: translateZ(100px);
+    filter: blur(10px);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ========== 旋转过渡 - 终极增强 ========== */
+/* 顺时针旋转 */
+.page-rotate-enter {
+    transform: rotate(-15deg) scale(0.8);
+    opacity: 0;
+}
+
+.page-rotate-enter-active {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page-rotate-exit {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+}
+
+.page-rotate-exit-active {
+    transform: rotate(15deg) scale(0.8);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 3D立方体旋转 */
+.page-cube-enter {
+    transform: rotateY(90deg) translateZ(50%);
+    transform-origin: left center;
+    opacity: 0;
+}
+
+.page-cube-enter-active {
+    transform: rotateY(0deg) translateZ(0);
+    opacity: 1;
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page-cube-exit {
+    transform: rotateY(0deg) translateZ(0);
+    transform-origin: right center;
+    opacity: 1;
+}
+
+.page-cube-exit-active {
+    transform: rotateY(-90deg) translateZ(-50%);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ========== 组合特效过渡 ========== */
+/* 爆炸效果 */
+.page-explode-enter {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+}
+
+.page-explode-enter-active {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page-explode-exit {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+}
+
+.page-explode-exit-active {
+    transform: scale(1.5) rotate(-15deg);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 折叠效果 */
+.page-fold-enter {
+    transform: scaleY(0) rotateX(90deg);
+    transform-origin: top center;
+    opacity: 0;
+}
+
+.page-fold-enter-active {
+    transform: scaleY(1) rotateX(0deg);
+    opacity: 1;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 开门效果 */
+.page-door-enter {
+    transform: perspective(1000px) rotateY(-100deg);
+    transform-origin: left center;
+    opacity: 0;
+}
+
+.page-door-enter-active {
+    transform: perspective(1000px) rotateY(0deg);
+    opacity: 1;
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========== 模态框/弹窗过渡动画 ========== */
+/* 弹窗弹性弹出 */
+.modal-pop-enter {
+    transform: scale(0.5) translateY(50px);
+    opacity: 0;
+}
+
+.modal-pop-enter-active {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.modal-pop-exit {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.modal-pop-exit-active {
+    transform: scale(0.8) translateY(30px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 弹窗从顶部滑下 */
+.modal-slide-down-enter {
+    transform: translateY(-100%) scale(0.9);
+    opacity: 0;
+}
+
+.modal-slide-down-enter-active {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 弹窗从底部滑上 */
+.modal-slide-up-enter {
+    transform: translateY(100%) scale(0.9);
+    opacity: 0;
+}
+
+.modal-slide-up-enter-active {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========== 元素入场序列动画 ========== */
+/* 渐入序列 - 用于列表项 */
+.stagger-enter > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: staggerItemIn 0.5s ease-out forwards;
+}
+
+@keyframes staggerItemIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 弹性序列 */
+.stagger-elastic > * {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: staggerElasticIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes staggerElasticIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 从左滑入序列 */
+.stagger-left > * {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: staggerLeftIn 0.5s ease-out forwards;
+}
+
+@keyframes staggerLeftIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========== 路由切换工具类 ========== */
+/* 过渡模式 */
+.transition-mode-out-in {
+    transition-behavior: allow-discrete;
+}
+
+.transition-mode-in-out {
+    transition-behavior: allow-discrete;
+}
+
+/* 共享元素过渡 */
+.shared-element {
+    view-transition-name: shared-element;
+    contain: layout paint;
+}
+
+/* 页面过渡组 */
+.transition-group {
+    position: relative;
+}
+
+/* ========== 性能优化与无障碍支持 ========== */
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    .page,
+    .modal,
+    .stagger-enter > *,
+    .stagger-elastic > *,
+    .stagger-left > * {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+    }
+    
+    .page-container {
+        perspective: none !important;
+    }
+}
+
+/* 高帧率优化 */
+@media (prefers-reduced-motion: no-preference) {
+    .page,
+    .modal {
+        will-change: transform, opacity;
+    }
+}
+
+/* 硬件加速 */
+.page-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* ========== 动画延迟工具类 ========== */
+.delay-50 { animation-delay: 0.05s; }
+.delay-100 { animation-delay: 0.1s; }
+.delay-150 { animation-delay: 0.15s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-250 { animation-delay: 0.25s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-800 { animation-delay: 0.8s; }
+.delay-1000 { animation-delay: 1s; }
+

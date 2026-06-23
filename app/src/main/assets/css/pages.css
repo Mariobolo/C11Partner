@@ -4418,3 +4418,351 @@
     box-sizing: border-box;
     contain: size layout paint;
 }
+
+/* ============================================
+   【第52轮UI美化 - 优化点1】导航栏/侧边栏视觉与交互动效终极增强
+   3D透视效果、渐变发光边框、弹性悬停动效、粒子光晕、多层次阴影
+   ============================================ */
+/* 导航栏容器终极3D增强 */
+.nav-bar {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    background: 
+        linear-gradient(180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 50%,
+            rgba(0, 0, 0, 0.15) 100%);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.5),
+        0 4px 16px rgba(0, 0, 0, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset,
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 导航栏渐变发光边框 */
+.nav-bar::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    padding: 1px;
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 30%,
+        transparent 70%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* 导航栏顶部光泽效果 */
+.nav-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+/* 导航按钮终极3D增强 */
+.nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 18px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    overflow: hidden;
+    border: 1px solid transparent;
+    background: transparent;
+}
+
+/* 导航按钮粒子光晕容器 */
+.nav-item::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 30%,
+        transparent 70%
+    );
+    opacity: 0;
+    filter: blur(15px);
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+/* 导航按钮光泽扫过效果 */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.12) 40%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.12) 60%,
+        transparent 100%);
+    transform: skewX(-15deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.7s ease;
+    z-index: 1;
+}
+
+/* 导航按钮悬停3D透视效果 */
+.nav-item:hover {
+    background: 
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.04) 50%,
+            rgba(var(--primary-color-rgb), 0.08) 100%);
+    border-color: rgba(var(--primary-color-rgb), 0.25);
+    transform: translateY(-6px) scale(1.06) rotateX(8deg) rotateY(-4deg);
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 0 30px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.nav-item:hover::before {
+    opacity: 1;
+    animation: navGlowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes navGlowPulse {
+    0%, 100% { 
+        opacity: 0.8; 
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.15);
+    }
+}
+
+.nav-item:hover::after {
+    left: 150%;
+    opacity: 1;
+}
+
+/* 导航按钮点击3D按压效果 */
+.nav-item:active {
+    transform: translateY(-2px) scale(0.97) rotateX(-2deg);
+    box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.4),
+        inset 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* 导航按钮激活状态终极发光效果 */
+.nav-item.active {
+    background: 
+        radial-gradient(ellipse at center,
+            rgba(var(--primary-color-rgb), 0.3) 0%,
+            rgba(var(--primary-color-rgb), 0.15) 50%,
+            transparent 70%),
+        linear-gradient(135deg,
+            rgba(var(--primary-color-rgb), 0.25) 0%,
+            rgba(var(--secondary-color-rgb), 0.15) 100%);
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 
+        0 12px 36px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
+        0 0 50px rgba(var(--primary-color-rgb), 0.35),
+        0 0 90px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    animation: navActiveBreath 3s ease-in-out infinite;
+}
+
+@keyframes navActiveBreath {
+    0%, 100% {
+        box-shadow: 
+            0 12px 36px rgba(0, 0, 0, 0.5),
+            0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
+            0 0 50px rgba(var(--primary-color-rgb), 0.35),
+            0 0 90px rgba(var(--primary-color-rgb), 0.15);
+    }
+    50% {
+        box-shadow: 
+            0 16px 44px rgba(0, 0, 0, 0.55),
+            0 0 0 1px rgba(var(--primary-color-rgb), 0.45),
+            0 0 70px rgba(var(--primary-color-rgb), 0.45),
+            0 0 120px rgba(var(--primary-color-rgb), 0.25);
+    }
+}
+
+.nav-item.active::before {
+    opacity: 1;
+    animation: navActiveGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes navActiveGlow {
+    0%, 100% { 
+        opacity: 0.9; 
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+    }
+}
+
+/* 导航图标3D增强 */
+.nav-item .nav-icon {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    z-index: 2;
+}
+
+.nav-item:hover .nav-icon {
+    transform: scale(1.25) translateY(-3px) rotateY(10deg);
+    filter: drop-shadow(0 4px 12px rgba(var(--primary-color-rgb), 0.5));
+}
+
+.nav-item.active .nav-icon {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 15px rgba(var(--primary-color-rgb), 0.7));
+}
+
+/* 导航文字渐变发光 */
+.nav-item .nav-label {
+    position: relative;
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 10px;
+    color: var(--text-secondary);
+    transition: all 0.35s ease;
+    z-index: 2;
+    letter-spacing: 0.3px;
+}
+
+.nav-item:hover .nav-label {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(var(--primary-color-rgb), 0.4);
+}
+
+.nav-item.active .nav-label {
+    color: #ffffff;
+    font-weight: 600;
+    background: linear-gradient(135deg,
+        #ffffff 0%,
+        rgba(255, 255, 255, 0.9) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* 侧边栏导航终极增强 */
+.sidebar-nav {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    background: 
+        linear-gradient(180deg,
+            rgba(20, 20, 26, 0.9) 0%,
+            rgba(12, 12, 18, 0.95) 100%);
+    backdrop-filter: blur(35px) saturate(160%);
+    -webkit-backdrop-filter: blur(35px) saturate(160%);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        8px 0 32px rgba(0, 0, 0, 0.4),
+        inset -1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+/* 侧边栏项目3D悬停效果 */
+.sidebar-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    margin: 4px 12px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    overflow: hidden;
+    border: 1px solid transparent;
+}
+
+.sidebar-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: linear-gradient(
+        180deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%);
+    border-radius: 0 3px 3px 0;
+    box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.6);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sidebar-item:hover {
+    background: 
+        linear-gradient(90deg,
+            rgba(var(--primary-color-rgb), 0.12) 0%,
+            rgba(255, 255, 255, 0.04) 100%);
+    border-color: rgba(var(--primary-color-rgb), 0.15);
+    transform: translateX(6px) scale(1.02) rotateY(-5deg);
+    box-shadow: 
+        -4px 0 20px rgba(var(--primary-color-rgb), 0.15),
+        4px 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.sidebar-item:hover::before {
+    height: 70%;
+    opacity: 1;
+}
+
+.sidebar-item.active {
+    background: 
+        linear-gradient(90deg,
+            rgba(var(--primary-color-rgb), 0.2) 0%,
+            rgba(var(--primary-color-rgb), 0.08) 100%);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+    transform: translateX(4px);
+    box-shadow: 
+        -4px 0 25px rgba(var(--primary-color-rgb), 0.25),
+        4px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-item.active::before {
+    height: 80%;
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.8);
+}
+
