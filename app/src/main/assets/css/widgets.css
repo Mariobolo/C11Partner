@@ -10685,24 +10685,79 @@ footer.status-bar {
     font-size: 22px !important;
     line-height: 1 !important;
     border-radius: 10px !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 6px !important;
     flex-shrink: 0 !important;
+    overflow: hidden !important;
 }
 
 .quick-switch-item {
-    height: auto !important;
+    height: 76px !important;
     min-height: 76px !important;
+    max-height: 76px !important;
+    width: 60px !important;
+    min-width: 60px !important;
+    max-width: 60px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 10px 8px !important;
+    padding: 8px 6px !important;
     box-sizing: border-box !important;
+    overflow: hidden !important;
 }
 
 .quick-switch-item.more .quick-switch-icon {
-    font-size: 20px !important;
+    font-size: 18px !important;
     width: 40px !important;
     height: 40px !important;
+}
+
+.quick-switch-name {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+}
+/* ===== 修复结束 ===== */
+
+
+/* ===== 修复：隐藏底部绿色滚动条 ===== */
+::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+::-webkit-scrollbar-track {
+    display: none !important;
+}
+
+::-webkit-scrollbar-thumb {
+    display: none !important;
+    background: transparent !important;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+    display: none !important;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    display: none !important;
+    background: transparent !important;
+}
+
+* {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 /* ===== 修复结束 ===== */
