@@ -10578,14 +10578,6 @@
     transform: rotate(30deg) !important;
 }
 
-/* 调整快捷开关组件的整体大小 */
-.quick-switches-widget {
-    min-width: 380px !important;
-    height: auto !important;
-    padding: 8px !important;
-}
-
-
 /* ========================================
    隐藏底部Dock栏并调整布局
    ======================================== */
@@ -10675,56 +10667,6 @@ footer.status-bar {
     max-width: 70px !important;
 }
 
-/* ===== 修复：统一快捷开关按钮大小 ===== */
-.quick-switch-icon {
-    width: 40px !important;
-    height: 40px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 22px !important;
-    line-height: 1 !important;
-    border-radius: 10px !important;
-    margin-bottom: 6px !important;
-    flex-shrink: 0 !important;
-    overflow: hidden !important;
-}
-
-.quick-switch-item {
-    height: 76px !important;
-    min-height: 76px !important;
-    max-height: 76px !important;
-    width: 60px !important;
-    min-width: 60px !important;
-    max-width: 60px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 8px 6px !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-}
-
-.quick-switch-item.more .quick-switch-icon {
-    font-size: 18px !important;
-    width: 40px !important;
-    height: 40px !important;
-}
-
-.quick-switch-name {
-    font-size: 11px !important;
-    line-height: 1.2 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    max-width: 100% !important;
-}
-/* ===== 修复结束 ===== */
-
-
 /* ===== 修复：隐藏底部绿色滚动条 ===== */
 ::-webkit-scrollbar {
     display: none !important;
@@ -10762,36 +10704,3 @@ footer.status-bar {
 }
 /* ===== 修复结束 ===== */
 
-/* ===== 修复：胎压模块车模型 ===== */
-.car-image {
-    background-image: url('../images/nav_car.png') !important;
-}
-
-/* ===== 修复：导航模块 ===== */
-/* map-icon恢复为背景装饰 */
-.map-icon {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    transform: none !important;
-    background-image: url('../images/nav_map.png') !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    opacity: 0.08 !important;
-    filter: blur(1px) !important;
-    z-index: 0 !important;
-}
-
-/* 导航按钮恢复边框和底色 */
-.nav-button {
-    background: var(--surface-color) !important;
-    border: 1px solid var(--border-light) !important;
-    border-radius: var(--radius-lg) !important;
-}
-/* ===== 修复结束 ===== */
