@@ -10761,3 +10761,115 @@ footer.status-bar {
     -ms-overflow-style: none !important;
 }
 /* ===== 修复结束 ===== */
+
+
+
+
+
+
+/* ===== 修复：导航模块布局和样式 ===== */
+/* 去掉右侧的导航图标装饰 */
+.map-widget::before {
+    display: none !important;
+    background-image: none !important;
+}
+
+/* 恢复按钮的边框和背景色，让它们更明显 */
+.map-widget .nav-button {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 16px !important;
+    padding: 14px 20px !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.map-widget .nav-button:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.5) !important;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+}
+
+/* 确保按钮是横排居中布局 */
+.map-widget {
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 24px !important;
+    padding: 20px 24px !important;
+}
+/* ===== 修复结束 ===== */
+
+
+/* ===== 修复：胎压模块车模型显示 ===== */
+.car-image {
+    background-image: url('../images/nav_car.png') !important;
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* ===== 修复：导航模块布局和按钮样式 ===== */
+.map-widget {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: var(--spacing-xl) !important;
+}
+
+/* map-icon恢复为背景装饰 */
+.map-icon {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    background-image: url('../images/nav_map.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    opacity: 0.08 !important;
+    filter: blur(1px) !important;
+    z-index: 0 !important;
+}
+
+/* 导航按钮恢复边框和底色 */
+.nav-button {
+    position: relative !important;
+    z-index: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 70px !important;
+    padding: 14px 18px !important;
+    background: var(--surface-color) !important;
+    border: 1px solid var(--border-light) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.nav-button .nav-icon {
+    width: 32px !important;
+    height: 32px !important;
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    margin-bottom: 6px !important;
+}
+
+.nav-button .nav-text {
+    font-size: 12px !important;
+    color: var(--text-primary) !important;
+}
+/* ===== 修复结束 ===== */
