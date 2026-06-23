@@ -4931,3 +4931,818 @@
     margin-top: 0;
 }
 
+
+/* ============================================
+   【第55轮UI美化 - 优化点2】自动化场景卡片3D视觉与交互动效终极增强
+   3D透视深度、粒子发光、弹性动画、状态切换特效
+   ============================================ */
+/* 自动化场景卡片容器3D增强 */
+.automation-card {
+    position: relative;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.08) 0%, 
+            rgba(255, 255, 255, 0.03) 40%, 
+            rgba(0, 0, 0, 0.12) 100%),
+        var(--bg-card);
+    backdrop-filter: blur(25px) saturate(160%);
+    -webkit-backdrop-filter: blur(25px) saturate(160%);
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    overflow: hidden;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+/* 场景卡片渐变发光边框 */
+.automation-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.15) 0%,
+        rgba(var(--secondary-color-rgb), 0.08) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: all 0.45s ease;
+}
+
+/* 场景卡片粒子光晕背景 */
+.automation-card::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(circle at 30% 20%,
+        rgba(var(--primary-color-rgb), 0.12) 0%,
+        transparent 50%);
+    opacity: 0;
+    transition: all 0.5s ease;
+    pointer-events: none;
+    animation: cardParticleGlow 4s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+@keyframes cardParticleGlow {
+    0%, 100% { 
+        opacity: 0.3; 
+        transform: scale(0.95) rotate(0deg);
+    }
+    25% { 
+        opacity: 0.5; 
+        transform: scale(1.02) rotate(2deg);
+    }
+    50% { 
+        opacity: 0.4; 
+        transform: scale(1) rotate(0deg);
+    }
+    75% { 
+        opacity: 0.55; 
+        transform: scale(1.02) rotate(-2deg);
+    }
+}
+
+/* 场景卡片顶部高光层 */
+.automation-card .card-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.02) 100%);
+    border-radius: 16px 16px 0 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 场景卡片光泽扫过效果 */
+.automation-card .card-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 30%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 70%,
+        transparent 100%);
+    transform: skewX(-15deg);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 2;
+}
+
+/* 场景卡片悬停3D终极效果 */
+.automation-card:hover {
+    transform: translateY(-10px) scale(1.04) rotateX(5deg) translateZ(25px);
+    box-shadow: 
+        0 24px 60px rgba(0, 0, 0, 0.5),
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 0 60px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.12) 0%, 
+            rgba(255, 255, 255, 0.05) 40%, 
+            rgba(var(--primary-color-rgb), 0.06) 100%),
+        var(--bg-card);
+}
+
+.automation-card:hover::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        transparent 100%
+    );
+}
+
+.automation-card:hover::after {
+    opacity: 1;
+    animation-play-state: running;
+}
+
+.automation-card:hover .card-shimmer {
+    opacity: 1;
+    animation: cardShimmerSweep 2.5s ease-in-out infinite;
+}
+
+@keyframes cardShimmerSweep {
+    0% { left: -100%; }
+    100% { left: 150%; }
+}
+
+/* 场景卡片激活状态终极增强 */
+.automation-card.active {
+    transform: translateY(-6px) scale(1.02) translateZ(15px);
+    background: 
+        linear-gradient(135deg, 
+            rgba(var(--primary-color-rgb), 0.18) 0%, 
+            rgba(var(--secondary-color-rgb), 0.1) 50%, 
+            rgba(var(--primary-color-rgb), 0.06) 100%),
+        var(--bg-card);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.45),
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
+        0 0 50px rgba(var(--primary-color-rgb), 0.25),
+        0 0 100px rgba(var(--primary-color-rgb), 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(var(--primary-color-rgb), 0.15);
+    border-color: rgba(var(--primary-color-rgb), 0.45);
+}
+
+.automation-card.active::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 50%,
+        transparent 100%
+    );
+}
+
+.automation-card.active::after {
+    opacity: 1;
+    animation-play-state: running;
+}
+
+/* 场景卡片点击3D按压反馈 */
+.automation-card:active {
+    transform: translateY(-3px) scale(0.99) rotateX(-3deg) translateZ(5px);
+    box-shadow: 
+        0 8px 28px rgba(0, 0, 0, 0.45),
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        0 0 25px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 3px 12px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* 场景图标3D视觉增强 */
+.automation-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.12) 0%, 
+            rgba(255, 255, 255, 0.04) 100%),
+        linear-gradient(135deg, 
+            rgba(var(--primary-color-rgb), 0.1) 0%, 
+            rgba(var(--secondary-color-rgb), 0.05) 100%);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.automation-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.03) 100%);
+    border-radius: 12px 12px 0 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.automation-card:hover .automation-icon {
+    transform: translateY(-4px) scale(1.15) rotateY(10deg) translateZ(20px);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+}
+
+.automation-card.active .automation-icon {
+    transform: translateY(-2px) scale(1.1) translateZ(15px);
+    background: 
+        linear-gradient(135deg, 
+            rgba(var(--primary-color-rgb), 0.25) 0%, 
+            rgba(var(--secondary-color-rgb), 0.15) 100%),
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.08) 0%, 
+            rgba(255, 255, 255, 0.03) 100%);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.35),
+        0 0 30px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* 场景标题文字渐变增强 */
+.automation-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    position: relative;
+    transition: all 0.4s ease;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.automation-card:hover .automation-title {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(var(--primary-color-rgb), 0.9) 50%,
+        rgba(var(--secondary-color-rgb), 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transform: translateX(2px);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.automation-card.active .automation-title {
+    background: linear-gradient(135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.4));
+}
+
+/* 场景描述文字优化 */
+.automation-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    transition: all 0.4s ease;
+    line-height: 1.4;
+}
+
+.automation-card:hover .automation-desc {
+    color: var(--text-primary);
+    opacity: 0.9;
+    transform: translateX(2px);
+}
+
+/* 场景开关3D视觉增强 */
+.automation-toggle {
+    width: 48px;
+    height: 26px;
+    border-radius: 13px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: linear-gradient(135deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.2) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        inset 0 2px 6px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.automation-toggle::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 2px;
+    left: 3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(200, 200, 200, 0.7) 100%);
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.automation-card.active .automation-toggle {
+    background: linear-gradient(135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--secondary-color-rgb), 0.25) 100%);
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    box-shadow: 
+        inset 0 2px 6px rgba(var(--primary-color-rgb), 0.2),
+        0 0 15px rgba(var(--primary-color-rgb), 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.automation-card.active .automation-toggle::before {
+    left: 23px;
+    background: linear-gradient(135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 12px rgba(var(--primary-color-rgb), 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.automation-card:hover .automation-toggle {
+    transform: scale(1.08);
+}
+
+.automation-card:hover .automation-toggle::before {
+    box-shadow: 
+        0 3px 10px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   【第55轮UI美化 - 优化点3】设置面板组件视觉细节与无障碍终极优化
+   3D深度增强、键盘导航、高对比度、焦点管理、语义化支持
+   ============================================ */
+/* 设置面板容器3D视觉增强 */
+.settings-panel {
+    position: relative;
+    background: 
+        linear-gradient(180deg, 
+            rgba(255, 255, 255, 0.06) 0%, 
+            rgba(255, 255, 255, 0.02) 30%, 
+            rgba(0, 0, 0, 0.08) 100%),
+        var(--bg-overlay);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.5),
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+/* 设置面板渐变发光边框 */
+.settings-panel::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(
+        180deg,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        rgba(var(--secondary-color-rgb), 0.1) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* 设置面板顶部高光层 */
+.settings-panel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        transparent 100%);
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 设置项组件3D视觉增强 */
+.setting-item {
+    position: relative;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* 设置项悬停3D效果 */
+.setting-item:hover {
+    background: linear-gradient(90deg,
+        rgba(var(--primary-color-rgb), 0.08) 0%,
+        rgba(var(--primary-color-rgb), 0.04) 50%,
+        transparent 100%);
+    transform: translateX(4px);
+    border-left: 3px solid var(--primary-color);
+}
+
+/* 设置项光泽扫过效果 */
+.setting-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.06) 40%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.06) 60%,
+        transparent 100%);
+    transform: skewX(-20deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+.setting-item:hover::before {
+    opacity: 1;
+    left: 150%;
+    transition: left 0.8s ease;
+}
+
+/* 设置项图标3D视觉增强 */
+.setting-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.03) 100%),
+        linear-gradient(135deg, 
+            rgba(var(--primary-color-rgb), 0.08) 0%, 
+            rgba(var(--secondary-color-rgb), 0.04) 100%);
+    box-shadow: 
+        0 3px 10px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.setting-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.02) 100%);
+    border-radius: 10px 10px 0 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.setting-item:hover .setting-icon {
+    transform: scale(1.12) rotateY(8deg) translateZ(15px);
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    border-color: rgba(var(--primary-color-rgb), 0.25);
+}
+
+.setting-icon svg,
+.setting-icon i {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+    transition: all 0.4s ease;
+}
+
+.setting-item:hover .setting-icon svg,
+.setting-item:hover .setting-icon i {
+    background: linear-gradient(135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))
+            drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.4));
+}
+
+/* 设置标题文字优化 */
+.setting-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: all 0.35s ease;
+    position: relative;
+}
+
+.setting-item:hover .setting-title {
+    color: var(--primary-color);
+    transform: translateX(2px);
+    text-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.3);
+}
+
+/* 设置描述文字优化 */
+.setting-desc {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 3px;
+    transition: all 0.35s ease;
+    line-height: 1.4;
+}
+
+.setting-item:hover .setting-desc {
+    color: var(--text-secondary);
+    transform: translateX(2px);
+}
+
+/* ========== 无障碍终极优化 ========== */
+/* 键盘焦点可见性增强 - WCAG 2.1标准 */
+.setting-item:focus-visible,
+.settings-panel button:focus-visible,
+.settings-panel [role="button"]:focus-visible,
+.settings-panel [tabindex]:focus-visible {
+    outline: none !important;
+    box-shadow: 
+        0 0 0 3px rgba(0, 0, 0, 0.8),
+        0 0 0 6px var(--primary-color),
+        0 0 20px rgba(var(--primary-color-rgb), 0.5) !important;
+    border-radius: 8px;
+    position: relative;
+    z-index: 100;
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+    .setting-item {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .setting-item:hover {
+        border-left: 4px solid var(--primary-color);
+        background: rgba(var(--primary-color-rgb), 0.15);
+    }
+    
+    .setting-title {
+        font-weight: 600;
+    }
+    
+    .setting-icon {
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* 减少动画模式支持 */
+@media (prefers-reduced-motion: reduce) {
+    .setting-item,
+    .setting-icon,
+    .setting-title,
+    .setting-desc,
+    .setting-item::before,
+    .setting-icon::before {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .setting-item:hover,
+    .setting-item:hover .setting-icon,
+    .setting-item:hover .setting-title,
+    .setting-item:hover .setting-desc {
+        transform: none !important;
+    }
+}
+
+/* 屏幕阅读器支持 - 隐藏但可访问文本 */
+.setting-item .sr-only,
+.settings-panel .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ARIA状态视觉反馈 */
+.setting-item[aria-disabled="true"],
+.setting-item[aria-disabled="true"] * {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
+.setting-item[aria-disabled="true"]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        rgba(0, 0, 0, 0.1) 5px,
+        rgba(0, 0, 0, 0.1) 10px
+    );
+    pointer-events: none;
+}
+
+/* 加载状态视觉反馈 */
+.setting-item[aria-busy="true"] {
+    pointer-events: none;
+}
+
+.setting-item[aria-busy="true"]::after {
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: settingSpin 0.8s linear infinite;
+}
+
+@keyframes settingSpin {
+    to { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* 展开/折叠状态指示器 */
+.setting-item[aria-expanded="true"] .setting-expand-icon {
+    transform: rotate(180deg);
+    color: var(--primary-color);
+}
+
+.setting-expand-icon {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* 选中状态增强 */
+.setting-item[aria-checked="true"] {
+    background: linear-gradient(90deg,
+        rgba(var(--primary-color-rgb), 0.12) 0%,
+        rgba(var(--primary-color-rgb), 0.06) 50%,
+        transparent 100%);
+    border-left: 3px solid var(--primary-color);
+}
+
+.setting-item[aria-checked="true"]::after {
+    content: '✓';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 100%);
+    border-radius: 50%;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(var(--primary-color-rgb), 0.4);
+}
+
+/* 大字体模式支持 */
+@media (min-resolution: 120dpi) {
+    .setting-item {
+        padding: 20px 24px;
+    }
+    
+    .setting-title {
+        font-size: 17px;
+    }
+    
+    .setting-desc {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+    
+    .setting-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+}
+
+/* 触控目标尺寸保障 - WCAG 2.1 48x48px最小 */
+.setting-item {
+    min-height: 56px;
+}
+
+.setting-item button,
+.setting-item [role="button"],
+.settings-panel button {
+    min-width: 48px;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 对比度优化 - WCAG AA标准 4.5:1 */
+.setting-title {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.setting-desc {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* 最后一个设置项去掉下边框 */
+.setting-item:last-child {
+    border-bottom: none;
+}
