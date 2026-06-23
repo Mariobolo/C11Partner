@@ -1931,8 +1931,8 @@ function loadQuickSwitches() {
         showAppsModal();
         // 确保设置图标已添加
         addSettingsIconToApps();
-        // 加载模拟应用数据（非Android环境下使用，测试时取消注释）
-        // loadMockAppData();
+        // 加载模拟应用数据（非Android环境下使用）
+        loadMockAppData();
     });
 
     container.appendChild(moreItem);

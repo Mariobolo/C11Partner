@@ -10620,9 +10620,57 @@ footer.status-bar {
 
 
 
-/* 测试：快捷开关背景色 */
-.quick-switches-widget {
-    background: red !important;
-    min-height: 100px !important;
+
+
+/* 应用列表网格布局 */
+#appsList {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+    padding: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
+/* 应用项样式优化 */
+#appsList .app-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 12px 8px !important;
+    cursor: pointer !important;
+    border-radius: 12px !important;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    width: auto !important;
+}
+
+#appsList .app-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-2px) !important;
+}
+
+#appsList .app-item:active {
+    transform: scale(0.95) !important;
+}
+
+#appsList .app-icon {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 28px !important;
+    margin-bottom: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+#appsList .app-name {
+    font-size: 12px !important;
+    color: var(--text-primary) !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 70px !important;
+}
