@@ -3075,13 +3075,20 @@
     opacity: 1;
 }
 .map-icon {
-    position: absolute;
-    inset: 0;
-    opacity: 0.08;
-    background-size: cover;
-    background-position: center;
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 50px !important;
+    height: 50px !important;
+    background-image: url('images/nav_map_go_home.png') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    opacity: 0.25 !important;
+    z-index: 0 !important;
+    filter: drop-shadow(0 0 15px rgba(var(--primary-color-rgb), 0.4)) blur(0.3px) !important;
     transition: all 0.4s ease;
-    filter: blur(1px);
 }
 .map-widget:hover .map-icon {
     opacity: 0.12;
@@ -9778,14 +9785,7 @@
     gap: var(--spacing-xl) !important;
 }
 
-/* 修复地图图标大小 */
-.map-icon {
-    width: 60px !important;
-    height: 60px !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-}
+
 
 /* 修复导航按钮布局 */
 .map-widget .nav-button {
@@ -9793,7 +9793,21 @@
     align-items: center !important;
     justify-content: center !important;
     min-width: 70px !important;
-    padding: 12px 16px !important;
+    padding: 14px 18px !important;
+    position: relative !important;
+    z-index: 2 !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.12) 0%, 
+        rgba(255, 255, 255, 0.05) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: var(--radius-lg) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.25),
+        0 0 30px rgba(var(--primary-color-rgb), 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 /* 修复导航图标大小 */
@@ -9842,24 +9856,24 @@
 
 /* 地图组件标题装饰 */
 .map-widget::after {
-    content: '快捷导航';
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    color: var(--text-secondary);
-    opacity: 0.7;
-    letter-spacing: 2px;
-    z-index: 1;
+    content: '📍 快捷导航' !important;
+    position: absolute !important;
+    top: 10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    display: inline-block !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    opacity: 0.9 !important;
+    letter-spacing: 2px !important;
+    text-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2) !important;
+    z-index: 3 !important;
 }
 
-/* 导航按钮装饰增强 */
-.map-widget .nav-button {
-    position: relative !important;
-    z-index: 2 !important;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-}
+
 
 .map-widget .nav-button:hover {
     transform: translateY(-4px) scale(1.05) !important;
@@ -9915,22 +9929,7 @@
 }
 
 
-/* 地图图标装饰 - 让它显示出来并美化 */
-.map-icon {
-    position: absolute !important;
-    left: 16px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 50px !important;
-    height: 50px !important;
-    background-image: url('images/nav_map_go_home.png') !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    opacity: 0.15 !important;
-    z-index: 0 !important;
-    filter: blur(1px);
-}
+
 
 /* 地图组件装饰点 - 模拟地图上的标记点 */
 .map-widget .nav-button::before {
@@ -9953,14 +9952,7 @@
 }
 
 /* 增强快捷导航标题 */
-.map-widget::after {
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    color: var(--text-primary) !important;
-    opacity: 0.9 !important;
-    letter-spacing: 3px !important;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
-}
+
 
 /* 给地图组件添加底部装饰线 */
 .map-widget .nav-button::after {
@@ -9999,17 +9991,7 @@
 }
 
 /* 给导航按钮添加卡片效果 */
-.map-widget .nav-button {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: var(--radius-md) !important;
-    padding: 14px 18px !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-}
+
 
 .map-widget .nav-button:hover {
     background: rgba(255, 255, 255, 0.1) !important;
@@ -10043,22 +10025,7 @@
 }
 
 
-/* 地图图标 - 做成左侧大装饰 */
-.map-icon {
-    position: absolute !important;
-    left: 12px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 60px !important;
-    height: 60px !important;
-    background-image: url('images/nav_map_go_home.png') !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    opacity: 0.25 !important;
-    z-index: 0 !important;
-    filter: blur(0.5px) drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.3));
-}
+
 
 /* 给地图组件添加右侧装饰 */
 .map-widget {
@@ -10083,34 +10050,9 @@
     filter: blur(0.5px);
 }
 
-/* 增强快捷导航标题 */
-.map-widget::after {
-    content: '📍 快捷导航' !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: var(--text-primary) !important;
-    opacity: 0.95 !important;
-    letter-spacing: 2px !important;
-    top: 12px !important;
-    text-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.6),
-        0 0 20px rgba(var(--primary-color-rgb), 0.2) !important;
-}
 
-/* 导航按钮增强 */
-.map-widget .nav-button {
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.12) 0%, 
-        rgba(255, 255, 255, 0.05) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    border-radius: var(--radius-lg) !important;
-    padding: 16px 20px !important;
-    box-shadow: 
-        0 6px 20px rgba(0, 0, 0, 0.25),
-        0 0 30px rgba(var(--primary-color-rgb), 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-    z-index: 2 !important;
-}
+
+
 
 .map-widget .nav-button:hover {
     background: linear-gradient(135deg, 
@@ -10174,27 +10116,9 @@
     border: 1px solid rgba(var(--primary-color-rgb), 0.1) !important;
 }
 
-/* 增强地图图标装饰 */
-.map-icon {
-    opacity: 0.35 !important;
-    width: 70px !important;
-    height: 70px !important;
-    left: 8px !important;
-    filter: 
-        drop-shadow(0 0 15px rgba(var(--primary-color-rgb), 0.4))
-        blur(0.3px) !important;
-}
 
-/* 给快捷导航标题添加下划线装饰 */
-.map-widget::after {
-    position: relative !important;
-    display: block !important;
-    text-align: center !important;
-    margin-bottom: 8px !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
-}
+
+
 
 /* 标题下方的装饰线 */
 .map-widget .nav-button:first-child::before {
@@ -10222,9 +10146,7 @@
 }
 
 /* 按钮容器 */
-.map-widget .nav-button {
-    /* 保持按钮样式 */
-}
+
 
 
 /* 修复地图组件布局 - 恢复水平排列 */
@@ -10236,24 +10158,7 @@
     padding: 16px 24px !important;
 }
 
-/* 修复快捷导航标题 - 放回顶部 */
-.map-widget::after {
-    content: '📍 快捷导航' !important;
-    position: absolute !important;
-    top: 10px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    display: inline-block !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    color: var(--text-primary) !important;
-    opacity: 0.9 !important;
-    letter-spacing: 2px !important;
-    text-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.6),
-        0 0 20px rgba(var(--primary-color-rgb), 0.2) !important;
-    z-index: 3 !important;
-}
+
 
 /* 给标题添加下划线 */
 .map-widget::before {
@@ -10273,19 +10178,9 @@
     z-index: 3 !important;
 }
 
-/* 调整地图图标位置 */
-.map-icon {
-    left: 16px !important;
-    width: 50px !important;
-    height: 50px !important;
-    opacity: 0.25 !important;
-}
 
-/* 调整导航按钮 */
-.map-widget .nav-button {
-    padding: 14px 18px !important;
-    z-index: 2 !important;
-}
+
+
 
 
 /* ========================================

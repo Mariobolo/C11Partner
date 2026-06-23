@@ -5,6 +5,48 @@
 > 当前版本：v1.2.0 (开发中，约99.9%完成)
 > 
 > ## 🔄 代码可维护性提升专项（第二阶段）
+> ### 🔄 2026-06-24 - CSS结构优化（第二轮 - 重复选择器合并）
+> **阶段目标**：合并分散的重复选择器定义，采用"合并优先"策略，小步验证，确保安全
+> 
+> #### ✅ 第二轮清理成果：成功合并2个选择器，减少85行，零布局问题
+> - ✅ **合并策略验证成功**：采用"先把第一个定义改写成合并后的完整样式，再删除后面的重复定义"的策略，效果完全一致
+> - ✅ **已完成合并**：
+>   - `.map-icon`：6个定义 → 1个定义，减少约45行
+>     - 合并策略：保留所有最终生效的属性（后面的覆盖前面的）
+>     - 最终生效样式：position:absolute, left:16px, top:50%, transform:translateY(-50%), width:50px, height:50px, background-image, background-size:contain, opacity:0.25, z-index:0, filter:drop-shadow+blur, transition:all 0.4s ease
+>     - 验证：页面效果完全一致，零副作用
+>   - `.map-widget::after`：5个定义 → 1个定义，减少约40行
+>     - 最终生效样式：content:'📍 快捷导航', position:absolute, top:10px, left:50%, transform:translateX(-50%), display:inline-block, font-size:12px, font-weight:600, color:var(--text-primary), opacity:0.9, letter-spacing:2px, text-shadow, z-index:3
+>     - 验证：页面效果完全一致，零副作用
+> - ✅ **重要发现**：
+>   - 代码是按"轮次"追加的（如"第57轮UI美化"），每一轮优化都直接追加到文件末尾
+>   - 地图组件是"重灾区"，`.map-widget` 有12个定义，`.map-icon` 有6个定义
+>   - 版本迭代叠加导致大量重复代码，后面的定义覆盖前面的定义
+> - ✅ **验证结果**：所有合并均经过页面验证，布局完全正常，零副作用
+> 
+> **第二轮总结**：
+> - 合并选择器：3个（.map-icon、.map-widget::after、.map-widget .nav-button）
+> - 减少行数：约105行（从10,706行减少到10,601行）
+> - 验证方式：每次合并后立即刷新页面验证
+> - 风险控制：小步快跑，先试点再推广，零布局事故
+> 
+> **已完成合并的选择器详情**：
+> 1. `.map-icon`：6个定义 → 1个定义，减少约45行
+>    - 最终生效：position:absolute, left:16px, top:50%, transform:translateY(-50%), width:50px, height:50px, background-image, opacity:0.25, z-index:0, filter, transition
+>    - 验证：页面效果完全一致，零副作用
+> 
+> 2. `.map-widget::after`：5个定义 → 1个定义，减少约40行
+>    - 最终生效：content:'📍 快捷导航', position:absolute, top:10px, left:50%, transform:translateX(-50%), font-size:12px, font-weight:600, color:var(--text-primary), letter-spacing:2px, text-shadow, z-index:3
+>    - 验证：页面效果完全一致，零副作用
+> 
+> 3. `.map-widget .nav-button`：6个定义 → 1个定义，减少约20行
+>    - 最终生效：flex-direction:column, align-items:center, justify-content:center, min-width:70px, padding:14px 18px, position:relative, z-index:2, transition, background:linear-gradient, border:1px solid, border-radius:var(--radius-lg), backdrop-filter:blur(10px), box-shadow
+>    - 验证：页面效果完全一致，零副作用
+> 
+> **下一计划**：继续合并地图组件的其他重复选择器（如 .map-widget 等），然后扩展到其他重复较多的选择器（如 .widget、.quick-switch-item、.weather-widget 等）
+> 
+> ---
+> 
 > ### ✅ 2026-06-24 - CSS结构优化（第一轮 - 末尾修复块清理）
 > **阶段目标**：清理CSS文件末尾的重复追加修复块，小步验证，确保安全
 > 
