@@ -9266,50 +9266,8 @@
         transform: translateY(-3px) rotateX(-1deg) rotateY(1deg); 
     }
 }
-/* ============================================
-   快捷应用卡片终极光泽与阴影优化
-   ============================================ */
-.quick-app-item {
-    box-shadow: 
-        0 8px 28px rgba(0, 0, 0, 0.35),
-        0 3px 10px rgba(0, 0, 0, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-.quick-app-item:hover {
-    transform: translateY(-10px) scale(1.08) rotateX(8deg) rotateY(-4deg);
-    box-shadow: 
-        0 24px 72px rgba(0, 0, 0, 0.5),
-        0 12px 36px rgba(0, 0, 0, 0.4),
-        0 4px 12px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
-        0 0 50px rgba(var(--primary-color-rgb), 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.12);
-}
-/* ============================================
-   快捷开关卡片终极光泽与阴影优化
-   ============================================ */
-.quick-switch-item {
-    box-shadow: 
-        0 6px 24px rgba(0, 0, 0, 0.32),
-        0 2px 8px rgba(0, 0, 0, 0.22),
-        0 0 0 1px rgba(255, 255, 255, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-.quick-switch-item:hover {
-    transform: translateY(-8px) scale(1.06) rotateX(6deg) rotateY(-3deg);
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.48),
-        0 10px 30px rgba(0, 0, 0, 0.38),
-        0 3px 10px rgba(0, 0, 0, 0.28),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.28),
-        0 0 40px rgba(var(--primary-color-rgb), 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.12);
-}
+
+
 /* ============================================
    【第57轮UI美化 - 优化点3】无障碍支持与响应式细节终极优化
    键盘焦点增强、触控目标优化、高对比度优化、屏幕阅读器支持
