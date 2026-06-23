@@ -8489,3 +8489,458 @@
     }
 }
 
+
+
+/* ============================================
+   【第54轮UI美化 - 优化点2】车辆状态指示器3D视觉终极增强
+   3D悬浮、渐变发光、状态过渡动画、粒子光晕、呼吸效果
+   ============================================ */
+.car-status-indicators {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    background:
+        radial-gradient(ellipse at 50% 0%,
+            rgba(var(--primary-color-rgb), 0.08) 0%,
+            transparent 60%),
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 50%,
+            rgba(0, 0, 0, 0.12) 100%),
+        var(--surface-color);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 0 30px rgba(var(--primary-color-rgb), 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 状态指示器渐变发光边框 */
+.car-status-indicators::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 999px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 状态指示器顶部高光 */
+.car-status-indicators::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 30%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0.3) 70%,
+        transparent 100%);
+    pointer-events: none;
+}
+
+/* 状态指示器悬停3D上浮 */
+.car-status-indicators:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.5),
+        0 6px 20px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 50px rgba(var(--primary-color-rgb), 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.car-status-indicators:hover::before {
+    opacity: 1;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.25) 50%,
+        rgba(255, 255, 255, 0.15) 100%
+    );
+}
+
+/* 单个状态指示器3D增强 */
+.status-indicator {
+    transform-style: preserve-3d;
+    position: relative;
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(255, 255, 255, 0.08) 0%,
+            transparent 60%),
+        rgba(255, 255, 255, 0.03);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* 状态指示器粒子光晕 */
+.status-indicator::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        transparent 70%);
+    border-radius: 50%;
+    filter: blur(6px);
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+
+/* 状态指示器激活发光 */
+.status-indicator.active::before {
+    opacity: 1;
+    animation: statusIndicatorGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes statusIndicatorGlow {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+}
+
+/* 状态指示器悬停3D效果 */
+.status-indicator:hover {
+    transform: translateY(-4px) scale(1.15) rotateX(5deg);
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(255, 255, 255, 0.15) 0%,
+            transparent 60%),
+        rgba(255, 255, 255, 0.06);
+    border-color: rgba(var(--primary-color-rgb), 0.3);
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.35),
+        0 0 15px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.status-indicator:hover::before {
+    opacity: 0.8;
+    transform: scale(1.2);
+}
+
+/* 档位指示器3D终极增强 */
+.gear-indicator {
+    transform-style: preserve-3d;
+    position: relative;
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(var(--primary-color-rgb), 0.15) 0%,
+            transparent 70%),
+        rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 4px 12px;
+    border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    animation: gearIndicatorBreath 3s ease-in-out infinite;
+}
+
+@keyframes gearIndicatorBreath {
+    0%, 100% {
+        box-shadow:
+            0 4px 16px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(var(--primary-color-rgb), 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    50% {
+        box-shadow:
+            0 6px 24px rgba(0, 0, 0, 0.35),
+            0 0 35px rgba(var(--primary-color-rgb), 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+}
+
+/* R档红色警告增强 */
+.gear-indicator.gear-r {
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(255, 82, 82, 0.2) 0%,
+            transparent 70%),
+        rgba(255, 82, 82, 0.08);
+    border-color: rgba(255, 82, 82, 0.4);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 25px rgba(255, 82, 82, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    animation: gearRWarning 1.5s ease-in-out infinite;
+}
+
+@keyframes gearRWarning {
+    0%, 100% {
+        box-shadow:
+            0 4px 16px rgba(0, 0, 0, 0.3),
+            0 0 25px rgba(255, 82, 82, 0.25);
+    }
+    50% {
+        box-shadow:
+            0 6px 24px rgba(0, 0, 0, 0.35),
+            0 0 45px rgba(255, 82, 82, 0.45);
+    }
+}
+
+/* N档警告增强 */
+.gear-indicator.gear-n {
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(255, 215, 64, 0.18) 0%,
+            transparent 70%),
+        rgba(255, 215, 64, 0.06);
+    border-color: rgba(255, 215, 64, 0.35);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 215, 64, 0.2);
+}
+
+/* 车门警告指示器增强 */
+.door-indicator {
+    position: relative;
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(255, 82, 82, 0.25) 0%,
+            transparent 70%),
+        rgba(255, 82, 82, 0.1);
+    border-radius: 10px;
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 82, 82, 0.5);
+    animation: doorWarningPulse 1s ease-in-out infinite;
+}
+
+@keyframes doorWarningPulse {
+    0%, 100% {
+        box-shadow:
+            0 2px 10px rgba(0, 0, 0, 0.25),
+            0 0 15px rgba(255, 82, 82, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow:
+            0 4px 16px rgba(0, 0, 0, 0.3),
+            0 0 30px rgba(255, 82, 82, 0.5);
+        transform: scale(1.05);
+    }
+}
+
+
+
+/* ============================================
+   【第54轮UI美化 - 优化点3】Dock栏邻近图标放大效应
+   macOS Dock风格：鼠标悬停时，当前图标及其邻近图标按距离梯度放大
+   ============================================ */
+
+/* Dock栏容器 - 启用邻近放大效果 */
+.dock-bar {
+    --dock-icon-size: 52px;
+    --dock-icon-max-scale: 1.4;
+    --dock-icon-neighbor-scale: 1.2;
+}
+
+/* Dock按钮基础 - 准备邻近放大 */
+.dock-btn {
+    transform-origin: center bottom;
+    will-change: transform;
+}
+
+/* ============================================
+   邻近放大核心逻辑 - CSS实现macOS Dock效果
+   使用兄弟选择器实现梯度放大：
+   - 直接悬停的图标：最大放大 (1.4x)
+   - 相邻1个图标 (紧邻左右)：中等放大 (1.2x)
+   - 相邻2个图标 (间隔1个)：轻微放大 (1.1x)
+   ============================================ */
+
+/* 直接悬停的图标 - 最大放大 */
+.dock-btn:hover {
+    transform: translateY(-14px) scale(1.4) rotateX(-10deg) translateZ(30px) !important;
+    z-index: 100;
+}
+
+/* 悬停图标的下一个兄弟 (右侧紧邻) */
+.dock-btn:hover + .dock-btn {
+    transform: translateY(-8px) scale(1.22) rotateX(-6deg) translateZ(15px);
+    z-index: 90;
+}
+
+/* 悬停图标的下下个兄弟 (右侧间隔1个) */
+.dock-btn:hover + .dock-btn + .dock-btn {
+    transform: translateY(-5px) scale(1.12) rotateX(-3deg) translateZ(8px);
+    z-index: 80;
+}
+
+/* 悬停图标的下下下个兄弟 (右侧间隔2个) */
+.dock-btn:hover + .dock-btn + .dock-btn + .dock-btn {
+    transform: translateY(-2px) scale(1.05) rotateX(-1deg) translateZ(3px);
+    z-index: 70;
+}
+
+/* 使用 :has() 选择器实现左侧邻近放大 (现代浏览器支持) */
+/* 悬停图标的前一个兄弟 (左侧紧邻) */
+.dock-bar:has(.dock-btn:hover) .dock-btn:has(+ .dock-btn:hover) {
+    transform: translateY(-8px) scale(1.22) rotateX(-6deg) translateZ(15px);
+    z-index: 90;
+}
+
+/* 悬停图标的前前个兄弟 (左侧间隔1个) */
+.dock-bar:has(.dock-btn:hover) .dock-btn:has(+ .dock-btn + .dock-btn:hover) {
+    transform: translateY(-5px) scale(1.12) rotateX(-3deg) translateZ(8px);
+    z-index: 80;
+}
+
+/* 悬停图标的前前前个兄弟 (左侧间隔2个) */
+.dock-bar:has(.dock-btn:hover) .dock-btn:has(+ .dock-btn + .dock-btn + .dock-btn:hover) {
+    transform: translateY(-2px) scale(1.05) rotateX(-1deg) translateZ(3px);
+    z-index: 70;
+}
+
+/* ============================================
+   邻近放大增强效果 - 光晕和阴影
+   ============================================ */
+
+/* 悬停图标 - 终极发光 */
+.dock-btn:hover {
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.5),
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.4),
+        0 0 60px rgba(var(--primary-color-rgb), 0.35),
+        0 0 100px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+/* 紧邻图标 - 中等发光 */
+.dock-btn:hover + .dock-btn,
+.dock-bar:has(.dock-btn:hover) .dock-btn:has(+ .dock-btn:hover) {
+    box-shadow:
+        0 16px 44px rgba(0, 0, 0, 0.45),
+        0 6px 20px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
+        0 0 40px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* 次近图标 - 轻微发光 */
+.dock-btn:hover + .dock-btn + .dock-btn,
+.dock-bar:has(.dock-btn:hover) .dock-btn:has(+ .dock-btn + .dock-btn:hover) {
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 4px 14px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.2),
+        0 0 25px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   邻近放大过渡动画 - 弹性曲线
+   ============================================ */
+
+.dock-btn {
+    transition:
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.35s ease,
+        border-color 0.35s ease,
+        z-index 0s linear 0.05s;
+}
+
+/* ============================================
+   图标内容同步放大
+   ============================================ */
+
+.dock-btn:hover svg,
+.dock-btn:hover i {
+    transform: scale(1.15) !important;
+    filter:
+        drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45))
+        drop-shadow(0 0 25px rgba(var(--primary-color-rgb), 0.5)) !important;
+}
+
+.dock-btn:hover + .dock-btn svg,
+.dock-btn:hover + .dock-btn i,
+.dock-bar:has(.dock-btn:hover) .dock-btn:has(+ .dock-btn:hover) svg,
+.dock-bar:has(.dock-btn:hover) .dock-btn:has(+ .dock-btn:hover) i {
+    transform: scale(1.1);
+    filter:
+        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))
+        drop-shadow(0 0 18px rgba(var(--primary-color-rgb), 0.35));
+}
+
+/* ============================================
+   粒子拖尾效果 - 邻近放大增强
+   ============================================ */
+
+.dock-btn:hover::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background: radial-gradient(ellipse at center,
+        rgba(var(--primary-color-rgb), 0.6) 0%,
+        rgba(var(--primary-color-rgb), 0.3) 40%,
+        transparent 70%);
+    border-radius: 50%;
+    filter: blur(4px);
+    animation: dockParticleTrail 0.6s ease-out;
+}
+
+@keyframes dockParticleTrail {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5);
+        bottom: -4px;
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.2);
+        bottom: -10px;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+        bottom: -14px;
+    }
+}
+
+/* ============================================
+   兼容性回退 - 对于不支持 :has() 的浏览器
+   至少保证直接悬停的图标有放大效果
+   ============================================ */
+
+@supports not selector(:has(*)) {
+    .dock-btn:hover {
+        transform: translateY(-12px) scale(1.3) rotateX(-8deg) translateZ(25px);
+    }
+}
+
