@@ -15297,3 +15297,600 @@ input[type="range"]::-moz-range-thumb:hover {
 .app-item:hover .app-name {
     color: rgba(255, 255, 255, 0.95) !important;
 }
+
+/* ============================================
+   【第58轮优化点1】应用列表弹窗（appsModal）视觉增强
+   毛玻璃效果增强、渐变边框、发光效果、3D透视、动效过渡
+   ============================================ */
+/* ========== 弹窗整体毛玻璃与3D透视增强 ========== */
+.apps-modal-content {
+    background: linear-gradient(
+        135deg,
+        rgba(15, 15, 20, 0.85) 0%,
+        rgba(25, 25, 35, 0.75) 50%,
+        rgba(20, 20, 30, 0.8) 100%
+    ) !important;
+    backdrop-filter: blur(50px) saturate(200%) contrast(1.1) !important;
+    -webkit-backdrop-filter: blur(50px) saturate(200%) contrast(1.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 
+        0 25px 80px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 0 60px rgba(var(--primary-color-rgb), 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    transform: perspective(1000px) rotateX(0deg) !important;
+    transform-style: preserve-3d !important;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* 弹窗渐变边框动画 */
+.apps-modal-content::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -2px !important;
+    border-radius: 28px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.3) 25%,
+        rgba(0, 204, 255, 0.4) 50%,
+        rgba(var(--secondary-color-rgb), 0.3) 75%,
+        rgba(var(--primary-color-rgb), 0.5) 100%
+    ) !important;
+    background-size: 400% 400% !important;
+    animation: appsModalGradientBorder 8s ease-in-out infinite !important;
+    z-index: -1 !important;
+    opacity: 0.6 !important;
+}
+
+@keyframes appsModalGradientBorder {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* 弹窗内部光泽效果 */
+.apps-modal-content::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 50% !important;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 100%
+    ) !important;
+    border-radius: 26px 26px 0 0 !important;
+    pointer-events: none !important;
+}
+
+/* ========== 搜索框视觉增强 ========== */
+.app-search-input {
+    background: linear-gradient(
+        135deg,
+        rgba(30, 30, 40, 0.7) 0%,
+        rgba(20, 20, 30, 0.6) 100%
+    ) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    padding: 14px 20px 14px 48px !important;
+    font-size: 15px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+}
+
+.app-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 搜索框聚焦发光效果 */
+.app-search-input:focus {
+    outline: none !important;
+    border-color: rgba(var(--primary-color-rgb), 0.5) !important;
+    background: linear-gradient(
+        135deg,
+        rgba(35, 35, 45, 0.8) 0%,
+        rgba(25, 25, 35, 0.7) 100%
+    ) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* 搜索图标增强 */
+.app-search-icon {
+    left: 18px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    transition: all 0.3s ease !important;
+}
+
+.app-search-input:focus + .app-search-icon,
+.app-search-input:focus ~ .app-search-icon {
+    color: var(--primary-color) !important;
+    filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.6)) !important;
+    transform: scale(1.1) !important;
+}
+
+/* ========== 分类标签3D悬浮效果 ========== */
+.app-category-tab {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 20px !important;
+    padding: 10px 20px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* 标签光泽效果 */
+.app-category-tab::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    ) !important;
+    transition: left 0.5s ease !important;
+}
+
+.app-category-tab:hover::before {
+    left: 100% !important;
+}
+
+/* 标签悬停3D效果 */
+.app-category-tab:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    transform: translateY(-3px) scale(1.05) !important;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(var(--primary-color-rgb), 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset !important;
+}
+
+/* 标签选中状态发光 */
+.app-category-tab.active {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--primary-color-rgb), 0.2) 100%
+    ) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.5) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.25),
+        0 0 30px rgba(var(--primary-color-rgb), 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.15) inset !important;
+    text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.8) !important;
+}
+
+/* ========== 应用图标网格阴影层次增强 ========== */
+.app-item {
+    background: linear-gradient(
+        145deg,
+        rgba(40, 40, 50, 0.5) 0%,
+        rgba(25, 25, 35, 0.4) 100%
+    ) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 20px !important;
+    padding: 16px 12px !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transform-style: preserve-3d !important;
+    perspective: 1000px !important;
+}
+
+/* 应用卡片渐变边框 */
+.app-item::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: 20px !important;
+    padding: 1px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    ) !important;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+    -webkit-mask-composite: xor !important;
+    mask-composite: exclude !important;
+    opacity: 0 !important;
+    transition: all 0.4s ease !important;
+    pointer-events: none !important;
+}
+
+/* 应用卡片悬停3D透视效果 */
+.app-item:hover {
+    transform: translateY(-8px) scale(1.05) rotateX(5deg) !important;
+    background: linear-gradient(
+        145deg,
+        rgba(50, 50, 60, 0.6) 0%,
+        rgba(35, 35, 45, 0.5) 100%
+    ) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(var(--primary-color-rgb), 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset !important;
+}
+
+.app-item:hover::before {
+    opacity: 1 !important;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.3) 50%,
+        rgba(0, 204, 255, 0.4) 100%
+    ) !important;
+    animation: appItemGlowPulse 2s ease-in-out infinite !important;
+}
+
+@keyframes appItemGlowPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* 应用图标发光与3D效果 */
+.app-icon {
+    position: relative !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    transform: translateZ(20px) !important;
+}
+
+.app-item:hover .app-icon {
+    transform: translateZ(30px) scale(1.15) !important;
+    filter: 
+        drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5))
+        drop-shadow(0 0 20px rgba(var(--primary-color-rgb), 0.4)) !important;
+}
+
+/* 应用图标光晕效果 */
+.app-icon::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 150% !important;
+    height: 150% !important;
+    background: radial-gradient(
+        circle,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        transparent 70%
+    ) !important;
+    opacity: 0 !important;
+    transition: all 0.4s ease !important;
+    pointer-events: none !important;
+}
+
+.app-item:hover .app-icon::after {
+    opacity: 1 !important;
+    animation: iconGlowPulse 2s ease-in-out infinite !important;
+}
+
+@keyframes iconGlowPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+/* 应用名称文字发光 */
+.app-name {
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+    transition: all 0.3s ease !important;
+    transform: translateZ(10px) !important;
+}
+
+.app-item:hover .app-name {
+    color: rgba(255, 255, 255, 0.98) !important;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(var(--primary-color-rgb), 0.5) !important;
+    transform: translateZ(15px) translateY(-2px) !important;
+}
+
+/* ============================================
+   【第58轮优化点2】设置面板（settingsModal）视觉增强
+   TAB导航、设置项卡片、阴影层次、动效过渡
+   ============================================ */
+/* ========== 设置面板整体增强 ========== */
+#settingsModal .modal-content {
+    background: linear-gradient(
+        145deg,
+        rgba(18, 18, 25, 0.9) 0%,
+        rgba(28, 28, 38, 0.8) 50%,
+        rgba(22, 22, 32, 0.85) 100%
+    ) !important;
+    backdrop-filter: blur(50px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(50px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 0 50px rgba(var(--primary-color-rgb), 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 设置面板渐变边框 */
+#settingsModal .modal-content::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -2px !important;
+    border-radius: 24px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(0, 204, 255, 0.3) 33%,
+        rgba(var(--secondary-color-rgb), 0.35) 66%,
+        rgba(var(--primary-color-rgb), 0.4) 100%
+    ) !important;
+    background-size: 300% 300% !important;
+    animation: settingsModalGlow 10s ease-in-out infinite !important;
+    z-index: -1 !important;
+    opacity: 0.5 !important;
+}
+
+@keyframes settingsModalGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* ========== TAB导航视觉增强 ========== */
+.settings-tabs {
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-radius: 16px !important;
+    padding: 6px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* TAB按钮3D效果 */
+.settings-tab {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 20px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* TAB悬停效果 */
+.settings-tab:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* TAB选中状态 - 渐变背景+发光 */
+.settings-tab.active {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        rgba(var(--primary-color-rgb), 0.25) 100%
+    ) !important;
+    color: white !important;
+    box-shadow: 
+        0 4px 16px rgba(var(--primary-color-rgb), 0.3),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-1px) !important;
+    text-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.6) !important;
+}
+
+/* TAB选中指示器 - 渐变下划线 */
+.settings-tab.active::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 4px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 40% !important;
+    height: 3px !important;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--primary-color) 30%,
+        #00ccff 70%,
+        transparent 100%
+    ) !important;
+    border-radius: 2px !important;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.6) !important;
+    animation: tabIndicatorPulse 2s ease-in-out infinite !important;
+}
+
+@keyframes tabIndicatorPulse {
+    0%, 100% { opacity: 0.8; width: 40%; }
+    50% { opacity: 1; width: 50%; }
+}
+
+/* ========== 设置项卡片阴影层次增强 ========== */
+.setting-item {
+    background: linear-gradient(
+        145deg,
+        rgba(45, 45, 55, 0.5) 0%,
+        rgba(30, 30, 40, 0.4) 100%
+    ) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 16px 20px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.05) inset !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* 设置项光泽效果 */
+.setting-item::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 20%,
+        rgba(255, 255, 255, 0.25) 50%,
+        rgba(255, 255, 255, 0.15) 80%,
+        transparent 100%
+    ) !important;
+    opacity: 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+/* 设置项悬停动效 */
+.setting-item:hover {
+    background: linear-gradient(
+        145deg,
+        rgba(55, 55, 65, 0.55) 0%,
+        rgba(40, 40, 50, 0.45) 100%
+    ) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    transform: translateX(8px) translateY(-2px) !important;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.25),
+        0 0 20px rgba(var(--primary-color-rgb), 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.08) inset !important;
+}
+
+.setting-item:hover::before {
+    opacity: 1 !important;
+}
+
+/* 设置项左侧边框指示器 */
+.setting-item::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 3px !important;
+    height: 0 !important;
+    background: linear-gradient(
+        to bottom,
+        var(--primary-color) 0%,
+        #00ccff 100%
+    ) !important;
+    border-radius: 0 2px 2px 0 !important;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.5) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.setting-item:hover::after {
+    height: 60% !important;
+}
+
+/* ========== 开关样式视觉增强 ========== */
+.setting-switch {
+    width: 52px !important;
+    height: 28px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+/* 开关滑块3D效果 */
+.setting-switch::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 3px !important;
+    left: 3px !important;
+    width: 22px !important;
+    height: 22px !important;
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #e0e0e0 100%
+    ) !important;
+    border-radius: 50% !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.8) inset !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* 开关开启状态 - 发光效果 */
+.setting-switch.active {
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(0, 204, 255, 0.4) 100%
+    ) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.5) !important;
+    box-shadow: 
+        0 2px 12px rgba(0, 0, 0, 0.25),
+        0 0 20px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 1px 3px rgba(var(--primary-color-rgb), 0.2) !important;
+}
+
+.setting-switch.active::before {
+    left: 27px !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(var(--primary-color-rgb), 0.5),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset !important;
+}
+
+/* 开关悬停效果 */
+.setting-switch:hover {
+    transform: scale(1.05) !important;
+}
+
+.setting-switch:hover::before {
+    transform: scale(1.05) !important;
+}
