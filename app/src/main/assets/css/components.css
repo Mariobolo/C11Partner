@@ -13011,3 +13011,781 @@ input[type="range"]::-moz-range-thumb:hover {
     }
 } }
 }
+
+/* ============================================
+   【第58轮优化 - 应用列表弹窗终极美化】
+   毛玻璃效果、渐变边框、发光效果、3D透视、动效过渡
+   ============================================ */
+/* ========== 应用列表弹窗整体容器 - 终极玻璃拟态 ========== */
+.apps-modal-content {
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.12) 0%, 
+            rgba(255, 255, 255, 0.06) 30%, 
+            rgba(0, 0, 0, 0.15) 100%),
+        rgba(15, 15, 20, 0.85) !important;
+    backdrop-filter: blur(40px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 24px !important;
+    box-shadow: 
+        0 25px 80px rgba(0, 0, 0, 0.6),
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 0 60px rgba(var(--primary-color-rgb), 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transform-style: preserve-3d !important;
+    perspective: 1000px !important;
+}
+/* 应用列表弹窗渐变发光边框 */
+.apps-modal-content::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -2px !important;
+    border-radius: 24px !important;
+    padding: 2px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.35) 0%,
+        rgba(var(--secondary-color-rgb), 0.2) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(var(--secondary-color-rgb), 0.2) 75%,
+        rgba(var(--primary-color-rgb), 0.35) 100%
+    ) !important;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+    -webkit-mask-composite: xor !important;
+    mask-composite: exclude !important;
+    pointer-events: none !important;
+    opacity: 0.6 !important;
+    animation: appsModalBorderGlow 8s linear infinite !important;
+}
+@keyframes appsModalBorderGlow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+/* 应用列表弹窗内部氛围光 */
+.apps-modal-content::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: 
+        radial-gradient(ellipse at 20% 0%, 
+            rgba(var(--primary-color-rgb), 0.08) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 80% 100%, 
+            rgba(var(--secondary-color-rgb), 0.06) 0%, 
+            transparent 50%) !important;
+    pointer-events: none !important;
+    border-radius: 24px !important;
+}
+/* ========== 应用列表头部 - 3D标题效果 ========== */
+.apps-modal-header {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.04) 0%,
+        transparent 100%
+    ) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 24px 28px 20px !important;
+    position: relative !important;
+}
+.apps-modal-header h2 {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        #e6f3ff 50%, 
+        #ffffff 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: 0 0 30px rgba(var(--primary-color-rgb), 0.2) !important;
+    letter-spacing: 0.5px !important;
+    margin: 0 !important;
+}
+/* ========== 搜索框 - 终极发光效果 ========== */
+.search-container {
+    padding: 0 28px 16px !important;
+    position: relative !important;
+}
+#appSearch {
+    width: 100% !important;
+    padding: 14px 20px 14px 48px !important;
+    font-size: 15px !important;
+    color: var(--text-primary) !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.08) 0%, 
+            rgba(255, 255, 255, 0.04) 100%),
+        rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    position: relative !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+/* 搜索框图标 */
+.search-container::before {
+    content: '🔍' !important;
+    position: absolute !important;
+    left: 44px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 18px !important;
+    opacity: 0.5 !important;
+    z-index: 1 !important;
+    transition: all 0.3s ease !important;
+    pointer-events: none !important;
+}
+/* 搜索框聚焦发光效果 */
+#appSearch:focus {
+    outline: none !important;
+    border-color: rgba(var(--primary-color-rgb), 0.5) !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.12) 0%, 
+            rgba(255, 255, 255, 0.06) 100%),
+        rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 0 0 3px rgba(var(--primary-color-rgb), 0.15),
+        0 0 30px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    transform: translateY(-2px) !important;
+}
+.search-container:focus-within::before {
+    opacity: 1 !important;
+    transform: translateY(-50%) scale(1.15) !important;
+    filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.6)) !important;
+}
+#appSearch::placeholder {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+/* ========== 分类标签 - 3D玻璃按钮效果 ========== */
+.app-category-tabs {
+    display: flex !important;
+    gap: 10px !important;
+    padding: 0 28px 16px !important;
+    position: relative !important;
+}
+.app-tab {
+    padding: 10px 22px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--text-secondary) !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.06) 0%, 
+            rgba(255, 255, 255, 0.03) 100%),
+        rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+/* 标签光泽效果 */
+.app-tab::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%) !important;
+    transition: left 0.5s ease !important;
+    pointer-events: none !important;
+}
+.app-tab:hover::before {
+    left: 100% !important;
+}
+/* 标签悬停效果 */
+.app-tab:hover {
+    color: var(--text-primary) !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.05) 100%),
+        rgba(0, 0, 0, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-3px) scale(1.03) !important;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+/* 标签激活状态 - 渐变发光 */
+.app-tab.active {
+    color: white !important;
+    background: linear-gradient(135deg, 
+        rgba(var(--primary-color-rgb), 0.45) 0%, 
+        rgba(var(--secondary-color-rgb), 0.35) 100%) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.6) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 
+        0 6px 20px rgba(var(--primary-color-rgb), 0.4),
+        0 0 30px rgba(var(--primary-color-rgb), 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    animation: tabActivePulse 2s ease-in-out infinite !important;
+}
+@keyframes tabActivePulse {
+    0%, 100% { 
+        box-shadow: 
+            0 6px 20px rgba(var(--primary-color-rgb), 0.4),
+            0 0 30px rgba(var(--primary-color-rgb), 0.25);
+    }
+    50% { 
+        box-shadow: 
+            0 6px 20px rgba(var(--primary-color-rgb), 0.5),
+            0 0 45px rgba(var(--primary-color-rgb), 0.35);
+    }
+}
+/* ========== 应用图标网格 - 3D卡片效果 ========== */
+.apps-list-container {
+    padding: 8px 28px 24px !important;
+}
+#appsList {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
+    gap: 16px 12px !important;
+    perspective: 1000px !important;
+}
+.app-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 14px 8px !important;
+    border-radius: 16px !important;
+    cursor: pointer !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    transform-style: preserve-3d !important;
+}
+/* 应用项渐变边框发光 */
+.app-item::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: 16px !important;
+    padding: 1px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        rgba(var(--secondary-color-rgb), 0.1) 50%,
+        transparent 100%
+    ) !important;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+    -webkit-mask-composite: xor !important;
+    mask-composite: exclude !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    transition: all 0.35s ease !important;
+}
+/* 应用项光泽扫过 */
+.app-item::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 70% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.12) 30%,
+        rgba(255, 255, 255, 0.18) 50%,
+        rgba(255, 255, 255, 0.12) 70%,
+        transparent 100%) !important;
+    transform: skewX(-15deg) !important;
+    transition: left 0.7s ease !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    z-index: 1 !important;
+}
+/* 应用项悬停3D效果 */
+.app-item:hover {
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.08) 0%, 
+            rgba(255, 255, 255, 0.04) 50%, 
+            rgba(var(--primary-color-rgb), 0.06) 100%),
+        rgba(0, 0, 0, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    transform: translateY(-8px) scale(1.06) rotateX(6deg) !important;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 0 30px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+.app-item:hover::before {
+    opacity: 1 !important;
+}
+.app-item:hover::after {
+    left: 150% !important;
+    opacity: 1 !important;
+}
+/* 应用项点击按压效果 */
+.app-item:active {
+    transform: translateY(-2px) scale(0.97) rotateX(-2deg) !important;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.2),
+        0 0 15px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 3px 8px rgba(0, 0, 0, 0.25) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+/* 应用图标3D效果 */
+.app-icon {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 14px !important;
+    margin-bottom: 10px !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    transform-style: preserve-3d !important;
+}
+/* 应用图标顶部高光 */
+.app-icon::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 50% !important;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.18) 0%,
+        transparent 100%) !important;
+    border-radius: 14px 14px 0 0 !important;
+    pointer-events: none !important;
+}
+/* 应用图标发光光晕 */
+.app-icon::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: -10px !important;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        transparent 70%) !important;
+    opacity: 0 !important;
+    border-radius: 50% !important;
+    transition: all 0.4s ease !important;
+    pointer-events: none !important;
+}
+.app-item:hover .app-icon {
+    transform: scale(1.18) translateY(-6px) rotateY(10deg) !important;
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        0 0 30px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+.app-item:hover .app-icon::after {
+    opacity: 1 !important;
+    animation: appIconGlow 2s ease-in-out infinite !important;
+}
+@keyframes appIconGlow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+}
+/* 应用名称渐变效果 */
+.app-name {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: var(--text-secondary) !important;
+    text-align: center !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    transition: all 0.3s ease !important;
+    letter-spacing: 0.2px !important;
+}
+.app-item:hover .app-name {
+    color: var(--text-primary) !important;
+    transform: translateY(-2px) !important;
+    text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3) !important;
+}
+/* ============================================
+   【第58轮优化 - 设置面板终极美化】
+   TAB导航、设置项卡片、开关样式、整体视觉
+   ============================================ */
+/* ========== 设置面板TAB导航 - 玻璃拟态3D效果 ========== */
+.tab-navigation {
+    display: flex !important;
+    gap: 8px !important;
+    padding: 0 28px 16px !important;
+    position: relative !important;
+    perspective: 800px !important;
+}
+.tab-button {
+    flex: 1 !important;
+    padding: 12px 20px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--text-secondary) !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.06) 0%, 
+            rgba(255, 255, 255, 0.03) 100%),
+        rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    cursor: pointer !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    transform-style: preserve-3d !important;
+}
+/* TAB按钮光泽效果 */
+.tab-button::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        transparent 100%) !important;
+    transition: left 0.6s ease !important;
+    pointer-events: none !important;
+}
+.tab-button:hover::before {
+    left: 100% !important;
+}
+/* TAB按钮悬停效果 */
+.tab-button:hover {
+    color: var(--text-primary) !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.05) 100%),
+        rgba(0, 0, 0, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-4px) scale(1.02) !important;
+    box-shadow: 
+        0 10px 24px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+/* TAB按钮激活状态 - 渐变发光 */
+.tab-button.active {
+    color: white !important;
+    background: linear-gradient(135deg, 
+        rgba(var(--primary-color-rgb), 0.5) 0%, 
+        rgba(var(--secondary-color-rgb), 0.4) 100%) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.6) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 
+        0 8px 24px rgba(var(--primary-color-rgb), 0.45),
+        0 0 40px rgba(var(--primary-color-rgb), 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    animation: tabButtonPulse 2.5s ease-in-out infinite !important;
+}
+@keyframes tabButtonPulse {
+    0%, 100% { 
+        box-shadow: 
+            0 8px 24px rgba(var(--primary-color-rgb), 0.45),
+            0 0 40px rgba(var(--primary-color-rgb), 0.3);
+    }
+    50% { 
+        box-shadow: 
+            0 8px 24px rgba(var(--primary-color-rgb), 0.55),
+            0 0 60px rgba(var(--primary-color-rgb), 0.4);
+    }
+}
+/* ========== 设置项卡片 - 玻璃拟态3D效果 ========== */
+.setting-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 20px !important;
+    margin-bottom: 12px !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.06) 0%, 
+            rgba(255, 255, 255, 0.03) 50%, 
+            rgba(0, 0, 0, 0.08) 100%),
+        rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    transform-style: preserve-3d !important;
+}
+/* 设置项渐变发光边框 */
+.setting-item::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -1px !important;
+    border-radius: 16px !important;
+    padding: 1px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.12) 50%,
+        transparent 100%
+    ) !important;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+    -webkit-mask-composite: xor !important;
+    mask-composite: exclude !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    transition: all 0.35s ease !important;
+}
+/* 设置项光泽扫过效果 */
+.setting-item::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 70% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 30%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.1) 70%,
+        transparent 100%) !important;
+    transform: skewX(-15deg) !important;
+    transition: left 0.7s ease !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    z-index: 1 !important;
+}
+/* 设置项悬停3D效果 */
+.setting-item:hover {
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.05) 50%, 
+            rgba(var(--primary-color-rgb), 0.06) 100%),
+        rgba(0, 0, 0, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    transform: translateY(-4px) scale(1.015) !important;
+    box-shadow: 
+        0 12px 28px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 0 20px rgba(var(--primary-color-rgb), 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+.setting-item:hover::before {
+    opacity: 1 !important;
+}
+.setting-item:hover::after {
+    left: 150% !important;
+    opacity: 1 !important;
+}
+/* 设置项点击按压效果 */
+.setting-item:active {
+    transform: translateY(0) scale(0.99) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+/* 设置项标签文字 */
+.setting-item label {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease !important;
+}
+.setting-item:hover label {
+    text-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.2) !important;
+}
+/* ========== 设置按钮 - 渐变发光效果 ========== */
+.setting-btn,
+.setting-button {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.05) 100%),
+        rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+.setting-btn::before,
+.setting-button::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%) !important;
+    transition: left 0.5s ease !important;
+    pointer-events: none !important;
+}
+.setting-btn:hover::before,
+.setting-button:hover::before {
+    left: 100% !important;
+}
+.setting-btn:hover,
+.setting-button:hover {
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.15) 0%, 
+            rgba(255, 255, 255, 0.08) 100%),
+        rgba(0, 0, 0, 0.35) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) scale(1.03) !important;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+.setting-btn.primary,
+.setting-button.primary {
+    background: linear-gradient(135deg, 
+        rgba(var(--primary-color-rgb), 0.5) 0%, 
+        rgba(var(--secondary-color-rgb), 0.4) 100%) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.5) !important;
+    color: white !important;
+    box-shadow: 
+        0 6px 20px rgba(var(--primary-color-rgb), 0.4),
+        0 0 30px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+.setting-btn.primary:hover,
+.setting-button.primary:hover {
+    box-shadow: 
+        0 10px 28px rgba(var(--primary-color-rgb), 0.5),
+        0 0 50px rgba(var(--primary-color-rgb), 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+/* ========== 输入框和选择框美化 ========== */
+.setting-input,
+.setting-select {
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    color: var(--text-primary) !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.06) 0%, 
+            rgba(255, 255, 255, 0.03) 100%),
+        rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+.setting-input:focus,
+.setting-select:focus {
+    outline: none !important;
+    border-color: rgba(var(--primary-color-rgb), 0.5) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        0 0 0 3px rgba(var(--primary-color-rgb), 0.15),
+        0 0 20px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+/* ========== 复选框终极美化 ========== */
+.setting-checkbox {
+    width: 24px !important;
+    height: 24px !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.08) 0%, 
+            rgba(255, 255, 255, 0.04) 100%),
+        rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+.setting-checkbox::before {
+    content: '✓' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0) !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: white !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    text-shadow: 0 0 8px rgba(var(--primary-color-rgb), 0.8) !important;
+}
+.setting-checkbox:checked {
+    background: linear-gradient(135deg, 
+        rgba(var(--primary-color-rgb), 0.6) 0%, 
+        rgba(var(--secondary-color-rgb), 0.5) 100%) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.7) !important;
+    box-shadow: 
+        0 4px 12px rgba(var(--primary-color-rgb), 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+.setting-checkbox:checked::before {
+    transform: translate(-50%, -50%) scale(1) !important;
+}
+.setting-checkbox:hover {
+    transform: scale(1.1) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+}
+.setting-checkbox:checked:hover {
+    box-shadow: 
+        0 6px 16px rgba(var(--primary-color-rgb), 0.5),
+        0 0 30px rgba(var(--primary-color-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
