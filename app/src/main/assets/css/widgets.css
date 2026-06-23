@@ -10674,3 +10674,35 @@ footer.status-bar {
     text-overflow: ellipsis !important;
     max-width: 70px !important;
 }
+
+/* ===== 修复：统一快捷开关按钮大小 ===== */
+.quick-switch-icon {
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 22px !important;
+    line-height: 1 !important;
+    border-radius: 10px !important;
+    margin-bottom: 8px !important;
+    flex-shrink: 0 !important;
+}
+
+.quick-switch-item {
+    height: auto !important;
+    min-height: 76px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 8px !important;
+    box-sizing: border-box !important;
+}
+
+.quick-switch-item.more .quick-switch-icon {
+    font-size: 20px !important;
+    width: 40px !important;
+    height: 40px !important;
+}
+/* ===== 修复结束 ===== */
