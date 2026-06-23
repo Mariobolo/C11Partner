@@ -14556,3 +14556,290 @@ input[type="range"]::-moz-range-thumb:hover {
         0 0 12px rgba(var(--primary-color-rgb), 0.2) !important;
     transition: transform 0.15s ease, box-shadow 0.15s ease !important;
 }
+/* ============================================
+   【第59轮优化 - 搜索框霓虹发光终极版】
+   动态霓虹边框、呼吸发光动画、3D深度悬浮、粒子光晕效果
+   ============================================ */
+/* ========== 搜索框霓虹边框容器 ========== */
+.search-container {
+    position: relative !important;
+}
+.search-container::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: -2px !important;
+    border-radius: 18px !important;
+    background: conic-gradient(
+        from 0deg,
+        rgba(var(--primary-color-rgb), 0) 0deg,
+        rgba(var(--primary-color-rgb), 0.4) 60deg,
+        rgba(var(--secondary-color-rgb), 0.5) 120deg,
+        rgba(var(--primary-color-rgb), 0) 180deg,
+        rgba(var(--primary-color-rgb), 0.4) 240deg,
+        rgba(var(--secondary-color-rgb), 0.5) 300deg,
+        rgba(var(--primary-color-rgb), 0) 360deg
+    ) !important;
+    opacity: 0 !important;
+    filter: blur(8px) !important;
+    transition: opacity 0.4s ease !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+    animation: searchBoxNeonRotate 4s linear infinite !important;
+}
+.search-container:focus-within::after {
+    opacity: 1 !important;
+}
+@keyframes searchBoxNeonRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* 搜索框3D悬浮增强 */
+#appSearch {
+    transform-style: preserve-3d !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+#appSearch:focus {
+    transform: translateY(-4px) scale(1.01) !important;
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.45),
+        0 0 0 3px rgba(var(--primary-color-rgb), 0.2),
+        0 0 50px rgba(var(--primary-color-rgb), 0.35),
+        0 0 80px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 2px 0 rgba(255, 255, 255, 0.15) !important;
+}
+/* 搜索框内部发光效果 */
+#appSearch::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(var(--primary-color-rgb), 0.08) 0%,
+        transparent 70%
+    ) !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+    pointer-events: none !important;
+}
+.search-container:focus-within #appSearch::before {
+    opacity: 1 !important;
+}
+/* ============================================
+   【第59轮优化 - 应用图标网格3D粒子发光版】
+   3D透视增强、粒子光晕环绕、悬停爆炸光效、层级阴影
+   ============================================ */
+/* 应用项3D透视容器 */
+#appsList {
+    perspective: 1500px !important;
+    perspective-origin: center center !important;
+}
+/* 应用项粒子光晕层 */
+.app-item {
+    position: relative !important;
+}
+.app-item::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -4px !important;
+    border-radius: 20px !important;
+    background: radial-gradient(
+        circle at 30% 20%,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 50%
+    ),
+    radial-gradient(
+        circle at 70% 80%,
+        rgba(var(--primary-color-rgb), 0.2) 0%,
+        transparent 50%
+    ) !important;
+    opacity: 0 !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+    filter: blur(6px) !important;
+}
+/* 应用项悬停爆炸光效 */
+.app-item:hover::before {
+    opacity: 1 !important;
+    inset: -8px !important;
+    animation: appItemParticleGlow 2s ease-in-out infinite !important;
+}
+@keyframes appItemParticleGlow {
+    0%, 100% { 
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+/* 应用图标3D翻转增强 */
+.app-icon {
+    transform-style: preserve-3d !important;
+}
+.app-item:hover .app-icon {
+    transform: scale(1.22) translateY(-10px) rotateY(15deg) rotateX(5deg) !important;
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.18),
+        0 0 40px rgba(var(--primary-color-rgb), 0.35),
+        0 0 70px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 2px 0 rgba(255, 255, 255, 0.25) !important;
+}
+/* 应用图标顶部立体高光 */
+.app-icon::before {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.28) 0%,
+        rgba(255, 255, 255, 0.12) 30%,
+        transparent 60%
+    ) !important;
+}
+/* 应用名称发光增强 */
+.app-item:hover .app-name {
+    color: #ffffff !important;
+    transform: translateY(-4px) !important;
+    text-shadow: 
+        0 0 12px rgba(var(--primary-color-rgb), 0.5),
+        0 0 24px rgba(var(--primary-color-rgb), 0.3) !important;
+    font-weight: 600 !important;
+}
+/* 应用项点击3D按压 */
+.app-item:active {
+    transform: translateY(0) scale(0.95) rotateX(-5deg) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(var(--primary-color-rgb), 0.25),
+        inset 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+}
+.app-item:active .app-icon {
+    transform: scale(1.05) translateY(-2px) rotateY(5deg) !important;
+}
+/* ============================================
+   【第59轮优化 - 设置项卡片玻璃拟态3D版】
+   毛玻璃深度、渐变边框发光、悬停上浮动画、开关霓虹效果
+   ============================================ */
+/* ========== 设置项卡片3D玻璃效果 ========== */
+.setting-item {
+    position: relative !important;
+    transform-style: preserve-3d !important;
+    perspective: 1000px !important;
+}
+.setting-item::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: 16px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        rgba(var(--primary-color-rgb), 0.06) 100%
+    ) !important;
+    opacity: 0 !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    pointer-events: none !important;
+}
+.setting-item::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: 16px !important;
+    padding: 1px !important;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        transparent 100%
+    ) !important;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+    -webkit-mask-composite: xor !important;
+    mask-composite: exclude !important;
+    opacity: 0 !important;
+    transition: all 0.4s ease !important;
+    pointer-events: none !important;
+}
+/* 设置项悬停3D上浮 */
+.setting-item:hover {
+    transform: translateY(-6px) scale(1.01) !important;
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 0 30px rgba(var(--primary-color-rgb), 0.15) !important;
+}
+.setting-item:hover::before {
+    opacity: 1 !important;
+}
+.setting-item:hover::after {
+    opacity: 1 !important;
+    animation: settingItemBorderGlow 3s ease-in-out infinite !important;
+}
+@keyframes settingItemBorderGlow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+/* ========== 开关按钮霓虹发光终极版 ========== */
+.toggle-switch {
+    position: relative !important;
+    transform-style: preserve-3d !important;
+}
+.toggle-switch::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: -3px !important;
+    border-radius: 20px !important;
+    background: radial-gradient(
+        circle,
+        rgba(var(--primary-color-rgb), 0.4) 0%,
+        transparent 70%
+    ) !important;
+    opacity: 0 !important;
+    filter: blur(8px) !important;
+    transition: all 0.4s ease !important;
+    pointer-events: none !important;
+}
+.toggle-switch.active::before {
+    opacity: 1 !important;
+    animation: toggleNeonGlow 2s ease-in-out infinite !important;
+}
+@keyframes toggleNeonGlow {
+    0%, 100% { 
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+/* 开关滑块3D效果 */
+.toggle-slider {
+    transform-style: preserve-3d !important;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+.toggle-switch.active .toggle-slider {
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(var(--primary-color-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+/* 开关旋钮3D立体 */
+.toggle-slider::after {
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    transform-style: preserve-3d !important;
+}
+.toggle-switch.active .toggle-slider::after {
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.45),
+        0 0 12px rgba(var(--primary-color-rgb), 0.5),
+        0 0 24px rgba(var(--primary-color-rgb), 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+}
