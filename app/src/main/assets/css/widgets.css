@@ -10287,3 +10287,331 @@
     z-index: 2 !important;
 }
 
+
+/* ========================================
+   状态栏重构样式
+   ======================================== */
+
+/* 顶部状态栏整体调整 */
+.top-status-bar {
+    height: var(--status-bar-height) !important;
+    padding: 0 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+/* 左侧区域调整 */
+.top-left-section {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+}
+
+/* 隐藏时间显示（已在HTML中移除，这里确保兼容） */
+.top-left-time {
+    display: none !important;
+}
+
+/* 车辆状态指示器容器 */
+.car-status-indicators {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/* 状态指示器基础样式 */
+.status-indicator {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    padding: 4px 10px !important;
+    border-radius: var(--radius-sm) !important;
+    white-space: nowrap !important;
+}
+
+/* 档位指示器 */
+.gear-indicator {
+    background: rgba(var(--primary-color-rgb), 0.15) !important;
+    color: var(--primary-color) !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    padding: 4px 12px !important;
+    border: 1px solid rgba(var(--primary-color-rgb), 0.3) !important;
+    box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.2) !important;
+}
+
+/* 档位不同状态颜色 */
+.gear-indicator.gear-p {
+    background: rgba(var(--primary-color-rgb), 0.15) !important;
+    color: var(--primary-color) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.3) !important;
+}
+
+.gear-indicator.gear-r {
+    background: rgba(255, 100, 100, 0.15) !important;
+    color: #ff6464 !important;
+    border-color: rgba(255, 100, 100, 0.3) !important;
+    box-shadow: 0 0 10px rgba(255, 100, 100, 0.2) !important;
+}
+
+.gear-indicator.gear-n {
+    background: rgba(255, 200, 0, 0.15) !important;
+    color: #ffc800 !important;
+    border-color: rgba(255, 200, 0, 0.3) !important;
+    box-shadow: 0 0 10px rgba(255, 200, 0, 0.2) !important;
+}
+
+.gear-indicator.gear-d {
+    background: rgba(0, 200, 255, 0.15) !important;
+    color: #00c8ff !important;
+    border-color: rgba(0, 200, 255, 0.3) !important;
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.2) !important;
+}
+
+/* 转向灯组 */
+.turn-indicators-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+/* 转向灯指示器 */
+.turn-indicator {
+    opacity: 0.35 !important;
+    color: var(--text-secondary) !important;
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* 转向灯激活状态 - 黄色 */
+.turn-indicator.active {
+    opacity: 1 !important;
+    color: #ffd700 !important;
+    animation: blink 0.5s infinite !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8) !important;
+}
+
+/* 闪烁动画 */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* 门锁指示器 */
+.lock-indicator {
+    font-size: 12px !important;
+    color: var(--text-secondary) !important;
+    padding: 4px 8px !important;
+}
+
+.lock-indicator.unlocked {
+    color: #ff6464 !important;
+    animation: pulse 1s infinite !important;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* 门窗状态容器 */
+.door-window-status {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding-left: 12px !important;
+    margin-left: 8px !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 门窗状态项 - 默认隐藏 */
+.dw-status {
+    display: none !important;
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+    border-radius: var(--radius-xs) !important;
+    white-space: nowrap !important;
+    transition: all 0.3s ease !important;
+}
+
+/* 门窗状态激活时显示 */
+.dw-status.active {
+    display: inline-block !important;
+}
+
+/* 门状态 - 红色警告 */
+.dw-status.dw-door.active {
+    background: rgba(255, 100, 100, 0.2) !important;
+    color: #ff6464 !important;
+    border: 1px solid rgba(255, 100, 100, 0.4) !important;
+    animation: doorOpenPulse 1s infinite !important;
+}
+
+@keyframes doorOpenPulse {
+    0%, 100% { 
+        box-shadow: 0 0 5px rgba(255, 100, 100, 0.3);
+    }
+    50% { 
+        box-shadow: 0 0 15px rgba(255, 100, 100, 0.6);
+    }
+}
+
+/* 窗状态 - 橙色警告 */
+.dw-status.dw-window.active {
+    background: rgba(255, 165, 0, 0.2) !important;
+    color: #ffa500 !important;
+    border: 1px solid rgba(255, 165, 0, 0.4) !important;
+}
+
+/* 右侧信息区域 */
+.top-right-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/* 蓝牙和WiFi图标 */
+.bluetooth-status-icon,
+.network-status-icon {
+    width: 20px !important;
+    height: 20px !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    opacity: 0.7 !important;
+}
+
+
+/* ========================================
+   快捷开关重构 - 空调控制样式
+   ======================================== */
+
+/* 快捷开关容器调整 */
+.quick-switches-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 12px !important;
+}
+
+/* 空调控制按钮样式 */
+.quick-switch-item.ac-control-item {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 60px !important;
+    height: 70px !important;
+    padding: 8px 6px !important;
+    border-radius: var(--radius-md) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.quick-switch-item.ac-control-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.3) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.2),
+        0 0 20px rgba(var(--primary-color-rgb), 0.1) !important;
+}
+
+.quick-switch-item.ac-control-item:active {
+    transform: translateY(0) scale(0.98) !important;
+}
+
+/* 空调控制按钮激活状态 */
+.quick-switch-item.ac-control-item.active {
+    background: rgba(var(--primary-color-rgb), 0.15) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.4) !important;
+    box-shadow: 
+        0 0 15px rgba(var(--primary-color-rgb), 0.2),
+        inset 0 0 10px rgba(var(--primary-color-rgb), 0.1) !important;
+}
+
+/* 空调控制图标 */
+.quick-switch-item.ac-control-item .quick-switch-icon {
+    font-size: 22px !important;
+    margin-bottom: 4px !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
+}
+
+/* 空调控制文字 */
+.quick-switch-item.ac-control-item .quick-switch-name {
+    font-size: 11px !important;
+    color: var(--text-secondary) !important;
+    white-space: nowrap !important;
+}
+
+.quick-switch-item.ac-control-item.active .quick-switch-name {
+    color: var(--primary-color) !important;
+}
+
+/* "全部"按钮中的设置入口 */
+.quick-switch-item.more {
+    position: relative !important;
+}
+
+.settings-entry {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    font-size: 12px !important;
+    opacity: 0.6 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    padding: 2px !important;
+    border-radius: 4px !important;
+}
+
+.settings-entry:hover {
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: rotate(30deg) !important;
+}
+
+/* 调整快捷开关组件的整体大小 */
+.quick-switches-widget {
+    min-width: 380px !important;
+    height: auto !important;
+    padding: 8px !important;
+}
+
+
+/* ========================================
+   隐藏底部Dock栏并调整布局
+   ======================================== */
+
+/* 隐藏底部状态栏/Dock栏 */
+footer.status-bar {
+    display: none !important;
+}
+
+/* 调整卡片区域位置 - 因为底部Dock栏去掉了，可以往下移 */
+.card-view {
+    bottom: 30px !important;
+}
+
+/* 调整横向滚动容器 */
+.horizontal-scroll {
+    padding-bottom: 10px !important;
+}
+
+/* 确保主容器占满整个屏幕 */
+.main-container {
+    padding-bottom: 0 !important;
+}
+
+/* 调整左侧时间区域的位置 - 可以稍微往下移一点 */
+.layout-left {
+    top: 35% !important;
+}
+

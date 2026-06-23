@@ -1859,45 +1859,83 @@ function loadQuickSwitches() {
 
     container.innerHTML = '';
 
-    // 桌面显示的4个常用开关 + 1个更多按钮
-    const desktopSwitches = [
-        { id: 'lowBeamLight', name: '近光灯', icon: '💡' },
-        { id: 'maxCooling', name: '极速制冷', icon: '❄️' },
-        { id: 'cameraOverspeed', name: '360限速', icon: '📸' },
-        { id: 'ambientLight', name: '氛围灯', icon: '🌈' },
+    // 空调控制组
+    const acControls = [
+        { id: 'acSwitch', name: '空调', icon: '❄️', type: 'toggle' },
+        { id: 'windMinus', name: '风量-', icon: '🌬️', type: 'action' },
+        { id: 'windPlus', name: '风量+', icon: '💨', type: 'action' },
+        { id: 'tempMinus', name: '温度-', icon: '🌡️', type: 'action' },
+        { id: 'tempPlus', name: '温度+', icon: '🔥', type: 'action' },
     ];
 
-    // 添加4个快捷开关
-    desktopSwitches.forEach(sw => {
+    // 添加空调控制按钮
+    acControls.forEach(ctrl => {
         const item = document.createElement('div');
-        item.className = 'quick-switch-item';
-        item.setAttribute('data-id', sw.id);
+        item.className = 'quick-switch-item ac-control-item';
+        item.setAttribute('data-id', ctrl.id);
+        item.setAttribute('data-type', ctrl.type);
         item.innerHTML = `
-            <div class="quick-switch-icon">${sw.icon}</div>
-            <div class="quick-switch-name">${sw.name}</div>
+            <div class="quick-switch-icon">${ctrl.icon}</div>
+            <div class="quick-switch-name">${ctrl.name}</div>
         `;
 
-        // 点击切换开关
+        // 点击事件
         item.addEventListener('click', function() {
-            if (window.QuickSwitchManager) {
-                window.QuickSwitchManager.toggleSwitch(sw.id);
-                // 更新显示状态
-                updateQuickSwitchStatus(sw.id);
+            if (window.ACManager) {
+                if (ctrl.type === 'toggle') {
+                    window.ACManager.toggleAC();
+                } else if (ctrl.id === 'windMinus') {
+                    window.ACManager.decreaseWind();
+                } else if (ctrl.id === 'windPlus') {
+                    window.ACManager.increaseWind();
+                } else if (ctrl.id === 'tempMinus') {
+                    window.ACManager.decreaseTemp();
+                } else if (ctrl.id === 'tempPlus') {
+                    window.ACManager.increaseTemp();
+                }
+                updateACControlStatus();
+            } else {
+                // 如果没有ACManager，尝试调用Android接口
+                if (window.Android) {
+                    if (ctrl.id === 'acSwitch') {
+                        Android.toggleAC();
+                    } else if (ctrl.id === 'windMinus') {
+                        Android.decreaseWindSpeed();
+                    } else if (ctrl.id === 'windPlus') {
+                        Android.increaseWindSpeed();
+                    } else if (ctrl.id === 'tempMinus') {
+                        Android.decreaseTemperature();
+                    } else if (ctrl.id === 'tempPlus') {
+                        Android.increaseTemperature();
+                    }
+                }
             }
         });
 
         container.appendChild(item);
     });
 
-    // 添加"全部"按钮
+    // 添加"全部"按钮（包含设置入口）
     const moreItem = document.createElement('div');
     moreItem.className = 'quick-switch-item more';
     moreItem.innerHTML = `
         <div class="quick-switch-icon">⋯</div>
         <div class="quick-switch-name">全部</div>
+        <div class="settings-entry" title="设置">⚙️</div>
     `;
 
-    moreItem.addEventListener('click', function() {
+    moreItem.addEventListener('click', function(e) {
+        // 如果点击的是设置图标，打开设置
+        if (e.target.closest('.settings-entry')) {
+            e.stopPropagation();
+            const settingsModal = document.getElementById('settingsModal');
+            if (settingsModal) {
+                settingsModal.style.display = 'block';
+            }
+            return;
+        }
+        
+        // 否则打开全部开关面板
         if (window.QuickSwitchManager) {
             window.QuickSwitchManager.togglePanel();
         }
@@ -1907,6 +1945,85 @@ function loadQuickSwitches() {
 
     // 初始化状态
     refreshQuickSwitchesStatus();
+    updateACControlStatus();
+}
+
+/**
+ * 更新空调控制状态显示
+ */
+function updateACControlStatus() {
+    const acSwitch = document.querySelector('[data-id="acSwitch"]');
+    if (acSwitch && window.ACManager) {
+        if (window.ACManager.isOn()) {
+            acSwitch.classList.add('active');
+        } else {
+            acSwitch.classList.remove('active');
+        }
+    }
+}
+
+/**
+ * 空调管理器 - 简化版
+ */
+if (!window.ACManager) {
+    window.ACManager = {
+        _isOn: false,
+        _windLevel: 3,
+        _temperature: 22,
+        
+        isOn: function() {
+            return this._isOn;
+        },
+        
+        toggleAC: function() {
+            this._isOn = !this._isOn;
+            console.log('空调开关:', this._isOn ? '开' : '关');
+            // 调用Android接口
+            if (window.Android && Android.toggleAC) {
+                Android.toggleAC();
+            }
+        },
+        
+        increaseWind: function() {
+            if (this._windLevel < 7) {
+                this._windLevel++;
+                console.log('风量增加:', this._windLevel);
+                if (window.Android && Android.increaseWindSpeed) {
+                    Android.increaseWindSpeed();
+                }
+            }
+        },
+        
+        decreaseWind: function() {
+            if (this._windLevel > 0) {
+                this._windLevel--;
+                console.log('风量减少:', this._windLevel);
+                if (window.Android && Android.decreaseWindSpeed) {
+                    Android.decreaseWindSpeed();
+                }
+            }
+        },
+        
+        increaseTemp: function() {
+            if (this._temperature < 30) {
+                this._temperature++;
+                console.log('温度增加:', this._temperature + '°');
+                if (window.Android && Android.increaseTemperature) {
+                    Android.increaseTemperature();
+                }
+            }
+        },
+        
+        decreaseTemp: function() {
+            if (this._temperature > 16) {
+                this._temperature--;
+                console.log('温度减少:', this._temperature + '°');
+                if (window.Android && Android.decreaseTemperature) {
+                    Android.decreaseTemperature();
+                }
+            }
+        }
+    };
 }
 
 // 更新单个快捷开关状态
@@ -3198,6 +3315,15 @@ function registerTimeUpdateListener() {
             // 更新各个状态指示器
             this.updateGearIndicator(state.gear, state.gearText);
             this.updateDoorIndicator(state.isAnyDoorOpen, state.frontLeftDoor, state.frontRightDoor, state.rearLeftDoor, state.rearRightDoor, state.trunkDoor, state.hoodDoor);
+            // 更新车窗状态（如果有数据的话）
+            if (state.frontLeftWindow !== undefined || state.frontRightWindow !== undefined) {
+                this.updateWindowStatus(
+                    state.frontLeftWindow,
+                    state.frontRightWindow,
+                    state.rearLeftWindow,
+                    state.rearRightWindow
+                );
+            }
             this.updateTurnIndicators(state.leftTurnLight, state.rightTurnLight);
             this.updateLockIndicator(state.isLocked);
             this.updateSpeedDisplay(state.speed);
@@ -3230,22 +3356,97 @@ function registerTimeUpdateListener() {
          * 更新车门指示器
          */
         updateDoorIndicator: function(isAnyDoorOpen, fl, fr, rl, rr, trunk, hood) {
-            const element = document.getElementById('doorIndicator');
-            if (element) {
-                if (isAnyDoorOpen) {
-                    element.style.display = 'inline';
-                    element.style.color = '#ff4444';
-                    // 可以根据具体哪个门开了显示不同的提示
-                    let doorCount = 0;
-                    if (fl === 1) doorCount++;
-                    if (fr === 1) doorCount++;
-                    if (rl === 1) doorCount++;
-                    if (rr === 1) doorCount++;
-                    if (trunk === 1) doorCount++;
-                    if (hood === 1) doorCount++;
-                    element.textContent = doorCount + '门开';
+            // 更新各个车门状态
+            const doorElements = {
+                frontLeft: document.getElementById('frontLeftDoorStatus'),
+                frontRight: document.getElementById('frontRightDoorStatus'),
+                rearLeft: document.getElementById('rearLeftDoorStatus'),
+                rearRight: document.getElementById('rearRightDoorStatus')
+            };
+            
+            const doorStates = {
+                frontLeft: fl,
+                frontRight: fr,
+                rearLeft: rl,
+                rearRight: rr
+            };
+            
+            let hasAnyActive = false;
+            
+            for (const [key, element] of Object.entries(doorElements)) {
+                if (element) {
+                    if (doorStates[key] === 1) {
+                        element.classList.add('active');
+                        hasAnyActive = true;
+                    } else {
+                        element.classList.remove('active');
+                    }
+                }
+            }
+            
+            // 更新门窗状态容器的显示
+            const dwContainer = document.getElementById('doorWindowStatus');
+            if (dwContainer) {
+                // 检查是否有任何门窗处于激活状态
+                const allDwElements = dwContainer.querySelectorAll('.dw-status');
+                let anyActive = false;
+                allDwElements.forEach(el => {
+                    if (el.classList.contains('active')) {
+                        anyActive = true;
+                    }
+                });
+                
+                if (anyActive) {
+                    dwContainer.style.display = 'flex';
                 } else {
-                    element.style.display = 'none';
+                    dwContainer.style.display = 'none';
+                }
+            }
+        },
+        
+        /**
+         * 更新车窗状态
+         */
+        updateWindowStatus: function(flw, frw, rlw, rrw) {
+            const windowElements = {
+                frontLeft: document.getElementById('frontLeftWindowStatus'),
+                frontRight: document.getElementById('frontRightWindowStatus'),
+                rearLeft: document.getElementById('rearLeftWindowStatus'),
+                rearRight: document.getElementById('rearRightWindowStatus')
+            };
+            
+            const windowStates = {
+                frontLeft: flw,
+                frontRight: frw,
+                rearLeft: rlw,
+                rearRight: rrw
+            };
+            
+            for (const [key, element] of Object.entries(windowElements)) {
+                if (element) {
+                    if (windowStates[key] === 1) {
+                        element.classList.add('active');
+                    } else {
+                        element.classList.remove('active');
+                    }
+                }
+            }
+            
+            // 更新门窗状态容器的显示
+            const dwContainer = document.getElementById('doorWindowStatus');
+            if (dwContainer) {
+                const allDwElements = dwContainer.querySelectorAll('.dw-status');
+                let anyActive = false;
+                allDwElements.forEach(el => {
+                    if (el.classList.contains('active')) {
+                        anyActive = true;
+                    }
+                });
+                
+                if (anyActive) {
+                    dwContainer.style.display = 'flex';
+                } else {
+                    dwContainer.style.display = 'none';
                 }
             }
         },
@@ -3259,25 +3460,17 @@ function registerTimeUpdateListener() {
             
             if (leftElement) {
                 if (left === 1) {
-                    leftElement.style.opacity = '1';
-                    leftElement.style.animation = 'blink 0.5s infinite';
-                    leftElement.style.color = '#4CAF50';
+                    leftElement.classList.add('active');
                 } else {
-                    leftElement.style.opacity = '0.3';
-                    leftElement.style.animation = 'none';
-                    leftElement.style.color = '#ffffff';
+                    leftElement.classList.remove('active');
                 }
             }
             
             if (rightElement) {
                 if (right === 1) {
-                    rightElement.style.opacity = '1';
-                    rightElement.style.animation = 'blink 0.5s infinite';
-                    rightElement.style.color = '#4CAF50';
+                    rightElement.classList.add('active');
                 } else {
-                    rightElement.style.opacity = '0.3';
-                    rightElement.style.animation = 'none';
-                    rightElement.style.color = '#ffffff';
+                    rightElement.classList.remove('active');
                 }
             }
         },

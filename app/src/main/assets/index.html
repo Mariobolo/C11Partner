@@ -43,20 +43,34 @@
     <div class="main-container">
         <!-- 顶部状态栏 -->
         <header class="top-status-bar">
-            <!-- 左侧区域：时间 + 车辆状态 -->
+            <!-- 左侧区域：车辆状态 -->
             <div class="top-left-section">
-                <div class="top-left-time">
-                    <span class="time-text">--:--:--</span>
-                </div>
                 <div class="car-status-indicators">
+                    <!-- 档位显示 -->
                     <span class="status-indicator gear-indicator" id="gearIndicator">P档</span>
-                    <span class="status-indicator turn-indicator" id="leftTurnIndicator">左转</span>
-                    <span class="status-indicator turn-indicator" id="rightTurnIndicator">右转</span>
-                    <span class="status-indicator door-indicator" id="doorIndicator" style="display:none;">门开</span>
-                    <span class="status-indicator lock-indicator" id="lockIndicator">已锁</span>
+                    
+                    <!-- 转向灯组 -->
+                    <div class="turn-indicators-group">
+                        <span class="status-indicator turn-indicator" id="leftTurnIndicator">◀ 左转</span>
+                        <span class="status-indicator turn-indicator" id="rightTurnIndicator">右转 ▶</span>
+                    </div>
+                    
+                    <!-- 门锁状态 -->
+                    <span class="status-indicator lock-indicator" id="lockIndicator">🔒 已锁</span>
+                    
+                    <!-- 门窗状态容器 -->
+                    <div class="door-window-status" id="doorWindowStatus">
+                        <span class="dw-status dw-door" id="frontLeftDoorStatus" title="主驾车门">主驾门</span>
+                        <span class="dw-status dw-window" id="frontLeftWindowStatus" title="主驾车窗">主驾窗</span>
+                        <span class="dw-status dw-door" id="frontRightDoorStatus" title="副驾车门">副驾门</span>
+                        <span class="dw-status dw-window" id="frontRightWindowStatus" title="副驾车窗">副驾窗</span>
+                        <span class="dw-status dw-door" id="rearLeftDoorStatus" title="左后车门">左后门</span>
+                        <span class="dw-status dw-window" id="rearLeftWindowStatus" title="左后车窗">左后窗</span>
+                        <span class="dw-status dw-door" id="rearRightDoorStatus" title="右后车门">右后门</span>
+                        <span class="dw-status dw-window" id="rearRightWindowStatus" title="右后车窗">右后窗</span>
+                    </div>
                 </div>
             </div>
-
             <!-- 右侧信息 -->
             <div class="top-right-info">
                 <div class="bluetooth-status-icon" id="bluetoothIcon"
