@@ -1923,11 +1923,13 @@ function loadQuickSwitches() {
         <div class="quick-switch-name">全部</div>
     `;
 
-    moreItem.addEventListener('click', function() {
-        // 打开应用抽屉
-        if (window.AppDrawerManager) {
-            window.AppDrawerManager.toggle();
-        }
+        moreItem.addEventListener('click', function() {
+        // 打开应用列表
+        showAppsModal();
+        // 确保设置图标已添加
+        addSettingsIconToApps();
+        // 测试时可取消下面这行注释，加载模拟数据
+        // loadMockAppData();
     });
 
     container.appendChild(moreItem);
@@ -4565,6 +4567,90 @@ document.addEventListener('DOMContentLoaded', function() {
 /**
  * 在应用列表中添加设置图标
  */
+
+/*
+// 模拟应用列表数据 - 用于测试，正式环境请注释
+function mockLoadAppList() {
+    const mockApps = [
+        { name: '设置', icon: '⚙️', package: 'com.android.settings' },
+        { name: '高德地图', icon: '🗺️', package: 'com.autonavi.minimap' },
+        { name: '酷狗音乐', icon: '🎵', package: 'com.kugou.android' },
+        { name: '微信', icon: '💬', package: 'com.tencent.mm' },
+        { name: '抖音', icon: '🎬', package: 'com.ss.android.ugc.aweme' },
+        { name: '哔哩哔哩', icon: '📺', package: 'tv.danmaku.bili' },
+        { name: 'QQ音乐', icon: '🎧', package: 'com.tencent.qqmusic' },
+        { name: '网易云音乐', icon: '🎶', package: 'com.netease.cloudmusic' },
+        { name: '喜马拉雅', icon: '📻', package: 'com.ximalaya.ting.android' },
+    ];
+    
+    const appsList = document.getElementById('appsList');
+    if (!appsList) return;
+    
+    appsList.innerHTML = '';
+    mockApps.forEach(app => {
+        const appItem = document.createElement('div');
+        appItem.className = 'app-item';
+        appItem.innerHTML = `
+            <div class="app-icon">${app.icon}</div>
+            <div class="app-name">${app.name}</div>
+        `;
+        appItem.addEventListener('click', () => {
+            console.log('点击应用:', app.name);
+            if (typeof Android !== 'undefined' && Android.launchApp) {
+                Android.launchApp(app.package);
+            }
+        });
+        appsList.appendChild(appItem);
+    });
+    
+    console.log('已加载模拟应用列表，共', mockApps.length, '个应用');
+}
+*/
+
+
+/*
+// 模拟应用列表数据 - 用于浏览器测试，正式环境请注释
+function loadMockAppData() {
+    const appsList = document.getElementById('appsList');
+    if (!appsList) return;
+    
+    // 如果已经有内容了就不重复加载
+    if (appsList.children.length > 0) return;
+    
+    const mockApps = [
+        { name: '设置', icon: '⚙️', type: 'system' },
+        { name: '高德地图', icon: '🗺️', type: 'user' },
+        { name: '酷狗音乐', icon: '🎵', type: 'user' },
+        { name: '微信', icon: '💬', type: 'user' },
+        { name: '抖音', icon: '🎬', type: 'user' },
+        { name: '哔哩哔哩', icon: '📺', type: 'user' },
+        { name: 'QQ音乐', icon: '🎧', type: 'user' },
+        { name: '网易云音乐', icon: '🎶', type: 'user' },
+        { name: '喜马拉雅', icon: '📻', type: 'user' },
+        { name: '浏览器', icon: '🌐', type: 'system' },
+        { name: '文件管理', icon: '📁', type: 'system' },
+        { name: '系统设置', icon: '🔧', type: 'system' },
+    ];
+    
+    appsList.innerHTML = '';
+    mockApps.forEach(app => {
+        const appItem = document.createElement('div');
+        appItem.className = 'app-item';
+        appItem.setAttribute('data-type', app.type);
+        appItem.innerHTML = `
+            <div class="app-icon">${app.icon}</div>
+            <div class="app-name">${app.name}</div>
+        `;
+        appItem.addEventListener('click', () => {
+            console.log('点击应用:', app.name);
+        });
+        appsList.appendChild(appItem);
+    });
+    
+    console.log('已加载模拟应用列表，共', mockApps.length, '个应用');
+}
+*/
+
 function addSettingsIconToApps() {
     const appsList = document.getElementById('appsList');
     if (!appsList) return;
@@ -4624,3 +4710,5 @@ function addSettingsIconToApps() {
     // 添加到应用列表的最前面
     appsList.insertBefore(settingsItem, appsList.firstChild);
 }
+
+
