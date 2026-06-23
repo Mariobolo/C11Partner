@@ -12554,5 +12554,460 @@ input[type="range"]::-moz-range-thumb:hover {
 @keyframes badgeCountPop {
     0% { transform: scale(0); }
     50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    100% { transform: scale(1);
+}
+
+/* ============================================
+   【第56轮UI美化 - 优化点1】图标视觉细节全面增强
+   图标光影、色彩渐变、精细间距、多状态视觉反馈
+   ============================================ */
+
+/* ========== 图标光影增强系统 ========== */
+.icon-enhanced {
+    position: relative;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.icon-enhanced::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(255, 255, 255, 0.4) 0%,
+        transparent 50%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.icon-enhanced:hover::before {
+    opacity: 1;
+}
+
+/* 图标色彩渐变映射 - 智能配色 */
+.icon-color-primary {
+    filter: brightness(1.1) contrast(1.1)
+            drop-shadow(0 2px 8px rgba(var(--primary-color-rgb), 0.4));
+}
+
+.icon-color-accent {
+    filter: brightness(1.15) contrast(1.15) saturate(1.3) hue-rotate(5deg)
+            drop-shadow(0 2px 8px rgba(var(--secondary-color-rgb), 0.4));
+}
+
+.icon-color-warm {
+    filter: brightness(1.1) contrast(1.1) sepia(0.2) saturate(1.2)
+            drop-shadow(0 2px 8px rgba(255, 152, 0, 0.35));
+}
+
+.icon-color-cool {
+    filter: brightness(1.1) contrast(1.1) hue-rotate(-10deg) saturate(1.1)
+            drop-shadow(0 2px 8px rgba(0, 188, 212, 0.35));
+}
+
+/* ========== 精细间距系统优化 ========== */
+.spacing-tight { gap: 4px; }
+.spacing-compact { gap: 8px; }
+.spacing-normal { gap: 12px; }
+.spacing-relaxed { gap: 16px; }
+.spacing-loose { gap: 24px; }
+
+/* 图标内边距精细调整 */
+.icon-padding-xs { padding: 2px; }
+.icon-padding-sm { padding: 4px; }
+.icon-padding-md { padding: 6px; }
+.icon-padding-lg { padding: 8px; }
+
+/* ========== 配色系统微调和优化 ========== */
+:root {
+    --icon-brightness: 1.05;
+    --icon-contrast: 1.08;
+    --icon-saturation: 1.12;
+}
+
+/* 主题色图标精细优化 */
+.theme-icon {
+    filter: 
+        brightness(var(--icon-brightness)) 
+        contrast(var(--icon-contrast)) 
+        saturate(var(--icon-saturation));
+    transition: filter 0.3s ease;
+}
+
+.theme-icon:hover {
+    filter: 
+        brightness(calc(var(--icon-brightness) + 0.1)) 
+        contrast(calc(var(--icon-contrast) + 0.05)) 
+        saturate(calc(var(--icon-saturation) + 0.1))
+        drop-shadow(0 0 12px rgba(var(--primary-color-rgb), 0.5));
+}
+
+/* 暗色图标优化 */
+.icon-dark {
+    filter: brightness(0.7) contrast(1.2);
+}
+
+/* 亮色图标优化 */
+.icon-light {
+    filter: brightness(1.3) contrast(1.05);
+}
+
+/* ========== 多状态图标视觉反馈 ========== */
+.icon-state-default {
+    opacity: 0.85;
+    filter: brightness(1) contrast(1.05);
+}
+
+.icon-state-hover {
+    opacity: 1;
+    filter: brightness(1.15) contrast(1.1);
+}
+
+.icon-state-active {
+    opacity: 1;
+    filter: brightness(1.2) contrast(1.15)
+            drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.6));
+}
+
+.icon-state-disabled {
+    opacity: 0.35;
+    filter: grayscale(0.8) brightness(0.6);
+}
+
+/* ========== 图标边缘抗锯齿优化 ========== */
+.icon-smooth {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+@supports (-webkit-backdrop-filter: blur(1px)) {
+    .icon-smooth {
+        image-rendering: auto;
+    }
+}
+
+/* ============================================
+   【第56轮UI美化 - 优化点2】交互动效全面升级
+   弹性动画曲线、微交互反馈、状态过渡优化
+   ============================================ */
+
+/* ========== 高级弹性动画曲线系统 ========== */
+:root {
+    --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-sharp: cubic-bezier(0.4, 0, 1, 1);
+    --ease-soft: cubic-bezier(0.12, 0.8, 0.32, 1);
+}
+
+/* 弹性缩放动画 */
+.animate-elastic-scale {
+    transition: transform 0.35s var(--ease-elastic);
+}
+
+.animate-elastic-scale:hover {
+    transform: scale(1.08);
+}
+
+.animate-elastic-scale:active {
+    transform: scale(0.95);
+    transition-duration: 0.1s;
+}
+
+/* 微弹跳动画 */
+.animate-bounce-tap {
+    transition: transform 0.25s var(--ease-bounce);
+}
+
+.animate-bounce-tap:active {
+    transform: scale(0.9) translateY(2px);
+}
+
+/* ========== 悬停微交互动效 ========== */
+/* 微光扫描效果 */
+.scan-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.scan-effect::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 60%
+    );
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.6s var(--ease-smooth);
+    pointer-events: none;
+}
+
+.scan-effect:hover::after {
+    transform: rotate(45deg) translateX(100%);
+}
+
+/* 呼吸光晕效果 */
+.glow-breath {
+    position: relative;
+}
+
+.glow-breath::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: radial-gradient(
+        circle at center,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        transparent 70%
+    );
+    border-radius: inherit;
+    opacity: 0;
+    animation: glowBreath 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glowBreath {
+    0%, 100% {
+        opacity: 0.2;
+        transform: scale(0.95);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.05);
+    }
+}
+
+/* ========== 点击波纹效果增强 ========== */
+.ripple-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple-wave {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: rippleExpand 0.6s var(--ease-smooth) forwards;
+    pointer-events: none;
+}
+
+@keyframes rippleExpand {
+    0% {
+        transform: scale(0);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* ========== 加载状态动效优化 ========== */
+.loading-pulse {
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(0.98);
+    }
+}
+
+/* 骨架屏闪烁动画 */
+.skeleton-shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ========== 状态过渡平滑优化 ========== */
+/* 颜色平滑过渡 */
+.smooth-color-transition {
+    transition: 
+        color 0.25s var(--ease-smooth),
+        background-color 0.25s var(--ease-smooth),
+        border-color 0.25s var(--ease-smooth),
+        box-shadow 0.25s var(--ease-smooth);
+}
+
+/* 全属性平滑过渡 */
+.smooth-all-transition {
+    transition: all 0.3s var(--ease-smooth);
+}
+
+/* 变换属性专用过渡 */
+.smooth-transform-transition {
+    transition: transform 0.25s var(--ease-elastic);
+}
+
+/* ============================================
+   【第56轮UI美化 - 优化点3】响应式布局智能适配
+   断点精细化、容器自适应、内容智能重排
+   ============================================ */
+
+/* ========== 智能容器宽度系统 ========== */
+.container-smart {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 clamp(12px, 3vw, 24px);
+}
+
+@container (min-width: 480px) {
+    .container-smart {
+        padding: 0 clamp(16px, 4vw, 32px);
+    }
+}
+
+@container (min-width: 768px) {
+    .container-smart {
+        max-width: 720px;
+    }
+}
+
+@container (min-width: 1024px) {
+    .container-smart {
+        max-width: 960px;
+    }
+}
+
+@container (min-width: 1280px) {
+    .container-smart {
+        max-width: 1180px;
+    }
+}
+
+/* ========== 智能网格布局 ========== */
+.grid-smart {
+    display: grid;
+    gap: clamp(8px, 2vw, 16px);
+    grid-template-columns: repeat(auto-fit, minmax(clamp(100px, 25vw, 160px), 1fr));
+}
+
+/* 紧凑网格 */
+.grid-smart-compact {
+    gap: clamp(6px, 1.5vw, 12px);
+    grid-template-columns: repeat(auto-fit, minmax(clamp(80px, 20vw, 140px), 1fr));
+}
+
+/* 宽松网格 */
+.grid-smart-relaxed {
+    gap: clamp(12px, 3vw, 24px);
+    grid-template-columns: repeat(auto-fit, minmax(clamp(120px, 30vw, 180px), 1fr));
+}
+
+/* ========== 弹性间距自适应 ========== */
+.space-auto-xs { gap: clamp(2px, 0.5vw, 4px); }
+.space-auto-sm { gap: clamp(4px, 1vw, 8px); }
+.space-auto-md { gap: clamp(8px, 2vw, 16px); }
+.space-auto-lg { gap: clamp(12px, 3vw, 24px); }
+.space-auto-xl { gap: clamp(16px, 4vw, 32px); }
+
+/* ========== 字体大小响应式 ========== */
+.text-auto-xs { font-size: clamp(10px, 2.5vw, 12px); }
+.text-auto-sm { font-size: clamp(12px, 3vw, 14px); }
+.text-auto-base { font-size: clamp(14px, 3.5vw, 16px); }
+.text-auto-lg { font-size: clamp(16px, 4vw, 18px); }
+.text-auto-xl { font-size: clamp(18px, 4.5vw, 20px); }
+.text-auto-2xl { font-size: clamp(20px, 5vw, 24px); }
+.text-auto-3xl { font-size: clamp(24px, 6vw, 32px); }
+
+/* ========== 触控目标自适应 ========== */
+.touch-target-auto {
+    min-width: clamp(36px, 9vw, 48px);
+    min-height: clamp(36px, 9vw, 48px);
+    padding: clamp(8px, 2vw, 12px);
+}
+
+/* ========== 内容可见性智能控制 ========== */
+/* 超小屏隐藏 */
+@media screen and (max-width: 479px) {
+    .hide-xs { display: none !important; }
+    .show-xs-only { display: flex !important; }
+}
+
+/* 小屏隐藏 */
+@media screen and (min-width: 480px) and (max-width: 767px) {
+    .hide-sm { display: none !important; }
+}
+
+/* 中屏隐藏 */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .hide-md { display: none !important; }
+}
+
+/* 大屏隐藏 */
+@media screen and (min-width: 1024px) {
+    .hide-lg { display: none !important; }
+}
+
+/* 横屏优化 */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .compact-landscape {
+        padding-top: clamp(4px, 1vh, 8px);
+        padding-bottom: clamp(4px, 1vh, 8px);
+    }
+    
+    .compact-landscape .widget {
+        min-height: clamp(60px, 15vh, 80px);
+        padding: clamp(8px, 2vh, 12px);
+    }
+}
+
+/* ========== 安全区域增强适配 ========== */
+@supports (padding: max(0px)) {
+    .safe-area-top {
+        padding-top: max(12px, env(safe-area-inset-top));
+    }
+    
+    .safe-area-bottom {
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+    
+    .safe-area-left {
+        padding-left: max(12px, env(safe-area-inset-left));
+    }
+    
+    .safe-area-right {
+        padding-right: max(12px, env(safe-area-inset-right));
+    }
+}
+
+/* ========== 高DPI屏幕渲染优化 ========== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .retina-optimized {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+    
+    .retina-sharp {
+        image-rendering: -webkit-optimize-contrast;
+    }
+} }
 }
