@@ -1512,7 +1512,7 @@ function showAppsModal() {
     // 先关闭设置弹窗（如果已打开）
     hideSettingsModal();
 
-    document.getElementById('appsModal').style.display = 'block';
+    const modal = document.getElementById('appsModal'); modal.style.display = 'flex'; modal.classList.add('show');
     
     // 启动自动关闭定时器
     resetAutoCloseTimer();
@@ -1915,29 +1915,18 @@ function loadQuickSwitches() {
         container.appendChild(item);
     });
 
-    // 添加"全部"按钮（包含设置入口）
+    // 添加"全部"按钮
     const moreItem = document.createElement('div');
     moreItem.className = 'quick-switch-item more';
     moreItem.innerHTML = `
         <div class="quick-switch-icon">⋯</div>
         <div class="quick-switch-name">全部</div>
-        <div class="settings-entry" title="设置">⚙️</div>
     `;
 
-    moreItem.addEventListener('click', function(e) {
-        // 如果点击的是设置图标，打开设置
-        if (e.target.closest('.settings-entry')) {
-            e.stopPropagation();
-            const settingsModal = document.getElementById('settingsModal');
-            if (settingsModal) {
-                settingsModal.style.display = 'block';
-            }
-            return;
-        }
-        
-        // 否则打开全部开关面板
-        if (window.QuickSwitchManager) {
-            window.QuickSwitchManager.togglePanel();
+    moreItem.addEventListener('click', function() {
+        // 打开应用抽屉
+        if (window.AppDrawerManager) {
+            window.AppDrawerManager.toggle();
         }
     });
 
@@ -2758,6 +2747,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // 加载桌面快捷开关
     loadQuickSwitches();
+    
+
 
     // 初始化可配置按钮
     initConfigurableButtons();
@@ -2804,6 +2795,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // 添加时间显示点击事件，用于切换壁纸轮播状态
     addTimeDisplayClickEvent();
+
+
 
 });
 
@@ -3772,6 +3765,20 @@ function registerTimeUpdateListener() {
             });
             html += '</div>';
             
+            // 设置入口
+            html += '<h4 style="color: white; margin: 16px 0 12px 0; font-size: 14px;">系统</h4>';
+            html += '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">';
+            html += `
+                <div class="settings-entry-item" 
+                     style="text-align: center; padding: 10px 6px; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; font-size: 12px; color: white; transition: all 0.2s;"
+                     onmouseover="this.style.background='rgba(255,255,255,0.2)'"
+                     onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                    <div style="font-size: 20px;">⚙️</div>
+                    <div>设置</div>
+                </div>
+            `;
+            html += '</div>';
+            
             panel.innerHTML = html;
             
             // 绑定开关点击事件
@@ -3794,6 +3801,24 @@ function registerTimeUpdateListener() {
                     this.toggleSceneMode(item.dataset.id);
                 });
             });
+            
+            // 绑定设置入口点击事件
+            const settingsEntry = panel.querySelector('.settings-entry-item');
+            if (settingsEntry) {
+                const self = this;
+                settingsEntry.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    self.hidePanel();
+                    setTimeout(() => {
+                        const settingsModal = document.getElementById('settingsModal');
+                        if (settingsModal) {
+                            settingsModal.classList.add('active');
+                            // 确保设置面板在最上层
+                            settingsModal.style.zIndex = '99999';
+                        }
+                    }, 100);
+                });
+            }
             
             return panel;
         },
@@ -4536,3 +4561,66 @@ document.addEventListener('DOMContentLoaded', function() {
         VoiceTestManager.init();
     }, 500);
 });
+
+/**
+ * 在应用列表中添加设置图标
+ */
+function addSettingsIconToApps() {
+    const appsList = document.getElementById('appsList');
+    if (!appsList) return;
+    
+    // 检查是否已经添加过
+    if (document.getElementById('settingsAppItem')) return;
+    
+    // 创建设置应用项
+    const settingsItem = document.createElement('div');
+    settingsItem.id = 'settingsAppItem';
+    settingsItem.className = 'app-item';
+    settingsItem.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 8px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s;
+    `;
+    settingsItem.innerHTML = `
+        <div class="app-icon" style="
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        ">⚙️</div>
+        <div class="app-name" style="
+            font-size: 12px;
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 60px;
+        ">设置</div>
+    `;
+    
+    // 点击事件：打开设置面板
+    settingsItem.addEventListener('click', function() {
+        const appsModal = document.getElementById('appsModal');
+        if (appsModal) {
+            appsModal.style.display = 'none';
+        }
+        const settingsModal = document.getElementById('settingsModal');
+        if (settingsModal) {
+            settingsModal.classList.add('active');
+        }
+    });
+    
+    // 添加到应用列表的最前面
+    appsList.insertBefore(settingsItem, appsList.firstChild);
+}
