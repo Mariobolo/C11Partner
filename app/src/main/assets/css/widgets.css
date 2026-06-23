@@ -9769,3 +9769,47 @@
     pointer-events: none !important;
 }
 
+
+/* 修复地图组件布局 - 恢复水平排列 */
+.map-widget {
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: var(--spacing-xl) !important;
+}
+
+/* 修复地图图标大小 */
+.map-icon {
+    width: 60px !important;
+    height: 60px !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* 修复导航按钮布局 */
+.map-widget .nav-button {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 70px !important;
+    padding: 12px 16px !important;
+}
+
+/* 修复导航图标大小 */
+.nav-icon {
+    width: 32px !important;
+    height: 32px !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    margin-bottom: 6px !important;
+}
+
+/* 修复导航文字大小 */
+.nav-text {
+    font-size: var(--font-size-sm) !important;
+    color: var(--text-primary) !important;
+}
+
+

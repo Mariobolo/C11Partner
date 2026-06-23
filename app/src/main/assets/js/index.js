@@ -4210,15 +4210,6 @@ if (document.readyState === 'loading') {
 
 
 
-                } catch (e) {
-                    console.error('解析空调信息失败:', e);
-                }
-            }
-        } catch (e) {
-            console.error('获取空调信息失败:', e);
-        }
-    }
-}
 
 
 
