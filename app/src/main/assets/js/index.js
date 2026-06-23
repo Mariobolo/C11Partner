@@ -661,7 +661,9 @@ function showSettingsModal() {
     // 先关闭应用列表弹窗（如果已打开）
     hideAppsModal();
 
-    document.getElementById('settingsModal').style.display = 'block';
+    const settingsModal = document.getElementById('settingsModal');
+    settingsModal.style.display = 'block';
+    settingsModal.classList.add('active');
     // 默认激活壁纸设置TAB
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -693,7 +695,6 @@ function showSettingsModal() {
     resetAutoCloseTimer();
     
     // 为弹窗内的元素添加交互事件，重置定时器
-    const settingsModal = document.getElementById('settingsModal');
     const interactiveElements = settingsModal.querySelectorAll('button, .tab-button, input, select, #closeSettings');
     interactiveElements.forEach(element => {
         element.addEventListener('click', resetAutoCloseTimer);
@@ -705,7 +706,9 @@ function showSettingsModal() {
 
 // 隐藏设置弹窗
 function hideSettingsModal() {
-    document.getElementById('settingsModal').style.display = 'none';
+    const settingsModal = document.getElementById('settingsModal');
+    settingsModal.style.display = 'none';
+    settingsModal.classList.remove('active');
     // 清除自动关闭定时器
     clearAutoCloseTimer();
 }
@@ -1512,7 +1515,7 @@ function showAppsModal() {
     // 先关闭设置弹窗（如果已打开）
     hideSettingsModal();
 
-    const modal = document.getElementById('appsModal'); modal.style.display = 'flex'; modal.classList.add('show');
+    const modal = document.getElementById('appsModal'); modal.style.display = 'flex'; modal.classList.add('active');
     
     // 启动自动关闭定时器
     resetAutoCloseTimer();
@@ -1536,7 +1539,7 @@ function showAppsModal() {
  * 2. 清除自动关闭定时器
  */
 function hideAppsModal() {
-    document.getElementById('appsModal').style.display = 'none';
+    const modal = document.getElementById('appsModal'); modal.style.display = 'none'; modal.classList.remove('active');
     // 清除自动关闭定时器
     clearAutoCloseTimer();
 }
@@ -1928,7 +1931,7 @@ function loadQuickSwitches() {
         showAppsModal();
         // 确保设置图标已添加
         addSettingsIconToApps();
-        // 测试时可取消下面这行注释，加载模拟数据
+        // 加载模拟应用数据（非Android环境下使用，测试时取消注释）
         // loadMockAppData();
     });
 
@@ -3736,7 +3739,8 @@ function registerTimeUpdateListener() {
                         <div class="switch-status" style="margin-top: 4px; font-size: 10px; color: #888;">--</div>
                     </div>
                 `;
-            });
+            
+});
             html += '</div>';
             
             // 驾驶模式
@@ -4697,18 +4701,121 @@ function addSettingsIconToApps() {
     
     // 点击事件：打开设置面板
     settingsItem.addEventListener('click', function() {
-        const appsModal = document.getElementById('appsModal');
-        if (appsModal) {
-            appsModal.style.display = 'none';
-        }
-        const settingsModal = document.getElementById('settingsModal');
-        if (settingsModal) {
-            settingsModal.classList.add('active');
-        }
+        showSettingsModal();
     });
     
     // 添加到应用列表的最前面
     appsList.insertBefore(settingsItem, appsList.firstChild);
 }
 
+// 加载模拟应用数据（用于非Android环境测试）
+function loadMockAppData() {
+    const appsList = document.getElementById('appsList');
+    if (!appsList) return;
+    
+    // 如果已经有应用了，就不重复添加
+    if (appsList.children.length > 1) return;
+    
+    // 模拟应用列表
+    const mockApps = [
+        { name: '导航', icon: '🧭', color: '#4CAF50' },
+        { name: '音乐', icon: '🎵', color: '#E91E63' },
+        { name: '视频', icon: '🎬', color: '#9C27B0' },
+        { name: '蓝牙', icon: '📶', color: '#2196F3' },
+        { name: '设置', icon: '⚙️', color: '#607D8B', isSettings: true },
+        { name: '电话', icon: '📞', color: '#009688' },
+        { name: '日历', icon: '📅', color: '#FF5722' },
+        { name: '相册', icon: '🖼️', color: '#795548' },
+        { name: '文件', icon: '📁', color: '#607D8B' },
+        { name: '浏览器', icon: '🌐', color: '#3F51B5' },
+        { name: '收音机', icon: '📻', color: '#FF9800' },
+        { name: '记录仪', icon: '📹', color: '#F44336' },
+    ];
+    
+    mockApps.forEach(app => {
+        // 跳过设置，因为已经单独添加了
+        if (app.isSettings) return;
+        
+        const appItem = document.createElement('div');
+        appItem.className = 'app-item';
+        appItem.style.cssText = `
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 8px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        `;
+        appItem.innerHTML = `
+            <div class="app-icon" style="
+                width: 48px;
+                height: 48px;
+                border-radius: 12px;
+                background: ${app.color};
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                margin-bottom: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            ">${app.icon}</div>
+            <div class="app-name" style="
+                font-size: 12px;
+                color: white;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 60px;
+            ">${app.name}</div>
+        `;
+        
+        // 点击效果
+        appItem.addEventListener('click', function() {
+            // 模拟点击效果
+            appItem.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                appItem.style.transform = 'scale(1)';
+            }, 150);
+        });
+        
+        // 悬停效果
+        appItem.addEventListener('mouseenter', function() {
+            appItem.style.background = 'rgba(255, 255, 255, 0.1)';
+        });
+        appItem.addEventListener('mouseleave', function() {
+            appItem.style.background = 'transparent';
+        });
+        
+        appsList.appendChild(appItem);
+    });
+}
 
+
+
+
+// ===== 修复：把appsModal移到body末尾，避免父容器transform影响 =====
+function fixAppsModalPosition() {
+    const appsModal = document.getElementById('appsModal');
+    if (appsModal && appsModal.parentNode !== document.body) {
+        document.body.appendChild(appsModal);
+        console.log('已将appsModal移到body末尾');
+    }
+}
+
+// 页面加载后立即执行
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixAppsModalPosition);
+} else {
+    fixAppsModalPosition();
+}
+
+
+
+
+// 自动测试：2秒后强制显示appsModal（测试用，正式版请删除）
+setTimeout(() => {
+    console.log('自动测试：显示appsModal');
+    testShowAppsModal(); // 取消注释以启用自动测试
+}, 2000);
