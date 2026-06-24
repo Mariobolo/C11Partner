@@ -835,6 +835,13 @@ function initComponentVisibility() {
  */
 let componentConfigListenersAdded = false;
 
+/**
+ * 加载组件配置
+ * @description 从Android原生层获取所有桌面组件的配置信息
+ * 包括音乐、地图、应用、胎压、天气等组件的启用/禁用状态
+ * 支持异步和同步两种调用方式，优先使用异步方法
+ * @returns {Promise<Object>} 组件配置对象，包含各组件的启用状态
+ */
 function loadComponentConfigs() {
     if (typeof Android !== 'undefined' && Android.getAllComponentConfigs) {
         // 使用同步方法
@@ -1726,7 +1733,12 @@ function showAddToQuickAppsDialog(app) {
     });
 }
 
-// 显示从快速启动移除对话框
+/**
+ * 显示从快速启动移除对话框
+ * @description 显示确认对话框，询问用户是否要从快速启动栏中移除指定应用
+ * 对话框包含取消和确认两个按钮，确认后调用Android原生层移除应用
+ * @param {Object} app - 要移除的应用对象，包含应用名称、包名等信息
+ */
 function showRemoveFromQuickAppsDialog(app) {
     // 检查是否已有对话框打开
     if (currentDialog) {
@@ -2058,7 +2070,12 @@ if (!window.ACManager) {
     };
 }
 
-// 更新单个快捷开关状态
+/**
+ * 更新单个快捷开关状态
+ * @description 根据开关ID从Android原生层获取最新状态并更新UI显示
+ * 支持空调、风量、温度、除霜、座椅加热等多种快捷开关
+ * @param {string} switchId - 快捷开关的唯一标识符
+ */
 function updateQuickSwitchStatus(switchId) {
     const item = document.querySelector('.quick-switch-item[data-id="' + switchId + '"]');
     if (!item || !window.QuickSwitchManager) return;
@@ -2072,7 +2089,12 @@ function updateQuickSwitchStatus(switchId) {
     }
 }
 
-// 刷新所有快捷开关状态
+/**
+ * 刷新所有快捷开关状态
+ * @description 批量更新所有快捷开关的显示状态
+ * 遍历所有快捷开关ID，逐个调用updateQuickSwitchStatus进行更新
+ * 确保所有开关状态与车辆实际状态同步
+ */
 function refreshQuickSwitchesStatus() {
     if (!window.QuickSwitchManager) return;
 
@@ -2322,7 +2344,13 @@ function initConfigurableButtons() {
     }
 }
 
-// 获取按钮显示名称
+/**
+ * 获取按钮显示名称
+ * @description 根据按钮ID获取对应的中文显示名称
+ * 用于可配置按钮的显示文本映射，支持导航、地图、360全景等多种按钮类型
+ * @param {string} buttonId - 按钮的唯一标识符
+ * @returns {string} 按钮的中文显示名称
+ */
 function getButtonDisplayName(buttonId) {
     switch (buttonId) {
         case 'goHomeBtn':
@@ -2335,7 +2363,12 @@ function getButtonDisplayName(buttonId) {
 }
 
 
-// 减少风量
+/**
+ * 减少风量级别
+ * @description 降低空调系统的风量输出级别
+ * 最小风量级别为1，达到最小值时不再继续降低
+ * 调用Android原生层执行风量调节操作
+ */
 function decreaseWindLevel() {
     if (typeof Android !== 'undefined' && Android.adjustWindLevel) {
         try {
@@ -2350,7 +2383,12 @@ function decreaseWindLevel() {
     setWindLevel(newLevel);
 }
 
-// 增加风量
+/**
+ * 增加风量级别
+ * @description 提高空调系统的风量输出级别
+ * 最大风量级别为7，达到最大值时不再继续升高
+ * 调用Android原生层执行风量调节操作
+ */
 function increaseWindLevel() {
     if (typeof Android !== 'undefined' && Android.adjustWindLevel) {
         try {
@@ -2364,7 +2402,13 @@ function increaseWindLevel() {
     const newLevel = Math.min(7, currentLevel + 1);
     setWindLevel(newLevel);
 }
-// 设置风量级别
+/**
+ * 设置风量级别
+ * @description 直接设置空调系统的风量输出到指定级别
+ * 有效范围：1-7级，超出范围自动修正到边界值
+ * 调用Android原生层执行风量设置操作
+ * @param {number} level - 目标风量级别（1-7）
+ */
 function setWindLevel(level) {
     const windLevelElement = document.querySelector('.wind-level');
     if (windLevelElement && level >= 0 && level <= 7) {
@@ -2387,7 +2431,12 @@ function getCurrentWindLevel() {
     return 6; // 默认为6级风量
 }
 
-// 空调温度控制 - 减少温度
+/**
+ * 降低空调温度
+ * @description 降低空调系统的设定温度
+ * 最低温度为16°C，达到最小值时不再继续降低
+ * 调用Android原生层执行温度调节操作
+ */
 function decreaseTemperature() {
     if (typeof Android !== 'undefined' && Android.adjustTemperature) {
         try {
@@ -2411,7 +2460,12 @@ function decreaseTemperature() {
     });
 }
 
-// 空调温度控制 - 增加温度
+/**
+ * 提高空调温度
+ * @description 提高空调系统的设定温度
+ * 最高温度为30°C，达到最大值时不再继续升高
+ * 调用Android原生层执行温度调节操作
+ */
 function increaseTemperature() {
     if (typeof Android !== 'undefined' && Android.adjustTemperature) {
         try {
@@ -2443,7 +2497,12 @@ function setWindLevel(level) {
     }
 }
 
-// 空调开关切换
+/**
+ * 切换空调开关状态
+ * @description 切换空调系统的开启/关闭状态
+ * 调用Android原生层执行空调开关切换操作
+ * 状态变更后自动更新UI显示
+ */
 function toggleAirConditioning() {
     if (typeof Android !== 'undefined' && Android.toggleAirConditioning) {
         try {
@@ -2472,7 +2531,12 @@ function toggleAirConditioning() {
     }
 }
 
-// 切换前除霜状态
+/**
+ * 切换前挡风玻璃除霜状态
+ * @description 切换空调系统的前挡风玻璃除霜功能
+ * 调用Android原生层执行除霜开关切换操作
+ * 支持除霜模式的开启和关闭
+ */
 function toggleDefrost() {
     if (typeof Android !== 'undefined' && Android.toggleDefrost) {
         try {
@@ -2593,7 +2657,12 @@ function updateNetworkAndBluetoothStatus() {
 
 
 
-// 初始化横向滚动功能
+/**
+ * 初始化横向滚动功能
+ * @description 为快捷开关面板添加触摸滑动和鼠标拖拽的横向滚动支持
+ * 支持触摸滑动、鼠标拖拽、惯性滚动三种交互方式
+ * 优化移动端和桌面端的用户体验
+ */
 function initHorizontalScroll() {
     const horizontalScroll = document.querySelector('.horizontal-scroll');
 
@@ -2730,7 +2799,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// 初始化壁纸双击和长按事件
+/**
+ * 初始化壁纸双击和长按事件
+ * @description 为壁纸区域添加双击切换壁纸和长按显示壁纸选择器功能
+ * 支持500ms内的双击检测，长按500ms触发壁纸选择器
+ * 使用防抖机制防止重复触发
+ */
 function initWallpaperDoubleClick() {
     const backgroundContainer = document.querySelector('.background-container');
     let lastClickTime = 0;
