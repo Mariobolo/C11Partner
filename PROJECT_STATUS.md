@@ -1,10 +1,54 @@
 # C11Partner 项目状态总览
 > 📌 **本文档是项目状态的唯一真相来源**，每次对话前请先读取本文档，再读取相关文档。
 >
->>> 最后更新：2026-06-24 08:52
+>>> 最后更新：2026-06-24 09:10
 > 当前版本：v1.2.0 (开发中，约99.9%完成)
 > 
 > ## 🔄 代码可维护性提升专项（第二阶段）
+> ### 🔄 2026-06-24 - CSS结构优化（第五轮 - .quick-switch-item + .weather-widget大规模合并）
+> **阶段目标**：合并.quick-switch-item和.weather-widget的所有重复定义，采用"合并优先"策略，小步验证，确保安全
+> 
+> #### ✅ 第五轮清理成果：成功合并.quick-switch-item + .weather-widget，减少约180行，零布局问题
+> - ✅ **合并策略再次验证成功**：采用"先把第一个定义改写成合并后的完整样式，再从后往前删除后面的重复定义"的策略，效果完全一致
+> - ✅ **已完成合并**：
+>   - `.quick-switch-item`：6个定义 → 1个定义，减少约90行
+>     - 合并策略：分析所有6个定义的属性，确定最终生效的（后面的覆盖前面的）
+>     - 最终生效样式包含：display, flex-direction, align-items, background, border-radius, padding, transition, border, min-width, min-height, margin, cursor, position, overflow, transform-style, box-shadow, touch-action, outline, user-select等完整属性
+>     - 验证：所有快捷开关按钮布局、样式、悬停效果完全正常，零副作用
+>   - `.weather-widget`：6个定义 → 1个定义，减少约90行
+>     - 合并策略：分析所有6个定义，优先保留增强版的3D视觉属性
+>     - 最终生效样式包含：min-width, padding, gap, display, align-items, position, overflow, perspective, transform-style, background, backdrop-filter, border, box-shadow, transition, animation等完整属性
+>     - 验证：天气组件3D视觉效果、渐变发光、呼吸浮动动画完全正常，零副作用
+> - ✅ **重要发现**：
+>   - 这两个选择器都是重复非常严重的，各有6个独立定义分散在文件各处
+>   - 主要是各种视觉增强、3D效果、动画属性被反复覆盖
+>   - 合并后代码结构极其清晰，所有属性集中在一个定义中，便于维护
+> - ✅ **验证结果**：所有合并均经过页面刷新验证，布局完全正常，零副作用
+> 
+> **第五轮总结**：
+> - 合并选择器：2个（.quick-switch-item、.weather-widget）
+> - 减少行数：约180行
+> - 验证方式：每次合并后立即刷新页面验证
+> - 风险控制：小步快跑，从后往前删除避免行号变化，零布局事故
+> 
+> **已完成合并的选择器汇总（前五轮）**：
+> 1. `.map-icon`：6个定义 → 1个定义，减少约45行 ✅
+> 2. `.map-widget::after`：5个定义 → 1个定义，减少约40行 ✅
+> 3. `.map-widget .nav-button`：6个定义 → 1个定义，减少约20行 ✅
+> 4. `.map-widget`：2个定义 → 1个定义，减少约20行 ✅
+> 5. `.widget`：7个定义 → 1个定义，减少约160行 ✅
+> 6. `.quick-switch-item`：6个定义 → 1个定义，减少约90行 ✅
+> 7. `.weather-widget`：6个定义 → 1个定义，减少约90行 ✅
+> 
+> **前五轮总计成果**：
+> - 合并选择器：7个
+> - 减少行数：约465行
+> - 验证：所有合并均经过页面验证，零布局问题
+> 
+> **下一计划**：继续合并剩余重复较多的选择器（.top-status-bar等）
+> 
+> ---
+> 
 > ### 🔄 2026-06-24 - CSS结构优化（第四轮 - .widget选择器大规模合并）
 > **阶段目标**：合并.widget的所有重复定义，采用"合并优先"策略，小步验证，确保安全
 > 
