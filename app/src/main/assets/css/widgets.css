@@ -1118,56 +1118,6 @@
     transform-style: preserve-3d;
 }
 /* 天气图标3D底座 */
-.weather-icon::before {
-    content: '';
-    position: absolute;
-    inset: -6px;
-    background: 
-        radial-gradient(circle,
-            rgba(100, 200, 255, 0.15) 0%,
-            transparent 70%);
-    border-radius: 50%;
-    opacity: 0;
-    transition: all 0.4s ease;
-    pointer-events: none;
-}
-/* 天气图标发光光晕 */
-.weather-icon::after {
-    content: '';
-    position: absolute;
-    inset: -12px;
-    background: radial-gradient(circle,
-        rgba(100, 200, 255, 0.35) 0%,
-        rgba(var(--primary-color-rgb), 0.15) 50%,
-        transparent 75%);
-    opacity: 0;
-    border-radius: 50%;
-    transition: all 0.4s ease;
-    pointer-events: none;
-}
-.weather-widget:hover .weather-icon {
-    transform: scale(1.22) translateY(-8px) rotateY(12deg) rotateX(-4deg);
-    filter: 
-        drop-shadow(0 12px 32px rgba(0, 0, 0, 0.5))
-        drop-shadow(0 0 40px rgba(100, 200, 255, 0.3));
-}
-.weather-widget:hover .weather-icon::before {
-    opacity: 1;
-    animation: weatherIconBase 2s ease-in-out infinite;
-}
-.weather-widget:hover .weather-icon::after {
-    opacity: 1;
-    animation: weatherIconGlow 2.5s ease-in-out infinite;
-}
-@keyframes weatherIconBase {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.15); opacity: 0.8; }
-}
-@keyframes weatherIconGlow {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.2); }
-}
-/* ========== 天气信息区域 ========== */
 .weather-info {
     margin-left: 0;
     flex: 1;
@@ -3385,25 +3335,6 @@
     transform: translateY(-2px);
 }
 /* 天气图标优化 - 已合并到主定义 */
-.weather-icon::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150%;
-    height: 150%;
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.1) 0%,
-        transparent 70%
-    );
-    opacity: 0;
-    transition: opacity var(--transition-normal);
-    pointer-events: none;
-}
-.weather-widget:hover .weather-icon::after {
-    opacity: 1;
 }
 /* 状态栏图标优化 */
 .network-status-icon,
@@ -4747,67 +4678,6 @@
 /* ========== 天气图标 - 终极3D增强 - 已合并到主定义 ========== */
 
 /* 天气图标3D底座光晕 */
-.weather-icon::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    background: 
-        radial-gradient(circle,
-            rgba(100, 210, 255, 0.2) 0%,
-            rgba(var(--primary-color-rgb), 0.08) 50%,
-            transparent 75%);
-    border-radius: 50%;
-    opacity: 0;
-    transition: all 0.5s ease;
-    pointer-events: none;
-}
-
-/* 天气图标终极发光光晕 */
-.weather-icon::after {
-    content: '';
-    position: absolute;
-    inset: -16px;
-    background: 
-        radial-gradient(circle,
-            rgba(100, 210, 255, 0.45) 0%,
-            rgba(var(--primary-color-rgb), 0.2) 40%,
-            transparent 70%);
-    opacity: 0;
-    border-radius: 50%;
-    transition: all 0.5s ease;
-    pointer-events: none;
-    animation: weatherIconPulse 3s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-@keyframes weatherIconPulse {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.15); opacity: 0.8; }
-}
-
-.weather-widget:hover .weather-icon {
-    transform: scale(1.28) translateY(-10px) rotateY(15deg) rotateX(-5deg);
-    filter: 
-        drop-shadow(0 16px 40px rgba(0, 0, 0, 0.55))
-        drop-shadow(0 0 50px rgba(100, 210, 255, 0.4));
-}
-
-.weather-widget:hover .weather-icon::before {
-    opacity: 1;
-    animation: weatherIconBase 1.8s ease-in-out infinite;
-}
-
-.weather-widget:hover .weather-icon::after {
-    opacity: 1;
-    animation-play-state: running;
-}
-
-@keyframes weatherIconBase {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    50% { transform: scale(1.2); opacity: 0.9; }
-}
-
-/* 温度数字终极发光光晕 */
 .temperature::before {
     content: attr(data-temp);
     position: absolute;
