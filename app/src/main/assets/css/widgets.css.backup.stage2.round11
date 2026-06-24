@@ -115,19 +115,8 @@
     text-shadow: 0 0 12px rgba(255, 215, 64, 0.5);
 }
 .door-indicator {
-    position: relative;
-    color: #ff5252;
+    color: var(--error-color);
     font-size: var(--font-size-sm);
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 10px;
-    background:
-        radial-gradient(circle at 50% 30%,
-            rgba(255, 82, 82, 0.25) 0%,
-            transparent 70%),
-        rgba(255, 82, 82, 0.1);
-    border: 1px solid rgba(255, 82, 82, 0.5);
-    animation: doorWarningPulse 1s ease-in-out infinite;
 }
 .turn-indicator {
     font-size: var(--font-size-sm);
@@ -157,15 +146,14 @@
 .network-status-icon,
 .bluetooth-status-icon,
 .network-5g-icon {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.85;
-    filter: brightness(1.15) contrast(1.1) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
-    transition: all 0.3s var(--easing-elastic);
-    position: relative;
+    opacity: 0.75;
+    filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    transition: all var(--transition-fast);
 }
 .network-status-icon:first-child,
 .bluetooth-status-icon:first-child,
@@ -523,8 +511,6 @@
             rgba(255, 255, 255, 0.03) 50%, 
             rgba(0, 0, 0, 0.08) 100%),
         var(--surface-color);
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
     border-radius: 16px;
     padding: 14px 12px;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -535,7 +521,6 @@
     position: relative;
     overflow: hidden;
     transform-style: preserve-3d;
-    perspective: 1000px;
     box-shadow: 
         0 8px 28px rgba(0, 0, 0, 0.35),
         0 3px 10px rgba(0, 0, 0, 0.25),
@@ -702,29 +687,6 @@
     position: relative;
     perspective: 800px;
     transform-style: preserve-3d;
-    overflow: hidden;
-    background: 
-        radial-gradient(ellipse at 20% 10%, 
-            rgba(var(--primary-color-rgb), 0.12) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 80% 90%, 
-            rgba(var(--secondary-color-rgb), 0.08) 0%, 
-            transparent 50%),
-        linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.09) 0%, 
-            rgba(255, 255, 255, 0.04) 40%, 
-            rgba(0, 0, 0, 0.15) 100%),
-        var(--bg-card);
-    backdrop-filter: blur(30px) saturate(190%);
-    -webkit-backdrop-filter: blur(30px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.11);
-    box-shadow: 
-        0 16px 48px rgba(0, 0, 0, 0.45),
-        0 6px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-    animation: switchesFloat 5.5s ease-in-out infinite;
-    animation-play-state: paused;
 }
 /* 快捷开关Widget渐变背景氛围光 */
 .quick-switches-widget::before {
@@ -962,14 +924,12 @@
     border-color: rgba(255, 255, 255, 0.25);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-    .quick-switch-name {
-        font-size: 11.5px;
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 500;
-        letter-spacing: 0.3px;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-        transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+.quick-switch-name {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    text-shadow: none;
+    transition: color var(--transition-fast);
 }
 .quick-switch-item.active .quick-switch-name {
     color: var(--primary-color);
@@ -1013,41 +973,38 @@
     animation-play-state: paused;
 }
 /* 天气Widget渐变发光边框 */
-/* 天气Widget三径向渐变氛围光（已合并增强版） */
+/* 天气Widget双径向渐变氛围光 */
 .weather-widget::after {
     content: '';
     position: absolute;
     inset: 0;
     background: 
-        radial-gradient(ellipse at 20% 10%, 
-            rgba(100, 210, 255, 0.15) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 80% 90%, 
-            rgba(255, 190, 110, 0.12) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 50% 50%, 
-            rgba(var(--primary-color-rgb), 0.06) 0%, 
-            transparent 60%);
+        radial-gradient(ellipse at 25% 15%, 
+            rgba(100, 200, 255, 0.12) 0%, 
+            transparent 55%),
+        radial-gradient(ellipse at 75% 85%, 
+            rgba(255, 180, 100, 0.1) 0%, 
+            transparent 55%);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.5s ease;
     border-radius: 20px;
 }
-/* 增强版光泽扫过效果（已合并） */
+/* 光泽扫过效果 */
 .weather-widget .weather-shimmer {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
-    width: 75%;
+    width: 70%;
     height: 100%;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.1) 25%,
-        rgba(255, 255, 255, 0.18) 45%,
-        rgba(255, 255, 255, 0.12) 65%,
+        rgba(255, 255, 255, 0.08) 30%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 70%,
         transparent 100%);
-    transform: skewX(-18deg);
+    transform: skewX(-15deg);
     pointer-events: none;
     opacity: 0;
     z-index: 1;
@@ -1159,17 +1116,17 @@
 }
 /* ========== 温度数字 - 渐变发光终极效果 ========== */
 .temperature {
-    font-size: 58px;
-    font-weight: 100;
+    font-size: 56px;
+    font-weight: 200;
     line-height: 1;
-    letter-spacing: -2.5px;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    letter-spacing: -2px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     background: linear-gradient(135deg, 
         #ffffff 0%, 
-        #e0f0ff 20%,
-        #c8e6ff 45%, 
-        #fff0d8 70%,
+        #e6f3ff 25%,
+        #d4ecff 50%, 
+        #fff5e6 75%,
         #ffffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -2387,19 +2344,22 @@
 /* 唱针 - 3D光影追踪 */
 .tonearm {
     position: absolute;
-    top: -5px;
-    right: 8px;
-    width: 4px;
-    height: 35px;
-    background-color: #ccc;
-    border-radius: 2px;
-    transform-origin: top center;
+    top: -8px;
+    right: -12px;
+    width: 40px;
+    height: 50px;
+    background: linear-gradient(135deg,
+        #4a4a5a 0%,
+        #2a2a35 50%,
+        #1a1a1f 100%);
+    transform-origin: top right;
     transform: rotate(-30deg);
+    border-radius: 2px 2px 4px 4px;
     box-shadow: 
         2px 4px 12px rgba(0, 0, 0, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 10;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 3;
 }
 /* 唱针播放时落下 */
 .tonearm.playing {
@@ -2409,13 +2369,16 @@
 .tonearm::before {
     content: '';
     position: absolute;
-    top: -3px;
+    bottom: -4px;
     left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 10px;
-    background-color: #999;
-    border-radius: 50%;
+    width: 8px;
+    height: 12px;
+    margin-left: -4px;
+    background: linear-gradient(180deg,
+        #6a6a7a 0%,
+        #3a3a4a 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 /* 唱针针尖 */
 .tonearm::after {
@@ -2812,8 +2775,167 @@
     z-index: 2;
     box-shadow: inset 0 -2px 0 0 rgba(255, 255, 255, 0.3);
 }
-
+/* 唱针 */
+.tonearm {
+    position: absolute;
+    top: -5px;
+    right: 8px;
+    width: 4px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: 2px;
+    transform-origin: top center;
+    transform: rotate(-30deg);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+}
+.tonearm::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: #999;
+    border-radius: 50%;
+}
 /* 音乐控制区 */
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+.music-header {
+    margin-bottom: 4px;
+}
+.music-name {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all var(--transition-fast);
+}
+.music-widget:hover .music-name {
+    text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
+}
+/* 进度条 */
+.music-progress-container {
+    display: flex;
+    align-items: center;
+    padding: 4px 0;
+    gap: var(--spacing-sm);
+}
+.music-current-time,
+.music-total-time {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+    min-width: 36px;
+}
+.music-current-time {
+    margin-right: var(--spacing-sm);
+}
+.music-total-time {
+    margin-left: var(--spacing-sm);
+}
+.music-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--surface-color);
+    border-radius: var(--radius-full);
+    overflow: visible;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+.music-progress-bar:hover {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+}
+.music-progress-filled {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: var(--radius-full);
+    transition: width 0.1s linear;
+    position: relative;
+}
+.music-progress-filled::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -4px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 10px rgba(var(--primary-color-rgb), 0.5);
+    opacity: 0;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.music-progress-bar:hover .music-progress-filled::after {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2);
+}
+/* 控制按钮 */
+}
+.control-buttons button:hover::before {
+    opacity: 1;
+}
+.control-buttons button:last-child {
+    margin-right: 0;
+}
+.control-buttons button:hover {
+    background: var(--surface-hover);
+    transform: scale(1.1);
+    border-color: var(--border-color);
+    opacity: 1;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35),
+                0 0 12px rgba(var(--primary-color-rgb), 0.2);
+}
+.control-buttons button:active {
+    background: var(--surface-active);
+    transform: scale(0.93);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.control-buttons button img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+    transition: all var(--transition-fast);
+}
+.control-buttons button:hover img {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(var(--primary-color-rgb), 0.5));
+}
+.control-buttons .btn-play {
+    width: 48px;
+    height: 48px;
+    background: var(--accent-gradient);
+    border: none;
+    box-shadow: 0 4px 16px rgba(var(--primary-color-rgb), 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.control-buttons .btn-play:hover {
+    transform: scale(1.12);
+    box-shadow: 0 8px 24px rgba(var(--primary-color-rgb), 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 0 20px rgba(var(--primary-color-rgb), 0.3);
+}
+.control-buttons .btn-play:active {
+    transform: scale(0.95);
+}
+.control-buttons .btn-play img {
+    width: 22px;
+    height: 22px;
+    opacity: 1;
+    filter: brightness(0) invert(1);
+}
 /* ========== 地图导航组件 ========== */
 .map-widget {
     min-width: 240px;
@@ -2853,6 +2975,130 @@
     transform: scale(1.05);
     filter: blur(0);
 }
+.nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--surface-color);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid var(--border-light);
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+/* 导航按钮光泽效果 */
+.nav-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        transparent 100%);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+.nav-button:hover::before {
+    left: 100%;
+}
+/* 导航按钮点击波纹 */
+.nav-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(100, 200, 100, 0.4);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+}
+.nav-button:active::after {
+    animation: navRipple 0.4s ease-out;
+}
+@keyframes navRipple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.6;
+    }
+    100% {
+        width: 150%;
+        height: 150%;
+        opacity: 0;
+    }
+}
+.nav-button:hover {
+    background: var(--surface-hover);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(100, 200, 100, 0.2),
+                0 0 20px rgba(100, 200, 100, 0.15);
+    border-color: rgba(100, 200, 100, 0.35);
+}
+.nav-button:active {
+    transform: translateY(0) scale(0.96);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.nav-icon {
+    width: 36px;
+    height: 36px;
+    opacity: 0.9;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+/* 导航图标发光效果 */
+.nav-icon::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: radial-gradient(circle,
+        rgba(100, 200, 100, 0.3) 0%,
+        transparent 70%);
+    opacity: 0;
+    border-radius: 50%;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+.nav-button:hover .nav-icon {
+    transform: scale(1.15) translateY(-3px);
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+}
+.nav-button:hover .nav-icon::after {
+    opacity: 1;
+    animation: navGlow 2s ease-in-out infinite;
+}
+@keyframes navGlow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+.nav-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    margin-top: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+.nav-button:hover .nav-text {
+    color: var(--text-primary);
+    text-shadow: 0 0 10px rgba(100, 200, 100, 0.3);
+    transform: scale(1.05);
+}
+/* ========== 底部 Dock 栏 ========== */
 .status-bar {
     position: absolute;
     bottom: 0;
@@ -3523,6 +3769,21 @@
    桌面小组件数据加载时的占位动画
    ============================================ */
 /* 骨架屏基础样式 */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
 /* 天气组件骨架屏 */
 .weather-skeleton {
     display: flex;
@@ -4322,38 +4583,23 @@
 
 /* ========== Dock栏按钮 - 弹性动效增强 ========== */
 .dock-btn {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: 
-        linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.1) 0%, 
-            rgba(255, 255, 255, 0.03) 50%, 
-            rgba(0, 0, 0, 0.1) 100%),
-        rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 22px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        rgba(0, 0, 0, 0.06) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
     cursor: pointer;
-    transition:
-        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-        background 0.35s ease,
-        border-color 0.35s ease,
-        z-index 0s linear 0.05s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
-    transform-style: preserve-3d;
-    perspective: 800px;
-    transform-origin: center bottom;
-    will-change: transform;
-    box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 /* 按钮光泽扫过 */
@@ -4576,6 +4822,24 @@
 }
 
 /* 快速启动应用卡片3D增强 */
+.quick-app-item {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 50%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 14px 10px;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
 /* 应用卡片顶部光泽边缘 */
 .quick-app-item::before {
     content: '';
@@ -4721,9 +4985,47 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* 天气Widget终极渐变发光边框 */
+/* 天气Widget三径向渐变氛围光 */
+.weather-widget::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 20% 10%, 
+            rgba(100, 210, 255, 0.15) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 80% 90%, 
+            rgba(255, 190, 110, 0.12) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 50% 50%, 
+            rgba(var(--primary-color-rgb), 0.06) 0%, 
+            transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    border-radius: 20px;
+}
 
-
-
+/* 增强版光泽扫过效果 */
+.weather-widget .weather-shimmer {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.18) 45%,
+        rgba(255, 255, 255, 0.12) 65%,
+        transparent 100%);
+    transform: skewX(-18deg);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1;
+}
 
 /* 悬停终极3D透视效果 */
 .weather-widget:hover {
@@ -4826,6 +5128,28 @@
 @keyframes weatherIconBase {
     0%, 100% { transform: scale(1); opacity: 0.6; }
     50% { transform: scale(1.2); opacity: 0.9; }
+}
+
+/* ========== 温度数字 - 终极渐变发光效果 ========== */
+.temperature {
+    font-size: 58px;
+    font-weight: 100;
+    line-height: 1;
+    letter-spacing: -2.5px;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        #e0f0ff 20%,
+        #c8e6ff 45%, 
+        #fff0d8 70%,
+        #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-variant-numeric: tabular-nums;
+    transform-style: preserve-3d;
 }
 
 /* 温度数字终极发光光晕 */
@@ -5037,6 +5361,21 @@
    骨架屏占位、脉冲加载、渐变扫过、多状态加载动画
    ============================================ */
 /* ========== 骨架屏基础样式 ========== */
+.skeleton {
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%);
+    background-size: 200% 100%;
+    border-radius: var(--radius-md);
+    animation: skeletonShimmer 1.5s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
 /* 骨架屏变体 - 圆形 */
 .skeleton-circle {
     border-radius: 50%;
@@ -5567,11 +5906,8 @@
     z-index: var(--z-dock);
     pointer-events: auto;
     transform-style: preserve-3d;
-    perspective: 1200px;
+    perspective: 1000px;
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    --dock-icon-size: 52px;
-    --dock-icon-max-scale: 1.4;
-    --dock-icon-neighbor-scale: 1.2;
 }
 /* Dock栏渐变发光边框 - 遮罩技术 */
 .dock-bar::before {
@@ -5643,6 +5979,33 @@
     );
 }
 /* Dock按钮 - 终极3D视觉增强 */
+.dock-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.03) 50%, 
+            rgba(0, 0, 0, 0.1) 100%),
+        rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    perspective: 800px;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
 /* Dock按钮渐变边框 */
 .dock-btn::before {
     content: '';
@@ -6289,6 +6652,30 @@
    【第48轮UI美化 - 优化点1】快捷开关Widget视觉终极美化
    3D透视效果、渐变发光边框、弹性悬停动效、波纹点击反馈
    ============================================ */
+/* 快捷开关Widget容器终极增强 */
+.quick-switches-widget {
+    background: 
+        radial-gradient(ellipse at 20% 10%, 
+            rgba(var(--primary-color-rgb), 0.12) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 80% 90%, 
+            rgba(var(--secondary-color-rgb), 0.08) 0%, 
+            transparent 50%),
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.09) 0%, 
+            rgba(255, 255, 255, 0.04) 40%, 
+            rgba(0, 0, 0, 0.15) 100%),
+        var(--bg-card);
+    backdrop-filter: blur(30px) saturate(190%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.45),
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
 /* 快捷开关Widget终极渐变发光边框 */
 .quick-switches-widget::before {
     content: '';
@@ -6362,6 +6749,11 @@
 }
 
 /* 快捷开关呼吸浮动动画 */
+.quick-switches-widget {
+    animation: switchesFloat 5.5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
 .quick-switches-widget:hover {
     animation-play-state: running;
 }
@@ -6448,6 +6840,13 @@
             inset 0 0 16px rgba(var(--primary-color-rgb), 0.2);
     }
 }
+
+/* 快捷开关名称文字渐变 */
+.quick-switch-name {
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .quick-switch-item:hover .quick-switch-name {
@@ -6477,6 +6876,11 @@
    粒子光效、鼠标跟随3D视差、多层次发光、状态切换动画
    ============================================ */
 /* 快捷开关面板粒子光效背景 */
+.quick-switches-widget {
+    position: relative;
+    overflow: hidden;
+}
+
 .quick-switches-widget .particle-glow {
     position: absolute;
     width: 200px;
@@ -6927,6 +7331,19 @@
 }
 
 /* 车门指示器警告效果 */
+.door-indicator {
+    position: relative;
+    color: #ff5252;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background:
+        radial-gradient(circle,
+            rgba(255, 82, 82, 0.3) 0%,
+            transparent 70%);
+    animation: doorWarningPulse 1.2s ease-in-out infinite;
+}
+
 .door-indicator::before {
     content: '';
     position: absolute;
@@ -7142,6 +7559,10 @@
 }
 
 /* 温度数字粒子光晕 */
+.temperature {
+    position: relative;
+}
+
 .temperature::after {
     content: '';
     position: absolute;
@@ -7238,6 +7659,10 @@
 }
 
 /* 图标悬浮轨迹效果 - 邻近图标放大 */
+.dock-bar {
+    perspective: 1200px;
+}
+
 .dock-bar:hover .dock-btn {
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -7463,6 +7888,14 @@
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
+
+/* 对比度优化 - 确保文字可读性 */
+.quick-switch-name {
+    /* 确保文字对比度至少 4.5:1 (WCAG AA) */
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 .quick-switch-item.active .quick-switch-name {
     color: #ffffff;
     font-weight: 500;
@@ -7657,6 +8090,19 @@
 }
 
 /* 车门警告指示器增强 */
+.door-indicator {
+    position: relative;
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(255, 82, 82, 0.25) 0%,
+            transparent 70%),
+        rgba(255, 82, 82, 0.1);
+    border-radius: 10px;
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 82, 82, 0.5);
+    animation: doorWarningPulse 1s ease-in-out infinite;
+}
+
 @keyframes doorWarningPulse {
     0%, 100% {
         box-shadow:
@@ -7678,6 +8124,19 @@
    【第54轮UI美化 - 优化点3】Dock栏邻近图标放大效应
    macOS Dock风格：鼠标悬停时，当前图标及其邻近图标按距离梯度放大
    ============================================ */
+
+/* Dock栏容器 - 启用邻近放大效果 */
+.dock-bar {
+    --dock-icon-size: 52px;
+    --dock-icon-max-scale: 1.4;
+    --dock-icon-neighbor-scale: 1.2;
+}
+
+/* Dock按钮基础 - 准备邻近放大 */
+.dock-btn {
+    transform-origin: center bottom;
+    will-change: transform;
+}
 
 /* ============================================
    邻近放大核心逻辑 - CSS实现macOS Dock效果
@@ -7770,6 +8229,15 @@
 /* ============================================
    邻近放大过渡动画 - 弹性曲线
    ============================================ */
+
+.dock-btn {
+    transition:
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.35s ease,
+        border-color 0.35s ease,
+        z-index 0s linear 0.05s;
+}
 
 /* ============================================
    图标内容同步放大

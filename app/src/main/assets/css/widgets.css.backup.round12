@@ -115,19 +115,8 @@
     text-shadow: 0 0 12px rgba(255, 215, 64, 0.5);
 }
 .door-indicator {
-    position: relative;
-    color: #ff5252;
+    color: var(--error-color);
     font-size: var(--font-size-sm);
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 10px;
-    background:
-        radial-gradient(circle at 50% 30%,
-            rgba(255, 82, 82, 0.25) 0%,
-            transparent 70%),
-        rgba(255, 82, 82, 0.1);
-    border: 1px solid rgba(255, 82, 82, 0.5);
-    animation: doorWarningPulse 1s ease-in-out infinite;
 }
 .turn-indicator {
     font-size: var(--font-size-sm);
@@ -157,15 +146,14 @@
 .network-status-icon,
 .bluetooth-status-icon,
 .network-5g-icon {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.85;
-    filter: brightness(1.15) contrast(1.1) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
-    transition: all 0.3s var(--easing-elastic);
-    position: relative;
+    opacity: 0.75;
+    filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    transition: all var(--transition-fast);
 }
 .network-status-icon:first-child,
 .bluetooth-status-icon:first-child,
@@ -962,14 +950,12 @@
     border-color: rgba(255, 255, 255, 0.25);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-    .quick-switch-name {
-        font-size: 11.5px;
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 500;
-        letter-spacing: 0.3px;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-        transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+.quick-switch-name {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    text-shadow: none;
+    transition: color var(--transition-fast);
 }
 .quick-switch-item.active .quick-switch-name {
     color: var(--primary-color);
@@ -2387,19 +2373,22 @@
 /* 唱针 - 3D光影追踪 */
 .tonearm {
     position: absolute;
-    top: -5px;
-    right: 8px;
-    width: 4px;
-    height: 35px;
-    background-color: #ccc;
-    border-radius: 2px;
-    transform-origin: top center;
+    top: -8px;
+    right: -12px;
+    width: 40px;
+    height: 50px;
+    background: linear-gradient(135deg,
+        #4a4a5a 0%,
+        #2a2a35 50%,
+        #1a1a1f 100%);
+    transform-origin: top right;
     transform: rotate(-30deg);
+    border-radius: 2px 2px 4px 4px;
     box-shadow: 
         2px 4px 12px rgba(0, 0, 0, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 10;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 3;
 }
 /* 唱针播放时落下 */
 .tonearm.playing {
@@ -2409,13 +2398,16 @@
 .tonearm::before {
     content: '';
     position: absolute;
-    top: -3px;
+    bottom: -4px;
     left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 10px;
-    background-color: #999;
-    border-radius: 50%;
+    width: 8px;
+    height: 12px;
+    margin-left: -4px;
+    background: linear-gradient(180deg,
+        #6a6a7a 0%,
+        #3a3a4a 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 /* 唱针针尖 */
 .tonearm::after {
@@ -2812,7 +2804,31 @@
     z-index: 2;
     box-shadow: inset 0 -2px 0 0 rgba(255, 255, 255, 0.3);
 }
-
+/* 唱针 */
+.tonearm {
+    position: absolute;
+    top: -5px;
+    right: 8px;
+    width: 4px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: 2px;
+    transform-origin: top center;
+    transform: rotate(-30deg);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+}
+.tonearm::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: #999;
+    border-radius: 50%;
+}
 /* 音乐控制区 */
 /* ========== 地图导航组件 ========== */
 .map-widget {
@@ -3523,6 +3539,21 @@
    桌面小组件数据加载时的占位动画
    ============================================ */
 /* 骨架屏基础样式 */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
 /* 天气组件骨架屏 */
 .weather-skeleton {
     display: flex;
@@ -5037,6 +5068,21 @@
    骨架屏占位、脉冲加载、渐变扫过、多状态加载动画
    ============================================ */
 /* ========== 骨架屏基础样式 ========== */
+.skeleton {
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 75%);
+    background-size: 200% 100%;
+    border-radius: var(--radius-md);
+    animation: skeletonShimmer 1.5s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
 /* 骨架屏变体 - 圆形 */
 .skeleton-circle {
     border-radius: 50%;
@@ -5567,11 +5613,8 @@
     z-index: var(--z-dock);
     pointer-events: auto;
     transform-style: preserve-3d;
-    perspective: 1200px;
+    perspective: 1000px;
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    --dock-icon-size: 52px;
-    --dock-icon-max-scale: 1.4;
-    --dock-icon-neighbor-scale: 1.2;
 }
 /* Dock栏渐变发光边框 - 遮罩技术 */
 .dock-bar::before {
@@ -6448,6 +6491,13 @@
             inset 0 0 16px rgba(var(--primary-color-rgb), 0.2);
     }
 }
+
+/* 快捷开关名称文字渐变 */
+.quick-switch-name {
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .quick-switch-item:hover .quick-switch-name {
@@ -6927,6 +6977,19 @@
 }
 
 /* 车门指示器警告效果 */
+.door-indicator {
+    position: relative;
+    color: #ff5252;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background:
+        radial-gradient(circle,
+            rgba(255, 82, 82, 0.3) 0%,
+            transparent 70%);
+    animation: doorWarningPulse 1.2s ease-in-out infinite;
+}
+
 .door-indicator::before {
     content: '';
     position: absolute;
@@ -7238,6 +7301,10 @@
 }
 
 /* 图标悬浮轨迹效果 - 邻近图标放大 */
+.dock-bar {
+    perspective: 1200px;
+}
+
 .dock-bar:hover .dock-btn {
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -7463,6 +7530,14 @@
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
+
+/* 对比度优化 - 确保文字可读性 */
+.quick-switch-name {
+    /* 确保文字对比度至少 4.5:1 (WCAG AA) */
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 .quick-switch-item.active .quick-switch-name {
     color: #ffffff;
     font-weight: 500;
@@ -7657,6 +7732,19 @@
 }
 
 /* 车门警告指示器增强 */
+.door-indicator {
+    position: relative;
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(255, 82, 82, 0.25) 0%,
+            transparent 70%),
+        rgba(255, 82, 82, 0.1);
+    border-radius: 10px;
+    padding: 4px 10px;
+    border: 1px solid rgba(255, 82, 82, 0.5);
+    animation: doorWarningPulse 1s ease-in-out infinite;
+}
+
 @keyframes doorWarningPulse {
     0%, 100% {
         box-shadow:
@@ -7678,6 +7766,13 @@
    【第54轮UI美化 - 优化点3】Dock栏邻近图标放大效应
    macOS Dock风格：鼠标悬停时，当前图标及其邻近图标按距离梯度放大
    ============================================ */
+
+/* Dock栏容器 - 启用邻近放大效果 */
+.dock-bar {
+    --dock-icon-size: 52px;
+    --dock-icon-max-scale: 1.4;
+    --dock-icon-neighbor-scale: 1.2;
+}
 
 /* ============================================
    邻近放大核心逻辑 - CSS实现macOS Dock效果
