@@ -380,20 +380,10 @@
     backface-visibility: hidden;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    transform-style: preserve-3d;
-    perspective: 1200px;
     will-change: transform, box-shadow;
     background: var(--surface-color) !important;
     backdrop-filter: var(--blur-medium) !important;
-    -webkit-backdrop-filter: var(--blur-medium) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: var(--shadow-md) !important;
-    transition: all var(--transition-normal) !important;
-    position: relative !important;
-    overflow: hidden !important;
-    white-space: normal !important;
-    animation: widgetFloatEnhanced 5s ease-in-out infinite;
-    animation-play-state: paused;
+    color: var(--text-primary);
     -webkit-backdrop-filter: blur(25px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 
@@ -401,7 +391,6 @@
         0 4px 12px rgba(0, 0, 0, 0.25),
         inset 0 1px 0 rgba(255, 255, 255, 0.08),
         inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-    color: var(--text-primary);
     transition: 
         transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
         box-shadow 0.35s ease,
@@ -411,6 +400,9 @@
     overflow: hidden;
     transform-style: preserve-3d;
     perspective: 1000px;
+    white-space: normal !important;
+    animation: widgetFloatEnhanced 5s ease-in-out infinite;
+    animation-play-state: paused;
 }
 /* Widget卡片渐变发光边框 */
 .widget::before {
