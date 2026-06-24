@@ -185,7 +185,7 @@
 /* ========== 时间日期显示 - 【优化点1】终极视觉美化 ========== */
 .layout-left {
     position: absolute;
-    top: 38%;
+    top: 35% !important;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -507,9 +507,10 @@
     padding: var(--spacing-lg);
 }
 .quick-apps-container {
-    display: flex;
-    gap: var(--spacing-md);
-    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 4px;
     width: 100%;
     perspective: 800px;
 }
@@ -628,12 +629,13 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 /* 图标顶部高光 */
 .quick-app-icon::before {
@@ -680,7 +682,6 @@
 }
 .quick-app-name {
     font-size: 11px;
-    color: var(--text-secondary);
     font-weight: 500;
     max-width: 64px;
     white-space: nowrap;
@@ -688,7 +689,15 @@
     text-overflow: ellipsis;
     text-align: center;
     transition: all 0.3s ease;
-    letter-spacing: 0.3px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.8) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.2px;
 }
 .quick-app-item:hover .quick-app-name {
     color: var(--text-primary);
@@ -897,18 +906,25 @@
 }
 /* 点击3D按压反馈 */
 .quick-switch-item:active {
-    transform: translateY(-2px) scale(0.97) rotateX(-2deg);
+    transform: scale(0.92);
     box-shadow: 
         0 8px 20px rgba(0, 0, 0, 0.35),
         0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
         0 0 20px rgba(var(--primary-color-rgb), 0.2),
         inset 0 3px 8px rgba(0, 0, 0, 0.25);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.1s ease;
 }
 
 /* 状态切换弹性动画 */
 .quick-switch-item.active {
-    animation: switchPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: switchActiveBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes switchActiveBounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(0.92); }
+    50% { transform: scale(1.06); }
+    70% { transform: scale(0.98); }
+    100% { transform: scale(1); }
 }
 @keyframes switchPop {
     0% { transform: scale(0.95); }
@@ -1102,60 +1118,12 @@
     transform-style: preserve-3d;
 }
 /* 天气图标3D底座 */
-.weather-icon::before {
-    content: '';
-    position: absolute;
-    inset: -6px;
-    background: 
-        radial-gradient(circle,
-            rgba(100, 200, 255, 0.15) 0%,
-            transparent 70%);
-    border-radius: 50%;
-    opacity: 0;
-    transition: all 0.4s ease;
-    pointer-events: none;
-}
-/* 天气图标发光光晕 */
-.weather-icon::after {
-    content: '';
-    position: absolute;
-    inset: -12px;
-    background: radial-gradient(circle,
-        rgba(100, 200, 255, 0.35) 0%,
-        rgba(var(--primary-color-rgb), 0.15) 50%,
-        transparent 75%);
-    opacity: 0;
-    border-radius: 50%;
-    transition: all 0.4s ease;
-    pointer-events: none;
-}
-.weather-widget:hover .weather-icon {
-    transform: scale(1.22) translateY(-8px) rotateY(12deg) rotateX(-4deg);
-    filter: 
-        drop-shadow(0 12px 32px rgba(0, 0, 0, 0.5))
-        drop-shadow(0 0 40px rgba(100, 200, 255, 0.3));
-}
-.weather-widget:hover .weather-icon::before {
-    opacity: 1;
-    animation: weatherIconBase 2s ease-in-out infinite;
-}
-.weather-widget:hover .weather-icon::after {
-    opacity: 1;
-    animation: weatherIconGlow 2.5s ease-in-out infinite;
-}
-@keyframes weatherIconBase {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.15); opacity: 0.8; }
-}
-@keyframes weatherIconGlow {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.2); }
-}
-/* ========== 天气信息区域 ========== */
 .weather-info {
     margin-left: 0;
     flex: 1;
     transform-style: preserve-3d;
+    position: relative;
+    z-index: 2;
 }
 /* ========== 温度数字 - 渐变发光终极效果 ========== */
 .temperature {
@@ -1201,8 +1169,11 @@
 }
 /* 温度数字悬停3D增强 */
 .weather-widget:hover .temperature {
-    transform: scale(1.08) translateZ(15px);
-    text-shadow: 0 0 40px rgba(100, 200, 255, 0.3);
+    transform: scale(1.08) translateY(-2px);
+    text-shadow: 
+        0 0 80px rgba(135, 206, 250, 0.4),
+        0 0 60px rgba(255, 215, 0, 0.25),
+        0 12px 48px rgba(0, 0, 0, 0.55);
 }
 /* ========== 天气描述文字 - 渐变优化 ========== */
 .weather-desc {
@@ -1255,10 +1226,6 @@
 @keyframes tempGlow {
     0% { opacity: 0.2; filter: blur(8px); }
     100% { opacity: 0.5; filter: blur(16px); }
-}
-.weather-widget:hover .temperature {
-    transform: scale(1.08) translateZ(15px);
-    text-shadow: none;
 }
 .weather-widget:hover .temperature::before {
     opacity: 0.6;
@@ -3341,11 +3308,7 @@
     box-shadow: 0 0 16px rgba(var(--primary-color-rgb), 0.4),
                 inset 0 0 8px rgba(var(--primary-color-rgb), 0.1);
 }
-/* 应用图标优化 */
-.quick-app-icon {
-    position: relative;
-    transition: all var(--transition-normal);
-}
+/* 应用图标优化 - 已合并到主定义 */
 .quick-app-icon::before {
     content: '';
     position: absolute;
@@ -3372,25 +3335,6 @@
     transform: translateY(-2px);
 }
 /* 天气图标优化 - 已合并到主定义 */
-.weather-icon::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150%;
-    height: 150%;
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.1) 0%,
-        transparent 70%
-    );
-    opacity: 0;
-    transition: opacity var(--transition-normal);
-    pointer-events: none;
-}
-.weather-widget:hover .weather-icon::after {
-    opacity: 1;
 }
 /* 状态栏图标优化 */
 .network-status-icon,
@@ -4567,13 +4511,7 @@
    【第33轮优化点2】快速启动应用卡片视觉全面升级
    网格布局优化、图标3D效果、卡片深度、悬停发光动效
    ============================================ */
-/* 快速启动容器网格布局优化 */
-.quick-apps-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    padding: 4px;
-}
+/* 快速启动容器网格布局优化 - 已合并到主定义 */
 
 /* 快速启动应用卡片3D增强 */
 /* 应用卡片顶部光泽边缘 */
@@ -4615,20 +4553,7 @@
     transition: opacity 0.3s ease;
 }
 
-/* 应用图标3D视觉增强 */
-.quick-app-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.4),
-        0 2px 8px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transform-style: preserve-3d;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-}
+/* 应用图标3D视觉增强 - 已合并到主定义 */
 
 /* 图标顶部光泽效果 */
 .quick-app-icon::before {
@@ -4682,21 +4607,6 @@
         0 4px 12px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.25),
         0 0 30px rgba(var(--primary-color-rgb), 0.3);
-}
-
-/* 应用名称渐变文字 */
-.quick-app-name {
-    font-size: 11px;
-    font-weight: 500;
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.95) 0%,
-        rgba(255, 255, 255, 0.8) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.2px;
 }
 
 .quick-app-item:hover .quick-app-name {
@@ -4768,67 +4678,6 @@
 /* ========== 天气图标 - 终极3D增强 - 已合并到主定义 ========== */
 
 /* 天气图标3D底座光晕 */
-.weather-icon::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    background: 
-        radial-gradient(circle,
-            rgba(100, 210, 255, 0.2) 0%,
-            rgba(var(--primary-color-rgb), 0.08) 50%,
-            transparent 75%);
-    border-radius: 50%;
-    opacity: 0;
-    transition: all 0.5s ease;
-    pointer-events: none;
-}
-
-/* 天气图标终极发光光晕 */
-.weather-icon::after {
-    content: '';
-    position: absolute;
-    inset: -16px;
-    background: 
-        radial-gradient(circle,
-            rgba(100, 210, 255, 0.45) 0%,
-            rgba(var(--primary-color-rgb), 0.2) 40%,
-            transparent 70%);
-    opacity: 0;
-    border-radius: 50%;
-    transition: all 0.5s ease;
-    pointer-events: none;
-    animation: weatherIconPulse 3s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-@keyframes weatherIconPulse {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.15); opacity: 0.8; }
-}
-
-.weather-widget:hover .weather-icon {
-    transform: scale(1.28) translateY(-10px) rotateY(15deg) rotateX(-5deg);
-    filter: 
-        drop-shadow(0 16px 40px rgba(0, 0, 0, 0.55))
-        drop-shadow(0 0 50px rgba(100, 210, 255, 0.4));
-}
-
-.weather-widget:hover .weather-icon::before {
-    opacity: 1;
-    animation: weatherIconBase 1.8s ease-in-out infinite;
-}
-
-.weather-widget:hover .weather-icon::after {
-    opacity: 1;
-    animation-play-state: running;
-}
-
-@keyframes weatherIconBase {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    50% { transform: scale(1.2); opacity: 0.9; }
-}
-
-/* 温度数字终极发光光晕 */
 .temperature::before {
     content: attr(data-temp);
     position: absolute;
@@ -4850,9 +4699,6 @@
     100% { opacity: 0.6; filter: blur(20px); }
 }
 
-.weather-widget:hover .temperature {
-    transform: scale(1.1) translateZ(20px) rotateX(-2deg);
-}
 
 .weather-widget:hover .temperature::before {
     opacity: 0.7;
@@ -6027,13 +5873,6 @@
     transition: all 0.4s ease;
 }
 
-.weather-widget:hover .temperature {
-    transform: scale(1.08) translateY(-2px);
-    text-shadow: 
-        0 0 80px rgba(135, 206, 250, 0.4),
-        0 0 60px rgba(255, 215, 0, 0.25),
-        0 12px 48px rgba(0, 0, 0, 0.55);
-}
 
 .weather-widget:hover .temperature::before {
     opacity: 0.7;
@@ -6517,19 +6356,6 @@
     opacity: 1;
 }
 
-/* 快捷开关状态切换弹性动画 */
-.quick-switch-item.active {
-    animation: switchActiveBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes switchActiveBounce {
-    0% { transform: scale(1); }
-    30% { transform: scale(0.92); }
-    50% { transform: scale(1.06); }
-    70% { transform: scale(0.98); }
-    100% { transform: scale(1); }
-}
-
 /* 快捷开关取消激活动画 */
 .quick-switch-item:not(.active) {
     animation: switchInactiveShrink 0.3s ease-out;
@@ -6552,7 +6378,8 @@
     align-items: center;
     justify-content: center;
     padding: 14px 18px;
-    min-width: 70px;
+    min-width: 48px;
+    min-height: 48px;
     background: 
         linear-gradient(135deg,
             rgba(255, 255, 255, 0.1) 0%,
@@ -6570,6 +6397,8 @@
         0 2px 8px rgba(0, 0, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
     overflow: hidden;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* 导航按钮顶部高光 */
@@ -7135,12 +6964,6 @@
     100% { transform: rotate(360deg); }
 }
 
-/* 天气信息区域3D增强 */
-.weather-info {
-    position: relative;
-    z-index: 2;
-}
-
 /* 温度数字粒子光晕 */
 .temperature::after {
     content: '';
@@ -7396,12 +7219,6 @@
     .quick-switch-item {
         padding: 20px 16px;
     }
-}
-
-/* 触控反馈增强 - 移动端优化 */
-.quick-switch-item:active {
-    transform: scale(0.92);
-    transition: transform 0.1s ease;
 }
 
 /* 屏幕阅读器隐藏文本 - 视觉隐藏但可朗读 */
@@ -8191,12 +8008,6 @@
 .quick-app-item,
 .quick-switch-item,
 .dock-btn,
-.nav-button {
-    min-width: 48px;
-    min-height: 48px;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-}
 /* 触控目标间距优化 */
 .quick-apps-container,
 .quick-switches-container,
@@ -8425,6 +8236,7 @@
     height: 100% !important;
     z-index: var(--z-base) !important;
     pointer-events: none !important;
+    padding-bottom: 0 !important;
 }
 
 
@@ -8839,14 +8651,7 @@ footer.status-bar {
 }
 
 /* 确保主容器占满整个屏幕 */
-.main-container {
-    padding-bottom: 0 !important;
-}
 
-/* 调整左侧时间区域的位置 - 可以稍微往下移一点 */
-.layout-left {
-    top: 35% !important;
-}
 
 
 
