@@ -450,8 +450,11 @@
     overflow: hidden;
     transform-style: preserve-3d;
     box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        0 8px 28px rgba(0, 0, 0, 0.35),
+        0 3px 10px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 /* 快捷应用渐变边框发光 */
 .quick-app-item::before {
@@ -765,16 +768,21 @@
 .quick-switch-item:hover {
     background: 
         linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.12) 0%, 
-            rgba(255, 255, 255, 0.06) 50%, 
-            rgba(var(--primary-color-rgb), 0.06) 100%),
+            rgba(255, 255, 255, 0.15) 0%, 
+            rgba(255, 255, 255, 0.07) 50%, 
+            rgba(var(--primary-color-rgb), 0.08) 100%),
         var(--surface-hover);
-    transform: translateY(-6px) scale(1.05) rotateX(5deg);
+    transform: translateY(-8px) scale(1.06) rotateX(6deg) rotateY(-3deg);
+    border-color: rgba(var(--primary-color-rgb), 0.35);
     box-shadow: 
-        0 16px 40px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.1),
-        0 0 30px rgba(var(--primary-color-rgb), 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        0 20px 60px rgba(0, 0, 0, 0.48),
+        0 10px 30px rgba(0, 0, 0, 0.38),
+        0 3px 10px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(var(--primary-color-rgb), 0.28),
+        0 0 40px rgba(var(--primary-color-rgb), 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
     border-color: rgba(var(--primary-color-rgb), 0.3);
 }
 /* 点击3D按压反馈 */
@@ -2208,10 +2216,6 @@
     100% { left: 150%; }
 }
 /* 音乐Widget呼吸浮动动画 */
-.music-widget {
-    animation: musicFloat 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
 .music-widget:hover {
     animation-play-state: running;
 }
@@ -6966,21 +6970,6 @@
 }
 
 /* 快捷开关按钮悬停终极3D效果 */
-.quick-switch-item:hover {
-    transform: translateY(-8px) scale(1.08) rotateX(6deg);
-    background: 
-        linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.15) 0%, 
-            rgba(255, 255, 255, 0.07) 50%, 
-            rgba(var(--primary-color-rgb), 0.08) 100%),
-        var(--surface-hover);
-    border-color: rgba(var(--primary-color-rgb), 0.35);
-    box-shadow: 
-        0 16px 40px rgba(0, 0, 0, 0.45),
-        0 6px 16px rgba(0, 0, 0, 0.32),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.25),
-        0 0 40px rgba(var(--primary-color-rgb), 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .quick-switch-item:hover::before {
@@ -9067,15 +9056,6 @@
 /* ============================================
    快捷应用卡片终极光泽与阴影优化
    ============================================ */
-.quick-app-item {
-    box-shadow: 
-        0 8px 28px rgba(0, 0, 0, 0.35),
-        0 3px 10px rgba(0, 0, 0, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-.quick-app-item:hover {
     transform: translateY(-10px) scale(1.08) rotateX(8deg) rotateY(-4deg);
     box-shadow: 
         0 24px 72px rgba(0, 0, 0, 0.5),
@@ -9087,19 +9067,6 @@
         inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
 
-.quick-switch-item:hover {
-    transform: translateY(-8px) scale(1.06) rotateX(6deg) rotateY(-3deg);
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.48),
-        0 10px 30px rgba(0, 0, 0, 0.38),
-        0 3px 10px rgba(0, 0, 0, 0.28),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.28),
-        0 0 40px rgba(var(--primary-color-rgb), 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.12);
-}
-/* ============================================
-   【第57轮UI美化 - 优化点3】无障碍支持与响应式细节终极优化
    键盘焦点增强、触控目标优化、高对比度优化、屏幕阅读器支持
    ============================================ */
 /* 键盘焦点终极增强 - WCAG 2.1 AA标准 */
