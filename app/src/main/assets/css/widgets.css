@@ -9777,12 +9777,20 @@
 }
 
 
-/* 修复地图组件布局 - 恢复水平排列 */
+/* 地图组件主样式 - 合并所有重复定义 */
 .map-widget {
     flex-direction: row !important;
     justify-content: center !important;
     align-items: center !important;
-    gap: var(--spacing-xl) !important;
+    gap: 24px !important;
+    padding: 16px 24px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        var(--shadow-md),
+        0 0 30px rgba(var(--primary-color-rgb), 0.05),
+        inset 0 0 20px rgba(var(--primary-color-rgb), 0.02) !important;
+    border: 1px solid rgba(var(--primary-color-rgb), 0.1) !important;
 }
 
 
@@ -9833,11 +9841,7 @@
     display: none !important;
 }
 
-/* 地图组件装饰增强 */
-.map-widget {
-    position: relative !important;
-    overflow: hidden !important;
-}
+
 
 /* 地图组件背景装饰 - 路线图案 */
 .map-widget::before {
@@ -9922,11 +9926,7 @@
     opacity: 1;
 }
 
-/* 调整地图组件内边距，给标题留出空间 */
-.map-widget {
-    padding-top: 28px !important;
-    padding-bottom: 16px !important;
-}
+
 
 
 
@@ -9971,11 +9971,7 @@
     border-radius: 2px;
 }
 
-/* 调整地图组件内边距 */
-.map-widget {
-    padding: 28px 24px 20px 24px !important;
-    gap: 20px !important;
-}
+
 
 
 /* 地图组件增强装饰 - 添加地图纹理背景 */
@@ -10018,19 +10014,12 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* 调整地图组件内边距 */
-.map-widget {
-    padding: 32px 24px 20px 24px !important;
-    gap: 16px !important;
-}
 
 
 
 
-/* 给地图组件添加右侧装饰 */
-.map-widget {
-    position: relative !important;
-}
+
+
 
 /* 右侧装饰 - 定位图标 */
 .map-widget::before {
@@ -10066,18 +10055,10 @@
     transform: translateY(-4px) scale(1.03) !important;
 }
 
-/* 调整地图组件布局 */
-.map-widget {
-    padding: 40px 24px 20px 24px !important;
-    gap: 20px !important;
-    justify-content: center !important;
-}
 
 
-/* 地图组件四角装饰 */
-.map-widget {
-    position: relative !important;
-}
+
+
 
 /* 左上角装饰 */
 .map-widget .nav-button:first-child::before {
@@ -10107,14 +10088,7 @@
     opacity: 0.6;
 }
 
-/* 给地图组件添加发光边框 */
-.map-widget {
-    box-shadow: 
-        var(--shadow-md),
-        0 0 30px rgba(var(--primary-color-rgb), 0.05),
-        inset 0 0 20px rgba(var(--primary-color-rgb), 0.02) !important;
-    border: 1px solid rgba(var(--primary-color-rgb), 0.1) !important;
-}
+
 
 
 
@@ -10138,25 +10112,13 @@
     opacity: 0.5;
 }
 
-/* 调整地图组件布局 */
-.map-widget {
-    padding: 16px 24px 20px 24px !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-}
+
 
 /* 按钮容器 */
 
 
 
-/* 修复地图组件布局 - 恢复水平排列 */
-.map-widget {
-    flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 24px !important;
-    padding: 16px 24px !important;
-}
+
 
 
 

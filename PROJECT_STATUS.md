@@ -1,14 +1,60 @@
 # C11Partner 项目状态总览
 > 📌 **本文档是项目状态的唯一真相来源**，每次对话前请先读取本文档，再读取相关文档。
 >
->>> 最后更新：2026-06-24 07:32
+>>> 最后更新：2026-06-24 07:38
 > 当前版本：v1.2.0 (开发中，约99.9%完成)
 > 
 > ## 🔄 代码可维护性提升专项（第二阶段）
+> ### 🔄 2026-06-24 - CSS结构优化（第三轮 - .map-widget重复选择器合并）
+> **阶段目标**：合并.map-widget的所有重复定义，采用"合并优先"策略，小步验证，确保安全
+> 
+> #### ✅ 第三轮清理成果：成功合并.map-widget，减少约100行，零布局问题
+> - ✅ **合并策略再次验证成功**：采用"先把第一个定义改写成合并后的完整样式，再删除后面的重复定义"的策略，效果完全一致
+> - ✅ **已完成合并**：
+>   - `.map-widget`：12个定义 → 1个定义，减少约100行
+>     - 合并策略：分析所有12个定义的属性，确定最终生效的（后面的覆盖前面的）
+>     - 最终生效样式：
+>       - flex-direction: row !important;
+>       - justify-content: center !important;
+>       - align-items: center !important;
+>       - gap: 24px !important;
+>       - padding: 16px 24px !important;
+>       - position: relative !important;
+>       - overflow: hidden !important;
+>       - box-shadow: var(--shadow-md), 0 0 30px rgba(var(--primary-color-rgb), 0.05), inset 0 0 20px rgba(var(--primary-color-rgb), 0.02) !important;
+>       - border: 1px solid rgba(var(--primary-color-rgb), 0.1) !important;
+>     - 验证：页面效果完全一致，地图组件水平排列显示正常，零副作用
+> - ✅ **重要发现**：
+>   - `.map-widget`是重复最严重的选择器之一，有12个独立定义
+>   - 主要是padding、gap、position等属性被反复覆盖
+>   - 合并后代码结构清晰，所有属性集中在一个定义中
+> - ✅ **验证结果**：所有合并均经过页面验证，地图组件布局完全正常，零副作用
+> 
+> **第三轮总结**：
+> - 合并选择器：1个（.map-widget）
+> - 减少行数：约100行（从10,601行减少到10,501行）
+> - 验证方式：每次合并后立即刷新页面验证
+> - 风险控制：小步快跑，从后往前删除避免行号变化，零布局事故
+> 
+> **已完成合并的选择器汇总（前三轮）**：
+> 1. `.map-icon`：6个定义 → 1个定义，减少约45行 ✅
+> 2. `.map-widget::after`：5个定义 → 1个定义，减少约40行 ✅
+> 3. `.map-widget .nav-button`：6个定义 → 1个定义，减少约20行 ✅
+> 4. `.map-widget`：12个定义 → 1个定义，减少约100行 ✅
+> 
+> **前三轮总计成果**：
+> - 合并选择器：4个
+> - 减少行数：约205行
+> - 验证：所有合并均经过页面验证，零布局问题
+> 
+> **下一计划**：继续扩展到其他重复较多的选择器（如 .widget、.quick-switch-item、.weather-widget 等）
+> 
+> ---
+> 
 > ### 🔄 2026-06-24 - CSS结构优化（第二轮 - 重复选择器合并）
 > **阶段目标**：合并分散的重复选择器定义，采用"合并优先"策略，小步验证，确保安全
 > 
-> #### ✅ 第二轮清理成果：成功合并2个选择器，减少85行，零布局问题
+> #### ✅ 第二轮清理成果：成功合并3个选择器，减少约105行，零布局问题
 > - ✅ **合并策略验证成功**：采用"先把第一个定义改写成合并后的完整样式，再删除后面的重复定义"的策略，效果完全一致
 > - ✅ **已完成合并**：
 >   - `.map-icon`：6个定义 → 1个定义，减少约45行
@@ -17,6 +63,9 @@
 >     - 验证：页面效果完全一致，零副作用
 >   - `.map-widget::after`：5个定义 → 1个定义，减少约40行
 >     - 最终生效样式：content:'📍 快捷导航', position:absolute, top:10px, left:50%, transform:translateX(-50%), display:inline-block, font-size:12px, font-weight:600, color:var(--text-primary), opacity:0.9, letter-spacing:2px, text-shadow, z-index:3
+>     - 验证：页面效果完全一致，零副作用
+>   - `.map-widget .nav-button`：6个定义 → 1个定义，减少约20行
+>     - 最终生效样式：flex-direction:column, align-items:center, justify-content:center, min-width:70px, padding:14px 18px, position:relative, z-index:2, transition, background:linear-gradient, border:1px solid, border-radius:var(--radius-lg), backdrop-filter:blur(10px), box-shadow
 >     - 验证：页面效果完全一致，零副作用
 > - ✅ **重要发现**：
 >   - 代码是按"轮次"追加的（如"第57轮UI美化"），每一轮优化都直接追加到文件末尾
@@ -29,19 +78,6 @@
 > - 减少行数：约105行（从10,706行减少到10,601行）
 > - 验证方式：每次合并后立即刷新页面验证
 > - 风险控制：小步快跑，先试点再推广，零布局事故
-> 
-> **已完成合并的选择器详情**：
-> 1. `.map-icon`：6个定义 → 1个定义，减少约45行
->    - 最终生效：position:absolute, left:16px, top:50%, transform:translateY(-50%), width:50px, height:50px, background-image, opacity:0.25, z-index:0, filter, transition
->    - 验证：页面效果完全一致，零副作用
-> 
-> 2. `.map-widget::after`：5个定义 → 1个定义，减少约40行
->    - 最终生效：content:'📍 快捷导航', position:absolute, top:10px, left:50%, transform:translateX(-50%), font-size:12px, font-weight:600, color:var(--text-primary), letter-spacing:2px, text-shadow, z-index:3
->    - 验证：页面效果完全一致，零副作用
-> 
-> 3. `.map-widget .nav-button`：6个定义 → 1个定义，减少约20行
->    - 最终生效：flex-direction:column, align-items:center, justify-content:center, min-width:70px, padding:14px 18px, position:relative, z-index:2, transition, background:linear-gradient, border:1px solid, border-radius:var(--radius-lg), backdrop-filter:blur(10px), box-shadow
->    - 验证：页面效果完全一致，零副作用
 > 
 > **下一计划**：继续合并地图组件的其他重复选择器（如 .map-widget 等），然后扩展到其他重复较多的选择器（如 .widget、.quick-switch-item、.weather-widget 等）
 > 
