@@ -5,9 +5,10 @@
 
 /* ========== 设置弹窗 ========== */
 .settings-modal {
-    width: 720px;
-    max-width: 90vw;
-    max-height: 80vh;
+    width: 95%;
+    height: 95%;
+    max-width: 95%;
+    max-height: 95%;
 }
 
 .settings-content {
@@ -388,15 +389,17 @@
 
 /* ========== 应用列表弹窗 ========== */
 .apps-modal {
-    width: 800px;
-    max-width: 90vw;
-    max-height: 85vh;
+    width: 95%;
+    height: 95%;
+    max-width: 95%;
+    max-height: 95%;
 }
 
 .apps-modal-content {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    width: 95%;
+    height: 95%;
 }
 
 .apps-modal-header {

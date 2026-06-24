@@ -640,8 +640,10 @@
         0 1px 0 rgba(255, 255, 255, 0.1) inset;
     color: var(--text-primary);
     overflow: hidden;
-    max-width: 90%;
-    max-height: 85vh;
+    width: 95%;
+    height: 95%;
+    max-width: 95%;
+    max-height: 95%;
     min-width: 320px;
     display: flex;
     flex-direction: column;
