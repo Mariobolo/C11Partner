@@ -5455,27 +5455,6 @@
     box-shadow: 0 0 16px rgba(var(--primary-color-rgb), 0.2);
 }
 /* ========== 档位指示器3D视觉 ========== */
-.gear-indicator {
-    font-size: 20px;
-    font-weight: 800;
-    min-width: 44px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background: 
-        linear-gradient(135deg,
-            rgba(var(--primary-color-rgb), 0.15) 0%,
-            rgba(var(--primary-color-rgb), 0.05) 100%);
-    border: 1px solid rgba(var(--primary-color-rgb), 0.3);
-    box-shadow: 
-        0 0 20px rgba(var(--primary-color-rgb), 0.3),
-        0 1px 0 rgba(255, 255, 255, 0.1) inset;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s var(--easing-elastic);
-}
 .gear-indicator::before {
     content: '';
     position: absolute;
@@ -6198,6 +6177,7 @@
     position: relative;
     overflow: hidden;
     transform-style: preserve-3d;
+    perspective: 800px;
     box-shadow: 
         0 4px 12px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05),
@@ -7912,10 +7892,6 @@
    ============================================ */
 
 /* Dock栏图标3D容器 */
-.dock-btn {
-    transform-style: preserve-3d;
-    perspective: 800px;
-}
 
 /* 图标粒子光晕容器 */
 .dock-btn .icon-glow-container {
@@ -7998,9 +7974,6 @@
 }
 
 /* 3D悬浮轨迹 - 鼠标悬停时的邻近效应 */
-.dock-btn {
-    transform-origin: center bottom;
-}
 
 /* 粒子拖尾效果 */
 .dock-btn .particle-trail {
