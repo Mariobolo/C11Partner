@@ -293,31 +293,39 @@
    【优化点2】Widget卡片视觉细节全面优化
    3D深度增强、多层次光影、圆角优化、间距调整、呼吸动画
    ============================================ */
-/* ========== Widget 卡片基础样式 - 视觉增强版 ========== */
+/* ========== Widget 卡片基础样式 - 视觉增强版（已合并所有重复定义） ========== */
 .widget {
-    display: inline-flex;
+    display: inline-flex !important;
     flex-shrink: 0;
-    height: var(--widget-height);
+    flex-direction: column !important;
+    height: var(--widget-height) !important;
     min-height: var(--widget-height);
-    min-width: 180px;
+    min-width: 280px !important;
     align-items: center;
     justify-content: flex-start;
-    margin-right: 16px;
-    padding: 20px 24px;
+    margin-right: var(--spacing-lg) !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
     box-sizing: border-box;
-    border-radius: 20px;
-    vertical-align: middle;
+    border-radius: var(--radius-lg) !important;
+    vertical-align: top !important;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    background: 
-        linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.08) 0%, 
-            rgba(255, 255, 255, 0.03) 40%, 
-            rgba(0, 0, 0, 0.12) 100%),
-        var(--bg-card);
-    backdrop-filter: blur(25px) saturate(160%);
+    transform-style: preserve-3d;
+    perspective: 1200px;
+    will-change: transform, box-shadow;
+    background: var(--surface-color) !important;
+    backdrop-filter: var(--blur-medium) !important;
+    -webkit-backdrop-filter: var(--blur-medium) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-md) !important;
+    transition: all var(--transition-normal) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+    animation: widgetFloatEnhanced 5s ease-in-out infinite;
+    animation-play-state: paused;
     -webkit-backdrop-filter: blur(25px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 
@@ -380,10 +388,7 @@
     0% { left: -100%; }
     100% { left: 150%; }
 }
-/* 卡片渐变边框发光效果 */
-.widget {
-    position: relative;
-}
+
 .widget::before {
     content: '';
     position: absolute;
@@ -461,10 +466,7 @@
             inset 0 -1px 0 rgba(0, 0, 0, 0.2);
     }
 }
-.widget {
-    animation: widgetFloat 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
+
 .widget:hover {
     animation-play-state: running;
 }
@@ -3047,13 +3049,19 @@
 /* ========== 地图导航组件 ========== */
 .map-widget {
     min-width: 240px;
-    padding: var(--spacing-lg);
-    justify-content: center;
-    gap: var(--spacing-xl);
     display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 24px !important;
+    padding: 16px 24px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        var(--shadow-md),
+        0 0 30px rgba(var(--primary-color-rgb), 0.05),
+        inset 0 0 20px rgba(var(--primary-color-rgb), 0.02) !important;
+    border: 1px solid rgba(var(--primary-color-rgb), 0.1) !important;
 }
 /* 【优化点2】地图组件视觉增强 - 渐变背景+地图纹理 */
 .map-widget::before {
@@ -9166,28 +9174,8 @@
    【第57轮UI美化 - 优化点2】卡片组件光泽与阴影深度终极优化
    3D透视旋转、光泽扫过增强、内发光效果、渐变边框、多层阴影
    ============================================ */
-/* Widget卡片基础3D透视增强 */
-.widget {
-    transform-style: preserve-3d;
-    perspective: 1200px;
-    will-change: transform, box-shadow;
-}
-/* Widget卡片终极多层阴影系统 */
-.widget {
-    box-shadow: 
-        /* 最外层远距离柔和阴影 - 环境光遮蔽 */
-        0 24px 72px rgba(0, 0, 0, 0.35),
-        /* 中层阴影 - 主要投影 */
-        0 12px 36px rgba(0, 0, 0, 0.25),
-        /* 近层阴影 - 接触阴影 */
-        0 4px 12px rgba(0, 0, 0, 0.2),
-        /* 边框高光 */
-        0 0 0 1px rgba(255, 255, 255, 0.06),
-        /* 内发光 - 顶部 */
-        inset 0 2px 0 rgba(255, 255, 255, 0.12),
-        /* 内阴影 - 底部 */
-        inset 0 -2px 0 rgba(0, 0, 0, 0.18);
-}
+
+
 /* Widget卡片悬停终极3D透视效果 */
 .widget:hover {
     transform: 
@@ -9315,11 +9303,7 @@
             inset 0 0 40px rgba(var(--primary-color-rgb), 0.12);
     }
 }
-/* Widget卡片呼吸浮动动画 - 增强版 */
-.widget {
-    animation: widgetFloatEnhanced 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
+
 .widget:hover {
     animation-play-state: running;
 }
@@ -9734,26 +9718,7 @@
     margin: 0 !important;
 }
 
-/* 修复widget卡片基础样式 */
-.widget {
-    display: inline-flex !important;
-    flex-direction: column !important;
-    min-width: 280px !important;
-    height: var(--widget-height) !important;
-    margin-right: var(--spacing-lg) !important;
-    padding: var(--spacing-md) var(--spacing-lg) !important;
-    background: var(--surface-color) !important;
-    backdrop-filter: var(--blur-medium) !important;
-    -webkit-backdrop-filter: var(--blur-medium) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: var(--radius-lg) !important;
-    box-shadow: var(--shadow-md) !important;
-    vertical-align: top !important;
-    transition: all var(--transition-normal) !important;
-    position: relative !important;
-    overflow: hidden !important;
-    white-space: normal !important;
-}
+
 
 /* 修复时间日期显示位置 */
 .layout-left {
@@ -9777,21 +9742,7 @@
 }
 
 
-/* 地图组件主样式 - 合并所有重复定义 */
-.map-widget {
-    flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 24px !important;
-    padding: 16px 24px !important;
-    position: relative !important;
-    overflow: hidden !important;
-    box-shadow: 
-        var(--shadow-md),
-        0 0 30px rgba(var(--primary-color-rgb), 0.05),
-        inset 0 0 20px rgba(var(--primary-color-rgb), 0.02) !important;
-    border: 1px solid rgba(var(--primary-color-rgb), 0.1) !important;
-}
+
 
 
 
