@@ -2400,15 +2400,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 /* 悬停时唱片3D增强 */
-.music-widget:hover .vinyl-record {
-    transform: scale(1.1) rotateX(12deg) translateY(-4px);
-    box-shadow: 
-        0 16px 48px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 0 60px rgba(138, 43, 226, 0.35),
-        inset 0 2px 6px rgba(255, 255, 255, 0.15),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.5);
-}
+.music-widget:hover 
 /* 音乐控制区域 */
 .controls {
     flex: 1;
@@ -2675,30 +2667,7 @@
     filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 /* 【优化点1】黑胶唱片动效增强 - 平滑旋转+发光效果+纹理 */
-.vinyl-record {
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at center,
-            #2a2a2a 0%,
-            #1a1a1a 15%,
-            #0d0d0d 30%,
-            #1a1a1a 50%,
-            #0d0d0d 70%,
-            #1a1a1a 85%,
-            #0d0d0d 100%);
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-    animation: vinylSpin 2.8s linear infinite;
-    animation-play-state: paused;
-    box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.4),
-        inset 0 0 20px rgba(0, 0, 0, 0.8),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.05),
-        0 0 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+
 
 /* 唱片纹理增强 */
 .vinyl-record::before {
@@ -2731,14 +2700,7 @@
     pointer-events: none;
 }
 
-.music-widget:hover .vinyl-record {
-    box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.5),
-        inset 0 0 20px rgba(0, 0, 0, 0.8),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.08),
-        0 0 30px rgba(var(--primary-color-rgb), 0.15);
-    transform: scale(1.02);
-}
+.music-widget:hover 
 
 .vinyl-record.spinning {
     animation-play-state: running;
