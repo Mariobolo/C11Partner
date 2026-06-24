@@ -893,18 +893,30 @@
 }
 
 .quick-switch-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--surface-color);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-    margin-bottom: 6px;
-    font-size: 20px;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 20px;
+    border-radius: 12px;
+    margin-bottom: 8px;
     position: relative;
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-style: preserve-3d;
+    background: 
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%, 
+            rgba(255, 255, 255, 0.02) 50%, 
+            rgba(0, 0, 0, 0.1) 100%),
+        linear-gradient(135deg, 
+            rgba(var(--primary-color-rgb), 0.08) 0%, 
+            rgba(var(--secondary-color-rgb), 0.04) 100%);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     overflow: hidden;
 }
 .quick-switch-item:hover .quick-switch-icon {
@@ -3552,11 +3564,7 @@
         filter: drop-shadow(0 0 12px rgba(var(--primary-color-rgb), 0.5));
     }
 }
-/* 快捷开关图标优化 */
-.quick-switch-icon {
-    position: relative;
-    overflow: hidden;
-}
+/* 快捷开关图标优化 - 已合并到主定义 */
 .quick-switch-icon::before {
     content: '';
     position: absolute;
@@ -3609,11 +3617,7 @@
                 0 0 0 1px rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
 }
-/* 天气图标优化 */
-.weather-icon {
-    position: relative;
-    transition: all var(--transition-normal);
-}
+/* 天气图标优化 - 已合并到主定义 */
 .weather-icon::after {
     content: '';
     position: absolute;
@@ -5075,23 +5079,7 @@
     75% { transform: translateY(-2px) rotateX(-1deg); }
 }
 
-/* ========== 天气图标 - 终极3D增强 ========== */
-.weather-icon {
-    width: 76px;
-    height: 76px;
-    opacity: 1;
-    filter: 
-        drop-shadow(0 6px 20px rgba(0, 0, 0, 0.45))
-        drop-shadow(0 0 25px rgba(100, 210, 255, 0.2));
-    margin-right: 0;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    flex-shrink: 0;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    transform-style: preserve-3d;
-}
+/* ========== 天气图标 - 终极3D增强 - 已合并到主定义 ========== */
 
 /* 天气图标3D底座光晕 */
 .weather-icon::before {
@@ -6314,18 +6302,7 @@
     }
 }
 
-/* 天气图标3D视觉终极增强 */
-.weather-icon {
-    width: 64px;
-    height: 64px;
-    margin-right: 16px;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    filter: 
-        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35))
-        drop-shadow(0 0 20px rgba(135, 206, 250, 0.25));
-}
+/* 天气图标3D视觉终极增强 - 已合并到主定义 */
 
 /* 天气图标发光光晕 */
 .weather-icon::before {
@@ -6826,20 +6803,7 @@
     );
 }
 
-/* 快捷开关图标终极3D增强 */
-.quick-switch-icon {
-    width: 44px;
-    height: 44px;
-    background: 
-        linear-gradient(135deg,
-            rgba(255, 255, 255, 0.08) 0%,
-            rgba(0, 0, 0, 0.1) 100%),
-        var(--surface-color);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 
-        0 3px 10px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
+/* 快捷开关图标终极3D增强 - 已合并到主定义 */
 
 /* 快捷开关图标顶部高光 */
 .quick-switch-icon::after {
@@ -7953,14 +7917,7 @@
     font-weight: 500;
 }
 
-/* 图标对比度优化 */
-.quick-switch-icon {
-    filter: brightness(1.2) contrast(1.1);
-}
-
-.quick-switch-item.active .quick-switch-icon {
-    filter: brightness(1.4) contrast(1.2) drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.5));
-}
+/* 图标对比度优化 - 已合并到主定义 */
 
 /* 大字体模式支持 */
 @media (min-width: 120dpi) {
@@ -8374,34 +8331,7 @@
    【第55轮UI美化 - 优化点1】快捷开关面板图标视觉细节终极增强
    图标3D深度、粒子发光、渐变填充、动态光晕
    ============================================ */
-/* 快捷开关图标容器3D增强 */
-.quick-switch-icon {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    border-radius: 12px;
-    margin-bottom: 8px;
-    position: relative;
-    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-style: preserve-3d;
-    background: 
-        linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.1) 0%, 
-            rgba(255, 255, 255, 0.02) 50%, 
-            rgba(0, 0, 0, 0.1) 100%),
-        linear-gradient(135deg, 
-            rgba(var(--primary-color-rgb), 0.08) 0%, 
-            rgba(var(--secondary-color-rgb), 0.04) 100%);
-    box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    overflow: hidden;
-}
+/* 快捷开关图标容器3D增强 - 已合并到主定义 */
 
 /* 图标3D顶部高光层 */
 .quick-switch-icon::before {
