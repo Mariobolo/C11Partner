@@ -999,38 +999,41 @@
     animation-play-state: paused;
 }
 /* 天气Widget渐变发光边框 */
-/* 天气Widget双径向渐变氛围光 */
+/* 天气Widget三径向渐变氛围光（已合并增强版） */
 .weather-widget::after {
     content: '';
     position: absolute;
     inset: 0;
     background: 
-        radial-gradient(ellipse at 25% 15%, 
-            rgba(100, 200, 255, 0.12) 0%, 
-            transparent 55%),
-        radial-gradient(ellipse at 75% 85%, 
-            rgba(255, 180, 100, 0.1) 0%, 
-            transparent 55%);
+        radial-gradient(ellipse at 20% 10%, 
+            rgba(100, 210, 255, 0.15) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 80% 90%, 
+            rgba(255, 190, 110, 0.12) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 50% 50%, 
+            rgba(var(--primary-color-rgb), 0.06) 0%, 
+            transparent 60%);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease;
     border-radius: 20px;
 }
-/* 光泽扫过效果 */
+/* 增强版光泽扫过效果（已合并） */
 .weather-widget .weather-shimmer {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
-    width: 70%;
+    width: 75%;
     height: 100%;
     background: linear-gradient(90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.08) 30%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.08) 70%,
+        rgba(255, 255, 255, 0.1) 25%,
+        rgba(255, 255, 255, 0.18) 45%,
+        rgba(255, 255, 255, 0.12) 65%,
         transparent 100%);
-    transform: skewX(-15deg);
+    transform: skewX(-18deg);
     pointer-events: none;
     opacity: 0;
     z-index: 1;
@@ -5008,47 +5011,9 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* 天气Widget终极渐变发光边框 */
-/* 天气Widget三径向渐变氛围光 */
-.weather-widget::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-        radial-gradient(ellipse at 20% 10%, 
-            rgba(100, 210, 255, 0.15) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 80% 90%, 
-            rgba(255, 190, 110, 0.12) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 50% 50%, 
-            rgba(var(--primary-color-rgb), 0.06) 0%, 
-            transparent 60%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    border-radius: 20px;
-}
 
-/* 增强版光泽扫过效果 */
-.weather-widget .weather-shimmer {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 75%;
-    height: 100%;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.1) 25%,
-        rgba(255, 255, 255, 0.18) 45%,
-        rgba(255, 255, 255, 0.12) 65%,
-        transparent 100%);
-    transform: skewX(-18deg);
-    pointer-events: none;
-    opacity: 0;
-    z-index: 1;
-}
+
+
 
 /* 悬停终极3D透视效果 */
 .weather-widget:hover {
