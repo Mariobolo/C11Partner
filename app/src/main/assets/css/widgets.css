@@ -318,7 +318,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    padding: var(--spacing-sm) 0;
+    padding: var(--spacing-sm) 0 10px 0;
     margin: 0;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none !important;
@@ -1383,14 +1383,6 @@
 /* ========== 网络/蓝牙图标终极美化 ========== */
 .network-status-icon,
 .bluetooth-status-icon,
-.network-5g-icon {
-    width: 26px;
-    height: 26px;
-    opacity: 0.85;
-    filter: brightness(1.15) contrast(1.1) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
-    transition: all 0.3s var(--easing-elastic);
-    position: relative;
-}
 .network-status-icon::after,
 .bluetooth-status-icon::after {
     content: '';
@@ -3300,8 +3292,7 @@
 }
 /* 状态栏图标优化 */
 .network-status-icon,
-.bluetooth-status-icon,
-.network-5g-icon {
+.bluetooth-status-icon {
     position: relative;
     transition: all var(--transition-fast);
 }
@@ -4803,14 +4794,6 @@
 /* ========== 网络/蓝牙图标终极美化 ========== */
 .network-status-icon,
 .bluetooth-status-icon,
-.network-5g-icon {
-    width: 26px;
-    height: 26px;
-    opacity: 0.85;
-    filter: brightness(1.15) contrast(1.1) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
-    transition: all 0.3s var(--easing-elastic);
-    position: relative;
-}
 .network-status-icon::after,
 .bluetooth-status-icon::after {
     content: '';
@@ -4842,132 +4825,6 @@
 }
 /* ============================================
    【第41轮优化点2】加载状态与骨架屏动画系统
-   骨架屏占位、脉冲加载、渐变扫过、多状态加载动画
-   ============================================ */
-/* ========== 骨架屏基础样式 ========== */
-/* 骨架屏变体 - 圆形 */
-.skeleton-circle {
-    border-radius: 50%;
-}
-/* 骨架屏变体 - 文本行 */
-.skeleton-text {
-    height: 14px;
-    margin-bottom: 10px;
-}
-.skeleton-text:last-child {
-    margin-bottom: 0;
-    width: 60%;
-}
-/* 骨架屏变体 - 卡片 */
-.skeleton-card {
-    height: 110px;
-    border-radius: var(--radius-xl);
-}
-/* 骨架屏变体 - 头像/图标 */
-.skeleton-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-}
-/* ========== 脉冲加载动画 ========== */
-.loading-pulse {
-    animation: loadingPulse 1.5s ease-in-out infinite;
-}
-@keyframes loadingPulse {
-    0%, 100% { 
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% { 
-        opacity: 0.5;
-        transform: scale(0.98);
-    }
-}
-/* ========== 呼吸加载动画 ========== */
-.loading-breathe {
-    animation: loadingBreathe 2s ease-in-out infinite;
-}
-@keyframes loadingBreathe {
-    0%, 100% { 
-        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.4);
-    }
-    50% { 
-        box-shadow: 0 0 0 10px rgba(var(--primary-color-rgb), 0);
-    }
-}
-/* ========== 旋转加载动画 ========== */
-.loading-spinner {
-    width: 24px;
-    height: 24px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-top-color: var(--primary-color);
-    border-radius: 50%;
-    animation: loadingSpin 0.8s linear infinite;
-}
-@keyframes loadingSpin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-/* 加载器尺寸变体 */
-.loading-spinner-sm {
-    width: 16px;
-    height: 16px;
-    border-width: 1.5px;
-}
-.loading-spinner-lg {
-    width: 32px;
-    height: 32px;
-    border-width: 3px;
-}
-/* ========== 渐入加载动画 ========== */
-.fade-in-loading {
-    animation: fadeInLoading 0.5s ease-out forwards;
-}
-@keyframes fadeInLoading {
-    0% { 
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    100% { 
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-/* 级联渐入 - 列表项 */
-.stagger-loading > * {
-    opacity: 0;
-    animation: staggerFadeIn 0.5s ease-out forwards;
-}
-.stagger-loading > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger-loading > *:nth-child(2) { animation-delay: 0.1s; }
-.stagger-loading > *:nth-child(3) { animation-delay: 0.15s; }
-.stagger-loading > *:nth-child(4) { animation-delay: 0.2s; }
-.stagger-loading > *:nth-child(5) { animation-delay: 0.25s; }
-@keyframes staggerFadeIn {
-    0% { 
-        opacity: 0;
-        transform: translateY(15px) scale(0.95);
-    }
-    100% { 
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-/* ========== 内容加载占位容器 ========== */
-.loading-container {
-    position: relative;
-    min-height: 40px;
-}
-.loading-container.loading::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(2px);
-    border-radius: inherit;
-    z-index: 10;
-}
-.loading-container.loading::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -8176,19 +8033,6 @@
 
 /* 修复左侧和右侧按钮组布局 */
 .left-buttons,
-.right-buttons {
-    display: flex !important;
-    align-items: center !important;
-    gap: var(--spacing-lg) !important;
-}
-
-/* 修复中间空调控制区布局 */
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    text-align: center !important;
-    width: auto !important;
-    padding: 0 !important;
-    pointer-events: auto !important;
 }
 
 /* 修复主容器 */
@@ -8608,8 +8452,6 @@ footer.status-bar {
 }
 
 /* 调整横向滚动容器 */
-.horizontal-scroll {
-    padding-bottom: 10px !important;
 }
 
 /* 确保主容器占满整个屏幕 */
