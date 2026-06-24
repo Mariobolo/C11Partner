@@ -9022,6 +9022,7 @@
 /* ============================================
    快捷应用卡片终极光泽与阴影优化
    ============================================ */
+.quick-app-item:hover {
     transform: translateY(-10px) scale(1.08) rotateX(8deg) rotateY(-4deg);
     box-shadow: 
         0 24px 72px rgba(0, 0, 0, 0.5),
@@ -9383,168 +9384,48 @@
 
 
 
-/* 修复导航按钮布局 */
-.map-widget .nav-button {
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-width: 70px !important;
-    padding: 14px 18px !important;
-    position: relative !important;
-    z-index: 2 !important;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.12) 0%, 
-        rgba(255, 255, 255, 0.05) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    border-radius: var(--radius-lg) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    box-shadow: 
-        0 6px 20px rgba(0, 0, 0, 0.25),
-        0 0 30px rgba(var(--primary-color-rgb), 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-}
-
-/* 修复导航图标大小 */
-.nav-icon {
-    width: 32px !important;
-    height: 32px !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    margin-bottom: 6px !important;
-}
-
-/* 修复导航文字大小 */
-.nav-text {
-    font-size: var(--font-size-sm) !important;
-    color: var(--text-primary) !important;
-}
-
-
-
-/* 隐藏顶部状态栏时间 - 避免和桌面时钟重复 */
-.top-left-time {
-    display: none !important;
-}
-
-
-
-
-
-/* 地图组件标题装饰 */
-.map-widget::after {
-    content: '📍 快捷导航' !important;
-    position: absolute !important;
-    top: 10px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    display: inline-block !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    color: var(--text-primary) !important;
-    opacity: 0.9 !important;
-    letter-spacing: 2px !important;
-    text-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.6),
-        0 0 20px rgba(var(--primary-color-rgb), 0.2) !important;
-    z-index: 3 !important;
-}
-
-
-
-.map-widget .nav-button:hover {
-    transform: translateY(-4px) scale(1.05) !important;
-}
-
-/* 两个按钮中间的装饰分隔线 */
-.map-widget .nav-button:first-child::after {
-    content: '';
-    position: absolute;
-    right: -16px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, 
-        transparent 0%, 
-        rgba(var(--primary-color-rgb), 0.3) 30%, 
-        rgba(var(--secondary-color-rgb), 0.3) 70%, 
-        transparent 100%);
-    opacity: 0.5;
-}
-
-/* 导航按钮光晕效果 */
-.nav-icon {
-    position: relative !important;
-}
-
-.nav-icon::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: radial-gradient(circle, 
-        rgba(var(--primary-color-rgb), 0.15) 0%, 
-        transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.map-widget .nav-button:hover .nav-icon::after {
-    opacity: 1;
-}
 
 
 
 
 
 
-/* 地图组件装饰点 - 模拟地图上的标记点 */
-.map-widget .nav-button::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    width: 12px;
-    height: 12px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--primary-color);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 3;
-}
 
-.map-widget .nav-button:hover::before {
-    opacity: 1;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* 增强快捷导航标题 */
 
 
 /* 给地图组件添加底部装饰线 */
-.map-widget .nav-button::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 2px;
-    background: linear-gradient(to right, 
-        transparent 0%, 
-        var(--primary-color) 50%, 
-        transparent 100%);
-    opacity: 0.4;
-    border-radius: 2px;
-}
+
 
 
 
@@ -9581,32 +9462,9 @@
 
 
 /* 左上角装饰 */
-.map-widget .nav-button:first-child::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    width: 12px;
-    height: 12px;
-    border-top: 2px solid var(--primary-color);
-    border-left: 2px solid var(--primary-color);
-    border-radius: 4px 0 0 0;
-    opacity: 0.6;
-}
 
-/* 右下角装饰 */
-.map-widget .nav-button:last-child::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    right: -4px;
-    width: 12px;
-    height: 12px;
-    border-bottom: 2px solid var(--secondary-color);
-    border-right: 2px solid var(--secondary-color);
-    border-radius: 0 0 4px 0;
-    opacity: 0.6;
-}
+
+
 
 
 
@@ -9627,22 +9485,7 @@
 
 
 /* 给标题添加下划线 */
-.map-widget::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 30px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 50px !important;
-    height: 2px !important;
-    background: linear-gradient(to right, 
-        transparent 0%, 
-        var(--primary-color) 50%, 
-        transparent 100%) !important;
-    border-radius: 2px !important;
-    opacity: 0.4 !important;
-    z-index: 3 !important;
-}
+
 
 
 
