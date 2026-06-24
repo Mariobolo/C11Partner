@@ -9585,20 +9585,9 @@
 
 
 
-/* 增强导航图标 */
-.nav-icon {
-    width: 36px !important;
-    height: 36px !important;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
-}
 
-/* 增强导航文字 */
-.nav-text {
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    margin-top: 6px !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
-}
+
+
 
 
 
@@ -9654,23 +9643,7 @@
 
 
 
-/* 标题下方的装饰线 */
-.map-widget .nav-button:first-child::before {
-    /* 覆盖之前的定义 */
-    content: '';
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 2px;
-    background: linear-gradient(to right, 
-        transparent 0%, 
-        var(--primary-color) 50%, 
-        transparent 100%);
-    border-radius: 2px;
-    opacity: 0.5;
-}
+
 
 
 
@@ -9725,10 +9698,7 @@
     gap: 0 !important;
 }
 
-/* 隐藏时间显示（已在HTML中移除，这里确保兼容） */
-.top-left-time {
-    display: none !important;
-}
+
 
 /* 车辆状态指示器容器 */
 /* 状态指示器基础样式 */
@@ -9969,6 +9939,27 @@
 /* "全部"按钮中的设置入口 */
 .quick-switch-item.more {
     position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 60px !important;
+    height: 70px !important;
+    padding: 8px 6px !important;
+}
+
+/* "全部"按钮图标样式 - 与空调控制按钮对齐 */
+.quick-switch-item.more .quick-switch-icon {
+    font-size: 22px !important;
+    margin-bottom: 4px !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
+}
+
+/* "全部"按钮文字样式 - 与空调控制按钮对齐 */
+.quick-switch-item.more .quick-switch-name {
+    font-size: 11px !important;
+    color: var(--text-secondary) !important;
+    white-space: nowrap !important;
 }
 
 .settings-entry {
