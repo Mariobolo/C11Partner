@@ -9583,7 +9583,15 @@
 /* 给导航按钮添加卡片效果 */
 
 
-
+.map-widget .nav-button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(var(--primary-color-rgb), 0.3) !important;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(var(--primary-color-rgb), 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+}
 
 /* 增强导航图标 */
 .nav-icon {
