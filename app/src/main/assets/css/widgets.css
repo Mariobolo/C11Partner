@@ -2746,22 +2746,6 @@
     transform: scale(1.05);
     filter: blur(0);
 }
-.status-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: var(--dock-height);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 var(--spacing-2xl);
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
-    backdrop-filter: var(--blur-strong);
-    -webkit-backdrop-filter: var(--blur-strong);
-    border-top: 1px solid var(--border-color);
-    z-index: var(--z-fixed);
-    pointer-events: auto;
 }
 .left-buttons,
 .right-buttons {
