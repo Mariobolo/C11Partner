@@ -1996,76 +1996,7 @@ function refreshQuickSwitchesStatus() {
 }
 
 
-// 检查是否有其他元素覆盖在背景上:
-function checkForOverlappingElements() {
-    const backgroundElement = document.querySelector('.background-image');
-    if (!backgroundElement) return;
 
-    // 背景元素位置和尺寸:
-    const bgRect = backgroundElement.getBoundingClientRect();
-
-    // 检查页面上所有元素
-    const allElements = document.querySelectorAll('*');
-    const overlappingElements = [];
-
-    allElements.forEach(element => {
-        // 跳过背景元素本身和它的子元素
-        if (element === backgroundElement || backgroundElement.contains(element)) {
-            return;
-        }
-
-        // 跳过隐藏元素
-        const computedStyle = window.getComputedStyle(element);
-        if (computedStyle.display === 'none' || computedStyle.visibility === 'hidden') {
-            return;
-        }
-
-        // 获取元素的位置和尺寸
-        const rect = element.getBoundingClientRect();
-
-        // 检查是否与背景元素重叠
-        if (rect.left < bgRect.right &&
-            rect.right > bgRect.left &&
-            rect.top < bgRect.bottom &&
-            rect.bottom > bgRect.top) {
-            // 检查z-index
-            const zIndex = computedStyle.zIndex;
-            if (zIndex !== 'auto' && parseInt(zIndex) >= 0) {
-                overlappingElements.push({
-                    element: element,
-                    tagName: element.tagName,
-                    className: element.className,
-                    id: element.id,
-                    zIndex: zIndex,
-                    rect: rect
-                });
-            }
-        }
-    });
-
-    // 按z-index排序
-    overlappingElements.sort((a, b) => parseInt(b.zIndex) - parseInt(a.zIndex));
-
-    // 可能覆盖在背景上的元素:
-}
-
-// 获取元素事件监听器的函数（用于调试）
-function getEventListeners(element) {
-    // 这是一个简化版本，实际浏览器可能有专门的API
-    const listeners = {};
-
-    // 获取标准事件
-    ['touchstart', 'touchmove', 'touchend', 'mousedown'].forEach(eventType => {
-        const hasListener = element.hasAttribute(`on${eventType}`) ||
-            element[`on${eventType}`] ||
-            (element._listeners && element._listeners[eventType]);
-        if (hasListener) {
-            listeners[eventType] = true;
-        }
-    });
-
-    return listeners;
-}
 
 // 添加触摸滑动事件监听器 - 已由WallpaperSwipeManager接管
 function addTouchSwipeListener() {
@@ -2566,57 +2497,7 @@ function updateNetworkAndBluetoothStatus() {
 }
 
 
-// 检查元素是否在背景元素上方
-function isElementOverBackground(element, backgroundElement) {
-    // 获取元素的边界矩形
-    const elementRect = element.getBoundingClientRect();
-    const backgroundRect = backgroundElement.getBoundingClientRect();
 
-    // 检查元素是否与背景元素重叠
-    return !(elementRect.right < backgroundRect.left ||
-        elementRect.left > backgroundRect.right ||
-        elementRect.bottom < backgroundRect.top ||
-        elementRect.top > backgroundRect.bottom);
-}
-
-// 获取触摸点上的所有元素
-function getElementsAtTouchPoint(touchX, touchY, backgroundElement) {
-    const elementsAtPoint = document.elementsFromPoint(touchX, touchY);
-
-    // 检查是否有元素覆盖在背景上
-    let topMostElement = null;
-    let isBackgroundTopMost = false;
-
-    for (let i = 0; i < elementsAtPoint.length; i++) {
-        const element = elementsAtPoint[i];
-
-        // 跳过隐藏元素
-        const computedStyle = window.getComputedStyle(element);
-        if (computedStyle.display === 'none' || computedStyle.visibility === 'hidden') {
-            continue;
-        }
-
-        // 如果找到背景元素，标记它为顶层元素
-        if (element === backgroundElement || backgroundElement.contains(element)) {
-            isBackgroundTopMost = true;
-            topMostElement = element;
-            break;
-        }
-
-        // 检查z-index
-        const zIndex = parseInt(computedStyle.zIndex) || 0;
-        if (zIndex > 0) {
-            topMostElement = element;
-            break;
-        }
-    }
-
-    return {
-        elements: elementsAtPoint,
-        topMostElement: topMostElement,
-        isBackgroundTopMost: isBackgroundTopMost
-    };
-}
 
 // 初始化横向滚动功能
 function initHorizontalScroll() {
