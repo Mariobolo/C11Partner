@@ -5067,18 +5067,6 @@
     100% { left: 150%; }
 }
 
-/* 天气Widget增强呼吸浮动动画 */
-.weather-widget:hover {
-    animation-play-state: running;
-}
-
-@keyframes weatherFloat {
-    0%, 100% { transform: translateY(0) rotateX(0); }
-    25% { transform: translateY(-3px) rotateX(1deg); }
-    50% { transform: translateY(-5px) rotateX(0); }
-    75% { transform: translateY(-2px) rotateX(-1deg); }
-}
-
 /* ========== 天气图标 - 终极3D增强 - 已合并到主定义 ========== */
 
 /* 天气图标3D底座光晕 */
@@ -6250,6 +6238,7 @@
             rgba(255, 255, 255, 0.05) 40%, 
             rgba(135, 206, 250, 0.08) 100%),
         var(--bg-card);
+    animation-play-state: running;
 }
 
 .weather-widget:hover::before {
@@ -6270,11 +6259,6 @@
 .weather-widget:hover .weather-shimmer {
     opacity: 1;
     left: 150%;
-}
-
-/* 天气Widget呼吸浮动动画 */
-.weather-widget:hover {
-    animation-play-state: running;
 }
 
 @keyframes weatherFloat {
