@@ -2,24 +2,7 @@
    Widgets - 桌面小组件样式
    状态栏、时间、卡片、Dock栏等桌面组件
    ============================================ */
-/* ========== 顶部状态栏 ========== */
-.top-status-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--status-bar-height);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 var(--spacing-2xl);
-    z-index: var(--z-sticky);
-    pointer-events: auto;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
-    backdrop-filter: var(--blur-medium);
-    -webkit-backdrop-filter: var(--blur-medium);
-    border-bottom: 1px solid var(--border-light);
-}
+
 .top-left-section {
     display: flex;
     align-items: center;
@@ -1203,19 +1186,7 @@
    图标渐变、发光效果、间距优化、3D悬停、多状态视觉
    ============================================ */
 /* ========== 状态栏整体视觉升级 ========== */
-.top-status-bar {
-    background: 
-        linear-gradient(to bottom, 
-            rgba(0, 0, 0, 0.7) 0%, 
-            rgba(0, 0, 0, 0.4) 50%,
-            rgba(0, 0, 0, 0) 100%);
-    backdrop-filter: var(--backdrop-glass-md);
-    -webkit-backdrop-filter: var(--backdrop-glass-md);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 
-        0 1px 0 rgba(255, 255, 255, 0.05) inset,
-        0 8px 32px rgba(0, 0, 0, 0.3);
-}
+
 /* 状态栏渐变边框发光效果 */
 .top-status-bar::after {
     content: '';
@@ -3010,25 +2981,7 @@
         inset 0 0 20px rgba(var(--primary-color-rgb), 0.02) !important;
     border: 1px solid rgba(var(--primary-color-rgb), 0.1) !important;
 }
-/* 【优化点2】地图组件视觉增强 - 渐变背景+地图纹理 */
-.map-widget::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-        radial-gradient(ellipse at 30% 30%, 
-            rgba(100, 200, 100, 0.06) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 70% 70%, 
-            rgba(100, 150, 255, 0.04) 0%, 
-            transparent 50%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-.map-widget:hover::before {
-    opacity: 1;
-}
+
 .map-icon {
     position: absolute !important;
     left: 16px !important;
@@ -4798,29 +4751,7 @@
 }
 
 /* ========== 顶部状态栏 - 视觉增强 ========== */
-.top-status-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--status-bar-height);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 var(--spacing-2xl);
-    z-index: var(--z-sticky);
-    pointer-events: auto;
-    background: 
-        linear-gradient(to bottom, 
-            rgba(0, 0, 0, 0.7) 0%, 
-            rgba(0, 0, 0, 0.4) 50%,
-            rgba(0, 0, 0, 0) 100%);
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    transform-style: preserve-3d;
-    transition: all 0.3s ease;
-}
+
 
 /* 状态栏渐变底边线 */
 .top-status-bar::after {
@@ -5390,19 +5321,7 @@
    图标渐变、发光效果、间距优化、3D悬停、多状态视觉
    ============================================ */
 /* ========== 状态栏整体视觉升级 ========== */
-.top-status-bar {
-    background: 
-        linear-gradient(to bottom, 
-            rgba(0, 0, 0, 0.7) 0%, 
-            rgba(0, 0, 0, 0.4) 50%,
-            rgba(0, 0, 0, 0) 100%);
-    backdrop-filter: var(--backdrop-glass-md);
-    -webkit-backdrop-filter: var(--backdrop-glass-md);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 
-        0 1px 0 rgba(255, 255, 255, 0.05) inset,
-        0 8px 32px rgba(0, 0, 0, 0.3);
-}
+
 /* 状态栏渐变边框发光效果 */
 .top-status-bar::after {
     content: '';
@@ -9608,20 +9527,7 @@
 
 
 
-/* 地图组件背景装饰 - 路线图案 */
-.map-widget::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(var(--primary-color-rgb), 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(var(--secondary-color-rgb), 0.06) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-}
+
 
 /* 地图组件标题装饰 */
 .map-widget::after {
@@ -9739,17 +9645,7 @@
 
 
 
-/* 地图组件增强装饰 - 添加地图纹理背景 */
-.map-widget::before {
-    background: 
-        /* 网格线效果 */
-        linear-gradient(rgba(var(--primary-color-rgb), 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(var(--primary-color-rgb), 0.03) 1px, transparent 1px),
-        /* 渐变光晕 */
-        radial-gradient(circle at 30% 60%, rgba(var(--primary-color-rgb), 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 70% 40%, rgba(var(--secondary-color-rgb), 0.08) 0%, transparent 40%) !important;
-    background-size: 20px 20px, 20px 20px, 100% 100%, 100% 100% !important;
-}
+
 
 /* 给导航按钮添加卡片效果 */
 
@@ -9786,23 +9682,7 @@
 
 
 
-/* 右侧装饰 - 定位图标 */
-.map-widget::before {
-    content: '' !important;
-    position: absolute !important;
-    right: 20px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 40px !important;
-    height: 40px !important;
-    background-image: url('images/nav_map_go_company.png') !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    opacity: 0.2 !important;
-    z-index: 0 !important;
-    filter: blur(0.5px);
-}
+
 
 
 
