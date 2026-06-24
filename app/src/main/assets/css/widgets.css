@@ -690,6 +690,29 @@
     position: relative;
     perspective: 800px;
     transform-style: preserve-3d;
+    overflow: hidden;
+    background: 
+        radial-gradient(ellipse at 20% 10%, 
+            rgba(var(--primary-color-rgb), 0.12) 0%, 
+            transparent 50%),
+        radial-gradient(ellipse at 80% 90%, 
+            rgba(var(--secondary-color-rgb), 0.08) 0%, 
+            transparent 50%),
+        linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.09) 0%, 
+            rgba(255, 255, 255, 0.04) 40%, 
+            rgba(0, 0, 0, 0.15) 100%),
+        var(--bg-card);
+    backdrop-filter: blur(30px) saturate(190%);
+    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.45),
+        0 6px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    animation: switchesFloat 5.5s ease-in-out infinite;
+    animation-play-state: paused;
 }
 /* 快捷开关Widget渐变背景氛围光 */
 .quick-switches-widget::before {
@@ -1119,17 +1142,17 @@
 }
 /* ========== 温度数字 - 渐变发光终极效果 ========== */
 .temperature {
-    font-size: 56px;
-    font-weight: 200;
+    font-size: 58px;
+    font-weight: 100;
     line-height: 1;
-    letter-spacing: -2px;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    letter-spacing: -2.5px;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     background: linear-gradient(135deg, 
         #ffffff 0%, 
-        #e6f3ff 25%,
-        #d4ecff 50%, 
-        #fff5e6 75%,
+        #e0f0ff 20%,
+        #c8e6ff 45%, 
+        #fff0d8 70%,
         #ffffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -5130,28 +5153,6 @@
     50% { transform: scale(1.2); opacity: 0.9; }
 }
 
-/* ========== 温度数字 - 终极渐变发光效果 ========== */
-.temperature {
-    font-size: 58px;
-    font-weight: 100;
-    line-height: 1;
-    letter-spacing: -2.5px;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    background: linear-gradient(135deg, 
-        #ffffff 0%, 
-        #e0f0ff 20%,
-        #c8e6ff 45%, 
-        #fff0d8 70%,
-        #ffffff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
-    font-variant-numeric: tabular-nums;
-    transform-style: preserve-3d;
-}
-
 /* 温度数字终极发光光晕 */
 .temperature::before {
     content: attr(data-temp);
@@ -6625,30 +6626,6 @@
    【第48轮UI美化 - 优化点1】快捷开关Widget视觉终极美化
    3D透视效果、渐变发光边框、弹性悬停动效、波纹点击反馈
    ============================================ */
-/* 快捷开关Widget容器终极增强 */
-.quick-switches-widget {
-    background: 
-        radial-gradient(ellipse at 20% 10%, 
-            rgba(var(--primary-color-rgb), 0.12) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 80% 90%, 
-            rgba(var(--secondary-color-rgb), 0.08) 0%, 
-            transparent 50%),
-        linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.09) 0%, 
-            rgba(255, 255, 255, 0.04) 40%, 
-            rgba(0, 0, 0, 0.15) 100%),
-        var(--bg-card);
-    backdrop-filter: blur(30px) saturate(190%);
-    -webkit-backdrop-filter: blur(30px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.11);
-    box-shadow: 
-        0 16px 48px rgba(0, 0, 0, 0.45),
-        0 6px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-
 /* 快捷开关Widget终极渐变发光边框 */
 .quick-switches-widget::before {
     content: '';
@@ -6722,11 +6699,6 @@
 }
 
 /* 快捷开关呼吸浮动动画 */
-.quick-switches-widget {
-    animation: switchesFloat 5.5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
 .quick-switches-widget:hover {
     animation-play-state: running;
 }
@@ -6849,11 +6821,6 @@
    粒子光效、鼠标跟随3D视差、多层次发光、状态切换动画
    ============================================ */
 /* 快捷开关面板粒子光效背景 */
-.quick-switches-widget {
-    position: relative;
-    overflow: hidden;
-}
-
 .quick-switches-widget .particle-glow {
     position: absolute;
     width: 200px;
@@ -7532,10 +7499,6 @@
 }
 
 /* 温度数字粒子光晕 */
-.temperature {
-    position: relative;
-}
-
 .temperature::after {
     content: '';
     position: absolute;
