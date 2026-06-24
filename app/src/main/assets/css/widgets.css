@@ -1210,8 +1210,11 @@
 }
 /* 温度数字悬停3D增强 */
 .weather-widget:hover .temperature {
-    transform: scale(1.08) translateZ(15px);
-    text-shadow: 0 0 40px rgba(100, 200, 255, 0.3);
+    transform: scale(1.08) translateY(-2px);
+    text-shadow: 
+        0 0 80px rgba(135, 206, 250, 0.4),
+        0 0 60px rgba(255, 215, 0, 0.25),
+        0 12px 48px rgba(0, 0, 0, 0.55);
 }
 /* ========== 天气描述文字 - 渐变优化 ========== */
 .weather-desc {
@@ -1264,10 +1267,6 @@
 @keyframes tempGlow {
     0% { opacity: 0.2; filter: blur(8px); }
     100% { opacity: 0.5; filter: blur(16px); }
-}
-.weather-widget:hover .temperature {
-    transform: scale(1.08) translateZ(15px);
-    text-shadow: none;
 }
 .weather-widget:hover .temperature::before {
     opacity: 0.6;
@@ -4836,9 +4835,6 @@
     100% { opacity: 0.6; filter: blur(20px); }
 }
 
-.weather-widget:hover .temperature {
-    transform: scale(1.1) translateZ(20px) rotateX(-2deg);
-}
 
 .weather-widget:hover .temperature::before {
     opacity: 0.7;
@@ -6013,13 +6009,6 @@
     transition: all 0.4s ease;
 }
 
-.weather-widget:hover .temperature {
-    transform: scale(1.08) translateY(-2px);
-    text-shadow: 
-        0 0 80px rgba(135, 206, 250, 0.4),
-        0 0 60px rgba(255, 215, 0, 0.25),
-        0 12px 48px rgba(0, 0, 0, 0.55);
-}
 
 .weather-widget:hover .temperature::before {
     opacity: 0.7;
