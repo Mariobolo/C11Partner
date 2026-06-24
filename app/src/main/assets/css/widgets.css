@@ -146,14 +146,15 @@
 .network-status-icon,
 .bluetooth-status-icon,
 .network-5g-icon {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.75;
-    filter: brightness(1.1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-    transition: all var(--transition-fast);
+    opacity: 0.85;
+    filter: brightness(1.15) contrast(1.1) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+    transition: all 0.3s var(--easing-elastic);
+    position: relative;
 }
 .network-status-icon:first-child,
 .bluetooth-status-icon:first-child,
@@ -950,12 +951,14 @@
     border-color: rgba(255, 255, 255, 0.25);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-.quick-switch-name {
-    font-size: var(--font-size-xs);
-    color: var(--text-secondary);
-    font-weight: var(--font-weight-medium);
-    text-shadow: none;
-    transition: color var(--transition-fast);
+    .quick-switch-name {
+        font-size: 11.5px;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
 }
 .quick-switch-item.active .quick-switch-name {
     color: var(--primary-color);
@@ -3539,21 +3542,6 @@
    桌面小组件数据加载时的占位动画
    ============================================ */
 /* 骨架屏基础样式 */
-.skeleton {
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.05) 25%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.05) 75%
-    );
-    background-size: 200% 100%;
-    animation: skeletonShimmer 1.5s infinite;
-    border-radius: var(--radius-md);
-}
-@keyframes skeletonShimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
 /* 天气组件骨架屏 */
 .weather-skeleton {
     display: flex;
@@ -5068,21 +5056,6 @@
    骨架屏占位、脉冲加载、渐变扫过、多状态加载动画
    ============================================ */
 /* ========== 骨架屏基础样式 ========== */
-.skeleton {
-    background: linear-gradient(90deg,
-        rgba(255, 255, 255, 0.05) 25%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.05) 75%);
-    background-size: 200% 100%;
-    border-radius: var(--radius-md);
-    animation: skeletonShimmer 1.5s ease-in-out infinite;
-    position: relative;
-    overflow: hidden;
-}
-@keyframes skeletonShimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
 /* 骨架屏变体 - 圆形 */
 .skeleton-circle {
     border-radius: 50%;
@@ -6491,13 +6464,6 @@
             inset 0 0 16px rgba(var(--primary-color-rgb), 0.2);
     }
 }
-
-/* 快捷开关名称文字渐变 */
-.quick-switch-name {
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .quick-switch-item:hover .quick-switch-name {
@@ -7530,14 +7496,6 @@
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
-
-/* 对比度优化 - 确保文字可读性 */
-.quick-switch-name {
-    /* 确保文字对比度至少 4.5:1 (WCAG AA) */
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
 .quick-switch-item.active .quick-switch-name {
     color: #ffffff;
     font-weight: 500;
