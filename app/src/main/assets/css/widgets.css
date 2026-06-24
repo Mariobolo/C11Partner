@@ -682,7 +682,6 @@
 }
 .quick-app-name {
     font-size: 11px;
-    color: var(--text-secondary);
     font-weight: 500;
     max-width: 64px;
     white-space: nowrap;
@@ -690,7 +689,15 @@
     text-overflow: ellipsis;
     text-align: center;
     transition: all 0.3s ease;
-    letter-spacing: 0.3px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.8) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.2px;
 }
 .quick-app-item:hover .quick-app-name {
     color: var(--text-primary);
@@ -1165,6 +1172,8 @@
     margin-left: 0;
     flex: 1;
     transform-style: preserve-3d;
+    position: relative;
+    z-index: 2;
 }
 /* ========== 温度数字 - 渐变发光终极效果 ========== */
 .temperature {
@@ -4669,21 +4678,6 @@
         0 0 30px rgba(var(--primary-color-rgb), 0.3);
 }
 
-/* 应用名称渐变文字 */
-.quick-app-name {
-    font-size: 11px;
-    font-weight: 500;
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.95) 0%,
-        rgba(255, 255, 255, 0.8) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.2px;
-}
-
 .quick-app-item:hover .quick-app-name {
     background: linear-gradient(
         135deg,
@@ -7095,12 +7089,6 @@
 @keyframes sunRotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-/* 天气信息区域3D增强 */
-.weather-info {
-    position: relative;
-    z-index: 2;
 }
 
 /* 温度数字粒子光晕 */
