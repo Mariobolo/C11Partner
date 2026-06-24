@@ -185,7 +185,7 @@
 /* ========== 时间日期显示 - 【优化点1】终极视觉美化 ========== */
 .layout-left {
     position: absolute;
-    top: 38%;
+    top: 35% !important;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -6508,7 +6508,8 @@
     align-items: center;
     justify-content: center;
     padding: 14px 18px;
-    min-width: 70px;
+    min-width: 48px;
+    min-height: 48px;
     background: 
         linear-gradient(135deg,
             rgba(255, 255, 255, 0.1) 0%,
@@ -6526,6 +6527,8 @@
         0 2px 8px rgba(0, 0, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
     overflow: hidden;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* 导航按钮顶部高光 */
@@ -8135,12 +8138,6 @@
 .quick-app-item,
 .quick-switch-item,
 .dock-btn,
-.nav-button {
-    min-width: 48px;
-    min-height: 48px;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-}
 /* 触控目标间距优化 */
 .quick-apps-container,
 .quick-switches-container,
@@ -8369,6 +8366,7 @@
     height: 100% !important;
     z-index: var(--z-base) !important;
     pointer-events: none !important;
+    padding-bottom: 0 !important;
 }
 
 
@@ -8783,14 +8781,7 @@ footer.status-bar {
 }
 
 /* 确保主容器占满整个屏幕 */
-.main-container {
-    padding-bottom: 0 !important;
-}
 
-/* 调整左侧时间区域的位置 - 可以稍微往下移一点 */
-.layout-left {
-    top: 35% !important;
-}
 
 
 
