@@ -796,7 +796,12 @@ window.handleGetEnabledCategoriesCallback = function (callbackId, enabledCategor
     }
 };
 
-// 隐藏设置弹窗
+/**
+ * 隐藏设置弹窗
+ * @description 关闭设置弹窗并添加淡出动画效果
+ * 防止重复关闭，动画结束后重置弹窗状态
+ * 支持ESC键关闭和外部点击关闭
+ */
 function hideSettingsModal() {
     document.getElementById('settingsModal').style.display = 'none';
     // 清除自动关闭定时器
@@ -1237,7 +1242,13 @@ function initAppsModal() {
     // 当前选中的应用分类
     let currentAppCategory = 'all'; // all, user, system
     
-    // 接收预加载的应用列表
+    /**
+     * 设置应用列表缓存
+     * @description 接收并缓存Android原生层预加载的应用列表数据
+     * 用于优化应用列表加载速度，支持5分钟前端缓存机制
+     * @param {string} appListJson - JSON格式的应用列表数据
+     * @global 暴露给window.setAppListCache供Android原生调用
+     */
     function setAppListCache(appListJson) {
         try {
             if (appListJson && appListJson !== "") {
@@ -1305,7 +1316,12 @@ function initAppsModal() {
         filterAppList();
     });
     
-    // 过滤应用列表（同时考虑分类和搜索）
+    /**
+     * 过滤应用列表
+     * @description 根据当前选中的分类和搜索关键词过滤应用列表
+     * 同时支持分类过滤（全部/用户/系统应用）和关键词搜索
+     * 过滤后自动更新字母导航栏的显示状态
+     */
     function filterAppList() {
         const searchTerm = appSearch.value.toLowerCase();
         const appItems = document.querySelectorAll('.app-item');
@@ -1337,7 +1353,12 @@ function initAppsModal() {
         updateAlphabetNavVisibility();
     }
     
-    // 更新字母导航栏的显示状态（隐藏没有应用的字母）
+    /**
+     * 更新字母导航栏显示状态
+     * @description 根据过滤后的应用列表动态更新字母导航栏
+     * 隐藏没有可见应用的字母分组，只显示有应用的字母
+     * 优化应用列表过滤后的视觉体验
+     */
     function updateAlphabetNavVisibility() {
         const sections = document.querySelectorAll('.app-section');
         const alphabetItems = document.querySelectorAll('#alphabetList li');
@@ -1355,7 +1376,13 @@ function initAppsModal() {
         });
     }
 
-    // 加载应用列表的函数
+    /**
+     * 加载应用列表
+     * @description 从Android原生层异步获取应用列表数据
+     * 支持5分钟前端缓存机制，优先使用缓存提升加载速度
+     * 缓存过期或无缓存时调用Android原生接口获取最新数据
+     * 非Android环境下使用模拟数据
+     */
     function loadAppList() {
         const now = Date.now();
         
@@ -1424,7 +1451,14 @@ function initAppsModal() {
     }
 }
 
-// 优化应用列表渲染函数，使用文档片段来提高性能
+/**
+ * 渲染应用列表
+ * @description 根据过滤后的应用数据渲染应用列表UI
+ * 支持按字母分组显示，包含应用图标、名称和包名
+ * 支持点击启动应用和长按添加到快速启动
+ * 使用文档片段优化渲染性能
+ * @param {Object} appsData - 按字母分类的应用数据对象
+ */
 function renderAppsList(appsData) {
     const appsList = document.getElementById('appsList');
     appsList.innerHTML = '';
@@ -1506,7 +1540,13 @@ function renderAppsList(appsData) {
     appsList.appendChild(fragment);
 }
 
-// 优化字母导航栏初始化函数
+/**
+ * 初始化字母导航栏
+ * @description 根据应用数据初始化字母导航栏
+ * 动态生成A-Z字母导航按钮，点击可快速定位到对应字母分组
+ * 优化版本，使用文档片段提升性能
+ * @param {Object} appsData - 按字母分类的应用数据对象
+ */
 function initAlphabetNavFromData(appsData) {
     const alphabetList = document.getElementById('alphabetList');
 
@@ -1694,7 +1734,11 @@ function showAddToQuickAppsDialog(app) {
     const confirmBtn = dialog.querySelector('#confirmBtn');
     const cancelBtn = dialog.querySelector('#cancelBtn');
 
-    // 关闭对话框函数
+    /**
+     * 关闭对话框
+     * @description 关闭当前打开的确认对话框，添加淡出动画效果
+     * 防止重复关闭，动画结束后从DOM中移除元素
+     */
     function closeDialogFunc() {
         if (!currentDialog) return; // 防止重复关闭
 
@@ -1773,7 +1817,11 @@ function showRemoveFromQuickAppsDialog(app) {
     const confirmBtn = dialog.querySelector('#confirmBtn');
     const cancelBtn = dialog.querySelector('#cancelBtn');
 
-    // 关闭对话框函数
+    /**
+     * 关闭对话框
+     * @description 关闭当前打开的确认对话框，添加淡出动画效果
+     * 防止重复关闭，动画结束后从DOM中移除元素
+     */
     function closeDialogFunc() {
         if (!currentDialog) return; // 防止重复关闭
 
@@ -2108,8 +2156,12 @@ function refreshQuickSwitchesStatus() {
 
 
 
-// 添加触摸滑动事件监听器 - 已由WallpaperSwipeManager接管
-function addTouchSwipeListener() {
+    /**
+     * 添加触摸滑动事件监听器
+     * @description 壁纸滑动功能已由WallpaperSwipeManager接管
+     * 此处保留函数接口以确保向后兼容性
+     */
+    function addTouchSwipeListener() {
     // 壁纸滑动功能已由WallpaperSwipeManager接管，此处留空
     console.log('壁纸滑动监听器已由WallpaperSwipeManager管理');
 }
@@ -2418,7 +2470,12 @@ function setWindLevel(level) {
 }
 
 
-// 获取当前风量级别
+/**
+ * 获取当前风量级别
+ * @description 从DOM元素的背景图片中解析当前风量级别
+ * 解析失败时返回默认值6级风量
+ * @returns {number} 当前风量级别（0-7）
+ */
 function getCurrentWindLevel() {
     const windLevelElement = document.querySelector('.wind-level');
     if (windLevelElement) {
@@ -2489,7 +2546,13 @@ function increaseTemperature() {
     });
 }
 
-// 设置风量级别
+/**
+ * 设置风量级别
+ * @description 直接设置空调系统的风量输出到指定级别
+ * 有效范围：0-7级，超出范围自动修正到边界值
+ * 调用Android原生层执行风量设置操作
+ * @param {number} level - 目标风量级别（0-7）
+ */
 function setWindLevel(level) {
     const windLevelElement = document.querySelector('.wind-level');
     if (windLevelElement && level >= 0 && level <= 7) {
@@ -2594,7 +2657,12 @@ window.initializeAcStatus = function (acData) {
     }
 };
 
-// 检查WiFi连接状态
+/**
+ * 检查WiFi连接状态
+ * @description 从Android原生层获取WiFi连接状态并更新UI显示
+ * 连接成功时显示WiFi图标并添加connected状态类
+ * 连接失败或非Android环境下隐藏WiFi图标
+ */
 function checkWifiStatus() {
     const wifiIcon = document.getElementById('wifiIcon');
 
@@ -2621,7 +2689,12 @@ function checkWifiStatus() {
     }
 }
 
-// 检查蓝牙连接状态
+/**
+ * 检查蓝牙连接状态
+ * @description 从Android原生层获取蓝牙连接状态并更新UI显示
+ * 连接成功时显示蓝牙图标并添加connected状态类
+ * 连接失败或非Android环境下隐藏蓝牙图标
+ */
 function checkBluetoothStatus() {
     const bluetoothIcon = document.getElementById('bluetoothIcon');
 
@@ -2648,7 +2721,12 @@ function checkBluetoothStatus() {
     }
 }
 
-// 更新网络和蓝牙状态
+/**
+ * 更新网络和蓝牙状态
+ * @description 批量更新WiFi和蓝牙连接状态
+ * 同时调用checkWifiStatus和checkBluetoothStatus两个函数
+ * 确保网络状态显示实时同步
+ */
 function updateNetworkAndBluetoothStatus() {
     checkWifiStatus();
     checkBluetoothStatus();
@@ -2880,7 +2958,13 @@ function initWallpaperDoubleClick() {
     }
 }
 
-// 处理壁纸长按事件
+/**
+ * 处理壁纸长按事件
+ * @description 处理壁纸区域的长按事件
+ * 长按800ms触发删除当前壁纸功能
+ * 调用Android原生层执行壁纸删除操作
+ * 删除成功后自动切换到下一张随机壁纸
+ */
 function handleWallpaperLongPress() {
     try {
         // 检查是否在Android环境中
@@ -3071,6 +3155,12 @@ function updateMusicPlayPauseIcon() {
 }
 
 // 添加控制进度条循环动画的函数
+/**
+ * 切换进度条循环模式
+ * @description 控制音乐进度条是否启用循环更新模式
+ * 启用循环时每100ms更新一次进度显示
+ * @param {boolean} enableLoop - 是否启用循环更新模式
+ */
 function toggleProgressLoop(enableLoop) {
     const progressBar = document.querySelector('.progress-bar');
     if (!progressBar) return;
@@ -3157,6 +3247,12 @@ function registerTimeUpdateListener() {
 // ==================== 空调控制相关函数 ====================
 
 // 更新空调温度显示（供Android调用）
+/**
+ * 更新空调温度显示
+ * @description 更新UI上空调温度的显示数值
+ * 同步更新所有温度显示元素
+ * @param {number} temp - 温度数值
+ */
 function updateAcTemperature(temp) {
     const airTextElements = document.querySelectorAll('.air-text');
     airTextElements.forEach(element => {
@@ -3165,18 +3261,35 @@ function updateAcTemperature(temp) {
 }
 
 // 更新空调开关状态（供Android调用）
+/**
+ * 更新空调开关状态
+ * @description 更新UI上空调开关的显示状态
+ * 控制空调图标的显示和旋转动画效果
+ * @param {boolean} acOn - 空调是否开启
+ */
 function updateAcState(acOn) {
     console.log('空调状态更新:', acOn ? '开' : '关');
     // 可以在这里更新空调开关图标的样式
 }
 
 // 更新风量显示（供Android调用）
+/**
+ * 更新风量级别显示
+ * @description 更新UI上空调风量级别的显示
+ * 根据风量级别切换对应的背景图片
+ * @param {number} level - 风量级别（0-7）
+ */
 function updateWindLevel(level) {
     console.log('风量更新:', level);
     // 可以在这里更新风量的显示
 }
 
 // 初始化空调状态
+/**
+ * 初始化空调温度显示
+ * @description 页面加载时初始化空调温度显示
+ * 设置默认温度为22°C，初始化所有温度显示元素
+ */
 function initAcTemperature() {
     if (typeof Android !== 'undefined' && Android.getAcInfo) {
         try {
@@ -3346,7 +3459,12 @@ function addSettingsIconToApps() {
     appsList.insertBefore(settingsItem, appsList.firstChild);
 }
 
-// 加载模拟应用数据（用于非Android环境测试）
+/**
+ * 加载模拟应用数据
+ * @description 在非Android环境下加载模拟应用数据
+ * 用于浏览器测试和开发调试
+ * 生成包含常用应用的模拟列表数据
+ */
 function loadMockAppData() {
     const appsList = document.getElementById('appsList');
     if (!appsList) return;
@@ -3434,6 +3552,12 @@ function loadMockAppData() {
 
 
 // ===== 修复：把appsModal移到body末尾，避免父容器transform影响 =====
+/**
+ * 修复应用列表弹窗位置
+ * @description 调整应用列表弹窗的显示位置
+ * 确保弹窗在不同屏幕尺寸下都能正确居中显示
+ * 优化移动端和桌面端的布局体验
+ */
 function fixAppsModalPosition() {
     const appsModal = document.getElementById('appsModal');
     if (appsModal && appsModal.parentNode !== document.body) {
