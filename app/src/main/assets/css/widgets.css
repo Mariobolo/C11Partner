@@ -899,18 +899,25 @@
 }
 /* 点击3D按压反馈 */
 .quick-switch-item:active {
-    transform: translateY(-2px) scale(0.97) rotateX(-2deg);
+    transform: scale(0.92);
     box-shadow: 
         0 8px 20px rgba(0, 0, 0, 0.35),
         0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
         0 0 20px rgba(var(--primary-color-rgb), 0.2),
         inset 0 3px 8px rgba(0, 0, 0, 0.25);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.1s ease;
 }
 
 /* 状态切换弹性动画 */
 .quick-switch-item.active {
-    animation: switchPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: switchActiveBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes switchActiveBounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(0.92); }
+    50% { transform: scale(1.06); }
+    70% { transform: scale(0.98); }
+    100% { transform: scale(1); }
 }
 @keyframes switchPop {
     0% { transform: scale(0.95); }
@@ -6496,19 +6503,6 @@
     opacity: 1;
 }
 
-/* 快捷开关状态切换弹性动画 */
-.quick-switch-item.active {
-    animation: switchActiveBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes switchActiveBounce {
-    0% { transform: scale(1); }
-    30% { transform: scale(0.92); }
-    50% { transform: scale(1.06); }
-    70% { transform: scale(0.98); }
-    100% { transform: scale(1); }
-}
-
 /* 快捷开关取消激活动画 */
 .quick-switch-item:not(.active) {
     animation: switchInactiveShrink 0.3s ease-out;
@@ -7375,12 +7369,6 @@
     .quick-switch-item {
         padding: 20px 16px;
     }
-}
-
-/* 触控反馈增强 - 移动端优化 */
-.quick-switch-item:active {
-    transform: scale(0.92);
-    transition: transform 0.1s ease;
 }
 
 /* 屏幕阅读器隐藏文本 - 视觉隐藏但可朗读 */
