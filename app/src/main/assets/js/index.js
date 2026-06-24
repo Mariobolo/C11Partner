@@ -8,16 +8,9 @@ let categoryCheckboxEventsInitialized = false;
 
 /**
  * 添加按钮点击效果
- * 
- * 功能说明：
- * 1. 为所有按钮添加按下和释放的视觉效果
- * 2. 支持鼠标和触摸事件
- * 3. 为音乐控制按钮添加特殊播放效果
- * 
- * 视觉效果：
- * - 按下时添加button-pressed类
- * - 释放时移除button-pressed类
- * - 音乐播放时添加playing类，3秒后移除
+ * @description 为所有控制按钮添加按下和释放的视觉反馈效果
+ * 支持鼠标和触摸两种交互方式，为音乐控制按钮添加特殊播放动画效果
+ * 视觉效果包括：按下状态、释放状态、音乐播放动画
  */
 function addClickEffect() {
     // 获取所有需要添加点击效果的按钮元素
@@ -79,11 +72,9 @@ function addClickEffect() {
 
 /**
  * 初始化设置弹窗事件
- * 
- * 功能说明：
- * 1. 设置弹窗的打开和关闭事件
- * 2. 实现标签页切换功能
- * 3. 加载设置数据
+ * @description 初始化设置模态窗口的所有交互事件
+ * 包括：弹窗开关、标签页切换、壁纸设置、系统设置、组件配置等
+ * 支持点击外部区域关闭弹窗，所有事件使用防重复绑定机制
  */
 function initSettingsModal() {
     // 获取相关元素
@@ -869,7 +860,12 @@ function loadComponentConfigs() {
     }
 }
 
-// 添加组件配置事件监听器
+/**
+ * 添加组件配置事件监听器
+ * @description 为所有桌面组件配置复选框添加change事件监听器
+ * 包括：音乐组件、地图组件、应用组件、胎压组件、天气组件
+ * 保存配置后自动更新前端组件可见性并显示Toast提示
+ */
 function addComponentConfigEventListeners() {
     // 音乐组件复选框事件
     document.getElementById('musicComponentCheckbox').addEventListener('change', function () {
@@ -952,7 +948,14 @@ function addComponentConfigEventListeners() {
     });
 }
 
-// 更新组件可见性
+/**
+ * 更新组件可见性
+ * @description 根据组件名称和可见性状态更新DOM元素的显示/隐藏
+ * 支持音乐、地图、应用、胎压、天气等5种桌面组件
+ * 对widget类型组件使用inline-flex布局保持样式一致
+ * @param {string} componentName - 组件名称标识
+ * @param {boolean} isVisible - 是否显示该组件
+ */
 function updateComponentVisibility(componentName, isVisible) {
     let selector = '';
     let element = null;
@@ -989,7 +992,13 @@ function updateComponentVisibility(componentName, isVisible) {
     }
 }
 
-// 生成模拟应用数据
+/**
+ * 生成模拟应用数据
+ * @description 生成按字母分类的模拟应用列表数据
+ * 包含主流应用名称、包名和图标路径
+ * 用于非Android环境下的测试和演示
+ * @returns {Object} 按字母A-Z分类的应用数据对象
+ */
 function generateAppData() {
     // 模拟应用数据，按字母分类
     const apps = {
@@ -1056,7 +1065,12 @@ function generateAppData() {
     return apps;
 }
 
-// 初始化字母导航栏
+/**
+ * 初始化字母导航栏
+ * @description 创建完整的A-Z字母导航栏并添加点击滚动事件
+ * 点击字母可平滑滚动到对应字母的应用分组
+ * 用于应用列表弹窗的快速定位
+ */
 function initAlphabetNav() {
     const alphabetList = document.getElementById('alphabetList');
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -1081,7 +1095,12 @@ function initAlphabetNav() {
     }
 }
 
-// 根据数据初始化字母导航栏
+/**
+ * 根据数据初始化字母导航栏
+ * @description 根据实际应用数据动态生成字母导航栏
+ * 只创建存在应用的字母导航项，使用文档片段优化DOM性能
+ * @param {Object} appsData - 按字母分类的应用数据对象
+ */
 function initAlphabetNavFromData(appsData) {
     const alphabetList = document.getElementById('alphabetList');
 
@@ -1106,7 +1125,13 @@ function initAlphabetNavFromData(appsData) {
     }
 }
 
-// 渲染应用列表
+/**
+ * 渲染应用列表
+ * @description 根据应用数据渲染完整的应用列表界面
+ * 使用文档片段优化DOM性能，支持点击启动应用、长按添加到快速启动
+ * 包含字母分组标题和应用网格布局
+ * @param {Object} appsData - 按字母分类的应用数据对象
+ */
 function renderAppsList(appsData) {
     const appsList = document.getElementById('appsList');
     appsList.innerHTML = '';
@@ -1182,6 +1207,12 @@ function renderAppsList(appsData) {
     }
 }
 
+/**
+ * 初始化应用列表弹窗
+ * @description 初始化应用列表弹窗的所有交互功能
+ * 包括：弹窗开关、搜索过滤、分类切换、应用列表缓存、快速启动管理
+ * 支持5分钟前端缓存机制，优化加载性能
+ */
 function initAppsModal() {
     // 获取相关元素
     const appsBtn = document.getElementById('appsBtn');
@@ -1769,7 +1800,12 @@ function showRemoveFromQuickAppsDialog(app) {
     });
 }
 
-// 加载快速启动应用列表
+/**
+ * 加载快速启动应用列表
+ * @description 从Android原生层获取快速启动应用列表并渲染
+ * 支持点击启动应用、长按移除应用，空状态显示提示文案
+ * 非Android环境下自动隐藏组件
+ */
 function loadQuickApps() {
     const quickAppsContainer = document.getElementById('quickAppsContainer');
     const quickAppsWidget = document.querySelector('.quick-apps-widget');
@@ -1852,7 +1888,12 @@ function loadQuickApps() {
     }
 }
 
-// 加载桌面快捷开关
+/**
+ * 加载桌面快捷开关
+ * @description 渲染桌面底部快捷开关栏
+ * 包含空调控制组（开关、风量、温度）和"全部"按钮
+ * 支持ACManager和Android原生两种调用方式
+ */
 function loadQuickSwitches() {
     const container = document.getElementById('quickSwitchesContainer');
     if (!container) return;
@@ -2055,6 +2096,12 @@ function addTouchSwipeListener() {
 // 添加一个标志来防止重复初始化
 let isConfigurableButtonsInitialized = false;
 
+/**
+ * 初始化可配置按钮
+ * @description 初始化所有可配置的导航按钮和功能按钮
+ * 包括：回家/公司导航、地图应用选择、360全景、多任务、空调控制等
+ * 支持长按配置和点击启动应用，使用防重复初始化机制
+ */
 function initConfigurableButtons() {
     // 防止重复初始化
     if (isConfigurableButtonsInitialized) {
