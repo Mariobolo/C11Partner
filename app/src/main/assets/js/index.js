@@ -233,7 +233,12 @@ function initSettingsModal() {
     });
 }
 
-// 加载壁纸设置
+/**
+ * 加载壁纸设置配置
+ * @description 从Android原生层异步获取壁纸相关设置，包括轮播开关、随机模式、指定模式、切换间隔等
+ * 支持异步和同步两种调用方式，优先使用异步方法
+ * 更新UI控件状态并加载相关分类配置
+ */
 function loadWallpaperSettings() {
     isLoadingSettings = true;
     if (typeof Android !== 'undefined' && Android.getWallpaperSettingsAsync) {
@@ -334,7 +339,11 @@ function loadWallpaperSettings() {
     }
 }
 
-// 加载系统设置（原桌面自启和开机问候语）
+/**
+ * 加载系统设置配置
+ * @description 加载原桌面自启和开机问候语等系统级设置
+ * @param {Object} settings - 设置配置对象，包含system_launcher和boot_greeting字段
+ */
 function loadSystemSettings(settings) {
     // 设置原桌面自启复选框状态
     const systemLauncherCheckbox = document.getElementById('systemLauncherCheckbox');
@@ -349,7 +358,12 @@ function loadSystemSettings(settings) {
     }
 }
 
-// 加载已启用的分类状态
+/**
+ * 加载已启用的壁纸分类状态
+ * @description 从Android原生层获取用户已启用的壁纸分类列表
+ * 更新UI中对应分类复选框的选中状态
+ * 支持异步和同步两种调用方式
+ */
 function loadEnabledCategories() {
     if (typeof Android !== 'undefined' && Android.getEnabledCategoriesAsync) {
         const callbackId = AsyncCallbackManager.register(function (enabledCategoriesJson) {
@@ -391,7 +405,12 @@ function loadEnabledCategories() {
     }
 }
 
-// 初始化分类复选框事件
+/**
+ * 初始化壁纸分类复选框事件监听器
+ * @description 为所有壁纸分类复选框绑定点击事件
+ * 用户点击时通过Android原生层保存分类启用/禁用状态
+ * 使用防重复绑定机制确保只绑定一次
+ */
 function initCategoryCheckboxEvents() {
     // console.log('initCategoryCheckboxEvents 被调用');
     const checkboxes = document.querySelectorAll('.category-checkbox');
@@ -428,7 +447,12 @@ function initCategoryCheckboxEvents() {
 }
 
 
-// 初始化重启应用按钮事件监听器
+/**
+ * 初始化系统管理按钮事件监听器
+ * @description 初始化重启应用、设置默认桌面、原桌面自启、开机问候语等按钮
+ * 所有按钮使用防重复绑定机制确保只绑定一次
+ * 调用Android原生层执行相应系统操作
+ */
 function initRestartAppButton() {
     const restartAppBtn = document.getElementById('restartAppBtn');
 
@@ -522,7 +546,12 @@ function initRestartAppButton() {
         bootGreetingCheckbox.dataset.listenerAdded = 'true';
     }
 }
-// 初始化ADB调试授权按钮事件监听器
+/**
+ * 初始化ADB调试授权按钮事件监听器
+ * @description 初始化无线ADB授权、USB调试授权、ADB权限执行、ADB测试等按钮
+ * 支持多种ADB授权方式，优先使用无线WiFi ADB
+ * 所有按钮使用防重复绑定机制确保只绑定一次
+ */
 function initADBButton() {
     // console.log('初始化ADB按钮');
     const adbAuthorizationBtn = document.getElementById('adbAuthorizationBtn');
@@ -606,7 +635,12 @@ function initADBButton() {
     }
 }
 
-// 显示设置弹窗
+/**
+ * 显示设置弹窗
+ * @description 打开设置模态窗口，自动激活壁纸设置TAB
+ * 加载壁纸设置、组件配置、系统管理按钮事件
+ * 启动弹窗自动关闭定时器，无操作60秒后自动关闭
+ */
 function showSettingsModal() {
     // 先关闭应用列表弹窗（如果已打开）
     hideAppsModal();
@@ -654,7 +688,11 @@ function showSettingsModal() {
     settingsModal.addEventListener('scroll', resetAutoCloseTimer);
 }
 
-// 隐藏设置弹窗
+/**
+ * 隐藏设置弹窗
+ * @description 关闭设置模态窗口，移除active状态
+ * 清除弹窗自动关闭定时器
+ */
 function hideSettingsModal() {
     const settingsModal = document.getElementById('settingsModal');
     settingsModal.style.display = 'none';
@@ -774,7 +812,11 @@ function hideSettingsModal() {
     clearAutoCloseTimer();
 }
 
-// 初始化组件可见性
+/**
+ * 初始化桌面组件可见性
+ * @description 从Android原生层获取所有组件配置
+ * 根据配置更新音乐、地图、应用、胎压、天气等组件的显示/隐藏状态
+ */
 function initComponentVisibility() {
     if (typeof Android !== 'undefined' && Android.getAllComponentConfigs) {
         // 使用同步方法
@@ -794,7 +836,12 @@ function initComponentVisibility() {
     }
 }
 
-// 加载组件配置
+/**
+ * 加载组件配置
+ * @description 从Android原生层获取所有组件配置并更新UI复选框状态
+ * 只在第一次调用时添加事件监听器，防止重复绑定
+ * @global {boolean} componentConfigListenersAdded - 标记是否已添加监听器
+ */
 let componentConfigListenersAdded = false;
 
 function loadComponentConfigs() {
