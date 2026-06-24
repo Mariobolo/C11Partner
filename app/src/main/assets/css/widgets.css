@@ -4,9 +4,9 @@
    ============================================ */
 
 .top-left-section {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xl);
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
 }
 .top-left-time {
     font-size: var(--font-size-sm);
@@ -21,9 +21,9 @@
     font-weight: var(--font-weight-semibold);
 }
 .top-right-info {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-lg);
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
 }
 /* 车辆状态指示器 */
 .car-status-indicators {
@@ -143,8 +143,11 @@
     50% { opacity: 0.3; }
 }
 .lock-indicator {
-    font-size: var(--font-size-sm);
-    color: var(--primary-color);
+    font-size: 12px !important;
+    color: var(--text-secondary) !important;
+    padding: 4px 8px !important;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .lock-indicator.unlocked {
     color: #ff9800;
@@ -6595,11 +6598,6 @@
 }
 
 /* 锁车指示器状态切换 */
-.lock-indicator {
-    position: relative;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
 .lock-indicator::before {
     content: '';
     position: absolute;
@@ -8055,12 +8053,7 @@
     justify-content: space-between !important;
 }
 
-/* 左侧区域调整 */
-.top-left-section {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0 !important;
-}
+/* 左侧区域调整 - 已合并 */
 
 /* 车辆状态指示器容器 */
 /* 状态指示器基础样式 */
@@ -8124,12 +8117,6 @@
 }
 
 /* 门锁指示器 */
-.lock-indicator {
-    font-size: 12px !important;
-    color: var(--text-secondary) !important;
-    padding: 4px 8px !important;
-}
-
 .lock-indicator.unlocked {
     color: #ff6464 !important;
     animation: pulse 1s infinite !important;
@@ -8189,12 +8176,7 @@
     border: 1px solid rgba(255, 165, 0, 0.4) !important;
 }
 
-/* 右侧信息区域 */
-.top-right-info {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-}
+/* 右侧信息区域 - 已合并 */
 
 /* 蓝牙和WiFi图标 */
 .bluetooth-status-icon,
