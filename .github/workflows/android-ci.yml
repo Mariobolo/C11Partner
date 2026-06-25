@@ -1,12 +1,10 @@
 name: Android CI Build
-
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,47 +12,37 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         fetch-depth: 1
-
     - name: Set up JDK 17
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: 'gradle'
-
     - name: Set up Android SDK
-      uses: android-actions/setup-android@v3
+      uses: android-actions/setup-android@v4
       with:
-        api-level: 30
-        build-tools: "30.0.3"
-        cmdline-tools: latest
-        ndk-version: ""
-        components: ""
-
+        packages: 'platform-tools platforms;android-30 build-tools;30.0.3'
+        cmdline-tools-version: 'latest'
     - name: Accept Android SDK licenses
       run: |
         yes | sdkmanager --licenses || true
         sdkmanager "platforms;android-30" "build-tools;30.0.3"
-
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.10'
-
     - name: Run commit message check
       run: |
         echo "=== 检查最新提交信息 ==="
         LATEST_COMMIT_MSG=$(git log -1 --pretty=%B)
         echo "提交信息: $LATEST_COMMIT_MSG"
         python3 tools/check_commit_msg.py "$LATEST_COMMIT_MSG"
-
     - name: Install coverage tools
       run: |
         pip install coverage
-
     - name: Run unit tests with coverage
       run: |
         echo "=== 运行单元测试（带覆盖率） ==="
@@ -69,40 +57,33 @@ jobs:
         echo ""
         echo "=== 生成 HTML 报告 ==="
         coverage html -d coverage_html
-
     - name: Upload coverage report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: coverage-report
         path: coverage_html/
         retention-days: 7
-
     - name: Make gradlew executable
       run: chmod +x gradlew
-
     - name: Clean previous build
       run: ./gradlew clean --no-build-cache
-
     - name: Build debug APK
       run: |
         set -o pipefail
         ./gradlew assembleDebug --stacktrace 2>&1 | tee build-debug.log
-
     - name: Build release APK
       run: |
         set -o pipefail
         ./gradlew assembleRelease --stacktrace 2>&1 | tee build-release.log
-
     - name: Upload build error log
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: build-error-log
         path: |
           build-debug.log
           build-release.log
         retention-days: 14
-
     - name: Find APK files
       id: find_apk
       run: |
@@ -134,23 +115,20 @@ jobs:
         
         echo "Debug APK: $DEBUG_APK"
         echo "Release APK: $RELEASE_APK"
-
     - name: Upload debug APK
       if: steps.find_apk.outputs.debug_apk != ''
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: C11Partner-debug
         path: ${{ steps.find_apk.outputs.debug_apk }}
         retention-days: 30
-
     - name: Upload release APK
       if: steps.find_apk.outputs.release_apk != ''
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: C11Partner-release
         path: ${{ steps.find_apk.outputs.release_apk }}
         retention-days: 90
-
     - name: Create GitHub Release (打标签时触发)
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
