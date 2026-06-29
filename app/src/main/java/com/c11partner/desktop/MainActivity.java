@@ -307,8 +307,7 @@ public class MainActivity extends AppCompatActivity {
         public void onSpeedChanged(float speed) {
             throttledPushCarState();
         }
-        }
-        
+
         @Override
         public void onLockStateChanged(boolean isLocked) {
             Log.i("MainActivity", "锁车状态: " + (isLocked ? "已锁" : "已解锁"));
