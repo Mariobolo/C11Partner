@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 壁纸设置更改广播接收器
     private WallpaperSettingsChangedReceiver wallpaperSettingsChangedReceiver;
+    private RestartAppReceiver restartAppReceiver;
 
     // 零跑C11日志监控服务
     private LogcatMonitorService logcatMonitorService;
@@ -218,6 +219,44 @@ public class MainActivity extends AppCompatActivity {
     public boolean isLogServiceBound() {
         return isLogcatServiceBound;
     }
+
+    // ==================== 字段访问器（供Bridge类使用） ====================
+
+    /** 获取WebView实例 */
+    public WebView getWebView() {
+        return webView;
+    }
+
+    /** 获取音乐可视化器 */
+    public MusicVisualizer getMusicVisualizer() {
+        return musicVisualizer;
+    }
+
+    /** 获取音乐播放状态 */
+    public boolean isMusicPlaying() {
+        return isMusicPlaying;
+    }
+
+    /** 是否使用默认壁纸 */
+    public boolean isUsingDefaultWallpaper() {
+        return isUsingDefaultWallpaper;
+    }
+
+    /** 设置是否使用默认壁纸 */
+    public void setUsingDefaultWallpaper(boolean usingDefault) {
+        this.isUsingDefaultWallpaper = usingDefault;
+    }
+
+    /** 获取当前壁纸路径 */
+    public String getCurrentWallpaperPath() {
+        return currentWallpaperPath;
+    }
+
+    /** 设置当前壁纸路径 */
+    public void setCurrentWallpaperPath(String path) {
+        this.currentWallpaperPath = path;
+    }
+
     // 日志监控服务连接
     private ServiceConnection logcatServiceConnection = new ServiceConnection() {
         @Override
@@ -236,29 +275,37 @@ public class MainActivity extends AppCompatActivity {
             Log.i("MainActivity", "日志监控服务已断开");
         }
     };
+    // 车辆状态推送节流（防止CAN信号频繁变化导致UI卡顿）
+    private static final long CAR_STATE_PUSH_THROTTLE_MS = 200; // 最快200ms推送一次
+    private long lastCarStatePushTime = 0;
+    private boolean carStatePushPending = false;
+    private final Handler carStatePushHandler = new Handler(Looper.getMainLooper());
+    private String lastPushedStateJson = null; // 缓存上次推送的状态，避免重复推送
+
     // 车辆状态监听器实现
     private CarStateListener carStateListener = new CarStateListener() {
         @Override
         public void onGearChanged(int oldGear, int newGear) {
             Log.i("MainActivity", "档位变化: " + oldGear + " -> " + newGear);
-            updateCarStateToFrontend();
+            throttledPushCarState();
         }
         
         @Override
         public void onTurnLightChanged(boolean isLeft, int state) {
             Log.i("MainActivity", (isLeft ? "左" : "右") + "转向灯: " + state);
-            updateCarStateToFrontend();
+            throttledPushCarState();
         }
         
         @Override
         public void onDoorChanged(String doorName, int state) {
-            Log.i("MainActivity", doorName + "状态: " + (state == 1 ? "开" : "关"));
-            updateCarStateToFrontend();
+            Log.d("MainActivity", doorName + "状态: " + (state == 1 ? "开" : "关"));
+            throttledPushCarState();
         }
         
         @Override
         public void onSpeedChanged(float speed) {
-            updateCarStateToFrontend();
+            throttledPushCarState();
+        }
         }
         
         @Override
@@ -354,6 +401,31 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 更新车辆状态到前端
      */
+    /**
+     * 节流推送车辆状态到前端
+     * 确保最快每200ms推送一次，避免CAN信号频繁变化导致UI卡顿
+     */
+    private void throttledPushCarState() {
+        long now = System.currentTimeMillis();
+        long elapsed = now - lastCarStatePushTime;
+        
+        if (elapsed >= CAR_STATE_PUSH_THROTTLE_MS) {
+            // 距离上次推送已超过间隔，立即推送
+            lastCarStatePushTime = now;
+            updateCarStateToFrontend();
+        } else if (!carStatePushPending) {
+            // 还没到间隔，但没有待定推送，安排一个延迟推送
+            carStatePushPending = true;
+            long delay = CAR_STATE_PUSH_THROTTLE_MS - elapsed;
+            carStatePushHandler.postDelayed(() -> {
+                carStatePushPending = false;
+                lastCarStatePushTime = System.currentTimeMillis();
+                updateCarStateToFrontend();
+            }, delay);
+        }
+        // 如果已有待定推送，忽略本次（合并到待定推送中）
+    }
+
     private void updateCarStateToFrontend() {
         if (webView != null && isLogcatServiceBound && logcatMonitorService != null) {
             LeapMotorCarState state = logcatMonitorService.getCurrentState();
@@ -373,7 +445,6 @@ public class MainActivity extends AppCompatActivity {
                         stateJson.put("speed", state.getSpeed());
                         stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
                         stateJson.put("isLocked", state.isLocked());
-                        // 补充具体车门状态
                         stateJson.put("frontLeftDoor", state.getFrontLeftDoor());
                         stateJson.put("frontRightDoor", state.getFrontRightDoor());
                         stateJson.put("rearLeftDoor", state.getRearLeftDoor());
@@ -388,7 +459,6 @@ public class MainActivity extends AppCompatActivity {
                         stateJson.put("screenOn", state.isScreenOn());
                         stateJson.put("acPageOpen", state.isAcPageOpen());
                         stateJson.put("camera360Visible", state.isCamera360Visible());
-                        // 添加胎压和胎温数据
                         stateJson.put("frontLeftTirePressure", state.getFrontLeftTirePressure());
                         stateJson.put("frontRightTirePressure", state.getFrontRightTirePressure());
                         stateJson.put("rearLeftTirePressure", state.getRearLeftTirePressure());
@@ -398,8 +468,15 @@ public class MainActivity extends AppCompatActivity {
                         stateJson.put("rearLeftTireTemp", state.getRearLeftTireTemp());
                         stateJson.put("rearRightTireTemp", state.getRearRightTireTemp());
                         
+                        String newStateStr = stateJson.toString();
+                        // 状态没变就不推送，避免无效开销
+                        if (newStateStr.equals(lastPushedStateJson)) {
+                            return;
+                        }
+                        lastPushedStateJson = newStateStr;
+                        
                         String jsCode = "javascript:if(typeof window.updateCarState === 'function') { window.updateCarState(" 
-                                + stateJson.toString() + "); }";
+                                + newStateStr + "); }";
                         webView.evaluateJavascript(jsCode, null);
                     } catch (Exception e) {
                         Log.e("MainActivity", "更新车辆状态到前端失败: " + e.getMessage());
@@ -566,7 +643,7 @@ public class MainActivity extends AppCompatActivity {
      * 监听重启应用广播，在收到广播时重启应用
      */
     public void initRestartAppReceiver() {
-        RestartAppReceiver restartAppReceiver = new RestartAppReceiver();
+        restartAppReceiver = new RestartAppReceiver();
         IntentFilter restartAppFilter = new IntentFilter("com.c11partner.desktop.RESTART_APP");
         registerReceiver(restartAppReceiver, restartAppFilter);
     }
@@ -588,6 +665,18 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setDisplayZoomControls(false);
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
+        
+        // 性能优化
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSettings.setBlockNetworkImage(false);
+        webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
+        
+        // 硬件加速（Android 9 支持）
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         // 添加JavaScript接口
         webView.addJavascriptInterface(webViewBridge, "Android");
@@ -1522,6 +1611,14 @@ public class MainActivity extends AppCompatActivity {
                 unregisterReceiver(wallpaperSettingsChangedReceiver);
             } catch (Exception e) {
                 Log.e("MainActivity", "注销壁纸设置更改接收器时出错", e);
+            }
+        }
+
+        if (restartAppReceiver != null) {
+            try {
+                unregisterReceiver(restartAppReceiver);
+            } catch (Exception e) {
+                Log.e("MainActivity", "注销重启应用接收器时出错", e);
             }
         }
     }

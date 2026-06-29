@@ -273,22 +273,22 @@ public class SystemBridge extends BaseBridge {
                 wallpaperSettingsDbHelper.updateSystemLauncher(enabled);
                 // 在UI线程中执行JavaScript回调
                 mActivity.runOnUiThread(() -> {
-                    if (mActivity.webView != null) {
+                    if (mActivity.getWebView() != null) {
                         String javascript = String.format(
                                 "javascript:window.handleSaveSystemLauncherSettingCallback('%s', %s)",
                                 callbackId, "true");
-                        mActivity.webView.loadUrl(javascript);
+                        mActivity.getWebView().loadUrl(javascript);
                     }
                 });
             } catch (Exception e) {
                 logE(TAG, "保存原桌面自启设置时出错", e);
                 // 在UI线程中执行JavaScript回调
                 mActivity.runOnUiThread(() -> {
-                    if (mActivity.webView != null) {
+                    if (mActivity.getWebView() != null) {
                         String javascript = String.format(
                                 "javascript:window.handleSaveSystemLauncherSettingCallback('%s', %s)",
                                 callbackId, "false");
-                        mActivity.webView.loadUrl(javascript);
+                        mActivity.getWebView().loadUrl(javascript);
                     }
                 });
             }

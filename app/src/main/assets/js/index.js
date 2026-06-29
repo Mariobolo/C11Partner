@@ -2864,9 +2864,9 @@ window.addEventListener('DOMContentLoaded', () => {
     // 注意：音乐信息更新已由 SystemMusicManager 统一管理
     // 每2秒自动更新一次，包含歌名、歌手、播放状态等
 
-    // 启动音乐进度更新
+    // 启动音乐进度更新（2秒足够，1秒太频繁）
     updateMusicProgress();
-    setInterval(updateMusicProgress, 1000); // 每1秒更新一次音乐进度
+    setInterval(updateMusicProgress, 2000);
 
     // 注意：getMusicProgressInfo方法已在WebViewBridge中实现，用于获取音乐播放进度
 

@@ -19,7 +19,6 @@ const CarStateManager = {
     updateState: function(state) {
         if (!state) return;
         this.currentState = state;
-        console.log('收到车辆状态更新:', state);
         
         // 更新各个状态指示器
         this.updateGearIndicator(state.gear, state.gearText);
@@ -221,8 +220,7 @@ const CarStateManager = {
      * @param {number} speed - 车速 (km/h)
      */
     updateSpeedDisplay: function(speed) {
-        // 可以在状态栏显示车速，或者在其他位置显示
-        console.log('当前车速:', speed, 'km/h');
+        // 车速显示（静默更新，不打印日志）
     },
 
     /**

@@ -11,6 +11,23 @@
  * - 也可以通过 window.Utils 访问
  */
 
+// 生产环境日志抑制：保留warn/error，抑制debug/log
+(function() {
+    var originalLog = console.log;
+    var logCount = 0;
+    var MAX_LOGS_PER_SECOND = 5;
+    var lastLogReset = Date.now();
+    console.log = function() {
+        logCount++;
+        if (logCount > MAX_LOGS_PER_SECOND) {
+            return; // 超过频率限制，静默丢弃
+        }
+        originalLog.apply(console, arguments);
+    };
+    // 每秒重置计数
+    setInterval(function() { logCount = 0; lastLogReset = Date.now(); }, 1000);
+})();
+
 (function() {
     'use strict';
 

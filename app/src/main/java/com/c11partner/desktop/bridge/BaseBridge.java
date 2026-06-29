@@ -80,9 +80,9 @@ public class BaseBridge {
             return;
         }
         runOnUiThread(() -> {
-            if (mActivity != null && mActivity.webView != null) {
+            if (mActivity != null && mActivity.getWebView() != null) {
                 try {
-                    mActivity.webView.loadUrl(javascript);
+                    mActivity.getWebView().loadUrl(javascript);
                 } catch (Exception e) {
                     Log.e(TAG, "执行JavaScript失败: " + javascript, e);
                 }

@@ -680,8 +680,8 @@ function initCustomAudioPlayer() {
     // 定时更新歌曲名称
     setInterval(updateCurrentSongName, 2000);
     
-    // 定时更新播放状态
-    setInterval(updatePlayingState, 500);
+    // 定时更新播放状态（2秒足够，500ms太频繁导致卡顿）
+    setInterval(updatePlayingState, 2000);
 }
 
 // 添加控制进度条循环动画的函数

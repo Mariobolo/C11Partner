@@ -34,7 +34,8 @@ Thumbs.db
 
 # Keystore files (IMPORTANT: never commit signing keys!)
 *.keystore
-*.jks
+# dipartner.jks is intentionally committed for CI builds
+!app/dipartner.jks
 
 # Database files
 *.db
@@ -50,6 +51,9 @@ Thumbs.db
 # Patch files
 *.diff
 *.patch
+
+# CSS backup files
+*.backup*
 
 # Output directories
 out/

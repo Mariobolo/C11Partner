@@ -60,10 +60,10 @@ public class MusicBridge extends BaseBridge {
             return;
         }
         mActivity.runOnUiThread(() -> {
-            if (mActivity.musicVisualizer != null) {
+            if (mActivity.getMusicVisualizer() != null) {
                 try {
                     logD(TAG, "正在启动音乐可视化");
-                    mActivity.musicVisualizer.startVisualizer();
+                    mActivity.getMusicVisualizer().startVisualizer();
                     logD(TAG, "音乐可视化启动完成");
                 } catch (Exception e) {
                     logE(TAG, "启动音乐可视化时出错", e);
@@ -84,9 +84,9 @@ public class MusicBridge extends BaseBridge {
             return;
         }
         mActivity.runOnUiThread(() -> {
-            if (mActivity.musicVisualizer != null) {
+            if (mActivity.getMusicVisualizer() != null) {
                 try {
-                    mActivity.musicVisualizer.stopVisualizer();
+                    mActivity.getMusicVisualizer().stopVisualizer();
                     logD(TAG, "音乐可视化已停止");
                 } catch (Exception e) {
                     logE(TAG, "停止音乐可视化时出错", e);
@@ -102,8 +102,7 @@ public class MusicBridge extends BaseBridge {
      */
     @JavascriptInterface
     public boolean isMusicPlaying() {
-        boolean isMusicPlaying = mActivity.isMusicPlaying;
-        return isMusicPlaying;
+        return mActivity.isMusicPlaying();
     }
     /**
      * 获取当前音乐名称

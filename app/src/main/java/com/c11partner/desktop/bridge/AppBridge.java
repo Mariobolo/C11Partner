@@ -670,11 +670,11 @@ public class AppBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetAppListCallback('%s', %s)",
                                         callbackId, org.json.JSONObject.quote(result));
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -684,11 +684,11 @@ public class AppBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetAppListCallback('%s', %s)",
                                         callbackId, org.json.JSONObject.quote("{}"));
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });

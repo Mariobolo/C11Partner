@@ -14,8 +14,8 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.c11partner.desktop.utils.AutomationEngine;
 
@@ -58,11 +58,11 @@ public class LogcatMonitorService extends Service {
     // Binder
     private final IBinder binder = new LogcatMonitorBinder();
     
-    // 车辆状态
-    private LeapMotorCarState carState = new LeapMotorCarState();
+    // 车辆状态（后台线程写入、主线程读取，需要volatile保证可见性）
+    private volatile LeapMotorCarState carState = new LeapMotorCarState();
     
-    // 监听器列表
-    private List<CarStateListener> listeners = new ArrayList<>();
+    // 监听器列表（线程安全）
+    private final List<CarStateListener> listeners = new CopyOnWriteArrayList<>();
     
     // 自动化场景引擎
     private AutomationEngine mAutomationEngine;
@@ -215,11 +215,12 @@ public class LogcatMonitorService extends Service {
             } catch (Exception e) {
                 Log.e(TAG, "日志读取错误: " + e.getMessage(), e);
             } finally {
-                try {
-                    if (reader != null) reader.close();
-                    if (process != null) process.destroy();
-                } catch (Exception e) {
-                    Log.e(TAG, "清理资源错误: " + e.getMessage());
+                // 确保资源释放
+                if (reader != null) {
+                    try { reader.close(); } catch (Exception ignored) {}
+                }
+                if (process != null) {
+                    process.destroy();
                 }
             }
         }

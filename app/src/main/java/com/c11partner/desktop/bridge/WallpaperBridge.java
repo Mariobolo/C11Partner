@@ -433,8 +433,8 @@ public class WallpaperBridge extends BaseBridge {
                 String wallpaperPath = getRandomWallpaperFromFstartExcept00();
                 // 更新MainActivity中的壁纸状态
                 if (mActivity != null && wallpaperPath != null) {
-                    mActivity.isUsingDefaultWallpaper = false;
-                    mActivity.currentWallpaperPath = wallpaperPath;
+                    mActivity.setUsingDefaultWallpaper(false);
+                    mActivity.setCurrentWallpaperPath(wallpaperPath);
                 }
                 return wallpaperPath;
             }
@@ -444,8 +444,8 @@ public class WallpaperBridge extends BaseBridge {
                 String wallpaperPath = getRandomWallpaperFromFstart00();
                 // 更新MainActivity中的壁纸状态
                 if (mActivity != null && wallpaperPath != null) {
-                    mActivity.isUsingDefaultWallpaper = false;
-                    mActivity.currentWallpaperPath = wallpaperPath;
+                    mActivity.setUsingDefaultWallpaper(false);
+                    mActivity.setCurrentWallpaperPath(wallpaperPath);
                 }
                 return wallpaperPath;
             }
@@ -483,8 +483,8 @@ public class WallpaperBridge extends BaseBridge {
             
             // 更新MainActivity中的壁纸状态
             if (mActivity != null && wallpaperPath != null) {
-                mActivity.isUsingDefaultWallpaper = false;
-                mActivity.currentWallpaperPath = wallpaperPath;
+                mActivity.setUsingDefaultWallpaper(false);
+                mActivity.setCurrentWallpaperPath(wallpaperPath);
             }
             
             return wallpaperPath;
@@ -672,8 +672,8 @@ public class WallpaperBridge extends BaseBridge {
                 if (localWallpaper != null) {
                     // 更新MainActivity中的壁纸状态
                     if (mActivity != null) {
-                        mActivity.isUsingDefaultWallpaper = false;
-                        mActivity.currentWallpaperPath = localWallpaper;
+                        mActivity.setUsingDefaultWallpaper(false);
+                        mActivity.setCurrentWallpaperPath(localWallpaper);
                     }
                     return encodeImageToBase64(localWallpaper);
                 }
@@ -685,8 +685,8 @@ public class WallpaperBridge extends BaseBridge {
                 if (localWallpaper != null) {
                     // 更新MainActivity中的壁纸状态
                     if (mActivity != null) {
-                        mActivity.isUsingDefaultWallpaper = false;
-                        mActivity.currentWallpaperPath = localWallpaper;
+                        mActivity.setUsingDefaultWallpaper(false);
+                        mActivity.setCurrentWallpaperPath(localWallpaper);
                     }
                     return encodeImageToBase64(localWallpaper);
                 }
@@ -707,8 +707,8 @@ public class WallpaperBridge extends BaseBridge {
             if (filteredCategories.isEmpty()) {
                 // 更新MainActivity中的壁纸状态
                 if (mActivity != null) {
-                    mActivity.isUsingDefaultWallpaper = true;
-                    mActivity.currentWallpaperPath = "";
+                    mActivity.setUsingDefaultWallpaper(true);
+                    mActivity.setCurrentWallpaperPath("");
                 }
                 return encodeImageToBase64("file:///android_asset/images/nav_car.png");
             }
@@ -725,16 +725,16 @@ public class WallpaperBridge extends BaseBridge {
             if (localWallpaper != null) {
                 // 更新MainActivity中的壁纸状态
                 if (mActivity != null) {
-                    mActivity.isUsingDefaultWallpaper = false;
-                    mActivity.currentWallpaperPath = localWallpaper;
+                    mActivity.setUsingDefaultWallpaper(false);
+                    mActivity.setCurrentWallpaperPath(localWallpaper);
                 }
                 return encodeImageToBase64(localWallpaper);
             }
             
             // 如果没有找到壁纸，返回默认壁纸
             if (mActivity != null) {
-                mActivity.isUsingDefaultWallpaper = true;
-                mActivity.currentWallpaperPath = "";
+                mActivity.setUsingDefaultWallpaper(true);
+                mActivity.setCurrentWallpaperPath("");
             }
             return encodeImageToBase64("file:///android_asset/images/nav_car.png");
         } catch (Exception e) {
@@ -1037,11 +1037,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleSaveWallpaperCarouselSettingCallback('%s', %s)",
                                         callbackId, "true");
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1051,11 +1051,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleSaveWallpaperCarouselSettingCallback('%s', %s)",
                                         callbackId, "false");
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1086,11 +1086,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleSaveWallpaperSwitchIntervalCallback('%s', %s)",
                                         callbackId, "true");
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1100,11 +1100,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleSaveWallpaperSwitchIntervalCallback('%s', %s)",
                                         callbackId, "false");
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1129,11 +1129,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleUpdateCategoryEnabledCallback('%s', '%s')",
                                         callbackId, "true");
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1143,11 +1143,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleUpdateCategoryEnabledCallback('%s', '%s')",
                                         callbackId, "false");
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1177,11 +1177,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetEnabledCategoriesCallback('%s', '%s')",
                                         callbackId, result);
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1191,11 +1191,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetEnabledCategoriesCallback('%s', '%s')",
                                         callbackId, "[]");
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1227,11 +1227,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetWallpaperSettingsCallback('%s', %s)",
                                         callbackId, org.json.JSONObject.quote(result));
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1242,11 +1242,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetWallpaperSettingsCallback('%s', %s)",
                                         callbackId, org.json.JSONObject.quote(result));
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1269,11 +1269,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetRandomWallpaperCallback('%s', %s)",
                                         callbackId, org.json.JSONObject.quote(result != null ? result : ""));
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1283,11 +1283,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetRandomWallpaperCallback('%s', %s)",
                                         callbackId, org.json.JSONObject.quote(""));
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1310,11 +1310,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetRandomWallpaperBase64Callback('%s', %s)",
                                         callbackId, org.json.JSONObject.quote(result));
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
@@ -1324,11 +1324,11 @@ public class WallpaperBridge extends BaseBridge {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (mActivity != null && mActivity.webView != null) {
+                            if (mActivity != null && mActivity.getWebView() != null) {
                                 String javascript = String.format(
                                         "javascript:window.handleGetRandomWallpaperBase64Callback('%s', %s)",
                                         callbackId, org.json.JSONObject.quote(""));
-                                mActivity.webView.loadUrl(javascript);
+                                mActivity.getWebView().loadUrl(javascript);
                             }
                         }
                     });
