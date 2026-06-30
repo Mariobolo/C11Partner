@@ -303,9 +303,9 @@ const CarStateManager = {
         this.addBlinkAnimation();
         
         // 尝试从后端获取初始状态
-        if (window.AndroidInterface && window.AndroidInterface.getCarState) {
+        if (window.Android && window.Android.getCarState) {
             try {
-                const stateJson = window.AndroidInterface.getCarState();
+                const stateJson = window.Android.getCarState();
                 if (stateJson) {
                     const state = JSON.parse(stateJson);
                     this.updateState(state);

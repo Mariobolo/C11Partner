@@ -516,7 +516,7 @@
     display: inline-flex !important;
     flex-shrink: 0;
     flex-direction: column !important;
-    height: var(--widget-height) !important;
+    height: auto !important;
     min-height: var(--widget-height);
     min-width: 280px !important;
     align-items: center;
@@ -1150,7 +1150,8 @@
     min-width: 270px;
     padding: 22px 30px;
     gap: 20px;
-    display: flex;
+    display: inline-flex !important;
+    flex-direction: row !important;
     align-items: center;
     position: relative;
     overflow: hidden;
@@ -2074,9 +2075,7 @@
     width: 100%;
     height: 100%;
     opacity: 0.65;
-    filter: 
-        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4))
-        drop-shadow(0 0 20px rgba(var(--primary-color-rgb), 0.1));
+    background-image: url('images/nav_car.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -5603,6 +5602,17 @@
 }
 
 /* 天气图标3D视觉终极增强 - 已合并到主定义 */
+
+/* 天气图标基础样式 */
+.weather-icon {
+    width: 48px;
+    height: 48px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    flex-shrink: 0;
+}
 
 /* 天气图标发光光晕 */
 .weather-icon::before {

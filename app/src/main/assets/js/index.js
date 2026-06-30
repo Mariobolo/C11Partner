@@ -2646,10 +2646,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // 初始化组件可见性
     initComponentVisibility();
 
-    // 初始化自定义音频播放器
-    initCustomAudioPlayer();
-
-    // 初始化音乐播放控制按钮
+    // 初始化音乐播放控制按钮 (由 SystemMusicManager 统一管理)
     initMusicControls();
 
     // 初始化空调温度显示
@@ -2873,46 +2870,30 @@ function restoreDefaultWallpaper() {
  */
 function updateMusicProgress() {
     try {
-        // 检查是否在Android环境中
         if (typeof Android !== 'undefined' && Android.getMusicProgressInfo) {
             const progressInfoJson = Android.getMusicProgressInfo();
             const progressInfo = JSON.parse(progressInfoJson);
             
-            const progressBar = document.querySelector('.progress-bar');
-            const progressBarFill = document.querySelector('.progress-fill');
-            const currentTimeElement = document.querySelector('.current-time');
+            const progressFilled = document.querySelector('.music-progress-filled');
+            const currentTimeEl = document.querySelector('.music-current-time');
+            const totalTimeEl = document.querySelector('.music-total-time');
             
-            // 添加调试信息
-            //console.log('更新音乐播放进度:', progressInfo);
-            
-            // 计算进度百分比
             const progressPercent = progressInfo.duration > 0 
                 ? (progressInfo.currentPosition / progressInfo.duration) * 100 
                 : 0;
             
-            if (progressBarFill) {
-                // 更新进度条填充宽度
-                progressBarFill.style.width = progressPercent + '%';
+            if (progressFilled) {
+                progressFilled.style.width = progressPercent + '%';
             }
-            
-            if (currentTimeElement) {
-                // 格式化时间显示
-                const formatTime = (ms) => {
-                    if (!ms || ms <= 0) return '00:00';
-                    const totalSeconds = Math.floor(ms / 1000);
-                    const minutes = Math.floor(totalSeconds / 60);
-                    const seconds = totalSeconds % 60;
-                    return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-                };
-                
-                currentTimeElement.textContent = formatTime(progressInfo.currentPosition);
+            if (currentTimeEl) {
+                currentTimeEl.textContent = formatMusicTime(progressInfo.currentPosition);
             }
-            
-        } else {
-            //console.log('Android接口不可用');
+            if (totalTimeEl) {
+                totalTimeEl.textContent = formatMusicTime(progressInfo.duration);
+            }
         }
-    } catch (error) {
-        console.error('更新音乐播放进度时出错:', error);
+    } catch (e) {
+        // 静默处理
     }
 }
 
@@ -2921,30 +2902,18 @@ function updateMusicProgress() {
  */
 function updateMusicPlayPauseIcon() {
     try {
-        // 检查是否在Android环境中
         if (typeof Android !== 'undefined' && Android.isMusicPlaying) {
             const isPlaying = Android.isMusicPlaying();
             const playPauseBtn = document.getElementById('play-pause-btn');
-
-            // 添加调试信息
-            //console.log('检查音乐播放状态图标:', isPlaying);
-
             if (playPauseBtn) {
-                if (isPlaying) {
-                    playPauseBtn.src = 'images/nav_music_pause.png';
-                    //console.log('设置为暂停图标');
-                } else {
-                    playPauseBtn.src = 'images/nav_music_play.png';
-                    //console.log('设置为播放图标');
+                const img = playPauseBtn.querySelector('img');
+                if (img) {
+                    img.src = isPlaying ? 'images/nav_music_pause.png' : 'images/nav_music_play.png';
                 }
-            } else {
-                //console.log('未找到播放/暂停按钮');
             }
-        } else {
-            //console.log('Android接口不可用');
         }
     } catch (error) {
-        //console.error('更新音乐播放状态图标时出错:', error);
+        // 静默处理
     }
 }
 
