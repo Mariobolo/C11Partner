@@ -2853,7 +2853,7 @@
 /* ========== 地图导航组件 ========== */
 .map-widget {
     min-width: 240px;
-    display: flex;
+    display: inline-flex !important;
     flex-direction: row !important;
     justify-content: center !important;
     align-items: center !important;
