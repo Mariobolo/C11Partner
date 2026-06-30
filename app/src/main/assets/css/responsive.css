@@ -606,28 +606,6 @@
 }
 
 /* ========== 触控设备优化 ========== */
-@media (hover: none) and (pointer: coarse) {
-    /* 触控设备禁用悬停效果 */
-    .widget:hover,
-    .btn:hover,
-    .app-item:hover,
-    .switch-item:hover,
-    .nav-button:hover,
-    .quick-app-item:hover,
-    .quick-switch-item:hover {
-        transform: none;
-        box-shadow: var(--shadow-lg), var(--shadow-inner);
-    }
-
-    /* 增大触控目标 */
-    .control-icon,
-    .ac-control,
-    .ac-hcs {
-        min-width: 40px;
-        min-height: 40px;
-    }
-}
-
 /* ========== 超宽屏优化 (2560px+) ========== */
 @media screen and (min-width: 2560px) {
     :root {
@@ -1031,37 +1009,6 @@
 }
 
 /* ========== 零跑车机专用分辨率 (1920×1080) ========== */
-@media screen and (width: 1920px) and (height: 1080px) {
-    :root {
-        --widget-height: 110px;
-        --status-bar-height: 50px;
-        --dock-height: 80px;
-        --font-size-4xl: 140px;
-        --font-size-3xl: 44px;
-        --font-size-2xl: 26px;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 140px;
-        letter-spacing: -3px;
-    }
-    
-    .date-text {
-        font-size: 26px;
-    }
-    
-    .card-view {
-        bottom: 92px;
-        left: 52px;
-        right: 52px;
-    }
-    
-    .widget {
-        min-width: 180px;
-        padding: 16px 20px;
-    }
-}
-
 /* ========== 车机横屏优化 (宽高比 > 2:1) ========== */
 @media screen and (min-aspect-ratio: 2/1) {
     .layout-left {

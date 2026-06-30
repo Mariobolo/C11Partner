@@ -2433,3 +2433,13 @@ html:not(.is-scrolling) .scroll-pause-animations {
 .delay-800 { animation-delay: 0.8s; }
 .delay-1000 { animation-delay: 1s; }
 
+/* ========== 空调旋转动画 ========== */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rotate-animation {
+    animation: rotate 2s linear infinite;
+}
+

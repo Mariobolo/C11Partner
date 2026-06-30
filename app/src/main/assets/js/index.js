@@ -7,70 +7,6 @@ let isLoadingSettings = false;
 let categoryCheckboxEventsInitialized = false;
 
 /**
- * 添加按钮点击效果
- * @description 为所有控制按钮添加按下和释放的视觉反馈效果
- * 支持鼠标和触摸两种交互方式，为音乐控制按钮添加特殊播放动画效果
- * 视觉效果包括：按下状态、释放状态、音乐播放动画
- */
-function addClickEffect() {
-    // 获取所有需要添加点击效果的按钮元素
-    const buttons = document.querySelectorAll('.control-button, .control-icon, .ac-control, .ac-hcs, .nav-button');
-
-    // 为每个按钮添加点击效果
-    buttons.forEach(button => {
-        // 添加按下效果
-        button.addEventListener('mousedown', function () {
-            this.classList.add('button-pressed');
-        });
-
-        // 添加释放效果
-        button.addEventListener('mouseup', function () {
-            this.classList.remove('button-pressed');
-        });
-
-        // 添加鼠标离开时释放效果
-        button.addEventListener('mouseleave', function () {
-            this.classList.remove('button-pressed');
-        });
-
-        // 添加触摸开始效果（移动端）
-        button.addEventListener('touchstart', function () {
-            this.classList.add('button-pressed');
-        });
-
-        // 添加触摸结束效果（移动端）
-        button.addEventListener('touchend', function () {
-            this.classList.remove('button-pressed');
-        });
-
-        // 添加触摸取消效果（移动端）
-        button.addEventListener('touchcancel', function () {
-            this.classList.remove('button-pressed');
-        });
-    });
-
-    // 为音乐控制按钮添加特殊效果
-    const musicPauseBtn = document.getElementById('musicPauseBtn');
-    if (musicPauseBtn) {
-        musicPauseBtn.addEventListener('click', function () {
-            const musicControl = document.querySelector('.music-control');
-            if (musicControl) {
-                // 切换播放状态效果
-                if (musicControl.classList.contains('playing')) {
-                    musicControl.classList.remove('playing');
-                } else {
-                    musicControl.classList.add('playing');
-                    // 3秒后移除效果
-                    setTimeout(() => {
-                        musicControl.classList.remove('playing');
-                    }, 3000);
-                }
-            }
-        });
-    }
-}
-
-/**
  * 初始化设置弹窗事件
  * @description 初始化设置模态窗口的所有交互事件
  * 包括：弹窗开关、标签页切换、壁纸设置、系统设置、组件配置等
@@ -797,18 +733,6 @@ window.handleGetEnabledCategoriesCallback = function (callbackId, enabledCategor
 };
 
 /**
- * 隐藏设置弹窗
- * @description 关闭设置弹窗并添加淡出动画效果
- * 防止重复关闭，动画结束后重置弹窗状态
- * 支持ESC键关闭和外部点击关闭
- */
-function hideSettingsModal() {
-    document.getElementById('settingsModal').style.display = 'none';
-    // 清除自动关闭定时器
-    clearAutoCloseTimer();
-}
-
-/**
  * 初始化桌面组件可见性
  * @description 从Android原生层获取所有组件配置
  * 根据配置更新音乐、地图、应用、胎压、天气等组件的显示/隐藏状态
@@ -1104,118 +1028,6 @@ function initAlphabetNav() {
             }
         });
         alphabetList.appendChild(li);
-    }
-}
-
-/**
- * 根据数据初始化字母导航栏
- * @description 根据实际应用数据动态生成字母导航栏
- * 只创建存在应用的字母导航项，使用文档片段优化DOM性能
- * @param {Object} appsData - 按字母分类的应用数据对象
- */
-function initAlphabetNavFromData(appsData) {
-    const alphabetList = document.getElementById('alphabetList');
-
-    // 清空现有内容
-    alphabetList.innerHTML = '';
-
-    // 为每个字母创建列表项
-    for (const letter in appsData) {
-        if (appsData.hasOwnProperty(letter) && appsData[letter].length > 0) {
-            const li = document.createElement('li');
-            li.textContent = letter;
-            li.setAttribute('data-letter', letter);
-            li.addEventListener('click', function () {
-                // 滚动到对应字母的应用列表
-                const section = document.getElementById(`section-${letter}`);
-                if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-            alphabetList.appendChild(li);
-        }
-    }
-}
-
-/**
- * 渲染应用列表
- * @description 根据应用数据渲染完整的应用列表界面
- * 使用文档片段优化DOM性能，支持点击启动应用、长按添加到快速启动
- * 包含字母分组标题和应用网格布局
- * @param {Object} appsData - 按字母分类的应用数据对象
- */
-function renderAppsList(appsData) {
-    const appsList = document.getElementById('appsList');
-    appsList.innerHTML = '';
-
-    // 遍历每个字母分类
-    for (const letter in appsData) {
-        if (appsData.hasOwnProperty(letter) && appsData[letter].length > 0) {
-            // 创建字母分组容器
-            const section = document.createElement('div');
-            section.className = 'app-section';
-            section.id = `section-${letter}`;
-
-            // 创建字母标题
-            const title = document.createElement('h3');
-            title.className = 'app-section-title';
-            title.textContent = letter;
-            section.appendChild(title);
-
-            // 创建应用网格
-            const grid = document.createElement('div');
-            grid.className = 'app-grid';
-
-            // 添加应用项
-            appsData[letter].forEach(app => {
-                const appItem = document.createElement('div');
-                appItem.className = 'app-item';
-                appItem.setAttribute('data-package', app.packageName);
-                appItem.setAttribute('data-is-system-app', app.isSystemApp || false);
-                appItem.innerHTML = `
-                    <div class="app-icon" style="background-image: url('${app.icon}');"></div>
-                    <div class="app-name">${app.name}</div>
-                `;
-
-                // 添加点击事件
-                appItem.addEventListener('click', function () {
-                    // 调用原生代码启动应用
-                    if (typeof Android !== 'undefined' && Android.launchApp) {
-                        Android.launchApp(app.packageName);
-                    } else {
-                        // 用于测试的模拟数据
-                        alert(`启动应用: ${app.name}\n包名: ${app.packageName}`);
-                    }
-                });
-
-                // 添加长按事件（用于添加到快速启动）
-                let pressTimer;
-                appItem.addEventListener('touchstart', function (e) {
-                    pressTimer = setTimeout(() => {
-                        showAddToQuickAppsDialog(app);
-                    }, 1000); // 长按1秒触发
-                });
-
-                appItem.addEventListener('touchend', function () {
-                    clearTimeout(pressTimer);
-                });
-
-                appItem.addEventListener('touchmove', function () {
-                    clearTimeout(pressTimer);
-                });
-
-                // 鼠标右键事件（用于测试环境）
-                appItem.addEventListener('contextmenu', function (e) {
-                    e.preventDefault();
-                    showAddToQuickAppsDialog(app);
-                });
-
-                grid.appendChild(appItem);
-            });
-
-            section.appendChild(grid);
-            appsList.appendChild(section);
-        }
     }
 }
 
@@ -2025,12 +1837,10 @@ function loadQuickSwitches() {
     `;
 
         moreItem.addEventListener('click', function() {
-        // 打开应用列表
-        showAppsModal();
-        // 确保设置图标已添加
-        addSettingsIconToApps();
-        // 加载模拟应用数据（非Android环境下使用，测试时取消注释）
-        // loadMockAppData();
+        // 打开快捷开关面板（功能控制面板）
+        if (window.QuickSwitchManager) {
+            window.QuickSwitchManager.togglePanel();
+        }
     });
 
     container.appendChild(moreItem);
@@ -2454,22 +2264,6 @@ function increaseWindLevel() {
     const newLevel = Math.min(7, currentLevel + 1);
     setWindLevel(newLevel);
 }
-/**
- * 设置风量级别
- * @description 直接设置空调系统的风量输出到指定级别
- * 有效范围：1-7级，超出范围自动修正到边界值
- * 调用Android原生层执行风量设置操作
- * @param {number} level - 目标风量级别（1-7）
- */
-function setWindLevel(level) {
-    const windLevelElement = document.querySelector('.wind-level');
-    if (windLevelElement && level >= 0 && level <= 7) {
-        windLevelElement.style.backgroundImage = `url('images/wind_level_0${level}.png')`;
-        console.log('风量设置为:', level);
-    }
-}
-
-
 /**
  * 获取当前风量级别
  * @description 从DOM元素的背景图片中解析当前风量级别
@@ -3235,14 +3029,10 @@ function registerTimeUpdateListener() {
     
     // ==================== 快捷开关面板 ====================
     
-    /**
     console.log('时间更新监听器注册完成');
 }
 
 // ==================== 自动化场景配置 ====================
-
-/**
-
 
 // ==================== 空调控制相关函数 ====================
 

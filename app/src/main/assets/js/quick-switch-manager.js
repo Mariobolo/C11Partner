@@ -107,75 +107,55 @@ const QuickSwitchManager = {
         const panel = document.createElement('div');
         panel.id = 'quickSwitchPanel';
         panel.className = 'quick-switch-panel';
-        panel.style.cssText = `
-            position: fixed;
-            top: 50px;
-            right: 20px;
-            width: 360px;
-            max-height: 80vh;
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 16px;
-            padding: 20px;
-            z-index: 9999;
-            overflow-y: auto;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        `;
         
-        let html = '<h3 style="color: white; margin: 0 0 16px 0; font-size: 18px;">快捷控制</h3>';
+        let html = '<h3 class="qsp-title">功能控制面板</h3>';
         
         // 快捷开关网格
-        html += '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">';
+        html += '<div class="qsp-grid qsp-switch-grid">';
         this.switches.forEach(sw => {
             html += `
-                <div class="switch-item" data-id="${sw.id}" 
-                     style="text-align: center; padding: 12px 8px; background: rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.2s;">
-                    <div style="font-size: 24px; margin-bottom: 4px;">${sw.icon}</div>
-                    <div style="color: white; font-size: 12px;">${sw.name}</div>
-                    <div class="switch-status" style="margin-top: 4px; font-size: 10px; color: #888;">--</div>
+                <div class="qsp-switch-item" data-id="${sw.id}">
+                    <div class="qsp-icon">${sw.icon}</div>
+                    <div class="qsp-label">${sw.name}</div>
+                    <div class="qsp-status">--</div>
                 </div>
             `;
         });
         html += '</div>';
         
         // 驾驶模式
-        html += '<h4 style="color: white; margin: 16px 0 12px 0; font-size: 14px;">驾驶模式</h4>';
-        html += '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px;">';
+        html += '<h4 class="qsp-section-title">驾驶模式</h4>';
+        html += '<div class="qsp-grid qsp-mode-grid">';
         this.driveModes.forEach(mode => {
             html += `
-                <div class="drive-mode-item" data-id="${mode.id}"
-                     style="text-align: center; padding: 10px 6px; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; font-size: 12px; color: white;">
-                    <div style="font-size: 20px;">${mode.icon}</div>
-                    <div>${mode.name}</div>
+                <div class="qsp-mode-item" data-id="${mode.id}">
+                    <div class="qsp-icon">${mode.icon}</div>
+                    <div class="qsp-label">${mode.name}</div>
                 </div>
             `;
         });
         html += '</div>';
         
         // 场景模式
-        html += '<h4 style="color: white; margin: 16px 0 12px 0; font-size: 14px;">场景模式</h4>';
-        html += '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">';
+        html += '<h4 class="qsp-section-title">场景模式</h4>';
+        html += '<div class="qsp-grid qsp-mode-grid">';
         this.sceneModes.forEach(mode => {
             html += `
-                <div class="scene-mode-item" data-id="${mode.id}"
-                     style="text-align: center; padding: 10px 6px; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; font-size: 12px; color: white;">
-                    <div style="font-size: 20px;">${mode.icon}</div>
-                    <div>${mode.name}</div>
+                <div class="qsp-mode-item" data-id="${mode.id}">
+                    <div class="qsp-icon">${mode.icon}</div>
+                    <div class="qsp-label">${mode.name}</div>
                 </div>
             `;
         });
         html += '</div>';
         
         // 设置入口
-        html += '<h4 style="color: white; margin: 16px 0 12px 0; font-size: 14px;">系统</h4>';
-        html += '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">';
+        html += '<h4 class="qsp-section-title">系统</h4>';
+        html += '<div class="qsp-grid qsp-mode-grid">';
         html += `
-            <div class="settings-entry-item" 
-                 style="text-align: center; padding: 10px 6px; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; font-size: 12px; color: white; transition: all 0.2s;"
-                 onmouseover="this.style.background='rgba(255,255,255,0.2)'"
-                 onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-                <div style="font-size: 20px;">⚙️</div>
-                <div>设置</div>
+            <div class="qsp-mode-item qsp-settings-entry">
+                <div class="qsp-icon">⚙️</div>
+                <div class="qsp-label">设置</div>
             </div>
         `;
         html += '</div>';
@@ -183,28 +163,28 @@ const QuickSwitchManager = {
         panel.innerHTML = html;
         
         // 绑定开关点击事件
-        panel.querySelectorAll('.switch-item').forEach(item => {
+        panel.querySelectorAll('.qsp-switch-item').forEach(item => {
             item.addEventListener('click', () => {
                 this.toggleSwitch(item.dataset.id);
             });
         });
         
         // 绑定驾驶模式点击事件
-        panel.querySelectorAll('.drive-mode-item').forEach(item => {
+        panel.querySelectorAll('.qsp-mode-item').forEach(item => {
             item.addEventListener('click', () => {
                 this.setDriveMode(parseInt(item.dataset.id));
             });
         });
         
         // 绑定场景模式点击事件
-        panel.querySelectorAll('.scene-mode-item').forEach(item => {
+        panel.querySelectorAll('.qsp-mode-item').forEach(item => {
             item.addEventListener('click', () => {
                 this.toggleSceneMode(item.dataset.id);
             });
         });
         
         // 绑定设置入口点击事件
-        const settingsEntry = panel.querySelector('.settings-entry-item');
+        const settingsEntry = panel.querySelector('.qsp-settings-entry');
         if (settingsEntry) {
             const self = this;
             settingsEntry.addEventListener('click', function(e) {
@@ -214,8 +194,6 @@ const QuickSwitchManager = {
                     const settingsModal = document.getElementById('settingsModal');
                     if (settingsModal) {
                         settingsModal.classList.add('active');
-                        // 确保设置面板在最上层
-                        settingsModal.style.zIndex = '99999';
                     }
                 }, 100);
             });
@@ -230,8 +208,8 @@ const QuickSwitchManager = {
      * @param {string} switchId - 开关ID
      */
     toggleSwitch: function(switchId) {
-        if (!window.AndroidInterface) {
-            console.warn('AndroidInterface不可用');
+        if (!window.Android) {
+            console.warn('Android环境不可用');
             return;
         }
         
@@ -240,56 +218,56 @@ const QuickSwitchManager = {
             switch (switchId) {
                 case 'lowBeamLight':
                     // 先获取当前状态再切换
-                    result = window.AndroidInterface.setLowBeamLight(true); // 简化处理，实际需要读取状态
+                    result = window.Android.setLowBeamLight(true); // 简化处理，实际需要读取状态
                     break;
                 case 'rearFogLight':
-                    result = window.AndroidInterface.setRearFogLight(true);
+                    result = window.Android.setRearFogLight(true);
                     break;
                 case 'positionLight':
-                    result = window.AndroidInterface.setPositionLight(true);
+                    result = window.Android.setPositionLight(true);
                     break;
                 case 'pedestrianAlert':
-                    result = window.AndroidInterface.setPedestrianAlert(true);
+                    result = window.Android.setPedestrianAlert(true);
                     break;
                 case 'maxCooling':
-                    result = window.AndroidInterface.setMaxCooling(true);
+                    result = window.Android.setMaxCooling(true);
                     break;
                 case 'nightMode':
-                    result = window.AndroidInterface.setNightMode(true);
+                    result = window.Android.setNightMode(true);
                     break;
                 case 'wifi':
-                    result = window.AndroidInterface.setWifiEnabled(true);
+                    result = window.Android.setWifiEnabled(true);
                     break;
                 case 'bluetooth':
-                    result = window.AndroidInterface.setBluetoothEnabled(true);
+                    result = window.Android.setBluetoothEnabled(true);
                     break;
                 case 'videoWhileDriving':
-                    const videoEnabled = window.AndroidInterface.isVideoWhileDrivingEnabled();
-                    result = window.AndroidInterface.setVideoWhileDriving(!videoEnabled);
+                    const videoEnabled = window.Android.isVideoWhileDrivingEnabled();
+                    result = window.Android.setVideoWhileDriving(!videoEnabled);
                     break;
                 case 'cameraOverspeed':
-                    const overspeedEnabled = window.AndroidInterface.isCameraOverspeedLimitEnabled();
-                    result = window.AndroidInterface.setCameraOverspeedLimit(!overspeedEnabled);
+                    const overspeedEnabled = window.Android.isCameraOverspeedLimitEnabled();
+                    result = window.Android.setCameraOverspeedLimit(!overspeedEnabled);
                     break;
                 case 'ambientLight':
-                    const ambientEnabled = window.AndroidInterface.isAmbientLightEnabled();
-                    result = window.AndroidInterface.setAmbientLightEnabled(!ambientEnabled);
+                    const ambientEnabled = window.Android.isAmbientLightEnabled();
+                    result = window.Android.setAmbientLightEnabled(!ambientEnabled);
                     break;
                 case 'speech':
-                    const speechEnabled = window.AndroidInterface.isSpeechEnabled();
-                    result = window.AndroidInterface.setSpeechEnabled(!speechEnabled);
+                    const speechEnabled = window.Android.isSpeechEnabled();
+                    result = window.Android.setSpeechEnabled(!speechEnabled);
                     break;
                 case 'secondaryScreen':
-                    const screenEnabled = window.AndroidInterface.isSecondaryScreenEnabled();
-                    result = window.AndroidInterface.setSecondaryScreenEnabled(!screenEnabled);
+                    const screenEnabled = window.Android.isSecondaryScreenEnabled();
+                    result = window.Android.setSecondaryScreenEnabled(!screenEnabled);
                     break;
                 case 'screenPresentation':
-                    const showing = window.AndroidInterface.isPresentationShowing();
+                    const showing = window.Android.isPresentationShowing();
                     if (showing) {
-                        window.AndroidInterface.hidePresentation();
+                        window.Android.hidePresentation();
                         result = true;
                     } else {
-                        result = window.AndroidInterface.showCarStatusPresentation();
+                        result = window.Android.showCarStatusPresentation();
                     }
                     break;
             }
@@ -308,8 +286,8 @@ const QuickSwitchManager = {
      * @param {number} mode - 驾驶模式ID (0-5)
      */
     setDriveMode: function(mode) {
-        if (window.AndroidInterface && window.AndroidInterface.setDriveMode) {
-            const result = window.AndroidInterface.setDriveMode(mode);
+        if (window.Android && window.Android.setDriveMode) {
+            const result = window.Android.setDriveMode(mode);
             console.log('设置驾驶模式:', mode, '结果:', result);
         }
     },
@@ -320,25 +298,25 @@ const QuickSwitchManager = {
      * @param {string} modeId - 场景模式ID
      */
     toggleSceneMode: function(modeId) {
-        if (!window.AndroidInterface) return;
+        if (!window.Android) return;
         
         try {
             let result = false;
             switch (modeId) {
                 case 'guard':
-                    result = window.AndroidInterface.setGuardMode(true);
+                    result = window.Android.setGuardMode(true);
                     break;
                 case 'rest':
-                    result = window.AndroidInterface.setRestMode(true);
+                    result = window.Android.setRestMode(true);
                     break;
                 case 'camping':
-                    result = window.AndroidInterface.setCampingMode(true);
+                    result = window.Android.setCampingMode(true);
                     break;
                 case 'powerSave':
-                    result = window.AndroidInterface.setPowerSaveMode(true);
+                    result = window.Android.setPowerSaveMode(true);
                     break;
                 case 'sentinel':
-                    result = window.AndroidInterface.setSentinelMode(true);
+                    result = window.Android.setSentinelMode(true);
                     break;
             }
             console.log('切换场景模式:', modeId, '结果:', result);
@@ -352,28 +330,28 @@ const QuickSwitchManager = {
      * @description 刷新所有开关的状态显示
      */
     refreshSwitchStates: function() {
-        if (!window.AndroidInterface) return;
+        if (!window.Android) return;
         
         const panel = document.getElementById('quickSwitchPanel');
         if (!panel) return;
         
         // 更新可读取状态的开关
         const statusMap = {
-            'videoWhileDriving': window.AndroidInterface.isVideoWhileDrivingEnabled ? window.AndroidInterface.isVideoWhileDrivingEnabled() : null,
-            'cameraOverspeed': window.AndroidInterface.isCameraOverspeedLimitEnabled ? window.AndroidInterface.isCameraOverspeedLimitEnabled() : null,
-            'ambientLight': window.AndroidInterface.isAmbientLightEnabled ? window.AndroidInterface.isAmbientLightEnabled() : null,
-            'speech': window.AndroidInterface.isSpeechEnabled ? window.AndroidInterface.isSpeechEnabled() : null,
-            'secondaryScreen': window.AndroidInterface.isSecondaryScreenEnabled ? window.AndroidInterface.isSecondaryScreenEnabled() : null,
-            'screenPresentation': window.AndroidInterface.isPresentationShowing ? window.AndroidInterface.isPresentationShowing() : null,
+            'videoWhileDriving': window.Android.isVideoWhileDrivingEnabled ? window.Android.isVideoWhileDrivingEnabled() : null,
+            'cameraOverspeed': window.Android.isCameraOverspeedLimitEnabled ? window.Android.isCameraOverspeedLimitEnabled() : null,
+            'ambientLight': window.Android.isAmbientLightEnabled ? window.Android.isAmbientLightEnabled() : null,
+            'speech': window.Android.isSpeechEnabled ? window.Android.isSpeechEnabled() : null,
+            'secondaryScreen': window.Android.isSecondaryScreenEnabled ? window.Android.isSecondaryScreenEnabled() : null,
+            'screenPresentation': window.Android.isPresentationShowing ? window.Android.isPresentationShowing() : null,
         };
         
-        panel.querySelectorAll('.switch-item').forEach(item => {
+        panel.querySelectorAll('.qsp-switch-item').forEach(item => {
             const id = item.dataset.id;
-            const statusEl = item.querySelector('.switch-status');
+            const statusEl = item.querySelector('.qsp-status');
             if (statusEl && statusMap[id] !== null && statusMap[id] !== undefined) {
                 statusEl.textContent = statusMap[id] ? '开' : '关';
                 statusEl.style.color = statusMap[id] ? '#4CAF50' : '#888';
-                item.style.background = statusMap[id] ? 'rgba(76, 175, 80, 0.2)' : 'rgba(255,255,255,0.1)';
+                item.classList.toggle('qsp-active', statusMap[id]);
             }
         });
         

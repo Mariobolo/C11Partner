@@ -201,10 +201,10 @@
         <footer class="status-bar">
             <!-- 左侧按钮组 -->
             <div class="left-buttons">
-                <button class="control-icon" id="appsBtn"
-                    style="background-image: url('images/nav_apps.png'); width: 25px; height: 25px; background-color: transparent; border: none;"></button>
-                <button class="control-icon" id="tasksBtn"
-                    style="background-image: url('images/nav_tasks.png'); width: 25px; height: 25px; margin-left: 20px; background-color: transparent; border: none;"></button>
+                <button class="control-icon btn-nav" id="appsBtn"
+                    style="background-image: url('images/nav_apps.png');"></button>
+                <button class="control-icon btn-nav btn-nav-spaced" id="tasksBtn"
+                    style="background-image: url('images/nav_tasks.png');"></button>
             </div>
 
             <!-- 中间控制组 -->
@@ -237,10 +237,10 @@
 
             <!-- 右侧按钮组 -->
             <div class="right-buttons">
-                <button class="control-icon" id="camera360Btn"
-                    style="background-image: url('images/nav_camera.png'); width: 25px; height: 25px; background-color: transparent; border: none;"></button>
-                <button class="control-icon" id="settingsBtn"
-                    style="background-image: url('images/nav_seetings.png'); width: 25px; height: 25px; margin-left: 20px; background-color: transparent; border: none;"></button>
+                <button class="control-icon btn-nav" id="camera360Btn"
+                    style="background-image: url('images/nav_camera.png');"></button>
+                <button class="control-icon btn-nav btn-nav-spaced" id="settingsBtn"
+                    style="background-image: url('images/nav_seetings.png');"></button>
             </div>
         </footer>
 
@@ -324,8 +324,8 @@
                             </div>
                             <div class="setting-item">
                                 <label>轮播间隔（秒）</label>
-                                <input type="number" class="setting-input" id="wallpaperIntervalV2Input"
-                                    value="15" min="5" max="3600" style="width: 100px;">
+                                <input type="number" class="setting-input setting-input-short" id="wallpaperIntervalV2Input"
+                                    value="15" min="5" max="3600">
                             </div>
                         </div>
 
@@ -462,11 +462,9 @@
                                 <!-- 应用列表将通过JavaScript动态生成 -->
                             </div>
                             <!-- 加载提示 -->
-                            <div id="appsLoading"
-                                style="display: none; text-align: center; padding: 15px; color: #aaa;">
-                                <div style="font-size: 14px; margin-bottom: 8px;">加载中...</div>
-                                <div class="loading-spinner"
-                                    style="border: 3px solid #333; border-top: 3px solid #007bff; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto;">
+                            <div id="appsLoading" class="apps-loading-placeholder">
+                                <div class="loading-tip-text">加载中...</div>
+                                <div class="loading-spinner-small">
                                 </div>
                             </div>
                         </div>
@@ -476,29 +474,6 @@
         </div>
     </div>
 
-    <!-- 加载动画样式 -->
-    <style>
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
 
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .rotate-animation {
-            animation: rotate 2s linear infinite;
-        }
-    </style>
 </body>
 </html>
