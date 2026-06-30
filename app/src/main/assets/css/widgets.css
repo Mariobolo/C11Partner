@@ -645,7 +645,6 @@
     }
 }
 
-}
 .widget:last-child {
     margin-right: 0;
 }
@@ -1053,7 +1052,6 @@
         inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
     border-color: rgba(var(--primary-color-rgb), 0.3);
-}
 /* 点击3D按压反馈 */
 .quick-switch-item:active {
     transform: scale(0.92);
@@ -1136,7 +1134,6 @@
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-}
 .quick-switch-item.active .quick-switch-name {
     color: var(--primary-color);
 }
@@ -1233,7 +1230,6 @@
     transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     transform-style: preserve-3d;
-}
 /* 天气图标3D底座 */
 .weather-info {
     margin-left: 0;
@@ -1339,7 +1335,6 @@
     opacity: 0.3;
     z-index: -1;
     animation: tempGlow 3s ease-in-out infinite alternate;
-}
 @keyframes tempGlow {
     0% { opacity: 0.2; filter: blur(8px); }
     100% { opacity: 0.5; filter: blur(16px); }
@@ -1452,7 +1447,6 @@
         0 4px 12px rgba(0, 0, 0, 0.5);
 }
 /* ========== 车辆状态指示器视觉增强 ========== */
-}
 /* ========== 状态指示器图标增强 ========== */
 .status-indicator:hover {
     background: rgba(255, 255, 255, 0.08);
@@ -2896,7 +2890,6 @@
     transform: scale(1.05);
     filter: blur(0);
 }
-}
 .left-buttons,
 .right-buttons {
     display: flex;
@@ -3395,7 +3388,6 @@
     transform: translateY(-2px);
 }
 /* 天气图标优化 - 已合并到主定义 */
-}
 /* 状态栏图标优化 */
 .network-status-icon,
 .bluetooth-status-icon {
@@ -4809,7 +4801,6 @@
 }
 /* ========== 车辆状态指示器视觉增强 ========== */
     opacity: 1;
-}
 /* ========== 状态指示器图标增强 ========== */
 .status-indicator:hover {
     background: rgba(255, 255, 255, 0.08);
@@ -4906,7 +4897,6 @@
     border-radius: 50%;
     animation: loadingSpin 0.8s linear infinite;
     z-index: 11;
-}
 /* ============================================
    【第41轮优化点3】响应式布局终极适配
    多断点优化、小屏幕间距调整、触控区域优化、字体缩放
@@ -6064,7 +6054,6 @@
 }
 
 /* 快捷开关按钮悬停终极3D效果 */
-}
 
 .quick-switch-item:hover::before {
     background: linear-gradient(
@@ -6127,7 +6116,6 @@
             0 0 70px rgba(var(--primary-color-rgb), 0.35),
             inset 0 0 16px rgba(var(--primary-color-rgb), 0.2);
     }
-}
 }
 
 .quick-switch-item:hover .quick-switch-name {
@@ -6452,7 +6440,6 @@
         rgba(var(--secondary-color-rgb), 0.2) 50%,
         transparent 100%
     );
-}
 
 .car-status-indicators:hover {
     transform: translateY(-3px) scale(1.02);
@@ -8044,7 +8031,6 @@
 
 /* 修复左侧和右侧按钮组布局 */
 .left-buttons,
-}
 
 /* 修复主容器 */
 .main-container {

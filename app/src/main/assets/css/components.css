@@ -2919,7 +2919,6 @@ input[type="range"]::-moz-range-thumb:hover {
 *:hover {
     scrollbar-color: rgba(var(--primary-color-rgb), 0.4) rgba(255, 255, 255, 0.05) !important;
 }
-}
 @keyframes ripple {
     0% { 
         transform: translate(-50%, -50%) scale(0); 
@@ -12551,7 +12550,7 @@ input[type="range"]::-moz-range-thumb:hover {
 @keyframes badgeCountPop {
     0% { transform: scale(0); }
     50% { transform: scale(1.2); }
-    100% { transform: scale(1);
+    100% { transform: scale(1); }
 }
 
 /* ============================================
@@ -13006,7 +13005,6 @@ input[type="range"]::-moz-range-thumb:hover {
     .retina-sharp {
         image-rendering: -webkit-optimize-contrast;
     }
-} }
 }
 
 /* ============================================

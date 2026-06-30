@@ -1712,8 +1712,6 @@
     background: rgba(var(--primary-color-rgb), 0.15);
     font-weight: 600;
 }
-    letter-spacing: 0.3px;
-}
 
 /* Tab按钮光泽扫过效果 */
 .tab-button::before {
