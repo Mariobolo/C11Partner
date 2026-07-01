@@ -2670,7 +2670,8 @@ window.addEventListener('DOMContentLoaded', () => {
     // 添加时间显示点击事件，用于切换壁纸轮播状态
     safeInit('addTimeDisplayClickEvent', addTimeDisplayClickEvent);
 
-
+    // 初始化特效等级设置
+    safeInit('initEffectLevel', initEffectLevel);
 
 });
 
@@ -3225,10 +3226,41 @@ if (document.readyState === 'loading') {
 }
 
 
+// ==================== 特效等级系统 ====================
+/**
+ * 初始化特效等级设置
+ * 从localStorage读取保存的等级，应用到body，绑定radio事件
+ */
+function initEffectLevel() {
+    // 从本地存储读取特效等级（默认balanced）
+    var savedLevel = localStorage.getItem('effectLevel') || 'balanced';
+    applyEffectLevel(savedLevel);
 
+    // 绑定radio按钮change事件
+    var radios = document.querySelectorAll('input[name="effectLevel"]');
+    radios.forEach(function(radio) {
+        // 设置当前选中状态
+        if (radio.value === savedLevel) {
+            radio.checked = true;
+        }
+        // 绑定change事件
+        radio.addEventListener('change', function() {
+            if (this.checked) {
+                var level = this.value;
+                localStorage.setItem('effectLevel', level);
+                applyEffectLevel(level);
+                console.log('[EffectLevel] 已切换为:', level);
+            }
+        });
+    });
+}
 
-// 自动测试：2秒后强制显示appsModal（测试用，正式版请删除）
-setTimeout(() => {
-    console.log('自动测试：显示appsModal');
-    testShowAppsModal(); // 取消注释以启用自动测试
-}, 2000);
+/**
+ * 应用特效等级
+ * @param {string} level - low/balanced/high
+ */
+function applyEffectLevel(level) {
+    var body = document.body;
+    body.classList.remove('effect-low', 'effect-balanced', 'effect-high');
+    body.classList.add('effect-' + level);
+}

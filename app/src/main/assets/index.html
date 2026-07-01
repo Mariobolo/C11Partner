@@ -256,6 +256,7 @@
                     <button class="tab-button active" data-tab="wallpaper">壁纸设置</button>
                     <button class="tab-button" data-tab="components">组件配置</button>
                     <button class="tab-button" data-tab="apps">系统管理</button>
+                    <button class="tab-button" data-tab="ui">界面设置</button>
                 </nav>
 
                 <div class="modal-body">
@@ -419,6 +420,34 @@
                                     <span class="quick-cmd" data-cmd="打开近光灯">打开近光灯</span>
                                     <span class="quick-cmd" data-cmd="切换到舒适模式">舒适模式</span>
                                 </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 界面设置TAB -->
+                    <section class="tab-content" id="ui-tab">
+                        <div class="setting-section">
+                            <h3>特效等级</h3>
+                            <p class="setting-hint" style="margin-bottom:12px;">降低特效等级可提升车机流畅度</p>
+                            <div class="wallpaper-type-list">
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="effectLevel" value="low">
+                                    <span class="type-icon">⚡</span>
+                                    <span class="type-name">流畅</span>
+                                    <span class="type-desc">关闭动画特效，最佳性能</span>
+                                </label>
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="effectLevel" value="balanced" checked>
+                                    <span class="type-icon">⚖️</span>
+                                    <span class="type-name">平衡</span>
+                                    <span class="type-desc">保留基础动画，兼顾性能</span>
+                                </label>
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="effectLevel" value="high">
+                                    <span class="type-icon">✨</span>
+                                    <span class="type-name">炫丽</span>
+                                    <span class="type-desc">全部特效，最佳视觉体验</span>
+                                </label>
                             </div>
                         </div>
                     </section>

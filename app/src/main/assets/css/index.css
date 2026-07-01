@@ -3354,3 +3354,43 @@ audio {
     animation: pulse 1s ease-in-out infinite;
 }
 
+
+/* ========== 特效等级系统 ========== */
+/* 流畅模式：禁用所有动画和特效 */
+body.effect-low *,
+body.effect-low *::before,
+body.effect-low *::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.05s !important;
+    transition-delay: 0s !important;
+}
+body.effect-low .widget::before,
+body.effect-low .widget::after,
+body.effect-low .weather-widget::after,
+body.effect-low .music-widget::before,
+body.effect-low .music-widget::after,
+body.effect-low .quick-app-item::before,
+body.effect-low .quick-app-item::after,
+body.effect-low .quick-switch-item::before {
+    display: none !important;
+}
+body.effect-low .vinyl-record {
+    animation: none !important;
+}
+body.effect-low .backdrop-filter {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 平衡模式：保留基础动画，去掉复杂特效 */
+body.effect-balanced .widget::before,
+body.effect-balanced .widget::after {
+    opacity: 0.2 !important;
+}
+body.effect-balanced .quick-app-item:hover,
+body.effect-balanced .quick-switch-item:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+}
+
+/* 炫丽模式：默认全开，无需额外规则 */
