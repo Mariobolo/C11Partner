@@ -95,7 +95,7 @@ public class InitManager {
      * 初始化权限
      */
     public void initPermissions() {
-        activity.requestAudioPermission();
+        // 录音权限已移除（应用不需要麦克风）
         activity.requestStoragePermission();
         requestNotificationListenerPermission();
     }

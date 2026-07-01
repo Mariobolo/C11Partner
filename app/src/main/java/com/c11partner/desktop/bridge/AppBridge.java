@@ -343,6 +343,52 @@ public class AppBridge extends BaseBridge {
     }
     
     /**
+     * 轻量版应用列表JSON（不转图标base64，避免车机OOM）
+     * 用于异步加载场景，图标使用默认占位
+     */
+    private String buildGroupedAppListJsonLite(List<Map<String, Object>> apps) {
+        try {
+            Map<String, List<Map<String, Object>>> groupedApps = new HashMap<>();
+            for (Map<String, Object> app : apps) {
+                String name = (String) app.get("name");
+                String letter = getFirstLetter(name);
+                if (!groupedApps.containsKey(letter)) {
+                    groupedApps.put(letter, new ArrayList<Map<String, Object>>());
+                }
+                groupedApps.get(letter).add(app);
+            }
+            for (List<Map<String, Object>> appList : groupedApps.values()) {
+                Collections.sort(appList, new Comparator<Map<String, Object>>() {
+                    @Override
+                    public int compare(Map<String, Object> app1, Map<String, Object> app2) {
+                        return ((String) app1.get("name")).compareToIgnoreCase((String) app2.get("name"));
+                    }
+                });
+            }
+            JSONObject result = new JSONObject();
+            List<String> sortedLetters = new ArrayList<>(groupedApps.keySet());
+            Collections.sort(sortedLetters);
+            for (String letter : sortedLetters) {
+                JSONArray appArray = new JSONArray();
+                for (Map<String, Object> app : groupedApps.get(letter)) {
+                    JSONObject appObj = new JSONObject();
+                    appObj.put("name", app.get("name"));
+                    appObj.put("packageName", app.get("packageName"));
+                    appObj.put("isSystemApp", app.get("isSystemApp"));
+                    // 轻量版：不转图标，使用默认图标
+                    appObj.put("icon", "images/ic_launcher.png");
+                    appArray.put(appObj);
+                }
+                result.put(letter, appArray);
+            }
+            return result.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "buildGroupedAppListJsonLite失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
      * 获取名称的首字母
      * @param name 应用名称
      * @return 首字母（大写）
@@ -695,7 +741,8 @@ public class AppBridge extends BaseBridge {
                 try {
                     // 使用 AppUtils 获取所有已安装应用
                     List<Map<String, Object>> allApps = AppUtils.getInstalledApps(mContext);
-                    final String result = buildGroupedAppListJson(allApps);
+                    // 使用轻量版JSON（不转图标base64，避免OOM）
+                    final String result = buildGroupedAppListJsonLite(allApps);
                     
                     // 在UI线程中执行JavaScript回调
                     runOnUiThread(new Runnable() {

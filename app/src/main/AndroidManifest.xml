@@ -20,8 +20,7 @@
     <!-- 前台服务 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
-    <!-- 音频可视化 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 音频设置（用于媒体播放控制） -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <!-- 存储权限（Android 10 以下需要） -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -64,6 +63,14 @@
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
+    
+    <!-- Android 11+ 包可见性声明 -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
 
     <uses-feature android:name="android.software.home_launcher" />
     <application
