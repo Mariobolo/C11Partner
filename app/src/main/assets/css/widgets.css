@@ -8138,12 +8138,12 @@
 
 /* 门窗状态容器 */
 .door-window-status {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding-left: 12px !important;
-    margin-left: 8px !important;
-    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 12px;
+    margin-left: 8px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* 门窗状态项 - 默认隐藏 */

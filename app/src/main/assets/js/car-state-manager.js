@@ -92,7 +92,7 @@ const CarStateManager = {
         
         for (const [key, element] of Object.entries(doorElements)) {
             if (element) {
-                if (doorStates[key] === 1) {
+                if (doorStates[key] === 1 || doorStates[key] === true) {
                     element.classList.add('active');
                     hasAnyActive = true;
                 } else {
@@ -145,7 +145,7 @@ const CarStateManager = {
         
         for (const [key, element] of Object.entries(windowElements)) {
             if (element) {
-                if (windowStates[key] === 1) {
+                if (windowStates[key] === 1 || windowStates[key] === true) {
                     element.classList.add('active');
                 } else {
                     element.classList.remove('active');
@@ -182,7 +182,7 @@ const CarStateManager = {
         const rightElement = document.getElementById('rightTurnIndicator');
         
         if (leftElement) {
-            if (left === 1) {
+            if (left === 1 || left === true) {
                 leftElement.classList.add('active');
             } else {
                 leftElement.classList.remove('active');
@@ -190,7 +190,7 @@ const CarStateManager = {
         }
         
         if (rightElement) {
-            if (right === 1) {
+            if (right === 1 || right === true) {
                 rightElement.classList.add('active');
             } else {
                 rightElement.classList.remove('active');
