@@ -1753,10 +1753,24 @@ function loadQuickApps() {
             }
         }
     } else {
-        // 在非Android环境中隐藏组件
+        // 非Android环境，显示模拟快速启动应用
         if (quickAppsWidget) {
-            quickAppsWidget.style.display = 'none';
+            quickAppsWidget.style.display = 'flex';
         }
+        const mockQuickApps = [
+            { name: '高德地图', packageName: 'com.autonavi.minimap', icon: 'images/ic_launcher.png' },
+            { name: '音乐', packageName: 'com.android.music', icon: 'images/ic_launcher.png' },
+            { name: '微信', packageName: 'com.tencent.mm', icon: 'images/ic_launcher.png' },
+        ];
+        mockQuickApps.forEach(app => {
+            const appItem = document.createElement('div');
+            appItem.className = 'quick-app-item';
+            appItem.innerHTML = `
+                <div class="quick-app-icon" style="background-image: url('${app.icon}'); width: 60px; height: 60px;"></div>
+                <div class="quick-app-name" style="font-size: 14px;">${app.name}</div>
+            `;
+            quickAppsContainer.appendChild(appItem);
+        });
     }
 }
 

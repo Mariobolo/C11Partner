@@ -414,49 +414,16 @@ function visualize() {
 }
 
 // 初始化自定义音频播放器
+// 注意：播放/暂停/上一首/下一首按钮事件已由 SystemMusicManager 统一管理
+// 此函数只保留进度条交互和状态轮询功能
 function initCustomAudioPlayer() {
-    // 获取播放器元素
-    const playPauseBtn = document.getElementById('play-pause-btn');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const volumeBtn = document.getElementById('volume-btn');
-    const progressBar = document.querySelector('.progress-bar');
-    const progressDot = document.querySelector('.progress-dot');
+    const progressBar = document.querySelector('.music-progress-bar');
     const vinylRecord = document.querySelector('.vinyl-record');
     const tonearm = document.getElementById('tonearm');
 
-    // 模拟音频时长（秒）
-    let duration = 180; // 3分钟
-    let currentTime = 0;
     let isPlaying = false;
-    let progressInterval = null;
 
-    // 更新进度条
-    function updateProgressBar() {
-        const progressPercent = (currentTime / duration) * 100;
-        progressDot.style.left = progressPercent + '%';
-        // 更新进度条背景
-        if (progressBar) {
-            progressBar.style.setProperty('--progress', progressPercent + '%');
-        }
-    }
-
-    // 从Android获取当前音乐名称
-    function updateCurrentSongName() {
-        try {
-            if (typeof Android !== 'undefined' && Android.getCurrentMusicName) {
-                const songName = Android.getCurrentMusicName();
-                const currentSongNameElement = document.getElementById('current-song-name');
-                if (currentSongNameElement) {
-                    currentSongNameElement.textContent = songName || '此刻无声，佳音已备候君启...';
-                }
-            }
-        } catch (error) {
-            console.error('更新歌曲名称时出错:', error);
-        }
-    }
-
-    // 从Android获取播放状态并更新UI
+    // 从Android获取播放状态并更新UI（唱片旋转、唱针）
     function updatePlayingState() {
         try {
             if (typeof Android !== 'undefined' && Android.getMusicProgressInfo) {
@@ -464,223 +431,45 @@ function initCustomAudioPlayer() {
                 const progressInfo = JSON.parse(progressInfoJson);
                 const actualIsPlaying = progressInfo.isPlaying;
                 
-                // 如果播放状态发生变化，更新UI
                 if (actualIsPlaying !== isPlaying) {
                     isPlaying = actualIsPlaying;
                     if (isPlaying) {
-                        if (vinylRecord) {
-                            vinylRecord.classList.add('spinning');
-                        }
-                        if (tonearm) {
-                            tonearm.classList.add('playing');
-                        }
+                        if (vinylRecord) vinylRecord.classList.add('spinning');
+                        if (tonearm) tonearm.classList.add('playing');
                     } else {
-                        if (vinylRecord) {
-                            vinylRecord.classList.remove('spinning');
-                        }
-                        if (tonearm) {
-                            tonearm.classList.remove('playing');
-                        }
+                        if (vinylRecord) vinylRecord.classList.remove('spinning');
+                        if (tonearm) tonearm.classList.remove('playing');
                     }
                 }
             }
         } catch (error) {
-            console.error('更新播放状态时出错:', error);
+            // 静默处理
         }
     }
 
-    // 播放/暂停功能
-    playPauseBtn.addEventListener('click', function () {
-        try {
-            // 检查是否在Android环境中
-            if (typeof Android !== 'undefined' && Android.playPause) {
-                // 调用Android原生方法
-                Android.playPause();
-                // 立即更新UI状态（乐观更新）
-                isPlaying = !isPlaying;
-                if (isPlaying) {
-                    if (vinylRecord) {
-                        vinylRecord.classList.add('spinning');
-                    }
-                    if (tonearm) {
-                        tonearm.classList.add('playing');
-                    }
-                } else {
-                    if (vinylRecord) {
-                        vinylRecord.classList.remove('spinning');
-                    }
-                    if (tonearm) {
-                        tonearm.classList.remove('playing');
+    // 进度条点击事件（跳转播放进度）
+    if (progressBar) {
+        progressBar.addEventListener('click', function (e) {
+            try {
+                const progressBarWidth = progressBar.offsetWidth;
+                const clickPosition = e.offsetX;
+                const progressPercent = clickPosition / progressBarWidth;
+
+                if (typeof Android !== 'undefined' && Android.seekTo) {
+                    if (Android.getMusicProgressInfo) {
+                        const progressInfoJson = Android.getMusicProgressInfo();
+                        const progressInfo = JSON.parse(progressInfoJson);
+                        const seekTime = Math.floor(progressPercent * progressInfo.duration);
+                        Android.seekTo(seekTime);
                     }
                 }
-                // 延迟更新播放状态，等待Android响应确认
-                setTimeout(updatePlayingState, 200);
-                setTimeout(updatePlayingState, 500);
-                setTimeout(updatePlayingState, 1000);
-            } else {
-                // 模拟播放/暂停
-                isPlaying = !isPlaying;
-                if (isPlaying) {
-                    // 更换图标为暂停图标
-                    // 开始播放进度更新
-                    progressInterval = setInterval(() => {
-                        if (isPlaying) {
-                            if (currentTime < duration) {
-                                currentTime++;
-                                updateProgressBar();
-                            } else {
-                                // 播放结束，自动回到开头继续播放（循环播放）
-                                currentTime = 0;
-                                updateProgressBar();
-                            }
-                        }
-                    }, 1000);
-                    // 开始唱片旋转和唱针移动
-                    if (vinylRecord) {
-                        vinylRecord.classList.add('spinning');
-                    }
-                    if (tonearm) {
-                        tonearm.classList.add('playing');
-                    }
-                } else {
-                    // 更换图标为播放图标
-                    // 暂停播放进度更新
-                    clearInterval(progressInterval);
-                    // 停止唱片旋转和唱针复位
-                    if (vinylRecord) {
-                        vinylRecord.classList.remove('spinning');
-                    }
-                    if (tonearm) {
-                        tonearm.classList.remove('playing');
-                    }
-                }
+            } catch (error) {
+                // 静默处理
             }
-        } catch (error) {
-            console.error('播放/暂停操作出错:', error);
-        }
-    });
+        });
+    }
 
-    // 上一首功能
-    prevBtn.addEventListener('click', function () {
-        try {
-            // 检查是否在Android环境中
-            if (typeof Android !== 'undefined' && Android.playPrevious) {
-                // 调用Android原生方法
-                Android.playPrevious();
-                // 更新歌曲名称
-                updateCurrentSongName();
-                // 延迟更新播放状态，等待Android响应
-                setTimeout(updatePlayingState, 100);
-            } else {
-                // 使用原有的模拟功能
-                // 重置当前播放状态
-                isPlaying = false;
-                clearInterval(progressInterval);
-                // 停止唱片旋转和唱针复位
-                if (vinylRecord) {
-                    vinylRecord.classList.remove('spinning');
-                }
-                if (tonearm) {
-                    tonearm.classList.remove('playing');
-                }
-                // 重置进度
-                currentTime = 0;
-                updateProgressBar();
-            }
-        } catch (error) {
-            console.error('上一首操作出错:', error);
-        }
-    });
-
-    // 下一首功能
-    nextBtn.addEventListener('click', function () {
-        try {
-            // 检查是否在Android环境中
-            if (typeof Android !== 'undefined' && Android.playNext) {
-                // 调用Android原生方法
-                Android.playNext();
-                // 更新歌曲名称
-                updateCurrentSongName();
-                // 延迟更新播放状态，等待Android响应
-                setTimeout(updatePlayingState, 100);
-            } else {
-                // 使用原有的模拟功能
-                // 重置当前播放状态
-                isPlaying = false;
-                clearInterval(progressInterval);
-                // 停止唱片旋转和唱针复位
-                if (vinylRecord) {
-                    vinylRecord.classList.remove('spinning');
-                }
-                if (tonearm) {
-                    tonearm.classList.remove('playing');
-                }
-                // 重置进度
-                currentTime = 0;
-                updateProgressBar();
-            }
-        } catch (error) {
-            console.error('下一首操作出错:', error);
-        }
-    });
-
-    // 音量控制功能
-    volumeBtn.addEventListener('click', function () {
-        try {
-            // 检查是否在Android环境中
-            if (typeof Android !== 'undefined' && Android.toggleMute) {
-                // 调用Android原生方法
-                Android.toggleMute();
-            } else {
-                // 模拟音量控制
-                showToast('音量控制');
-            }
-        } catch (error) {
-            console.error('音量控制操作出错:', error);
-        }
-    });
-
-    // 进度条点击事件
-    progressBar.addEventListener('click', function (e) {
-        try {
-            const progressBarWidth = progressBar.offsetWidth;
-            const clickPosition = e.offsetX;
-            const progressPercent = (clickPosition / progressBarWidth) * 100;
-            progressDot.style.left = progressPercent + '%';
-            // 更新进度条背景
-            progressBar.style.setProperty('--progress', progressPercent + '%');
-
-            // 更新当前时间
-            currentTime = (progressPercent / 100) * duration;
-
-            // 检查是否在Android环境中
-            if (typeof Android !== 'undefined' && Android.seekTo) {
-                // 调用Android原生方法设置播放进度
-                Android.seekTo(Math.floor(currentTime * 1000));
-            }
-        } catch (error) {
-            console.error('进度条操作出错:', error);
-        }
-    });
-
-    // 初始化进度条
-    updateProgressBar();
-    
-    // 初始化歌曲名称
-    updateCurrentSongName();
-    
-    // 立即初始化播放状态（不延迟）
-    updatePlayingState();
-    
-    // 延迟再次更新播放状态，确保获取到最新状态
-    setTimeout(updatePlayingState, 500);
-    setTimeout(updatePlayingState, 1000);
-    setTimeout(updatePlayingState, 2000);
-    
-    // 定时更新歌曲名称
-    setInterval(updateCurrentSongName, 2000);
-    
-    // 定时更新播放状态（2秒足够，500ms太频繁导致卡顿）
+    // 定时更新播放状态（唱片动画同步）
     setInterval(updatePlayingState, 2000);
 }
 
