@@ -308,8 +308,24 @@ public class AppBridge extends BaseBridge {
                     JSONObject appObj = new JSONObject();
                     appObj.put("name", app.get("name"));
                     appObj.put("packageName", app.get("packageName"));
-                    appObj.put("icon", app.get("icon"));
                     appObj.put("isSystemApp", app.get("isSystemApp"));
+                    // 将Drawable图标转为base64
+                    String pkgName = (String) app.get("packageName");
+                    String iconBase64 = getCachedAppIconBase64(pkgName);
+                    if (iconBase64 == null || iconBase64.isEmpty()) {
+                        Object iconObj = app.get("icon");
+                        if (iconObj instanceof Drawable) {
+                            iconBase64 = drawableToBase64((Drawable) iconObj);
+                            if (iconBase64 != null && !iconBase64.isEmpty()) {
+                                cacheAppIconBase64(pkgName, iconBase64);
+                            }
+                        }
+                    }
+                    if (iconBase64 != null && !iconBase64.isEmpty()) {
+                        appObj.put("icon", "data:image/png;base64," + iconBase64);
+                    } else {
+                        appObj.put("icon", "images/ic_launcher.png");
+                    }
                     appArray.put(appObj);
                 }
                 appsObj.put(letter, appArray);
@@ -398,7 +414,22 @@ public class AppBridge extends BaseBridge {
                 JSONObject appObj = new JSONObject();
                 appObj.put("name", app.get("name"));
                 appObj.put("packageName", app.get("packageName"));
-                appObj.put("icon", app.get("icon"));
+                String pkgName = (String) app.get("packageName");
+                String iconBase64 = getCachedAppIconBase64(pkgName);
+                if (iconBase64 == null || iconBase64.isEmpty()) {
+                    Object iconObj = app.get("icon");
+                    if (iconObj instanceof Drawable) {
+                        iconBase64 = drawableToBase64((Drawable) iconObj);
+                        if (iconBase64 != null && !iconBase64.isEmpty()) {
+                            cacheAppIconBase64(pkgName, iconBase64);
+                        }
+                    }
+                }
+                if (iconBase64 != null && !iconBase64.isEmpty()) {
+                    appObj.put("icon", "data:image/png;base64," + iconBase64);
+                } else {
+                    appObj.put("icon", "images/ic_launcher.png");
+                }
                 quickAppsArray.put(appObj);
             }
             

@@ -154,7 +154,7 @@ function initSettingsModal() {
 
     // 点击弹窗外部区域隐藏弹窗
     window.addEventListener('click', function (event) {
-        if (event.target === settingsModal) {
+        if (event.target === settingsModal || (settingsModal.style.display !== 'none' && !event.target.closest('.modal-content') && !event.target.closest('#settingsBtn'))) {
             hideSettingsModal();
         }
     });
@@ -1102,7 +1102,7 @@ function initAppsModal() {
 
     // 点击弹窗外部区域隐藏弹窗
     window.addEventListener('click', function (event) {
-        if (event.target === appsModal) {
+        if (event.target === appsModal || (appsModal.style.display !== 'none' && !event.target.closest('.apps-modal-content') && !event.target.closest('#appsBtn'))) {
             hideAppsModal();
         }
     });
