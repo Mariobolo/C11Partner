@@ -460,19 +460,15 @@ public class AppBridge extends BaseBridge {
                 JSONObject appObj = new JSONObject();
                 appObj.put("name", app.get("name"));
                 appObj.put("packageName", app.get("packageName"));
-                String pkgName = (String) app.get("packageName");
-                String iconBase64 = getCachedAppIconBase64(pkgName);
-                if (iconBase64 == null || iconBase64.isEmpty()) {
-                    Object iconObj = app.get("icon");
-                    if (iconObj instanceof Drawable) {
-                        iconBase64 = drawableToBase64((Drawable) iconObj);
-                        if (iconBase64 != null && !iconBase64.isEmpty()) {
-                            cacheAppIconBase64(pkgName, iconBase64);
-                        }
+                // 数据库中icon字段已是base64字符串
+                Object iconObj = app.get("icon");
+                if (iconObj instanceof String && !((String) iconObj).isEmpty()) {
+                    String iconStr = (String) iconObj;
+                    if (iconStr.startsWith("data:image")) {
+                        appObj.put("icon", iconStr);
+                    } else {
+                        appObj.put("icon", "data:image/png;base64," + iconStr);
                     }
-                }
-                if (iconBase64 != null && !iconBase64.isEmpty()) {
-                    appObj.put("icon", "data:image/png;base64," + iconBase64);
                 } else {
                     appObj.put("icon", "images/ic_launcher.png");
                 }
