@@ -2600,38 +2600,42 @@ window.addEventListener('DOMContentLoaded', () => {
         backgroundElement.style.backgroundImage = "url('images/default_bg_1.jpg')";
     }
 
-    // 注册时间更新监听事件
-    registerTimeUpdateListener();
+    // 安全执行初始化（任一步骤失败不影响后续）
+    function safeInit(name, fn) {
+        try {
+            fn();
+        } catch (e) {
+            console.error('[Init] ' + name + ' 失败:', e);
+        }
+    }
 
+    // 注册时间更新监听事件
+    safeInit('registerTimeUpdateListener', registerTimeUpdateListener);
 
     // 添加按钮点击效果
-    addClickEffect();
+    safeInit('addClickEffect', addClickEffect);
 
     // 初始化设置弹窗
-    initSettingsModal();
+    safeInit('initSettingsModal', initSettingsModal);
 
     // 初始化应用列表弹窗
-    initAppsModal();
-
-
-    // 启动壁纸轮播
-    //ensureWallpaperCarouselSettings();
+    safeInit('initAppsModal', initAppsModal);
 
     // 加载快速启动应用列表
-    loadQuickApps();
+    safeInit('loadQuickApps', loadQuickApps);
 
     // 加载桌面快捷开关
-    loadQuickSwitches();
+    safeInit('loadQuickSwitches', loadQuickSwitches);
     
 
 
     // 初始化可配置按钮
-    initConfigurableButtons();
+    safeInit('initConfigurableButtons', initConfigurableButtons);
 
     // 添加触摸滑动事件监听器
-    addTouchSwipeListener();
+    safeInit('addTouchSwipeListener', addTouchSwipeListener);
     // 初始化横向滚动功能
-    initHorizontalScroll();
+    safeInit('initHorizontalScroll', initHorizontalScroll);
 
     // 初始化时隐藏WiFi和蓝牙图标，只在连接时显示
     const wifiIcon = document.getElementById('wifiIcon');
@@ -2640,33 +2644,31 @@ window.addEventListener('DOMContentLoaded', () => {
     if (bluetoothIcon) bluetoothIcon.style.display = 'none';
 
     // 立即检查并更新网络和蓝牙状态
-    updateNetworkAndBluetoothStatus();
+    safeInit('updateNetworkAndBluetoothStatus', updateNetworkAndBluetoothStatus);
     // 每5秒检查一次网络和蓝牙状态
     setInterval(updateNetworkAndBluetoothStatus, 5000);
 
     // 初始化壁纸双击事件
-    initWallpaperDoubleClick();
+    safeInit('initWallpaperDoubleClick', initWallpaperDoubleClick);
 
     // 初始化组件可见性
-    initComponentVisibility();
+    safeInit('initComponentVisibility', initComponentVisibility);
 
     // 初始化音乐播放控制按钮 (由 SystemMusicManager 统一管理)
-    initMusicControls();
+    safeInit('initMusicControls', initMusicControls);
 
     // 初始化空调温度显示
-    initAcTemperature();
+    safeInit('initAcTemperature', initAcTemperature);
 
     // 注意：音乐信息更新已由 SystemMusicManager 统一管理
     // 每2秒自动更新一次，包含歌名、歌手、播放状态等
 
     // 启动音乐进度更新（2秒足够，1秒太频繁）
-    updateMusicProgress();
+    safeInit('updateMusicProgress', updateMusicProgress);
     setInterval(updateMusicProgress, 2000);
 
-    // 注意：getMusicProgressInfo方法已在WebViewBridge中实现，用于获取音乐播放进度
-
     // 添加时间显示点击事件，用于切换壁纸轮播状态
-    addTimeDisplayClickEvent();
+    safeInit('addTimeDisplayClickEvent', addTimeDisplayClickEvent);
 
 
 
