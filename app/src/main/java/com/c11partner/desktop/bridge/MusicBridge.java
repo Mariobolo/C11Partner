@@ -477,6 +477,14 @@ public class MusicBridge extends BaseBridge {
             return false;
         }
     }
+    
+    /**
+     * hasNotificationAccess - isNotificationListenerEnabled 的别名
+     * 供JS前端调用
+     */
+    public boolean hasNotificationAccess() {
+        return isNotificationListenerEnabled();
+    }
     /**
      * 打开通知监听设置页面
      */

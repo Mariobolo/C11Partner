@@ -1,6 +1,7 @@
 package com.c11partner.desktop.bridge;
 
 import android.content.Context;
+import android.content.Intent;
 import android.webkit.JavascriptInterface;
 import com.c11partner.desktop.MainActivity;
 
@@ -673,6 +674,190 @@ public class WebViewBridge extends BaseBridge {
     
     @JavascriptInterface
     public void openAppSettings() { mSystemBridge.openAppSettings(); }
+
+    // ==================== 车控补充方法（JS前端调用但原先缺失） ====================
+    
+    @JavascriptInterface
+    public String getCarState() {
+        // 由MainActivity通过updateCarState推送，此方法供JS主动拉取
+        return "{}";
+    }
+    
+    @JavascriptInterface
+    public void navigateToHome() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                android.net.Uri.parse("amapuri://route/plan/?dlat=0&dlon=0&dev=0&t=0"));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+        } catch (Exception e) {
+            logE(TAG, "导航回家失败", e);
+        }
+    }
+    
+    @JavascriptInterface
+    public void navigateToCompany() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                android.net.Uri.parse("amapuri://route/plan/?dlat=0&dlon=0&dev=0&t=0"));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+        } catch (Exception e) {
+            logE(TAG, "导航去公司失败", e);
+        }
+    }
+    
+    @JavascriptInterface
+    public boolean toggleAC() { return mCarControlBridge.toggleAirConditioning(); }
+    
+    @JavascriptInterface
+    public boolean toggleAirConditioning() { return mCarControlBridge.toggleAirConditioning(); }
+    
+    @JavascriptInterface
+    public boolean toggleDefrost() { return mCarControlBridge.toggleDefrost(); }
+    
+    @JavascriptInterface
+    public boolean increaseTemperature() { return mCarControlBridge.adjustTemperature(1); }
+    
+    @JavascriptInterface
+    public boolean decreaseTemperature() { return mCarControlBridge.adjustTemperature(-1); }
+    
+    @JavascriptInterface
+    public boolean increaseWindSpeed() { return mCarControlBridge.adjustWindLevel(1); }
+    
+    @JavascriptInterface
+    public boolean decreaseWindSpeed() { return mCarControlBridge.adjustWindLevel(-1); }
+    
+    @JavascriptInterface
+    public boolean adjustTemperature() { return mCarControlBridge.adjustTemperature(1); }
+    
+    @JavascriptInterface
+    public boolean adjustWindLevel() { return mCarControlBridge.adjustWindLevel(1); }
+    
+    @JavascriptInterface
+    public String getAcInfo() { return mCarControlBridge.getAcInfo(); }
+    
+    // ==================== 音乐控制旧API兼容 ====================
+    
+    @JavascriptInterface
+    public void playPause() { mMusicBridge.playPauseMusic(); }
+    
+    @JavascriptInterface
+    public void playNext() { mMusicBridge.nextMusic(); }
+    
+    @JavascriptInterface
+    public void playPrevious() { mMusicBridge.prevMusic(); }
+    
+    @JavascriptInterface
+    public void playMusic() { mMusicBridge.playPauseMusic(); }
+    
+    @JavascriptInterface
+    public void pauseMusic() { mMusicBridge.playPauseMusic(); }
+    
+    // ==================== 应用管理补充方法 ====================
+    
+    @JavascriptInterface
+    public void getAppListAsync(final String callbackId) {
+        mAppBridge.getAppListAsync(callbackId);
+    }
+    
+    @JavascriptInterface
+    public void getEnabledCategoriesAsync(final String callbackId) {
+        mWallpaperBridge.getEnabledCategoriesAsync(callbackId);
+    }
+    
+    @JavascriptInterface
+    public void showToast(final String message) {
+        try {
+            android.widget.Toast.makeText(mContext, message, android.widget.Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            logE(TAG, "showToast失败", e);
+        }
+    }
+    
+    @JavascriptInterface
+    public boolean hasNotificationAccess() {
+        return mMusicBridge.hasNotificationAccess();
+    }
+    
+    @JavascriptInterface
+    public void setDefaultDesktop() {
+        mAdbBridge.setDefaultDesktopViaAdb();
+    }
+    
+    // ==================== 展示/副屏方法（暂用stub实现） ====================
+    
+    @JavascriptInterface
+    public boolean isPresentationShowing() {
+        // TODO: 对接SecondaryScreenManager
+        return false;
+    }
+    
+    @JavascriptInterface
+    public void hidePresentation() {
+        // TODO: 对接SecondaryScreenManager
+    }
+    
+    @JavascriptInterface
+    public boolean showCarStatusPresentation() {
+        // TODO: 对接SecondaryScreenManager
+        return false;
+    }
+    
+    // ==================== ADB补充方法 ====================
+    
+    @JavascriptInterface
+    public void enableAdbDebugging() {
+        mAdbBridge.triggerUsbDebugAuthorization();
+    }
+    
+    @JavascriptInterface
+    public void executeAdbCommand(String command) {
+        try {
+            Runtime.getRuntime().exec(new String[]{"sh", "-c", command});
+        } catch (Exception e) {
+            logE(TAG, "executeAdbCommand失败", e);
+        }
+    }
+    
+    @JavascriptInterface
+    public void openRecentsViaAdb() {
+        mAdbBridge.openRecents();
+    }
+    
+    // ==================== 自动化方法 ====================
+    
+    @JavascriptInterface
+    public String getAutomationSettings() {
+        try {
+            String json = mContext.getSharedPreferences("automation", 0).getString("settings", "{}");
+            return json;
+        } catch (Exception e) {
+            return "{}";
+        }
+    }
+    
+    @JavascriptInterface
+    public boolean setAutomationSettings(String settingsJson) {
+        try {
+            mContext.getSharedPreferences("automation", 0).edit()
+                .putString("settings", settingsJson).apply();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    @JavascriptInterface
+    public boolean setAutomationScenarioEnabled(String scenarioId, boolean enabled) {
+        try {
+            mContext.getSharedPreferences("automation_scenarios", 0).edit()
+                .putBoolean(scenarioId, enabled).apply();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     // ==================== MainActivity 调用的UI更新方法 ====================
     
