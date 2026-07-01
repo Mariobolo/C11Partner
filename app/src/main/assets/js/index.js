@@ -2227,16 +2227,6 @@ function initConfigurableButtons() {
  * @param {string} buttonId - 按钮的唯一标识符
  * @returns {string} 按钮的中文显示名称
  */
-function getButtonDisplayName(buttonId) {
-    switch (buttonId) {
-        case 'goHomeBtn':
-            return '回家按钮';
-        case 'goCompanyBtn':
-            return '公司按钮';
-        default:
-            return buttonId;
-    }
-}
 
 
 /**
@@ -2914,22 +2904,6 @@ function updateMusicProgress() {
 /**
  * 更新音乐播放状态图标
  */
-function updateMusicPlayPauseIcon() {
-    try {
-        if (typeof Android !== 'undefined' && Android.isMusicPlaying) {
-            const isPlaying = Android.isMusicPlaying();
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            if (playPauseBtn) {
-                const img = playPauseBtn.querySelector('img');
-                if (img) {
-                    img.src = isPlaying ? 'images/nav_music_pause.png' : 'images/nav_music_play.png';
-                }
-            }
-        }
-    } catch (error) {
-        // 静默处理
-    }
-}
 
 // 添加控制进度条循环动画的函数
 /**
@@ -2938,16 +2912,6 @@ function updateMusicPlayPauseIcon() {
  * 启用循环时每100ms更新一次进度显示
  * @param {boolean} enableLoop - 是否启用循环更新模式
  */
-function toggleProgressLoop(enableLoop) {
-    const progressBar = document.querySelector('.progress-bar');
-    if (!progressBar) return;
-
-    if (enableLoop) {
-        progressBar.classList.add('looping');
-    } else {
-        progressBar.classList.remove('looping');
-    }
-}
 
 /**
  * 注册时间更新监听事件
@@ -3098,41 +3062,6 @@ function initAcTemperature() {
 
 /*
 // 模拟应用列表数据 - 用于测试，正式环境请注释
-function mockLoadAppList() {
-    const mockApps = [
-        { name: '设置', icon: '⚙️', package: 'com.android.settings' },
-        { name: '高德地图', icon: '🗺️', package: 'com.autonavi.minimap' },
-        { name: '酷狗音乐', icon: '🎵', package: 'com.kugou.android' },
-        { name: '微信', icon: '💬', package: 'com.tencent.mm' },
-        { name: '抖音', icon: '🎬', package: 'com.ss.android.ugc.aweme' },
-        { name: '哔哩哔哩', icon: '📺', package: 'tv.danmaku.bili' },
-        { name: 'QQ音乐', icon: '🎧', package: 'com.tencent.qqmusic' },
-        { name: '网易云音乐', icon: '🎶', package: 'com.netease.cloudmusic' },
-        { name: '喜马拉雅', icon: '📻', package: 'com.ximalaya.ting.android' },
-    ];
-    
-    const appsList = document.getElementById('appsList');
-    if (!appsList) return;
-    
-    appsList.innerHTML = '';
-    mockApps.forEach(app => {
-        const appItem = document.createElement('div');
-        appItem.className = 'app-item';
-        appItem.innerHTML = `
-            <div class="app-icon">${app.icon}</div>
-            <div class="app-name">${app.name}</div>
-        `;
-        appItem.addEventListener('click', () => {
-            console.log('点击应用:', app.name);
-            if (typeof Android !== 'undefined' && Android.launchApp) {
-                Android.launchApp(app.package);
-            }
-        });
-        appsList.appendChild(appItem);
-    });
-    
-    console.log('已加载模拟应用列表，共', mockApps.length, '个应用');
-}
 */
 
 
@@ -3178,59 +3107,6 @@ function loadMockAppData() {
     console.log('已加载模拟应用列表，共', mockApps.length, '个应用');
 }
 */
-
-function addSettingsIconToApps() {
-    const appsList = document.getElementById('appsList');
-    if (!appsList) return;
-    
-    // 检查是否已经添加过
-    if (document.getElementById('settingsAppItem')) return;
-    
-    // 创建设置应用项
-    const settingsItem = document.createElement('div');
-    settingsItem.id = 'settingsAppItem';
-    settingsItem.className = 'app-item';
-    settingsItem.style.cssText = `
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 12px 8px;
-        cursor: pointer;
-        border-radius: 8px;
-        transition: all 0.2s;
-    `;
-    settingsItem.innerHTML = `
-        <div class="app-icon" style="
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 8px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        ">⚙️</div>
-        <div class="app-name" style="
-            font-size: 12px;
-            color: white;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 60px;
-        ">设置</div>
-    `;
-    
-    // 点击事件：打开设置面板
-    settingsItem.addEventListener('click', function() {
-        showSettingsModal();
-    });
-    
-    // 添加到应用列表的最前面
-    appsList.insertBefore(settingsItem, appsList.firstChild);
-}
 
 /**
  * 加载模拟应用数据
