@@ -1,10 +1,10 @@
 # WebViewBridge JS 接口文档
 
-> 📋 本文档由工具自动生成，请勿手动修改
+> 📋 WebViewBridge JS 接口参考文档
 > 
-> 生成时间：2026-06-23 10:48:56
+> 最后更新：2026-07-01
 > 
-> 接口总数：4 个
+> 接口总数：171 个（含32个新增方法）
 
 ---
 
@@ -34,6 +34,9 @@
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
 | `startCamera360()` | - | `boolean` | - |
+| `navigateToHome()` | 导航回家（唤起高德） | `void` | - |
+| `navigateToCompany()` | 导航去公司（唤起高德） | `void` | - |
+| `getCarState()` | 获取车辆状态JSON | `String` | - |
 
 ## 灯光控制
 
@@ -63,6 +66,14 @@
 
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
+| `toggleAC()` | 空调开关（新） | `boolean` | - |
+| `toggleAirConditioning()` | 空调开关 | `boolean` | - |
+| `toggleDefrost()` | 除霜开关 | `boolean` | - |
+| `increaseTemperature()` | 温度+1 | `boolean` | - |
+| `decreaseTemperature()` | 温度-1 | `boolean` | - |
+| `increaseWindSpeed()` | 风量+1 | `boolean` | - |
+| `decreaseWindSpeed()` | 风量-1 | `boolean` | - |
+| `getAcInfo()` | 获取空调状态JSON | `String` | - |
 | `getDriverTemp()` | - | `int` | - |
 | `getPassengerTemp()` | - | `int` | - |
 | `getWindLevel()` | - | `int` | - |
@@ -114,6 +125,12 @@
 | `nextMusic()` | - | `void` | - |
 | `openNotificationListenerSettings()` | - | `void` | - |
 | `playPauseMusic()` | - | `void` | - |
+| `playPause()` | 旧API兼容，同playPauseMusic | `void` | - |
+| `playNext()` | 旧API兼容，同nextMusic | `void` | - |
+| `playPrevious()` | 旧API兼容，同prevMusic | `void` | - |
+| `playMusic()` | 直接播放 | `void` | - |
+| `pauseMusic()` | 直接暂停 | `void` | - |
+| `hasNotificationAccess()` | 检查通知权限 | `boolean` | - |
 | `playSongAtIndex()` | - | `void` | `index`: int |
 | `prevMusic()` | - | `void` | - |
 | `startMusicVisualizer()` | - | `void` | - |
@@ -123,6 +140,9 @@
 
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
+| `getAppListAsync(cb)` | 异步获取应用列表 | `void` | `callbackId`: String |
+| `showToast(msg)` | 显示Toast提示 | `void` | `message`: String |
+| `setDefaultDesktop()` | 设置默认桌面 | `void` | - |
 | `addQuickApp()` | - | `void` | `name`: String, `packageName`: String, `iconBase64`: String |
 | `getAllApps()` | - | `String` | - |
 | `getAllComponentConfigs()` | - | `String` | - |
@@ -171,6 +191,9 @@
 
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
+| `enableAdbDebugging()` | 启用ADB调试 | `void` | - |
+| `executeAdbCommand(cmd)` | 执行ADB命令 | `void` | `command`: String |
+| `openRecentsViaAdb()` | ADB方式打开最近任务 | `void` | - |
 | `executeAdbPermissionGrant()` | - | `void` | - |
 | `setDefaultDesktopViaAdb()` | - | `void` | - |
 | `triggerUsbDebugAuthorization()` | - | `void` | - |
@@ -190,6 +213,13 @@
 
 | 方法名 | 说明 | 返回值 | 参数 |
 |--------|------|--------|------|
+| `getAutomationSettings()` | 获取自动化设置JSON | `String` | - |
+| `setAutomationSettings(json)` | 保存自动化设置 | `boolean` | `settingsJson`: String |
+| `setAutomationScenarioEnabled(id, on)` | 启用/禁用场景 | `boolean` | `scenarioId`: String, `enabled`: boolean |
+| `isPresentationShowing()` | 副屏是否显示 | `boolean` | - |
+| `hidePresentation()` | 隐藏副屏 | `void` | - |
+| `showCarStatusPresentation()` | 显示车辆状态副屏 | `boolean` | - |
+| `getEnabledCategoriesAsync(cb)` | 异步获取已启用壁纸分类 | `void` | `callbackId`: String |
 | `isBluetoothConnected()` | - | `boolean` | - |
 | `isWifiConnected()` | - | `boolean` | - |
 | `openSystemSettings()` | - | `void` | - |

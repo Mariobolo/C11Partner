@@ -228,6 +228,42 @@ window.updateCarState(JSON车辆数据)
 
 > 💡 **注意**：后台主动推送，不需要前端轮询。前端不实现也不影响核心功能。
 
+**JS → Java 接口清单（前端调用原生）**：
+
+> 以下方法均通过 `Android.xxx()` 调用，WebViewBridge.java 中实现
+
+| 分类 | 方法 | 说明 |
+|------|------|------|
+| **音乐控制** | `playPauseMusic()` | 播放/暂停（通用API） |
+| | `nextMusic()` / `prevMusic()` | 上下一首（通用API） |
+| | `playPause()` / `playNext()` / `playPrevious()` | 旧API兼容 |
+| | `getSystemMusicInfo()` | 获取音乐信息JSON |
+| | `getMusicProgressInfo()` | 获取播放进度JSON |
+| | `seekTo(ms)` | 跳转播放位置 |
+| **车控** | `toggleAC()` / `toggleAirConditioning()` | 空调开关 |
+| | `toggleDefrost()` | 除霜 |
+| | `increaseTemperature()` / `decreaseTemperature()` | 温度±1 |
+| | `increaseWindSpeed()` / `decreaseWindSpeed()` | 风量±1 |
+| | `navigateToHome()` / `navigateToCompany()` | 导航回家/公司 |
+| | `setDriveMode(mode)` | 驾驶模式(0-5) |
+| **快捷开关** | `setLowBeamLight(on)` | 近光灯 |
+| | `setWifiEnabled(on)` / `setBluetoothEnabled(on)` | WiFi/蓝牙 |
+| | `setVideoWhileDriving(on)` | 行驶视频 |
+| | `setAmbientLightEnabled(on)` | 氛围灯 |
+| **应用管理** | `launchApp(packageName)` | 启动应用 |
+| | `getAppListAsync(callbackId)` | 异步获取应用列表 |
+| | `getQuickAppList()` | 快捷应用列表 |
+| | `addQuickApp()` / `removeQuickApp()` | 添加/移除快捷应用 |
+| **壁纸** | `getWallpaperSettingsAsync(cb)` | 异步壁纸设置 |
+| | `getRandomWallpaperBase64Async(cb)` | 异步随机壁纸 |
+| **系统** | `showToast(msg)` | 显示Toast |
+| | `restartApp()` | 重启应用 |
+| | `saveComponentConfig(name, on)` | 组件配置 |
+| **ADB** | `triggerWirelessAdbAuthorization()` | 无线ADB授权 |
+| | `executeAdbPermissionGrant()` | 执行权限授予 |
+
+> 📄 完整接口参考：`docs/JS_API_REFERENCE.md`
+
 ---
 
 ### 3️⃣ 空调控制

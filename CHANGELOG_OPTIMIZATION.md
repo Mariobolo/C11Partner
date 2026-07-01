@@ -152,3 +152,81 @@
 | 中 | CSS/JS 压缩（minify） | 1小时 |
 | 低 | MainActivity 拆分（2100行 God Class） | 1-2天 |
 | 低 | 数据库层抽象（6个Helper → Room或DAO基类） | 半天 |
+
+---
+
+## 七、2026-07-01 前端修复 + Bridge补齐
+
+> 日期：2026-07-01
+> 范围：前端布局修复 + Java Bridge方法补齐 + Mock接口完善 + 死代码清理
+
+### 7.1 P0 - WebViewBridge补齐32个缺失方法
+
+**文件**：`app/src/main/java/com/c11partner/desktop/bridge/WebViewBridge.java`
+
+**问题**：JS前端调用了32个Android.*方法，但WebViewBridge中未实现，导致功能静默失败
+
+**新增方法**：
+- 车控：getCarState / navigateToHome / navigateToCompany / toggleAC / toggleDefrost
+- 温度风量：increaseTemperature / decreaseTemperature / increaseWindSpeed / decreaseWindLevel
+- 音乐兼容：playPause / playNext / playPrevious / playMusic / pauseMusic
+- 应用管理：getAppListAsync / getEnabledCategoriesAsync / showToast / hasNotificationAccess / setDefaultDesktop
+- 副屏展示：isPresentationShowing / hidePresentation / showCarStatusPresentation (stub)
+- ADB：enableAdbDebugging / executeAdbCommand / openRecentsViaAdb
+- 自动化：getAutomationSettings / setAutomationSettings / setAutomationScenarioEnabled
+
+**附带修改**：
+- `MusicBridge.java`：添加 `hasNotificationAccess()` 别名方法
+- `WebViewBridge.java`：添加 `import android.content.Intent`
+
+### 7.2 P1 - 重写android_interface.js完整Mock
+
+**文件**：`app/src/main/assets/js/android_interface.js`
+
+**问题**：原文件仅mock 4个方法，浏览器调试大量功能静默失败
+
+**改动**：完全重写，覆盖100+个Android.*方法，包括：
+- 音乐控制（播放/暂停/上下首/进度/音量）
+- 空调控制（开关/温度/风量/除霜）
+- 车辆状态（档位/门/胎压/锁车/转向灯）
+- 应用管理（列表/快捷应用/启动/搜索）
+- 壁纸设置（轮播/随机/分类/间隔）
+- 组件配置（5个组件开关）
+- 系统设置（桌面自启/开机问候/Toast）
+- ADB授权（USB/无线/权限授予）
+- 座椅舒适（加热/通风/方向盘/后视镜）
+
+### 7.3 P2 - 死代码清理
+
+**文件**：`app/src/main/assets/js/music.js`
+
+**删除函数**（5个，共126行）：
+- `isMusicTimeSupported`：未被调用
+- `visualize`：音频可视化启动函数，未使用
+- `initCustomAudioPlayer`：已被SystemMusicManager接管
+- `toggleProgressLoop`：重复定义且未调用
+- `updateMusicName`：使用已废弃的getCurrentMusicName API
+
+### 7.4 前端CSS/JS修复（4次提交）
+
+| 提交 | 内容 |
+|------|------|
+| `116d986` | widget高度冲突 / 天气错位 / 胎压绿块 / 导航图标 |
+| `4aa7f1b` | 音乐控制统一(SystemMusicManager) / 快捷应用fallback |
+| `2ae4844` | 车门/车窗/转向灯类型兼容(boolean+number) / 门窗容器显隐 |
+| `a79cbbf` | 按钮图标冲突 / 跑马灯class(marquee→scrolling) / 旧API回退 |
+
+### 7.5 文件变更清单
+
+| 文件 | 操作 |
+|------|------|
+| `app/src/main/assets/css/index.css` | 修改（widget高度/天气/胎压/导航/音乐） |
+| `app/src/main/assets/css/theme.css` | 修改（添加--widget-height变量） |
+| `app/src/main/assets/css/widgets.css` | 修改（door-window-status移除!important） |
+| `app/src/main/assets/js/music.js` | 修改（移除按钮绑定+死代码清理） |
+| `app/src/main/assets/js/system-music-manager.js` | 修改（旧API回退兼容） |
+| `app/src/main/assets/js/car-state-manager.js` | 修改（类型兼容修复） |
+| `app/src/main/assets/js/index.js` | 修改（快捷应用fallback） |
+| `app/src/main/assets/js/android_interface.js` | 重写（完整mock） |
+| `app/.../bridge/WebViewBridge.java` | 修改（+32个方法） |
+| `app/.../bridge/MusicBridge.java` | 修改（+hasNotificationAccess） |
