@@ -666,12 +666,13 @@ body {
 }
 
 .music-name {
-    width: 180px;
+    max-width: 200px;
     font-size: 12px;
     color: white;
     white-space: nowrap;
     display: inline-block;
-
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 跑马灯动画 - 从右往左滚动 */

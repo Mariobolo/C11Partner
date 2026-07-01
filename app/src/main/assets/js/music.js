@@ -135,10 +135,10 @@ function updateMusicUI() {
         
         if (isOverflow) {
             // 标题过长，启用跑马灯效果
-            currentSongNameElement.classList.add('marquee');
+            currentSongNameElement.classList.add('scrolling');
         } else {
             // 标题不长，不启用跑马灯
-            currentSongNameElement.classList.remove('marquee');
+            currentSongNameElement.classList.remove('scrolling');
         }
     }
     
@@ -188,33 +188,19 @@ function updateMusicProgressBar() {
 }
 
 /**
- * 更新音乐播放状态（按钮、唱片、唱针）
+ * 更新音乐播放状态（唱片、唱针动画）
+ * 注意：播放按钮图标由 SystemMusicManager 统一管理，此处不更新
  */
 function updateMusicPlayState() {
-    const playPauseBtn = document.getElementById('play-pause-btn');
     const vinylRecord = document.querySelector('.vinyl-record');
     const tonearm = document.getElementById('tonearm');
     
-    if (!playPauseBtn) return;
-    
     if (musicStatus.isPlaying) {
-        // 播放状态 - 显示暂停图标
-        playPauseBtn.innerHTML = '<img src="images/nav_music_pause1.png" alt="暂停">';
-        if (vinylRecord) {
-            vinylRecord.classList.add('spinning');
-        }
-        if (tonearm) {
-            tonearm.classList.add('playing');
-        }
+        if (vinylRecord) vinylRecord.classList.add('spinning');
+        if (tonearm) tonearm.classList.add('playing');
     } else {
-        // 暂停状态 - 显示播放图标
-        playPauseBtn.innerHTML = '<img src="images/nav_music_play.png" alt="播放">';
-        if (vinylRecord) {
-            vinylRecord.classList.remove('spinning');
-        }
-        if (tonearm) {
-            tonearm.classList.remove('playing');
-        }
+        if (vinylRecord) vinylRecord.classList.remove('spinning');
+        if (tonearm) tonearm.classList.remove('playing');
     }
 }
 
@@ -475,7 +461,7 @@ function initCustomAudioPlayer() {
 
 // 添加控制进度条循环动画的函数
 function toggleProgressLoop(isPlaying) {
-    const progressBar = document.querySelector('.progress-bar');
+    const progressBar = document.querySelector('.music-progress-bar');
     if (!progressBar) return;
 
     if (isPlaying) {

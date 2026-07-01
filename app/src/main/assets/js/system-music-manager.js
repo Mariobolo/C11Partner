@@ -37,9 +37,12 @@ const SystemMusicManager = {
 
         if (playPauseBtn) {
             playPauseBtn.addEventListener('click', function() {
-                if (typeof Android !== 'undefined' && Android.playPauseMusic) {
-                    Android.playPauseMusic();
-                    // 点击后立即更新状态
+                if (typeof Android !== 'undefined') {
+                    if (Android.playPauseMusic) {
+                        Android.playPauseMusic();
+                    } else if (Android.playPause) {
+                        Android.playPause();
+                    }
                     setTimeout(() => SystemMusicManager.updateMusicInfo(), 500);
                 }
             });
@@ -47,8 +50,12 @@ const SystemMusicManager = {
 
         if (nextBtn) {
             nextBtn.addEventListener('click', function() {
-                if (typeof Android !== 'undefined' && Android.nextMusic) {
-                    Android.nextMusic();
+                if (typeof Android !== 'undefined') {
+                    if (Android.nextMusic) {
+                        Android.nextMusic();
+                    } else if (Android.playNext) {
+                        Android.playNext();
+                    }
                     setTimeout(() => SystemMusicManager.updateMusicInfo(), 500);
                 }
             });
@@ -56,8 +63,12 @@ const SystemMusicManager = {
 
         if (prevBtn) {
             prevBtn.addEventListener('click', function() {
-                if (typeof Android !== 'undefined' && Android.prevMusic) {
-                    Android.prevMusic();
+                if (typeof Android !== 'undefined') {
+                    if (Android.prevMusic) {
+                        Android.prevMusic();
+                    } else if (Android.playPrevious) {
+                        Android.playPrevious();
+                    }
                     setTimeout(() => SystemMusicManager.updateMusicInfo(), 500);
                 }
             });
