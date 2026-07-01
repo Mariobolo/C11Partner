@@ -2435,6 +2435,11 @@ audio {
     gap: 12px !important;
 }
 
+.quick-switches-widget {
+    height: auto !important;
+    min-height: 80px !important;
+}
+
 .quick-app-item {
     background: rgba(255, 255, 255, 0.08) !important;
     border-radius: 16px !important;
@@ -2927,8 +2932,10 @@ audio {
 
 /* ========== 天气组件优化 ========== */
 .weather-widget {
-    min-width: 180px !important;
-    padding: 16px !important;
+    min-width: 200px !important;
+    padding: 16px 20px !important;
+    height: auto !important;
+    min-height: 80px !important;
 }
 
 .weather-widget .temperature {
@@ -2938,12 +2945,15 @@ audio {
 .weather-icon {
     width: 48px !important;
     height: 48px !important;
+    flex-shrink: 0 !important;
 }
 
 /* ========== 音乐组件优化 ========== */
 .music-widget {
-    min-width: 280px !important;
+    min-width: 300px !important;
     padding: 14px 16px !important;
+    height: auto !important;
+    min-height: 90px !important;
 }
 
 .control-buttons button {
@@ -2959,6 +2969,8 @@ audio {
 /* ========== 快捷应用优化 ========== */
 .quick-apps-widget {
     padding: 12px !important;
+    height: auto !important;
+    min-height: 80px !important;
 }
 
 .quick-app-item {
@@ -2979,6 +2991,21 @@ audio {
 .car-widget {
     min-width: 200px !important;
     padding: 16px !important;
+    height: auto !important;
+    min-height: 120px !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.car-image {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 80px !important;
+    background-image: url('images/nav_car.png') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    opacity: 0.65 !important;
 }
 
 .tire-pressure {
@@ -2988,8 +3015,22 @@ audio {
 
 /* ========== 导航组件优化 ========== */
 .map-widget {
-    min-width: 180px !important;
-    padding: 12px !important;
+    min-width: 220px !important;
+    padding: 12px 24px 12px 70px !important;
+    height: auto !important;
+    min-height: 80px !important;
+    position: relative !important;
+}
+
+.map-icon {
+    position: absolute !important;
+    left: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 44px !important;
+    height: 44px !important;
+    opacity: 0.25 !important;
+    z-index: 0 !important;
 }
 
 .nav-button {
@@ -3008,10 +3049,10 @@ audio {
 
 /* ========== 卡片大小统一 ========== */
 .widget {
-    height: 100px !important;
-    min-height: 100px !important;
+    height: auto !important;
+    min-height: var(--widget-height) !important;
     border-radius: 16px !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
 }
 

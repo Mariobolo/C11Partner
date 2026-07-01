@@ -66,6 +66,10 @@
     --spacing-2xl: 32px;
     --spacing-3xl: 40px;
     
+    /* ========== 组件尺寸 ========== */
+    --widget-height: 100px;
+    --widget-height-auto: auto;
+
     /* ========== 字体系统【第43轮优化】 ========== */
     --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
                         'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
