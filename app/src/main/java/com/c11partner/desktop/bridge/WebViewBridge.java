@@ -94,21 +94,29 @@ public class WebViewBridge extends BaseBridge {
     public boolean setLowBeamLight(boolean on) { 
         return mCarControlBridge.setLowBeamLight(on); 
     }
+    @JavascriptInterface
+    public boolean isLowBeamLightOn() { return mCarControlBridge.isLowBeamLightOn(); }
     
     @JavascriptInterface
     public boolean setRearFogLight(boolean on) { 
         return mCarControlBridge.setRearFogLight(on); 
     }
+    @JavascriptInterface
+    public boolean isRearFogLightOn() { return mCarControlBridge.isRearFogLightOn(); }
     
     @JavascriptInterface
     public boolean setPositionLight(boolean on) { 
         return mCarControlBridge.setPositionLight(on); 
     }
+    @JavascriptInterface
+    public boolean isPositionLightOn() { return mCarControlBridge.isPositionLightOn(); }
     
     @JavascriptInterface
     public boolean setPedestrianAlert(boolean on) { 
         return mCarControlBridge.setPedestrianAlert(on); 
     }
+    @JavascriptInterface
+    public boolean isPedestrianAlertOn() { return mCarControlBridge.isPedestrianAlertOn(); }
     
     // 驾驶/场景模式
     @JavascriptInterface
@@ -146,6 +154,8 @@ public class WebViewBridge extends BaseBridge {
     public boolean setMaxCooling(boolean on) { 
         return mCarControlBridge.setMaxCooling(on); 
     }
+    @JavascriptInterface
+    public boolean isMaxCoolingOn() { return mCarControlBridge.isMaxCoolingOn(); }
     
     @JavascriptInterface
     public boolean setAcEnabled(boolean enabled) { 
@@ -234,16 +244,22 @@ public class WebViewBridge extends BaseBridge {
     public boolean setNightMode(boolean on) { 
         return mCarControlBridge.setNightMode(on); 
     }
+    @JavascriptInterface
+    public boolean isNightModeOn() { return mCarControlBridge.isNightModeOn(); }
     
     @JavascriptInterface
     public boolean setWifiEnabled(boolean enabled) { 
         return mCarControlBridge.setWifiEnabled(enabled); 
     }
+    @JavascriptInterface
+    public boolean isWifiEnabled() { return mCarControlBridge.isWifiEnabled(); }
     
     @JavascriptInterface
     public boolean setBluetoothEnabled(boolean enabled) { 
         return mCarControlBridge.setBluetoothEnabled(enabled); 
     }
+    @JavascriptInterface
+    public boolean isBluetoothEnabled() { return mCarControlBridge.isBluetoothEnabled(); }
     
     @JavascriptInterface
     public boolean setVideoWhileDriving(boolean enabled) { 

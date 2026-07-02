@@ -1215,7 +1215,10 @@ function initAppsModal() {
         
         // 检查是否在Android环境中
         if (typeof Android !== 'undefined' && Android.getAppListAsync) {
+            var callbackFired = false;
             const callbackId = AsyncCallbackManager.register(function (appListJson) {
+                if (callbackFired) return;
+                callbackFired = true;
                 try {
                     const appsData = JSON.parse(appListJson);
 
@@ -1244,6 +1247,35 @@ function initAppsModal() {
                 appsList.style.display = 'block';
             });
             Android.getAppListAsync(callbackId);
+
+            // 超时兜底：5秒后如果回调没触发，用同步接口或模拟数据
+            setTimeout(function() {
+                if (callbackFired) return;
+                callbackFired = true;
+                console.warn('[AppList] 异步回调超时，尝试同步接口');
+                try {
+                    if (Android.getAppList) {
+                        const appsJson = Android.getAppList();
+                        const appsData = JSON.parse(appsJson);
+                        cachedAppsData = appsData;
+                        lastAppListLoadTime = now;
+                        initAlphabetNavFromData(appsData);
+                        renderAppsList(appsData);
+                    } else {
+                        throw new Error('同步接口不可用');
+                    }
+                } catch (e) {
+                    console.warn('[AppList] 同步接口也失败，使用模拟数据:', e);
+                    const appsData = generateAppData();
+                    cachedAppsData = appsData;
+                    lastAppListLoadTime = now;
+                    initAlphabetNav();
+                    renderAppsList(appsData);
+                }
+                loadQuickApps();
+                appsLoading.style.display = 'none';
+                appsList.style.display = 'block';
+            }, 5000);
         } else {
             // 非Android环境，使用模拟数据
             const appsData = generateAppData();
@@ -1786,44 +1818,41 @@ function loadQuickSwitches() {
 
     container.innerHTML = '';
 
-    // 空调控制组
-    const acControls = [
-        { id: 'acSwitch', name: '空调', icon: '❄️', type: 'toggle' },
-        { id: 'windMinus', name: '风量-', icon: '🌬️', type: 'action' },
-        { id: 'windPlus', name: '风量+', icon: '💨', type: 'action' },
-        { id: 'tempMinus', name: '温度-', icon: '🌡️', type: 'action' },
-        { id: 'tempPlus', name: '温度+', icon: '🔥', type: 'action' },
-    ];
+    // 空调控制组（容错：任一步骤失败不影响后续）
+    try {
+        const acControls = [
+            { id: 'acSwitch', name: '空调', icon: '❄️', type: 'toggle' },
+            { id: 'windMinus', name: '风量-', icon: '🌬️', type: 'action' },
+            { id: 'windPlus', name: '风量+', icon: '💨', type: 'action' },
+            { id: 'tempMinus', name: '温度-', icon: '🌡️', type: 'action' },
+            { id: 'tempPlus', name: '温度+', icon: '🔥', type: 'action' },
+        ];
 
-    // 添加空调控制按钮
-    acControls.forEach(ctrl => {
-        const item = document.createElement('div');
-        item.className = 'quick-switch-item ac-control-item';
-        item.setAttribute('data-id', ctrl.id);
-        item.setAttribute('data-type', ctrl.type);
-        item.innerHTML = `
-            <div class="quick-switch-icon">${ctrl.icon}</div>
-            <div class="quick-switch-name">${ctrl.name}</div>
-        `;
+        acControls.forEach(ctrl => {
+            const item = document.createElement('div');
+            item.className = 'quick-switch-item ac-control-item';
+            item.setAttribute('data-id', ctrl.id);
+            item.setAttribute('data-type', ctrl.type);
+            item.innerHTML = `
+                <div class="quick-switch-icon">${ctrl.icon}</div>
+                <div class="quick-switch-name">${ctrl.name}</div>
+            `;
 
-        // 点击事件
-        item.addEventListener('click', function() {
-            if (window.ACManager) {
-                if (ctrl.type === 'toggle') {
-                    window.ACManager.toggleAC();
-                } else if (ctrl.id === 'windMinus') {
-                    window.ACManager.decreaseWind();
-                } else if (ctrl.id === 'windPlus') {
-                    window.ACManager.increaseWind();
-                } else if (ctrl.id === 'tempMinus') {
-                    window.ACManager.decreaseTemp();
-                } else if (ctrl.id === 'tempPlus') {
-                    window.ACManager.increaseTemp();
-                }
-                updateACControlStatus();
-            } else {
-                // 如果没有ACManager，尝试调用Android接口
-                if (window.Android) {
+            item.addEventListener('click', function() {
+                if (window.ACManager) {
+                    if (ctrl.type === 'toggle') {
+                        window.ACManager.toggleAC();
+                    } else if (ctrl.id === 'windMinus') {
+                        window.ACManager.decreaseWind();
+                    } else if (ctrl.id === 'windPlus') {
+                        window.ACManager.increaseWind();
+                    } else if (ctrl.id === 'tempMinus') {
+                        window.ACManager.decreaseTemp();
+                    } else if (ctrl.id === 'tempPlus') {
+                        window.ACManager.increaseTemp();
+                    }
+                    updateACControlStatus();
+                } else if (window.Android) {
                     if (ctrl.id === 'acSwitch') {
                         Android.toggleAC();
                     } else if (ctrl.id === 'windMinus') {
@@ -1836,32 +1865,35 @@ function loadQuickSwitches() {
                         Android.increaseTemperature();
                     }
                 }
-            }
+            });
+
+            container.appendChild(item);
         });
+    } catch (e) {
+        console.error('[QuickSwitches] 空调控制初始化失败:', e);
+    }
 
-        container.appendChild(item);
-    });
-
-    // 添加"全部"按钮
+    // “全部”按钮 —— 始终渲染，不依赖上面的空调控制
     const moreItem = document.createElement('div');
     moreItem.className = 'quick-switch-item more';
     moreItem.innerHTML = `
         <div class="quick-switch-icon">⋯</div>
         <div class="quick-switch-name">全部</div>
     `;
-
-        moreItem.addEventListener('click', function() {
-        // 打开快捷开关面板（功能控制面板）
+    moreItem.addEventListener('click', function() {
         if (window.QuickSwitchManager) {
             window.QuickSwitchManager.togglePanel();
         }
     });
-
     container.appendChild(moreItem);
 
     // 初始化状态
-    refreshQuickSwitchesStatus();
-    updateACControlStatus();
+    try {
+        refreshQuickSwitchesStatus();
+        updateACControlStatus();
+    } catch (e) {
+        console.error('[QuickSwitches] 状态初始化失败:', e);
+    }
 }
 
 /**
@@ -3232,8 +3264,21 @@ if (document.readyState === 'loading') {
  * 从localStorage读取保存的等级，应用到body，绑定radio事件
  */
 function initEffectLevel() {
-    // 从本地存储读取特效等级（默认balanced）
-    var savedLevel = localStorage.getItem('effectLevel') || 'balanced';
+    // 确保 Settings 模块已加载（Settings.init 可能未被调用）
+    if (window.Settings && typeof Settings.load === 'function' && !Settings.settings.ui) {
+        Settings.load();
+    }
+
+    // 兼容迁移：把旧的 localStorage.effectLevel 迁移到 Settings
+    var legacyLevel = localStorage.getItem('effectLevel');
+    if (legacyLevel && window.Settings && !Settings.get('ui.effectLevel')) {
+        Settings.set('ui.effectLevel', legacyLevel);
+        localStorage.removeItem('effectLevel');
+        console.log('[EffectLevel] 已迁移旧设置:', legacyLevel);
+    }
+
+    // 通过 Settings 模块读取特效等级（默认 low = 流畅模式）
+    var savedLevel = (window.Settings && Settings.get('ui.effectLevel')) || 'low';
     applyEffectLevel(savedLevel);
 
     // 绑定radio按钮change事件
@@ -3247,9 +3292,19 @@ function initEffectLevel() {
         radio.addEventListener('change', function() {
             if (this.checked) {
                 var level = this.value;
-                localStorage.setItem('effectLevel', level);
+                // 通过 Settings 模块保存
+                if (window.Settings) {
+                    Settings.set('ui.effectLevel', level);
+                } else {
+                    localStorage.setItem('effectLevel', level);
+                }
                 applyEffectLevel(level);
                 console.log('[EffectLevel] 已切换为:', level);
+                // 显示切换反馈
+                var names = { low: '流畅', medium: '平衡', high: '炫丽' };
+                if (typeof showToast === 'function') {
+                    showToast('已切换为' + (names[level] || level) + '模式');
+                }
             }
         });
     });
@@ -3257,10 +3312,10 @@ function initEffectLevel() {
 
 /**
  * 应用特效等级
- * @param {string} level - low/balanced/high
+ * @param {string} level - low/medium/high
  */
 function applyEffectLevel(level) {
     var body = document.body;
-    body.classList.remove('effect-low', 'effect-balanced', 'effect-high');
+    body.classList.remove('effect-low', 'effect-medium', 'effect-high');
     body.classList.add('effect-' + level);
 }

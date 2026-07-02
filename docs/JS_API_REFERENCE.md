@@ -46,10 +46,14 @@
 | `isAmbientLightEnabled()` | - | `boolean` | - |
 | `setAmbientLightColor()` | - | `boolean` | `color`: int |
 | `setAmbientLightEnabled()` | - | `boolean` | `enabled`: boolean |
-| `setLowBeamLight()` | - | `boolean` | `on`: boolean |
-| `setPedestrianAlert()` | - | `boolean` | `on`: boolean |
-| `setPositionLight()` | - | `boolean` | `on`: boolean |
-| `setRearFogLight()` | - | `boolean` | `on`: boolean |
+| `setLowBeamLight()` | 近光灯开关 | `boolean` | `on`: boolean |
+| `isLowBeamLightOn()` | 获取近光灯状态 | `boolean` | - |
+| `setPedestrianAlert()` | 行人警示开关 | `boolean` | `on`: boolean |
+| `isPedestrianAlertOn()` | 获取行人警示状态 | `boolean` | - |
+| `setPositionLight()` | 示廓灯开关 | `boolean` | `on`: boolean |
+| `isPositionLightOn()` | 获取示廓灯状态 | `boolean` | - |
+| `setRearFogLight()` | 后雾灯开关 | `boolean` | `on`: boolean |
+| `isRearFogLightOn()` | 获取后雾灯状态 | `boolean` | - |
 
 ## 驾驶/场景模式
 
@@ -80,7 +84,8 @@
 | `isAcEnabled()` | - | `boolean` | - |
 | `setAcEnabled()` | - | `boolean` | `enabled`: boolean |
 | `setDriverTemp()` | - | `boolean` | `temp`: int |
-| `setMaxCooling()` | - | `boolean` | `on`: boolean |
+| `setMaxCooling()` | 最大制冷开关 | `boolean` | `on`: boolean |
+| `isMaxCoolingOn()` | 获取最大制冷状态 | `boolean` | - |
 | `setPassengerTemp()` | - | `boolean` | `temp`: int |
 | `setWindLevel()` | - | `boolean` | `level`: int |
 
@@ -226,9 +231,12 @@
 | `saveBootGreetingSetting()` | - | `boolean` | `enabled`: boolean |
 | `saveRandomModeSetting()` | - | `boolean` | `enabled`: boolean |
 | `saveSpecifiedModeSetting()` | - | `boolean` | `enabled`: boolean |
-| `setBluetoothEnabled()` | - | `boolean` | `enabled`: boolean |
-| `setNightMode()` | - | `boolean` | `on`: boolean |
-| `setWifiEnabled()` | - | `boolean` | `enabled`: boolean |
+| `setBluetoothEnabled()` | 蓝牙开关 | `boolean` | `enabled`: boolean |
+| `isBluetoothEnabled()` | 获取蓝牙状态 | `boolean` | - |
+| `setNightMode()` | 夜间模式开关 | `boolean` | `on`: boolean |
+| `isNightModeOn()` | 获取夜间模式状态 | `boolean` | - |
+| `setWifiEnabled()` | WiFi开关 | `boolean` | `enabled`: boolean |
+| `isWifiEnabled()` | 获取WiFi状态 | `boolean` | - |
 
 ## 状态获取
 

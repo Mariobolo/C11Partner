@@ -2424,7 +2424,304 @@ html:not(.is-scrolling) .scroll-pause-animations {
     to { transform: rotate(360deg); }
 }
 
+/* ============================================
+   特效等级系统 (Effect Level System)
+   命名：low / medium / high
+   默认：low（流畅模式）
+   ============================================ */
+
+/* ==================== low（流畅模式）==================== */
+/* 关闭所有动画，最小化过渡，禁用毛玻璃 */
+
+/* 所有动画类 → 立即完成 */
+body.effect-low .animate-spin,
+body.effect-low .animate-pulse,
+body.effect-low .animate-blink,
+body.effect-low .animate-fade-in,
+body.effect-low .animate-fade-in-up,
+body.effect-low .animate-scale-in,
+body.effect-low .animate-slide-in-up,
+body.effect-low .animate-glow,
+body.effect-low .animate-breathe,
+body.effect-low .animate-breathe-subtle,
+body.effect-low .animate-float,
+body.effect-low .animate-float-slow,
+body.effect-low .animate-button-press,
+body.effect-low .animate-elastic-pop,
+body.effect-low .animate-shimmer,
+body.effect-low .skeleton-loading,
+body.effect-low .progress-indeterminate,
+body.effect-low .ripple-click::after,
+body.effect-low .shimmer-hover::before,
+body.effect-low .card-border-flow::before,
+body.effect-low .notification-enter,
+body.effect-low .notification-pop,
+body.effect-low .elastic-enter,
+body.effect-low .flip-in-x,
+body.effect-low .flip-in-y,
+body.effect-low .loading-dot {
+    animation: none !important;
+    animation-duration: 0s !important;
+}
+
+/* 所有过渡 → 极短 */
+body.effect-low .transition-fast,
+body.effect-low .transition-normal,
+body.effect-low .transition-slow,
+body.effect-low .transition-opacity,
+body.effect-low .transition-transform,
+body.effect-low .transition-color,
+body.effect-low .transition-shadow,
+body.effect-low .interactive-hover,
+body.effect-low .hover-scale,
+body.effect-low .hover-lift,
+body.effect-low .hover-glow,
+body.effect-low .press-scale,
+body.effect-low .press-depress,
+body.effect-low .press-color,
+body.effect-low .state-transition,
+body.effect-low .card-micro-float,
+body.effect-low .card-gradient-hover,
+body.effect-low .switch-slide,
+body.effect-low .switch-fade,
+body.effect-low .toggle-transition,
+body.effect-low .slider-thumb,
+body.effect-low .icon-bounce,
+body.effect-low .text-highlight::after,
+body.effect-low .text-underline::after {
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+}
+
+/* 特定高频动画元素 */
+body.effect-low .vinyl-record {
+    animation: none !important;
+}
+body.effect-low .door-indicator,
+body.effect-low .turn-indicator {
+    animation: none !important;
+}
+body.effect-low .camera-indicator {
+    animation: none !important;
+}
+body.effect-low .network-status-icon.connected,
+body.effect-low .bluetooth-status-icon.connected {
+    animation: none !important;
+}
+body.effect-low .music-name.scrolling {
+    animation: none !important;
+}
+body.effect-low .rotate-animation {
+    animation: none !important;
+}
+
+/* 弹窗/页面过渡 */
+body.effect-low .modal {
+    animation: none !important;
+}
+body.effect-low .modal-content {
+    animation: none !important;
+}
+body.effect-low .page-enter,
+body.effect-low .page-exit,
+body.effect-low .page-slide-in-right,
+body.effect-low .page-slide-out-left,
+body.effect-low .page-slide-in-left,
+body.effect-low .page-slide-out-right,
+body.effect-low .page-zoom-in,
+body.effect-low .page-zoom-out {
+    animation: none !important;
+}
+
+/* 交错序列 → 全部立即显示 */
+body.effect-low .stagger-children > *,
+body.effect-low .stagger-children.animate > *,
+body.effect-low .stagger-enter > *,
+body.effect-low .stagger-elastic > *,
+body.effect-low .stagger-left > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* 毛玻璃 → 全局关闭（backdrop-filter 是 GPU 头号杀手） */
+body.effect-low * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 背景遮罩渐变 → 简化 */
+body.effect-low .background-container::after {
+    background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 阴影 → 全局简化（多层 box-shadow 第二大性能杀手） */
+body.effect-low * {
+    box-shadow: none !important;
+}
+body.effect-low .widget {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+body.effect-low .modal-content {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+body.effect-low .confirm-dialog-content {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 关闭 will-change 释放 GPU 内存 */
+body.effect-low * {
+    will-change: auto !important;
+}
+
+/* 关闭 contain 声明 */
+body.effect-low * {
+    contain: auto !important;
+}
+
+/* 关闭 3D 变换提示 */
+body.effect-low * {
+    transform-style: flat !important;
+    perspective: none !important;
+    backface-visibility: visible !important;
+}
+
+
+/* ==================== medium（平衡模式）==================== */
+/* 保留基础过渡，关闭复杂/无限动画，降低毛玻璃强度 */
+
+/* 关闭无限循环动画 */
+body.effect-medium .animate-spin,
+body.effect-medium .animate-breathe,
+body.effect-medium .animate-breathe-subtle,
+body.effect-medium .animate-float,
+body.effect-medium .animate-float-slow,
+body.effect-medium .animate-glow,
+body.effect-medium .skeleton-loading,
+body.effect-medium .progress-indeterminate,
+body.effect-medium .loading-dot {
+    animation: none !important;
+}
+
+/* 特定元素关闭循环动画 */
+body.effect-medium .vinyl-record {
+    animation: none !important;
+}
+body.effect-medium .door-indicator {
+    animation: none !important;
+}
+body.effect-medium .camera-indicator {
+    animation: none !important;
+}
+body.effect-medium .rotate-animation {
+    animation-duration: 4s !important;
+}
+
+/* 降低毛玻璃强度 */
+body.effect-medium .widget {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+body.effect-medium .modal-content {
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+body.effect-medium .top-status-bar,
+body.effect-medium .status-bar {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* 降低悬停效果幅度 */
+body.effect-medium .interactive-hover:hover {
+    transform: translateY(-1px) scale(1.01) !important;
+}
+body.effect-medium .card-micro-float:hover {
+    transform: translateY(-3px) scale(1.005) !important;
+}
+body.effect-medium .hover-scale:hover {
+    transform: scale(1.03) !important;
+}
+body.effect-medium .hover-lift:hover {
+    transform: translateY(-2px) !important;
+}
+
+/* 交错序列保留但加速 */
+body.effect-medium .stagger-children > *,
+body.effect-medium .stagger-children.animate > *,
+body.effect-medium .stagger-enter > * {
+    animation-duration: 0.25s !important;
+}
+
+/* 阴影适度简化 */
+body.effect-medium .widget {
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+
+/* ==================== high（炫丽模式）==================== */
+/* 默认全开，此处只做增强 */
+
+/* 增强悬停效果 */
+body.effect-high .interactive-hover:hover {
+    transform: translateY(-4px) scale(1.04);
+}
+body.effect-high .card-micro-float:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+body.effect-high .hover-scale:hover {
+    transform: scale(1.08);
+}
+body.effect-high .hover-lift:hover {
+    transform: translateY(-8px);
+}
+
+/* 增强阴影 */
+body.effect-high .widget {
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* 增强毛玻璃 */
+body.effect-high .widget {
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+}
+
+/* 增强黑胶唱片转速 */
+body.effect-high .vinyl-record {
+    animation-duration: 1.5s !important;
+}
+
+/* 增强按钮波纹 */
+body.effect-high .ripple-click::after {
+    background: radial-gradient(circle,
+        rgba(0, 255, 136, 0.35) 0%,
+        rgba(0, 204, 255, 0.15) 40%,
+        transparent 70%) !important;
+}
+
+/* 增强卡片边框流光 */
+body.effect-high .card-border-flow:hover::before {
+    opacity: 1;
+    animation-duration: 2s !important;
+}
+
+/* 增强光泽扫过 */
+body.effect-high .shimmer-hover::before {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.12) 30%,
+        rgba(0, 255, 136, 0.1) 50%,
+        rgba(255, 255, 255, 0.12) 70%,
+        transparent 100%) !important;
+}
+
+/* ========== 空调旋转动画 ========== */
 .rotate-animation {
     animation: rotate 2s linear infinite;
 }
-

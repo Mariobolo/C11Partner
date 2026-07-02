@@ -125,10 +125,10 @@ const QuickSwitchManager = {
         
         // 驾驶模式
         html += '<h4 class="qsp-section-title">驾驶模式</h4>';
-        html += '<div class="qsp-grid qsp-mode-grid">';
+        html += '<div class="qsp-grid qsp-drive-mode-grid">';
         this.driveModes.forEach(mode => {
             html += `
-                <div class="qsp-mode-item" data-id="${mode.id}">
+                <div class="qsp-mode-item qsp-drive-mode" data-id="${mode.id}">
                     <div class="qsp-icon">${mode.icon}</div>
                     <div class="qsp-label">${mode.name}</div>
                 </div>
@@ -138,10 +138,10 @@ const QuickSwitchManager = {
         
         // 场景模式
         html += '<h4 class="qsp-section-title">场景模式</h4>';
-        html += '<div class="qsp-grid qsp-mode-grid">';
+        html += '<div class="qsp-grid qsp-scene-mode-grid">';
         this.sceneModes.forEach(mode => {
             html += `
-                <div class="qsp-mode-item" data-id="${mode.id}">
+                <div class="qsp-mode-item qsp-scene-mode" data-id="${mode.id}">
                     <div class="qsp-icon">${mode.icon}</div>
                     <div class="qsp-label">${mode.name}</div>
                 </div>
@@ -170,14 +170,14 @@ const QuickSwitchManager = {
         });
         
         // 绑定驾驶模式点击事件
-        panel.querySelectorAll('.qsp-mode-item').forEach(item => {
+        panel.querySelectorAll('.qsp-drive-mode').forEach(item => {
             item.addEventListener('click', () => {
                 this.setDriveMode(parseInt(item.dataset.id));
             });
         });
         
         // 绑定场景模式点击事件
-        panel.querySelectorAll('.qsp-mode-item').forEach(item => {
+        panel.querySelectorAll('.qsp-scene-mode').forEach(item => {
             item.addEventListener('click', () => {
                 this.toggleSceneMode(item.dataset.id);
             });
@@ -215,55 +215,64 @@ const QuickSwitchManager = {
         
         try {
             let result = false;
+            // 先读取当前状态，再取反
+            let currentState = false;
             switch (switchId) {
                 case 'lowBeamLight':
-                    // 先获取当前状态再切换
-                    result = window.Android.setLowBeamLight(true); // 简化处理，实际需要读取状态
+                    currentState = window.Android.isLowBeamLightOn ? window.Android.isLowBeamLightOn() : false;
+                    result = window.Android.setLowBeamLight(!currentState);
                     break;
                 case 'rearFogLight':
-                    result = window.Android.setRearFogLight(true);
+                    currentState = window.Android.isRearFogLightOn ? window.Android.isRearFogLightOn() : false;
+                    result = window.Android.setRearFogLight(!currentState);
                     break;
                 case 'positionLight':
-                    result = window.Android.setPositionLight(true);
+                    currentState = window.Android.isPositionLightOn ? window.Android.isPositionLightOn() : false;
+                    result = window.Android.setPositionLight(!currentState);
                     break;
                 case 'pedestrianAlert':
-                    result = window.Android.setPedestrianAlert(true);
+                    currentState = window.Android.isPedestrianAlertOn ? window.Android.isPedestrianAlertOn() : false;
+                    result = window.Android.setPedestrianAlert(!currentState);
                     break;
                 case 'maxCooling':
-                    result = window.Android.setMaxCooling(true);
+                    currentState = window.Android.isMaxCoolingOn ? window.Android.isMaxCoolingOn() : false;
+                    result = window.Android.setMaxCooling(!currentState);
                     break;
                 case 'nightMode':
-                    result = window.Android.setNightMode(true);
+                    currentState = window.Android.isNightModeOn ? window.Android.isNightModeOn() : false;
+                    result = window.Android.setNightMode(!currentState);
                     break;
                 case 'wifi':
-                    result = window.Android.setWifiEnabled(true);
+                    currentState = window.Android.isWifiEnabled ? window.Android.isWifiEnabled() : false;
+                    result = window.Android.setWifiEnabled(!currentState);
                     break;
                 case 'bluetooth':
-                    result = window.Android.setBluetoothEnabled(true);
+                    currentState = window.Android.isBluetoothEnabled ? window.Android.isBluetoothEnabled() : false;
+                    result = window.Android.setBluetoothEnabled(!currentState);
                     break;
                 case 'videoWhileDriving':
-                    const videoEnabled = window.Android.isVideoWhileDrivingEnabled();
-                    result = window.Android.setVideoWhileDriving(!videoEnabled);
+                    currentState = window.Android.isVideoWhileDrivingEnabled ? window.Android.isVideoWhileDrivingEnabled() : false;
+                    result = window.Android.setVideoWhileDriving(!currentState);
                     break;
                 case 'cameraOverspeed':
-                    const overspeedEnabled = window.Android.isCameraOverspeedLimitEnabled();
-                    result = window.Android.setCameraOverspeedLimit(!overspeedEnabled);
+                    currentState = window.Android.isCameraOverspeedLimitEnabled ? window.Android.isCameraOverspeedLimitEnabled() : false;
+                    result = window.Android.setCameraOverspeedLimit(!currentState);
                     break;
                 case 'ambientLight':
-                    const ambientEnabled = window.Android.isAmbientLightEnabled();
-                    result = window.Android.setAmbientLightEnabled(!ambientEnabled);
+                    currentState = window.Android.isAmbientLightEnabled ? window.Android.isAmbientLightEnabled() : false;
+                    result = window.Android.setAmbientLightEnabled(!currentState);
                     break;
                 case 'speech':
-                    const speechEnabled = window.Android.isSpeechEnabled();
-                    result = window.Android.setSpeechEnabled(!speechEnabled);
+                    currentState = window.Android.isSpeechEnabled ? window.Android.isSpeechEnabled() : false;
+                    result = window.Android.setSpeechEnabled(!currentState);
                     break;
                 case 'secondaryScreen':
-                    const screenEnabled = window.Android.isSecondaryScreenEnabled();
-                    result = window.Android.setSecondaryScreenEnabled(!screenEnabled);
+                    currentState = window.Android.isSecondaryScreenEnabled ? window.Android.isSecondaryScreenEnabled() : false;
+                    result = window.Android.setSecondaryScreenEnabled(!currentState);
                     break;
                 case 'screenPresentation':
-                    const showing = window.Android.isPresentationShowing();
-                    if (showing) {
+                    currentState = window.Android.isPresentationShowing ? window.Android.isPresentationShowing() : false;
+                    if (currentState) {
                         window.Android.hidePresentation();
                         result = true;
                     } else {
@@ -272,7 +281,7 @@ const QuickSwitchManager = {
                     break;
             }
             
-            console.log('切换开关:', switchId, '结果:', result);
+            console.log('切换开关:', switchId, currentState, '→', !currentState, '结果:', result);
             this.refreshSwitchStates();
             
         } catch (e) {
@@ -335,12 +344,20 @@ const QuickSwitchManager = {
         const panel = document.getElementById('quickSwitchPanel');
         if (!panel) return;
         
-        // 更新可读取状态的开关
+        // 更新所有可读取状态的开关
         const statusMap = {
+            'lowBeamLight':    window.Android.isLowBeamLightOn ? window.Android.isLowBeamLightOn() : null,
+            'rearFogLight':    window.Android.isRearFogLightOn ? window.Android.isRearFogLightOn() : null,
+            'positionLight':   window.Android.isPositionLightOn ? window.Android.isPositionLightOn() : null,
+            'pedestrianAlert': window.Android.isPedestrianAlertOn ? window.Android.isPedestrianAlertOn() : null,
+            'maxCooling':      window.Android.isMaxCoolingOn ? window.Android.isMaxCoolingOn() : null,
+            'nightMode':       window.Android.isNightModeOn ? window.Android.isNightModeOn() : null,
+            'wifi':            window.Android.isWifiEnabled ? window.Android.isWifiEnabled() : null,
+            'bluetooth':       window.Android.isBluetoothEnabled ? window.Android.isBluetoothEnabled() : null,
             'videoWhileDriving': window.Android.isVideoWhileDrivingEnabled ? window.Android.isVideoWhileDrivingEnabled() : null,
             'cameraOverspeed': window.Android.isCameraOverspeedLimitEnabled ? window.Android.isCameraOverspeedLimitEnabled() : null,
-            'ambientLight': window.Android.isAmbientLightEnabled ? window.Android.isAmbientLightEnabled() : null,
-            'speech': window.Android.isSpeechEnabled ? window.Android.isSpeechEnabled() : null,
+            'ambientLight':    window.Android.isAmbientLightEnabled ? window.Android.isAmbientLightEnabled() : null,
+            'speech':          window.Android.isSpeechEnabled ? window.Android.isSpeechEnabled() : null,
             'secondaryScreen': window.Android.isSecondaryScreenEnabled ? window.Android.isSecondaryScreenEnabled() : null,
             'screenPresentation': window.Android.isPresentationShowing ? window.Android.isPresentationShowing() : null,
         };

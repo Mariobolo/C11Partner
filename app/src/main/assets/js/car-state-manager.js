@@ -220,7 +220,18 @@ const CarStateManager = {
      * @param {number} speed - 车速 (km/h)
      */
     updateSpeedDisplay: function(speed) {
-        // 车速显示（静默更新，不打印日志）
+        const element = document.getElementById('speedIndicator');
+        if (element && speed !== undefined && speed !== null) {
+            element.textContent = Math.round(speed) + ' km/h';
+            // 低速时白色，高速时变色提醒
+            if (speed > 120) {
+                element.style.color = '#ff5252';
+            } else if (speed > 80) {
+                element.style.color = '#ffd740';
+            } else {
+                element.style.color = 'rgba(255, 255, 255, 0.85)';
+            }
+        }
     },
 
     /**

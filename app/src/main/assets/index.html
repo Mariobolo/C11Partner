@@ -55,6 +55,9 @@
                     <!-- 档位显示 -->
                     <span class="status-indicator gear-indicator" id="gearIndicator">P档</span>
                     
+                    <!-- 车速显示 -->
+                    <span class="status-indicator speed-indicator" id="speedIndicator">0 km/h</span>
+                    
                     <!-- 转向灯组 -->
                     <div class="turn-indicators-group">
                         <span class="status-indicator turn-indicator" id="leftTurnIndicator">◀ 左转</span>
@@ -431,13 +434,13 @@
                             <p class="setting-hint" style="margin-bottom:12px;">降低特效等级可提升车机流畅度</p>
                             <div class="wallpaper-type-list">
                                 <label class="wallpaper-type-item">
-                                    <input type="radio" name="effectLevel" value="low">
+                                    <input type="radio" name="effectLevel" value="low" checked>
                                     <span class="type-icon">⚡</span>
                                     <span class="type-name">流畅</span>
                                     <span class="type-desc">关闭动画特效，最佳性能</span>
                                 </label>
                                 <label class="wallpaper-type-item">
-                                    <input type="radio" name="effectLevel" value="balanced" checked>
+                                    <input type="radio" name="effectLevel" value="medium">
                                     <span class="type-icon">⚖️</span>
                                     <span class="type-name">平衡</span>
                                     <span class="type-desc">保留基础动画，兼顾性能</span>

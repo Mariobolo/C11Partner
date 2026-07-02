@@ -3,6 +3,10 @@ package com.c11partner.desktop.utils;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.bluetooth.BluetoothAdapter;
+import android.net.wifi.WifiManager;
+import android.app.UiModeManager;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -63,6 +67,17 @@ public class CarControlManager {
     public static final int AMBIENT_BLUE = 14;
     public static final int AMBIENT_PURPLE = 16;
     
+    // 本地状态缓存（用于无Logcat监控的开关）
+    // 发送Intent指令时同步更新，重启后重置为默认值
+    private Boolean lowBeamLightState = null;      // null=未知，true=开，false=关
+    private Boolean rearFogLightState = null;
+    private Boolean positionLightState = null;
+    private Boolean pedestrianAlertState = null;
+    private Boolean maxCoolingState = null;
+    private Boolean nightModeState = null;
+    private Boolean wifiEnabledState = null;
+    private Boolean bluetoothEnabledState = null;
+
     private CarControlManager(Context context) {
         this.context = context.getApplicationContext();
     }
@@ -103,12 +118,31 @@ public class CarControlManager {
             Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
             intent.putExtra("CARLIGHT_JINGUANG", on ? 1 : 0);
             context.sendBroadcast(intent);
+            lowBeamLightState = on;
             Log.d(TAG, "近光灯: " + (on ? "开" : "关"));
             return true;
         } catch (Exception e) {
             Log.e(TAG, "控制近光灯失败", e);
             return false;
         }
+    }
+    
+    /**
+     * 获取近光灯状态
+     * 优先从Logcat监控获取，fallback到本地缓存
+     */
+    public boolean isLowBeamLightOn() {
+        // 优先从Logcat监控的CarState获取
+        // 由WebViewBridge层调用LogcatMonitorService
+        // 这里返回本地缓存
+        return lowBeamLightState != null ? lowBeamLightState : false;
+    }
+    
+    /**
+     * 由Logcat监控更新近光灯状态
+     */
+    public void updateLowBeamLightState(boolean on) {
+        this.lowBeamLightState = on;
     }
     
     /**
@@ -119,6 +153,7 @@ public class CarControlManager {
             Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
             intent.putExtra("CARLIGHT_REARFOGCTL", on ? 1 : 0);
             context.sendBroadcast(intent);
+            rearFogLightState = on;
             Log.d(TAG, "后雾灯: " + (on ? "开" : "关"));
             return true;
         } catch (Exception e) {
@@ -126,6 +161,7 @@ public class CarControlManager {
             return false;
         }
     }
+    public boolean isRearFogLightOn() { return rearFogLightState != null ? rearFogLightState : false; }
     
     /**
      * 控制示廓灯
@@ -135,6 +171,7 @@ public class CarControlManager {
             Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
             intent.putExtra("CARLIGHT_SHEKUODENG", on ? 1 : 0);
             context.sendBroadcast(intent);
+            positionLightState = on;
             Log.d(TAG, "示廓灯: " + (on ? "开" : "关"));
             return true;
         } catch (Exception e) {
@@ -142,6 +179,7 @@ public class CarControlManager {
             return false;
         }
     }
+    public boolean isPositionLightOn() { return positionLightState != null ? positionLightState : false; }
     
     /**
      * 控制行人警示音
@@ -151,12 +189,20 @@ public class CarControlManager {
             Intent intent = new Intent(ACTION_TO_CAR_CONTROL);
             intent.putExtra("PEDESTRIANS_ALERT", on ? 1 : 0);
             context.sendBroadcast(intent);
+            pedestrianAlertState = on;
             Log.d(TAG, "行人警示音: " + (on ? "开" : "关"));
             return true;
         } catch (Exception e) {
             Log.e(TAG, "控制行人警示音失败", e);
             return false;
         }
+    }
+    public boolean isPedestrianAlertOn() { return pedestrianAlertState != null ? pedestrianAlertState : false; }
+    /**
+     * 由Logcat监控更新行人警示状态
+     */
+    public void updatePedestrianAlertState(boolean on) {
+        this.pedestrianAlertState = on;
     }
     
     // ==================== 驾驶模式控制 ====================
@@ -296,12 +342,20 @@ public class CarControlManager {
             Intent intent = new Intent(ACTION_TO_AIR_CONDITIONER);
             intent.putExtra("HVACACMAXREQ", on ? 1 : 0);
             context.sendBroadcast(intent);
+            maxCoolingState = on;
             Log.d(TAG, "最大制冷: " + (on ? "开" : "关"));
             return true;
         } catch (Exception e) {
             Log.e(TAG, "设置最大制冷失败", e);
             return false;
         }
+    }
+    public boolean isMaxCoolingOn() { return maxCoolingState != null ? maxCoolingState : false; }
+    /**
+     * 由Logcat监控更新最大制冷状态
+     */
+    public void updateMaxCoolingState(boolean on) {
+        this.maxCoolingState = on;
     }
 
     /**
@@ -374,12 +428,24 @@ public class CarControlManager {
             Intent intent = new Intent(ACTION_TO_SETTINGS);
             intent.putExtra("mode", night ? 0 : 1);
             context.sendBroadcast(intent);
+            nightModeState = night;
             Log.d(TAG, "模式: " + (night ? "夜间" : "白天"));
             return true;
         } catch (Exception e) {
             Log.e(TAG, "设置夜间模式失败", e);
             return false;
         }
+    }
+    public boolean isNightModeOn() {
+        try {
+            UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+            if (uiModeManager != null) {
+                return uiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_YES;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "读取夜间模式状态失败", e);
+        }
+        return nightModeState != null ? nightModeState : false;
     }
     
     /**
@@ -390,12 +456,24 @@ public class CarControlManager {
             Intent intent = new Intent(ACTION_TO_SETTINGS);
             intent.putExtra("wifi", enabled ? 1 : 0);
             context.sendBroadcast(intent);
+            wifiEnabledState = enabled;
             Log.d(TAG, "WiFi: " + (enabled ? "开" : "关"));
             return true;
         } catch (Exception e) {
             Log.e(TAG, "控制WiFi失败", e);
             return false;
         }
+    }
+    public boolean isWifiEnabled() {
+        try {
+            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if (wifiManager != null) {
+                return wifiManager.isWifiEnabled();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "读取WiFi状态失败", e);
+        }
+        return wifiEnabledState != null ? wifiEnabledState : false;
     }
     
     /**
@@ -406,12 +484,24 @@ public class CarControlManager {
             Intent intent = new Intent(ACTION_TO_SETTINGS);
             intent.putExtra("bluetooth", enabled ? 1 : 0);
             context.sendBroadcast(intent);
+            bluetoothEnabledState = enabled;
             Log.d(TAG, "蓝牙: " + (enabled ? "开" : "关"));
             return true;
         } catch (Exception e) {
             Log.e(TAG, "控制蓝牙失败", e);
             return false;
         }
+    }
+    public boolean isBluetoothEnabled() {
+        try {
+            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (bluetoothAdapter != null) {
+                return bluetoothAdapter.isEnabled();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "读取蓝牙状态失败", e);
+        }
+        return bluetoothEnabledState != null ? bluetoothEnabledState : false;
     }
     
     // ==================== 方控按键模拟 ====================

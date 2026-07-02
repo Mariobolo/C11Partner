@@ -65,6 +65,7 @@ Action: `com.leapmotor.speech.tocarcontrol`
 | **后雾灯** | `CARLIGHT_REARFOG_OPEN` / `CARLIGHT_REARFOG_CLOSE` | ✅ 已实现 | `setRearFogLight()` |
 | **示廓灯** | `CARLIGHT_WIDTH_OPEN` / `CARLIGHT_WIDTH_CLOSE` | ✅ 已实现 | `setPositionLight()` |
 | **行人警示** | `CARLIGHT_PEDESTRIAN_OPEN` / `CARLIGHT_PEDESTRIAN_CLOSE` | ✅ 已实现 | `setPedestrianAlert()` |
+| **最大制冷** | `HVACACMAXREQ` | ✅ 已实现 | `setMaxCooling()` |
 | **驾驶模式** | `MMI_DRIVER_MODE_SET` + mode值 | ✅ 已实现 | `setDriveMode()` |
 | **守护模式** | `GUARD_MODE` | ✅ 已实现 | `setGuardMode()` |
 | **小憩模式** | `REST_MODE` | ✅ 已实现 | `setRestMode()` |
@@ -131,15 +132,18 @@ Action: `com.leapmotor.speech.toairconditioner`
 | **左转向灯** | `dealTurnLeftLight mLeftLightSts X` | 1=开, 0=关 | ✅ 已实现 |
 | **右转向灯** | `dealTurnRightLight mRightLightSts X` | 1=开, 0=关 | ✅ 已实现 |
 
-### 3.3 灯光/车速信号（C11CarXml）
+### 3.3 灯光/车速/空调信号（C11CarXml）
 
 **TAG**: `D/C11CarXml`
 
-| 功能 | 关键字 | 状态 |
-|------|--------|------|
-| **近光灯** | `nearLight` | ✅ 已实现 |
-| **车速** | `speed` | ✅ 已实现 |
-| **空调开关** | - | 🔍 待确认 |
+| 功能 | 关键字 | 值说明 | 状态 |
+|------|--------|--------|------|
+| **近光灯** | `nearLight` / `Close` | 0=开, 1=关（反向逻辑） | ✅ 已实现 |
+| **车速** | `speed` | 数值（km/h） | ✅ 已实现 |
+| **行人警示** | `PedestriansAlert` | 0=关, 非0=开 | ✅ 已实现 |
+| **最大制冷** | `ACMAXControl` | 0=关, 2=开 | ✅ 已实现 |
+| **空调开关** | `ACButton` | 0=关, 1=开 | 🔍 待集成 |
+| **空调状态** | `AirState` | 1/3（待确认含义） | 🔍 待集成 |
 
 ### 3.4 胎压胎温（zza）
 
@@ -242,9 +246,13 @@ Action: `com.leapmotor.speech.toairconditioner`
 | 方法 | 说明 | 参数 |
 |------|------|------|
 | `setLowBeamLight(boolean on)` | 设置近光灯 | true=开, false=关 |
+| `isLowBeamLightOn()` | 获取近光灯状态 | 返回boolean |
 | `setRearFogLight(boolean on)` | 设置后雾灯 | true=开, false=关 |
+| `isRearFogLightOn()` | 获取后雾灯状态 | 返回boolean |
 | `setPositionLight(boolean on)` | 设置示廓灯 | true=开, false=关 |
+| `isPositionLightOn()` | 获取示廓灯状态 | 返回boolean |
 | `setPedestrianAlert(boolean on)` | 设置行人警示 | true=开, false=关 |
+| `isPedestrianAlertOn()` | 获取行人警示状态 | 返回boolean |
 
 ### 5.3 驾驶/场景模式
 
@@ -261,7 +269,8 @@ Action: `com.leapmotor.speech.toairconditioner`
 
 | 方法 | 说明 | 参数 |
 |------|------|------|
-| `setMaxCooling()` | 最大制冷 | - |
+| `setMaxCooling(boolean on)` | 最大制冷 | true=开, false=关 |
+| `isMaxCoolingOn()` | 获取最大制冷状态 | 返回boolean |
 | `setAcEnabled(boolean on)` | 设置空调开关 | true=开, false=关 |
 | `isAcEnabled()` | 获取空调状态 | - |
 | `setWindLevel(int level)` | 设置空调风量 | 1-?档 |
@@ -277,8 +286,11 @@ Action: `com.leapmotor.speech.toairconditioner`
 | 方法 | 说明 | 参数 |
 |------|------|------|
 | `setNightMode(boolean on)` | 设置夜间模式 | true=开, false=关 |
+| `isNightModeOn()` | 获取夜间模式状态 | 返回boolean |
 | `setWifiEnabled(boolean on)` | 设置WiFi | true=开, false=关 |
+| `isWifiEnabled()` | 获取WiFi状态 | 返回boolean |
 | `setBluetoothEnabled(boolean on)` | 设置蓝牙 | true=开, false=关 |
+| `isBluetoothEnabled()` | 获取蓝牙状态 | 返回boolean |
 
 ### 5.6 方控按键
 

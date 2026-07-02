@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.c11partner.desktop.utils.AutomationEngine;
+import com.c11partner.desktop.utils.CarControlManager;
 
 /**
  * 零跑C11日志监控服务
@@ -255,6 +256,18 @@ public class LogcatMonitorService extends Service {
                 parseLowBeamLightSignal(line);
             }
             
+            // 解析行人警示状态
+            // 格式: D/C11CarXml: node_name : PedestriansAlert  setTextContent: 0
+            else if (line.contains("C11CarXml") && line.contains("PedestriansAlert")) {
+                parsePedestrianAlertSignal(line);
+            }
+            
+            // 解析最大制冷状态
+            // 格式: D/C11CarXml: node_name : ACMAXControl  setTextContent: 0/2
+            else if (line.contains("C11CarXml") && line.contains("ACMAXControl")) {
+                parseMaxCoolingSignal(line);
+            }
+            
             // 解析空调页面状态
             // 格式: D/LPSysUI.LeapMotorTopTaskHelper: topPackage: com.leapmotor.carcontrol
             else if (line.contains("LPSysUI") && line.contains("topPackage")) {
@@ -414,10 +427,55 @@ public class LogcatMonitorService extends Service {
                 String stateStr = line.substring(pos + 15).trim();
                 int state = Integer.parseInt(stateStr);
                 carState.setLowBeamLight(state);
+                // 同步到CarControlManager本地缓存
+                CarControlManager ccm = CarControlManager.getInstance(this);
+                ccm.updateLowBeamLightState(state == 0);
                 Log.d(TAG, "近光灯状态: " + (state == 0 ? "开" : "关"));
             }
         } catch (Exception e) {
             Log.e(TAG, "解析近光灯信号错误: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 解析行人警示状态
+     * 格式: D/C11CarXml: node_name : PedestriansAlert  setTextContent: 0/1
+     * 0=关, 1=开（待验证，暂按正常逻辑）
+     */
+    private void parsePedestrianAlertSignal(String line) {
+        try {
+            if (line.contains("setTextContent:")) {
+                int pos = line.indexOf("setTextContent:");
+                String stateStr = line.substring(pos + 15).trim();
+                int state = Integer.parseInt(stateStr);
+                CarControlManager ccm = CarControlManager.getInstance(this);
+                // 日志中 0=关，非0=开
+                ccm.updatePedestrianAlertState(state != 0);
+                Log.d(TAG, "行人警示状态: " + (state != 0 ? "开" : "关"));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "解析行人警示信号错误: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * 解析最大制冷状态
+     * 格式: D/C11CarXml: node_name : ACMAXControl  setTextContent: 0/2
+     * 0=关, 2=开（实车日志确认）
+     */
+    private void parseMaxCoolingSignal(String line) {
+        try {
+            if (line.contains("setTextContent:")) {
+                int pos = line.indexOf("setTextContent:");
+                String stateStr = line.substring(pos + 15).trim();
+                int state = Integer.parseInt(stateStr);
+                CarControlManager ccm = CarControlManager.getInstance(this);
+                // 实车日志: 2=开, 0=关
+                ccm.updateMaxCoolingState(state != 0);
+                Log.d(TAG, "最大制冷状态: " + (state != 0 ? "开" : "关"));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "解析最大制冷信号错误: " + e.getMessage());
         }
     }
     

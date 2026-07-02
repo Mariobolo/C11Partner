@@ -207,6 +207,21 @@ body {
     text-shadow: 0 0 8px rgba(255, 215, 64, 0.6);
 }
 
+.gear-indicator.gear-d {
+    color: #00e676;
+    text-shadow: 0 0 8px rgba(0, 230, 118, 0.6);
+}
+
+/* 车速显示 */
+.speed-indicator {
+    font-size: 14px;
+    min-width: 60px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
 .door-indicator {
     color: #ff5252;
     animation: pulse 1s ease-in-out infinite;
@@ -2936,7 +2951,6 @@ audio {
     min-width: 200px !important;
     padding: 16px 20px !important;
     height: auto !important;
-    min-height: 80px !important;
 }
 
 .weather-widget .temperature {
@@ -2954,7 +2968,6 @@ audio {
     min-width: 300px !important;
     padding: 14px 16px !important;
     height: auto !important;
-    min-height: 90px !important;
 }
 
 .control-buttons button {
@@ -2971,7 +2984,6 @@ audio {
 .quick-apps-widget {
     padding: 12px !important;
     height: auto !important;
-    min-height: 80px !important;
 }
 
 .quick-app-item {
@@ -2993,7 +3005,6 @@ audio {
     min-width: 200px !important;
     padding: 16px !important;
     height: auto !important;
-    min-height: 120px !important;
     position: relative !important;
     overflow: visible !important;
 }
@@ -3001,7 +3012,6 @@ audio {
 .car-image {
     width: 100% !important;
     height: 100% !important;
-    min-height: 80px !important;
     background-image: url('images/nav_car.png') !important;
     background-size: contain !important;
     background-repeat: no-repeat !important;
@@ -3019,7 +3029,6 @@ audio {
     min-width: 220px !important;
     padding: 12px 24px 12px 70px !important;
     height: auto !important;
-    min-height: 80px !important;
     position: relative !important;
 }
 
@@ -3355,42 +3364,4 @@ audio {
 }
 
 
-/* ========== 特效等级系统 ========== */
-/* 流畅模式：禁用所有动画和特效 */
-body.effect-low *,
-body.effect-low *::before,
-body.effect-low *::after {
-    animation-duration: 0s !important;
-    animation-delay: 0s !important;
-    transition-duration: 0.05s !important;
-    transition-delay: 0s !important;
-}
-body.effect-low .widget::before,
-body.effect-low .widget::after,
-body.effect-low .weather-widget::after,
-body.effect-low .music-widget::before,
-body.effect-low .music-widget::after,
-body.effect-low .quick-app-item::before,
-body.effect-low .quick-app-item::after,
-body.effect-low .quick-switch-item::before {
-    display: none !important;
-}
-body.effect-low .vinyl-record {
-    animation: none !important;
-}
-body.effect-low .backdrop-filter {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-}
 
-/* 平衡模式：保留基础动画，去掉复杂特效 */
-body.effect-balanced .widget::before,
-body.effect-balanced .widget::after {
-    opacity: 0.2 !important;
-}
-body.effect-balanced .quick-app-item:hover,
-body.effect-balanced .quick-switch-item:hover {
-    transform: translateY(-3px) scale(1.02) !important;
-}
-
-/* 炫丽模式：默认全开，无需额外规则 */
