@@ -113,6 +113,16 @@ public class CarControlBridge extends BaseBridge {
         }
     }
     
+    @JavascriptInterface
+    public boolean isLowBeamLightOn() {
+        try {
+            return getCarControlManager().isLowBeamLightOn();
+        } catch (Exception e) {
+            Log.e(TAG, "获取近光灯状态失败", e);
+            return false;
+        }
+    }
+    
     /**
      * 设置后雾灯
      * 
@@ -125,6 +135,16 @@ public class CarControlBridge extends BaseBridge {
             return getCarControlManager().setRearFogLight(on);
         } catch (Exception e) {
             Log.e(TAG, "设置后雾灯失败", e);
+            return false;
+        }
+    }
+    
+    @JavascriptInterface
+    public boolean isRearFogLightOn() {
+        try {
+            return getCarControlManager().isRearFogLightOn();
+        } catch (Exception e) {
+            Log.e(TAG, "获取后雾灯状态失败", e);
             return false;
         }
     }
@@ -145,6 +165,16 @@ public class CarControlBridge extends BaseBridge {
         }
     }
     
+    @JavascriptInterface
+    public boolean isPositionLightOn() {
+        try {
+            return getCarControlManager().isPositionLightOn();
+        } catch (Exception e) {
+            Log.e(TAG, "获取示廓灯状态失败", e);
+            return false;
+        }
+    }
+    
     /**
      * 设置行人警示音
      * 
@@ -157,6 +187,16 @@ public class CarControlBridge extends BaseBridge {
             return getCarControlManager().setPedestrianAlert(on);
         } catch (Exception e) {
             Log.e(TAG, "设置行人警示音失败", e);
+            return false;
+        }
+    }
+    
+    @JavascriptInterface
+    public boolean isPedestrianAlertOn() {
+        try {
+            return getCarControlManager().isPedestrianAlertOn();
+        } catch (Exception e) {
+            Log.e(TAG, "获取行人警示状态失败", e);
             return false;
         }
     }
@@ -273,6 +313,16 @@ public class CarControlBridge extends BaseBridge {
             return getCarControlManager().setMaxCooling(on);
         } catch (Exception e) {
             Log.e(TAG, "设置极速制冷失败", e);
+            return false;
+        }
+    }
+    
+    @JavascriptInterface
+    public boolean isMaxCoolingOn() {
+        try {
+            return getCarControlManager().isMaxCoolingOn();
+        } catch (Exception e) {
+            Log.e(TAG, "获取最大制冷状态失败", e);
             return false;
         }
     }
@@ -700,6 +750,16 @@ public class CarControlBridge extends BaseBridge {
         }
     }
     
+    @JavascriptInterface
+    public boolean isNightModeOn() {
+        try {
+            return getCarControlManager().isNightModeOn();
+        } catch (Exception e) {
+            Log.e(TAG, "获取夜间模式状态失败", e);
+            return false;
+        }
+    }
+    
     /**
      * 设置 WiFi 开关
      * 
@@ -716,6 +776,16 @@ public class CarControlBridge extends BaseBridge {
         }
     }
     
+    @JavascriptInterface
+    public boolean isWifiEnabled() {
+        try {
+            return getCarControlManager().isWifiEnabled();
+        } catch (Exception e) {
+            Log.e(TAG, "获取WiFi状态失败", e);
+            return false;
+        }
+    }
+    
     /**
      * 设置蓝牙开关
      * 
@@ -728,6 +798,16 @@ public class CarControlBridge extends BaseBridge {
             return getCarControlManager().setBluetoothEnabled(enabled);
         } catch (Exception e) {
             Log.e(TAG, "设置蓝牙失败", e);
+            return false;
+        }
+    }
+    
+    @JavascriptInterface
+    public boolean isBluetoothEnabled() {
+        try {
+            return getCarControlManager().isBluetoothEnabled();
+        } catch (Exception e) {
+            Log.e(TAG, "获取蓝牙状态失败", e);
             return false;
         }
     }
