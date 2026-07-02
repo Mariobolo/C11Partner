@@ -3,7 +3,6 @@ package com.c11partner.desktop.utils;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.bluetooth.BluetoothAdapter;
 import android.net.wifi.WifiManager;
 import android.app.UiModeManager;

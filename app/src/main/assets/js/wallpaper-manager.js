@@ -103,8 +103,8 @@ const WallpaperManager = (function() {
                 applyVideoWallpaper(wallpaperUrl);
                 break;
             case TYPE_IFRAME:
-                // iframe壁纸（预留，暂时禁用）
-                applyImageWallpaper(wallpaperUrl);
+                // iframe壁纸
+                applyIframeWallpaper(wallpaperUrl || '3d/index.html');
                 break;
             case TYPE_DEFAULT:
             case TYPE_BING:
@@ -196,11 +196,8 @@ const WallpaperManager = (function() {
      * 注意：当前版本暂不启用iframe壁纸，会自动降级为默认图片壁纸
      */
     function applyIframeWallpaper(url) {
-        // 暂时禁用iframe壁纸，降级为图片壁纸
-        console.log('iframe壁纸功能暂未开放，使用默认壁纸');
+        console.log('应用iframe壁纸:', url);
         
-        // 预留代码：未来启用时取消注释即可
-        /*
         let iframeBg = document.getElementById('iframe-wallpaper');
         
         if (!iframeBg) {
@@ -216,6 +213,7 @@ const WallpaperManager = (function() {
                 z-index: -1;
             `;
             iframeBg.setAttribute('allow', 'autoplay; fullscreen');
+            iframeBg.setAttribute('scrolling', 'no');
             
             const bgContainer = document.querySelector('.background-container');
             if (bgContainer) {
@@ -230,10 +228,12 @@ const WallpaperManager = (function() {
         if (bgElement) {
             bgElement.style.display = 'none';
         }
-        */
         
-        // 暂时使用默认图片壁纸
-        applyImageWallpaper('images/default_bg_1.jpg');
+        // 隐藏壁纸预览层
+        const previewElement = document.getElementById('wallpaperPreview');
+        if (previewElement) {
+            previewElement.style.display = 'none';
+        }
     }
 
     /**
