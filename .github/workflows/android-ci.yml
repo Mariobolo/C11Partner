@@ -66,15 +66,15 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x gradlew
     - name: Clean previous build
-      run: ./gradlew clean --no-build-cache
+      run: ./gradlew clean --no-build-cache 2>&1 | grep -v "Warning: Mapping new ns" || true
     - name: Build debug APK
       run: |
         set -o pipefail
-        ./gradlew assembleDebug --stacktrace 2>&1 | tee build-debug.log
+        ./gradlew assembleDebug --stacktrace 2>&1 | grep -v "Warning: Mapping new ns" | tee build-debug.log
     - name: Build release APK
       run: |
         set -o pipefail
-        ./gradlew assembleRelease --stacktrace 2>&1 | tee build-release.log
+        ./gradlew assembleRelease --stacktrace 2>&1 | grep -v "Warning: Mapping new ns" | tee build-release.log
     - name: Upload build error log
       if: failure()
       uses: actions/upload-artifact@v6
