@@ -2,9 +2,9 @@
 
 > 📋 WebViewBridge JS 接口参考文档
 > 
-> 最后更新：2026-07-01
+> 最后更新：2026-07-03
 > 
-> 接口总数：171 个（含32个新增方法）
+> 接口总数：173 个（含34个新增方法）
 
 ---
 
@@ -75,8 +75,10 @@
 | `toggleDefrost()` | 除霜开关 | `boolean` | - |
 | `increaseTemperature()` | 温度+1 | `boolean` | - |
 | `decreaseTemperature()` | 温度-1 | `boolean` | - |
-| `increaseWindSpeed()` | 风量+1 | `boolean` | - |
 | `decreaseWindSpeed()` | 风量-1 | `boolean` | - |
+| `increaseWindSpeed()` | 风量+1 | `boolean` | - |
+| `adjustWindLevel(delta)` | 调整风量（相对值） | `boolean` | `delta`: int |
+| `adjustTemperature(delta)` | 调整温度（相对值） | `boolean` | `delta`: int |
 | `getAcInfo()` | 获取空调状态JSON | `String` | - |
 | `getDriverTemp()` | - | `int` | - |
 | `getPassengerTemp()` | - | `int` | - |

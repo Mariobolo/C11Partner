@@ -1643,21 +1643,18 @@ textarea:focus:not(:focus-visible),
 }
 
 /* ========== 性能优化 - 硬件加速提示 ========== */
-/* 3D变换元素启用硬件加速 */
+/* 3D变换元素启用硬件加速 - 性能优化: 移除 .widget/.card 的 will-change 和 perspective，避免 GPU 内存浪费 */
 .hardware-accelerate,
 .weather-icon,
 .dock-btn img,
 .setting-item,
-.settings-tab,
-.widget,
-.card {
+.settings-tab {
     will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
-    perspective: 1000px;
 }
 
-/* 动画元素性能优化 */
+/* 动画元素性能优化 - 仅保留实际运行动画的 will-change */
 .animate-spin,
 .animate-breathe,
 .animate-float,
@@ -1674,7 +1671,6 @@ textarea:focus:not(:focus-visible),
 /* 高优先级动画 - 60fps */
 .high-priority-animation {
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform, opacity;
 }
 
 /* 低优先级动画 - 30fps */
@@ -1844,9 +1840,8 @@ html:not(.is-scrolling) .scroll-pause-animations {
     visibility: visible;
 }
 
-/* 合成层提升 */
+/* 合成层提升 - 性能优化: 移除通用 will-change，仅在需要时手动添加 */
 .promote-layer {
-    will-change: transform;
     transform: translateZ(0);
 }
 
@@ -2390,19 +2385,18 @@ html:not(.is-scrolling) .scroll-pause-animations {
     }
 }
 
-/* 高帧率优化 */
+/* 高帧率优化 - 性能优化: 移除过于宽泛的 will-change */
 @media (prefers-reduced-motion: no-preference) {
-    .page,
-    .modal {
+    .page.transitioning,
+    .modal.transitioning {
         will-change: transform, opacity;
     }
 }
 
-/* 硬件加速 */
+/* 硬件加速 - 性能优化: 移除不必要的 perspective */
 .page-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;
-    perspective: 1000px;
 }
 
 /* ========== 动画延迟工具类 ========== */

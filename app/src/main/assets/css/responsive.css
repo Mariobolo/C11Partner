@@ -1393,7 +1393,7 @@ body.orientation-changing {
 /* ========== 零跑车机专用分辨率 (1920x1080) - 主流配置 ========== */
 @media screen and (width: 1920px) and (height: 1080px) {
     :root {
-        --widget-height: 110px;
+        --widget-height: 130px;
         --status-bar-height: 52px;
         --dock-height: 84px;
         --font-size-4xl: 148px;
@@ -1423,7 +1423,7 @@ body.orientation-changing {
     }
     
     .card-view {
-        bottom: 94px;
+        bottom: 40px;
         left: 56px;
         right: 56px;
     }

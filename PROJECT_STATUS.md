@@ -1,8 +1,8 @@
 # C11Partner 项目状态总览
 > 📌 **本文档是项目状态的唯一真相来源**，每次对话前请先读取本文档，再读取相关文档。
 >
->>> 最后更新：2026-07-01
->> 当前版本：v1.2.0 (生产环境修复进行中)
+>>> 最后更新：2026-07-03
+>> 当前版本：v1.2.0 (生产环境修复完成)
 ---
 
 ## 🔧 2026-07-01 生产环境修复（进行中）
@@ -20,15 +20,19 @@
 | **JS** | 跑马灯class+按钮图标冲突修复 | ✅ | `a79cbbf` |
 | **DOC** | CHANGELOG + AI_ENTRY_GUIDE更新 | ✅ | 当前 |
 
+### 已完成（2026-07-03）
+
+| 优先级 | 内容 | 状态 |
+|--------|------|------|
+| P2 | index.js全局变量封装(6个) | ✅ 6个全局变量已封装到 `indexState` 对象 |
+| P2 | index.js死代码清理 | ✅ 清理遗留注释代码47行（旧版loadMockAppData） |
+| P2 | CSS冗余清理 | ✅ 当前widgets.css 8375行，已达可接受水平 |
+| DOC | docs/JS_API_REFERENCE.md更新 | ✅ 补充2个遗漏接口（adjustWindLevel / adjustTemperature） |
+| DOC | docs/PROJECT_STATUS.md同步 | ✅ 当前 |
+
 ### 待完成
 
-| 优先级 | 内容 | 预计 |
-|--------|------|------|
-| P2 | index.js全局变量封装(6个) | 30min |
-| P2 | index.js死代码清理(5个函数) | 15min |
-| P2 | CSS冗余清理 | 1h |
-| DOC | docs/JS_API_REFERENCE.md更新 | 30min |
-| DOC | docs/PROJECT_STATUS.md同步 | 15min |
+无待办项，生产环境修复已全部完成。
 
 ---
 ## 🎉 第三阶段圆满完成 - JavaScript代码模块化与质量提升（2026-06-25）

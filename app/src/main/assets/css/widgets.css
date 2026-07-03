@@ -202,8 +202,8 @@
         0 0 0 1px rgba(255, 255, 255, 0.05),
         0 0 30px rgba(var(--primary-color-rgb), 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    transform-style: preserve-3d;
-    perspective: 1000px;
+    /* 性能优化: 移除非3D变换场景的 preserve-3d 和 perspective */
+    transform-style: flat;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .status-indicator {
@@ -220,7 +220,8 @@
     border-radius: var(--radius-sm) !important;
     white-space: nowrap !important;
     position: relative;
-    transform-style: preserve-3d;
+    /* 性能优化: 移除非3D变换场景的 preserve-3d */
+    transform-style: flat;
     background:
         radial-gradient(circle at 50% 30%,
             rgba(255, 255, 255, 0.08) 0%,
@@ -249,7 +250,8 @@
     border-radius: 12px;
     position: relative;
     overflow: hidden;
-    transform-style: preserve-3d;
+    /* 性能优化: 移除非3D变换场景的 preserve-3d */
+    transform-style: flat;
     background: rgba(var(--primary-color-rgb), 0.15) !important;
     border: 1px solid rgba(var(--primary-color-rgb), 0.3) !important;
     box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.2) !important;
@@ -374,7 +376,8 @@
     filter: drop-shadow(0 0 30px rgba(var(--primary-color-rgb), 0.15));
     position: relative;
     animation: timeBreath 4s ease-in-out infinite;
-    transform-style: preserve-3d;
+    /* 性能优化: 移除非3D变换场景的 preserve-3d */
+    transform-style: flat;
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 /* 时间文字发光光晕效果 */
@@ -458,14 +461,14 @@
 /* ========== 底部卡片容器 ========== */
 .card-view {
     position: absolute !important;
-    bottom: 30px !important;
+    bottom: 40px !important;
     left: var(--spacing-3xl) !important;
     right: var(--spacing-3xl) !important;
-    height: auto !important;
+    height: 260px !important;
     background-color: transparent !important;
     border-radius: var(--radius-lg) !important;
     pointer-events: auto !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     padding: 0 0 var(--spacing-xl) 0 !important;
 }
 .horizontal-scroll {
@@ -516,11 +519,10 @@
     display: inline-flex !important;
     flex-shrink: 0;
     flex-direction: column !important;
-    height: auto !important;
-    min-height: var(--widget-height);
+    height: 130px !important;
     min-width: 280px !important;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     margin-right: var(--spacing-lg) !important;
     padding: var(--spacing-md) var(--spacing-lg) !important;
     box-sizing: border-box;
@@ -530,17 +532,15 @@
     backface-visibility: hidden;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    will-change: transform, box-shadow;
+    /* 性能优化: will-change 仅保留 backdrop-filter，避免 GPU 内存浪费 */
+    will-change: backdrop-filter;
     background: var(--surface-color) !important;
     backdrop-filter: var(--blur-medium) !important;
     color: var(--text-primary);
     -webkit-backdrop-filter: blur(25px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        0 4px 12px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    /* 性能优化: 多层 box-shadow 简化为单层，减少重绘开销 */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     transition: 
         transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
         box-shadow 0.35s ease,
@@ -548,8 +548,9 @@
         background 0.35s ease;
     position: relative;
     overflow: hidden;
-    transform-style: preserve-3d;
-    perspective: 1000px;
+    /* 性能优化: 移除非3D变换场景的 preserve-3d 和 perspective */
+    transform-style: flat;
+    /* 性能优化: 移除静态元素的 perspective */
     white-space: normal !important;
     animation: widgetFloatEnhanced 5s ease-in-out infinite;
     animation-play-state: paused;
@@ -615,13 +616,9 @@
 }
 /* 卡片点击3D按压效果 - 深度触觉反馈 */
 .widget:active {
-    transform: translateY(-2px) scale(0.985) rotateX(-2deg);
-    box-shadow: 
-        0 12px 32px rgba(0, 0, 0, 0.45),
-        0 4px 12px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
-        0 0 30px rgba(var(--primary-color-rgb), 0.2),
-        inset 0 3px 12px rgba(0, 0, 0, 0.35);
+    transform: translateY(-2px) scale(0.985);
+    /* 性能优化: box-shadow 简化为单层 */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     border-color: rgba(var(--primary-color-rgb), 0.45);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
@@ -629,19 +626,13 @@
 @keyframes widgetFloat {
     0%, 100% { 
         transform: translateY(0); 
-        box-shadow: 
-            0 12px 40px rgba(0, 0, 0, 0.4),
-            0 4px 12px rgba(0, 0, 0, 0.25),
-            inset 0 1px 0 rgba(255, 255, 255, 0.08),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        /* 性能优化: box-shadow 简化为单层 */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     }
     50% { 
         transform: translateY(-3px); 
-        box-shadow: 
-            0 16px 48px rgba(0, 0, 0, 0.45),
-            0 6px 16px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.08),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        /* 性能优化: box-shadow 简化为单层 */
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
     }
 }
 
@@ -659,7 +650,7 @@
     gap: 12px;
     padding: 4px;
     width: 100%;
-    perspective: 800px;
+    /* 性能优化: 移除非3D变换场景的 perspective */
 }
 .quick-app-item {
     display: flex;
@@ -682,14 +673,10 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    box-shadow: 
-        0 8px 28px rgba(0, 0, 0, 0.35),
-        0 3px 10px rgba(0, 0, 0, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    /* 性能优化: 移除非3D变换场景的 preserve-3d 和 perspective */
+    transform-style: flat;
+    /* 性能优化: box-shadow 简化为单层 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 /* 快捷应用渐变边框发光 */
 .quick-app-item::before {
@@ -750,39 +737,30 @@
             rgba(255, 255, 255, 0.06) 50%, 
             rgba(var(--primary-color-rgb), 0.06) 100%),
         var(--surface-hover);
-    transform: translateY(-6px) scale(1.04) rotateX(5deg);
+    transform: translateY(-6px) scale(1.04);
     border-color: rgba(var(--primary-color-rgb), 0.3);
-    box-shadow: 
-        0 16px 40px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.1),
-        0 0 30px rgba(var(--primary-color-rgb), 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    /* 性能优化: box-shadow 简化 */
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 /* 点击波纹扩散效果 */
 .quick-app-item:active {
-    transform: translateY(-2px) scale(0.97) rotateX(-2deg);
-    box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
-        0 0 20px rgba(var(--primary-color-rgb), 0.2),
-        inset 0 3px 8px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px) scale(0.97);
+    /* 性能优化: box-shadow 简化 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .quick-app-icon {
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    transform-style: preserve-3d;
+    transform-style: flat;
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.4),
-        0 2px 8px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 /* 图标顶部高光 */
 .quick-app-icon::before {
@@ -856,8 +834,8 @@
     min-width: 300px;
     padding: 18px 20px;
     position: relative;
-    perspective: 800px;
-    transform-style: preserve-3d;
+    /* 性能优化: 移除非3D变换场景的 perspective 和 preserve-3d */
+    transform-style: flat;
     overflow: hidden;
     background: 
         radial-gradient(ellipse at 20% 10%, 
@@ -874,11 +852,8 @@
     backdrop-filter: blur(30px) saturate(190%);
     -webkit-backdrop-filter: blur(30px) saturate(190%);
     border: 1px solid rgba(255, 255, 255, 0.11);
-    box-shadow: 
-        0 16px 48px rgba(0, 0, 0, 0.45),
-        0 6px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    /* 性能优化: box-shadow 简化为单层 */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     animation: switchesFloat 5.5s ease-in-out infinite;
     animation-play-state: paused;
 }
@@ -909,7 +884,8 @@
     gap: 8px !important;
     padding: 12px !important;
     width: 100%;
-    transform-style: preserve-3d;
+    /* 性能优化: 移除非3D变换场景的 preserve-3d */
+    transform-style: flat;
 }
 .quick-switch-item {
     display: flex;
@@ -931,13 +907,10 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transform-style: preserve-3d;
-    box-shadow: 
-        0 6px 24px rgba(0, 0, 0, 0.32),
-        0 2px 8px rgba(0, 0, 0, 0.22),
-        0 0 0 1px rgba(255, 255, 255, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    /* 性能优化: 移除非3D变换场景的 preserve-3d */
+    transform-style: flat;
+    /* 性能优化: box-shadow 简化为单层，减少重绘 */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     outline: none;
@@ -1102,7 +1075,7 @@
     justify-content: center;
     font-size: 20px;
     border-radius: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     position: relative;
     transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
@@ -8371,5 +8344,240 @@ footer.status-bar {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     max-width: 70px !important;
+}
+
+/* ============================================
+   【触屏设备优化】Touch Device Optimization
+   桌面小组件 hover 效果仅限非触屏设备，
+   触屏设备使用 active 反馈代替 hover
+   ============================================ */
+
+/* ========== 仅非触屏设备应用 widget hover 效果 ========== */
+@media (hover: hover) {
+    /* Widget 通用 hover */
+    .widget:hover::after,
+    .widget:hover::before { opacity: 1; }
+
+    /* 快捷应用 hover */
+    .quick-app-item:hover::before,
+    .quick-app-item:hover::after { opacity: 1; }
+    .quick-app-item:hover .quick-app-icon::after,
+    .quick-app-item:hover .quick-app-icon::before { opacity: 1; }
+    .quick-app-item:hover .quick-app-name,
+    .quick-app-item:hover .quick-app-icon { color: var(--text-primary); }
+
+    /* 快捷开关 hover */
+    .quick-switch-item:hover::before { opacity: 1; }
+    .quick-switch-item:hover .switch-shimmer,
+    .quick-switch-item:hover .quick-switch-icon::before { left: 150%; opacity: 1; }
+    .quick-switch-item:hover .quick-switch-icon { transform: scale(1.1) translateY(-2px); }
+    .quick-switch-item:hover .quick-switch-name { color: var(--text-primary); }
+    .quick-switches-widget:hover::before { opacity: 1; }
+
+    /* 导航按钮 / Dock按钮 hover */
+    .dock-btn:hover,
+    .nav-button:hover,
+    .home-btn:hover,
+    .back-btn:hover,
+    .task-btn:hover,
+    .ac-control:hover {
+        background: rgba(255, 255, 255, 0.12) !important;
+        transform: translateY(-3px) scale(1.08) !important;
+    }
+    .dock-btn:hover img,
+    .nav-button:hover img,
+    .ac-control:hover img {
+        filter: drop-shadow(0 0 8px rgba(var(--primary-color-rgb), 0.6)) !important;
+        transform: scale(1.12) !important;
+    }
+
+    /* 音乐 Widget hover */
+    .music-widget:hover,
+    .music-widget:hover::before,
+    .music-widget:hover::after,
+    .music-widget:hover .music-shimmer { opacity: 1; }
+    .music-progress-bar:hover { height: 8px; }
+    .music-progress-bar:hover .music-progress-filled::after { opacity: 1; transform: scale(1); }
+    .btn-prev:hover, .btn-play:hover, .btn-next:hover {
+        transform: translateY(-4px) scale(1.1);
+    }
+    .music-control-btn:hover { transform: scale(1.15); }
+
+    /* 天气 Widget hover */
+    .weather-widget:hover .temperature { transform: scale(1.08) translateY(-2px); }
+    .weather-widget:hover .weather-desc { transform: scale(1.05) translateY(-1px); }
+    .weather-widget:hover .city-name { opacity: 1; transform: scale(1.03); }
+    .weather-widget:hover .condition { color: var(--text-primary); transform: translateY(-2px); }
+    .weather-widget:hover .weather-detail { opacity: 1; transform: translateY(0); }
+
+    /* 车辆 Widget hover */
+    .car-widget:hover::before { opacity: 1; }
+    .car-widget:hover .car-image { opacity: 0.8; }
+
+    /* 地图 Widget hover */
+    .map-widget:hover .map-icon { opacity: 0.12; transform: scale(1.05); }
+
+    /* 状态指示器 hover */
+    .status-indicator:hover { background: rgba(255, 255, 255, 0.08); transform: scale(1.1); }
+    .gear-indicator:hover { transform: scale(1.1); }
+    .network-status-icon:hover,
+    .bluetooth-status-icon:hover { opacity: 1; transform: scale(1.15); }
+
+    /* 空调控件 hover */
+    .ac-control:hover::after,
+    .ac-hcs:hover::after { opacity: 1; }
+    .ac-control:hover,
+    .ac-hcs:hover { opacity: 1; transform: scale(1.2); }
+    .wind-display:hover { transform: scale(1.1); }
+    .wind-display:hover .wind-level { opacity: 1; }
+    .center-controls:hover::before { left: 100%; }
+    .center-controls:hover .air-text { text-shadow: 0 0 20px rgba(0, 204, 255, 0.5); }
+
+    /* 控制按钮 hover */
+    .control-icon:hover::after { opacity: 1; }
+    .control-icon:hover { opacity: 1; transform: scale(1.15); }
+
+    /* 时间/日期 hover */
+    .layout-left:hover .time-text#timeDisplay,
+    .top-left-time:hover .time-text { transform: scale(1.03); }
+    .layout-left:hover .date-text { transform: scale(1.05) translateY(-2px); }
+    .layout-left:hover .lunar-calendar-text { transform: scale(1.03); opacity: 1; }
+
+    /* Widget 图标 hover */
+    .widget-icon:hover::before { opacity: 1; }
+    .settings-entry:hover { opacity: 1; background: rgba(255, 255, 255, 0.1); transform: rotate(30deg); }
+
+    /* 应用列表 hover */
+    #appsList .app-item:hover { background: rgba(255, 255, 255, 0.1) !important; transform: translateY(-2px) !important; }
+
+    /* QSP 面板 hover */
+    .qsp-switch-item:hover,
+    .qsp-mode-item:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.15); }
+}
+
+/* ========== 触屏设备优化 - 触摸反馈与交互增强 ========== */
+
+/* 1. 可点击元素禁用 tap-highlight 和禁止双击缩放 */
+.widget,
+.quick-app-item,
+.quick-switch-item,
+.nav-button,
+.control-buttons button,
+.dock-btn,
+.ac-control,
+.ac-hcs,
+.home-btn,
+.back-btn,
+.task-btn,
+.music-control-btn,
+.btn-prev,
+.btn-play,
+.btn-next,
+.control-icon,
+.status-indicator,
+.gear-indicator,
+.network-status-icon,
+.bluetooth-status-icon,
+.map-icon,
+.wind-display,
+.center-controls,
+.settings-entry,
+#appsList .app-item,
+.qsp-switch-item,
+.qsp-mode-item,
+.switch-item,
+.automation-item {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* 2. 可点击元素 cursor: pointer */
+.widget,
+.quick-app-item,
+.quick-switch-item,
+.nav-button,
+.control-buttons button,
+.dock-btn,
+.ac-control,
+.ac-hcs,
+.home-btn,
+.back-btn,
+.task-btn,
+.music-control-btn,
+.btn-prev,
+.btn-play,
+.btn-next,
+.control-icon,
+.status-indicator,
+.gear-indicator,
+.network-status-icon,
+.bluetooth-status-icon,
+.map-icon,
+.wind-display,
+.center-controls,
+.settings-entry,
+#appsList .app-item,
+.qsp-switch-item,
+.qsp-mode-item,
+.switch-item,
+.automation-item {
+    cursor: pointer;
+}
+
+/* 3. active 状态触摸反馈 - 缩放 + 透明度过渡 */
+.widget,
+.quick-app-item,
+.quick-switch-item,
+.nav-button,
+.control-buttons button,
+.dock-btn,
+.ac-control,
+.ac-hcs,
+.home-btn,
+.back-btn,
+.task-btn,
+.music-control-btn,
+.btn-prev,
+.btn-play,
+.btn-next,
+.control-icon,
+.status-indicator,
+.gear-indicator,
+.wind-display,
+.center-controls,
+#appsList .app-item,
+.qsp-switch-item,
+.qsp-mode-item,
+.switch-item,
+.automation-item {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+.widget:active,
+.quick-app-item:active,
+.quick-switch-item:active,
+.nav-button:active,
+.control-buttons button:active,
+.dock-btn:active,
+.ac-control:active,
+.ac-hcs:active,
+.home-btn:active,
+.back-btn:active,
+.task-btn:active,
+.music-control-btn:active,
+.btn-prev:active,
+.btn-play:active,
+.btn-next:active,
+.control-icon:active,
+.status-indicator:active,
+.wind-display:active,
+.center-controls:active,
+#appsList .app-item:active,
+.qsp-switch-item:active,
+.qsp-mode-item:active,
+.switch-item:active,
+.automation-item:active {
+    transform: scale(0.95);
+    opacity: 0.8;
 }
 

@@ -1,10 +1,71 @@
+/**
+ * index.js 模块内部状态对象
+ * @description 封装原全局变量，避免污染全局命名空间
+ * @type {Object}
+ */
+const indexState = {
+    /** @type {boolean} 是否正在加载设置 */
+    isLoadingSettings: false,
+    /** @type {boolean} 是否已经初始化了分类复选框事件 */
+    categoryCheckboxEventsInitialized: false,
+    /** @type {boolean} 标记是否已添加组件配置监听器 */
+    componentConfigListenersAdded: false,
+    /** @type {HTMLElement|null} 当前打开的对话框引用 */
+    currentDialog: null,
+    /** @type {number|null} 自动关闭定时器ID */
+    autoCloseTimer: null,
+    /** @type {boolean} 可配置按钮是否已初始化 */
+    isConfigurableButtonsInitialized: false
+};
 
+/**
+ * 【触屏优化】通用防抖函数
+ * @description 用于触屏设备的点击防抖，防止快速连续点击导致重复触发
+ * @param {Function} fn - 需要防抖的函数
+ * @param {number} delay - 防抖延迟时间（毫秒），默认 300ms
+ * @returns {Function} 防抖处理后的函数
+ */
+function debounce(fn, delay = 300) {
+    let timer = null;
+    return function (...args) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(this, args);
+        }, delay);
+    };
+}
 
-// 标志：是否正在加载设置
-let isLoadingSettings = false;
+/**
+ * 【触屏优化】通用节流函数
+ * @description 用于触屏设备的点击节流，确保在指定时间内最多执行一次
+ * @param {Function} fn - 需要节流的函数
+ * @param {number} interval - 节流间隔时间（毫秒），默认 300ms
+ * @returns {Function} 节流处理后的函数
+ */
+function throttle(fn, interval = 300) {
+    let lastTime = 0;
+    return function (...args) {
+        const now = Date.now();
+        if (now - lastTime >= interval) {
+            lastTime = now;
+            fn.apply(this, args);
+        }
+    };
+}
 
-// 标志：是否已经初始化了分类复选框事件
-let categoryCheckboxEventsInitialized = false;
+/**
+ * 【触屏优化】为元素添加防抖点击事件
+ * @description 便捷方法：给元素绑定带防抖的 click 事件
+ * @param {HTMLElement} element - 目标 DOM 元素
+ * @param {Function} handler - 点击事件处理函数
+ * @param {number} delay - 防抖延迟（毫秒），默认 300ms
+ * @param {boolean} useThrottle - 是否使用节流而非防抖，默认 false
+ */
+function addDebouncedClick(element, handler, delay = 300, useThrottle = false) {
+    if (!element) return;
+    const wrappedHandler = useThrottle ? throttle(handler, delay) : debounce(handler, delay);
+    element.addEventListener('click', wrappedHandler);
+}
 
 /**
  * 初始化设置弹窗事件
@@ -85,7 +146,7 @@ function initSettingsModal() {
     const randomModeCheckbox = document.getElementById('randomModeCheckbox');
     if (randomModeCheckbox && !randomModeCheckbox.dataset.listenerAdded) {
         randomModeCheckbox.addEventListener('change', function () {
-            if (isLoadingSettings) return;
+            if (indexState.isLoadingSettings) return;
 
             if (typeof Android !== 'undefined' && Android.saveRandomModeSetting) {
                 const result = Android.saveRandomModeSetting(this.checked);
@@ -112,7 +173,7 @@ function initSettingsModal() {
     const specifiedModeCheckbox = document.getElementById('specifiedModeCheckbox');
     if (specifiedModeCheckbox && !specifiedModeCheckbox.dataset.listenerAdded) {
         specifiedModeCheckbox.addEventListener('change', function () {
-            if (isLoadingSettings) return;
+            if (indexState.isLoadingSettings) return;
 
             if (typeof Android !== 'undefined' && Android.saveSpecifiedModeSetting) {
                 const result = Android.saveSpecifiedModeSetting(this.checked);
@@ -167,7 +228,7 @@ function initSettingsModal() {
  * 更新UI控件状态并加载相关分类配置
  */
 function loadWallpaperSettings() {
-    isLoadingSettings = true;
+    indexState.isLoadingSettings = true;
     if (typeof Android !== 'undefined' && Android.getWallpaperSettingsAsync) {
         const callbackId = AsyncCallbackManager.register(function (settingsJson) {
             try {
@@ -212,13 +273,13 @@ function loadWallpaperSettings() {
             } catch (e) {
                 console.error('加载壁纸设置时出错:', e);
             } finally {
-                isLoadingSettings = false;
+                indexState.isLoadingSettings = false;
             }
         });
         Android.getWallpaperSettingsAsync(callbackId);
     } else if (typeof Android !== 'undefined' && Android.getWallpaperSettings) {
         // 回退到同步方法
-        isLoadingSettings = true;
+        indexState.isLoadingSettings = true;
         try {
             const settingsJson = Android.getWallpaperSettings();
             const settings = JSON.parse(settingsJson);
@@ -261,7 +322,7 @@ function loadWallpaperSettings() {
         } catch (e) {
             console.error('加载壁纸设置时出错:', e);
         } finally {
-            isLoadingSettings = false;
+            indexState.isLoadingSettings = false;
         }
     }
 }
@@ -760,9 +821,8 @@ function initComponentVisibility() {
  * 加载组件配置
  * @description 从Android原生层获取所有组件配置并更新UI复选框状态
  * 只在第一次调用时添加事件监听器，防止重复绑定
- * @global {boolean} componentConfigListenersAdded - 标记是否已添加监听器
+ * @global {boolean} indexState.componentConfigListenersAdded - 标记是否已添加监听器
  */
-let componentConfigListenersAdded = false;
 
 /**
  * 加载组件配置
@@ -786,9 +846,9 @@ function loadComponentConfigs() {
             document.getElementById('weatherComponentCheckbox').checked = configs.weather_component === true;
 
             // 只在第一次加载时添加事件监听器
-            if (!componentConfigListenersAdded) {
+            if (!indexState.componentConfigListenersAdded) {
                 addComponentConfigEventListeners();
-                componentConfigListenersAdded = true;
+                indexState.componentConfigListenersAdded = true;
             }
         } catch (e) {
             console.error('加载组件配置时出错:', e);
@@ -1464,10 +1524,8 @@ function hideAppsModal() {
 }
 
 // 全局变量来跟踪当前打开的对话框
-let currentDialog = null;
 
 // 全局变量来存储自动关闭定时器
-let autoCloseTimer = null;
 
 /**
  * 重置自动关闭定时器
@@ -1483,12 +1541,12 @@ let autoCloseTimer = null;
  */
 function resetAutoCloseTimer() {
     // 清除现有的定时器
-    if (autoCloseTimer) {
-        clearTimeout(autoCloseTimer);
+    if (indexState.autoCloseTimer) {
+        clearTimeout(indexState.autoCloseTimer);
     }
     
     // 设置新的30秒定时器
-    autoCloseTimer = setTimeout(() => {
+    indexState.autoCloseTimer = setTimeout(() => {
         // 检查是否有打开的弹窗
         const appsModal = document.getElementById('appsModal');
         const settingsModal = document.getElementById('settingsModal');
@@ -1515,9 +1573,9 @@ function resetAutoCloseTimer() {
  * - 切换弹窗时
  */
 function clearAutoCloseTimer() {
-    if (autoCloseTimer) {
-        clearTimeout(autoCloseTimer);
-        autoCloseTimer = null;
+    if (indexState.autoCloseTimer) {
+        clearTimeout(indexState.autoCloseTimer);
+        indexState.autoCloseTimer = null;
     }
 }
 
@@ -1534,7 +1592,7 @@ function clearAutoCloseTimer() {
  */
 function showAddToQuickAppsDialog(app) {
     // 检查是否已有对话框打开
-    if (currentDialog) {
+    if (indexState.currentDialog) {
         return;
     }
 
@@ -1572,7 +1630,7 @@ function showAddToQuickAppsDialog(app) {
 
     // 添加到页面
     document.body.appendChild(dialog);
-    currentDialog = dialog; // 保存当前对话框引用
+    indexState.currentDialog = dialog; // 保存当前对话框引用
 
     // 获取按钮元素
     const confirmBtn = dialog.querySelector('#confirmBtn');
@@ -1584,14 +1642,14 @@ function showAddToQuickAppsDialog(app) {
      * 防止重复关闭，动画结束后从DOM中移除元素
      */
     function closeDialogFunc() {
-        if (!currentDialog) return; // 防止重复关闭
+        if (!indexState.currentDialog) return; // 防止重复关闭
 
         dialog.classList.add('closing');
         setTimeout(() => {
             if (dialog.parentNode) {
                 dialog.parentNode.removeChild(dialog);
             }
-            currentDialog = null; // 清除引用
+            indexState.currentDialog = null; // 清除引用
         }, 300);
     }
 
@@ -1629,7 +1687,7 @@ function showAddToQuickAppsDialog(app) {
  */
 function showRemoveFromQuickAppsDialog(app) {
     // 检查是否已有对话框打开
-    if (currentDialog) {
+    if (indexState.currentDialog) {
         return;
     }
 
@@ -1655,7 +1713,7 @@ function showRemoveFromQuickAppsDialog(app) {
 
     // 添加到页面
     document.body.appendChild(dialog);
-    currentDialog = dialog; // 保存当前对话框引用
+    indexState.currentDialog = dialog; // 保存当前对话框引用
 
     // 获取按钮元素
     const confirmBtn = dialog.querySelector('#confirmBtn');
@@ -1667,14 +1725,14 @@ function showRemoveFromQuickAppsDialog(app) {
      * 防止重复关闭，动画结束后从DOM中移除元素
      */
     function closeDialogFunc() {
-        if (!currentDialog) return; // 防止重复关闭
+        if (!indexState.currentDialog) return; // 防止重复关闭
 
         dialog.classList.add('closing');
         setTimeout(() => {
             if (dialog.parentNode) {
                 dialog.parentNode.removeChild(dialog);
             }
-            currentDialog = null; // 清除引用
+            indexState.currentDialog = null; // 清除引用
         }, 300);
     }
 
@@ -1838,7 +1896,7 @@ function loadQuickSwitches() {
                 <div class="quick-switch-name">${ctrl.name}</div>
             `;
 
-            item.addEventListener('click', function() {
+            item.addEventListener('click', debounce(function() {
                 if (window.ACManager) {
                     if (ctrl.type === 'toggle') {
                         window.ACManager.toggleAC();
@@ -1865,7 +1923,7 @@ function loadQuickSwitches() {
                         Android.increaseTemperature();
                     }
                 }
-            });
+            }));
 
             container.appendChild(item);
         });
@@ -1880,11 +1938,11 @@ function loadQuickSwitches() {
         <div class="quick-switch-icon">⋯</div>
         <div class="quick-switch-name">全部</div>
     `;
-    moreItem.addEventListener('click', function() {
+    moreItem.addEventListener('click', debounce(function() {
         if (window.QuickSwitchManager) {
             window.QuickSwitchManager.togglePanel();
         }
-    });
+    }));
     container.appendChild(moreItem);
 
     // 初始化状态
@@ -2024,7 +2082,6 @@ function refreshQuickSwitchesStatus() {
 
 // 初始化可配置按钮
 // 添加一个标志来防止重复初始化
-let isConfigurableButtonsInitialized = false;
 
 /**
  * 初始化可配置按钮
@@ -2034,13 +2091,13 @@ let isConfigurableButtonsInitialized = false;
  */
 function initConfigurableButtons() {
     // 防止重复初始化
-    if (isConfigurableButtonsInitialized) {
+    if (indexState.isConfigurableButtonsInitialized) {
         console.log('可配置按钮已初始化，跳过重复初始化');
         return;
     }
 
     // 标记已初始化
-    isConfigurableButtonsInitialized = true;
+    indexState.isConfigurableButtonsInitialized = true;
 
     // 获取所有可配置的按钮
     const configurableButtons = document.querySelectorAll('[data-configurable="true"]');
@@ -2070,8 +2127,8 @@ function initConfigurableButtons() {
             showMapAppSelectionDialog(buttonId);
         });
 
-        // 添加点击事件监听器
-        button.addEventListener('click', function () {
+        // 添加点击事件监听器（防抖300ms）
+        button.addEventListener('click', debounce(function () {
             // 检查是否为回家或公司按钮
             if (buttonId === 'goHomeBtn') {
                 // 调用Android原生方法导航到家
@@ -2114,14 +2171,14 @@ function initConfigurableButtons() {
                 // 在非Android环境中显示地图应用选择对话框
                 showMapAppSelectionDialog(buttonId);
             }
-        });
+        }));
     });
 
 
-    // 为地图图标添加点击事件，启动高德地图
+    // 为地图图标添加点击事件，启动高德地图（防抖300ms）
     const mapIcon = document.querySelector('.map-icon');
     if (mapIcon) {
-        mapIcon.addEventListener('click', function () {
+        addDebouncedClick(mapIcon, function () {
             // 检查是否在Android环境中
             if (typeof Android !== 'undefined' && Android.launchApp) {
                 try {
@@ -2141,10 +2198,10 @@ function initConfigurableButtons() {
         });
     }
 
-    // 为比亚迪桌面按钮添加点击事件
+    // 为比亚迪桌面按钮添加点击事件（防抖300ms）
     const camera360Btn = document.getElementById('camera360Btn');
     if (camera360Btn) {
-        camera360Btn.addEventListener('click', function () {
+        addDebouncedClick(camera360Btn, function () {
             if (typeof Android !== 'undefined' && Android.startCamera360) {
                 try {
                     Android.startCamera360();
@@ -2154,10 +2211,10 @@ function initConfigurableButtons() {
         });
     }
 
-    // 为多任务按钮添加点击事件
+    // 为多任务按钮添加点击事件（防抖300ms）
     const tasksBtn = document.getElementById('tasksBtn');
     if (tasksBtn) {
-        tasksBtn.addEventListener('click', function () {
+        addDebouncedClick(tasksBtn, function () {
             console.log('多任务按钮被点击');
             // 先尝试通过ADB连接打开多任务
             if (typeof Android !== 'undefined' && Android.openRecentTasks) {
@@ -2179,10 +2236,10 @@ function initConfigurableButtons() {
         });
     }
 
-    // 为空调组件添加点击事件
+    // 为空调组件添加点击事件（节流300ms）
     const acControls = document.querySelector('.center-controls');
     if (acControls) {
-        acControls.addEventListener('click', function (e) {
+        acControls.addEventListener('click', throttle(function (e) {
             // 检查点击的是否是空调相关控件
             const target = e.target;
 
@@ -2248,13 +2305,12 @@ function initConfigurableButtons() {
                     }
                 }
             }
-        });
+        }));
     }
 }
 
 /**
  * 获取按钮显示名称
- * @description 根据按钮ID获取对应的中文显示名称
  * 用于可配置按钮的显示文本映射，支持导航、地图、360全景等多种按钮类型
  * @param {string} buttonId - 按钮的唯一标识符
  * @returns {string} 按钮的中文显示名称
@@ -2831,20 +2887,20 @@ function handleWallpaperLongPress() {
 }
 
 /**
- * 添加时间显示点击事件处理
+ * 添加时间显示点击事件处理（防抖300ms）
  */
 function addTimeDisplayClickEvent() {
     const timeDisplay = document.getElementById('timeDisplay');
     if (timeDisplay) {
-        timeDisplay.addEventListener('click', function () {
+        addDebouncedClick(timeDisplay, function () {
             toggleWallpaperCarousel();
         });
     }
     
-    // 为顶部时间显示区域也添加点击事件
+    // 为顶部时间显示区域也添加点击事件（防抖300ms）
     const topLeftTime = document.querySelector('.top-left-time');
     if (topLeftTime) {
-        topLeftTime.addEventListener('click', function () {
+        addDebouncedClick(topLeftTime, function () {
             toggleWallpaperCarousel();
         });
     }
@@ -3094,54 +3150,6 @@ function initAcTemperature() {
 /**
  * 在应用列表中添加设置图标
  */
-
-/*
-// 模拟应用列表数据 - 用于测试，正式环境请注释
-*/
-
-
-/*
-// 模拟应用列表数据 - 用于浏览器测试，正式环境请注释
-function loadMockAppData() {
-    const appsList = document.getElementById('appsList');
-    if (!appsList) return;
-    
-    // 如果已经有内容了就不重复加载
-    if (appsList.children.length > 0) return;
-    
-    const mockApps = [
-        { name: '设置', icon: '⚙️', type: 'system' },
-        { name: '高德地图', icon: '🗺️', type: 'user' },
-        { name: '酷狗音乐', icon: '🎵', type: 'user' },
-        { name: '微信', icon: '💬', type: 'user' },
-        { name: '抖音', icon: '🎬', type: 'user' },
-        { name: '哔哩哔哩', icon: '📺', type: 'user' },
-        { name: 'QQ音乐', icon: '🎧', type: 'user' },
-        { name: '网易云音乐', icon: '🎶', type: 'user' },
-        { name: '喜马拉雅', icon: '📻', type: 'user' },
-        { name: '浏览器', icon: '🌐', type: 'system' },
-        { name: '文件管理', icon: '📁', type: 'system' },
-        { name: '系统设置', icon: '🔧', type: 'system' },
-    ];
-    
-    appsList.innerHTML = '';
-    mockApps.forEach(app => {
-        const appItem = document.createElement('div');
-        appItem.className = 'app-item';
-        appItem.setAttribute('data-type', app.type);
-        appItem.innerHTML = `
-            <div class="app-icon">${app.icon}</div>
-            <div class="app-name">${app.name}</div>
-        `;
-        appItem.addEventListener('click', () => {
-            console.log('点击应用:', app.name);
-        });
-        appsList.appendChild(appItem);
-    });
-    
-    console.log('已加载模拟应用列表，共', mockApps.length, '个应用');
-}
-*/
 
 /**
  * 加载模拟应用数据
