@@ -7,7 +7,7 @@ buildscript {
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:8.5.2'
     }
 }
 
@@ -23,8 +23,8 @@ allprojects {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 30
-    buildToolsVersion "30.0.3"
+    namespace 'com.c11partner.desktop'
+    compileSdk 34
     defaultConfig {
         applicationId "com.c11partner.desktop"
         minSdk 25
@@ -32,6 +32,10 @@ android {
         versionCode 2
         versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     signingConfigs {
@@ -53,11 +57,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     
-    lintOptions {
+    lint {
         abortOnError false
     }
     

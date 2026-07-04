@@ -24,12 +24,12 @@ jobs:
     - name: Set up Android SDK
       uses: android-actions/setup-android@v4
       with:
-        packages: 'platform-tools platforms;android-30 build-tools;30.0.3'
+        packages: 'platform-tools platforms;android-34'
         cmdline-tools-version: 'latest'
     - name: Accept Android SDK licenses
       run: |
         yes | sdkmanager --licenses || true
-        sdkmanager "platforms;android-30" "build-tools;30.0.3"
+        sdkmanager "platforms;android-34"
     - name: Set up Python
       uses: actions/setup-python@v6
       with:
