@@ -14,7 +14,7 @@ const SystemMusicManager = {
     updateInterval: null,
     
     /** @type {number} 更新间隔毫秒数 */
-    updateIntervalMs: 2000,
+    updateIntervalMs: 500,
 
     /**
      * 初始化系统音乐管理器

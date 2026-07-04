@@ -25,7 +25,7 @@
         originalLog.apply(console, arguments);
     };
     // 每秒重置计数
-    setInterval(function() { logCount = 0; lastLogReset = Date.now(); }, 1000);
+    window._logResetInterval = setInterval(function() { logCount = 0; lastLogReset = Date.now(); }, 1000);
 })();
 
 (function() {

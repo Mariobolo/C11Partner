@@ -190,7 +190,6 @@
 /* 车辆状态指示器 */
 
 .car-status-indicators {
-    /* 性能优化: 移除非3D变换场景的 preserve-3d 和 perspective */
     display: flex;
     align-items: center;
     gap: 12px;
@@ -205,10 +204,8 @@
             rgba(255, 255, 255, 0.03) 50%,
             rgba(0, 0, 0, 0.12) 100%),
         var(--surface-color);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(30, 32, 38, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
         0 2px 8px rgba(0, 0, 0, 0.25),
         0 0 0 1px rgba(255, 255, 255, 0.05),
@@ -391,7 +388,6 @@
     width: auto;
     padding: 0;
     pointer-events: auto;
-    perspective: 1000px;
 }
 
 .time-text#timeDisplay {
@@ -519,9 +515,7 @@
     height: auto;
     min-height: 130px;
     max-height: 160px;
-    background: rgba(10, 10, 20, 0.45);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    background: rgba(10, 10, 20, 0.75);
     border-radius: var(--radius-lg);
     pointer-events: auto;
     overflow: visible;
@@ -561,10 +555,6 @@
    ============================================ */
 /* ========== Widget 卡片基础样式 - 视觉增强版（已合并所有重复定义） ========== */
 .widget {
-    /* 性能优化: will-change 仅保留 backdrop-filter，避免 GPU 内存浪费 */
-    /* 性能优化: 多层 box-shadow 简化为单层，减少重绘开销 */
-    /* 性能优化: 移除非3D变换场景的 preserve-3d 和 perspective */
-    /* 性能优化: 移除静态元素的 perspective */
     display: inline-flex;
     flex-shrink: 0;
     flex-direction: column;
@@ -580,11 +570,8 @@
     backface-visibility: hidden;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    will-change: backdrop-filter;
-    background: var(--surface-color);
-    backdrop-filter: var(--blur-medium);
+    background: rgba(30, 32, 38, 0.85);
     color: var(--text-primary);
-    -webkit-backdrop-filter: blur(25px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -712,8 +699,6 @@
 }
 
 .quick-app-item {
-    /* 性能优化: 移除非3D变换场景的 preserve-3d 和 perspective */
-    /* 性能优化: box-shadow 简化为单层 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -721,9 +706,7 @@
             rgba(255, 255, 255, 0.08) 0%, 
             rgba(255, 255, 255, 0.03) 50%, 
             rgba(0, 0, 0, 0.08) 100%),
-        var(--surface-color);
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
+        rgba(30, 32, 38, 0.85);
     border-radius: 16px;
     padding: 14px 12px;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -901,13 +884,6 @@
     animation: iconGlowPulse 2s ease-in-out infinite;
 }
 
-@keyframes iconGlowPulse {
-
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.15); }
-
-}
-
 .quick-app-name {
     font-size: 11px;
     font-weight: 500;
@@ -963,8 +939,6 @@
 }
 /* ========== 快捷开关模块 - 【优化点1】视觉与交互动效终极增强 ========== */
 .quick-switches-widget {
-    /* 性能优化: 移除非3D变换场景的 perspective 和 preserve-3d */
-    /* 性能优化: box-shadow 简化为单层 */
     min-width: 300px;
     padding: 18px 20px;
     position: relative;
@@ -981,8 +955,7 @@
             rgba(255, 255, 255, 0.04) 40%, 
             rgba(0, 0, 0, 0.15) 100%),
         var(--bg-card);
-    backdrop-filter: blur(30px) saturate(190%);
-    -webkit-backdrop-filter: blur(30px) saturate(190%);
+    background: rgba(30, 32, 38, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.11);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     animation: switchesFloat 5.5s ease-in-out infinite;
@@ -1336,9 +1309,7 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
             rgba(255, 255, 255, 0.07) 25%, 
             rgba(255, 190, 110, 0.05) 60%, 
             rgba(0, 0, 0, 0.12) 100%),
-        var(--bg-card);
-    backdrop-filter: blur(32px) saturate(200%);
-    -webkit-backdrop-filter: blur(32px) saturate(200%);
+        rgba(30, 32, 38, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4),
@@ -1493,13 +1464,6 @@ width: 72px;
     z-index: -1;
     animation: tempGlow 2.5s ease-in-out infinite alternate;
 }
-
-@keyframes tempGlow {
-
-    0% { opacity: 0.3; filter: blur(12px); }
-    100% { opacity: 0.7; filter: blur(20px); }
-
-}
 /* 温度数字悬停3D增强 */
 
 .weather-widget:hover .temperature {
@@ -1559,10 +1523,6 @@ linear-gradient(135deg,
     opacity: 0.3;
     z-index: -1;
     animation: tempGlow 3s ease-in-out infinite alternate;
-@keyframes tempGlow {
-    opacity: 0.5;
-    filter: blur(16px);
-}
 
 .weather-widget:hover .temperature::before {
     opacity: 0.7;
@@ -1633,7 +1593,6 @@ linear-gradient(135deg,
     color: rgba(255, 255, 255, 0.85);
 }
 /* ============================================
-   【第41轮优化点1】状态栏视觉细节终极增强
    图标渐变、发光效果、间距优化、3D悬停、多状态视觉
    ============================================ */
 /* ========== 状态栏整体视觉升级 ========== */
@@ -1722,7 +1681,6 @@ linear-gradient(135deg,
     animation: iconGlowPulse 2s ease-in-out infinite;
 }
 /* ============================================
-   【第41轮优化点2】加载状态与骨架屏动画系统
    骨架屏占位、脉冲加载、渐变扫过、多状态加载动画
    ============================================ */
 /* ========== 骨架屏基础样式 ========== */
@@ -1776,19 +1734,6 @@ linear-gradient(135deg,
 /* ========== 脉冲加载动画 ========== */
 .loading-pulse {
     animation: loadingPulse 1.5s ease-in-out infinite;
-}
-
-@keyframes loadingPulse {
-
-    0%, 100% { 
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% { 
-        opacity: 0.5;
-        transform: scale(0.98);
-    }
-
 }
 /* ========== 呼吸加载动画 ========== */
 .loading-breathe {
@@ -1921,7 +1866,6 @@ linear-gradient(135deg,
     z-index: 11;
 }
 /* ============================================
-   【第41轮优化点3】响应式布局终极适配
    多断点优化、小屏幕间距调整、触控区域优化、字体缩放
    ============================================ */
 /* ========== 超宽屏幕适配 (1920px+) ========== */
@@ -2333,8 +2277,7 @@ linear-gradient(135deg,
     border: 1px solid rgba(var(--primary-color-rgb), 0.4);
     border-radius: 10px;
     padding: 6px 10px;
-    backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    background: rgba(30, 32, 38, 0.8);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.05),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -2475,7 +2418,6 @@ linear-gradient(135deg,
     50% { opacity: 0.9; }
 
 }
-/* ========== 音乐组件 - 【第49轮优化点1】3D透视与发光终极增强 ========== */
 .music-widget {
     min-width: 380px;
     padding: 18px 24px;
@@ -2487,9 +2429,7 @@ linear-gradient(135deg,
             rgba(255, 255, 255, 0.06) 30%, 
             rgba(255, 105, 180, 0.05) 60%, 
             rgba(0, 0, 0, 0.12) 100%),
-        var(--bg-card);
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
+        rgba(30, 32, 38, 0.85);
     overflow: hidden;
 }
 /* 音乐Widget渐变发光边框 */
@@ -2648,13 +2588,6 @@ linear-gradient(135deg,
 
 .vinyl-record.playing {
     animation-play-state: running;
-}
-
-@keyframes vinylSpin {
-
-    0% { transform: rotate(0deg) rotateX(8deg); }
-    100% { transform: rotate(360deg) rotateX(8deg); }
-
 }
 /* 黑胶唱片3D边缘厚度效果 */
 
@@ -2925,8 +2858,6 @@ linear-gradient(135deg,
     background: linear-gradient(135deg,
             rgba(255, 255, 255, 0.12) 0%,
             rgba(255, 255, 255, 0.04) 100%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -3335,13 +3266,6 @@ linear-gradient(135deg,
 .ac-control.active {
     animation: acSpin 3s linear infinite;
     filter: drop-shadow(0 0 16px rgba(0, 204, 255, 0.8));
-}
-
-@keyframes acSpin {
-
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-
 }
 
 .air-text {
@@ -4074,17 +3998,11 @@ linear-gradient(135deg,
 .hw-accelerate {
     transform: translateZ(0);
     backface-visibility: hidden;
-    perspective: 1000px;
-    will-change: transform;
 }
 /* 包含优化 - 浏览器渲染优化 */
 
 .contain-layout {
     contain: layout;
-}
-
-.contain-paint {
-    contain: paint;
 }
 
 .contain-size {
@@ -4101,15 +4019,15 @@ linear-gradient(135deg,
 /* 减少重绘区域 */
 
 .will-change-transform {
-    will-change: transform;
+    /* will-change: transform; - 性能优化: 移除通用 will-change，仅在需要时手动添加 */
 }
 
 .will-change-opacity {
-    will-change: opacity;
+    /* will-change: opacity; - 性能优化: 移除通用 will-change，仅在需要时手动添加 */
 }
 
 .will-change-scroll {
-    will-change: scroll-position;
+    /* will-change: scroll-position; - 性能优化: 移除通用 will-change，仅在需要时手动添加 */
 }
 /* 内容可见性优化 - 延迟渲染 */
 
@@ -4390,7 +4308,6 @@ linear-gradient(135deg,
     }
 }
 /* ============================================
-   【第29轮优化点3】导航栏/侧边栏视觉与交互动效全面增强
    左侧应用栏、底部Dock栏、顶部状态栏、导航按钮视觉升级
    ============================================ */
 /* ========== 左侧应用栏 - 视觉增强终极版 ========== */
@@ -4408,8 +4325,7 @@ linear-gradient(135deg,
             rgba(255, 255, 255, 0.03) 50%, 
             rgba(0, 0, 0, 0.1) 100%),
         rgba(15, 15, 20, 0.6);
-    backdrop-filter: blur(25px) saturate(160%);
-    -webkit-backdrop-filter: blur(25px) saturate(160%);
+    background: rgba(15, 15, 20, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
@@ -4417,8 +4333,6 @@ linear-gradient(135deg,
         inset 0 1px 0 rgba(255, 255, 255, 0.08),
         inset 0 -1px 0 rgba(0, 0, 0, 0.2);
     z-index: var(--z-sticky);
-    transform-style: preserve-3d;
-    perspective: 1000px;
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 /* 应用栏顶部高光 */
@@ -4950,7 +4864,6 @@ linear-gradient(135deg,
     transform: translateY(-50%) translateX(4px);
 }
 /* ============================================
-   【第33轮优化点2】快速启动应用卡片视觉全面升级
    网格布局优化、图标3D效果、卡片深度、悬停发光动效
    ============================================ */
 /* 快速启动容器网格布局优化 - 已合并到主定义 */
@@ -5013,7 +4926,6 @@ linear-gradient(135deg,
 
 }
 /* ============================================
-   【第41轮优化点1】状态栏视觉细节终极增强
    图标渐变、发光效果、间距优化、3D悬停、多状态视觉
    ============================================ */
 /* ========== 状态栏整体视觉升级 ========== */
@@ -5029,7 +4941,6 @@ opacity: 1;
 /* ========== 档位指示器3D视觉 ========== */
 /* ========== 网络/蓝牙图标终极美化 ========== */
 /* ============================================
-   【第41轮优化点2】加载状态与骨架屏动画系统
     content: '';
     position: absolute;
     top: 50%;
@@ -5043,7 +4954,6 @@ opacity: 1;
     animation: loadingSpin 0.8s linear infinite;
     z-index: 11;
 /* ============================================
-   【第41轮优化点3】响应式布局终极适配
    多断点优化、小屏幕间距调整、触控区域优化、字体缩放
    ============================================ */
 /* ========== 超宽屏幕适配 (1920px+) ========== */
@@ -5417,8 +5327,7 @@ opacity: 1;
             rgba(255, 255, 255, 0.05) 40%, 
             rgba(0, 0, 0, 0.15) 100%),
         rgba(20, 20, 30, 0.7);
-    backdrop-filter: blur(32px) saturate(200%);
-    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    background: rgba(20, 20, 30, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 24px;
     box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5),
@@ -5782,7 +5691,6 @@ opacity: 1;
     letter-spacing: 0.3px;
 }
 /* ============================================
-   【第47轮UI美化 - 优化点1】Dock栏AC控制按钮终极视觉增强
    3D旋转动画、多层次发光、弹性悬停、渐变光晕
    ============================================ */
 /* AC按钮3D容器增强 */
@@ -5980,7 +5888,6 @@ opacity: 1;
     transform: scale(1.1) rotateY(-5deg);
 }
 /* ============================================
-   【第48轮UI美化 - 优化点1】快捷开关Widget视觉终极美化
    3D透视效果、渐变发光边框、弹性悬停动效、波纹点击反馈
    ============================================ */
 /* 快捷开关Widget终极渐变发光边框 */
@@ -6077,11 +5984,9 @@ opacity: 1;
 
 }
 /* ============================================
-   【第48轮UI美化 - 优化点2】设置页面分类标签页3D视觉增强
    透视效果、渐变发光、选中状态动画、弹性过渡
    ============================================ */
 /* ============================================
-   【第50轮UI美化 - 优化点1】快捷开关面板视觉与交互动效终极增强
    粒子光效、鼠标跟随3D视差、多层次发光、状态切换动画
    ============================================ */
 /* 快捷开关面板粒子光效背景 */
@@ -6138,7 +6043,6 @@ opacity: 1;
 
 }
 /* ============================================
-   【第50轮UI美化 - 优化点2】导航按钮与控制图标3D视觉终极美化
    3D深度渲染、渐变发光、弹性悬停动效、点击波纹反馈
    ============================================ */
 /* 导航按钮终极3D增强 */
@@ -6161,8 +6065,6 @@ opacity: 1;
     border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-style: preserve-3d;
-    perspective: 800px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3),
         0 2px 8px rgba(0, 0, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -6365,7 +6267,6 @@ opacity: 1;
 }
 /* 控制图标点击3D按压反馈 */
 /* ============================================
-   【第50轮UI美化 - 优化点3】车辆状态指示器视觉与动画增强
    发光指示器、状态切换动画、呼吸效果、3D深度渲染
    ============================================ */
 /* 车辆状态指示器容器终极增强 */
@@ -6493,19 +6394,6 @@ background: linear-gradient(
     animation: doorGlowPulse 1.2s ease-in-out infinite;
 }
 
-@keyframes doorWarningPulse {
-
-    0%, 100% {
-        transform: scale(1);
-        text-shadow: 0 0 12px rgba(255, 82, 82, 0.7);
-    }
-    50% {
-        transform: scale(1.08);
-        text-shadow: 0 0 20px rgba(255, 82, 82, 1);
-    }
-
-}
-
 @keyframes doorGlowPulse {
 
     0%, 100% { opacity: 0.7; }
@@ -6542,7 +6430,6 @@ background: linear-gradient(
     transform: scale(1.15);
 }
 /* ============================================
-   【第51轮UI美化优化点1】天气小组件动态粒子效果终极增强
    雨雪粒子动画、云层飘动、阳光射线、3D深度增强
    ============================================ */
 /* 天气粒子容器 */
@@ -6706,7 +6593,6 @@ background: linear-gradient(
     opacity: 1;
 }
 /* ============================================
-   【第51轮UI美化优化点2】Dock栏图标3D悬浮与粒子发光终极升级
    图标悬浮轨迹、粒子拖尾、3D透视、弹性物理动画
    ============================================ */
 /* Dock栏图标3D容器 */
@@ -6758,19 +6644,6 @@ background: linear-gradient(
         transparent 60%);
     filter: blur(15px);
     animation: iconGlowExpand 2.5s ease-in-out infinite;
-}
-
-@keyframes iconGlowPulse {
-
-    0%, 100% { 
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.8;
-    }
-    50% { 
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 1;
-    }
-
 }
 
 @keyframes iconGlowExpand {
@@ -6835,7 +6708,6 @@ background: linear-gradient(
 /* Dock按钮3D旋转增强 */
 /* Dock按钮阴影3D增强 */
 /* ============================================
-   【第51轮UI美化优化点3】快捷开关面板无障碍与响应式终极优化
    大触控区域、高对比度优化、键盘导航、屏幕阅读器支持
    ============================================ */
 /* 键盘焦点可见性 - 高对比度 */
@@ -6923,17 +6795,6 @@ background: linear-gradient(
 }
 /* 屏幕阅读器隐藏文本 - 视觉隐藏但可朗读 */
 
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
 /* 开关状态ARIA标签支持 */
 
 .quick-switch-item[aria-checked="true"]::after {
@@ -6995,7 +6856,6 @@ background: linear-gradient(
         }
 }
 /* ============================================
-   【第54轮UI美化 - 优化点2】车辆状态指示器3D视觉终极增强
    3D悬浮、渐变发光、状态过渡动画、粒子光晕、呼吸效果
    ============================================ */
 /* 状态指示器渐变发光边框 */
@@ -7151,7 +7011,6 @@ background: linear-gradient(
 
 }
 /* ============================================
-   【第54轮UI美化 - 优化点3】Dock栏邻近图标放大效应
    macOS Dock风格：鼠标悬停时，当前图标及其邻近图标按距离梯度放大
    ============================================ */
 /* ============================================
@@ -7269,7 +7128,6 @@ background: linear-gradient(
     }
 }
 /* ============================================
-   【第55轮UI美化 - 优化点1】快捷开关面板图标视觉细节终极增强
    图标3D深度、粒子发光、渐变填充、动态光晕
    ============================================ */
 /* 快捷开关图标容器3D增强 - 已合并到主定义 */
@@ -7371,7 +7229,6 @@ background: linear-gradient(
         transparent 70%);
 }
 /* ============================================
-   【第57轮UI美化 - 优化点2】卡片组件光泽与阴影深度终极优化
    3D透视旋转、光泽扫过增强、内发光效果、渐变边框、多层阴影
    ============================================ */
 /* Widget卡片悬停终极3D透视效果 */
@@ -7882,8 +7739,6 @@ background: linear-gradient(
     border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
 .quick-switch-item.ac-control-item:hover {

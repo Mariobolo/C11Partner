@@ -66,11 +66,7 @@
     --spacing-2xl: 32px;
     --spacing-3xl: 40px;
     
-    /* ========== 组件尺寸 ========== */
-    --widget-height: 100px;
-    --widget-height-auto: auto;
-
-    /* ========== 字体系统【第43轮优化】 ========== */
+    /* ========== 字体系统 ========== */
     --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
                         'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
     --font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
@@ -134,7 +130,6 @@
 }
 
 /* ============================================
-   【第35轮优化点3】CSS变量系统完善与设计令牌统一
    动画曲线、增强阴影、颜色语义化、组件尺寸、透明度层级
    ============================================ */
 :root {
@@ -332,7 +327,6 @@
 .transition-elastic { transition: all 0.3s var(--easing-elastic); }
 .transition-elastic-soft { transition: all 0.3s var(--easing-elastic-soft); }
 .transition-standard { transition: all 0.25s var(--easing-standard); }
-.transition-fast { transition: all 0.15s var(--easing-fast); }
 
 /* 阴影工具类 */
 .shadow-level-1 { box-shadow: var(--shadow-level-1); }

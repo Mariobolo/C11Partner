@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     updateLunarDate();
     
     // 每秒更新时间
-    setInterval(updateTime, 1000);
+    window._timeUpdateInterval = setInterval(updateTime, 1000);
     
     // 每分钟更新日期和农历
-    setInterval(function() {
+    window._dateUpdateInterval = setInterval(function() {
         updateDate();
         updateLunarDate();
     }, 60000);

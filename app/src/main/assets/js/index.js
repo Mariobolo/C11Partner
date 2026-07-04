@@ -237,7 +237,6 @@ function loadWallpaperSettings() {
         const callbackId = AsyncCallbackManager.register(function (settingsJson) {
             try {
                 const settings = JSON.parse(settingsJson);
-                // console.log('加载壁纸设置:', settings);
 
                 // 设置复选框状态
                 const wallpaperCarouselCheckbox = document.getElementById('wallpaperCarouselCheckbox');
@@ -370,7 +369,6 @@ function loadEnabledCategories() {
                         checkbox.checked = false;
                     }
                 });
-                // console.log('已加载在线壁纸分类状态');
             } catch (e) {
                 console.error('加载已启用分类时出错:', e);
             }
@@ -390,7 +388,6 @@ function loadEnabledCategories() {
                     checkbox.checked = false;
                 }
             });
-            // console.log('已加载在线壁纸分类状态');
         } catch (e) {
             console.error('加载已启用分类时出错:', e);
         }
@@ -404,21 +401,16 @@ function loadEnabledCategories() {
  * 使用防重复绑定机制确保只绑定一次
  */
 function initCategoryCheckboxEvents() {
-    // console.log('initCategoryCheckboxEvents 被调用');
     const checkboxes = document.querySelectorAll('.category-checkbox');
-    // console.log('找到的分类复选框数量:', checkboxes.length);
     checkboxes.forEach(checkbox => {
         if (!checkbox.dataset.listenerAdded) {
-            // console.log('为复选框添加事件监听器:', checkbox.getAttribute('data-category-id'));
             checkbox.addEventListener('click', function () {
-                // console.log('分类复选框click事件被触发');
                 const categoryId = this.getAttribute('data-category-id');
                 const enabled = this.checked;
 
                 if (typeof Android !== 'undefined' && Android.updateCategoryEnabledAsync) {
                     const callbackId = AsyncCallbackManager.register(function (result) {
                         if (result === "true") {
-                            // console.log('分类状态已更新:', categoryId, enabled);
                             showToast('分类状态保存成功');
                         } else {
                             console.error('分类状态更新失败');
@@ -429,7 +421,6 @@ function initCategoryCheckboxEvents() {
                 } else if (typeof Android !== 'undefined' && Android.updateCategoryEnabled) {
                     // 回退到同步方法
                     Android.updateCategoryEnabled(categoryId, enabled);
-                    // console.log('分类状态已更新:', categoryId, enabled);
                     showToast('分类状态保存成功');
                 }
             });
@@ -476,7 +467,6 @@ function initRestartAppButton() {
     // 检查按钮是否已绑定事件
     if (setDefaultDesktopBtn && !setDefaultDesktopBtn.dataset.listenerAdded) {
         setDefaultDesktopBtn.addEventListener('click', function () {
-            // console.log('默认桌面按钮被点击');
             // 设置为默认桌面按钮被点击
             // 调用原生代码设置为默认桌面
             if (typeof Android !== 'undefined' && Android.setDefaultDesktopViaAdb) {
@@ -545,21 +535,17 @@ function initRestartAppButton() {
  * 所有按钮使用防重复绑定机制确保只绑定一次
  */
 function initADBButton() {
-    // console.log('初始化ADB按钮');
     const adbAuthorizationBtn = document.getElementById('adbAuthorizationBtn');
     if (adbAuthorizationBtn && !adbAuthorizationBtn.dataset.listenerAdded) {
         adbAuthorizationBtn.addEventListener('click', function () {
-            // console.log('ADB授权按钮被点击');
             // 显示提示信息
             showToast('正在尝试ADB授权...');
 
             // 首先尝试新的无线WiFi ADB授权方法
             if (typeof Android !== 'undefined' && Android.triggerWirelessAdbAuthorization) {
-                // console.log('调用 triggerWirelessAdbAuthorization');
                 Android.triggerWirelessAdbAuthorization();
             } else if (typeof Android !== 'undefined' && Android.triggerUsbDebugAuthorization) {
                 // 如果无线方法不可用，直接使用传统USB方法
-                // console.log('调用 triggerUsbDebugAuthorization');
                 Android.triggerUsbDebugAuthorization();
             } else {
                 // 如果新接口不可用，尝试旧接口
@@ -573,26 +559,21 @@ function initADBButton() {
 
         // 标记已添加事件监听器
         adbAuthorizationBtn.dataset.listenerAdded = 'true';
-        // console.log('ADB授权按钮事件监听器已添加');
     } else if (adbAuthorizationBtn) {
         // ADB调试授权按钮事件监听器已存在
-        // console.log('ADB授权按钮事件监听器已存在');
     } else {
         // 未找到adbAuthorizationBtn元素
-        // console.log('未找到adbAuthorizationBtn元素');
     }
 
     // 初始化ADB执行按钮事件
     const adbAuthorizationBtn2 = document.getElementById('adbAuthorizationBtn2');
     if (adbAuthorizationBtn2 && !adbAuthorizationBtn2.dataset.listenerAdded) {
         adbAuthorizationBtn2.addEventListener('click', function () {
-            // console.log('ADB执行按钮被点击');
             // 显示提示信息
             showToast('正在执行ADB权限授权...');
 
             // 调用执行ADB权限授权的方法
             if (typeof Android !== 'undefined' && Android.executeAdbPermissionGrant) {
-                // console.log('调用 executeAdbPermissionGrant');
                 Android.executeAdbPermissionGrant();
             } else {
                 alert('ADB权限授权功能不可用');
@@ -601,13 +582,10 @@ function initADBButton() {
 
         // 标记已添加事件监听器
         adbAuthorizationBtn2.dataset.listenerAdded = 'true';
-        // console.log('ADB执行按钮事件监听器已添加');
     } else if (adbAuthorizationBtn2) {
         // ADB执行按钮事件监听器已存在
-        // console.log('ADB执行按钮事件监听器已存在');
     } else {
         // 未找到adbAuthorizationBtn2元素
-        // console.log('未找到adbAuthorizationBtn2元素');
     }
 
     // 初始化ADB测试按钮事件
@@ -791,7 +769,6 @@ window.handleGetEnabledCategoriesCallback = function (callbackId, enabledCategor
                 checkbox.checked = false;
             }
         });
-        // console.log('已加载在线壁纸分类状态');
     } catch (e) {
         console.error('加载已启用分类时出错:', e);
     }
@@ -2810,7 +2787,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // 立即检查并更新网络和蓝牙状态
     safeInit('updateNetworkAndBluetoothStatus', updateNetworkAndBluetoothStatus);
     // 每5秒检查一次网络和蓝牙状态
-    setInterval(updateNetworkAndBluetoothStatus, 5000);
+    window._networkStatusInterval = setInterval(updateNetworkAndBluetoothStatus, 5000);
 
     // 初始化壁纸双击事件
     safeInit('initWallpaperDoubleClick', initWallpaperDoubleClick);
@@ -2829,13 +2806,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // 启动音乐进度更新（2秒足够，1秒太频繁）
     safeInit('updateMusicProgress', updateMusicProgress);
-    setInterval(updateMusicProgress, 2000);
+    window._musicProgressInterval = setInterval(updateMusicProgress, 2000);
 
     // 添加时间显示点击事件，用于切换壁纸轮播状态
     safeInit('addTimeDisplayClickEvent', addTimeDisplayClickEvent);
 
     // 初始化特效等级设置
     safeInit('initEffectLevel', initEffectLevel);
+
+    // 页面卸载时清理定时器
+    window.addEventListener('beforeunload', function() {
+        if (window._networkStatusInterval) clearInterval(window._networkStatusInterval);
+        if (window._musicProgressInterval) clearInterval(window._musicProgressInterval);
+    });
 
 });
 
@@ -3088,7 +3071,6 @@ function registerTimeUpdateListener() {
 
     // 将时间更新函数挂载到window对象上，供后端调用
     window.updateTimeDisplay = function (timeData) {
-        //console.log('收到时间更新数据:', timeData);
 
         // 如果传入的是对象格式
         if (typeof timeData === 'object' && timeData !== null) {

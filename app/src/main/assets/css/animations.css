@@ -252,19 +252,6 @@
     to { background-position: 0 0; }
 
 }
-/* ========== 波纹动画 ========== */
-@keyframes ripple {
-
-    0% {
-        transform: scale(0);
-        opacity: 0.5;
-    }
-    100% {
-        transform: scale(4);
-        opacity: 0;
-    }
-
-}
 /* ========== 【新增】呼吸浮动动画 ========== */
 @keyframes breathe {
 
@@ -322,19 +309,6 @@
     }
     100% {
         transform: scale(1);
-    }
-
-}
-
-@keyframes rippleEffect {
-
-    0% {
-        transform: scale(0);
-        opacity: 0.6;
-    }
-    100% {
-        transform: scale(2.5);
-        opacity: 0;
     }
 
 }
@@ -726,45 +700,6 @@
 .text-underline:hover::after {
     width: 100%;
 }
-/* ========== 卡片动效 ========== */
-/* 卡片边框流动 */
-
-@keyframes borderFlow {
-
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-
-}
-
-.card-border-flow {
-    position: relative;
-}
-
-.card-border-flow::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: inherit;
-    padding: 2px;
-    background: linear-gradient(45deg,
-        var(--primary-color),
-        var(--accent-color),
-        var(--primary-color));
-    background-size: 200% 200%;
-    animation: borderFlow 3s ease infinite;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.card-border-flow:hover::before {
-    opacity: 1;
-}
 /* 卡片背景渐变 */
 
 .card-gradient-hover {
@@ -841,97 +776,10 @@
 .tooltip-show {
     animation: popTip 0.25s ease-out;
 }
-/* ========== 滚动reveal动画 ========== */
-.reveal-on-scroll {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.reveal-on-scroll.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-/* 交错reveal延迟 */
-
-.reveal-delay-1 {
-    transition-delay: 0.1s;
-}
-
-.reveal-delay-2 {
-    transition-delay: 0.2s;
-}
-
-.reveal-delay-3 {
-    transition-delay: 0.3s;
-}
-
-.reveal-delay-4 {
-    transition-delay: 0.4s;
-}
-
-.reveal-delay-5 {
-    transition-delay: 0.5s;
-}
 /* ============================================
    【优化点2】交互动效增强
    页面切换动画、元素入场动画、微交互反馈
    ============================================ */
-/* ========== 页面切换动画 ========== */
-/* 淡入淡出切换 */
-
-@keyframes pageFadeIn {
-
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-@keyframes pageFadeOut {
-
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-}
-/* 滑动切换 */
-
-@keyframes pageSlideLeft {
-
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-}
-
-@keyframes pageSlideRight {
-
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-}
 /* ========== 元素入场序列动画 ========== */
 .stagger-children > * {
     opacity: 0;
@@ -1112,18 +960,6 @@
    【优化点3】无障碍支持增强
    ARIA 视觉反馈、键盘导航、屏幕阅读器支持
    ============================================ */
-/* ========== 屏幕阅读器专用文本 ========== */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
 /* 跳过链接 */
 
 .skip-link {
@@ -1258,118 +1094,6 @@ textarea:focus:not(:focus-visible),
     outline: none;
     box-shadow: none;
 }
-
-.page-enter {
-    animation: pageFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.page-exit {
-    animation: pageFadeOut 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
-}
-/* 滑动切换 */
-
-@keyframes slideInFromRight {
-
-    from {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-}
-
-@keyframes slideOutToLeft {
-
-    from {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-
-}
-
-@keyframes slideInFromLeft {
-
-    from {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-}
-
-@keyframes slideOutToRight {
-
-    from {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-
-}
-
-.page-slide-in-right {
-    animation: slideInFromRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.page-slide-out-left {
-    animation: slideOutToLeft 0.3s cubic-bezier(0.4, 0, 1, 1);
-}
-
-.page-slide-in-left {
-    animation: slideInFromLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.page-slide-out-right {
-    animation: slideOutToRight 0.3s cubic-bezier(0.4, 0, 1, 1);
-}
-/* 缩放切换 */
-
-@keyframes zoomIn {
-
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-}
-
-@keyframes zoomOut {
-
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: scale(1.1);
-    }
-
-}
-
-.page-zoom-in {
-    animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-zoom-out {
-    animation: zoomOut 0.3s ease-in;
-}
 /* ========== 元素入场动画 ========== */
 /* 交错淡入 */
 
@@ -1484,43 +1208,12 @@ textarea:focus:not(:focus-visible),
 /* ========== 微交互反馈 ========== */
 /* 点击波纹效果 */
 
-@keyframes rippleExpand {
-
-    0% {
-        transform: scale(0);
-        opacity: 0.6;
-    }
-    100% {
-        transform: scale(4);
-        opacity: 0;
-    }
-
-}
-
 .ripple-effect {
     position: absolute;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.4);
     pointer-events: none;
     animation: rippleExpand 0.6s ease-out forwards;
-}
-/* 成功反馈动画 */
-
-@keyframes successCheck {
-
-    0% {
-        stroke-dashoffset: 100;
-    }
-    100% {
-        stroke-dashoffset: 0;
-    }
-
-}
-
-.success-animation path {
-    stroke-dasharray: 100;
-    stroke-dashoffset: 100;
-    animation: successCheck 0.5s ease-out forwards;
 }
 /* 错误抖动动画 */
 
@@ -1534,18 +1227,6 @@ textarea:focus:not(:focus-visible),
 
 .shake-error {
     animation: shakeError 0.5s ease-in-out;
-}
-/* 加载骨架屏动画 */
-
-@keyframes skeletonPulse {
-
-    0%, 100% {
-        background-position: -200% 0;
-    }
-    50% {
-        background-position: 200% 0;
-    }
-
 }
 /* ========== 状态过渡动画 ========== */
 /* 数字变化动画 */
@@ -1754,45 +1435,6 @@ textarea:focus:not(:focus-visible),
 .state-elastic.active {
     animation: elasticSwitch 0.4s ease-out;
 }
-/* ========== 悬停光泽扫过增强 ========== */
-@keyframes shimmerSweep {
-
-    0% {
-        transform: translateX(-100%) skewX(-15deg);
-    }
-    100% {
-        transform: translateX(200%) skewX(-15deg);
-    }
-
-}
-
-.shimmer-hover {
-    position: relative;
-    overflow: hidden;
-}
-
-.shimmer-hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.08) 30%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.08) 70%,
-        transparent 100%
-    );
-    transform: translateX(-100%) skewX(-15deg);
-    pointer-events: none;
-}
-
-.shimmer-hover:hover::before {
-    animation: shimmerSweep 0.8s ease-out;
-}
 /* ========== 数字变化滚动动画 ========== */
 @keyframes numberRoll {
 
@@ -1916,7 +1558,6 @@ textarea:focus:not(:focus-visible),
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 /* ============================================
-   【第47轮UI美化 - 优化点3】动画性能优化与无障碍支持
    减少动画模式、硬件加速、性能优化、无障碍支持
    ============================================ */
 /* ========== 无障碍 - 减少动画模式支持 ========== */
@@ -1972,14 +1613,13 @@ textarea:focus:not(:focus-visible),
         }
 }
 /* ========== 性能优化 - 硬件加速提示 ========== */
-/* 3D变换元素启用硬件加速 - 性能优化: 移除 .widget/.card 的 will-change 和 perspective，避免 GPU 内存浪费 */
+/* 静态元素仅启用 GPU 合成层提升，不使用 will-change 避免内存浪费 */
 
 .hardware-accelerate,
 .weather-icon,
 .dock-btn img,
 .setting-item,
 .settings-tab {
-    will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
 }
@@ -2172,10 +1812,6 @@ html:not(.is-scrolling) .scroll-pause-animations {
 }
 /* 防止图层过大 */
 
-.contain-paint {
-    contain: layout paint size;
-}
-
 .contain-strict {
     contain: strict;
 }
@@ -2215,7 +1851,6 @@ html:not(.is-scrolling) .scroll-pause-animations {
         }
 }
 /* ============================================
-   【第52轮UI美化 - 优化点3】页面过渡与路由切换动画系统终极增强
    3D页面切换、淡入淡出、滑动过渡、缩放旋转、弹性动画系统
    ============================================ */
 /* ========== 页面容器基础设置 ========== */
@@ -2238,330 +1873,7 @@ html:not(.is-scrolling) .scroll-pause-animations {
     will-change: transform, opacity;
     contain: layout paint style;
 }
-/* ========== 3D翻转过渡 - 终极增强 ========== */
-/* 3D翻转进入 */
 
-.page-flip-enter {
-    transform: rotateY(90deg) translateZ(100px);
-    opacity: 0;
-}
-
-.page-flip-enter-active {
-    transform: rotateY(0deg) translateZ(0);
-    opacity: 1;
-    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* 3D翻转离开 */
-
-.page-flip-exit {
-    transform: rotateY(0deg) translateZ(0);
-    opacity: 1;
-}
-
-.page-flip-exit-active {
-    transform: rotateY(-90deg) translateZ(-100px);
-    opacity: 0;
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* 3D上下翻转 */
-
-.page-flip-up-enter {
-    transform: rotateX(90deg) translateZ(100px);
-    opacity: 0;
-}
-
-.page-flip-up-enter-active {
-    transform: rotateX(0deg) translateZ(0);
-    opacity: 1;
-    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-flip-up-exit {
-    transform: rotateX(0deg) translateZ(0);
-    opacity: 1;
-}
-
-.page-flip-up-exit-active {
-    transform: rotateX(-90deg) translateZ(-100px);
-    opacity: 0;
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* ========== 缩放过渡 - 终极增强 ========== */
-/* 缩放淡入 */
-
-.page-scale-enter {
-    transform: scale(0.8) translateZ(-100px);
-    opacity: 0;
-}
-
-.page-scale-enter-active {
-    transform: scale(1) translateZ(0);
-    opacity: 1;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* 缩放淡出 */
-
-.page-scale-exit {
-    transform: scale(1) translateZ(0);
-    opacity: 1;
-}
-
-.page-scale-exit-active {
-    transform: scale(1.1) translateZ(50px);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* 弹性缩放 */
-
-.page-elastic-enter {
-    transform: scale(0.5);
-    opacity: 0;
-}
-
-.page-elastic-enter-active {
-    transform: scale(1);
-    opacity: 1;
-    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.page-elastic-exit {
-    transform: scale(1);
-    opacity: 1;
-}
-
-.page-elastic-exit-active {
-    transform: scale(0.8);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* ========== 滑动过渡 - 终极增强 ========== */
-/* 从左滑入 */
-
-.page-slide-left-enter {
-    transform: translateX(-100%) translateZ(-50px) rotateY(10deg);
-    opacity: 0;
-}
-
-.page-slide-left-enter-active {
-    transform: translateX(0) translateZ(0) rotateY(0deg);
-    opacity: 1;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-slide-left-exit {
-    transform: translateX(0) translateZ(0) rotateY(0deg);
-    opacity: 1;
-}
-
-.page-slide-left-exit-active {
-    transform: translateX(100%) translateZ(-50px) rotateY(-10deg);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* 从右滑入 */
-
-.page-slide-right-enter {
-    transform: translateX(100%) translateZ(-50px) rotateY(-10deg);
-    opacity: 0;
-}
-
-.page-slide-right-enter-active {
-    transform: translateX(0) translateZ(0) rotateY(0deg);
-    opacity: 1;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-slide-right-exit {
-    transform: translateX(0) translateZ(0) rotateY(0deg);
-    opacity: 1;
-}
-
-.page-slide-right-exit-active {
-    transform: translateX(-100%) translateZ(-50px) rotateY(10deg);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* 从下滑入 */
-
-.page-slide-up-enter {
-    transform: translateY(100%) translateZ(-50px) rotateX(-10deg);
-    opacity: 0;
-}
-
-.page-slide-up-enter-active {
-    transform: translateY(0) translateZ(0) rotateX(0deg);
-    opacity: 1;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-slide-up-exit {
-    transform: translateY(0) translateZ(0) rotateX(0deg);
-    opacity: 1;
-}
-
-.page-slide-up-exit-active {
-    transform: translateY(-100%) translateZ(-50px) rotateX(10deg);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* 从上滑入 */
-
-.page-slide-down-enter {
-    transform: translateY(-100%) translateZ(-50px) rotateX(10deg);
-    opacity: 0;
-}
-
-.page-slide-down-enter-active {
-    transform: translateY(0) translateZ(0) rotateX(0deg);
-    opacity: 1;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* ========== 淡入淡出过渡 - 终极增强 ========== */
-/* 标准淡入淡出 */
-
-.page-fade-enter {
-    opacity: 0;
-}
-
-.page-fade-enter-active {
-    opacity: 1;
-    transition: opacity 0.4s ease-out;
-}
-
-.page-fade-exit {
-    opacity: 1;
-}
-
-.page-fade-exit-active {
-    opacity: 0;
-    transition: opacity 0.3s ease-in;
-}
-/* 深度淡入淡出 */
-
-.page-depth-enter {
-    opacity: 0;
-    transform: translateZ(-100px);
-    filter: blur(10px);
-}
-
-.page-depth-enter-active {
-    opacity: 1;
-    transform: translateZ(0);
-    filter: blur(0);
-    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-depth-exit {
-    opacity: 1;
-    transform: translateZ(0);
-    filter: blur(0);
-}
-
-.page-depth-exit-active {
-    opacity: 0;
-    transform: translateZ(100px);
-    filter: blur(10px);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* ========== 旋转过渡 - 终极增强 ========== */
-/* 顺时针旋转 */
-
-.page-rotate-enter {
-    transform: rotate(-15deg) scale(0.8);
-    opacity: 0;
-}
-
-.page-rotate-enter-active {
-    transform: rotate(0deg) scale(1);
-    opacity: 1;
-    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-rotate-exit {
-    transform: rotate(0deg) scale(1);
-    opacity: 1;
-}
-
-.page-rotate-exit-active {
-    transform: rotate(15deg) scale(0.8);
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* 3D立方体旋转 */
-
-.page-cube-enter {
-    transform: rotateY(90deg) translateZ(50%);
-    transform-origin: left center;
-    opacity: 0;
-}
-
-.page-cube-enter-active {
-    transform: rotateY(0deg) translateZ(0);
-    opacity: 1;
-    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-cube-exit {
-    transform: rotateY(0deg) translateZ(0);
-    transform-origin: right center;
-    opacity: 1;
-}
-
-.page-cube-exit-active {
-    transform: rotateY(-90deg) translateZ(-50%);
-    opacity: 0;
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* ========== 组合特效过渡 ========== */
-/* 爆炸效果 */
-
-.page-explode-enter {
-    transform: scale(0) rotate(180deg);
-    opacity: 0;
-}
-
-.page-explode-enter-active {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.page-explode-exit {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-}
-
-.page-explode-exit-active {
-    transform: scale(1.5) rotate(-15deg);
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* 折叠效果 */
-
-.page-fold-enter {
-    transform: scaleY(0) rotateX(90deg);
-    transform-origin: top center;
-    opacity: 0;
-}
-
-.page-fold-enter-active {
-    transform: scaleY(1) rotateX(0deg);
-    opacity: 1;
-    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* 开门效果 */
-
-.page-door-enter {
-    transform: perspective(1000px) rotateY(-100deg);
-    transform-origin: left center;
-    opacity: 0;
-}
-
-.page-door-enter-active {
-    transform: perspective(1000px) rotateY(0deg);
-    opacity: 1;
-    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
 /* ========== 模态框/弹窗过渡动画 ========== */
 /* 弹窗弹性弹出 */
 
@@ -2803,8 +2115,6 @@ body.effect-low .animate-shimmer,
 body.effect-low .skeleton-loading,
 body.effect-low .progress-indeterminate,
 body.effect-low .ripple-click::after,
-body.effect-low .shimmer-hover::before,
-body.effect-low .card-border-flow::before,
 body.effect-low .notification-enter,
 body.effect-low .notification-pop,
 body.effect-low .elastic-enter,
@@ -2879,17 +2189,6 @@ body.effect-low .modal {
 body.effect-low .modal-content {
     animation: none;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-}
-
-body.effect-low .page-enter,
-body.effect-low .page-exit,
-body.effect-low .page-slide-in-right,
-body.effect-low .page-slide-out-left,
-body.effect-low .page-slide-in-left,
-body.effect-low .page-slide-out-right,
-body.effect-low .page-zoom-in,
-body.effect-low .page-zoom-out {
-    animation: none;
 }
 /* 交错序列 → 全部立即显示 */
 
@@ -3047,23 +2346,6 @@ body.effect-high .ripple-click::after {
         rgba(0, 255, 136, 0.35) 0%,
         rgba(0, 204, 255, 0.15) 40%,
         transparent 70%);
-}
-/* 增强卡片边框流光 */
-
-body.effect-high .card-border-flow:hover::before {
-    opacity: 1;
-    animation-duration: 2s;
-}
-/* 增强光泽扫过 */
-
-body.effect-high .shimmer-hover::before {
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.12) 30%,
-        rgba(0, 255, 136, 0.1) 50%,
-        rgba(255, 255, 255, 0.12) 70%,
-        transparent 100%);
 }
 /* ========== 空调旋转动画 ========== */
 .rotate-animation {

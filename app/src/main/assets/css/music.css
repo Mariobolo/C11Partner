@@ -317,43 +317,6 @@
     height: 80px;
     margin-right: 16px;
 }
-.music-widget .vinyl-record {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: 
-        radial-gradient(circle at center, 
-            #1a1a1a 0%, 
-            #0d0d0d 30%, 
-            #1a1a1a 50%, 
-            #2a2a2a 70%, 
-            #1a1a1a 100%);
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.5),
-        0 2px 8px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    position: relative;
-    transition: transform 0.3s ease;
-}
-.music-widget .vinyl-record.playing {
-    animation: vinylSpin 3s linear infinite;
-}
-@keyframes vinylSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-.music-widget .vinyl-record::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #333 0%, #1a1a1a 100%);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
-}
 .music-widget .vinyl-dot {
     position: absolute;
     top: 50%;
@@ -383,31 +346,10 @@
     transform: rotate(0deg);
 }
 /* ============================================
-   【第33轮优化点1】音乐播放器组件视觉全面升级
    黑胶唱片3D光影、进度条渐变、控制按钮发光、歌曲名称动效
    ============================================ */
-/* 黑胶唱片3D光影增强 */
-.music-widget .vinyl-record {
-    background: 
-        radial-gradient(circle at 30% 30%, 
-            rgba(255, 255, 255, 0.15) 0%, 
-            transparent 30%),
-        radial-gradient(circle at center, 
-            #2a2a2a 0%, 
-            #1a1a1a 20%, 
-            #0d0d0d 35%, 
-            #1a1a1a 50%, 
-            #2a2a2a 65%, 
-            #1a1a1a 80%, 
-            #0d0d0d 100%);
-    box-shadow: 
-        0 12px 40px rgba(0, 0, 0, 0.6),
-        0 4px 16px rgba(0, 0, 0, 0.4),
-        inset 0 2px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(0, 0, 0, 0.8);
-}
 /* 黑胶唱片凹槽纹理效果 */
+
 .music-widget .vinyl-record::after {
     content: '';
     position: absolute;
@@ -423,20 +365,6 @@
     pointer-events: none;
     opacity: 0.5;
 }
-/* 唱片中心标签增强 */
-.music-widget .vinyl-record::before {
-    width: 24px;
-    height: 24px;
-    background: 
-        radial-gradient(circle, 
-            rgba(var(--primary-color-rgb), 0.8) 0%, 
-            rgba(var(--primary-color-rgb), 0.4) 40%, 
-            #1a1a1a 100%);
-    box-shadow: 
-        inset 0 1px 2px rgba(255, 255, 255, 0.2),
-        0 0 12px rgba(var(--primary-color-rgb), 0.4);
-    z-index: 2;
-}
 /* 唱片中心圆点发光 */
 .music-widget .vinyl-dot {
     width: 8px;
@@ -446,16 +374,6 @@
         0 0 8px rgba(255, 255, 255, 0.6),
         inset 0 1px 2px rgba(255, 255, 255, 0.8);
     z-index: 3;
-}
-/* 播放时唱片发光效果 */
-.music-widget .vinyl-record.playing {
-    box-shadow: 
-        0 12px 40px rgba(0, 0, 0, 0.6),
-        0 4px 16px rgba(0, 0, 0, 0.4),
-        inset 0 2px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(0, 0, 0, 0.8),
-        0 0 30px rgba(var(--primary-color-rgb), 0.3);
 }
 /* 音乐进度条视觉增强 */
 .music-progress-bar {
@@ -554,7 +472,6 @@
 }
 
 /* ============================================
-   【第57轮优化点1】音乐组件黑胶唱片动画与控制按钮视觉增强
    增强黑胶唱片3D旋转动画、光影变化、控制按钮悬停点击反馈、进度条渐变
    ============================================ */
 
