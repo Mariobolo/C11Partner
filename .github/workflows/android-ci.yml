@@ -66,7 +66,8 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x gradlew
     - name: Clean previous build
-      run: ./gradlew clean --no-build-cache 2>&1 | grep -v "Warning: Mapping new ns" || true
+      run: |
+        ./gradlew clean --no-build-cache 2>&1 | grep -v "Warning: Mapping new ns" || true
     - name: Build debug APK
       run: |
         set -o pipefail
