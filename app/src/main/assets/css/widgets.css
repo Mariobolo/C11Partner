@@ -461,7 +461,7 @@
 /* ========== 底部卡片容器 ========== */
 .card-view {
     position: absolute !important;
-    bottom: 20px !important;
+    bottom: 12px !important;
     left: var(--spacing-3xl) !important;
     right: var(--spacing-3xl) !important;
     height: auto !important;
@@ -8304,10 +8304,10 @@
    隐藏底部Dock栏并调整布局
    ======================================== */
 
-/* 底部状态栏/Dock栏 - 已恢复显示 */
-/* footer.status-bar {
+/* 底部状态栏/Dock栏 - 已废弃，功能已集成到widget区域 */
+footer.status-bar {
     display: none !important;
-} */
+}
 
 /* 调整横向滚动容器 */
 
