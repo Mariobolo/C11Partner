@@ -1863,11 +1863,15 @@ function loadQuickApps() {
 
                 quickAppsContainer.appendChild(appItem);
             });
+
+            // 添加"全部"按钮
+            quickAppsContainer.appendChild(createShowAllAppsButton());
         } catch (e) {
             console.error('加载快速启动应用列表时出错:', e);
-            // 出错时隐藏组件
+            // 出错时显示"全部"按钮作为兜底入口
+            quickAppsContainer.appendChild(createShowAllAppsButton());
             if (quickAppsWidget) {
-                quickAppsWidget.style.display = 'none';
+                quickAppsWidget.style.display = 'flex';
             }
         }
     } else {
@@ -1890,7 +1894,34 @@ function loadQuickApps() {
             `;
             quickAppsContainer.appendChild(appItem);
         });
+
+        // 添加"全部"按钮
+        quickAppsContainer.appendChild(createShowAllAppsButton());
     }
+}
+
+/**
+ * 创建"全部应用"入口按钮
+ */
+function createShowAllAppsButton() {
+    const allBtn = document.createElement('div');
+    allBtn.className = 'quick-app-item quick-app-all-btn';
+    allBtn.innerHTML = `
+        <div class="quick-app-icon quick-app-all-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round">
+                <circle cx="5" cy="5" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/>
+                <circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>
+                <circle cx="5" cy="19" r="1.5"/><circle cx="12" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/>
+            </svg>
+        </div>
+        <div class="quick-app-name">全部</div>
+    `;
+    allBtn.addEventListener('click', function () {
+        if (typeof showAppsModal === 'function') {
+            showAppsModal();
+        }
+    });
+    return allBtn;
 }
 
 /**

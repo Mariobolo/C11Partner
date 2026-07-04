@@ -52,9 +52,9 @@ const WallpaperManager = (function() {
      * 加载设置
      */
     function loadSettings() {
-        if (typeof AndroidInterface !== 'undefined' && AndroidInterface.getWallpaperSettingsV2) {
+        if (typeof Android !== 'undefined' && Android.getWallpaperSettingsV2) {
             try {
-                const settingsJson = AndroidInterface.getWallpaperSettingsV2();
+                const settingsJson = Android.getWallpaperSettingsV2();
                 if (settingsJson) {
                     currentSettings = JSON.parse(settingsJson);
                 }
@@ -68,21 +68,21 @@ const WallpaperManager = (function() {
      * 保存设置
      */
     function saveSettings() {
-        if (typeof AndroidInterface !== 'undefined') {
-            if (AndroidInterface.setWallpaperType) {
-                AndroidInterface.setWallpaperType(currentSettings.wallpaper_type);
+        if (typeof Android !== 'undefined') {
+            if (Android.setWallpaperType) {
+                Android.setWallpaperType(currentSettings.wallpaper_type);
             }
-            if (AndroidInterface.setWallpaperPath) {
-                AndroidInterface.setWallpaperPath(currentSettings.wallpaper_path);
+            if (Android.setWallpaperPath) {
+                Android.setWallpaperPath(currentSettings.wallpaper_path);
             }
-            if (AndroidInterface.setWallpaperCarouselEnabled) {
-                AndroidInterface.setWallpaperCarouselEnabled(currentSettings.carousel_enabled);
+            if (Android.setWallpaperCarouselEnabled) {
+                Android.setWallpaperCarouselEnabled(currentSettings.carousel_enabled);
             }
-            if (AndroidInterface.setWallpaperCarouselInterval) {
-                AndroidInterface.setWallpaperCarouselInterval(currentSettings.carousel_interval);
+            if (Android.setWallpaperCarouselInterval) {
+                Android.setWallpaperCarouselInterval(currentSettings.carousel_interval);
             }
-            if (AndroidInterface.setWallpaperFillMode) {
-                AndroidInterface.setWallpaperFillMode(currentSettings.fill_mode);
+            if (Android.setWallpaperFillMode) {
+                Android.setWallpaperFillMode(currentSettings.fill_mode);
             }
         }
     }
@@ -264,9 +264,9 @@ const WallpaperManager = (function() {
      * 获取当前壁纸URL
      */
     function getCurrentWallpaperUrl() {
-        if (typeof AndroidInterface !== 'undefined' && AndroidInterface.getCurrentWallpaperUrl) {
+        if (typeof Android !== 'undefined' && Android.getCurrentWallpaperUrl) {
             try {
-                return AndroidInterface.getCurrentWallpaperUrl();
+                return Android.getCurrentWallpaperUrl();
             } catch (e) {
                 console.error('获取当前壁纸URL失败:', e);
             }
@@ -278,9 +278,9 @@ const WallpaperManager = (function() {
      * 获取下一张壁纸URL
      */
     function getNextWallpaperUrl() {
-        if (typeof AndroidInterface !== 'undefined' && AndroidInterface.getNextWallpaperUrl) {
+        if (typeof Android !== 'undefined' && Android.getNextWallpaperUrl) {
             try {
-                return AndroidInterface.getNextWallpaperUrl();
+                return Android.getNextWallpaperUrl();
             } catch (e) {
                 console.error('获取下一张壁纸URL失败:', e);
             }
@@ -388,8 +388,8 @@ const WallpaperManager = (function() {
      * 刷新必应壁纸
      */
     function refreshBingWallpaper() {
-        if (typeof AndroidInterface !== 'undefined' && AndroidInterface.refreshBingWallpaper) {
-            AndroidInterface.refreshBingWallpaper();
+        if (typeof Android !== 'undefined' && Android.refreshBingWallpaper) {
+            Android.refreshBingWallpaper();
         }
         // 延迟一下再应用壁纸
         setTimeout(() => {
@@ -565,8 +565,8 @@ function bindSettingsEvents() {
     const pickFileBtn = document.getElementById('pickWallpaperFileBtn');
     if (pickFileBtn) {
         pickFileBtn.addEventListener('click', function() {
-            if (typeof AndroidInterface !== 'undefined' && AndroidInterface.pickLocalWallpaperFile) {
-                AndroidInterface.pickLocalWallpaperFile();
+            if (typeof Android !== 'undefined' && Android.pickLocalWallpaperFile) {
+                Android.pickLocalWallpaperFile();
             } else {
                 alert('请在输入框中手动输入文件路径');
             }
@@ -577,8 +577,8 @@ function bindSettingsEvents() {
     const pickFolderBtn = document.getElementById('pickWallpaperFolderBtn');
     if (pickFolderBtn) {
         pickFolderBtn.addEventListener('click', function() {
-            if (typeof AndroidInterface !== 'undefined' && AndroidInterface.pickLocalWallpaperFolder) {
-                AndroidInterface.pickLocalWallpaperFolder();
+            if (typeof Android !== 'undefined' && Android.pickLocalWallpaperFolder) {
+                Android.pickLocalWallpaperFolder();
             } else {
                 alert('请在输入框中手动输入文件夹路径');
             }

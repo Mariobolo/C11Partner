@@ -89,7 +89,7 @@ public class ComponentConfigDatabaseHelper extends SQLiteOpenHelper {
         for (String componentName : componentNames) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_COMPONENT_NAME, componentName);
-            values.put(COLUMN_IS_ENABLED, 0); // 默认不启用
+            values.put(COLUMN_IS_ENABLED, 1); // 默认启用
             db.insertWithOnConflict(TABLE_COMPONENT_CONFIG, null, values, SQLiteDatabase.CONFLICT_IGNORE);
         }
         

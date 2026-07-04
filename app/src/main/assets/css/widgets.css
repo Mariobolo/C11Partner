@@ -467,7 +467,9 @@
     height: auto !important;
     min-height: 130px !important;
     max-height: 160px !important;
-    background-color: transparent !important;
+    background: rgba(10, 10, 20, 0.45) !important;
+    backdrop-filter: blur(30px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
     border-radius: var(--radius-lg) !important;
     pointer-events: auto !important;
     overflow: visible !important;
@@ -831,6 +833,22 @@
     transform: translateY(-1px);
     text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
 }
+/* "全部"按钮样式 */
+.quick-app-all-icon {
+    background: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+}
+.quick-app-all-btn {
+    cursor: pointer;
+}
+.quick-app-all-btn:active .quick-app-all-icon {
+    border-color: rgba(var(--primary-color-rgb), 0.5);
+    transform: scale(0.92);
+}
 /* ========== 快捷开关模块 - 【优化点1】视觉与交互动效终极增强 ========== */
 .quick-switches-widget {
     min-width: 300px;
@@ -903,12 +921,12 @@
     padding: 12px 10px;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    min-width: 48px;
+    min-width: 68px;
     min-height: 48px;
     margin: 0;
     cursor: pointer;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     /* 性能优化: 移除非3D变换场景的 preserve-3d */
     transform-style: flat;
     /* 性能优化: box-shadow 简化为单层，减少重绘 */
@@ -8286,10 +8304,10 @@
    隐藏底部Dock栏并调整布局
    ======================================== */
 
-/* 隐藏底部状态栏/Dock栏 */
-footer.status-bar {
+/* 底部状态栏/Dock栏 - 已恢复显示 */
+/* footer.status-bar {
     display: none !important;
-}
+} */
 
 /* 调整横向滚动容器 */
 
