@@ -661,8 +661,6 @@ public class MainActivity extends AppCompatActivity {
         
         // 性能优化
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
         webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setBlockNetworkImage(false);
         webSettings.setLoadsImagesAutomatically(true);
