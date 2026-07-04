@@ -191,9 +191,14 @@ const QuickSwitchManager = {
                 e.stopPropagation();
                 self.hidePanel();
                 setTimeout(() => {
-                    const settingsModal = document.getElementById('settingsModal');
-                    if (settingsModal) {
-                        settingsModal.classList.add('active');
+                    if (typeof showSettingsModal === 'function') {
+                        showSettingsModal();
+                    } else {
+                        const settingsModal = document.getElementById('settingsModal');
+                        if (settingsModal) {
+                            settingsModal.style.display = 'block';
+                            settingsModal.classList.add('active');
+                        }
                     }
                 }, 100);
             });

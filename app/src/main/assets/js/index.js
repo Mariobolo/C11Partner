@@ -1363,16 +1363,40 @@ function initAppsModal() {
  * 使用文档片段优化渲染性能
  * @param {Object} appsData - 按字母分类的应用数据对象
  */
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function normalizeAppIcon(icon) {
+    if (!icon) return '';
+    if (icon.startsWith('data:')) return icon;
+    if (icon.startsWith('http://') || icon.startsWith('https://')) return icon;
+    // base64 without prefix
+    if (/^[A-Za-z0-9+/=]+$/.test(icon.substring(0, 100))) {
+        return 'data:image/png;base64,' + icon;
+    }
+    return icon;
+}
+
 function renderAppsList(appsData) {
     const appsList = document.getElementById('appsList');
+    if (!appsList) return;
     appsList.innerHTML = '';
+
+    if (!appsData || typeof appsData !== 'object' || Object.keys(appsData).length === 0) {
+        appsList.innerHTML = '<div class="app-empty-state">暂无应用数据</div>';
+        return;
+    }
 
     // 使用文档片段来减少DOM操作
     const fragment = document.createDocumentFragment();
 
     // 遍历每个字母分类
     for (const letter in appsData) {
-        if (appsData.hasOwnProperty(letter) && appsData[letter].length > 0) {
+        if (appsData.hasOwnProperty(letter) && Array.isArray(appsData[letter]) && appsData[letter].length > 0) {
             // 创建字母分组容器
             const section = document.createElement('div');
             section.className = 'app-section';
@@ -1394,9 +1418,11 @@ function renderAppsList(appsData) {
                 appItem.className = 'app-item';
                 appItem.setAttribute('data-package', app.packageName);
                 appItem.setAttribute('data-is-system-app', app.isSystemApp || false);
+                const safeIcon = normalizeAppIcon(app.icon);
+                const safeName = escapeHtml(app.name);
                 appItem.innerHTML = `
-                    <div class="app-icon" style="background-image: url('${app.icon}');"></div>
-                    <div class="app-name">${app.name}</div>
+                    <div class="app-icon" style="background-image: url('${safeIcon}');"></div>
+                    <div class="app-name">${safeName}</div>
                 `;
 
                 // 添加点击事件
@@ -1799,9 +1825,11 @@ function loadQuickApps() {
                 const appItem = document.createElement('div');
                 appItem.className = 'quick-app-item';
                 appItem.setAttribute('data-package', app.packageName);
+                const appSafeIcon = normalizeAppIcon(app.icon);
+                const appSafeName = escapeHtml(app.name);
                 appItem.innerHTML = `
-                    <div class="quick-app-icon" style="background-image: url('${app.icon}'); width: 60px; height: 60px;"></div>
-                    <div class="quick-app-name" style="font-size: 14px;">${app.name}</div>
+                    <div class="quick-app-icon" style="background-image: url('${appSafeIcon}');"></div>
+                    <div class="quick-app-name">${appSafeName}</div>
                 `;
 
                 // 添加点击事件
@@ -1855,9 +1883,10 @@ function loadQuickApps() {
         mockQuickApps.forEach(app => {
             const appItem = document.createElement('div');
             appItem.className = 'quick-app-item';
+            const appSafeName = escapeHtml(app.name);
             appItem.innerHTML = `
-                <div class="quick-app-icon" style="background-image: url('${app.icon}'); width: 60px; height: 60px;"></div>
-                <div class="quick-app-name" style="font-size: 14px;">${app.name}</div>
+                <div class="quick-app-icon" style="background-image: url('${app.icon}');"></div>
+                <div class="quick-app-name">${appSafeName}</div>
             `;
             quickAppsContainer.appendChild(appItem);
         });

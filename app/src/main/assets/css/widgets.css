@@ -12,7 +12,7 @@
 }
 
 .btn-nav-spaced {
-    margin-left: 20px;
+    margin-left: 8px;
 }
 
 /* 加载提示文字 */
@@ -461,15 +461,17 @@
 /* ========== 底部卡片容器 ========== */
 .card-view {
     position: absolute !important;
-    bottom: 40px !important;
+    bottom: 20px !important;
     left: var(--spacing-3xl) !important;
     right: var(--spacing-3xl) !important;
-    height: 260px !important;
+    height: auto !important;
+    min-height: 130px !important;
+    max-height: 160px !important;
     background-color: transparent !important;
     border-radius: var(--radius-lg) !important;
     pointer-events: auto !important;
     overflow: visible !important;
-    padding: 0 0 var(--spacing-xl) 0 !important;
+    padding: 0 !important;
 }
 .horizontal-scroll {
     width: 100%;
@@ -477,13 +479,13 @@
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    padding: var(--spacing-sm) 0 10px 0;
+    padding: 4px 0 0 0;
     margin: 0;
-    -webkit-overflow-scrolling: touch;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
-    scroll-behavior: smooth;
+    touch-action: pan-x;
     position: relative;
+    /* 性能优化: 避免scroll-behavior: smooth在触屏设备上的卡顿 */
 }
 /* 隐藏横向滚动条 */
 .horizontal-scroll::-webkit-scrollbar {
