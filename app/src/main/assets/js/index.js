@@ -81,14 +81,18 @@ function initSettingsModal() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
+    if (!settingsModal) return;
+
     // 点击设置按钮切换弹窗显示/隐藏
-    settingsBtn.addEventListener('click', function () {
-        if (settingsModal.style.display === 'block') {
-            hideSettingsModal();
-        } else {
-            showSettingsModal();
-        }
-    });
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', function () {
+            if (settingsModal.style.display === 'flex') {
+                hideSettingsModal();
+            } else {
+                showSettingsModal();
+            }
+        });
+    }
 
     // 点击关闭按钮隐藏弹窗
     closeSettings.addEventListener('click', function () {
@@ -634,7 +638,7 @@ function showSettingsModal() {
     hideAppsModal();
 
     const settingsModal = document.getElementById('settingsModal');
-    settingsModal.style.display = 'block';
+    settingsModal.style.display = 'flex';
     settingsModal.classList.add('active');
     // 默认激活壁纸设置TAB
     const tabButtons = document.querySelectorAll('.tab-button');
@@ -1138,22 +1142,24 @@ function initAppsModal() {
     window.setAppListCache = setAppListCache;
 
     // 点击应用按钮切换弹窗显示/隐藏
-    appsBtn.addEventListener('click', function () {
-        if (appsModal.style.display === 'block') {
-            hideAppsModal();
-        } else {
-            showAppsModal(); // 添加这行代码来显示应用列表弹窗
+    if (appsBtn) {
+        appsBtn.addEventListener('click', function () {
+            if (appsModal.style.display !== 'none') {
+                hideAppsModal();
+            } else {
+                showAppsModal();
 
-            // 显示加载提示
-            appsList.style.display = 'none';
-            appsLoading.style.display = 'block';
+                // 显示加载提示
+                appsList.style.display = 'none';
+                appsLoading.style.display = 'block';
 
-            // 使用setTimeout来确保UI更新后再执行耗时操作
-            setTimeout(() => {
-                loadAppList();
-            }, 1); // 短暂延迟确保UI更新
-        }
-    });
+                // 使用setTimeout来确保UI更新后再执行耗时操作
+                setTimeout(() => {
+                    loadAppList();
+                }, 1);
+            }
+        });
+    }
 
     // 点击关闭按钮隐藏弹窗
     closeApps.addEventListener('click', function () {
@@ -1577,9 +1583,9 @@ function resetAutoCloseTimer() {
         const appsModal = document.getElementById('appsModal');
         const settingsModal = document.getElementById('settingsModal');
         
-        if (appsModal && appsModal.style.display === 'block') {
+        if (appsModal && appsModal.style.display !== 'none') {
             hideAppsModal();
-        } else if (settingsModal && settingsModal.style.display === 'block') {
+        } else if (settingsModal && settingsModal.style.display !== 'none') {
             hideSettingsModal();
         }
         showToast('超时未操作，自动关闭！');
@@ -1823,13 +1829,13 @@ function loadQuickApps() {
             // 生成快速启动应用列表
             quickApps.forEach(app => {
                 const appItem = document.createElement('div');
-                appItem.className = 'quick-app-item';
+                appItem.className = 'quick-switch-item ac-control-item';
                 appItem.setAttribute('data-package', app.packageName);
                 const appSafeIcon = normalizeAppIcon(app.icon);
                 const appSafeName = escapeHtml(app.name);
                 appItem.innerHTML = `
-                    <div class="quick-app-icon" style="background-image: url('${appSafeIcon}');"></div>
-                    <div class="quick-app-name">${appSafeName}</div>
+                    <div class="quick-switch-icon" style="background-image: url('${appSafeIcon}');"></div>
+                    <div class="quick-switch-name">${appSafeName}</div>
                 `;
 
                 // 添加点击事件
@@ -1886,11 +1892,11 @@ function loadQuickApps() {
         ];
         mockQuickApps.forEach(app => {
             const appItem = document.createElement('div');
-            appItem.className = 'quick-app-item';
+            appItem.className = 'quick-switch-item ac-control-item';
             const appSafeName = escapeHtml(app.name);
             appItem.innerHTML = `
-                <div class="quick-app-icon" style="background-image: url('${app.icon}');"></div>
-                <div class="quick-app-name">${appSafeName}</div>
+                <div class="quick-switch-icon" style="background-image: url('${app.icon}');"></div>
+                <div class="quick-switch-name">${appSafeName}</div>
             `;
             quickAppsContainer.appendChild(appItem);
         });
@@ -1905,20 +1911,25 @@ function loadQuickApps() {
  */
 function createShowAllAppsButton() {
     const allBtn = document.createElement('div');
-    allBtn.className = 'quick-app-item quick-app-all-btn';
+    allBtn.className = 'quick-switch-item ac-control-item quick-app-all-btn';
     allBtn.innerHTML = `
-        <div class="quick-app-icon quick-app-all-icon">
+        <div class="quick-switch-icon quick-app-all-icon">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round">
                 <circle cx="5" cy="5" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/>
                 <circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>
                 <circle cx="5" cy="19" r="1.5"/><circle cx="12" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/>
             </svg>
         </div>
-        <div class="quick-app-name">全部</div>
+        <div class="quick-switch-name">全部</div>
     `;
-    allBtn.addEventListener('click', function () {
+    allBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        console.log('全部应用按钮被点击');
         if (typeof showAppsModal === 'function') {
             showAppsModal();
+        } else {
+            console.error('showAppsModal 函数未定义');
         }
     });
     return allBtn;

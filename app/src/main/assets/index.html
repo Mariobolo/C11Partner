@@ -190,62 +190,23 @@
                 </section>
 
                 <!-- 天气组件 -->
+                <!-- 天气组件 - #字形布局 -->
                 <section class="widget weather-widget">
-                    <div class="weather-icon"></div>
-                    <div class="weather-info">
-                        <div class="temperature"></div>
-                        <div class="condition"></div>
+                    <div class="weather-left">
+                        <div class="temperature" data-temp="--">--</div>
+                        <div class="condition">加载中</div>
+                    </div>
+                    <div class="weather-center">
+                        <div class="weather-car-icon"></div>
+                    </div>
+                    <div class="weather-right">
+                        <div class="weather-detail">湿度 --%</div>
+                        <div class="weather-detail">风速 --km/h</div>
+                        <div class="weather-detail">PM2.5 --</div>
                     </div>
                 </section>
             </div>
         </main>
-
-        <!-- 底部状态栏 -->
-        <footer class="status-bar">
-            <!-- 左侧按钮组 -->
-            <div class="left-buttons">
-                <button class="control-icon btn-nav" id="appsBtn"
-                    style="background-image: url('images/nav_apps.png');"></button>
-                <button class="control-icon btn-nav btn-nav-spaced" id="tasksBtn"
-                    style="background-image: url('images/nav_tasks.png');"></button>
-            </div>
-
-            <!-- 中间控制组 -->
-            <div class="center-controls">
-                <div class="ac-control rotate-animation" id="acControl"
-                    style="background-image: url('images/nav_air.png');"></div>
-                <div class="ac-control" id="acMinus"
-                    style="background-image: url('images/nav_minus.png');"></div>
-                <div class="air-text">22°</div>
-                <div class="ac-control" id="acPlus"
-                    style="background-image: url('images/nav_add.png');"></div>
-                <div class="ac-control" id="acArrow1"
-                    style="background-image: url('images/nav_arrow1.png');"></div>
-                <div class="wind-display">
-                    <div class="wind-background"
-                        style="background-image: url('images/nav_air.png');"></div>
-                    <div class="wind-level"
-                        style="background-image: url('images/wind_level_06.png');"></div>
-                </div>
-                <div class="ac-control" id="acArrow2"
-                    style="background-image: url('images/nav_arrow2.png');"></div>
-                <div class="ac-control" id="acWindMinus"
-                    style="background-image: url('images/nav_minus.png');"></div>
-                <div class="air-text">22°</div>
-                <div class="ac-control" id="acWindPlus"
-                    style="background-image: url('images/nav_add.png');"></div>
-                <div class="ac-hcs" id="acHcs"
-                    style="background-image: url('images/nav_ac_hcs.png');"></div>
-            </div>
-
-            <!-- 右侧按钮组 -->
-            <div class="right-buttons">
-                <button class="control-icon btn-nav" id="camera360Btn"
-                    style="background-image: url('images/nav_camera.png');"></button>
-                <button class="control-icon btn-nav btn-nav-spaced" id="settingsBtn"
-                    style="background-image: url('images/nav_seetings.png');"></button>
-            </div>
-        </footer>
 
         <!-- 设置弹窗页面 -->
         <div class="modal" id="settingsModal">
