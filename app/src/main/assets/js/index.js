@@ -1282,9 +1282,38 @@ function initAppsModal() {
         // 检查是否在Android环境中
         if (typeof Android !== 'undefined' && Android.getAppListAsync) {
             var callbackFired = false;
+            var asyncTimer = setTimeout(function() {
+                if (callbackFired) return;
+                callbackFired = true;
+                console.warn('[AppList] 异步回调超时，尝试同步接口');
+                try {
+                    if (Android.getAppList) {
+                        const appsJson = Android.getAppList();
+                        const appsData = JSON.parse(appsJson);
+                        cachedAppsData = appsData;
+                        lastAppListLoadTime = now;
+                        initAlphabetNavFromData(appsData);
+                        renderAppsList(appsData);
+                    } else {
+                        throw new Error('同步接口不可用');
+                    }
+                } catch (e) {
+                    console.warn('[AppList] 同步接口也失败，使用模拟数据:', e);
+                    const appsData = generateAppData();
+                    cachedAppsData = appsData;
+                    lastAppListLoadTime = now;
+                    initAlphabetNav();
+                    renderAppsList(appsData);
+                }
+                loadQuickApps();
+                appsLoading.style.display = 'none';
+                appsList.style.display = 'block';
+            }, 5000);
+
             const callbackId = AsyncCallbackManager.register(function (appListJson) {
                 if (callbackFired) return;
                 callbackFired = true;
+                clearTimeout(asyncTimer); // 清理超时定时器
                 try {
                     const appsData = JSON.parse(appListJson);
 
@@ -1312,36 +1341,12 @@ function initAppsModal() {
                 appsLoading.style.display = 'none';
                 appsList.style.display = 'block';
             });
-            Android.getAppListAsync(callbackId);
-
-            // 超时兜底：5秒后如果回调没触发，用同步接口或模拟数据
-            setTimeout(function() {
-                if (callbackFired) return;
-                callbackFired = true;
-                console.warn('[AppList] 异步回调超时，尝试同步接口');
-                try {
-                    if (Android.getAppList) {
-                        const appsJson = Android.getAppList();
-                        const appsData = JSON.parse(appsJson);
-                        cachedAppsData = appsData;
-                        lastAppListLoadTime = now;
-                        initAlphabetNavFromData(appsData);
-                        renderAppsList(appsData);
-                    } else {
-                        throw new Error('同步接口不可用');
-                    }
-                } catch (e) {
-                    console.warn('[AppList] 同步接口也失败，使用模拟数据:', e);
-                    const appsData = generateAppData();
-                    cachedAppsData = appsData;
-                    lastAppListLoadTime = now;
-                    initAlphabetNav();
-                    renderAppsList(appsData);
-                }
-                loadQuickApps();
-                appsLoading.style.display = 'none';
-                appsList.style.display = 'block';
-            }, 5000);
+            try {
+                Android.getAppListAsync(callbackId);
+            } catch (e) {
+                console.error('[AppList] 调用getAppListAsync失败:', e);
+                // 立即走同步接口兜底
+            }
         } else {
             // 非Android环境，使用模拟数据
             const appsData = generateAppData();
@@ -1649,7 +1654,7 @@ function showAddToQuickAppsDialog(app) {
                 <h2>添加到快速启动</h2>
             </div>
             <div class="confirm-dialog-body">
-                <div class="app-icon" style="background-image: url('${app.icon}');"></div>
+                <div class="app-icon" style="background-image: url('${normalizeAppIcon(app.icon)}');"></div>
                 <p class="app-name">${app.name}</p>
                 <p class="confirm-message">确定要添加到快速启动吗？</p>
             </div>
@@ -1691,7 +1696,7 @@ function showAddToQuickAppsDialog(app) {
     // 确认按钮事件
     confirmBtn.addEventListener('click', function () {
         if (typeof Android !== 'undefined' && Android.addQuickApp) {
-            Android.addQuickApp(app.name, app.packageName, app.icon);
+            Android.addQuickApp(app.name, app.packageName, normalizeAppIcon(app.icon));
             // 刷新快速启动应用列表
             loadQuickApps();
         }
@@ -1732,7 +1737,7 @@ function showRemoveFromQuickAppsDialog(app) {
                 <h2>移除快速启动</h2>
             </div>
             <div class="confirm-dialog-body">
-                <div class="app-icon" style="background-image: url('${app.icon}');"></div>
+                <div class="app-icon" style="background-image: url('${normalizeAppIcon(app.icon)}');"></div>
                 <p class="app-name">${app.name}</p>
                 <p class="confirm-message">确定要从快速启动中移除吗？</p>
             </div>

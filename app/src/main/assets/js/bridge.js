@@ -31,6 +31,7 @@
      */
     const AsyncCallbackManager = {
         callbacks: {},
+        timers: {},
         counter: 0,
 
         /**
@@ -46,23 +47,36 @@
          * 注册回调函数
          * 
          * @param callback 要注册的回调函数
+         * @param timeoutMs 可选，超时毫秒数，超时后自动清理回调
          * @return 回调ID
          */
-        register: function (callback) {
+        register: function (callback, timeoutMs) {
             const id = this.generateId();
             this.callbacks[id] = callback;
+            if (timeoutMs && timeoutMs > 0) {
+                this.timers[id] = setTimeout(function() {
+                    delete AsyncCallbackManager.callbacks[id];
+                    delete AsyncCallbackManager.timers[id];
+                }, timeoutMs);
+            }
             return id;
         },
 
         /**
          * 执行回调函数
          * 执行后自动删除回调，避免内存泄漏
+         * 同时清理关联的定时器
          * 
          * @param id 回调ID
          * @param result 回调结果
          */
         execute: function (id, result) {
             if (this.callbacks[id]) {
+                // 清理关联的定时器
+                if (this.timers[id]) {
+                    clearTimeout(this.timers[id]);
+                    delete this.timers[id];
+                }
                 this.callbacks[id](result);
                 delete this.callbacks[id];
             }
