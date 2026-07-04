@@ -1272,8 +1272,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         webView.post(() -> {
                             try {
-                                String javascript = String.format("javascript:setAppListCache('%s')",
-                                        appList.replace("'", "\\'"));
+                                String javascript = "javascript:setAppListCache(" + org.json.JSONObject.quote(appList) + ")";
                                 webView.loadUrl(javascript);
                                 Log.d("MainActivity", "已将预加载的应用列表传递给前端");
                             } catch (Exception e) {

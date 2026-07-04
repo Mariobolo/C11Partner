@@ -727,6 +727,14 @@ public class WebViewBridge extends BaseBridge {
     public boolean toggleAC() { return mCarControlBridge.toggleAirConditioning(); }
     
     @JavascriptInterface
+    public boolean toggleMute() {
+        if (mCarControlBridge != null) {
+            return mCarControlBridge.toggleMute();
+        }
+        return false;
+    }
+    
+    @JavascriptInterface
     public boolean toggleAirConditioning() { return mCarControlBridge.toggleAirConditioning(); }
     
     @JavascriptInterface

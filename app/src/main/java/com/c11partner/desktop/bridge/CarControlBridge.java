@@ -22,6 +22,7 @@ public class CarControlBridge extends BaseBridge {
     private static final String TAG = "CarControlBridge";
     
     private CarControlManager mCarControlManager;
+    private int savedVolumeBeforeMute = -1;
     
     /**
      * 构造函数
@@ -563,11 +564,16 @@ public class CarControlBridge extends BaseBridge {
             int current = getMusicVolume();
             if (current > 0) {
                 // 保存当前音量并静音
-                // 简单实现：直接设为0
+                savedVolumeBeforeMute = current;
                 return setMusicVolume(0);
             } else {
-                // 取消静音，恢复到默认音量
-                return setMusicVolume(10);
+                // 取消静音，恢复保存的音量
+                if (savedVolumeBeforeMute > 0) {
+                    int restoreVolume = savedVolumeBeforeMute;
+                    savedVolumeBeforeMute = -1;
+                    return setMusicVolume(restoreVolume);
+                }
+                return false;
             }
         } catch (Exception e) {
             Log.e(TAG, "切换静音失败", e);

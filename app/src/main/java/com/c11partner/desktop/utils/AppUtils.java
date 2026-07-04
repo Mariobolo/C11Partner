@@ -93,6 +93,11 @@ public class AppUtils {
                         || (appInfo.flags & android.content.pm.ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
                 appData.put("isSystemApp", isSystemApp);
                 
+                // 过滤非白名单系统应用
+                if (isSystemApp && !SYSTEM_APP_WHITELIST.contains(packageName)) {
+                    continue;
+                }
+                
                 // 优化：延迟加载图标，在需要时再加载
                 appData.put("icon", appInfo.loadIcon(pm));
                 appList.add(appData);

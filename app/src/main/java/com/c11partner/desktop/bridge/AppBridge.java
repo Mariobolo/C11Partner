@@ -19,12 +19,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.c11partner.desktop.database.AppDatabaseHelper;
 import com.c11partner.desktop.database.QuickAppDatabaseHelper;
@@ -43,6 +46,7 @@ import com.c11partner.desktop.database.ConfigAppDatabaseHelper;
 public class AppBridge extends BaseBridge {
     
     private static final String TAG = "AppBridge";
+    private static final ExecutorService appListExecutor = Executors.newSingleThreadExecutor();
     
     // 应用管理相关
     private AppDatabaseHelper appDbHelper;
@@ -641,23 +645,35 @@ public class AppBridge extends BaseBridge {
             return "";
         }
         
+        Bitmap bitmap = null;
+        ByteArrayOutputStream stream = null;
         try {
-            Bitmap bitmap = Bitmap.createBitmap(
-                drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(),
-                Bitmap.Config.ARGB_8888
-            );
+            int originalWidth = drawable.getIntrinsicWidth();
+            int originalHeight = drawable.getIntrinsicHeight();
+            
+            // 强制缩放到128x128，防止大图标OOM
+            int size = Math.min(Math.min(originalWidth, originalHeight), 128);
+            if (size <= 0) size = 64;
+            
+            bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
-            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.setBounds(0, 0, size, size);
             drawable.draw(canvas);
             
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 80, stream);
             byte[] byteArray = stream.toByteArray();
             return Base64.encodeToString(byteArray, Base64.NO_WRAP);
         } catch (Exception e) {
             Log.e(TAG, "Drawable转Base64失败", e);
             return "";
+        } finally {
+            if (bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+            }
+            if (stream != null) {
+                try { stream.close(); } catch (IOException ignored) {}
+            }
         }
     }
     
@@ -731,7 +747,7 @@ public class AppBridge extends BaseBridge {
      * @param callbackId 回调ID
      */
     public void getAppListAsync(final String callbackId) {
-        new Thread(new Runnable() {
+        appListExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -768,6 +784,6 @@ public class AppBridge extends BaseBridge {
                     });
                 }
             }
-        }).start();
+        });
     }
 }
