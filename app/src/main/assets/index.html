@@ -8,7 +8,14 @@
     <meta name="theme-color" content="#1a1a1f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="css/main.css">
+    <!-- CSS模块直接引入（避免@import在某些WebView环境中不生效，加v参数强制刷新缓存） -->
+    <link rel="stylesheet" href="css/theme.css?v=2">
+    <link rel="stylesheet" href="css/base.css?v=2">
+    <link rel="stylesheet" href="css/animations.css?v=2">
+    <link rel="stylesheet" href="css/components.css?v=2">
+    <link rel="stylesheet" href="css/widgets.css?v=2">
+    <link rel="stylesheet" href="css/pages.css?v=2">
+    <link rel="stylesheet" href="css/responsive.css?v=2">
 
     <!-- 基础依赖层 -->
     <script src="js/utils.js"></script>
