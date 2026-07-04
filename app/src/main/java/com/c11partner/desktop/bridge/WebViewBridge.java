@@ -6,6 +6,7 @@ import android.webkit.JavascriptInterface;
 import com.c11partner.desktop.MainActivity;
 
 import com.c11partner.desktop.LeapMotorCarState;
+import com.c11partner.desktop.LogcatMonitorService;
 import com.c11partner.desktop.service.MediaSessionService;
 
 import org.json.JSONObject;
@@ -695,7 +696,39 @@ public class WebViewBridge extends BaseBridge {
     
     @JavascriptInterface
     public String getCarState() {
-        // 由MainActivity通过updateCarState推送，此方法供JS主动拉取
+        // 从LogcatMonitorService获取当前车辆状态，复用updatePresentationCarState的JSON构建逻辑
+        try {
+            if (mActivity != null) {
+                LogcatMonitorService service = mActivity.getLogcatMonitorService();
+                if (service != null) {
+                    LeapMotorCarState state = service.getCurrentState();
+                    if (state != null) {
+                        JSONObject stateJson = new JSONObject();
+                        stateJson.put("speed", state.getSpeed());
+                        stateJson.put("gear", state.getGear());
+                        stateJson.put("gearText", state.getGearText());
+                        stateJson.put("leftTurnLight", state.getLeftTurnLight());
+                        stateJson.put("rightTurnLight", state.getRightTurnLight());
+                        stateJson.put("lowBeamLight", state.getLowBeamLight());
+                        stateJson.put("lockState", state.getLockState());
+                        stateJson.put("isLocked", state.isLocked());
+                        stateJson.put("openDoorCount", state.getOpenDoorCount());
+                        stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
+                        stateJson.put("sunroof", state.getSunroof());
+                        stateJson.put("bluetoothConnected", state.isBluetoothConnected());
+                        stateJson.put("acPageOpen", state.isAcPageOpen());
+                        stateJson.put("camera360Visible", state.isCamera360Visible());
+                        stateJson.put("frontLeftTirePressure", state.getFrontLeftTirePressure());
+                        stateJson.put("frontRightTirePressure", state.getFrontRightTirePressure());
+                        stateJson.put("rearLeftTirePressure", state.getRearLeftTirePressure());
+                        stateJson.put("rearRightTirePressure", state.getRearRightTirePressure());
+                        return stateJson.toString();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logE(TAG, "获取车辆状态失败", e);
+        }
         return "{}";
     }
     
@@ -941,8 +974,10 @@ public class WebViewBridge extends BaseBridge {
     
     /**
      * 初始化空调状态（MainActivity调用）
+     * 
+     * @param acInfoJson 空调状态JSON字符串
      */
-    public void initializeAcStatus() {
-        safeEvaluateJavascript("javascript:window.initializeAcStatus()");
+    public void initializeAcStatus(String acInfoJson) {
+        safeEvaluateJavascript("javascript:window.initializeAcStatus(" + acInfoJson + ")");
     }
 }

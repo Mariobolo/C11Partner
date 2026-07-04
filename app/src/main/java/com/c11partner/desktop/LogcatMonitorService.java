@@ -16,6 +16,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.c11partner.desktop.utils.AutomationEngine;
 import com.c11partner.desktop.utils.CarControlManager;
@@ -531,14 +533,46 @@ public class LogcatMonitorService extends Service {
     
     /**
      * 解析胎压胎温信号
+     * 实车日志格式: D/zza: TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0,
+     *   singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=283, singleTireTemp=34}
+     * pos: 0=左前, 1=右前, 2=左后, 3=右后
+     * singleTirePress: 胎压值（kPa）
+     * singleTireTemp: 胎温值（摄氏度）
      */
+    private static final Pattern TPMS_PATTERN = Pattern.compile(
+        "TPMSBean\\{pos=(\\d),.*?singleTirePress=(\\d+),.*?singleTireTemp=(\\d+)"
+    );
+
     private void parseTirePressureSignal(String line) {
         try {
-            // 简单解析TPMSBean数据，提取胎压胎温
-            // 实际格式需要根据实车日志调整
-            if (line.contains("TPMSBean")) {
-                // 这里简化处理，实际需要根据日志格式解析
-                Log.d(TAG, "收到胎压数据: " + line);
+            Matcher matcher = TPMS_PATTERN.matcher(line);
+            if (matcher.find()) {
+                int pos = Integer.parseInt(matcher.group(1));
+                int pressure = Integer.parseInt(matcher.group(2));
+                int temp = Integer.parseInt(matcher.group(3));
+
+                switch (pos) {
+                    case 0: // 左前
+                        carState.setFrontLeftTirePressure(pressure);
+                        carState.setFrontLeftTireTemp(temp);
+                        break;
+                    case 1: // 右前
+                        carState.setFrontRightTirePressure(pressure);
+                        carState.setFrontRightTireTemp(temp);
+                        break;
+                    case 2: // 左后
+                        carState.setRearLeftTirePressure(pressure);
+                        carState.setRearLeftTireTemp(temp);
+                        break;
+                    case 3: // 右后
+                        carState.setRearRightTirePressure(pressure);
+                        carState.setRearRightTireTemp(temp);
+                        break;
+                    default:
+                        Log.w(TAG, "未知胎压位置: " + pos);
+                        break;
+                }
+                Log.d(TAG, String.format("胎压更新 pos=%d pressure=%dkPa temp=%dC", pos, pressure, temp));
             }
         } catch (Exception e) {
             Log.e(TAG, "解析胎压信号错误: " + e.getMessage());

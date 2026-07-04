@@ -679,8 +679,16 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 // 页面加载完成后注册时间更新监听器
                 view.loadUrl("javascript:registerTimeUpdateListener()");
-                // 初始化AC状态
-                webViewBridge.initializeAcStatus();
+                // 初始化AC状态，先获取空调信息JSON再传入
+                if (webViewBridge != null && isLogcatServiceBound && logcatMonitorService != null) {
+                    try {
+                        String acInfoJson = webViewBridge.getAcInfo();
+                        webViewBridge.initializeAcStatus(acInfoJson);
+                    } catch (Exception e) {
+                        Log.e("MainActivity", "初始化AC状态失败", e);
+                        webViewBridge.initializeAcStatus("{}");
+                    }
+                }
             }
         });
 
