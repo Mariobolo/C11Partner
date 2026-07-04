@@ -64,6 +64,7 @@ android {
     
     lint {
         abortOnError false
+        disable 'OldTargetApi'
     }
     
     tasks.whenTaskAdded { task ->
