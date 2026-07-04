@@ -1,7 +1,7 @@
 # C11Partner 代码索引文档
 > 📌 **快速定位代码的神器** - 修改代码前先看本文档，找到对应函数行号再精准读取，避免读取大文件占用上下文
 >
-> 自动生成时间：2026-06-23 10:48:58
+> 自动生成时间：2026-07-04 12:00:00
 > 生成脚本：`tools/generate_code_index.py`
 
 ---
@@ -43,29 +43,31 @@ python3 tools/generate_code_index.py
 ### CSS文件总览
 | 文件名 | 行数 | 大小(KB) | 占比 | 职责说明 |
 |--------|------|----------|------|----------|
-| components.css | 15,896 | 417 | 36.1% | 通用组件样式（按钮、卡片、弹窗、图标等） |
-| widgets.css | 10,797 | 285 | 24.5% | 桌面小组件样式（状态栏、widget卡片、Dock栏等） |
-| pages.css | 5,748 | 153 | 13.1% | 各页面专属样式（设置页、应用列表页等） |
-| index.css | 3,314 | 65 | 7.5% | 主样式/索引样式 |
-| base.css | 2,844 | 67 | 6.5% | 基础重置与全局样式 |
-| animations.css | 2,435 | 55 | 5.5% | 动画效果与关键帧 |
-| responsive.css | 1,712 | 35 | 3.9% | 响应式适配与媒体查询 |
-| music.css | 851 | 24 | 1.9% | 音乐播放器专属样式 |
-| theme.css | 352 | 14 | 0.8% | CSS变量/设计令牌/主题系统 |
-| main.css | 32 | 1 | 0.1% | 样式入口文件（统一import） |
-| **总计** | **43,981** | **1,116** | **100%** | - |
+| components.css | 15,896 | 417 | 38.9% | 通用组件样式（按钮、卡片、弹窗、图标等） |
+| widgets.css | 10,797 | 285 | 26.4% | 桌面小组件样式（状态栏、widget卡片、Dock栏等） |
+| pages.css | 5,748 | 153 | 14.1% | 各页面专属样式（设置页、应用列表页等） |
+| base.css | 2,844 | 67 | 7.0% | 基础重置与全局样式 |
+| animations.css | 2,435 | 55 | 6.0% | 动画效果与关键帧 |
+| responsive.css | 1,712 | 35 | 4.2% | 响应式适配与媒体查询 |
+| theme.css | 352 | 14 | 0.9% | CSS变量/设计令牌/主题系统（含少量!important） |
+| **总计** | **39,784** | **1,026** | **100%** | - |
+> 注：index.css、music.css、main.css 已删除。CSS通过 index.html 中 `<link>` 标签按顺序直接引入7个模块文件。
 
 ### CSS文件加载顺序
 ```
-main.css → theme.css → base.css → animations.css → components.css → widgets.css → pages.css → responsive.css
+index.html → <link> 直接引入7个CSS模块（按顺序）：
+  theme.css → base.css → animations.css → components.css → widgets.css → pages.css → responsive.css
 ```
-> 注意：后面的文件会覆盖前面的同名样式，这是CSS重复定义能"生效"的原因
+> 注意：CSS加载方式已从 main.css 的 @import 改为 index.html 中直接使用 `<link>` 标签按顺序引入7个模块文件。此方式在 WebView 中更可靠，避免了 @import 在部分 WebView 环境下不生效的问题。
 
 ### CSS主要问题识别
 1. **文件职责重叠**：components.css与widgets.css存在大量样式重叠，边界不清晰
 2. **重复定义严重**：同一选择器在多处重复定义，依靠加载顺序维持最终效果
 3. **硬编码较多**：大量颜色、间距、阴影是硬编码值，未使用CSS变量
 4. **优先级依赖脆弱**：大量样式依赖文件加载顺序，改动容易引发连锁反应
+
+### CSS !important 清理状态（2026-07-04 更新）
+> CSS规范化清理已完成，!important 从原来的 **2,247处** 大幅减少到约 **4处**（仅 base.css 中保留少量必要的 !important 声明）。大部分依赖 !important 覆盖的样式已通过调整选择器优先级和清理冗余代码来解决。底部状态栏相关样式已完全删除。
 
 ---
 

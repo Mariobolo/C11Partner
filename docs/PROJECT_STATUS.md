@@ -3,13 +3,81 @@
 - **项目名称**: C11Partner - 零跑C11专属车载桌面系统
 - **GitHub仓库**: Mariobolo/C11Partner
 - **当前版本**: v1.0.0
-- **最后更新**: 2026-06-23
+- **最后更新**: 2026-07-04
 ## 最新构建状态
 - **状态**: ✅ 已推送 (等待GitHub Actions构建)
-- **最新提交SHA**: eac2481
-- **提交信息**: 第56轮UI美化：图标视觉增强、交互动效升级、响应式布局优化
+- **最新提交SHA**: 最新（多轮后端P0/P1修复 + CSS规范化清理提交）
+- **提交信息**: 后端审计12项P0/P1修复、CSS !important从2247处清理至约4处、WidgetBridge拆分、胎压解析修复、底部状态栏删除
 ## GitHub Actions修复
 ### ✅ CI构建错误修复 (android-ci.yml)
+
+---
+
+## 后端审计修复完成（2026-07-04）
+
+### 概述
+后端审计共完成 **12项 P0/P1 修复**，涵盖安全性、功能正确性、性能优化等方面。
+
+### P0 级修复（8项）
+| 编号 | 修复项 | 说明 |
+|------|--------|------|
+| P0-1 | **应用图标压缩128x128 + 线程池** | 应用图标生成过程增加尺寸压缩至128x128，并使用线程池提升并发处理性能 |
+| P0-2 | **JSON安全转义** | 修复WebViewBridge中JSON数据注入时的安全转义问题，防止XSS和注入攻击 |
+| P0-3 | **音量系统统一** | 统一调用/导航/媒体三路音量控制逻辑，消除不一致的行为 |
+| P0-4 | **系统应用白名单过滤** | 应用列表中增加系统应用白名单过滤机制，避免敏感系统应用暴露给用户 |
+| P0-5 | **WRITE_SETTINGS权限** | 修复设置写入时缺少WRITE_SETTINGS权限检查的问题 |
+| P0-6 | **胎压解析修复（TPMSBean格式正则解析）** | 修复LogcatMonitorService中胎压CAN信号解析逻辑，采用TPMSBean格式正则匹配，正确解析四轮胎压数据 |
+| P0-7 | **getCarState() 返回真实数据** | getCarState() 接口改为返回真实车辆状态数据（替代之前的mock/空数据） |
+| P0-8 | **initializeAcStatus参数传递** | 修复initializeAcStatus()调用时参数未正确传递的问题 |
+
+### P1 级修复（4项）
+| 编号 | 修复项 | 说明 |
+|------|--------|------|
+| P1-1 | **前端try-catch保护** | 前端关键调用增加try-catch异常捕获，防止JS错误导致UI卡死 |
+| P1-2 | **normalizeAppIcon** | 修复应用图标加载时normalizeAppIcon处理异常的问题 |
+| P1-3 | **clearTimeout修复** | 修复多处定时器未正确清理导致的内存泄漏和回调误触发 |
+| P1-4 | **AsyncCallbackManager超时清理** | AsyncCallbackManager增加超时自动清理机制，防止回调堆积 |
+
+---
+
+## CSS规范化清理（2026-07-04）
+
+### 概述
+对前端CSS进行全面规范化清理，解决长期积累的样式优先级混乱问题。
+
+### 清理成果
+| 指标 | 清理前 | 清理后 | 改善幅度 |
+|------|--------|--------|----------|
+| !important 数量 | 2,247处 | 约4处 | 减少99.8% |
+| CSS模块文件数 | 10个（含main.css入口） | 7个（直接link引入） | 精简30% |
+| CSS引入方式 | main.css @import | index.html `<link>` 直接引入 | 更可靠 |
+
+### 主要变更
+1. **!important 大幅清理**：从2,247处减少到约4处（仅base.css中保留少量必要的!important声明），其余全部通过调整选择器优先级和清理冗余代码解决
+2. **CSS引入方式重构**：从 `main.css` 中使用 `@import` 统一引入，改为 `index.html` 中直接使用 `<link>` 标签按顺序引入7个CSS模块文件
+3. **加载顺序**：theme.css -> base.css -> animations.css -> components.css -> widgets.css -> pages.css -> responsive.css
+4. **已删除文件**：index.css（内容合并或废弃）、music.css（已合并）、main.css（不再需要@import入口）
+
+---
+
+## Widget横向布局修复（2026-07-04）
+
+### 问题描述
+Widget在页面上的横向布局排列异常，CSS样式未正确生效。
+
+### 根因分析
+**根本原因**：CSS加载使用了 `main.css` 中的 `@import` 方式，而 Android WebView 对 `@import` 的支持不完整，导致后续模块的CSS未能正确加载。Widget横向布局相关样式定义在 widgets.css 中，因 @import 加载失败而未生效。
+
+### 修复方案
+1. 将CSS加载方式从 `main.css` 的 `@import` 改为 `index.html` 中直接使用 `<link>` 标签按顺序引入7个CSS模块文件
+2. 确保 widgets.css 在正确位置被加载，Widget横向布局样式恢复正常
+
+### 相关变更
+- 删除 main.css（@import入口文件）
+- 删除 index.css（已废弃）
+- index.html 中添加7个 `<link>` 标签
+
+---
 **文件路径**: .github/workflows/android-ci.yml
 **修复内容**:
 1. **升级setup-android版本**: v2 → v3

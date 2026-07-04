@@ -529,18 +529,20 @@
 }
 
 .horizontal-scroll {
-    /* 性能优化: 避免scroll-behavior: smooth在触屏设备上的卡顿 */
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
     width: 100%;
     height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    white-space: nowrap;
     padding: 4px 0 0 0;
     margin: 0;
     scrollbar-width: none;
     -ms-overflow-style: none;
     touch-action: pan-x;
     position: relative;
+    gap: var(--spacing-lg);
 }
 /* 隐藏横向滚动条 */
 
@@ -570,7 +572,6 @@
     min-width: 280px;
     align-items: center;
     justify-content: center;
-    margin-right: var(--spacing-lg);
     padding: var(--spacing-md) var(--spacing-lg);
     box-sizing: border-box;
     border-radius: var(--radius-lg);
@@ -701,12 +702,13 @@
 }
 
 .quick-apps-container {
-    /* 性能优化: 移除非3D变换场景的 perspective */
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 12px;
     padding: 4px;
     width: 100%;
+    flex-wrap: nowrap;
 }
 
 .quick-app-item {
@@ -2034,7 +2036,6 @@ linear-gradient(135deg,
             min-width: 140px;
             padding: 14px 16px;
             height: 90px;
-            margin-right: 12px;
             border-radius: 16px;
         }
         .quick-apps-widget {
@@ -2097,7 +2098,6 @@ linear-gradient(135deg,
             min-width: 120px;
             padding: 12px 14px;
             height: 80px;
-            margin-right: 10px;
             border-radius: 14px;
         }
         .quick-apps-widget {
@@ -2176,7 +2176,6 @@ linear-gradient(135deg,
             min-width: 100px;
             padding: 10px 12px;
             height: 70px;
-            margin-right: 8px;
         }
         .widget-icon {
             width: 28px;
@@ -5159,7 +5158,6 @@ opacity: 1;
             min-width: 140px;
             padding: 14px 16px;
             height: 90px;
-            margin-right: 12px;
             border-radius: 16px;
         }
         .quick-apps-widget {
@@ -5222,7 +5220,6 @@ opacity: 1;
             min-width: 120px;
             padding: 12px 14px;
             height: 80px;
-            margin-right: 10px;
             border-radius: 14px;
         }
         .quick-apps-widget {
@@ -5301,7 +5298,6 @@ opacity: 1;
             min-width: 100px;
             padding: 10px 12px;
             height: 70px;
-            margin-right: 8px;
         }
         .widget-icon {
             width: 28px;

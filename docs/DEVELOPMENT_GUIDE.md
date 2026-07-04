@@ -2,7 +2,7 @@
 
 > 🛠️ 本文档描述如何搭建开发环境、调试和构建 C11Partner
 >
-> 最后更新：2026-06-20
+> 最后更新：2026-07-04
 
 ---
 
@@ -99,17 +99,33 @@ python3 tools/generate_code_index.py
 
 ```
 assets/
-├── index.html          # 主页面
+├── index.html          # 主页面（CSS通过<link>标签按顺序引入）
 ├── css/
-│   ├── index.css       # 主样式
-│   └── music.css       # 音乐模块样式
+│   ├── theme.css      # CSS变量、主题色、配色方案
+│   ├── base.css       # 基础重置样式、全局默认值（仅此处保留!important，约4处）
+│   ├── animations.css # 动画关键帧、过渡效果
+│   ├── components.css # 通用组件样式（卡片、按钮、弹窗等）
+│   ├── widgets.css     # 各Widget专属样式（天气、音乐、快捷开关等）
+│   ├── pages.css      # 页面级布局样式（设置面板、应用列表等）
+│   └── responsive.css # 响应式适配、媒体查询
 ├── js/
-│   ├── index.js        # 主 JS（3000+行，含多个管理器）
-│   ├── weather.js      # 天气模块
-│   ├── music.js        # 音乐模块
+│   ├── index.js                    # 主JS入口
+│   ├── car-state-manager.js       # 车辆状态管理器
+│   ├── gear-bridge.js             # 档位状态前后端桥接
+│   ├── automation-manager.js      # 自动化场景配置
+│   ├── quick-switch-manager.js    # 快捷开关管理器
+│   ├── async-callback-manager.js  # 异步回调统一管理
+│   ├── voice-test-manager.js      # 语音控制测试
+│   ├── system-music-manager.js    # 系统音乐信息与播放控制
+│   ├── wallpaper-manager.js       # 壁纸切换、轮播、分类
+│   ├── wallpaper-swipe-bootstrap.js # 壁纸滑动手势引导
+│   ├── weather.js                 # 天气模块
+│   ├── music.js                   # 音乐可视化模块
 │   └── ...
 └── images/             # 图片资源
 ```
+
+**CSS 引入说明**：CSS 通过 `index.html` 中的 `<link>` 标签按固定顺序直接引入（theme.css → base.css → animations.css → components.css → widgets.css → pages.css → responsive.css），不使用 `@import`（因 `@import` 在某些 WebView 环境中不生效）。
 
 **调试技巧**：
 - 可以在浏览器中直接打开 `index.html` 预览 UI（部分功能需要 Android 环境）
@@ -497,5 +513,5 @@ adb logcat -v time | grep -i crash
 
 ---
 
-**文档版本**：v1.1  
-**最后更新**：2026-06-24
+**文档版本**：v1.2  
+**最后更新**：2026-07-04

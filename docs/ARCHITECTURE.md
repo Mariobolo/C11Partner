@@ -2,7 +2,7 @@
 
 > 📐 本文档描述 C11Partner 的整体架构、模块划分和关键设计决策
 >
-> 最后更新：2026-06-20
+> 最后更新：2026-07-04
 
 ---
 
@@ -80,15 +80,18 @@
 
 | 模块 | 文件 | 职责 |
 |------|------|------|
-| **主页面** | `index.html` + `index.js` | 整体布局、状态栏、快捷开关 |
-| **车辆状态** | `CarStateManager` (index.js) | 接收后端推送，更新状态栏车辆状态 |
-| **快捷开关** | `QuickSwitchManager` (index.js) | 14个快捷开关 + 6个驾驶模式 + 5个场景模式 |
-| **自动化配置** | `AutomationManager` (index.js) | 自动化场景配置界面 |
-| **系统音乐** | `SystemMusicManager` (index.js) | 音乐信息显示和播放控制 |
-| **音乐可视化** | `music.js` + `music.css` | 频谱可视化、播放控制 |
-| **天气模块** | `weather.js` | 天气数据获取和显示 |
-| **壁纸模块** | `wallpaper.js` | 壁纸切换、轮播、分类 |
-| **应用列表** | `appsModal` (index.js) | 应用列表、分类过滤、字母导航 |
+| **主页面** | `index.html` + `index.js` | 整体布局、快捷开关入口 |
+| **车辆状态** | `car-state-manager.js` | 接收后端推送，更新状态栏车辆状态 |
+| **档位桥接** | `gear-bridge.js` | 档位状态前后端交互桥接 |
+| **快捷开关** | `quick-switch-manager.js` | 14个快捷开关 + 6个驾驶模式 + 5个场景模式 |
+| **自动化配置** | `automation-manager.js` | 自动化场景配置界面 |
+| **异步回调** | `async-callback-manager.js` | 异步回调统一管理 |
+| **语音测试** | `voice-test-manager.js` | 语音控制测试与调试 |
+| **系统音乐** | `system-music-manager.js` | 音乐信息显示和播放控制 |
+| **壁纸模块** | `wallpaper-manager.js` + `wallpaper-swipe-bootstrap.js` | 壁纸切换、轮播、分类及滑动手势引导 |
+| **音乐可视化** | `music.js` | 频谱可视化、播放控制 |
+| **天气模块** | `weather.js` | 天气数据获取和显示（#字形布局） |
+| **应用列表** | 由 `index.js` 内的 appsModal 管理 | 应用列表、分类过滤、字母导航 |
 
 ### 2.2 后端模块（Java）
 
@@ -326,6 +329,22 @@ com.c11partner.desktop
 - **JS对象**：大驼峰，如 `CarStateManager`
 - **JS函数**：小驼峰，如 `updateCarState`
 
+### 6.3 CSS 组织规范
+
+CSS 采用**分模块文件 + `<link>` 标签直接引入**的方式组织，不使用 `@import` 嵌套加载（因 `@import` 在部分 WebView 环境中不生效）。
+
+**文件列表及引入顺序**（`index.html` 中的 `<link>` 标签）：
+
+1. `theme.css` — CSS 变量、主题色、配色方案
+2. `base.css` — 基础重置样式、全局默认值（唯一允许使用 `!important` 的模块，仅约4处）
+3. `animations.css` — 动画关键帧、过渡效果
+4. `components.css` — 通用组件样式（卡片、按钮、弹窗等）
+5. `widgets.css` — 各 Widget 专属样式（天气、音乐、快捷开关等）
+6. `pages.css` — 页面级布局样式（设置面板、应用列表等）
+7. `responsive.css` — 响应式适配、媒体查询
+
+> **注意**：加载顺序不可调换，后续文件依赖前面文件定义的变量和基础样式。`!important` 已从全量 2247 处精简至约 4 处，仅在 `base.css` 中保留必要的覆盖。
+
 ---
 
 ## 七、扩展开发指南
@@ -365,5 +384,5 @@ com.c11partner.desktop
 
 ---
 
-**文档版本**：v1.0  
-**最后更新**：2026-06-20
+**文档版本**：v1.1  
+**最后更新**：2026-07-04

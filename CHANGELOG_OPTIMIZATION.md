@@ -230,3 +230,49 @@
 | `app/src/main/assets/js/android_interface.js` | 重写（完整mock） |
 | `app/.../bridge/WebViewBridge.java` | 修改（+32个方法） |
 | `app/.../bridge/MusicBridge.java` | 修改（+hasNotificationAccess） |
+
+---
+
+## 三、后端代码审计修复（2026-07-04）
+
+> 日期：2026-07-04
+> 范围：后端安全审计 + P0/P1缺陷修复 + 前后端健壮性加固
+
+### 3.1 应用列表获取（P0）
+- **图标压缩**：`drawableToBase64()` 强制128x128缩放 + PNG质量80 + `bitmap.recycle()`释放内存
+- **线程池**：`getAppListAsync()` 改用 `Executors.newSingleThreadExecutor()` 替代直接new Thread
+- **JSON转义**：`preloadAppList()` 使用 `JSONObject.quote()` 替代手动字符串替换，防止注入
+- **应用过滤**：`AppUtils` 新增 `SYSTEM_APP_WHITELIST` 白名单，过滤非必要系统应用
+
+### 3.2 开关控制对接（P0）
+- **权限修复**：`AndroidManifest.xml` 添加 `WRITE_SETTINGS` 权限声明
+- **音量统一**：`CarControlBridge.toggleMute()` 保存/恢复实际系统音量，而非简单切换
+- **AC参数**：`initializeAcStatus(String acInfoJson)` 改为接受参数传入，不再依赖全局变量
+
+### 3.3 车辆状态前后端交互（P0）
+- **胎压解析**：`parseTirePressureSignal()` 支持 TPMSBean 格式正则解析（实车数据兼容）
+- **真实数据**：`getCarState()` 返回 `LeapMotorCarState` 结构化 JSON
+- **前端健壮性**：所有Android.*调用增加 try-catch包裹、`normalizeAppIcon` 容错、`clearTimeout` 清理防泄漏
+
+---
+
+## 四、CSS规范化清理与布局修复（2026-07-04）
+
+> 日期：2026-07-04
+> 范围：CSS !important清理 + 引入方式修复 + 代码仓库同步
+
+### 4.1 !important清理
+- **清理前**：2247处 `!important`
+- **清理后**：约4处（仅 `base.css` 保留必要的全局覆盖）
+- **影响文件**：`widgets.css`、`components.css`、`pages.css`、`animations.css`、`responsive.css`
+- **方法**：通过提升选择器优先级、重构CSS层级关系，从根本上消除 `!important` 滥用
+
+### 4.2 CSS引入方式修复
+- **问题**：`main.css` 的 `@import` 在 WebView 环境中不生效，导致所有子样式丢失
+- **修复**：`index.html` 改为直接 `<link>` 引入7个CSS模块（base/components/widgets/pages/animations/responsive/theme.css）
+- **效果**：Widget横向布局恢复正常（`display:flex` 生效），天气组件 # 字形布局正确渲染
+
+### 4.3 GitHub→Gitee同步
+- **新增**：`.github/workflows/gitee-sync.yml`
+- **方案**：SSH Deploy Key，权限仅限单个仓库，安全可控
+- **触发条件**：push到main分支时自动同步到Gitee镜像仓库

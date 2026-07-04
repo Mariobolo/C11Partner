@@ -23,6 +23,11 @@
 - ✅ **副屏投屏功能** - SecondaryScreenManager/CarStatusPresentation/副屏实时状态显示/胎压监测
 - ✅ **桌面快捷开关模块** - 4个常用开关+全部按钮，状态与面板同步
 - ✅ **实车测试6个问题修复** - 天气空白/快捷应用不显示/胎压数据/状态栏美化/时钟延迟
+- ✅ **CSS规范化清理** - !important从2247处减少到约4处，仅base.css保留必要全局覆盖
+- ✅ **后端代码审计与12项P0/P1修复** - 图标压缩/线程池/JSON转义/权限/胎压解析/前端健壮性等
+- ✅ **WebViewBridge模块化拆分** - CarControlBridge、AppBridge等子模块完成，职责单一化
+- ✅ **GitHub→Gitee自动同步工作流** - SSH Deploy Key方案，权限仅限单个仓库
+- ✅ **Widget横向布局修复** - CSS引入方式从@import改为index.html直接`<link>`引入7个模块
 
 ### ✅ **v1.1.0 - 核心功能已完成 (2026-06-18)**
 - ✅ **零跑C11日志监控系统** - 实时解析CAN信号（档位、转向灯、车门）
@@ -276,7 +281,7 @@ C11Partner/
 ├── app/
 │   ├── src/main/
 │   │   ├── assets/          # Web 前端资源
-│   │   │   ├── css/         # 样式文件
+│   │   │   ├── css/         # 样式文件（base/components/widgets/pages/animations/responsive/theme.css）
 │   │   │   ├── js/          # JavaScript 文件
 │   │   │   │   ├── index.js # 主逻辑（含CarStateManager、QuickSwitchManager、AutomationManager）
 │   │   │   ├── images/      # 图片资源
@@ -284,8 +289,14 @@ C11Partner/
 │   │   ├── java/            # Android Java 代码
 │   │   │   ├── com.c11partner.desktop/
 │   │   │   │   ├── adb/     # ADB 相关模块
-│   │   │   │   ├── bridge/  # WebView 通信桥
-│   │   │   │   │   └── WebViewBridge.java  # JS接口（50+方法）
+│   │   │   │   ├── bridge/  # WebView 通信桥（模块化拆分）
+│   │   │   │   │   ├── BaseBridge.java          # 公共基类
+│   │   │   │   │   ├── WebViewBridge.java       # 统一入口（50+方法委托）
+│   │   │   │   │   ├── CarControlBridge.java    # 车控功能（50+方法）
+│   │   │   │   │   ├── AppBridge.java            # 应用管理（15方法）
+│   │   │   │   │   ├── WallpaperBridge.java      # 壁纸功能（26方法）
+│   │   │   │   │   ├── MusicBridge.java          # 音乐功能（12方法）
+│   │   │   │   │   └── SystemBridge.java         # 系统设置（11方法）
 │   │   │   │   ├── database/# 数据库模块
 │   │   │   │   ├── service/ # 后台服务
 │   │   │   │   ├── utils/   # 工具类
@@ -427,25 +438,30 @@ chore: 构建/工具链变动
 
 ---
 
-## 📊 项目状态（2026-06-20）
+## 📊 项目状态（2026-07-04）
 
 | 指标 | 状态 |
 |------|------|
 | **版本** | v1.2.0（开发中，~99.9% 完成） |
 | **测试覆盖率** | 68%（31 个测试全部通过） |
-| **文档数量** | 17 份 |
+| **文档数量** | 18 份 |
 | **代码索引** | 633 个函数/方法 |
-| **模块化拆分** | 框架就绪，车控模块 91% 完成 |
-| **CI/CD** | ✅ GitHub Actions 自动构建 |
+| **模块化拆分** | BaseBridge + 6 个子Bridge已完成，WebViewBridge行数大幅减少 |
+| **CSS规范化** | !important 从2247处减少到约4处 |
+| **CI/CD** | ✅ GitHub Actions 自动构建 + Gitee自动同步 |
 
 ### 最新进展
-- ✅ 模块化拆分框架（BaseBridge + 3 个子 Bridge）
+- ✅ CSS规范化清理（!important从2247减少到约4处）
+- ✅ 后端代码审计与12项P0/P1修复
+- ✅ WebViewBridge模块化拆分（CarControlBridge, AppBridge等6个子模块）
+- ✅ GitHub→Gitee自动同步工作流（SSH Deploy Key方案）
+- ✅ Widget横向布局修复（@import→直接link引入）
 - ✅ 测试覆盖率大幅提升（8% → 68%）
-- ✅ 完整文档体系（17 份文档）
+- ✅ 完整文档体系（18 份文档）
 - ✅ 代码索引自动生成工具
 - ✅ API 文档自动生成工具
 - ✅ 提交规范检查工具
 
 ---
 
-*最后更新：2026-06-20*
+*最后更新：2026-07-04*

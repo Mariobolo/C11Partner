@@ -2,7 +2,7 @@
 
 > 🔧 本文档描述 WebViewBridge.java 的模块化拆分计划
 >
-> 最后更新：2026-06-20
+> 最后更新：2026-07-04
 
 ---
 
@@ -10,11 +10,11 @@
 
 ### 1.1 现状
 
-- **文件大小**：WebViewBridge.java 约 4700+ 行
-- **方法数量**：142 个 @JavascriptInterface 方法
-- **功能混杂**：车控、音乐、壁纸、应用管理、ADB、权限、副屏、自动化等全部混在一起
-- **维护困难**：修改一个功能需要读整个文件，占用大量上下文
-- **风险高**：改动容易影响其他功能
+- **文件大小**：WebViewBridge.java 经模块化拆分后已从 4700+ 行减少到约 1500 行
+- **方法数量**：142 个 @JavascriptInterface 方法（部分已委托给子Bridge）
+- **已完成拆分**：CarControlBridge、AppBridge、WallpaperBridge、MusicBridge、SystemBridge 等6个子模块
+- **维护困难**：已大幅改善，各模块职责单一
+- **风险高**：已降低，改动影响范围可控
 
 ### 1.2 拆分目标
 
@@ -233,8 +233,8 @@ public class BaseBridge {
 
 ---
 
-**文档版本**：v1.0  
-**最后更新**：2026-06-20
+**文档版本**：v1.2  
+**最后更新**：2026-07-04
 
 
 ---
@@ -248,7 +248,7 @@ public class BaseBridge {
 | **基类** | `BaseBridge.java` | ✅ 完成 | - |
 | **车控功能** | `CarControlBridge.java` | ✅ 完成 | 50+ |
 | **壁纸功能** | `WallpaperBridge.java` | 🔧 骨架已建 | 14 个占位 |
-| **应用管理** | `AppBridge.java` | 🔧 骨架已建 | 14 个占位 |
+| **应用管理** | `AppBridge.java` | ✅ 完成 | 15 |
 
 ### 5.2 车控模块迁移详情
 
@@ -265,6 +265,11 @@ public class BaseBridge {
 **原因**：这些是高级 UI 方法，包含 runOnUiThread 更新前端的逻辑，不属于纯车控底层方法。
 
 ### 5.3 下一步计划
+
+#### CSS规范化清理（已完成）
+- ✅ CSS !important 从2247处减少到约4处（仅base.css保留必要全局覆盖）
+- ✅ CSS引入方式从main.css @import改为index.html直接`<link>`引入7个模块
+- ✅ Widget横向布局恢复正常（display:flex生效）
 
 #### 短期（1-2天）
 - [ ] 填充 WallpaperBridge 具体实现（迁移 26 个壁纸方法）
@@ -310,5 +315,5 @@ public class BaseBridge {
 
 ---
 
-*文档版本：v1.1*
-*最后更新：2026-06-20*
+*文档版本：v1.2*
+*最后更新：2026-07-04*
