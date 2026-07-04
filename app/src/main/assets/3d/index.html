@@ -6,19 +6,69 @@
   <meta http-equiv="pragma" content="no-cache">
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
-  <title>零跑C16</title>
+  <title>零跑C16 - 资源内联版本（file协议测试）</title>
   <meta name="description" content="一触即发">
   
   <script>
     baseURL = "";
   </script>
   
-  <script type="module" crossorigin="" src="js/main.js"></script>
-  <script type="module" crossorigin="" src="js/interaction.js"></script>
-  <link rel="modulepreload" crossorigin="" href="assets/vendor.js">
-  <link rel="stylesheet" crossorigin="" href="css/style.css">
+  <!-- SystemJS 模块加载器 -->
+  <script src="js/vendor/system.min.js"></script>
+  
+  <!-- 配置 SystemJS 使用 script 标签加载（兼容 file 协议） -->
+  <script>
+    System.config({
+      scriptLoad: true
+    });
+  </script>
+  
+  <!-- 交互脚本（普通脚本） -->
+  <script src="js/interaction.js"></script>
+  
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="app"></div>
+  
+  <div id="debug-info" style="position: fixed; top: 10px; left: 10px; color: white; font-size: 12px; z-index: 9999; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px;">
+    <div>调试信息：</div>
+    <div id="debug-status">加载中...</div>
+  </div>
+  
+  <script>
+    // 调试输出
+    function setStatus(msg) {
+      document.getElementById('debug-status').innerHTML = msg;
+      console.log('[调试]', msg);
+    }
+    
+    setStatus('开始加载模块...');
+    
+    // 用 SystemJS 加载打包后的 System 格式模块（含内联资源）
+    System.import('./js/bundle-system-inline.js').then(function(module) {
+      setStatus('✅ 模块加载成功！');
+      console.log('模块导出:', module);
+      
+      // 检查全局对象
+      setTimeout(function() {
+        if (window.i && window.v) {
+          setStatus('✅ 3D车模初始化成功！window.i 和 window.v 已就绪');
+        } else {
+          setStatus('⚠️ 模块加载成功，但全局对象未就绪');
+        }
+      }, 2000);
+    }).catch(function(err) {
+      setStatus('❌ 模块加载失败: ' + err.message);
+      console.error('SystemJS 加载失败:', err);
+    });
+    
+    // 监听资源加载
+    var originalFetch = window.fetch;
+    window.fetch = function() {
+      console.log('[Fetch请求]', arguments[0]);
+      return originalFetch.apply(this, arguments);
+    };
+  </script>
 </body>
 </html>

@@ -104,7 +104,7 @@ const WallpaperManager = (function() {
                 break;
             case TYPE_IFRAME:
                 // iframe壁纸
-                applyIframeWallpaper(wallpaperUrl || '3d/index.html');
+                applyIframeWallpaper('3d/index.html');
                 break;
             case TYPE_DEFAULT:
             case TYPE_BING:
@@ -192,8 +192,8 @@ const WallpaperManager = (function() {
 
 
     /**
-     * 应用iframe壁纸（预留功能，暂时禁用）
-     * 注意：当前版本暂不启用iframe壁纸，会自动降级为默认图片壁纸
+     * 应用iframe壁纸
+     * 注意：当前版本启用iframe壁纸
      */
     function applyIframeWallpaper(url) {
         console.log('应用iframe壁纸:', url);

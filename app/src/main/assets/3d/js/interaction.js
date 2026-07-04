@@ -387,7 +387,4 @@ window.getCurrentCameraAngles = function() {
   return interactionController.getCurrentCameraAngles();
 };
 
-// 暴露 InteractionController 到全局，供父窗口调用
-window.interactionController = interactionController;
-
 console.log('=== Interaction.js 加载完成 ===');
