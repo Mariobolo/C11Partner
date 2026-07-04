@@ -4240,16 +4240,16 @@
 @media (prefers-reduced-motion: reduce) {
     /* 禁用所有动画 */
     *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
+        scroll-behavior: auto;
     }
     
     /* 保留必要的状态切换动画 */
     .quick-switch-item.active,
     .settings-tab.active {
-        animation: none !important;
+        animation: none;
     }
     
     /* 禁用呼吸、浮动、光泽动画 */
@@ -4258,8 +4258,8 @@
     .quick-switches-widget,
     .dock-btn.ac-btn.active,
     .settings-tab.active {
-        animation: none !important;
-        animation-play-state: paused !important;
+        animation: none;
+        animation-play-state: paused;
     }
     
     /* 禁用光泽扫过效果 */
@@ -4267,7 +4267,7 @@
     .weather-shimmer,
     .switch-shimmer,
     .settings-tab::after {
-        display: none !important;
+        display: none;
     }
 }
 
@@ -4280,8 +4280,8 @@
     .quick-switch-item,
     .dock-btn,
     .settings-tab {
-        border-width: 2px !important;
-        border-color: rgba(255, 255, 255, 0.5) !important;
+        border-width: 2px;
+        border-color: rgba(255, 255, 255, 0.5);
     }
     
     /* 增强文字对比度 */
@@ -4289,38 +4289,38 @@
     .temperature,
     .condition,
     .quick-switch-name {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        text-shadow: 0 0 0 #ffffff !important;
+        color: #ffffff;
+        -webkit-text-fill-color: #ffffff;
+        text-shadow: 0 0 0 #ffffff;
     }
     
     .text-secondary {
-        color: #e0e0e0 !important;
+        color: #e0e0e0;
     }
     
     /* 增强按钮对比度 */
     .btn-primary,
     .quick-switch-item.active,
     .settings-tab.active {
-        background: var(--primary-color) !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        font-weight: 700 !important;
-        border-color: #ffffff !important;
+        background: var(--primary-color);
+        color: #000000;
+        -webkit-text-fill-color: #000000;
+        font-weight: 700;
+        border-color: #ffffff;
     }
     
     /* 移除半透明效果 */
     .widget,
     .card {
-        background: rgba(20, 20, 26, 0.95) !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
+        background: rgba(20, 20, 26, 0.95);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
     
     /* 增强阴影对比度 */
     .widget,
     .btn {
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
     }
 }
 
@@ -4330,11 +4330,11 @@
 .dock-btn:focus-visible,
 .settings-tab:focus-visible,
 .btn:focus-visible {
-    outline: 3px solid var(--primary-color) !important;
-    outline-offset: 3px !important;
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
     box-shadow: 
         0 0 0 6px rgba(var(--primary-color-rgb), 0.3),
-        var(--shadow-level-3) !important;
+        var(--shadow-level-3);
 }
 
 /* 跳过链接 - 屏幕阅读器支持 */
@@ -5546,11 +5546,11 @@
 .settings-panel button:focus-visible,
 .settings-panel [role="button"]:focus-visible,
 .settings-panel [tabindex]:focus-visible {
-    outline: none !important;
+    outline: none;
     box-shadow: 
         0 0 0 3px rgba(0, 0, 0, 0.8),
         0 0 0 6px var(--primary-color),
-        0 0 20px rgba(var(--primary-color-rgb), 0.5) !important;
+        0 0 20px rgba(var(--primary-color-rgb), 0.5);
     border-radius: 8px;
     position: relative;
     z-index: 100;
@@ -5584,15 +5584,15 @@
     .setting-desc,
     .setting-item::before,
     .setting-icon::before {
-        animation: none !important;
-        transition: none !important;
+        animation: none;
+        transition: none;
     }
     
     .setting-item:hover,
     .setting-item:hover .setting-icon,
     .setting-item:hover .setting-title,
     .setting-item:hover .setting-desc {
-        transform: none !important;
+        transform: none;
     }
 }
 
@@ -5613,9 +5613,9 @@
 /* ARIA状态视觉反馈 */
 .setting-item[aria-disabled="true"],
 .setting-item[aria-disabled="true"] * {
-    opacity: 0.5 !important;
-    cursor: not-allowed !important;
-    pointer-events: none !important;
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .setting-item[aria-disabled="true"]::after {

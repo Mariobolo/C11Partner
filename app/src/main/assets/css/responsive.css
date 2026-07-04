@@ -2,661 +2,545 @@
    Responsive - 响应式断点
    适配不同分辨率和屏幕尺寸
    ============================================ */
-
 /* ========== 大屏适配 (1920px+) ========== */
 @media screen and (min-width: 1920px) {
-    :root {
-        --widget-height: 120px;
-        --status-bar-height: 56px;
-        --dock-height: 88px;
-        --font-size-4xl: 160px;
-    }
-
-    .time-text#timeDisplay {
-        font-size: 160px;
-    }
-
-    .card-view {
-        bottom: 100px;
-        left: 60px;
-        right: 60px;
-    }
-
-    .widget {
-        min-width: 200px;
-    }
+        :root {
+            --widget-height: 120px;
+            --status-bar-height: 56px;
+            --dock-height: 88px;
+            --font-size-4xl: 160px;
+        }
+        .time-text#timeDisplay {
+            font-size: 160px;
+        }
+        .card-view {
+            bottom: 100px;
+            left: 60px;
+            right: 60px;
+        }
+        .widget {
+            min-width: 200px;
+        }
 }
-
 /* ========== 标准屏 (1280px - 1919px) ========== */
 @media screen and (max-width: 1919px) and (min-width: 1280px) {
     /* 默认样式，无需额外调整 */
 }
-
 /* ========== 中小屏 (1024px - 1279px) ========== */
 @media screen and (max-width: 1279px) and (min-width: 1024px) {
-    :root {
-        --widget-height: 100px;
-        --status-bar-height: 48px;
-        --dock-height: 72px;
-        --font-size-4xl: 120px;
-        --font-size-3xl: 40px;
-        --font-size-2xl: 24px;
-    }
-
-    .time-text#timeDisplay {
-        font-size: 120px;
-        letter-spacing: -3px;
-    }
-
-    .date-text {
-        font-size: 24px;
-    }
-
-    .lunar-calendar-text {
-        font-size: 14px;
-    }
-
-    .card-view {
-        bottom: 82px;
-        left: 40px;
-        right: 40px;
-    }
-
-    .widget {
-        min-width: 160px;
-        padding: 14px 18px;
-    }
-
-    .top-status-bar {
-        padding: 0 24px;
-    }
-
-    .status-bar {
-        padding: 0 24px;
-    }
-
-    .center-controls {
-        padding: 6px 16px;
-    }
-
-    .air-text {
-        font-size: 18px;
-        min-width: 40px;
-    }
-
-    .control-icon {
-        width: 28px;
-        height: 28px;
-    }
-
-    .ac-control,
+        :root {
+            --widget-height: 100px;
+            --status-bar-height: 48px;
+            --dock-height: 72px;
+            --font-size-4xl: 120px;
+            --font-size-3xl: 40px;
+            --font-size-2xl: 24px;
+        }
+        .time-text#timeDisplay {
+            font-size: 120px;
+            letter-spacing: -3px;
+        }
+        .date-text {
+            font-size: 24px;
+        }
+        .lunar-calendar-text {
+            font-size: 14px;
+        }
+        .card-view {
+            bottom: 82px;
+            left: 40px;
+            right: 40px;
+        }
+        .widget {
+            min-width: 160px;
+            padding: 14px 18px;
+        }
+        .top-status-bar {
+            padding: 0 24px;
+        }
+        .status-bar {
+            padding: 0 24px;
+        }
+        .center-controls {
+            padding: 6px 16px;
+        }
+        .air-text {
+            font-size: 18px;
+            min-width: 40px;
+        }
+        .control-icon {
+            width: 28px;
+            height: 28px;
+        }
+        .ac-control,
     .ac-hcs {
-        width: 24px;
-        height: 24px;
-        margin: 0 6px;
-    }
-
-    .wind-display {
-        width: 28px;
-        height: 28px;
-        margin: 0 6px;
-    }
-
+            width: 24px;
+            height: 24px;
+            margin: 0 6px;
+        }
+        .wind-display {
+            width: 28px;
+            height: 28px;
+            margin: 0 6px;
+        }
     /* 音乐组件 */
-    .music-widget {
-        min-width: 320px;
-    }
-
-    .vinyl-record-container {
-        width: 56px;
-        height: 56px;
-    }
-
-    .control-buttons button {
-        width: 36px;
-        height: 36px;
-    }
-
-    .control-buttons .btn-play {
-        width: 44px;
-        height: 44px;
-    }
-
+        .music-widget {
+            min-width: 320px;
+        }
+        .vinyl-record-container {
+            width: 56px;
+            height: 56px;
+        }
+        .control-buttons button {
+            width: 36px;
+            height: 36px;
+        }
+        .control-buttons .btn-play {
+            width: 44px;
+            height: 44px;
+        }
     /* 天气组件 */
-    .weather-widget {
-        min-width: 200px;
-    }
-
-    .temperature {
-        font-size: 40px;
-    }
-
-    .weather-icon {
-        width: 48px;
-        height: 48px;
-    }
-
+        .weather-widget {
+            min-width: 200px;
+        }
+        .temperature {
+            font-size: 40px;
+        }
+        .weather-icon {
+            width: 48px;
+            height: 48px;
+        }
     /* 弹窗尺寸 */
-    .settings-modal {
-        width: 640px;
-    }
-
-    .apps-modal {
-        width: 720px;
-    }
-
-    .quick-switch-panel {
-        width: 540px;
-    }
-
-    .automation-panel {
-        width: 460px;
-    }
+        .settings-modal {
+            width: 640px;
+        }
+        .apps-modal {
+            width: 720px;
+        }
+        .quick-switch-panel {
+            width: 540px;
+        }
+        .automation-panel {
+            width: 460px;
+        }
 }
-
 /* ========== 小屏 (768px - 1023px) ========== */
 @media screen and (max-width: 1023px) and (min-width: 768px) {
-    :root {
-        --widget-height: 90px;
-        --status-bar-height: 44px;
-        --dock-height: 64px;
-        --font-size-4xl: 100px;
-        --font-size-3xl: 36px;
-        --font-size-2xl: 20px;
-        --font-size-xl: 18px;
-    }
-
-    .time-text#timeDisplay {
-        font-size: 100px;
-        letter-spacing: -2px;
-    }
-
-    .date-text {
-        font-size: 20px;
-    }
-
-    .lunar-calendar-text {
-        font-size: 13px;
-    }
-
-    .card-view {
-        bottom: 74px;
-        left: 30px;
-        right: 30px;
-    }
-
-    .widget {
-        min-width: 140px;
-        padding: 12px 16px;
-        border-radius: 16px;
-    }
-
-    .top-status-bar {
-        padding: 0 20px;
-    }
-
-    .car-status-indicators {
-        padding: 5px 12px;
-        gap: 8px;
-    }
-
-    .gear-indicator {
-        font-size: 16px;
-        min-width: 32px;
-    }
-
-    .status-indicator {
-        font-size: 12px;
-        min-width: 24px;
-        height: 24px;
-    }
-
-    .status-bar {
-        padding: 0 20px;
-    }
-
-    .left-buttons,
+        :root {
+            --widget-height: 90px;
+            --status-bar-height: 44px;
+            --dock-height: 64px;
+            --font-size-4xl: 100px;
+            --font-size-3xl: 36px;
+            --font-size-2xl: 20px;
+            --font-size-xl: 18px;
+        }
+        .time-text#timeDisplay {
+            font-size: 100px;
+            letter-spacing: -2px;
+        }
+        .date-text {
+            font-size: 20px;
+        }
+        .lunar-calendar-text {
+            font-size: 13px;
+        }
+        .card-view {
+            bottom: 74px;
+            left: 30px;
+            right: 30px;
+        }
+        .widget {
+            min-width: 140px;
+            padding: 12px 16px;
+            border-radius: 16px;
+        }
+        .top-status-bar {
+            padding: 0 20px;
+        }
+        .car-status-indicators {
+            padding: 5px 12px;
+            gap: 8px;
+        }
+        .gear-indicator {
+            font-size: 16px;
+            min-width: 32px;
+        }
+        .status-indicator {
+            font-size: 12px;
+            min-width: 24px;
+            height: 24px;
+        }
+        .status-bar {
+            padding: 0 20px;
+        }
+        .left-buttons,
     .right-buttons {
-        gap: 12px;
-    }
-
-    .center-controls {
-        padding: 6px 14px;
-        gap: 4px;
-    }
-
-    .air-text {
-        font-size: 16px;
-        min-width: 36px;
-        margin: 0 6px;
-    }
-
-    .control-icon {
-        width: 26px;
-        height: 26px;
-    }
-
-    .ac-control,
+            gap: 12px;
+        }
+        .center-controls {
+            padding: 6px 14px;
+            gap: 4px;
+        }
+        .air-text {
+            font-size: 16px;
+            min-width: 36px;
+            margin: 0 6px;
+        }
+        .control-icon {
+            width: 26px;
+            height: 26px;
+        }
+        .ac-control,
     .ac-hcs {
-        width: 22px;
-        height: 22px;
-        margin: 0 5px;
-    }
-
-    .wind-display {
-        width: 24px;
-        height: 24px;
-        margin: 0 5px;
-    }
-
+            width: 22px;
+            height: 22px;
+            margin: 0 5px;
+        }
+        .wind-display {
+            width: 24px;
+            height: 24px;
+            margin: 0 5px;
+        }
     /* 音乐组件 */
-    .music-widget {
-        min-width: 280px;
-    }
-
-    .vinyl-record-container {
-        width: 50px;
-        height: 50px;
-        margin-right: 12px;
-    }
-
-    .music-name {
-        font-size: 14px;
-        width: 160px;
-    }
-
-    .control-buttons {
-        gap: 10px;
-    }
-
-    .control-buttons button {
-        width: 32px;
-        height: 32px;
-        margin-right: 8px;
-    }
-
-    .control-buttons button:last-child {
-        margin-right: 0;
-    }
-
-    .control-buttons .btn-play {
-        width: 40px;
-        height: 40px;
-    }
-
-    .control-buttons button img {
-        width: 16px;
-        height: 16px;
-    }
-
-    .control-buttons .btn-play img {
-        width: 18px;
-        height: 18px;
-    }
-
+        .music-widget {
+            min-width: 280px;
+        }
+        .vinyl-record-container {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+        }
+        .music-name {
+            font-size: 14px;
+            width: 160px;
+        }
+        .control-buttons {
+            gap: 10px;
+        }
+        .control-buttons button {
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+        }
+        .control-buttons button:last-child {
+            margin-right: 0;
+        }
+        .control-buttons .btn-play {
+            width: 40px;
+            height: 40px;
+        }
+        .control-buttons button img {
+            width: 16px;
+            height: 16px;
+        }
+        .control-buttons .btn-play img {
+            width: 18px;
+            height: 18px;
+        }
     /* 天气组件 */
-    .weather-widget {
-        min-width: 180px;
-        padding: 16px 20px;
-        gap: 12px;
-    }
-
-    .temperature {
-        font-size: 36px;
-    }
-
-    .condition {
-        font-size: 14px;
-    }
-
-    .weather-icon {
-        width: 44px;
-        height: 44px;
-    }
-
+        .weather-widget {
+            min-width: 180px;
+            padding: 16px 20px;
+            gap: 12px;
+        }
+        .temperature {
+            font-size: 36px;
+        }
+        .condition {
+            font-size: 14px;
+        }
+        .weather-icon {
+            width: 44px;
+            height: 44px;
+        }
     /* 快捷应用 */
-    .quick-apps-widget {
-        min-width: 260px;
-    }
-
-    .quick-app-icon {
-        width: 38px;
-        height: 38px;
-    }
-
-    .quick-app-name {
-        font-size: 11px;
-        max-width: 50px;
-    }
-
+        .quick-apps-widget {
+            min-width: 260px;
+        }
+        .quick-app-icon {
+            width: 38px;
+            height: 38px;
+        }
+        .quick-app-name {
+            font-size: 11px;
+            max-width: 50px;
+        }
     /* 快捷开关 */
-    .quick-switches-widget {
-        min-width: 240px;
-    }
-
-    .quick-switch-icon {
-        width: 34px;
-        height: 34px;
-        font-size: 16px;
-    }
-
-    .quick-switch-name {
-        font-size: 10px;
-    }
-
+        .quick-switches-widget {
+            min-width: 240px;
+        }
+        .quick-switch-icon {
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+        }
+        .quick-switch-name {
+            font-size: 10px;
+        }
     /* 地图组件 */
-    .map-widget {
-        min-width: 180px;
-    }
-
-    .nav-icon {
-        width: 28px;
-        height: 28px;
-    }
-
-    .nav-text {
-        font-size: 11px;
-    }
-
+        .map-widget {
+            min-width: 180px;
+        }
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+        }
+        .nav-text {
+            font-size: 11px;
+        }
     /* 弹窗尺寸 */
-    .settings-modal {
-        width: 560px;
-    }
-
-    .apps-modal {
-        width: 640px;
-    }
-
-    .quick-switch-panel {
-        width: 480px;
-    }
-
-    .automation-panel {
-        width: 420px;
-    }
-
-    .switch-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .scene-mode-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+        .settings-modal {
+            width: 560px;
+        }
+        .apps-modal {
+            width: 640px;
+        }
+        .quick-switch-panel {
+            width: 480px;
+        }
+        .automation-panel {
+            width: 420px;
+        }
+        .switch-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .scene-mode-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
 }
-
 /* ========== 超小屏 (< 768px) ========== */
 @media screen and (max-width: 767px) {
-    :root {
-        --widget-height: 80px;
-        --status-bar-height: 40px;
-        --dock-height: 56px;
-        --font-size-4xl: 80px;
-        --font-size-3xl: 32px;
-        --font-size-2xl: 18px;
-        --font-size-xl: 16px;
-    }
-
-    .time-text#timeDisplay {
-        font-size: 80px;
-        letter-spacing: -1px;
-    }
-
-    .date-text {
-        font-size: 18px;
-    }
-
-    .lunar-calendar-text {
-        font-size: 12px;
-    }
-
-    .card-view {
-        bottom: 66px;
-        left: 20px;
-        right: 20px;
-    }
-
-    .widget {
-        min-width: 120px;
-        padding: 10px 14px;
-        border-radius: 14px;
-    }
-
-    .top-status-bar {
-        padding: 0 16px;
-    }
-
-    .car-status-indicators {
-        padding: 4px 10px;
-        gap: 6px;
-    }
-
-    .gear-indicator {
-        font-size: 14px;
-        min-width: 28px;
-    }
-
-    .status-indicator {
-        font-size: 11px;
-        min-width: 22px;
-        height: 22px;
-    }
-
-    .status-bar {
-        padding: 0 16px;
-    }
-
-    .left-buttons,
+        :root {
+            --widget-height: 80px;
+            --status-bar-height: 40px;
+            --dock-height: 56px;
+            --font-size-4xl: 80px;
+            --font-size-3xl: 32px;
+            --font-size-2xl: 18px;
+            --font-size-xl: 16px;
+        }
+        .time-text#timeDisplay {
+            font-size: 80px;
+            letter-spacing: -1px;
+        }
+        .date-text {
+            font-size: 18px;
+        }
+        .lunar-calendar-text {
+            font-size: 12px;
+        }
+        .card-view {
+            bottom: 66px;
+            left: 20px;
+            right: 20px;
+        }
+        .widget {
+            min-width: 120px;
+            padding: 10px 14px;
+            border-radius: 14px;
+        }
+        .top-status-bar {
+            padding: 0 16px;
+        }
+        .car-status-indicators {
+            padding: 4px 10px;
+            gap: 6px;
+        }
+        .gear-indicator {
+            font-size: 14px;
+            min-width: 28px;
+        }
+        .status-indicator {
+            font-size: 11px;
+            min-width: 22px;
+            height: 22px;
+        }
+        .status-bar {
+            padding: 0 16px;
+        }
+        .left-buttons,
     .right-buttons {
-        gap: 10px;
-    }
-
-    .center-controls {
-        padding: 5px 12px;
-        gap: 2px;
-    }
-
-    .air-text {
-        font-size: 14px;
-        min-width: 32px;
-        margin: 0 4px;
-    }
-
-    .control-icon {
-        width: 22px;
-        height: 22px;
-    }
-
-    .ac-control,
+            gap: 10px;
+        }
+        .center-controls {
+            padding: 5px 12px;
+            gap: 2px;
+        }
+        .air-text {
+            font-size: 14px;
+            min-width: 32px;
+            margin: 0 4px;
+        }
+        .control-icon {
+            width: 22px;
+            height: 22px;
+        }
+        .ac-control,
     .ac-hcs {
-        width: 20px;
-        height: 20px;
-        margin: 0 4px;
-    }
-
-    .wind-display {
-        width: 22px;
-        height: 22px;
-        margin: 0 4px;
-    }
-
+            width: 20px;
+            height: 20px;
+            margin: 0 4px;
+        }
+        .wind-display {
+            width: 22px;
+            height: 22px;
+            margin: 0 4px;
+        }
     /* 音乐组件 */
-    .music-widget {
-        min-width: 240px;
-    }
-
-    .vinyl-record-container {
-        width: 44px;
-        height: 44px;
-        margin-right: 10px;
-    }
-
-    .music-name {
-        font-size: 13px;
-        width: 120px;
-    }
-
-    .control-buttons {
-        gap: 8px;
-        margin-top: 6px;
-    }
-
-    .control-buttons button {
-        width: 28px;
-        height: 28px;
-        margin-right: 6px;
-    }
-
-    .control-buttons button:last-child {
-        margin-right: 0;
-    }
-
-    .control-buttons .btn-play {
-        width: 36px;
-        height: 36px;
-    }
-
-    .control-buttons button img {
-        width: 14px;
-        height: 14px;
-    }
-
-    .control-buttons .btn-play img {
-        width: 16px;
-        height: 16px;
-    }
-
+        .music-widget {
+            min-width: 240px;
+        }
+        .vinyl-record-container {
+            width: 44px;
+            height: 44px;
+            margin-right: 10px;
+        }
+        .music-name {
+            font-size: 13px;
+            width: 120px;
+        }
+        .control-buttons {
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .control-buttons button {
+            width: 28px;
+            height: 28px;
+            margin-right: 6px;
+        }
+        .control-buttons button:last-child {
+            margin-right: 0;
+        }
+        .control-buttons .btn-play {
+            width: 36px;
+            height: 36px;
+        }
+        .control-buttons button img {
+            width: 14px;
+            height: 14px;
+        }
+        .control-buttons .btn-play img {
+            width: 16px;
+            height: 16px;
+        }
     /* 天气组件 */
-    .weather-widget {
-        min-width: 160px;
-        padding: 14px 16px;
-        gap: 10px;
-    }
-
-    .temperature {
-        font-size: 32px;
-    }
-
-    .condition {
-        font-size: 13px;
-    }
-
-    .weather-icon {
-        width: 40px;
-        height: 40px;
-    }
-
+        .weather-widget {
+            min-width: 160px;
+            padding: 14px 16px;
+            gap: 10px;
+        }
+        .temperature {
+            font-size: 32px;
+        }
+        .condition {
+            font-size: 13px;
+        }
+        .weather-icon {
+            width: 40px;
+            height: 40px;
+        }
     /* 弹窗尺寸 */
-    .settings-modal,
+        .settings-modal,
     .apps-modal,
     .quick-switch-panel,
     .automation-panel {
-        width: 95vw;
-        max-width: 95vw;
-    }
-
-    .switch-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .drive-mode-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .scene-mode-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .apps-grid {
-        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-        gap: 10px;
-        padding: 12px;
-    }
-
-    .app-item .app-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    .app-item .app-name {
-        font-size: 10px;
-        max-width: 60px;
-    }
+            width: 95vw;
+            max-width: 95vw;
+        }
+        .switch-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .drive-mode-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .scene-mode-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .apps-grid {
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 10px;
+            padding: 12px;
+        }
+        .app-item .app-icon {
+            width: 40px;
+            height: 40px;
+        }
+        .app-item .app-name {
+            font-size: 10px;
+            max-width: 60px;
+        }
 }
-
 /* ========== 横屏/竖屏适配 ========== */
 @media screen and (orientation: portrait) {
-    .layout-left {
-        top: 30%;
-    }
-
-    .card-view {
-        bottom: 100px;
-    }
+        .layout-left {
+            top: 30%;
+        }
+        .card-view {
+            bottom: 100px;
+        }
 }
-
 /* ========== 高DPI屏幕适配 ========== */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     /* 高DPI屏幕优化 */
-    .widget,
+        .widget,
     .card,
     .modal-content {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 }
-
 /* ========== 触控设备优化 ========== */
 /* ========== 超宽屏优化 (2560px+) ========== */
 @media screen and (min-width: 2560px) {
-    :root {
-        --widget-height: 140px;
-        --status-bar-height: 64px;
-        --dock-height: 100px;
-        --font-size-4xl: 192px;
-    }
-    .time-text#timeDisplay {
-        font-size: 192px;
-    }
-    .card-view {
-        bottom: 120px;
-        left: 80px;
-        right: 80px;
-    }
-    .widget {
-        min-width: 240px;
-        padding: 24px 28px;
-    }
-    .music-widget {
-        min-width: 440px;
-    }
+        :root {
+            --widget-height: 140px;
+            --status-bar-height: 64px;
+            --dock-height: 100px;
+            --font-size-4xl: 192px;
+        }
+        .time-text#timeDisplay {
+            font-size: 192px;
+        }
+        .card-view {
+            bottom: 120px;
+            left: 80px;
+            right: 80px;
+        }
+        .widget {
+            min-width: 240px;
+            padding: 24px 28px;
+        }
+        .music-widget {
+            min-width: 440px;
+        }
 }
-
 /* ========== 屏幕高宽比特殊处理 ========== */
 /* 超宽屏 (21:9) */
+
 @media screen and (min-aspect-ratio: 21/9) {
-    .layout-left {
-        left: 40%;
-    }
-    .card-view {
-        left: 80px;
-        right: 80px;
-    }
+        .layout-left {
+            left: 40%;
+        }
+        .card-view {
+            left: 80px;
+            right: 80px;
+        }
 }
-
 /* 宽屏 (16:9 ~ 21:9) */
+
 @media screen and (min-aspect-ratio: 16/9) and (max-aspect-ratio: 21/9) {
-    .layout-left {
-        left: 45%;
-    }
+        .layout-left {
+            left: 45%;
+        }
 }
-
 /* 方屏/竖屏 (4:3 ~ 16:9) */
-@media screen and (max-aspect-ratio: 16/9) {
-    .layout-left {
-        left: 50%;
-    }
-}
 
+@media screen and (max-aspect-ratio: 16/9) {
+        .layout-left {
+            left: 50%;
+        }
+}
 /* ========== 安全区域适配 ========== */
 @supports (padding: max(0px)) {
     .top-status-bar {
@@ -669,54 +553,52 @@
         padding-bottom: max(0px, env(safe-area-inset-bottom));
     }
 }
-
 /* ========== 触控设备优化 - 增强版 ========== */
 @media (hover: none) and (pointer: coarse) {
     /* 触控设备禁用悬停效果 */
-    .widget:hover,
+        .widget:hover,
     .btn:hover,
     .app-item:hover,
     .switch-item:hover,
     .nav-button:hover,
     .quick-app-item:hover,
     .quick-switch-item:hover {
-        transform: none;
-        box-shadow: var(--shadow-lg), var(--shadow-inner);
-    }
+            transform: none;
+            box-shadow: var(--shadow-lg), var(--shadow-inner);
+        }
     /* 增大触控目标 - 增强 */
-    .control-icon,
+        .control-icon,
     .ac-control,
     .ac-hcs {
-        min-width: 48px;
-        min-height: 48px;
-    }
-    .quick-app-icon,
+            min-width: 48px;
+            min-height: 48px;
+        }
+        .quick-app-icon,
     .quick-switch-icon {
-        min-width: 52px;
-        min-height: 52px;
-    }
+            min-width: 52px;
+            min-height: 52px;
+        }
     /* 增加点击区域外边距 */
-    .control-buttons button {
-        min-width: 44px;
-        min-height: 44px;
-    }
-    .control-buttons .btn-play {
-        min-width: 52px;
-        min-height: 52px;
-    }
+        .control-buttons button {
+            min-width: 44px;
+            min-height: 44px;
+        }
+        .control-buttons .btn-play {
+            min-width: 52px;
+            min-height: 52px;
+        }
 }
-
 /* ========== 减少动画偏好适配 (无障碍) ========== */
 @media (prefers-reduced-motion: reduce) {
-    *,
+        *,
     *::before,
     *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-    .animate-spin,
+            animation-duration: 0.01ms;
+            animation-iteration-count: 1;
+            transition-duration: 0.01ms;
+            scroll-behavior: auto;
+        }
+        .animate-spin,
     .animate-pulse,
     .animate-blink,
     .animate-breathe,
@@ -724,135 +606,113 @@
     .animate-float,
     .animate-float-slow,
     .animate-glow {
-        animation: none !important;
-    }
+            animation: none;
+        }
 }
-
 /* ========== 高对比度模式适配 ========== */
 @media (prefers-contrast: high) {
-    :root {
-        --text-primary: #ffffff;
-        --text-secondary: #e0e0e0;
-        --border-color: rgba(255, 255, 255, 0.3);
-    }
-    .widget {
-        border-width: 2px;
-    }
-    .quick-app-icon,
+        :root {
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --border-color: rgba(255, 255, 255, 0.3);
+        }
+        .widget {
+            border-width: 2px;
+        }
+        .quick-app-icon,
     .quick-switch-icon {
-        outline: 2px solid var(--border-color);
-    }
+            outline: 2px solid var(--border-color);
+        }
 }
-
 /* ========== 暗色模式增强 ========== */
 @media (prefers-color-scheme: dark) {
     /* 确保暗色模式下对比度足够 */
-    :root {
-        --text-primary: rgba(255, 255, 255, 0.95);
-        --text-secondary: rgba(255, 255, 255, 0.75);
-    }
+        :root {
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.75);
+        }
 }
-
-
 /* ============================================
    【新增】响应式优化 - 增强版
    更多断点适配和精细调整
    ============================================ */
-
 /* ========== 超高清屏优化 (3440px+ 带鱼屏) ========== */
 @media screen and (min-width: 3440px) {
-    :root {
-        --widget-height: 160px;
-        --status-bar-height: 72px;
-        --dock-height: 112px;
-        --font-size-4xl: 220px;
-        --font-size-3xl: 56px;
-        --font-size-2xl: 32px;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 220px;
-    }
-    
-    .card-view {
-        bottom: 140px;
-        left: 100px;
-        right: 100px;
-    }
-    
-    .widget {
-        min-width: 280px;
-        padding: 28px 32px;
-    }
-    
-    .music-widget {
-        min-width: 520px;
-    }
-    
-    .weather-widget {
-        min-width: 280px;
-    }
+        :root {
+            --widget-height: 160px;
+            --status-bar-height: 72px;
+            --dock-height: 112px;
+            --font-size-4xl: 220px;
+            --font-size-3xl: 56px;
+            --font-size-2xl: 32px;
+        }
+        .time-text#timeDisplay {
+            font-size: 220px;
+        }
+        .card-view {
+            bottom: 140px;
+            left: 100px;
+            right: 100px;
+        }
+        .widget {
+            min-width: 280px;
+            padding: 28px 32px;
+        }
+        .music-widget {
+            min-width: 520px;
+        }
+        .weather-widget {
+            min-width: 280px;
+        }
 }
-
 /* ========== 中等超宽屏 (2560px - 3439px) ========== */
 @media screen and (min-width: 2560px) and (max-width: 3439px) {
-    .apps-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 16px;
-    }
-    
-    .app-item .app-icon {
-        width: 56px;
-        height: 56px;
-    }
-    
-    .switch-grid {
-        grid-template-columns: repeat(5, 1fr);
-    }
+        .apps-grid {
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 16px;
+        }
+        .app-item .app-icon {
+            width: 56px;
+            height: 56px;
+        }
+        .switch-grid {
+            grid-template-columns: repeat(5, 1fr);
+        }
 }
-
 /* ========== 车机专用分辨率优化 (1920x720 等特殊比例) ========== */
 @media screen and (max-height: 800px) and (min-width: 1280px) {
-    :root {
-        --widget-height: 95px;
-        --status-bar-height: 44px;
-        --dock-height: 70px;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 110px;
-    }
-    
-    .card-view {
-        bottom: 80px;
-    }
-    
-    .widget {
-        padding: 14px 18px;
-    }
+        :root {
+            --widget-height: 95px;
+            --status-bar-height: 44px;
+            --dock-height: 70px;
+        }
+        .time-text#timeDisplay {
+            font-size: 110px;
+        }
+        .card-view {
+            bottom: 80px;
+        }
+        .widget {
+            padding: 14px 18px;
+        }
 }
-
 /* ========== 垂直方向空间优化 ========== */
 @media screen and (max-height: 720px) {
-    :root {
-        --widget-height: 85px;
-        --status-bar-height: 40px;
-        --dock-height: 60px;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 90px;
-    }
-    
-    .date-text {
-        font-size: 18px;
-    }
-    
-    .card-view {
-        bottom: 70px;
-    }
+        :root {
+            --widget-height: 85px;
+            --status-bar-height: 40px;
+            --dock-height: 60px;
+        }
+        .time-text#timeDisplay {
+            font-size: 90px;
+        }
+        .date-text {
+            font-size: 18px;
+        }
+        .card-view {
+            bottom: 70px;
+        }
 }
-
 /* ============================================
    【优化点3】响应式布局优化 - 增强版
    容器查询、弹性布局优化、动态间距
@@ -862,11 +722,13 @@
     container-type: inline-size;
     container-name: widgets;
 }
+
 @container widgets (min-width: 400px) {
     .widget {
         padding: 20px 24px;
     }
 }
+
 @container widgets (max-width: 399px) {
     .widget {
         padding: 14px 18px;
@@ -883,6 +745,7 @@
     font-size: clamp(12px, 2vw, 16px);
     line-height: clamp(1.4, 2vw, 1.6);
 }
+
 .title-responsive {
     font-size: clamp(16px, 3vw, 24px);
 }
@@ -899,169 +762,133 @@
 }
 /* ========== 触控目标大小优化 ========== */
 @media (pointer: coarse) {
-    .touch-target {
-        min-width: 48px;
-        min-height: 48px;
-        padding: 12px;
-    }
+        .touch-target {
+            min-width: 48px;
+            min-height: 48px;
+            padding: 12px;
+        }
 }
 /* ========== 打印样式优化 ========== */
 @media print {
-    .no-print {
-        display: none !important;
-    }
-    body {
-        background: white;
-        color: black;
-    }
+        .no-print {
+            display: none;
+        }
+        body {
+            background: white;
+            color: black;
+        }
 }
 /* ========== 暗色模式优化 ========== */
 @media (prefers-color-scheme: dark) {
-    .auto-dark {
-        background-color: rgba(0, 0, 0, 0.8);
-        color: rgba(255, 255, 255, 0.9);
-    }
+        .auto-dark {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: rgba(255, 255, 255, 0.9);
+        }
 }
 /* ========== 亮色模式优化 ========== */
 @media (prefers-color-scheme: light) {
-    .auto-light {
-        background-color: rgba(255, 255, 255, 0.9);
-        color: rgba(0, 0, 0, 0.8);
-    }
+        .auto-light {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: rgba(0, 0, 0, 0.8);
+        }
 }
 /* ========== 横屏特殊优化 ========== */
 @media (orientation: landscape) and (max-height: 600px) {
-    .compact-landscape .widget {
-        min-height: 70px;
-        padding: 10px 14px;
-    }
-    .compact-landscape .time-text#timeDisplay {
-        font-size: 72px;
-    }
+        .compact-landscape .widget {
+            min-height: 70px;
+            padding: 10px 14px;
+        }
+        .compact-landscape .time-text#timeDisplay {
+            font-size: 72px;
+        }
 }
 /* ========== 竖屏特殊优化 ========== */
 @media (orientation: portrait) and (min-height: 1000px) {
-    .tall-portrait .card-view {
-        bottom: 140px;
-    }
+        .tall-portrait .card-view {
+            bottom: 140px;
+        }
 }
 /* ========== 性能优化 - 低功耗模式 ========== */
 @media (prefers-reduced-transparency: reduce) {
-    .widget,
+        .widget,
     .card,
     .modal-content {
-        backdrop-filter: none;
-        background-color: rgba(20, 20, 25, 0.95);
-    }
+            backdrop-filter: none;
+            background-color: rgba(20, 20, 25, 0.95);
+        }
 }
 /* ========== 颜色方案优化 ========== */
 @media (forced-colors: active) {
-    .widget,
+        .widget,
     .btn,
     .card {
-        border: 1px solid CanvasText;
-    }
+            border: 1px solid CanvasText;
+        }
 }
-   车载屏幕特殊尺寸适配、横竖屏切换优化、安全区域增强
+
+车载屏幕特殊尺寸适配、横竖屏切换优化、安全区域增强
    ============================================ */
 /* ========== 零跑车机专用分辨率 (1920×1200) ========== */
 @media screen and (width: 1920px) and (height: 1200px) {
-    :root {
-        --widget-height: 115px;
-        --status-bar-height: 52px;
-        --dock-height: 84px;
-        --font-size-4xl: 148px;
-        --font-size-3xl: 48px;
-        --font-size-2xl: 28px;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 148px;
-        letter-spacing: -4px;
-    }
-    
-    .date-text {
-        font-size: 28px;
-    }
-    
-    .lunar-calendar-text {
-        font-size: 16px;
-    }
-    
-    .card-view {
-        bottom: 96px;
-        left: 56px;
-        right: 56px;
-    }
-    
-    .widget {
-        min-width: 190px;
-        padding: 18px 22px;
-    }
-    
-    .music-widget {
-        min-width: 380px;
-    }
-    
-    .weather-widget {
-        min-width: 220px;
-    }
+    --widget-height: 115px;
+    --status-bar-height: 52px;
+    --dock-height: 84px;
+    --font-size-4xl: 148px;
+    --font-size-3xl: 48px;
+    --font-size-2xl: 28px;
+    font-size: 16px;
+    letter-spacing: -4px;
+    bottom: 96px;
+    left: 56px;
+    right: 56px;
+    min-width: 220px;
+    padding: 18px 22px;
 }
-
 /* ========== 零跑车机专用分辨率 (1920×1080) ========== */
 /* ========== 车机横屏优化 (宽高比 > 2:1) ========== */
 @media screen and (min-aspect-ratio: 2/1) {
-    .layout-left {
-        left: 35%;
-        transform: translateX(-50%);
-    }
-    
-    .card-view {
-        left: 60px;
-        right: 60px;
-    }
-    
-    .horizontal-scroll {
-        gap: 20px;
-    }
-    
-    .widget {
-        flex-shrink: 0;
-    }
+        .layout-left {
+            left: 35%;
+            transform: translateX(-50%);
+        }
+        .card-view {
+            left: 60px;
+            right: 60px;
+        }
+        .horizontal-scroll {
+            gap: 20px;
+        }
+        .widget {
+            flex-shrink: 0;
+        }
 }
-
 /* ========== 车机竖屏优化 (高宽比 > 1.5:1) ========== */
 @media screen and (min-aspect-ratio: 3/2) and (orientation: portrait) {
-    :root {
-        --widget-height: 100px;
-    }
-    
-    .layout-left {
-        top: 25%;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-    }
-    
-    .card-view {
-        bottom: 120px;
-        left: 30px;
-        right: 30px;
-    }
-    
-    .horizontal-scroll {
-        flex-wrap: wrap;
-        justify-content: center;
-        overflow-y: auto;
-        max-height: 50vh;
-    }
-    
-    .widget {
-        flex: 1 1 calc(50% - 10px);
-        min-width: unset;
-    }
+        :root {
+            --widget-height: 100px;
+        }
+        .layout-left {
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        .card-view {
+            bottom: 120px;
+            left: 30px;
+            right: 30px;
+        }
+        .horizontal-scroll {
+            flex-wrap: wrap;
+            justify-content: center;
+            overflow-y: auto;
+            max-height: 50vh;
+        }
+        .widget {
+            flex: 1 1 calc(50% - 10px);
+            min-width: unset;
+        }
 }
-
 /* ========== 横竖屏切换平滑过渡 ========== */
 .main-container,
 .layout-left,
@@ -1069,8 +896,7 @@
 .widget,
 .status-bar,
 .top-status-bar {
-    transition: 
-        left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         right 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1078,9 +904,9 @@
         font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1),
         min-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 /* ========== 屏幕旋转动画 ========== */
 @keyframes orientationChange {
+
     0% {
         opacity: 0.8;
         transform: scale(0.98);
@@ -1089,12 +915,12 @@
         opacity: 1;
         transform: scale(1);
     }
+
 }
 
 body.orientation-changing {
     animation: orientationChange 0.5s ease-out;
 }
-
 /* ========== 安全区域增强适配 ========== */
 @supports (padding: max(0px)) {
     /* iPhone 刘海屏适配 */
@@ -1121,9 +947,9 @@ body.orientation-changing {
         margin-right: env(safe-area-inset-right);
     }
 }
-
 /* ========== 车机系统状态栏适配 ========== */
 /* 有系统状态栏时的顶部偏移 */
+
 .status-bar-offset .top-status-bar {
     top: 30px;
 }
@@ -1131,245 +957,211 @@ body.orientation-changing {
 .status-bar-offset .layout-left {
     top: calc(15% + 30px);
 }
-
 /* ========== 夜间驾驶模式优化 ========== */
 @media screen and (prefers-color-scheme: dark) and (max-height: 800px) {
-    :root {
-        --bg-overlay: rgba(0, 0, 0, 0.85);
-    }
-    
-    .widget {
-        background: rgba(10, 10, 10, 0.8);
-    }
-    
-    .text-primary {
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    }
+        :root {
+            --bg-overlay: rgba(0, 0, 0, 0.85);
+        }
+        .widget {
+            background: rgba(10, 10, 10, 0.8);
+        }
+        .text-primary {
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
 }
-
 /* ========== 低亮度屏幕优化 ========== */
 @media screen and (max-brightness: 0.5) {
-    :root {
-        --text-primary: rgba(255, 255, 255, 1);
-        --text-secondary: rgba(255, 255, 255, 0.9);
-    }
-    
-    .widget {
-        border-width: 1.5px;
-        border-color: rgba(255, 255, 255, 0.2);
-    }
+        :root {
+            --text-primary: rgba(255, 255, 255, 1);
+            --text-secondary: rgba(255, 255, 255, 0.9);
+        }
+        .widget {
+            border-width: 1.5px;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
 }
-
 /* ========== 触控反馈增强 ========== */
 @media (hover: none) and (pointer: coarse) {
     /* 触控设备点击态增强 */
-    .widget:active,
+        .widget:active,
     .btn:active,
     .app-item:active,
     .quick-app-item:active,
     .quick-switch-item:active {
-        transform: scale(0.96);
-        background: rgba(255, 255, 255, 0.15);
-    }
-    
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.15);
+        }
     /* 触控目标最小尺寸 */
-    .nav-button,
+        .nav-button,
     .quick-app-item,
     .quick-switch-item,
     .setting-item {
-        min-height: 56px;
-    }
-    
+            min-height: 56px;
+        }
     /* 增大文字便于驾驶时阅读 */
-    .nav-text,
+        .nav-text,
     .quick-app-name,
     .quick-switch-name {
-        font-size: calc(100% + 2px);
-    }
+            font-size: calc(100% + 2px);
+        }
 }
-
 /* ========== 分屏模式适配 ========== */
 @media screen and (max-width: 960px) and (min-width: 720px) {
-    :root {
-        --widget-height: 85px;
-        --font-size-4xl: 88px;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 88px;
-    }
-    
-    .card-view {
-        left: 20px;
-        right: 20px;
-    }
-    
-    .widget {
-        min-width: 130px;
-        padding: 10px 14px;
-    }
+        :root {
+            --widget-height: 85px;
+            --font-size-4xl: 88px;
+        }
+        .time-text#timeDisplay {
+            font-size: 88px;
+        }
+        .card-view {
+            left: 20px;
+            right: 20px;
+        }
+        .widget {
+            min-width: 130px;
+            padding: 10px 14px;
+        }
 }
-
 /* ========== 画中画模式适配 ========== */
 @media screen and (max-width: 640px) and (max-height: 480px) {
-    :root {
-        --widget-height: 60px;
-        --status-bar-height: 32px;
-        --dock-height: 48px;
-        --font-size-4xl: 56px;
-    }
-    
-    .top-status-bar,
+        :root {
+            --widget-height: 60px;
+            --status-bar-height: 32px;
+            --dock-height: 48px;
+            --font-size-4xl: 56px;
+        }
+        .top-status-bar,
     .status-bar {
-        display: none;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 56px;
-    }
-    
-    .date-text,
+            display: none;
+        }
+        .time-text#timeDisplay {
+            font-size: 56px;
+        }
+        .date-text,
     .lunar-calendar-text {
-        display: none;
-    }
-    
-    .card-view {
-        bottom: 16px;
-        left: 16px;
-        right: 16px;
-    }
-    
-    .widget {
-        min-width: 100px;
-        padding: 8px 12px;
-    }
-    
-    .music-widget,
+            display: none;
+        }
+        .card-view {
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+        }
+        .widget {
+            min-width: 100px;
+            padding: 8px 12px;
+        }
+        .music-widget,
     .weather-widget {
-        display: none;
-    }
+            display: none;
+        }
 }
-
 /* ========== 打印模式隐藏 ========== */
 @media print {
-    .top-status-bar,
+        .top-status-bar,
     .status-bar,
     .control-icon,
     .ac-control {
-        display: none !important;
-    }
+            display: none;
+        }
 }
-
 /* ========== 极窄高度优化 (600px以下) ========== */
 @media screen and (max-height: 600px) {
-    :root {
-        --widget-height: 75px;
-        --status-bar-height: 36px;
-        --dock-height: 52px;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 72px;
-    }
-    
-    .layout-left {
-        top: 25%;
-    }
-    
-    .card-view {
-        bottom: 62px;
-    }
-    
-    .widget {
-        padding: 10px 14px;
-    }
+        :root {
+            --widget-height: 75px;
+            --status-bar-height: 36px;
+            --dock-height: 52px;
+        }
+        .time-text#timeDisplay {
+            font-size: 72px;
+        }
+        .layout-left {
+            top: 25%;
+        }
+        .card-view {
+            bottom: 62px;
+        }
+        .widget {
+            padding: 10px 14px;
+        }
 }
-
 /* ========== 横竖屏精细适配 ========== */
 /* 横屏 - 宽高比 > 16:9 */
+
 @media screen and (min-aspect-ratio: 16/9) {
-    .layout-left {
-        transform: translateX(-50%);
-    }
-    
+        .layout-left {
+            transform: translateX(-50%);
+        }
     /* 横屏下卡片间距优化 */
-    .cards-container {
-        gap: 16px;
-    }
+        .cards-container {
+            gap: 16px;
+        }
 }
-
 /* 方屏 - 宽高比 1:1 ~ 4:3 */
-@media screen and (max-aspect-ratio: 4/3) and (min-aspect-ratio: 1/1) {
-    .layout-left {
-        top: 25%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
-    .card-view {
-        left: 30px;
-        right: 30px;
-    }
-}
 
+@media screen and (max-aspect-ratio: 4/3) and (min-aspect-ratio: 1/1) {
+        .layout-left {
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .card-view {
+            left: 30px;
+            right: 30px;
+        }
+}
 /* ========== 暗色模式对比度增强 ========== */
 @media (prefers-color-scheme: dark) {
     /* 确保暗色模式下所有文本对比度达标 */
-    .widget-title,
+        .widget-title,
     .music-name,
     .temperature,
     .air-text,
     .date-text,
     .time-text {
-        color: rgba(255, 255, 255, 0.95);
-    }
-    
-    .widget-subtitle,
+            color: rgba(255, 255, 255, 0.95);
+        }
+        .widget-subtitle,
     .artist-name,
     .condition,
     .lunar-calendar-text {
-        color: rgba(255, 255, 255, 0.8);
-    }
+            color: rgba(255, 255, 255, 0.8);
+        }
 }
-
 /* ========== 低透明度模式 ========== */
 @media (prefers-reduced-transparency: reduce) {
-    .widget,
+        .widget,
     .modal-content,
     .top-status-bar,
     .status-bar {
-        background: rgba(0, 0, 0, 0.9) !important;
-        backdrop-filter: none !important;
-    }
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: none;
+        }
 }
-
 /* ========== 强制色彩模式 ========== */
 @media (forced-colors: active) {
-    .widget {
-        border: 1px solid CanvasText;
-    }
-    
-    .quick-app-icon,
+        .widget {
+            border: 1px solid CanvasText;
+        }
+        .quick-app-icon,
     .quick-switch-icon {
-        forced-color-adjust: none;
-    }
+            forced-color-adjust: none;
+        }
 }
-
 /* ========== 大文本模式适配 ========== */
 @media screen and (min-width: 1024px) {
     /* 确保大字体下布局不溢出 */
-    .music-name,
+        .music-name,
     .artist-name {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 }
-
 /* ========== 触摸目标最小尺寸保障 (无障碍) ========== */
 @media (pointer: coarse) {
     /* WCAG 2.1 - 触摸目标至少 48x48px */
-    .control-icon,
+        .control-icon,
     .ac-control,
     .ac-hcs,
     .wind-display,
@@ -1377,14 +1169,13 @@ body.orientation-changing {
     .quick-switch-icon,
     .control-buttons button,
     .nav-button {
-        min-width: 48px !important;
-        min-height: 48px !important;
-    }
-    
-    .control-buttons .btn-play {
-        min-width: 56px !important;
-        min-height: 56px !important;
-    }
+            min-width: 48px;
+            min-height: 48px;
+        }
+        .control-buttons .btn-play {
+            min-width: 56px;
+            min-height: 56px;
+        }
 }
 /* ============================================
    【优化点3】响应式布局全面优化
@@ -1392,196 +1183,163 @@ body.orientation-changing {
    ============================================ */
 /* ========== 零跑车机专用分辨率 (1920x1080) - 主流配置 ========== */
 @media screen and (width: 1920px) and (height: 1080px) {
-    :root {
-        --widget-height: 130px;
-        --status-bar-height: 52px;
-        --dock-height: 84px;
-        --font-size-4xl: 148px;
-        --font-size-3xl: 48px;
-        --font-size-2xl: 28px;
-    }
-    
-    .layout-left {
-        top: 36%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 148px;
-        letter-spacing: -3px;
-        margin-bottom: 12px;
-    }
-    
-    .date-text {
-        font-size: 28px;
-        margin-bottom: 6px;
-    }
-    
-    .lunar-calendar-text {
-        font-size: 16px;
-    }
-    
-    .card-view {
-        bottom: 40px;
-        left: 56px;
-        right: 56px;
-    }
-    
-    .widget {
-        min-width: 190px;
-        padding: 18px 22px;
-        margin-right: 18px;
-        border-radius: 18px;
-    }
-    
-    .music-widget {
-        min-width: 380px;
-    }
-    
-    .weather-widget {
-        min-width: 220px;
-    }
-    
-    .quick-apps-widget {
-        min-width: 280px;
-    }
-    
-    .quick-switches-widget {
-        min-width: 260px;
-    }
-    
-    .map-widget {
-        min-width: 200px;
-    }
-    
-    .car-widget {
-        min-width: 260px;
-    }
-    
-    .top-status-bar {
-        padding: 0 32px;
-    }
-    
-    .status-bar {
-        padding: 0 32px;
-    }
+        :root {
+            --widget-height: 130px;
+            --status-bar-height: 52px;
+            --dock-height: 84px;
+            --font-size-4xl: 148px;
+            --font-size-3xl: 48px;
+            --font-size-2xl: 28px;
+        }
+        .layout-left {
+            top: 36%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .time-text#timeDisplay {
+            font-size: 148px;
+            letter-spacing: -3px;
+            margin-bottom: 12px;
+        }
+        .date-text {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+        .lunar-calendar-text {
+            font-size: 16px;
+        }
+        .card-view {
+            bottom: 40px;
+            left: 56px;
+            right: 56px;
+        }
+        .widget {
+            min-width: 190px;
+            padding: 18px 22px;
+            margin-right: 18px;
+            border-radius: 18px;
+        }
+        .music-widget {
+            min-width: 380px;
+        }
+        .weather-widget {
+            min-width: 220px;
+        }
+        .quick-apps-widget {
+            min-width: 280px;
+        }
+        .quick-switches-widget {
+            min-width: 260px;
+        }
+        .map-widget {
+            min-width: 200px;
+        }
+        .car-widget {
+            min-width: 260px;
+        }
+        .top-status-bar {
+            padding: 0 32px;
+        }
+        .status-bar {
+            padding: 0 32px;
+        }
 }
 /* ========== 零跑车机专用分辨率 (1280x720) - 入门配置 ========== */
 @media screen and (width: 1280px) and (height: 720px) {
-    :root {
-        --widget-height: 92px;
-        --status-bar-height: 44px;
-        --dock-height: 70px;
-        --font-size-4xl: 108px;
-        --font-size-3xl: 36px;
-        --font-size-2xl: 22px;
-    }
-    
-    .layout-left {
-        top: 35%;
-    }
-    
-    .time-text#timeDisplay {
-        font-size: 108px;
-        letter-spacing: -2px;
-        margin-bottom: 8px;
-    }
-    
-    .date-text {
-        font-size: 22px;
-    }
-    
-    .lunar-calendar-text {
-        font-size: 13px;
-    }
-    
-    .card-view {
-        bottom: 80px;
-        left: 40px;
-        right: 40px;
-    }
-    
-    .widget {
-        min-width: 160px;
-        padding: 14px 18px;
-        margin-right: 14px;
-        border-radius: 16px;
-    }
-    
-    .music-widget {
-        min-width: 320px;
-    }
-    
-    .weather-widget {
-        min-width: 190px;
-    }
-    
-    .quick-apps-widget {
-        min-width: 250px;
-    }
-    
-    .quick-switches-widget {
-        min-width: 230px;
-    }
-    
-    .top-status-bar {
-        padding: 0 24px;
-    }
-    
-    .status-bar {
-        padding: 0 24px;
-    }
-    
-    .center-controls {
-        gap: 4px;
-    }
-    
-    .air-text {
-        font-size: 18px;
-        min-width: 38px;
-    }
+        :root {
+            --widget-height: 92px;
+            --status-bar-height: 44px;
+            --dock-height: 70px;
+            --font-size-4xl: 108px;
+            --font-size-3xl: 36px;
+            --font-size-2xl: 22px;
+        }
+        .layout-left {
+            top: 35%;
+        }
+        .time-text#timeDisplay {
+            font-size: 108px;
+            letter-spacing: -2px;
+            margin-bottom: 8px;
+        }
+        .date-text {
+            font-size: 22px;
+        }
+        .lunar-calendar-text {
+            font-size: 13px;
+        }
+        .card-view {
+            bottom: 80px;
+            left: 40px;
+            right: 40px;
+        }
+        .widget {
+            min-width: 160px;
+            padding: 14px 18px;
+            margin-right: 14px;
+            border-radius: 16px;
+        }
+        .music-widget {
+            min-width: 320px;
+        }
+        .weather-widget {
+            min-width: 190px;
+        }
+        .quick-apps-widget {
+            min-width: 250px;
+        }
+        .quick-switches-widget {
+            min-width: 230px;
+        }
+        .top-status-bar {
+            padding: 0 24px;
+        }
+        .status-bar {
+            padding: 0 24px;
+        }
+        .center-controls {
+            gap: 4px;
+        }
+        .air-text {
+            font-size: 18px;
+            min-width: 38px;
+        }
 }
 /* ========== 车载横屏通用优化 (宽高比 > 16:9) ========== */
 @media screen and (min-aspect-ratio: 16/9) {
     /* 时间显示居中优化 */
-    .layout-left {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
+        .layout-left {
+            left: 50%;
+            transform: translateX(-50%);
+        }
     /* 卡片区域左右边距动态调整 */
-    .card-view {
-        left: clamp(24px, 4vw, 64px);
-        right: clamp(24px, 4vw, 64px);
-    }
-    
+        .card-view {
+            left: clamp(24px, 4vw, 64px);
+            right: clamp(24px, 4vw, 64px);
+        }
     /* Widget间距动态调整 */
-    .widget {
-        margin-right: clamp(12px, 1.5vw, 20px);
-    }
-    
+        .widget {
+            margin-right: clamp(12px, 1.5vw, 20px);
+        }
     /* 状态栏边距优化 */
-    .top-status-bar,
+        .top-status-bar,
     .status-bar {
-        padding-left: clamp(16px, 3vw, 40px);
-        padding-right: clamp(16px, 3vw, 40px);
-    }
+            padding-left: clamp(16px, 3vw, 40px);
+            padding-right: clamp(16px, 3vw, 40px);
+        }
 }
 /* ========== 车载竖屏/方屏优化 (宽高比 <= 16:9) ========== */
 @media screen and (max-aspect-ratio: 16/9) {
-    .layout-left {
-        top: 32%;
-    }
-    
-    .card-view {
-        bottom: clamp(64px, 10vh, 100px);
-    }
-    
+        .layout-left {
+            top: 32%;
+        }
+        .card-view {
+            bottom: clamp(64px, 10vh, 100px);
+        }
     /* 方屏下减小Widget最小宽度 */
-    .widget {
-        min-width: 150px;
-    }
+        .widget {
+            min-width: 150px;
+        }
 }
 /* ========== 动态间距系统 - 使用clamp实现响应式 ========== */
 .card-view {
@@ -1589,18 +1347,22 @@ body.orientation-changing {
     right: clamp(20px, 3vw, 60px);
     bottom: clamp(70px, 10vh, 100px);
 }
+
 .widget {
     margin-right: clamp(12px, 1.2vw, 18px);
     padding: clamp(14px, 2vh, 22px) clamp(16px, 2vw, 26px);
     border-radius: clamp(14px, 1.5vw, 20px);
 }
+
 .time-text#timeDisplay {
     font-size: clamp(80px, 12vw, 160px);
     letter-spacing: clamp(-1px, -0.1vw, -4px);
 }
+
 .date-text {
     font-size: clamp(16px, 2.5vw, 28px);
 }
+
 .lunar-calendar-text {
     font-size: clamp(11px, 1.5vw, 16px);
 }
@@ -1630,30 +1392,26 @@ body.orientation-changing {
 }
 /* ========== 车载夜间模式增强 ========== */
 @media screen and (prefers-color-scheme: dark) {
-    .widget {
-        background: 
-            linear-gradient(135deg, 
+        .widget {
+            background: linear-gradient(135deg, 
                 rgba(255, 255, 255, 0.05) 0%, 
                 rgba(0, 0, 0, 0.15) 100%),
             rgba(10, 10, 15, 0.85);
-    }
-    
-    .widget:hover {
-        background: 
-            linear-gradient(135deg, 
+        }
+        .widget:hover {
+            background: linear-gradient(135deg, 
                 rgba(255, 255, 255, 0.08) 0%, 
                 rgba(var(--primary-color-rgb), 0.04) 100%),
             rgba(10, 10, 15, 0.9);
-    }
+        }
 }
 /* ========== 低亮度环境优化 ========== */
 @media screen and (max-brightness: 0.5) {
-    :root {
-        --text-primary: rgba(255, 255, 255, 0.98);
-        --text-secondary: rgba(255, 255, 255, 0.85);
-    }
-    
-    .widget {
-        border-color: rgba(255, 255, 255, 0.15);
-    }
+        :root {
+            --text-primary: rgba(255, 255, 255, 0.98);
+            --text-secondary: rgba(255, 255, 255, 0.85);
+        }
+        .widget {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
 }
