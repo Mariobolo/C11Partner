@@ -73,6 +73,7 @@
 
     <uses-feature android:name="android.software.home_launcher" />
     <application
+        android:name="com.c11partner.desktop.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
