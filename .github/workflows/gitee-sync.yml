@@ -1,0 +1,48 @@
+# ============================================
+# GitHub -> Gitee 自动同步
+# 每次 push 到 main 分支时，自动镜像推送到 Gitee
+# ============================================
+name: Sync to Gitee
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 拉取完整历史，确保同步完整
+
+      - name: Sync to Gitee
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+          GITEE_OWNER: ${{ secrets.GITEE_OWNER }}
+          GITEE_REPO: ${{ secrets.GITEE_REPO || github.event.repository.name }}
+        run: |
+          if [ -z "$GITEE_TOKEN" ]; then
+            echo "::error::缺少 GITEE_TOKEN secret，请在 GitHub 仓库 Settings > Secrets > Actions 中添加"
+            exit 1
+          fi
+          if [ -z "$GITEE_OWNER" ]; then
+            echo "::error::缺少 GITEE_OWNER secret，请在 GitHub 仓库 Settings > Secrets > Actions 中添加"
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # 添加 Gitee remote（使用 oauth2 token 认证）
+          git remote add gitee "https://oauth2:${GITEE_TOKEN}@gitee.com/${GITEE_OWNER}/${GITEE_REPO}.git"
+
+          # 推送所有分支和标签
+          echo "正在同步到 gitee.com/${GITEE_OWNER}/${GITEE_REPO} ..."
+          git push gitee --all --force
+          git push gitee --tags --force
+
+          echo "同步完成"
