@@ -204,38 +204,93 @@
     }
 
     /**
+     * 触屏元素点击后恢复失焦
+     * @description 在触屏设备上，元素点击后会保持焦点状态导致样式异常，此函数确保点击后立即失焦
+     * @param {HTMLElement} element - 需要失焦的元素
+     */
+    function blurAfterClick(element) {
+        if (!element) return;
+        const focusable = element.closest('button, [role="button"], .widget, .qsp-item, .quick-app-item, .nav-button, .dock-btn, .control-icon, .ac-control, .ac-hcs, .music-control-btn, .btn, .setting-item, .app-item, .switch-item, .automation-item');
+        if (focusable && typeof focusable.blur === 'function') {
+            try {
+                focusable.blur();
+            } catch (e) {}
+        }
+        if (document.activeElement && document.activeElement !== document.body) {
+            try {
+                document.activeElement.blur();
+            } catch (e) {}
+        }
+    }
+
+    /**
+     * 清除所有元素的 :active 状态（解决触摸粘滞问题）
+     */
+    function clearActiveState() {
+        document.body.classList.add('touch-reset');
+        setTimeout(() => {
+            document.body.classList.remove('touch-reset');
+        }, 10);
+        
+        const activeElements = document.querySelectorAll(':active');
+        activeElements.forEach(el => {
+            try { el.blur(); } catch (e) {}
+        });
+        
+        if (document.activeElement && document.activeElement !== document.body) {
+            try { document.activeElement.blur(); } catch (e) {}
+        }
+        
+        try {
+            window.focus();
+            document.body.focus();
+        } catch (e) {}
+    }
+
+    /**
      * 添加点击效果
-     * 为元素添加点击时的缩放反馈
+     * 为元素添加点击时的缩放反馈，并在触摸后恢复失焦
      */
     function addClickEffect() {
-        const clickableElements = document.querySelectorAll('.widget, .btn, .nav-button, .quick-app-item, .quick-switch-item');
+        const clickableElements = document.querySelectorAll('.widget, .btn, .nav-button, .quick-app-item, .qsp-item');
         
         clickableElements.forEach(element => {
-            // 鼠标按下
             element.addEventListener('mousedown', function() {
                 this.style.transform = 'scale(0.98)';
                 this.style.transition = 'transform 0.1s';
             });
             
-            // 鼠标释放
             element.addEventListener('mouseup', function() {
                 this.style.transform = 'scale(1)';
+                blurAfterClick(this);
             });
             
-            // 鼠标离开
             element.addEventListener('mouseleave', function() {
                 this.style.transform = 'scale(1)';
+                blurAfterClick(this);
             });
             
-            // 触摸开始
             element.addEventListener('touchstart', function(e) {
                 this.style.transform = 'scale(0.98)';
                 this.style.transition = 'transform 0.1s';
             }, { passive: true });
             
-            // 触摸结束
             element.addEventListener('touchend', function() {
-                this.style.transform = 'scale(1)';
+                const el = this;
+                el.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    blurAfterClick(el);
+                    clearActiveState();
+                }, 50);
+            });
+            
+            element.addEventListener('touchcancel', function() {
+                const el = this;
+                el.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    blurAfterClick(el);
+                    clearActiveState();
+                }, 50);
             });
         });
     }
@@ -319,12 +374,45 @@
         }
     }
 
+    /**
+     * 全局触屏失焦处理
+     * @description 在DOMContentLoaded后，为所有可点击元素添加点击后失焦处理
+     */
+    function initTouchBlur() {
+        const isTouchDevice = ('ontouchstart' in window) || 
+                              (navigator.maxTouchPoints > 0) || 
+                              (navigator.msMaxTouchPoints > 0);
+        
+        if (!isTouchDevice) return;
+        
+        const handleTouchEnd = function(e) {
+            setTimeout(() => {
+                blurAfterClick(e.target);
+                clearActiveState();
+            }, 30);
+        };
+        
+        const handleClick = function(e) {
+            setTimeout(() => {
+                blurAfterClick(e.target);
+                clearActiveState();
+            }, 30);
+        };
+        
+        document.addEventListener('touchend', handleTouchEnd, { passive: true });
+        document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+        document.addEventListener('click', handleClick);
+    }
+
     // 暴露到全局（保持向后兼容）
     window.showSwipeHint = showSwipeHint;
     window.showToast = showToast;
     window.showSuccessMessage = showSuccessMessage;
     window.showErrorMessage = showErrorMessage;
     window.addClickEffect = addClickEffect;
+    window.blurAfterClick = blurAfterClick;
+    window.clearActiveState = clearActiveState;
+    window.initTouchBlur = initTouchBlur;
     window.formatTime = formatTime;
     window.debounce = debounce;
     window.throttle = throttle;
@@ -337,10 +425,20 @@
         showSuccessMessage,
         showErrorMessage,
         addClickEffect,
+        blurAfterClick,
+        clearActiveState,
+        initTouchBlur,
         formatTime,
         debounce,
         throttle,
         deepClone
     };
+
+    // 页面加载完成后自动初始化触屏失焦处理
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTouchBlur);
+    } else {
+        initTouchBlur();
+    }
 
 })();

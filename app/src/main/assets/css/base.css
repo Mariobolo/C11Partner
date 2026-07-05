@@ -457,7 +457,7 @@ a {
 button:focus-visible,
 .nav-button:focus-visible,
 .quick-app-item:focus-visible,
-.quick-switch-item:focus-visible {
+.qsp-item:focus-visible {
     outline: 3px solid var(--primary-color);
     outline-offset: 2px;
     box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.15);
@@ -474,6 +474,29 @@ input:focus-visible,
 *:focus:not(:focus-visible) {
     outline: none;
     box-shadow: none;
+}
+
+/* 触屏设备：完全禁用焦点样式（防止触摸后焦点残留） */
+@media (hover: none) and (pointer: coarse) {
+    *:focus,
+    *:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+}
+
+/* 触摸粘滞修复：临时类强制重置所有元素的 :active 状态 */
+body.touch-reset * {
+    pointer-events: none !important;
+}
+
+body.touch-reset *:active {
+    transform: none !important;
+    background: inherit !important;
+    box-shadow: inherit !important;
+    opacity: 1 !important;
+    filter: none !important;
 }
 
 /* ========== 屏幕阅读器支持 ========== */

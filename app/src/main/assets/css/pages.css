@@ -592,9 +592,9 @@
 
 /* ========== 快捷开关面板 ========== */
 .quick-switch-panel {
-    width: 600px;
+    width: 650px;
     max-width: 90vw;
-    max-height: 80vh;
+    max-height: 93vh;
 }
 
 .quick-switch-content {
@@ -4220,7 +4220,7 @@
 /* 动画元素硬件加速 */
 .widget,
 .btn,
-.quick-switch-item,
+.qsp-item,
 .dock-btn,
 .settings-tab {
     transform: translateZ(0);
@@ -4238,7 +4238,7 @@
     }
     
     /* 保留必要的状态切换动画 */
-    .quick-switch-item.active,
+    .qsp-item.qsp-active,
     .settings-tab.active {
         animation: none;
     }
@@ -4268,7 +4268,7 @@
     .widget,
     .card,
     .btn,
-    .quick-switch-item,
+    .qsp-item,
     .dock-btn,
     .settings-tab {
         border-width: 2px;
@@ -4279,7 +4279,7 @@
     .text-primary,
     .temperature,
     .condition,
-    .quick-switch-name {
+    .qsp-item > :last-child {
         color: #ffffff;
         -webkit-text-fill-color: #ffffff;
         text-shadow: 0 0 0 #ffffff;
@@ -4291,7 +4291,7 @@
     
     /* 增强按钮对比度 */
     .btn-primary,
-    .quick-switch-item.active,
+    .qsp-item.qsp-active,
     .settings-tab.active {
         background: var(--primary-color);
         color: #000000;
@@ -4317,7 +4317,7 @@
 
 /* 键盘导航焦点增强 - 无障碍支持 */
 .widget:focus-visible,
-.quick-switch-item:focus-visible,
+.qsp-item:focus-visible,
 .dock-btn:focus-visible,
 .settings-tab:focus-visible,
 .btn:focus-visible {
@@ -4362,7 +4362,7 @@
 }
 
 /* 触摸目标尺寸保障 - WCAG 2.1标准 */
-.quick-switch-item,
+.qsp-item,
 .dock-btn,
 .btn {
     min-height: 48px;
@@ -4380,7 +4380,7 @@
     /* 使用图案辅助区分状态 */
 }
 
-.quick-switch-item.active::after {
+.qsp-item.qsp-active::after {
     /* 激活状态添加视觉图案辅助 */
     content: '';
     position: absolute;
@@ -4395,7 +4395,7 @@
 
 /* 性能优化 - 包含渲染 */
 .widget,
-.quick-switch-item,
+.qsp-item,
 .dock-btn {
     contain: layout paint style;
 }

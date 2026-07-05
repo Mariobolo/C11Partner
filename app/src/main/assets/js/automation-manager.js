@@ -341,6 +341,14 @@ const AutomationManager = {
             });
         });
         
+        // 点击面板边缘或空白处关闭
+        panel.addEventListener('click', (e) => {
+            const interactive = e.target.closest('.automation-item, #closeAutomationPanel, h3, h4');
+            if (!interactive) {
+                this.hidePanel();
+            }
+        });
+        
         return panel;
     },
     

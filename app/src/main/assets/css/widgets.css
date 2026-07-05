@@ -96,55 +96,48 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
-.qsp-switch-item,
-.qsp-mode-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 6px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+.qsp-item {
+    display: block;
+    text-align: center;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.04) 50%,
+            rgba(0, 0, 0, 0.1) 100%),
+        var(--surface-color);
+    border-radius: 14px;
+    padding: 12px 10px;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 68px;
     min-height: 72px;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    overflow: visible;
+    transform-style: flat;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.qsp-switch-item:hover,
-.qsp-mode-item:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-.qsp-switch-item:active,
-.qsp-mode-item:active {
-    transform: scale(0.95);
-}
-
-.qsp-switch-item.qsp-active {
+.qsp-item.qsp-active {
     background: rgba(76, 175, 80, 0.2);
     border-color: rgba(76, 175, 80, 0.4);
+    animation: switchActiveBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.qsp-icon {
-    font-size: 24px;
-    margin-bottom: 6px;
-    line-height: 1;
-}
-
-.qsp-label {
+.qsp-item > :last-child {
     color: rgba(255, 255, 255, 0.9);
     font-size: 12px;
     font-weight: 500;
     text-align: center;
     white-space: nowrap;
-}
-
-.qsp-status {
-    margin-top: 4px;
-    font-size: 10px;
-    color: #888;
 }
 
 .qsp-settings-entry {
@@ -557,7 +550,10 @@
     backface-visibility: hidden;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    background: rgba(30, 32, 38, 0.85);
+    background: rgba(30, 32, 38, 0.55);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    -webkit-mask: linear-gradient(#fff 0 0);
     color: var(--text-primary);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -909,15 +905,6 @@
     border-radius: 12px;
 }
 
-.quick-app-all-btn {
-    cursor: pointer;
-}
-
-.quick-app-all-btn:active {
-    transform: scale(0.92);
-    border-color: rgba(var(--primary-color-rgb), 0.5);
-    transition: transform 0.1s ease;
-}
 /* ========== 快捷开关模块 - 【优化点1】视觉与交互动效终极增强 ========== */
 .quick-switches-widget {
     min-width: 300px;
@@ -975,42 +962,9 @@
     width: 100%;
     transform-style: flat;
 }
-
-.quick-switch-item {
-    /* 性能优化: 移除非3D变换场景的 preserve-3d */
-    /* 性能优化: box-shadow 简化为单层，减少重绘 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.1) 0%, 
-            rgba(255, 255, 255, 0.04) 50%, 
-            rgba(0, 0, 0, 0.1) 100%),
-        var(--surface-color);
-    border-radius: 14px;
-    padding: 12px 10px;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.25s ease,
-                border-color 0.25s ease,
-                background 0.25s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    min-width: 68px;
-    min-height: 48px;
-    margin: 0;
-    cursor: pointer;
-    position: relative;
-    overflow: visible;
-    transform-style: flat;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-    user-select: none;
-    -webkit-user-select: none;
-}
 /* 快捷开关渐变发光边框 */
 
-.quick-switch-item::before {
+.qsp-item::before {
     content: '';
     position: absolute;
     inset: -1px;
@@ -1031,7 +985,7 @@
 }
 /* 快捷开关光泽扫过效果增强 */
 
-.quick-switch-item .switch-shimmer {
+.qsp-item .switch-shimmer {
     content: '';
     position: absolute;
     top: 0;
@@ -1051,7 +1005,7 @@
     z-index: 1;
 }
 
-.quick-switch-item:hover::before {
+.qsp-item:hover::before {
     opacity: 1;
     background: linear-gradient(
         135deg,
@@ -1061,13 +1015,13 @@
     );
 }
 
-.quick-switch-item:hover .switch-shimmer {
+.qsp-item:hover .switch-shimmer {
     left: 150%;
     opacity: 1;
 }
 /* 点击波纹扩散效果 - 增强版 */
 
-.quick-switch-item .switch-ripple {
+.qsp-item .switch-ripple {
     content: '';
     position: absolute;
     top: 50%;
@@ -1085,7 +1039,7 @@
     z-index: 2;
 }
 
-.quick-switch-item:active .switch-ripple {
+.qsp-item:active .switch-ripple {
     animation: switchRippleExpand 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1105,7 +1059,7 @@
 }
 /* 悬停3D透视效果增强 */
 
-.quick-switch-item:hover {
+.qsp-item:hover {
     background: linear-gradient(135deg, 
             rgba(255, 255, 255, 0.15) 0%, 
             rgba(255, 255, 255, 0.07) 50%, 
@@ -1121,10 +1075,8 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
         inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
-
-border-color: rgba(var(--primary-color-rgb), 0.3);
 /* 点击3D按压反馈 */
-.quick-switch-item:active {
+.qsp-item:active {
     transform: scale(0.92);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35),
         0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
@@ -1134,10 +1086,6 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
 }
 /* 确保松手后transform恢复，不卡住 */
 /* 状态切换弹性动画 */
-
-.quick-switch-item.active {
-    animation: switchActiveBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
 
 @keyframes switchActiveBounce {
 
@@ -1157,7 +1105,7 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
 
 }
 
-.quick-switch-item.active .quick-switch-icon {
+.qsp-item.qsp-active > :first-child {
     background: linear-gradient(135deg, 
             rgba(var(--primary-color-rgb), 0.25) 0%, 
             rgba(var(--secondary-color-rgb), 0.15) 50%, 
@@ -1183,7 +1131,7 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
 
 }
 
-.quick-switch-icon {
+.qsp-item > :first-child {
     width: 36px;
     height: 36px;
     display: flex;
@@ -1191,7 +1139,7 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
     justify-content: center;
     font-size: 20px;
     border-radius: 12px;
-    margin-bottom: 0px;
+    margin: 0 auto 0;
     position: relative;
     transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
@@ -1203,7 +1151,7 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
     overflow: hidden;
 }
 
-.quick-switch-item:hover .quick-switch-icon {
+.qsp-item:hover > :first-child {
     transform: translateY(-6px) scale(1.15) rotateX(8deg) translateZ(20px);
     border-color: rgba(var(--primary-color-rgb), 0.35);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45),
@@ -1219,7 +1167,7 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
             rgba(var(--secondary-color-rgb), 0.08) 100%);
 }
 
-.quick-switch-name {
+.qsp-item > :last-child {
     font-size: 11.5px;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
@@ -1228,7 +1176,7 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.quick-switch-item.active .quick-switch-name {
+.qsp-item.qsp-active > :last-child {
     color: #ffffff;
     background: linear-gradient(135deg,
         var(--primary-color) 0%,
@@ -1239,24 +1187,12 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
     font-weight: 500;
 }
 
-.quick-switch-item:hover .quick-switch-name {
+.qsp-item:hover > :last-child {
     color: #ffffff;
     transform: scale(1.05) translateY(-1px);
     text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
 }
 
-.quick-switch-item.more .quick-switch-icon {
-    background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.08) 0%, 
-            rgba(255, 255, 255, 0.02) 100%),
-        linear-gradient(135deg, 
-            rgba(150, 150, 150, 0.1) 0%, 
-            rgba(100, 100, 100, 0.05) 100%);
-    font-size: 22px;
-    color: var(--text-tertiary);
-    margin-bottom: 4px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
 /* ========== 天气组件 - 【优化点1】3D视觉终极美化 ========== */
 .weather-widget {
     min-width: 240px;
@@ -3511,7 +3447,7 @@ linear-gradient(135deg,
 }
 /* 快捷开关图标优化 - 已合并到主定义 */
 
-.quick-switch-icon::before {
+.qsp-item > :first-child::before {
     content: '';
     position: absolute;
     top: 0;
@@ -3528,7 +3464,7 @@ linear-gradient(135deg,
     z-index: 1;
 }
 
-.quick-switch-item:hover .quick-switch-icon::before {
+.qsp-item:hover > :first-child::before {
     left: 100%;
 }
 /* 应用图标优化 - 已合并到主定义 */
@@ -3868,7 +3804,7 @@ linear-gradient(135deg,
 
 .widget:focus-visible,
 .quick-app-item:focus-visible,
-.quick-switch-item:focus-visible,
+.qsp-item:focus-visible,
 .setting-item:focus-visible {
     outline: 3px solid var(--primary-color);
     outline-offset: 2px;
@@ -5477,7 +5413,7 @@ opacity: 1;
 /* 快捷开关图标终极3D增强 - 已合并到主定义 */
 /* 快捷开关图标顶部高光 */
 
-.quick-switch-icon::after {
+.qsp-item > :first-child::after {
     content: '';
     position: absolute;
     top: 0;
@@ -5544,7 +5480,7 @@ opacity: 1;
 }
 /* 快捷开关项目粒子跟随效果 */
 
-.quick-switch-item .item-glow {
+.qsp-item .item-glow {
     position: absolute;
     width: 100px;
     height: 100px;
@@ -5559,12 +5495,12 @@ opacity: 1;
     z-index: 0;
 }
 
-.quick-switch-item:hover .item-glow {
+.qsp-item:hover .item-glow {
     opacity: 1;
 }
 /* 快捷开关取消激活动画 */
 
-.quick-switch-item:not(.active) {
+.qsp-item:not(.active) {
     animation: switchInactiveShrink 0.3s ease-out;
 }
 
@@ -6244,7 +6180,7 @@ background: linear-gradient(
    ============================================ */
 /* 键盘焦点可见性 - 高对比度 */
 
-.quick-switch-item:focus-visible {
+.qsp-item:focus-visible {
     outline: 3px solid rgba(var(--primary-color-rgb), 0.8);
     outline-offset: 4px;
     box-shadow: 0 0 0 6px rgba(var(--primary-color-rgb), 0.2),
@@ -6253,15 +6189,15 @@ background: linear-gradient(
 /* 高对比度模式优化 */
 
 @media (prefers-contrast: high) {
-        .quick-switch-item {
+        .qsp-item {
             border-width: 2px;
             border-color: rgba(255, 255, 255, 0.4);
         }
-        .quick-switch-item.active {
+        .qsp-item.qsp-active {
             border-color: var(--primary-color);
             border-width: 3px;
         }
-        .quick-switch-name {
+        .qsp-item > :last-child {
             font-weight: 600;
             color: #ffffff;
         }
@@ -6269,10 +6205,10 @@ background: linear-gradient(
 /* 减少动画模式支持 */
 
 @media (prefers-reduced-motion: reduce) {
-        .quick-switch-item,
-    .quick-switch-item *,
-    .quick-switch-item::before,
-    .quick-switch-item::after {
+        .qsp-item,
+    .qsp-item *,
+    .qsp-item::before,
+    .qsp-item::after {
             animation-duration: 0.01ms;
             animation-iteration-count: 1;
             transition-duration: 0.01ms;
@@ -6282,16 +6218,16 @@ background: linear-gradient(
 
 @media (max-width: 768px) {
         /* .switch-grid 通用规则见 responsive.css (max-width: 767px) */
-        .quick-switch-item {
+        .qsp-item {
             padding: 16px 12px;
             min-height: 80px;
         }
-        .quick-switch-icon {
+        .qsp-item > :first-child {
             width: 36px;
             height: 36px;
             margin-bottom: 0px;
         }
-        .quick-switch-name {
+        .qsp-item > :last-child {
             font-size: 12px;
             line-height: 1.3;
         }
@@ -6318,7 +6254,7 @@ background: linear-gradient(
             grid-template-columns: repeat(5, 1fr);
             gap: 16px;
         }
-        .quick-switch-item {
+        .qsp-item {
             padding: 20px 16px;
         }
 }
@@ -6326,7 +6262,7 @@ background: linear-gradient(
 
 /* 开关状态ARIA标签支持 */
 
-.quick-switch-item[aria-checked="true"]::after {
+.qsp-item[aria-checked="true"]::after {
     content: '';
     position: absolute;
     top: 8px;
@@ -6339,24 +6275,24 @@ background: linear-gradient(
 }
 /* 禁用状态无障碍 */
 
-.quick-switch-item[aria-disabled="true"] {
+.qsp-item[aria-disabled="true"] {
     opacity: 0.4;
     cursor: not-allowed;
     pointer-events: none;
 }
 
-.quick-switch-item[aria-disabled="true"] .quick-switch-name {
+.qsp-item[aria-disabled="true"] > :last-child {
     color: var(--text-tertiary);
     text-decoration: line-through;
 }
 /* 加载状态无障碍 */
 
-.quick-switch-item[aria-busy="true"] {
+.qsp-item[aria-busy="true"] {
     position: relative;
     overflow: hidden;
 }
 
-.quick-switch-item[aria-busy="true"]::before {
+.qsp-item[aria-busy="true"]::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -6377,10 +6313,10 @@ background: linear-gradient(
 /* 大字体模式支持 */
 
 @media (min-width: 120dpi) {
-        .quick-switch-name {
+        .qsp-item > :last-child {
             font-size: 14px;
         }
-        .quick-switch-item {
+        .qsp-item {
             padding: 24px 20px;
         }
 }
@@ -6677,8 +6613,8 @@ background: linear-gradient(
 }
 /* 图标内部渐变填充 */
 
-.quick-switch-icon svg,
-.quick-switch-icon i {
+.qsp-item > :first-child svg,
+.qsp-item > :first-child i {
     position: relative;
     z-index: 2;
     background: linear-gradient(135deg,
@@ -6692,13 +6628,13 @@ background: linear-gradient(
 }
 /* 悬停时图标3D增强效果 */
 
-.quick-switch-item:hover .quick-switch-icon::after {
+.qsp-item:hover > :first-child::after {
     opacity: 1;
     animation-play-state: running;
 }
 
-.quick-switch-item:hover .quick-switch-icon svg,
-.quick-switch-item:hover .quick-switch-icon i {
+.qsp-item:hover > :first-child svg,
+.qsp-item:hover > :first-child i {
     background: linear-gradient(135deg,
         rgba(255, 255, 255, 1) 0%,
         rgba(var(--primary-color-rgb), 0.9) 50%,
@@ -6712,13 +6648,13 @@ background: linear-gradient(
 }
 /* 激活状态图标终极增强 */
 
-.quick-switch-item.active .quick-switch-icon::after {
+.qsp-item.qsp-active > :first-child::after {
     opacity: 1;
     animation-play-state: running;
 }
 
-.quick-switch-item.active .quick-switch-icon svg,
-.quick-switch-item.active .quick-switch-icon i {
+.qsp-item.qsp-active > :first-child svg,
+.qsp-item.qsp-active > :first-child i {
     background: linear-gradient(135deg,
         var(--primary-color) 0%,
         var(--secondary-color) 100%);
@@ -6730,7 +6666,7 @@ background: linear-gradient(
 }
 /* 图标点击3D按压反馈 */
 
-.quick-switch-item:active .quick-switch-icon {
+.qsp-item:active > :first-child {
     transform: translateY(-2px) scale(1.05) rotateX(-4deg) translateZ(5px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
         0 0 20px rgba(var(--primary-color-rgb), 0.2),
@@ -6739,7 +6675,7 @@ background: linear-gradient(
 }
 /* 更多按钮图标特殊样式 */
 
-.quick-switch-item.more:hover .quick-switch-icon {
+.qsp-item:hover > :first-child {
     background: linear-gradient(135deg, 
             rgba(255, 255, 255, 0.12) 0%, 
             rgba(255, 255, 255, 0.04) 100%),
@@ -6751,7 +6687,7 @@ background: linear-gradient(
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-.quick-switch-item.more .quick-switch-icon::after {
+.qsp-item > :first-child::after {
     background: radial-gradient(circle at center,
         rgba(150, 150, 150, 0.2) 0%,
         rgba(100, 100, 100, 0.08) 40%,
@@ -6872,7 +6808,7 @@ background: linear-gradient(
 /* 键盘焦点终极增强 - WCAG 2.1 AA标准 */
 .widget:focus-visible,
 .quick-app-item:focus-visible,
-.quick-switch-item:focus-visible,
+.qsp-item:focus-visible,
 .dock-btn:focus-visible,
 .nav-button:focus-visible,
 .control-icon:focus-visible {
@@ -6886,7 +6822,7 @@ background: linear-gradient(
 
 .widget,
 .quick-app-item,
-.quick-switch-item,
+.qsp-item,
 .dock-btn,
 /* 触控目标间距优化 */
 .quick-apps-container,
@@ -6899,7 +6835,7 @@ background: linear-gradient(
 @media (prefers-contrast: high) {
         .widget,
     .quick-app-item,
-    .quick-switch-item,
+    .qsp-item,
     .dock-btn {
             border-width: 2px;
             border-color: rgba(255, 255, 255, 0.5);
@@ -6907,19 +6843,19 @@ background: linear-gradient(
         }
         .widget-title,
     .quick-app-name,
-    .quick-switch-name {
+    .qsp-item > :last-child {
             font-weight: 700;
             color: #ffffff;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         }
         .widget-icon,
     .quick-app-icon,
-    .quick-switch-icon {
+    .qsp-item > :first-child {
             filter: brightness(1.5) contrast(1.3);
         }
         .widget.active,
     .quick-app-item.active,
-    .quick-switch-item.active {
+    .qsp-item.qsp-active {
             border-color: var(--primary-color);
             border-width: 3px;
             box-shadow: 0 0 0 2px var(--primary-color);
@@ -6958,7 +6894,7 @@ background: linear-gradient(
 
 [aria-disabled="true"] .widget-title,
 [aria-disabled="true"] .quick-app-name,
-[aria-disabled="true"] .quick-switch-name {
+[aria-disabled="true"] > :last-child {
     text-decoration: line-through;
     color: var(--text-tertiary);
 }
@@ -7019,19 +6955,19 @@ background: linear-gradient(
 @media (max-width: 768px) {
         .widget,
     .quick-app-item,
-    .quick-switch-item,
+    .qsp-item,
     .dock-btn {
             min-height: 56px;
             min-width: 56px;
         }
         .quick-app-icon,
-    .quick-switch-icon {
+    .qsp-item > :first-child {
             width: 40px;
             height: 40px;
         }
         .widget-title,
     .quick-app-name,
-    .quick-switch-name {
+    .qsp-item > :last-child {
             font-size: 13px;
             line-height: 1.4;
         }
@@ -7041,7 +6977,7 @@ background: linear-gradient(
 @media (min-width: 769px) and (max-width: 1024px) {
         .widget,
     .quick-app-item,
-    .quick-switch-item {
+    .qsp-item {
             min-height: 52px;
         }
 }
@@ -7050,21 +6986,20 @@ background: linear-gradient(
 @media (min-width: 120dpi) {
         .widget-title,
     .quick-app-name,
-    .quick-switch-name {
+    .qsp-item > :last-child {
             font-size: 110%;
             line-height: 1.5;
         }
         .widget,
     .quick-app-item,
-    .quick-switch-item {
+    .qsp-item {
             padding: 15%;
         }
 }
 /* 色盲模式优化 - 颜色对比度增强 */
 
 .widget-icon,
-.quick-app-icon,
-.quick-switch-icon {
+.quick-app-icon {
     filter: contrast(1.2) saturate(1.1);
 }
 
@@ -7228,21 +7163,10 @@ background: linear-gradient(
    快捷开关重构 - 空调控制样式
    ======================================== */
 /* "全部"按钮中的设置入口 */
-
-.quick-switch-item.more {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 70px;
-    padding: 8px 6px;
-}
 /* "全部"按钮图标样式 - 与空调控制按钮对齐 */
 /* "全部"按钮文字样式 - 与空调控制按钮对齐 */
 
-.quick-switch-item.more .quick-switch-name {
+.qsp-item > :last-child {
     font-size: 11px;
     color: var(--text-secondary);
     white-space: nowrap;
@@ -7354,18 +7278,18 @@ footer.status-bar {
             color: var(--text-primary);
         }
     /* 快捷开关 hover */
-        .quick-switch-item:hover::before {
+        .qsp-item:hover::before {
             opacity: 1;
         }
-        .quick-switch-item:hover .switch-shimmer,
-    .quick-switch-item:hover .quick-switch-icon::before {
+        .qsp-item:hover .switch-shimmer,
+    .qsp-item:hover > :first-child::before {
             left: 150%;
             opacity: 1;
         }
-        .quick-switch-item:hover .quick-switch-icon {
+        .qsp-item:hover > :first-child {
             transform: scale(1.1) translateY(-2px);
         }
-        .quick-switch-item:hover .quick-switch-name {
+        .qsp-item:hover > :last-child {
             color: var(--text-primary);
         }
         .quick-switches-widget:hover::before {
@@ -7508,8 +7432,8 @@ footer.status-bar {
             transform: translateY(-2px);
         }
     /* QSP 面板 hover */
-        .qsp-switch-item:hover,
-    .qsp-mode-item:hover {
+        .qsp-item:hover,
+    .qsp-item:hover {
             background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.15);
         }
@@ -7519,7 +7443,7 @@ footer.status-bar {
 
 .widget,
 .quick-app-item,
-.quick-switch-item,
+.qsp-item,
 .nav-button,
 .control-buttons button,
 .dock-btn,
@@ -7542,8 +7466,7 @@ footer.status-bar {
 .center-controls,
 .settings-entry,
 #appsList .app-item,
-.qsp-switch-item,
-.qsp-mode-item,
+.qsp-item,
 .switch-item,
 .automation-item {
     -webkit-tap-highlight-color: transparent;
@@ -7555,7 +7478,7 @@ footer.status-bar {
 
 .widget,
 .quick-app-item,
-.quick-switch-item,
+.qsp-item,
 .nav-button,
 .control-buttons button,
 .dock-btn,
@@ -7574,8 +7497,7 @@ footer.status-bar {
 .wind-display,
 .center-controls,
 #appsList .app-item,
-.qsp-switch-item,
-.qsp-mode-item,
+.qsp-item,
 .switch-item,
 .automation-item {
     transition: transform 0.15s ease-out, opacity 0.15s ease-out;
@@ -7583,7 +7505,7 @@ footer.status-bar {
 
 .widget:active,
 .quick-app-item:active,
-.quick-switch-item:active,
+.qsp-item:active,
 .nav-button:active,
 .control-buttons button:active,
 .dock-btn:active,
@@ -7601,8 +7523,8 @@ footer.status-bar {
 .wind-display:active,
 .center-controls:active,
 #appsList .app-item:active,
-.qsp-switch-item:active,
-.qsp-mode-item:active,
+.qsp-item:active,
+.qsp-item:active,
 .switch-item:active,
 .automation-item:active {
     transform: scale(0.95);

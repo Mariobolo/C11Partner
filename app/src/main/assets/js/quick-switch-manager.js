@@ -107,86 +107,62 @@ const QuickSwitchManager = {
         const panel = document.createElement('div');
         panel.id = 'quickSwitchPanel';
         panel.className = 'quick-switch-panel';
-        
+
         let html = '<h3 class="qsp-title">功能控制面板</h3>';
-        
+
         // 快捷开关网格
         html += '<div class="qsp-grid qsp-switch-grid">';
         this.switches.forEach(sw => {
-            html += `
-                <div class="qsp-switch-item" data-id="${sw.id}">
-                    <div class="qsp-icon">${sw.icon}</div>
-                    <div class="qsp-label">${sw.name}</div>
-                    <div class="qsp-status">--</div>
-                </div>
-            `;
+            html += `<div class="qsp-item qsp-switch" data-id="${sw.id}"><div>${sw.icon}</div><div>${sw.name}</div></div>`;
         });
         html += '</div>';
-        
+
         // 驾驶模式
         html += '<h4 class="qsp-section-title">驾驶模式</h4>';
         html += '<div class="qsp-grid qsp-drive-mode-grid">';
         this.driveModes.forEach(mode => {
-            html += `
-                <div class="qsp-mode-item qsp-drive-mode" data-id="${mode.id}">
-                    <div class="qsp-icon">${mode.icon}</div>
-                    <div class="qsp-label">${mode.name}</div>
-                </div>
-            `;
+            html += `<div class="qsp-item" data-id="${mode.id}"><div>${mode.icon}</div><div>${mode.name}</div></div>`;
         });
         html += '</div>';
-        
+
         // 场景模式
         html += '<h4 class="qsp-section-title">场景模式</h4>';
         html += '<div class="qsp-grid qsp-scene-mode-grid">';
         this.sceneModes.forEach(mode => {
-            html += `
-                <div class="qsp-mode-item qsp-scene-mode" data-id="${mode.id}">
-                    <div class="qsp-icon">${mode.icon}</div>
-                    <div class="qsp-label">${mode.name}</div>
-                </div>
-            `;
+            html += `<div class="qsp-item" data-id="${mode.id}"><div>${mode.icon}</div><div>${mode.name}</div></div>`;
         });
         html += '</div>';
-        
+
         // 设置入口
         html += '<h4 class="qsp-section-title">系统</h4>';
         html += '<div class="qsp-grid qsp-mode-grid">';
-        html += `
-            <div class="qsp-mode-item qsp-settings-entry">
-                <div class="qsp-icon">⚙️</div>
-                <div class="qsp-label">设置</div>
-            </div>
-        `;
+        html += `<div class="qsp-item" id="qspSettingsEntry"><div>⚙️</div><div>设置</div></div>`;
         html += '</div>';
-        
+
         panel.innerHTML = html;
-        
-        // 绑定开关点击事件
-        panel.querySelectorAll('.qsp-switch-item').forEach(item => {
-            item.addEventListener('click', () => {
-                this.toggleSwitch(item.dataset.id);
-            });
+
+        // 事件委托：开关网格
+        panel.querySelector('.qsp-switch-grid').addEventListener('click', (e) => {
+            const item = e.target.closest('.qsp-item');
+            if (item) this.toggleSwitch(item.dataset.id);
         });
-        
-        // 绑定驾驶模式点击事件
-        panel.querySelectorAll('.qsp-drive-mode').forEach(item => {
-            item.addEventListener('click', () => {
-                this.setDriveMode(parseInt(item.dataset.id));
-            });
+
+        // 事件委托：驾驶模式网格
+        panel.querySelector('.qsp-drive-mode-grid').addEventListener('click', (e) => {
+            const item = e.target.closest('.qsp-item');
+            if (item) this.setDriveMode(parseInt(item.dataset.id));
         });
-        
-        // 绑定场景模式点击事件
-        panel.querySelectorAll('.qsp-scene-mode').forEach(item => {
-            item.addEventListener('click', () => {
-                this.toggleSceneMode(item.dataset.id);
-            });
+
+        // 事件委托：场景模式网格
+        panel.querySelector('.qsp-scene-mode-grid').addEventListener('click', (e) => {
+            const item = e.target.closest('.qsp-item');
+            if (item) this.toggleSceneMode(item.dataset.id);
         });
-        
-        // 绑定设置入口点击事件
-        const settingsEntry = panel.querySelector('.qsp-settings-entry');
+
+        // 事件委托：设置入口
+        const self = this;
+        const settingsEntry = panel.querySelector('#qspSettingsEntry');
         if (settingsEntry) {
-            const self = this;
             settingsEntry.addEventListener('click', function(e) {
                 e.stopPropagation();
                 self.hidePanel();
@@ -203,7 +179,15 @@ const QuickSwitchManager = {
                 }, 100);
             });
         }
-        
+
+        // 点击面板边缘或空白处关闭
+        panel.addEventListener('click', function(e) {
+            const interactive = e.target.closest('.qsp-item, .qsp-switch-grid, .qsp-drive-mode-grid, .qsp-scene-mode-grid, .qsp-mode-grid, #qspSettingsEntry');
+            if (!interactive) {
+                self.hidePanel();
+            }
+        });
+
         return panel;
     },
     
@@ -367,26 +351,23 @@ const QuickSwitchManager = {
             'screenPresentation': window.Android.isPresentationShowing ? window.Android.isPresentationShowing() : null,
         };
         
-        panel.querySelectorAll('.qsp-switch-item').forEach(item => {
+        panel.querySelectorAll('.qsp-item.qsp-switch').forEach(item => {
             const id = item.dataset.id;
-            const statusEl = item.querySelector('.qsp-status');
-            if (statusEl && statusMap[id] !== null && statusMap[id] !== undefined) {
-                statusEl.textContent = statusMap[id] ? '开' : '关';
-                statusEl.style.color = statusMap[id] ? '#4CAF50' : '#888';
+            if (statusMap[id] !== null && statusMap[id] !== undefined) {
                 item.classList.toggle('qsp-active', statusMap[id]);
             }
         });
-        
+
         // 更新桌面快捷开关状态
         const desktopContainer = document.getElementById('quickSwitchesContainer');
         if (desktopContainer) {
-            desktopContainer.querySelectorAll('.quick-switch-item[data-id]').forEach(item => {
+            desktopContainer.querySelectorAll('.qsp-item[data-id]').forEach(item => {
                 const id = item.getAttribute('data-id');
                 if (statusMap[id] !== null && statusMap[id] !== undefined) {
                     if (statusMap[id]) {
-                        item.classList.add('active');
+                        item.classList.add('qsp-active');
                     } else {
-                        item.classList.remove('active');
+                        item.classList.remove('qsp-active');
                     }
                 }
             });

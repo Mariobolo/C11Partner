@@ -1811,13 +1811,13 @@ function loadQuickApps() {
             // 生成快速启动应用列表
             quickApps.forEach(app => {
                 const appItem = document.createElement('div');
-                appItem.className = 'quick-switch-item ac-control-item';
+                appItem.className = 'qsp-item';
                 appItem.setAttribute('data-package', app.packageName);
                 const appSafeIcon = normalizeAppIcon(app.icon);
                 const appSafeName = escapeHtml(app.name);
                 appItem.innerHTML = `
-                    <div class="quick-switch-icon" style="background-image: url('${appSafeIcon}');"></div>
-                    <div class="quick-switch-name">${appSafeName}</div>
+                    <div style="background-image: url('${appSafeIcon}');"></div>
+                    <div>${appSafeName}</div>
                 `;
 
                 // 添加点击事件
@@ -1874,11 +1874,11 @@ function loadQuickApps() {
         ];
         mockQuickApps.forEach(app => {
             const appItem = document.createElement('div');
-            appItem.className = 'quick-switch-item ac-control-item';
+            appItem.className = 'qsp-item';
             const appSafeName = escapeHtml(app.name);
             appItem.innerHTML = `
-                <div class="quick-switch-icon" style="background-image: url('${app.icon}');"></div>
-                <div class="quick-switch-name">${appSafeName}</div>
+                <div style="background-image: url('${app.icon}');"></div>
+                <div>${appSafeName}</div>
             `;
             quickAppsContainer.appendChild(appItem);
         });
@@ -1893,16 +1893,16 @@ function loadQuickApps() {
  */
 function createShowAllAppsButton() {
     const allBtn = document.createElement('div');
-    allBtn.className = 'quick-switch-item ac-control-item quick-app-all-btn';
+    allBtn.className = 'qsp-item';
     allBtn.innerHTML = `
-        <div class="quick-switch-icon quick-app-all-icon">
+        <div>
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round">
                 <circle cx="5" cy="5" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/>
                 <circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>
                 <circle cx="5" cy="19" r="1.5"/><circle cx="12" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/>
             </svg>
         </div>
-        <div class="quick-switch-name">全部</div>
+        <div>全部</div>
     `;
     allBtn.addEventListener('click', function (e) {
         e.stopPropagation();
@@ -1941,12 +1941,12 @@ function loadQuickSwitches() {
 
         acControls.forEach(ctrl => {
             const item = document.createElement('div');
-            item.className = 'quick-switch-item ac-control-item';
+            item.className = 'qsp-item qsp-switch';
             item.setAttribute('data-id', ctrl.id);
             item.setAttribute('data-type', ctrl.type);
             item.innerHTML = `
-                <div class="quick-switch-icon">${ctrl.icon}</div>
-                <div class="quick-switch-name">${ctrl.name}</div>
+                <div>${ctrl.icon}</div>
+                <div>${ctrl.name}</div>
             `;
 
             item.addEventListener('click', debounce(function() {
@@ -1986,10 +1986,10 @@ function loadQuickSwitches() {
 
     // “全部”按钮 —— 始终渲染，不依赖上面的空调控制
     const moreItem = document.createElement('div');
-    moreItem.className = 'quick-switch-item more';
+    moreItem.className = 'qsp-item';
     moreItem.innerHTML = `
-        <div class="quick-switch-icon">⋯</div>
-        <div class="quick-switch-name">全部</div>
+        <div>⋯</div>
+        <div>全部</div>
     `;
     moreItem.addEventListener('click', debounce(function() {
         if (window.QuickSwitchManager) {
@@ -2014,9 +2014,9 @@ function updateACControlStatus() {
     const acSwitch = document.querySelector('[data-id="acSwitch"]');
     if (acSwitch && window.ACManager) {
         if (window.ACManager.isOn()) {
-            acSwitch.classList.add('active');
+            acSwitch.classList.add('qsp-active');
         } else {
-            acSwitch.classList.remove('active');
+            acSwitch.classList.remove('qsp-active');
         }
     }
 }
@@ -2092,15 +2092,15 @@ if (!window.ACManager) {
  * @param {string} switchId - 快捷开关的唯一标识符
  */
 function updateQuickSwitchStatus(switchId) {
-    const item = document.querySelector('.quick-switch-item[data-id="' + switchId + '"]');
+    const item = document.querySelector('.qsp-item[data-id="' + switchId + '"]');
     if (!item || !window.QuickSwitchManager) return;
 
     // 从QuickSwitchManager获取状态
     const sw = window.QuickSwitchManager.switches.find(s => s.id === switchId);
     if (sw && sw.currentState) {
-        item.classList.add('active');
+        item.classList.add('qsp-active');
     } else {
-        item.classList.remove('active');
+        item.classList.remove('qsp-active');
     }
 }
 
@@ -2113,7 +2113,7 @@ function updateQuickSwitchStatus(switchId) {
 function refreshQuickSwitchesStatus() {
     if (!window.QuickSwitchManager) return;
 
-    const items = document.querySelectorAll('.quick-switch-item[data-id]');
+    const items = document.querySelectorAll('.qsp-item[data-id]');
     items.forEach(item => {
         const id = item.getAttribute('data-id');
         updateQuickSwitchStatus(id);

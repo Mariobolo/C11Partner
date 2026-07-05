@@ -2368,7 +2368,7 @@
 .setting-item:focus-visible,
 .tab-button:focus-visible,
 .quick-app-item:focus-visible,
-.quick-switch-item:focus-visible {
+.qsp-item:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.8),
         0 0 0 4px rgba(var(--primary-color-rgb), 0.6);
@@ -2384,7 +2384,7 @@
 .btn:disabled,
 .setting-btn:disabled,
 .quick-app-item.disabled,
-.quick-switch-item.disabled {
+.qsp-item.disabled {
     opacity: 0.4;
     cursor: not-allowed;
     pointer-events: none;

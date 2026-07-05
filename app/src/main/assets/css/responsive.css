@@ -270,12 +270,12 @@
         .quick-switches-widget {
             min-width: 240px;
         }
-        .quick-switch-icon {
+        .qsp-item > :first-child {
             width: 34px;
             height: 34px;
             font-size: 16px;
         }
-        .quick-switch-name {
+        .qsp-item > :last-child {
             font-size: 10px;
         }
     /* 地图组件 */
@@ -562,7 +562,7 @@
     .switch-item:hover,
     .nav-button:hover,
     .quick-app-item:hover,
-    .quick-switch-item:hover {
+    .qsp-item:hover {
             transform: none;
             box-shadow: var(--shadow-lg), var(--shadow-inner);
         }
@@ -574,7 +574,7 @@
             min-height: 48px;
         }
         .quick-app-icon,
-    .quick-switch-icon {
+    .qsp-item > :first-child {
             min-width: 52px;
             min-height: 52px;
         }
@@ -620,7 +620,7 @@
             border-width: 2px;
         }
         .quick-app-icon,
-    .quick-switch-icon {
+    .qsp-item > :first-child {
             outline: 2px solid var(--border-color);
         }
 }
@@ -988,21 +988,21 @@ body.orientation-changing {
     .btn:active,
     .app-item:active,
     .quick-app-item:active,
-    .quick-switch-item:active {
+    .qsp-item:active {
             transform: scale(0.96);
             background: rgba(255, 255, 255, 0.15);
         }
     /* 触控目标最小尺寸 */
         .nav-button,
     .quick-app-item,
-    .quick-switch-item,
+    .qsp-item,
     .setting-item {
             min-height: 56px;
         }
     /* 增大文字便于驾驶时阅读 */
         .nav-text,
     .quick-app-name,
-    .quick-switch-name {
+    .qsp-item > :last-child {
             font-size: calc(100% + 2px);
         }
 }
@@ -1145,7 +1145,7 @@ body.orientation-changing {
             border: 1px solid CanvasText;
         }
         .quick-app-icon,
-    .quick-switch-icon {
+    .qsp-item > :first-child {
             forced-color-adjust: none;
         }
 }
@@ -1167,7 +1167,7 @@ body.orientation-changing {
     .ac-hcs,
     .wind-display,
     .quick-app-icon,
-    .quick-switch-icon,
+    .qsp-item > :first-child,
     .control-buttons button,
     .nav-button {
             min-width: 48px;
@@ -1346,7 +1346,7 @@ body.orientation-changing {
 .card-view {
     left: clamp(20px, 3vw, 60px);
     right: clamp(20px, 3vw, 60px);
-    bottom: clamp(70px, 10vh, 100px);
+    bottom: clamp(10px, 1vh, 40px);
 }
 
 .widget {
