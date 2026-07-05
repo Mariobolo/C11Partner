@@ -808,7 +808,7 @@
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    margin-bottom: 2px;
+    margin-bottom: 0px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -1191,7 +1191,7 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
     justify-content: center;
     font-size: 20px;
     border-radius: 12px;
-    margin-bottom: 2px;
+    margin-bottom: 0px;
     position: relative;
     transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
@@ -2161,27 +2161,6 @@ linear-gradient(135deg,
         }
 }
 /* ========== 减少动效模式适配 ========== */
-@media (prefers-reduced-motion: reduce) {
-        *,
-    *::before,
-    *::after {
-            animation-duration: 0.01ms;
-            animation-iteration-count: 1;
-            transition-duration: 0.01ms;
-        }
-        .skeleton {
-            animation: none;
-            background: rgba(255, 255, 255, 0.08);
-        }
-}
-/* ========== 深色模式强制优化 ========== */
-@media (prefers-color-scheme: dark) {
-        .widget,
-    .card,
-    .btn {
-            background-color: rgba(15, 15, 20, 0.8);
-        }
-}
 /* ========== 胎压组件 - 【优化点3】3D视觉终极美化 ========== */
 .car-widget {
     min-width: 260px;
@@ -2235,9 +2214,6 @@ linear-gradient(135deg,
     position: absolute;
     font-size: 10px;
     color: var(--text-secondary);
-    background: linear-gradient(135deg, 
-            rgba(var(--primary-color-rgb), 0.2) 0%, 
-            rgba(var(--primary-color-rgb), 0.1) 100%);
     border: 1px solid rgba(var(--primary-color-rgb), 0.4);
     border-radius: 10px;
     padding: 6px 10px;
@@ -3886,21 +3862,8 @@ linear-gradient(135deg,
             font-weight: var(--font-weight-bold);
         }
 }
-/* 减少动画模式支持 */
+/* 减少动画模式支持 - 通用规则见 responsive.css */
 
-@media (prefers-reduced-motion: reduce) {
-        *,
-    *::before,
-    *::after {
-            animation-duration: 0.01ms;
-            animation-iteration-count: 1;
-            transition-duration: 0.01ms;
-            scroll-behavior: auto;
-        }
-        .skeleton {
-            animation: none;
-        }
-}
 /* 焦点可见性增强 - 键盘导航 */
 
 .widget:focus-visible,
@@ -4128,15 +4091,8 @@ linear-gradient(135deg,
     gap: var(--spacing-lg);
 }
 /* ========== 性能最佳实践 ========== */
-/* 避免不必要的动画 */
+/* 避免不必要的动画 - 通用规则见 responsive.css */
 
-@media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-            animation-duration: 0.01ms;
-            animation-iteration-count: 1;
-            transition-duration: 0.01ms;
-        }
-}
 /* 高对比度模式支持 */
 
 @media (prefers-contrast: high) {
@@ -4219,29 +4175,6 @@ linear-gradient(135deg,
 /* 避免使用内联样式 */
 /* 避免使用 ID 选择器设置样式 */
 /* 避免嵌套过深（建议不超过3层） */
-/* ========== 响应式断点规范 ========== */
-/* 车机标准分辨率 */
-
-@media (min-width: 1920px) {
-    /* 1920x1080 标准车机 */
-}
-
-@media (min-width: 2560px) {
-    /* 2560x1440 高分辨率 */
-}
-
-@media (max-width: 1280px) {
-    /* 低分辨率适配 */
-}
-/* 横竖屏适配 */
-
-@media (orientation: landscape) {
-    /* 横屏优化 */
-}
-
-@media (orientation: portrait) {
-    /* 竖屏优化 */
-}
 /* ========== 调试工具类 - 开发时使用 ========== */
 .debug-outline {
     outline: 1px solid red;
@@ -4284,11 +4217,6 @@ linear-gradient(135deg,
     flex-direction: column;
     gap: var(--spacing-md);
     padding: var(--spacing-lg) var(--spacing-md);
-    background: linear-gradient(180deg, 
-            rgba(255, 255, 255, 0.08) 0%, 
-            rgba(255, 255, 255, 0.03) 50%, 
-            rgba(0, 0, 0, 0.1) 100%),
-        rgba(15, 15, 20, 0.6);
     background: rgba(15, 15, 20, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
@@ -4918,40 +4846,6 @@ opacity: 1;
     animation: loadingSpin 0.8s linear infinite;
     z-index: 11;
 }
-/* ========== 触控区域优化 ========== */
-@media (pointer: coarse) {
-        .btn,
-    .widget,
-    .quick-app-item {
-            min-height: 44px;
-        }
-        .btn-icon {
-            width: 48px;
-            height: 48px;
-        }
-}
-/* ========== 减少动效模式适配 ========== */
-@media (prefers-reduced-motion: reduce) {
-        *,
-    *::before,
-    *::after {
-            animation-duration: 0.01ms;
-            animation-iteration-count: 1;
-            transition-duration: 0.01ms;
-        }
-        .skeleton {
-            animation: none;
-            background: rgba(255, 255, 255, 0.08);
-        }
-}
-/* ========== 深色模式强制优化 ========== */
-@media (prefers-color-scheme: dark) {
-        .widget,
-    .card,
-    .btn {
-            background-color: rgba(15, 15, 20, 0.8);
-        }
-}
 /* ============================================
    【优化点2】Dock栏 - 视觉与交互动效终极增强
    3D毛玻璃、渐变边框、弹性动画、发光效果
@@ -4965,14 +4859,6 @@ opacity: 1;
     align-items: center;
     gap: 12px;
     padding: 14px 24px;
-    background: radial-gradient(ellipse at 50% 0%, 
-            rgba(var(--primary-color-rgb), 0.08) 0%, 
-            transparent 60%),
-        linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.12) 0%, 
-            rgba(255, 255, 255, 0.05) 40%, 
-            rgba(0, 0, 0, 0.15) 100%),
-        rgba(20, 20, 30, 0.7);
     background: rgba(20, 20, 30, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 24px;
@@ -6395,10 +6281,7 @@ background: linear-gradient(
 /* 响应式布局 - 小屏幕优化 */
 
 @media (max-width: 768px) {
-        .switch-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
+        /* .switch-grid 通用规则见 responsive.css (max-width: 767px) */
         .quick-switch-item {
             padding: 16px 12px;
             min-height: 80px;
@@ -6406,7 +6289,7 @@ background: linear-gradient(
         .quick-switch-icon {
             width: 36px;
             height: 36px;
-            margin-bottom: 8px;
+            margin-bottom: 0px;
         }
         .quick-switch-name {
             font-size: 12px;
@@ -6983,26 +6866,8 @@ background: linear-gradient(
 
 }
 
-@keyframes widgetFloatEnhanced {
-
-    0%, 100% { 
-        transform: translateY(0) rotateX(0) rotateY(0); 
-    }
-    25% { 
-        transform: translateY(-4px) rotateX(2deg) rotateY(-1deg); 
-    }
-    50% { 
-        transform: translateY(-6px) rotateX(0) rotateY(0); 
-    }
-    75% { 
-        transform: translateY(-3px) rotateX(-1deg) rotateY(1deg); 
-    }
-
-}
 /* ============================================
-   快捷应用卡片终极光泽与阴影优化
-   ============================================ */
-键盘焦点增强、触控目标优化、高对比度优化、屏幕阅读器支持
+   快捷应用卡片终极光泽与阴影优化、键盘焦点增强、触控目标优化、高对比度优化、屏幕阅读器支持
    ============================================ */
 /* 键盘焦点终极增强 - WCAG 2.1 AA标准 */
 .widget:focus-visible,
@@ -7063,14 +6928,7 @@ background: linear-gradient(
 /* 减少动画模式终极优化 */
 
 @media (prefers-reduced-motion: reduce) {
-        *,
-    *::before,
-    *::after {
-            animation-duration: 0.01ms;
-            animation-iteration-count: 1;
-            transition-duration: 0.01ms;
-            scroll-behavior: auto;
-        }
+        /* 通用规则见 responsive.css */
         .widget .widget-shimmer,
     .weather-sun-rays,
     .weather-particles,
