@@ -17,6 +17,25 @@
     <link rel="stylesheet" href="css/pages.css?v=2">
     <link rel="stylesheet" href="css/responsive.css?v=2">
 
+    <!-- 特效等级：在DOM渲染前应用，避免动画闪烁 -->
+    <script>
+    (function() {
+        try {
+            var level = 'none';
+            var raw = localStorage.getItem('app_settings');
+            if (raw) {
+                var parsed = JSON.parse(raw);
+                if (parsed && parsed.ui && parsed.ui.effectLevel) {
+                    level = parsed.ui.effectLevel;
+                }
+            }
+            document.documentElement.classList.add('effect-' + level);
+        } catch(e) {
+            document.documentElement.classList.add('effect-none');
+        }
+    })();
+    </script>
+
     <!-- 基础依赖层 -->
     <script src="js/utils.js"></script>
     <script src="js/storage.js"></script>
@@ -401,25 +420,25 @@
                     <section class="tab-content" id="ui-tab">
                         <div class="setting-section">
                             <h3>特效等级</h3>
-                            <p class="setting-hint" style="margin-bottom:12px;">降低特效等级可提升车机流畅度</p>
+                            <p class="setting-hint" style="margin-bottom:12px;">降低特效等级可显著提升车机流畅度</p>
                             <div class="wallpaper-type-list">
                                 <label class="wallpaper-type-item">
-                                    <input type="radio" name="effectLevel" value="low" checked>
-                                    <span class="type-icon">⚡</span>
-                                    <span class="type-name">流畅</span>
-                                    <span class="type-desc">关闭动画特效，最佳性能</span>
+                                    <input type="radio" name="effectLevel" value="none" checked>
+                                    <span class="type-icon">🚫</span>
+                                    <span class="type-name">无特效</span>
+                                    <span class="type-desc">关闭所有动画和特效，最佳性能</span>
                                 </label>
                                 <label class="wallpaper-type-item">
-                                    <input type="radio" name="effectLevel" value="medium">
-                                    <span class="type-icon">⚖️</span>
-                                    <span class="type-name">平衡</span>
-                                    <span class="type-desc">保留基础动画，兼顾性能</span>
+                                    <input type="radio" name="effectLevel" value="low">
+                                    <span class="type-icon">⚡</span>
+                                    <span class="type-name">最低特效</span>
+                                    <span class="type-desc">保留基础过渡，兼顾性能与体验</span>
                                 </label>
                                 <label class="wallpaper-type-item">
                                     <input type="radio" name="effectLevel" value="high">
                                     <span class="type-icon">✨</span>
-                                    <span class="type-name">炫丽</span>
-                                    <span class="type-desc">全部特效，最佳视觉体验</span>
+                                    <span class="type-name">全特效</span>
+                                    <span class="type-desc">全部动画特效，最佳视觉体验</span>
                                 </label>
                             </div>
                         </div>

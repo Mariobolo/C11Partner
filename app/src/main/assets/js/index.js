@@ -3343,8 +3343,8 @@ function initEffectLevel() {
         console.log('[EffectLevel] 已迁移旧设置:', legacyLevel);
     }
 
-    // 通过 Settings 模块读取特效等级（默认 low = 流畅模式）
-    var savedLevel = (window.Settings && Settings.get('ui.effectLevel')) || 'low';
+    // 通过 Settings 模块读取特效等级（默认 none = 无特效）
+    var savedLevel = (window.Settings && Settings.get('ui.effectLevel')) || 'none';
     applyEffectLevel(savedLevel);
 
     // 绑定radio按钮change事件
@@ -3367,7 +3367,7 @@ function initEffectLevel() {
                 applyEffectLevel(level);
                 console.log('[EffectLevel] 已切换为:', level);
                 // 显示切换反馈
-                var names = { low: '流畅', medium: '平衡', high: '炫丽' };
+                var names = { none: '无特效', low: '最低特效', high: '全特效' };
                 if (typeof showToast === 'function') {
                     showToast('已切换为' + (names[level] || level) + '模式');
                 }
@@ -3378,10 +3378,13 @@ function initEffectLevel() {
 
 /**
  * 应用特效等级
- * @param {string} level - low/medium/high
+ * @param {string} level - none无特效/low最低特效/high全特效
  */
 function applyEffectLevel(level) {
+    var root = document.documentElement;
     var body = document.body;
-    body.classList.remove('effect-low', 'effect-medium', 'effect-high');
+    root.classList.remove('effect-none', 'effect-low', 'effect-high');
+    body.classList.remove('effect-none', 'effect-low', 'effect-high');
+    root.classList.add('effect-' + level);
     body.classList.add('effect-' + level);
 }

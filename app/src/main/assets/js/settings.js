@@ -58,7 +58,7 @@
             theme: 'dark',     // 主题：dark/light/auto
             animations: true,  // 是否启用动画
             fontScale: 1.0,    // 字体缩放
-            effectLevel: 'low' // 特效等级：low/medium/high，默认low（流畅模式）
+            effectLevel: 'none' // 特效等级：none无特效/low最低特效/high全特效，默认none（最佳性能）
         }
     };
 

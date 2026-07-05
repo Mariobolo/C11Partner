@@ -563,3 +563,76 @@ body.touch-reset *:active {
     background: rgba(var(--primary-color-rgb), 0.3);
     color: #ffffff;
 }
+
+/* ========== 特效等级控制 ==========
+   三级特效：none(无特效) / low(最低特效) / high(全特效)
+   通过 .effect-none / .effect-low / .effect-high 控制（加在html或body上均可）
+   high 为默认行为（无需额外CSS），none 和 low 通过覆盖禁用相关属性
+*/
+
+/* ----- 无特效模式：关闭所有动画、过渡、3D变换、毛玻璃、阴影动画 ----- */
+.effect-none *,
+.effect-none *::before,
+.effect-none *::after {
+    animation: none !important;
+    transition: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+.effect-none .widget,
+.effect-none .qsp-item,
+.effect-none .quick-app-item,
+.effect-none .nav-button,
+.effect-none .dock-btn,
+.effect-none .setting-item,
+.effect-none .app-item {
+    transform: none !important;
+    background: rgba(30, 32, 38, 0.92) !important;
+}
+
+.effect-none .widget::before,
+.effect-none .widget::after,
+.effect-none .qsp-item::before,
+.effect-none .qsp-item::after {
+    display: none !important;
+}
+
+/* ----- 最低特效模式：保留基础过渡，禁用3D变换、毛玻璃、复杂动画 ----- */
+.effect-low *,
+.effect-low *::before,
+.effect-low *::after {
+    animation: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.effect-low .widget,
+.effect-low .qsp-item,
+.effect-low .quick-app-item,
+.effect-low .nav-button,
+.effect-low .dock-btn,
+.effect-low .setting-item,
+.effect-low .app-item {
+    transform: none !important;
+    background: rgba(30, 32, 38, 0.85) !important;
+}
+
+.effect-low .widget::before,
+.effect-low .widget::after {
+    display: none !important;
+}
+
+.effect-low .widget,
+.effect-low .qsp-item,
+.effect-low .quick-app-item,
+.effect-low .nav-button,
+.effect-low .dock-btn,
+.effect-low .btn,
+.effect-low .setting-item,
+.effect-low .app-item {
+    transition: opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
+}
