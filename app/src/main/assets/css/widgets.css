@@ -196,21 +196,9 @@
     padding: 8px 20px;
     position: relative;
     overflow: hidden;
-    background: radial-gradient(ellipse at 50% 0%,
-            rgba(var(--primary-color-rgb), 0.08) 0%,
-            transparent 60%),
-        linear-gradient(135deg,
-            rgba(255, 255, 255, 0.08) 0%,
-            rgba(255, 255, 255, 0.03) 50%,
-            rgba(0, 0, 0, 0.12) 100%),
-        var(--surface-color);
-    background: rgba(30, 32, 38, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
-        0 2px 8px rgba(0, 0, 0, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        0 0 30px rgba(var(--primary-color-rgb), 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: transparent;
+    border: none;
+    box-shadow: none;
     transform-style: flat;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -513,15 +501,14 @@
     left: var(--spacing-3xl);
     right: var(--spacing-3xl);
     height: auto;
-    min-height: 130px;
+    min-height: var(--widget-height, 120px);
     max-height: 160px;
-    background: rgba(10, 10, 20, 0.75);
+    background: transparent;
     border-radius: var(--radius-lg);
     pointer-events: auto;
     overflow: visible;
     padding: 0;
 }
-
 .horizontal-scroll {
     display: flex;
     flex-direction: row;
@@ -558,7 +545,7 @@
     display: inline-flex;
     flex-shrink: 0;
     flex-direction: column;
-    height: 130px;
+    height: var(--widget-height, 120px);
     min-width: 280px;
     align-items: center;
     justify-content: center;
@@ -582,8 +569,6 @@
     overflow: hidden;
     transform-style: flat;
     white-space: normal;
-    animation: widgetFloatEnhanced 5s ease-in-out infinite;
-    animation-play-state: paused;
 }
 /* Widget卡片渐变发光边框 */
 
@@ -702,11 +687,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.08) 0%, 
-            rgba(255, 255, 255, 0.03) 50%, 
-            rgba(0, 0, 0, 0.08) 100%),
-        rgba(30, 32, 38, 0.85);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 16px;
     padding: 14px 12px;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -827,7 +808,7 @@
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -944,17 +925,6 @@
     position: relative;
     transform-style: flat;
     overflow: hidden;
-    background: radial-gradient(ellipse at 20% 10%, 
-            rgba(var(--primary-color-rgb), 0.12) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 80% 90%, 
-            rgba(var(--secondary-color-rgb), 0.08) 0%, 
-            transparent 50%),
-        linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.09) 0%, 
-            rgba(255, 255, 255, 0.04) 40%, 
-            rgba(0, 0, 0, 0.15) 100%),
-        var(--bg-card);
     background: rgba(30, 32, 38, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.11);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -1221,17 +1191,11 @@ border-color: rgba(var(--primary-color-rgb), 0.3);
     justify-content: center;
     font-size: 20px;
     border-radius: 12px;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     position: relative;
     transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
-    background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.1) 0%, 
-            rgba(255, 255, 255, 0.02) 50%, 
-            rgba(0, 0, 0, 0.1) 100%),
-        linear-gradient(135deg, 
-            rgba(var(--primary-color-rgb), 0.08) 0%, 
-            rgba(var(--secondary-color-rgb), 0.04) 100%);
+    background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
         inset 0 -1px 0 rgba(0, 0, 0, 0.2);
@@ -1941,7 +1905,7 @@ linear-gradient(135deg,
         .widget {
             min-width: 160px;
             padding: 16px 20px;
-            height: 100px;
+            height: var(--widget-height, 120px);
         }
         .quick-apps-widget {
             min-width: 260px;
@@ -1979,7 +1943,7 @@ linear-gradient(135deg,
         .widget {
             min-width: 140px;
             padding: 14px 16px;
-            height: 90px;
+            height: var(--widget-height, 120px);
             border-radius: 16px;
         }
         .quick-apps-widget {
@@ -2041,7 +2005,7 @@ linear-gradient(135deg,
         .widget {
             min-width: 120px;
             padding: 12px 14px;
-            height: 80px;
+            height: var(--widget-height, 120px);
             border-radius: 14px;
         }
         .quick-apps-widget {
@@ -2119,7 +2083,7 @@ linear-gradient(135deg,
         .widget {
             min-width: 100px;
             padding: 10px 12px;
-            height: 70px;
+            height: var(--widget-height, 120px);
         }
         .widget-icon {
             width: 28px;
@@ -2159,7 +2123,7 @@ linear-gradient(135deg,
             bottom: 65px;
         }
         .widget {
-            height: 85px;
+            height: var(--widget-height, 120px);
         }
 }
 /* ========== 高DPI屏幕优化 ========== */
@@ -4953,324 +4917,6 @@ opacity: 1;
     border-radius: 50%;
     animation: loadingSpin 0.8s linear infinite;
     z-index: 11;
-/* ============================================
-   多断点优化、小屏幕间距调整、触控区域优化、字体缩放
-   ============================================ */
-/* ========== 超宽屏幕适配 (1920px+) ========== */
-@media (min-width: 1920px) {
-        .layout-left {
-            top: 36%;
-        }
-        .time-text#timeDisplay {
-            font-size: 160px;
-            letter-spacing: -8px;
-        }
-        .date-text {
-            font-size: 32px;
-        }
-        .lunar-calendar-text {
-            font-size: 18px;
-        }
-        .card-view {
-            bottom: 100px;
-            left: 60px;
-            right: 60px;
-        }
-        .widget {
-            min-width: 220px;
-            padding: 24px 28px;
-        }
-        .quick-apps-widget {
-            min-width: 360px;
-        }
-        .quick-app-item {
-            min-width: 72px;
-            padding: 16px 14px;
-        }
-}
-/* ========== 标准宽屏适配 (1440px - 1919px) ========== */
-@media (min-width: 1440px) and (max-width: 1919px) {
-        .layout-left {
-            top: 37%;
-        }
-        .time-text#timeDisplay {
-            font-size: 150px;
-            letter-spacing: -7px;
-        }
-        .date-text {
-            font-size: 30px;
-        }
-        .card-view {
-            bottom: 95px;
-            left: 50px;
-            right: 50px;
-        }
-}
-/* ========== 笔记本屏幕适配 (1024px - 1439px) ========== */
-@media (min-width: 1024px) and (max-width: 1439px) {
-        .layout-left {
-            top: 38%;
-        }
-        .time-text#timeDisplay {
-            font-size: 120px;
-            letter-spacing: -5px;
-        }
-        .date-text {
-            font-size: 24px;
-        }
-        .lunar-calendar-text {
-            font-size: 14px;
-        }
-        .card-view {
-            bottom: 85px;
-            left: 40px;
-            right: 40px;
-        }
-        .widget {
-            min-width: 160px;
-            padding: 16px 20px;
-            height: 100px;
-        }
-        .quick-apps-widget {
-            min-width: 260px;
-        }
-        .quick-app-item {
-            min-width: 56px;
-            padding: 12px 10px;
-        }
-        .top-status-bar {
-            height: 48px;
-            padding: 0 24px;
-        }
-}
-/* ========== 平板/小屏适配 (768px - 1023px) ========== */
-@media (min-width: 768px) and (max-width: 1023px) {
-        .layout-left {
-            top: 35%;
-        }
-        .time-text#timeDisplay {
-            font-size: 90px;
-            letter-spacing: -3px;
-        }
-        .date-text {
-            font-size: 20px;
-            margin-top: 8px;
-        }
-        .lunar-calendar-text {
-            font-size: 12px;
-        }
-        .card-view {
-            bottom: 80px;
-            left: 24px;
-            right: 24px;
-        }
-        .widget {
-            min-width: 140px;
-            padding: 14px 16px;
-            height: 90px;
-            border-radius: 16px;
-        }
-        .quick-apps-widget {
-            min-width: 220px;
-        }
-        .quick-app-item {
-            min-width: 52px;
-            padding: 10px 8px;
-            border-radius: 12px;
-        }
-        .quick-app-icon {
-            width: 32px;
-            height: 32px;
-        }
-        .quick-app-name {
-            font-size: 11px;
-            margin-top: 6px;
-        }
-        .top-status-bar {
-            height: 44px;
-            padding: 0 20px;
-        }
-        .top-left-section,
-    .top-right-info {
-            gap: 12px;
-        }
-        .car-status-indicators {
-            padding: 6px 14px;
-            gap: 12px;
-        }
-        .gear-indicator {
-            font-size: 16px;
-            min-width: 36px;
-            height: 30px;
-        }
-}
-/* ========== 手机竖屏适配 (< 768px) ========== */
-@media (max-width: 767px) {
-        .layout-left {
-            top: 30%;
-        }
-        .time-text#timeDisplay {
-            font-size: 64px;
-            letter-spacing: -2px;
-        }
-        .date-text {
-            font-size: 16px;
-            margin-top: 6px;
-        }
-        .lunar-calendar-text {
-            font-size: 11px;
-            letter-spacing: 1px;
-        }
-        .card-view {
-            bottom: 70px;
-            left: 16px;
-            right: 16px;
-        }
-        .widget {
-            min-width: 120px;
-            padding: 12px 14px;
-            height: 80px;
-            border-radius: 14px;
-        }
-        .quick-apps-widget {
-            min-width: 180px;
-        }
-        .quick-apps-container {
-            gap: 8px;
-        }
-        .quick-app-item {
-            min-width: 48px;
-            padding: 8px 6px;
-            border-radius: 10px;
-        }
-        .quick-app-icon {
-            width: 28px;
-            height: 28px;
-        }
-        .quick-app-name {
-            font-size: 10px;
-            margin-top: 4px;
-            display: none;
-        }
-        .top-status-bar {
-            height: 40px;
-            padding: 0 16px;
-        }
-        .top-left-section,
-    .top-right-info {
-            gap: 8px;
-        }
-        .top-left-time .time-text {
-            font-size: 13px;
-        }
-        .car-status-indicators {
-            padding: 4px 10px;
-            gap: 8px;
-        }
-        .status-indicator {
-            font-size: 12px;
-            min-width: 28px;
-            height: 28px;
-        }
-        .gear-indicator {
-            font-size: 14px;
-            min-width: 32px;
-            height: 26px;
-        }
-        .network-status-icon,
-    .bluetooth-status-icon,
-    .network-5g-icon {
-            width: 22px;
-            height: 22px;
-        }
-}
-/* ========== 超小屏幕适配 (< 480px) ========== */
-@media (max-width: 479px) {
-        .layout-left {
-            top: 28%;
-        }
-        .time-text#timeDisplay {
-            font-size: 48px;
-            letter-spacing: -1px;
-        }
-        .date-text {
-            font-size: 14px;
-        }
-        .lunar-calendar-text {
-            display: none;
-        }
-        .card-view {
-            bottom: 60px;
-            left: 12px;
-            right: 12px;
-        }
-        .widget {
-            min-width: 100px;
-            padding: 10px 12px;
-            height: 70px;
-        }
-        .widget-icon {
-            width: 28px;
-            height: 28px;
-        }
-        .widget-title {
-            font-size: 12px;
-        }
-        .widget-value {
-            font-size: 16px;
-        }
-        .quick-apps-widget {
-            min-width: 150px;
-        }
-        .quick-app-item {
-            min-width: 44px;
-            padding: 6px 4px;
-        }
-        .quick-app-icon {
-            width: 24px;
-            height: 24px;
-        }
-        .top-status-bar {
-            height: 36px;
-            padding: 0 12px;
-        }
-        .car-status-indicators {
-            display: none;
-        }
-}
-/* ========== 横屏特殊优化 ========== */
-@media (orientation: landscape) and (max-height: 600px) {
-        .layout-left {
-            top: 32%;
-        }
-        .card-view {
-            bottom: 65px;
-        }
-        .widget {
-            height: 85px;
-        }
-}
-/* ========== 高DPI屏幕优化 ========== */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-        .time-text#timeDisplay {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .widget,
-    .card,
-    .btn {
-            border-width: 0.5px;
-        }
-}
-/* ========== 安全区域适配 (刘海屏/挖孔屏) ========== */
-@supports (padding-top: env(safe-area-inset-top)) {
-    .top-status-bar {
-        padding-top: max(0px, env(safe-area-inset-top));
-        height: calc(var(--status-bar-height) + env(safe-area-inset-top));
-    }
-    .card-view {
-        padding-bottom: max(0px, env(safe-area-inset-bottom));
-    }
 }
 /* ========== 触控区域优化 ========== */
 @media (pointer: coarse) {
@@ -7723,62 +7369,6 @@ background: linear-gradient(
 /* ========================================
    快捷开关重构 - 空调控制样式
    ======================================== */
-/* 空调控制按钮样式 */
-
-.quick-switch-item.ac-control-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 90px;
-    padding: 8px 6px;
-    border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.quick-switch-item.ac-control-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(var(--primary-color-rgb), 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2),
-        0 0 20px rgba(var(--primary-color-rgb), 0.1);
-}
-
-.quick-switch-item.ac-control-item:active {
-    transform: translateY(0) scale(0.98);
-}
-/* 空调控制按钮激活状态 */
-
-.quick-switch-item.ac-control-item.active {
-    background: rgba(var(--primary-color-rgb), 0.15);
-    border-color: rgba(var(--primary-color-rgb), 0.4);
-    box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.2),
-        inset 0 0 10px rgba(var(--primary-color-rgb), 0.1);
-    transform: none;
-}
-/* 空调控制图标 */
-
-.quick-switch-item.ac-control-item .quick-switch-icon {
-    font-size: 22px;
-    margin-bottom: 4px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
-/* 空调控制文字 */
-
-.quick-switch-item.ac-control-item .quick-switch-name {
-    font-size: 11px;
-    color: var(--text-secondary);
-    white-space: nowrap;
-}
-
-.quick-switch-item.ac-control-item.active .quick-switch-name {
-    color: var(--primary-color);
-}
 /* "全部"按钮中的设置入口 */
 
 .quick-switch-item.more {
