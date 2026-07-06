@@ -36,7 +36,7 @@ for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
 
 @rem Find java.exe
-set JAVA_HOME=D:\apps\Java\jdk-11
+set JAVA_HOME=C:\Mario\Java\dragonwell-17.0.9.0.10+9-GA
 set JAVA_EXE=%JAVA_HOME%\bin\java.exe
 
 if exist "%JAVA_EXE%" goto execute

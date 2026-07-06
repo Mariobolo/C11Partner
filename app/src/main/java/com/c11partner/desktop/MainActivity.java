@@ -661,13 +661,9 @@ public class MainActivity extends AppCompatActivity {
         
         // 性能优化
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setBlockNetworkImage(false);
         webSettings.setLoadsImagesAutomatically(true);
         webSettings.setMediaPlaybackRequiresUserGesture(false);
-        
-        // 硬件加速（Android 9 支持）
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         // 添加JavaScript接口
         webView.addJavascriptInterface(webViewBridge, "Android");

@@ -1,10 +1,9 @@
 buildscript {
     repositories {
+        maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' }
+        maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/gradle-plugins/' }
         google()
         mavenCentral()
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.5.2'
@@ -13,11 +12,11 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' }
+        maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/gradle-plugins/' }
+        maven { url 'https://tbdsrepo.cloud.tencent.com/repository/maven-public/' }
         google()
         mavenCentral()
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://tbdsrepo.cloud.tencent.com/repository/maven-public/' }
     }
 }
 
@@ -29,10 +28,13 @@ android {
     defaultConfig {
         applicationId "com.c11partner.desktop"
         minSdk 25
-        targetSdk 34
+        targetSdk 28
         versionCode 2
         versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
     }
 
     buildFeatures {
