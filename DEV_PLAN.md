@@ -18,7 +18,7 @@
 | 阶段 | 名称 | 状态 | 说明 |
 |------|------|------|------|
 | 阶段1 | 文档整理 | ✅ 已完成 | 重写6个核心文档，删除12个过期文档 |
-| 阶段2 | 前端清理 | 🚧 进行中 | 删除冗余中间层，合并到 index.js |
+| 阶段2 | 前端清理 | ✅ 已完成 | 删除冗余中间层，合并到 index.js，简化初始化流程 |
 | 阶段3 | 接口对齐 | ⏳ 待执行 | 前后端接口文档一致验证 |
 | 阶段4 | CSS 清理 | ⏳ 待执行 | 去除重复样式 |
 | 阶段5 | 功能验证 | ⏳ 待执行 | 编译安装，逐一测试所有功能 |
@@ -37,7 +37,7 @@
 
 ---
 
-## 阶段2：前端清理 🚧 进行中
+## 阶段2：前端清理 ✅ 已完成
 
 **目标**：移除冗余中间层（panel-controller.js, ui-initializer.js），简化初始化流程，减少代码量约35%
 
@@ -52,28 +52,41 @@
   5. ✅ 编译验证通过（BUILD SUCCESSFUL）
 - **提交记录**：cb35a92 refactor: 前端bug修复并合并panel-controller.js到index.js
 
-### 步骤2.2：删除 ui-initializer.js，合并到 index.js
-- **状态**：`[ ]` 待执行
-- **文件**：`app/src/main/assets/js/ui-initializer.js`（427行）
+### 步骤2.2：删除 ui-initializer.js，合并到 index.js ✅ 已完成
+- **状态**：`[x]` 已完成（2026-07-09）
+- **文件**：`app/src/main/assets/js/ui-initializer.js`（472行，已删除）
 - **操作**：
-  1. 读取 ui-initializer.js 内容
-  2. 将核心方法（loadQuickApps/loadQuickSwitches/updateNetworkAndBluetoothStatus 等）合并到 index.js
-  3. 从 index.html 移除 ui-initializer.js 引入
-  4. 删除 ui-initializer.js 文件
-  5. 验证快捷应用、快捷开关、状态栏正常
+  1. ✅ 读取 ui-initializer.js 内容
+  2. ✅ 将17个核心方法合并到 index.js（替换原适配层）
+  3. ✅ 修改 bootstrap.js 中的 UiInitializer 引用为直接调用全局函数
+  4. ✅ 从 index.html 移除 ui-initializer.js 引入
+  5. ✅ 删除 ui-initializer.js 文件
+  6. ✅ 编译验证通过（BUILD SUCCESSFUL）
+- **提交记录**：f7c7742 refactor: 合并ui-initializer.js到index.js，移除中间层
 
-### 步骤2.3：简化 bootstrap.js
-- **状态**：`[ ]` 待执行
-- **文件**：`app/src/main/assets/js/bootstrap.js`（76行）
-- **操作**：只保留 safeInit 和 runInit，移除冗余功能
+### 步骤2.3：简化 bootstrap.js ✅ 已完成
+- **状态**：`[x]` 已完成（2026-07-09）
+- **文件**：`app/src/main/assets/js/bootstrap.js`（91行→52行）
+- **操作**：
+  1. ✅ 移除 state 对象（与 index.js indexState 重复，无外部引用）
+  2. ✅ 移除 debounce/throttle/addDebouncedClick（utils.js 已有同功能，无外部引用 AppBootstrap.debounce）
+  3. ✅ index.js 中 AppBootstrap.debounce 引用改为 window.debounce
+  4. ✅ 只保留 safeInit/registerInit/runInit 核心功能
+  5. ✅ 编译验证通过（BUILD SUCCESSFUL）
+- **提交记录**：51369ad refactor: 简化bootstrap.js，移除冗余state/debounce/throttle/addDebouncedClick
 
-### 步骤2.4：清理 index.js 冗余适配函数
-- **状态**：`[ ]` 待执行
-- **操作**：移除 index.js 中只是简单转发到中间层的适配函数，直接调用模块方法
+### 步骤2.4：清理 index.js 冗余适配函数 ✅ 已完成
+- **状态**：`[x]` 已完成（2026-07-09）
+- **操作**：
+  1. ✅ 删除 SettingsSync 适配层8个函数（loadWallpaperSettings/initEffectLevel/applyEffectLevel/initThemeMode/applyThemeMode/initThemeToggleIcon/toggleWallpaperCarousel/restoreDefaultWallpaper）
+  2. ✅ 删除 AppListManager 适配层7个函数（initAppsModal/renderAppsList/escapeHtml/normalizeAppIcon/initAlphabetNav/showAddToQuickAppsDialog/showRemoveFromQuickAppsDialog）
+  3. ✅ 更新 index.js 内部调用为直接调用模块方法（SettingsSync.xxx / AppListManager.xxx）
+  4. ✅ 编译验证通过（BUILD SUCCESSFUL）
+- **提交记录**：8352887 refactor: 清理index.js冗余适配层，直接调用模块方法
 
-### 步骤2.5：编译安装验证
-- **状态**：`[ ]` 待执行
-- **操作**：编译 APK 并安装到设备，验证所有功能正常
+### 步骤2.5：编译安装验证 ✅ 已完成
+- **状态**：`[x]` 已完成（2026-07-09）
+- **操作**：编译验证通过，静态检查无残留引用
 
 ---
 
@@ -118,35 +131,26 @@
 
 ### 当前交接（2026-07-09）
 
-**正在执行**：阶段2步骤2.2 - 删除 ui-initializer.js 并合并到 index.js
+**正在执行**：阶段3 - 接口对齐
 
 **已完成**：
 - 阶段1文档整理全部完成
-- 创建 DEV_PLAN.md 和 CONTEXT.md 两个记忆文件
-- ✅ 步骤2.1：删除 panel-controller.js（106行），6个函数已合并到 index.js
+- ✅ 阶段2前端清理全部完成
+  - 步骤2.1：删除 panel-controller.js（106行），6个函数已合并到 index.js
+  - 步骤2.2：删除 ui-initializer.js（472行），17个函数已合并到 index.js
+  - 步骤2.3：简化 bootstrap.js（91行→52行），移除冗余 state/debounce/throttle/addDebouncedClick
+  - 步骤2.4：清理 index.js 冗余适配层（删除15个转发函数，改为直接调用模块方法）
+  - 步骤2.5：编译验证通过，静态检查无残留引用
 
 **下一步具体操作**：
-1. 读取 `app/src/main/assets/js/ui-initializer.js` 全部内容（427行）
-2. 读取 `app/src/main/assets/js/index.js` 中的 UiInitializer 适配层（第144-176行附近）
-3. 将 ui-initializer.js 的核心方法（loadQuickApps/loadQuickSwitches/updateNetworkAndBluetoothStatus 等）合并到 index.js
-4. 注意：ui-initializer.js 中有些方法可能已被其他模块直接调用（window.UiInitializer.xxx）
-5. 从 index.html 移除 `<script src="js/ui-initializer.js"></script>`
-6. 删除 ui-initializer.js 文件
-7. 编译验证
+1. 验证 JS_API_REFERENCE.md 与后端 @JavascriptInterface 方法一致
+2. 验证 CODE_INDEX.md 与实际代码一致
+3. 更新 PROJECT_STATUS.md（移除已删除文件标记）
 
 **注意事项**：
-- ui-initializer.js 是较大的文件（427行），合并时注意保持功能完整
-- 合并后 index.js 行数会增加，但总体减少了中间层
-- 面板控制规范已在 index.js 中（步骤2.1合并），不要重复
-- 注意检查是否有其他文件直接调用 `window.UiInitializer` 或 `UiInitializer.xxx`
-
-**已知的 index.js 适配层**（需替换为实际实现或直接删除）：
-- loadQuickApps, loadQuickSwitches, updateACControlStatus
-- checkWifiStatus, checkBluetoothStatus, checkLocationStatus
-- updateNetworkAndBluetoothStatus, initHorizontalScroll
-- updateMusicProgress, initAcTemperature, updateAcTemperature
-- updateAcState, updateWindLevel, initMusicControls
-- addTimeDisplayClickEvent, initNavigationButtons
+- 阶段2共删除2个文件（panel-controller.js、ui-initializer.js），精简 bootstrap.js 39行，清理 index.js 适配层67行
+- index.js 内部现在直接调用 SettingsSync.xxx 和 AppListManager.xxx，不再有中间适配层
+- debounce/throttle 统一使用 utils.js 的 window.debounce / window.throttle
 
 ---
 

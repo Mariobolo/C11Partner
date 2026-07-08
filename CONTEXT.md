@@ -81,7 +81,7 @@
 
 ```
 基础依赖层：utils.js → storage.js → bridge.js
-核心框架层：bootstrap.js → panel-controller.js → settings-sync.js → ui-initializer.js → app-list-manager.js
+核心框架层：bootstrap.js → settings-sync.js → app-list-manager.js
 核心功能层：theme.js → widgets.js
 业务逻辑层：music.js → settings.js → app.js → toast.js → datetime.js → wallpaper-manager.js
            → weather.js → map.js → async-callback-manager.js → system-music-manager.js
@@ -96,10 +96,8 @@
 | utils.js | 414 | 通用工具函数 | — |
 | storage.js | 174 | localStorage 封装 | — |
 | bridge.js | 194 | Android 接口代理 | `Android` 对象 |
-| bootstrap.js | 76 | 初始化队列 | `AppBootstrap` |
-| panel-controller.js | 93 | 面板显示/隐藏（**待合并**） | `PanelController` |
+| bootstrap.js | 52 | 初始化队列（已简化） | `AppBootstrap` |
 | settings-sync.js | 174 | 设置项读写 | `SettingsSync` |
-| ui-initializer.js | 427 | UI 初始化（**待合并**） | `UiInitializer` |
 | app-list-manager.js | 389 | 应用面板管理 | `AppListManager` |
 | theme.js | 233 | 日夜模式切换 | — |
 | widgets.js | 603 | Widget 管理 | — |
@@ -117,7 +115,7 @@
 | gear-bridge.js | 184 | 档位前后端桥接 | — |
 | automation-manager.js | 396 | 场景配置 | `AutomationManager` |
 | quick-switch-manager.js | 422 | 开关面板 | `QuickSwitchManager` |
-| index.js | 515 | 主入口，统一初始化 | — |
+| index.js | 1003 | 主入口，统一初始化（含面板控制+UI初始化） | — |
 
 #### CSS 文件（按加载顺序）
 
@@ -272,6 +270,14 @@ LogcatMonitorService (后台服务，持续读取日志)
 - 删除12个过期文档
 - 建立文档维护规范
 
+### 阶段2：前端清理（2026-07-09 完成）
+
+- 删除 panel-controller.js（106行），6个面板控制函数合并到 index.js
+- 删除 ui-initializer.js（472行），17个UI初始化函数合并到 index.js
+- 简化 bootstrap.js（91行→52行），移除冗余 state/debounce/throttle/addDebouncedClick
+- 清理 index.js 冗余适配层（删除15个转发函数，改为直接调用模块方法）
+- debounce/throttle 统一使用 utils.js 的全局函数
+
 ### 之前的 Bug 修复
 
 - **时钟秒数闪烁**：删除 ui-initializer.js 中重复的时间更新逻辑，统一使用 datetime.js
@@ -286,8 +292,7 @@ LogcatMonitorService (后台服务，持续读取日志)
 ## 七、技术债务清单
 
 ### 高优先级
-- 前端冗余中间层（panel-controller.js, ui-initializer.js）待合并到 index.js
-- index.js 中大量适配函数只是简单转发到中间层
+- （已清除）前端冗余中间层已在阶段2完成清理
 
 ### 中优先级
 - 废弃 patch 文件未删除（one-click-permission-patch.js, tasks-btn-adb-patch.js）
