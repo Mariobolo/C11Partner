@@ -2,7 +2,11 @@
 
 > 📐 本文档描述 C11Partner 的整体架构、模块划分和关键设计决策
 >
-> 最后更新：2026-07-04
+> 最后更新：2026-07-07
+
+> ⚠️ **文档与代码脱节声明**：本文档部分章节（特别是 §6.3 CSS 规范的 `!important` 统计、§2.1 前端模块文件清单、§7 扩展步骤）已在 2026-07-07 与实际代码核对修正。**其他章节（§1-§5、§6.1-§6.2）反映的是项目**设计目标**，与代码现状可能存在偏差**——特别是实际初始化散落在 `index.js` 的 `safeInit()` 链中、模块边界不够清晰等问题，详见 `PROJECT_STATUS.md` 顶部的"已知问题：文档与代码脱节"清单。
+> 
+> **使用建议**：本文档作为"应当是什么"的参考，**不要把文档当现实**。如发现文档与代码不符，**先看代码**再判断。
 
 ---
 
@@ -80,18 +84,21 @@
 
 | 模块 | 文件 | 职责 |
 |------|------|------|
-| **主页面** | `index.html` + `index.js` | 整体布局、快捷开关入口 |
+| **主页面** | `index.html` + `index.js` | 整体布局、`safeInit()` 统一初始化入口（30+ 个模块） |
 | **车辆状态** | `car-state-manager.js` | 接收后端推送，更新状态栏车辆状态 |
 | **档位桥接** | `gear-bridge.js` | 档位状态前后端交互桥接 |
 | **快捷开关** | `quick-switch-manager.js` | 14个快捷开关 + 6个驾驶模式 + 5个场景模式 |
 | **自动化配置** | `automation-manager.js` | 自动化场景配置界面 |
 | **异步回调** | `async-callback-manager.js` | 异步回调统一管理 |
-| **语音测试** | `voice-test-manager.js` | 语音控制测试与调试 |
 | **系统音乐** | `system-music-manager.js` | 音乐信息显示和播放控制 |
-| **壁纸模块** | `wallpaper-manager.js` + `wallpaper-swipe-bootstrap.js` | 壁纸切换、轮播、分类及滑动手势引导 |
 | **音乐可视化** | `music.js` | 频谱可视化、播放控制 |
+| **壁纸模块** | `wallpaper-manager.js`（主） + `wallpaper.js`（旧） + `wallpaper-swipe-bootstrap.js`（手势引导） | ⚠️ 三个文件职责重叠，待合并 |
 | **天气模块** | `weather.js` | 天气数据获取和显示（#字形布局） |
-| **应用列表** | 由 `index.js` 内的 appsModal 管理 | 应用列表、分类过滤、字母导航 |
+| **应用列表** | 由 `index.js` 内的 `appsModal` 管理 | 应用列表、分类过滤、字母导航 |
+| **UI 工具** | `utils.js` | 触摸处理（blurAfterClick、clearActiveState） |
+| **主题** | `theme.js` | 主题切换逻辑 |
+| **Toast** | `toast.js` | 轻量提示组件 |
+| **自动化补丁** | `one-click-permission-patch.js`、`tasks-btn-adb-patch.js` | ⚠️ 命名带 `-patch.js` 的文件是历史补救代码，应合入主模块 |
 
 ### 2.2 后端模块（Java）
 
@@ -100,7 +107,8 @@
 | 模块 | 文件 | 职责 |
 |------|------|------|
 | **主入口** | `MainActivity.java` | 应用主界面，WebView容器，生命周期管理 |
-| **JS桥接** | `WebViewBridge.java` | 前端JS与后端Java的桥接层，50+个JS接口 |
+| **JS桥接（入口）** | `WebViewBridge.java` | 委托层，80+ 个 `@JavascriptInterface` 方法全部转发给下层 Bridge |
+| **JS桥接（实现）** | `bridge/` 目录 7 个 Bridge | `BaseBridge`（公共） + `CarControlBridge` / `WallpaperBridge` / `AppBridge` / `MusicBridge` / `SystemBridge` / `AdbBridge` |
 
 #### 车控层
 
@@ -336,14 +344,26 @@ CSS 采用**分模块文件 + `<link>` 标签直接引入**的方式组织，不
 **文件列表及引入顺序**（`index.html` 中的 `<link>` 标签）：
 
 1. `theme.css` — CSS 变量、主题色、配色方案
-2. `base.css` — 基础重置样式、全局默认值（唯一允许使用 `!important` 的模块，仅约4处）
+2. `base.css` — 基础重置样式、全局默认值、触摸设备优化、特效等级样式
 3. `animations.css` — 动画关键帧、过渡效果
-4. `components.css` — 通用组件样式（卡片、按钮、弹窗等）
+4. `components.css` — 通用组件样式（卡片、按钮、弹窗等；13000+ 行，包含设置面板、TAB、应用列表面板等大块样式）
 5. `widgets.css` — 各 Widget 专属样式（天气、音乐、快捷开关等）
 6. `pages.css` — 页面级布局样式（设置面板、应用列表等）
 7. `responsive.css` — 响应式适配、媒体查询
 
-> **注意**：加载顺序不可调换，后续文件依赖前面文件定义的变量和基础样式。`!important` 已从全量 2247 处精简至约 4 处，仅在 `base.css` 中保留必要的覆盖。
+> **注意**：加载顺序不可调换，后续文件依赖前面文件定义的变量和基础样式。
+
+**`!important` 现实情况（2026-07-07 统计）**：
+
+| 模块 | `!important` 处数 | 用途 |
+|------|------------------|------|
+| `base.css` | 34 | 特效等级 (`body.effect-none/low/high`) 强制覆盖动画/过渡/毛玻璃 |
+| `widgets.css` | 1 | 仅为注释 |
+| `components.css` | 0 | — |
+| 其他 | 0 | — |
+| **合计** | **35** | — |
+
+> ⚠️ 文档早期承诺"精简至约 4 处"的目标**未达成**。当前所有 `!important` 均在 `base.css` 内、有合理用途（特效等级切换 + 触摸设备焦点重置），其他模块保持 0 处，**新增样式严禁使用 `!important`**，如遇样式冲突应通过提高选择器优先级解决。
 
 ---
 
@@ -352,10 +372,10 @@ CSS 采用**分模块文件 + `<link>` 标签直接引入**的方式组织，不
 ### 7.1 添加一个新的车控功能
 
 **步骤**：
-1. 在 `CarControlManager.java` 中添加控制方法
-2. 在 `WebViewBridge.java` 中添加 JS 接口
-3. 在前端 `QuickSwitchManager` 中添加开关 UI
-4. 在 `CODE_INDEX.md` 中更新索引（或运行生成脚本）
+1. 在 `CarControlBridge.java` 中实现控制方法（继承自 `BaseBridge`）
+2. 在 `WebViewBridge.java` 中添加 `@JavascriptInterface` 委托方法（一行 `return mCarControlBridge.xxx();`）
+3. 在前端 `quick-switch-manager.js` 中添加开关 UI
+4. 在 `docs/JS_API_REFERENCE.md` 中更新接口索引
 
 ### 7.2 添加一个新的自动化场景
 
@@ -368,10 +388,11 @@ CSS 采用**分模块文件 + `<link>` 标签直接引入**的方式组织，不
 ### 7.3 添加一个新的前端模块
 
 **步骤**：
-1. 创建新的 JS 文件（如 `xxx.js`）
-2. 在 `index.html` 中引入
-3. 在 `index.js` 中初始化
-4. 添加对应的 CSS 样式
+1. 创建新的 JS 文件（如 `xxx.js`），采用 IIFE 模块封装：`const XxxManager = (function() { ... return { ... } })();`
+2. 在 `index.html` 中用 `<script>` 引入（注意顺序：被依赖的先引入）
+3. 在 `index.js` 的 `safeInit('initXxx', initXxx)` 统一初始化入口中注册
+4. **如遇样式冲突**：提高 CSS 选择器优先级（如 `#settingsModal.modal.active` 替代 `#settingsModal`），**禁止使用 `!important`**
+5. 添加对应的 CSS 样式到对应模块文件（不要新增 `*-patch.css`）
 
 ---
 

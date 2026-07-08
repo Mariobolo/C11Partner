@@ -227,11 +227,6 @@
      * 清除所有元素的 :active 状态（解决触摸粘滞问题）
      */
     function clearActiveState() {
-        document.body.classList.add('touch-reset');
-        setTimeout(() => {
-            document.body.classList.remove('touch-reset');
-        }, 10);
-        
         const activeElements = document.querySelectorAll(':active');
         activeElements.forEach(el => {
             try { el.blur(); } catch (e) {}
@@ -240,11 +235,6 @@
         if (document.activeElement && document.activeElement !== document.body) {
             try { document.activeElement.blur(); } catch (e) {}
         }
-        
-        try {
-            window.focus();
-            document.body.focus();
-        } catch (e) {}
     }
 
     /**
@@ -261,36 +251,36 @@
             });
             
             element.addEventListener('mouseup', function() {
-                this.style.transform = 'scale(1)';
+                this.style.transform = '';
+                this.style.transition = '';
                 blurAfterClick(this);
             });
             
             element.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
+                this.style.transform = '';
+                this.style.transition = '';
                 blurAfterClick(this);
             });
             
-            element.addEventListener('touchstart', function(e) {
+            element.addEventListener('touchstart', function() {
                 this.style.transform = 'scale(0.98)';
                 this.style.transition = 'transform 0.1s';
             }, { passive: true });
             
             element.addEventListener('touchend', function() {
                 const el = this;
-                el.style.transform = 'scale(1)';
-                setTimeout(() => {
-                    blurAfterClick(el);
-                    clearActiveState();
-                }, 50);
+                el.style.transform = '';
+                el.style.transition = '';
+                blurAfterClick(el);
+                clearActiveState();
             });
             
             element.addEventListener('touchcancel', function() {
                 const el = this;
-                el.style.transform = 'scale(1)';
-                setTimeout(() => {
-                    blurAfterClick(el);
-                    clearActiveState();
-                }, 50);
+                el.style.transform = '';
+                el.style.transition = '';
+                blurAfterClick(el);
+                clearActiveState();
             });
         });
     }
@@ -384,12 +374,24 @@
                               (navigator.msMaxTouchPoints > 0);
         
         if (!isTouchDevice) return;
+
+        document.documentElement.classList.add('touch-device');
         
         const handleTouchEnd = function(e) {
             setTimeout(() => {
                 blurAfterClick(e.target);
                 clearActiveState();
             }, 30);
+
+            const target = e.target;
+            if (target && target.style) {
+                target.style.pointerEvents = 'none';
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        target.style.pointerEvents = '';
+                    });
+                });
+            }
         };
         
         const handleClick = function(e) {

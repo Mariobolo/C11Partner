@@ -59,6 +59,23 @@ public class AppBridge extends BaseBridge {
     private String cachedAppList = null;
     private long cachedAppListTime = 0;
     private static final long CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+
+    // 默认快捷应用包名列表（按优先级排序，仅预填充已安装的应用，最多4个）
+    private static final String[] DEFAULT_QUICK_APP_PACKAGES = {
+        "com.autonavi.minimap",       // 高德地图
+        "com.baidu.BaiduMap",          // 百度地图
+        "com.tencent.mm",             // 微信
+        "com.netease.cloudmusic",     // 网易云音乐
+        "com.tencent.qqmusic",         // QQ音乐
+        "com.kugou.android",          // 酷狗音乐
+        "com.eg.android.AlipayGphone",// 支付宝
+        "com.taobao.taobao",          // 淘宝
+        "com.jingdong.app.mall",      // 京东
+        "com.tencent.mobileqq",       // QQ
+    };
+
+    // 标记是否已检查过默认快捷应用预填充（进程内只执行一次）
+    private boolean defaultAppsInitialized = false;
     
     /**
      * 构造函数
@@ -393,6 +410,68 @@ public class AppBridge extends BaseBridge {
     }
     
     /**
+     * 构建简单分组的应用列表JSON（轻量版，不转图标base64）
+     * 返回格式与getAppList()一致：{letter: [app1, app2, ...]}
+     * @param apps 应用列表
+     * @return JSON字符串
+     */
+    private String buildSimpleGroupedAppListLite(List<Map<String, Object>> apps) {
+        try {
+            JSONObject result = new JSONObject();
+            
+            // 按首字母分组
+            Map<String, List<Map<String, Object>>> groupedApps = new HashMap<>();
+            for (Map<String, Object> app : apps) {
+                String name = (String) app.get("name");
+                String letter = getFirstLetter(name);
+                if (!groupedApps.containsKey(letter)) {
+                    groupedApps.put(letter, new ArrayList<Map<String, Object>>());
+                }
+                groupedApps.get(letter).add(app);
+            }
+            
+            // 对每个分组内的应用按名称排序
+            for (List<Map<String, Object>> appList : groupedApps.values()) {
+                Collections.sort(appList, new Comparator<Map<String, Object>>() {
+                    @Override
+                    public int compare(Map<String, Object> app1, Map<String, Object> app2) {
+                        String name1 = (String) app1.get("name");
+                        String name2 = (String) app2.get("name");
+                        return name1.compareToIgnoreCase(name2);
+                    }
+                });
+            }
+            
+            // 构建JSON（按字母顺序排序）
+            List<String> sortedLetters = new ArrayList<>(groupedApps.keySet());
+            Collections.sort(sortedLetters, (letter1, letter2) -> {
+                if ("#".equals(letter1)) return -1;
+                if ("#".equals(letter2)) return 1;
+                return letter1.compareTo(letter2);
+            });
+            
+            for (String letter : sortedLetters) {
+                JSONArray appArray = new JSONArray();
+                for (Map<String, Object> app : groupedApps.get(letter)) {
+                    JSONObject appObj = new JSONObject();
+                    appObj.put("name", app.get("name"));
+                    appObj.put("packageName", app.get("packageName"));
+                    appObj.put("isSystemApp", app.get("isSystemApp"));
+                    // 轻量版：不转图标，使用默认图标
+                    appObj.put("icon", "images/ic_launcher.png");
+                    appArray.put(appObj);
+                }
+                result.put(letter, appArray);
+            }
+            
+            return result.toString();
+        } catch (Exception e) {
+            Log.e(TAG, "buildSimpleGroupedAppListLite失败", e);
+            return "{}";
+        }
+    }
+    
+    /**
      * 获取名称的首字母
      * @param name 应用名称
      * @return 首字母（大写）
@@ -450,12 +529,53 @@ public class AppBridge extends BaseBridge {
     }
     
     // ==================== 快捷应用相关 ====================
-    
+
+    /**
+     * 首次启动预填充默认快捷应用
+     * 当快捷应用数据库为空时，从预定义的常用应用包名列表中筛选已安装的应用，
+     * 自动写入数据库（最多4个），使新车机开箱即用。
+     * 进程内只执行一次检查，用户后续删除不会重新填充。
+     */
+    private void initDefaultQuickAppsIfNeeded() {
+        if (defaultAppsInitialized) return;
+        defaultAppsInitialized = true;
+
+        try {
+            List<Map<String, Object>> existing = quickAppDbHelper.getAllQuickApps();
+            if (!existing.isEmpty()) {
+                Log.d(TAG, "快捷应用数据库已有 " + existing.size() + " 个应用，跳过预填充");
+                return;
+            }
+
+            PackageManager pm = packageManager;
+            int addedCount = 0;
+            for (String pkg : DEFAULT_QUICK_APP_PACKAGES) {
+                if (addedCount >= 4) break;
+                try {
+                    ApplicationInfo info = pm.getApplicationInfo(pkg, 0);
+                    String name = pm.getApplicationLabel(info).toString();
+                    Drawable icon = pm.getApplicationIcon(info);
+                    String iconBase64 = drawableToBase64(icon);
+                    quickAppDbHelper.insertQuickApp(name, pkg, iconBase64);
+                    addedCount++;
+                    Log.d(TAG, "预填充快捷应用: " + name + " (" + pkg + ")");
+                } catch (PackageManager.NameNotFoundException e) {
+                    // 应用未安装，跳过
+                }
+            }
+            Log.d(TAG, "默认快捷应用预填充完成，共添加 " + addedCount + " 个");
+        } catch (Exception e) {
+            Log.e(TAG, "预填充默认快捷应用失败", e);
+        }
+    }
+
     /**
      * 获取快捷应用列表
      * @return 快捷应用列表 JSON
      */
     public String getQuickAppList() {
+        // 首次调用时检查并预填充默认快捷应用
+        initDefaultQuickAppsIfNeeded();
         try {
             List<Map<String, Object>> quickApps = quickAppDbHelper.getAllQuickApps();
             JSONArray quickAppsArray = new JSONArray();
@@ -753,8 +873,8 @@ public class AppBridge extends BaseBridge {
                 try {
                     // 使用 AppUtils 获取所有已安装应用
                     List<Map<String, Object>> allApps = AppUtils.getInstalledApps(mContext);
-                    // 使用轻量版JSON（不转图标base64，避免OOM）
-                    final String result = buildGroupedAppListJsonLite(allApps);
+                    // 使用与getAppList()相同的格式（轻量版，不转图标base64）
+                    final String result = buildSimpleGroupedAppListLite(allApps);
                     
                     // 在UI线程中执行JavaScript回调
                     runOnUiThread(new Runnable() {

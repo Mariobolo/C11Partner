@@ -449,34 +449,38 @@ a {
 
 /* ========== 键盘焦点可见性 ========== */
 *:focus-visible {
-    outline: 3px solid var(--primary-color);
-    outline-offset: 2px;
-    border-radius: var(--radius-md);
+    outline: none;
+    box-shadow: none;
 }
 
 button:focus-visible,
 .nav-button:focus-visible,
 .quick-app-item:focus-visible,
 .qsp-item:focus-visible {
-    outline: 3px solid var(--primary-color);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(var(--primary-color-rgb), 0.15);
+    outline: none;
+    box-shadow: none;
 }
 
 input:focus-visible,
 .setting-input:focus-visible {
-    outline: 3px solid var(--primary-color);
-    outline-offset: 2px;
-    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
 }
 
-/* 移除默认焦点轮廓但保留键盘焦点 */
 *:focus:not(:focus-visible) {
     outline: none;
     box-shadow: none;
 }
 
-/* 触屏设备：完全禁用焦点样式（防止触摸后焦点残留） */
+*:focus,
+*:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+/* 触屏设备：禁用hover状态的transform和box-shadow（防止触摸后状态残留） */
 @media (hover: none) and (pointer: coarse) {
     *:focus,
     *:focus-visible {
@@ -484,19 +488,20 @@ input:focus-visible,
         box-shadow: none !important;
         transform: none !important;
     }
-}
-
-/* 触摸粘滞修复：临时类强制重置所有元素的 :active 状态 */
-body.touch-reset * {
-    pointer-events: none !important;
-}
-
-body.touch-reset *:active {
-    transform: none !important;
-    background: inherit !important;
-    box-shadow: inherit !important;
-    opacity: 1 !important;
-    filter: none !important;
+    
+    *:hover,
+    *:hover::before,
+    *:hover::after {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    *:active,
+    *:active::before,
+    *:active::after {
+        transform: none !important;
+        box-shadow: none !important;
+    }
 }
 
 /* ========== 屏幕阅读器支持 ========== */
@@ -599,6 +604,21 @@ body.touch-reset *:active {
 .effect-none .qsp-item::before,
 .effect-none .qsp-item::after {
     display: none !important;
+}
+
+/* 无特效模式：禁用active状态的transform和复杂样式变化，避免闪烁 */
+.effect-none .widget:active,
+.effect-none .quick-app-item:active,
+.effect-none .qsp-item:active,
+.effect-none .nav-button:active,
+.effect-none .control-buttons button:active,
+.effect-none .dock-btn:active,
+.effect-none .setting-item:active,
+.effect-none .app-item:active {
+    transform: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    opacity: 0.8 !important;
 }
 
 /* ----- 最低特效模式：保留基础过渡，禁用3D变换、毛玻璃、复杂动画 ----- */

@@ -489,6 +489,33 @@ public class WebViewBridge extends BaseBridge {
     public void getWallpaperSettingsAsync(final String callbackId) {
         mWallpaperBridge.getWallpaperSettingsAsync(callbackId);
     }
+
+    @JavascriptInterface
+    public String getWallpaperSettingsV2() { return mWallpaperBridge.getWallpaperSettingsV2(); }
+
+    @JavascriptInterface
+    public String getCurrentWallpaperUrl() { return mWallpaperBridge.getCurrentWallpaper(); }
+
+    @JavascriptInterface
+    public String getNextWallpaperUrl() { return mWallpaperBridge.getNextWallpaperUrl(); }
+
+    @JavascriptInterface
+    public void setWallpaperType(int type) { mWallpaperBridge.setWallpaperType(type); }
+
+    @JavascriptInterface
+    public void setWallpaperPath(String path) { mWallpaperBridge.setWallpaperPath(path); }
+
+    @JavascriptInterface
+    public void setWallpaperCarouselEnabled(boolean enabled) { mWallpaperBridge.setWallpaperCarouselEnabled(enabled); }
+
+    @JavascriptInterface
+    public void setWallpaperCarouselInterval(int interval) { mWallpaperBridge.setWallpaperCarouselInterval(interval); }
+
+    @JavascriptInterface
+    public void setWallpaperFillMode(int mode) { mWallpaperBridge.setWallpaperFillMode(mode); }
+
+    @JavascriptInterface
+    public void refreshBingWallpaper() { mWallpaperBridge.refreshBingWallpaper(); }
     
     @JavascriptInterface
     public void pauseWallpaperCarousel() { mWallpaperBridge.pauseWallpaperCarousel(); }
@@ -585,6 +612,9 @@ public class WebViewBridge extends BaseBridge {
     
     @JavascriptInterface
     public boolean isBluetoothConnected() { return mSystemBridge.isBluetoothConnected(); }
+
+    @JavascriptInterface
+    public boolean isLocationEnabled() { return mSystemBridge.isLocationEnabled(); }
     
     @JavascriptInterface
     public boolean saveSystemLauncherSetting(boolean enabled) {

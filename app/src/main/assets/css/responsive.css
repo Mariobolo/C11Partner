@@ -21,6 +21,12 @@
         .widget {
             min-width: 200px;
         }
+        .music-widget,
+        .weather-widget,
+        .map-widget,
+        .car-widget {
+            min-width: 380px;
+        }
 }
 /* ========== 标准屏 (1280px - 1919px) ========== */
 @media screen and (max-width: 1919px) and (min-width: 1280px) {
@@ -101,7 +107,11 @@
         }
     /* 天气组件 */
         .weather-widget {
-            min-width: 200px;
+            min-width: 320px;
+        }
+    /* 车辆组件 */
+        .car-widget {
+            min-width: 320px;
         }
         .temperature {
             font-size: 40px;
@@ -116,9 +126,6 @@
         }
         .apps-modal {
             width: 720px;
-        }
-        .quick-switch-panel {
-            width: 540px;
         }
         .automation-panel {
             width: 460px;
@@ -240,9 +247,13 @@
         }
     /* 天气组件 */
         .weather-widget {
-            min-width: 180px;
+            min-width: 280px;
             padding: 16px 20px;
             gap: 12px;
+        }
+    /* 车辆组件 */
+        .car-widget {
+            min-width: 280px;
         }
         .temperature {
             font-size: 36px;
@@ -295,9 +306,6 @@
         }
         .apps-modal {
             width: 640px;
-        }
-        .quick-switch-panel {
-            width: 480px;
         }
         .automation-panel {
             width: 420px;
@@ -426,9 +434,13 @@
         }
     /* 天气组件 */
         .weather-widget {
-            min-width: 160px;
+            min-width: 240px;
             padding: 14px 16px;
             gap: 10px;
+        }
+    /* 车辆组件 */
+        .car-widget {
+            min-width: 240px;
         }
         .temperature {
             font-size: 32px;
@@ -443,7 +455,6 @@
     /* 弹窗尺寸 */
         .settings-modal,
     .apps-modal,
-    .quick-switch-panel,
     .automation-panel {
             width: 95vw;
             max-width: 95vw;
@@ -1183,7 +1194,7 @@ body.orientation-changing {
    车载屏幕专用断点、动态间距、弹性布局、安全区域适配
    ============================================ */
 /* ========== 零跑车机专用分辨率 (1920x1080) - 主流配置 ========== */
-@media screen and (width: 1920px) and (height: 1080px) {
+@media screen and (min-width: 1900px) and (min-height: 1060px) and (max-width: 1940px) and (max-height: 1100px) {
         :root {
             --widget-height: 130px;
             --status-bar-height: 52px;
@@ -1224,7 +1235,7 @@ body.orientation-changing {
             min-width: 380px;
         }
         .weather-widget {
-            min-width: 220px;
+            min-width: 380px;
         }
         .quick-apps-widget {
             min-width: 280px;
@@ -1233,10 +1244,10 @@ body.orientation-changing {
             min-width: 260px;
         }
         .map-widget {
-            min-width: 200px;
+            min-width: 380px;
         }
         .car-widget {
-            min-width: 260px;
+            min-width: 380px;
         }
         .top-status-bar {
             padding: 0 32px;
@@ -1246,7 +1257,7 @@ body.orientation-changing {
         }
 }
 /* ========== 零跑车机专用分辨率 (1280x720) - 入门配置 ========== */
-@media screen and (width: 1280px) and (height: 720px) {
+@media screen and (min-width: 1260px) and (min-height: 700px) and (max-width: 1300px) and (max-height: 740px) {
         :root {
             --widget-height: 92px;
             --status-bar-height: 44px;
@@ -1284,13 +1295,19 @@ body.orientation-changing {
             min-width: 320px;
         }
         .weather-widget {
-            min-width: 190px;
+            min-width: 320px;
         }
         .quick-apps-widget {
             min-width: 250px;
         }
         .quick-switches-widget {
             min-width: 230px;
+        }
+        .car-widget {
+            min-width: 320px;
+        }
+        .map-widget {
+            min-width: 320px;
         }
         .top-status-bar {
             padding: 0 24px;

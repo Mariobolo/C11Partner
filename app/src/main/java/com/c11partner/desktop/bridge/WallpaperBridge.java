@@ -93,7 +93,7 @@ public class WallpaperBridge extends BaseBridge {
     
     /**
      * 设置壁纸类型
-     * @param type 壁纸类型：0=默认,1=必应,2=本地图片,3=本地视频,4=本地文件夹,5=iframe
+     * @param type 壁纸类型：1=必应,2=本地图片,3=本地视频,5=iframe(3D车模)
      */
     public void setWallpaperType(int type) {
         try {
@@ -101,6 +101,18 @@ public class WallpaperBridge extends BaseBridge {
             Log.d(TAG, "设置壁纸类型: " + type);
         } catch (Exception e) {
             Log.e(TAG, "设置壁纸类型失败", e);
+        }
+    }
+
+    /**
+     * 设置壁纸路径
+     */
+    public void setWallpaperPath(String path) {
+        try {
+            wallpaperManager.setWallpaperPath(path);
+            Log.d(TAG, "设置壁纸路径: " + path);
+        } catch (Exception e) {
+            Log.e(TAG, "设置壁纸路径失败", e);
         }
     }
     

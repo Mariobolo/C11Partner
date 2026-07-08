@@ -2169,7 +2169,8 @@ body.effect-low .camera-indicator {
 }
 
 body.effect-low .network-status-icon.connected,
-body.effect-low .bluetooth-status-icon.connected {
+body.effect-low .bluetooth-status-icon.connected,
+body.effect-low .location-status-icon.connected {
     animation: none;
 }
 

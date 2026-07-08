@@ -5,12 +5,10 @@
 
 const WallpaperManager = (function() {
     // 壁纸类型常量
-    const TYPE_DEFAULT = 0;      // 默认壁纸
     const TYPE_BING = 1;         // 必应壁纸
     const TYPE_LOCAL_IMAGE = 2;  // 本地图片
     const TYPE_LOCAL_VIDEO = 3;  // 本地视频
-    const TYPE_LOCAL_FOLDER = 4; // 本地文件夹轮播
-    const TYPE_IFRAME = 5;       // iframe壁纸（预留）
+    const TYPE_IFRAME = 5;       // iframe壁纸（3D车模）
 
     // 填充模式
     const FILL_MODE_COVER = 0;   // 填充（裁剪）
@@ -19,7 +17,7 @@ const WallpaperManager = (function() {
 
     // 状态
     let currentSettings = {
-        wallpaper_type: TYPE_DEFAULT,
+        wallpaper_type: TYPE_BING,
         wallpaper_path: '',
         carousel_enabled: false,
         carousel_interval: 15000,
@@ -99,19 +97,14 @@ const WallpaperManager = (function() {
         // 根据壁纸类型处理
         switch (currentSettings.wallpaper_type) {
             case TYPE_LOCAL_VIDEO:
-                // 视频壁纸
                 applyVideoWallpaper(wallpaperUrl);
                 break;
             case TYPE_IFRAME:
-                // iframe壁纸
                 applyIframeWallpaper('3d/index.html');
                 break;
-            case TYPE_DEFAULT:
             case TYPE_BING:
             case TYPE_LOCAL_IMAGE:
-            case TYPE_LOCAL_FOLDER:
             default:
-                // 图片壁纸
                 applyImageWallpaper(wallpaperUrl);
                 break;
         }
@@ -409,12 +402,10 @@ const WallpaperManager = (function() {
      */
     function getTypeName(type) {
         const names = {
-            [TYPE_DEFAULT]: '默认壁纸',
             [TYPE_BING]: '必应壁纸',
             [TYPE_LOCAL_IMAGE]: '本地图片',
             [TYPE_LOCAL_VIDEO]: '本地视频',
-            [TYPE_LOCAL_FOLDER]: '本地文件夹',
-            [TYPE_IFRAME]: 'iframe壁纸'
+            [TYPE_IFRAME]: '3D车模'
         };
         return names[type] || '未知';
     }
@@ -434,11 +425,9 @@ const WallpaperManager = (function() {
     // 暴露公共方法
     return {
         // 常量
-        TYPE_DEFAULT,
         TYPE_BING,
         TYPE_LOCAL_IMAGE,
         TYPE_LOCAL_VIDEO,
-        TYPE_LOCAL_FOLDER,
         TYPE_IFRAME,
         FILL_MODE_COVER,
         FILL_MODE_CONTAIN,
@@ -463,6 +452,9 @@ const WallpaperManager = (function() {
         getFillModeName
     };
 })();
+
+// 显式挂载到 window，使 index.js 适配层的 if (window.WallpaperManager) 判断生效
+window.WallpaperManager = WallpaperManager;
 
 // 页面加载完成后初始化
 if (document.readyState === 'loading') {
@@ -593,10 +585,9 @@ function updatePathSectionVisibility(type) {
     const pathSection = document.getElementById('wallpaperPathSection');
     if (!pathSection) return;
     
-    // 本地图片、本地视频、本地文件夹显示路径输入
+    // 本地图片、本地视频显示路径输入
     if (type === WallpaperManager.TYPE_LOCAL_IMAGE || 
-        type === WallpaperManager.TYPE_LOCAL_VIDEO || 
-        type === WallpaperManager.TYPE_LOCAL_FOLDER) {
+        type === WallpaperManager.TYPE_LOCAL_VIDEO) {
         pathSection.style.display = 'block';
     } else {
         pathSection.style.display = 'none';
@@ -670,4 +661,257 @@ if (document.readyState === 'loading') {
         initWallpaperSettingsUI();
     }, 500);
 }
+
+
+// ==================== 壁纸滑动管理器 ====================
+
+class WallpaperSwipeManager {
+    constructor() {
+        this.backgroundElement = null;
+        this.containerElement = null;
+        this.isAnimating = false;
+        this.startX = 0;
+        this.currentX = 0;
+        this.velocity = 0;
+        this.lastTime = 0;
+
+        this.fadeDuration = 800;
+        this.swipeThreshold = 30;
+        this.velocityThreshold = 0.3;
+
+        this.init();
+    }
+
+    init() {
+        this.backgroundElement = document.querySelector('.background-image');
+        this.containerElement = document.querySelector('.background-container');
+
+        if (!this.backgroundElement) {
+            console.warn('壁纸元素(.background-image)未找到');
+            return;
+        }
+
+        if (!this.containerElement) {
+            console.warn('壁纸容器(.background-container)未找到');
+            return;
+        }
+
+        this.bindEvents();
+        console.log('壁纸滑动管理器已初始化');
+    }
+
+    bindEvents() {
+        this.containerElement.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false });
+        this.containerElement.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
+        this.containerElement.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: false });
+
+        this.containerElement.addEventListener('mousedown', this.handleMouseDown.bind(this));
+        document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+        document.addEventListener('mouseup', this.handleMouseUp.bind(this));
+    }
+
+    handleTouchStart(e) {
+        if (e.touches.length !== 1 || this.isAnimating) return;
+
+        this.startX = e.touches[0].clientX;
+        this.currentX = this.startX;
+        this.velocity = 0;
+        this.lastTime = Date.now();
+
+        e.preventDefault();
+    }
+
+    handleTouchMove(e) {
+        if (e.touches.length !== 1 || this.isAnimating) return;
+
+        const currentTime = Date.now();
+        const clientX = e.touches[0].clientX;
+        const deltaX = clientX - this.currentX;
+        const deltaTime = currentTime - this.lastTime;
+
+        if (deltaTime > 0) {
+            this.velocity = deltaX / deltaTime;
+        }
+
+        this.currentX = clientX;
+        this.lastTime = currentTime;
+
+        this.applyDragTransform(deltaX);
+        e.preventDefault();
+    }
+
+    handleTouchEnd(e) {
+        if (this.isAnimating) return;
+
+        const deltaX = this.currentX - this.startX;
+        const distance = Math.abs(deltaX);
+
+        if (distance > this.swipeThreshold || Math.abs(this.velocity) > this.velocityThreshold) {
+            if (deltaX > 0) {
+                this.animateToNextWallpaper('right', this.velocity);
+            } else {
+                this.animateToNextWallpaper('left', this.velocity);
+            }
+        } else {
+            this.resetOpacity();
+        }
+    }
+
+    handleMouseDown(e) {
+        this.isMouseDown = true;
+        this.startX = e.clientX;
+        this.currentX = this.startX;
+        this.velocity = 0;
+        this.lastTime = Date.now();
+        e.preventDefault();
+    }
+
+    handleMouseMove(e) {
+        if (!this.isMouseDown || this.isAnimating) return;
+
+        const currentTime = Date.now();
+        const deltaX = e.clientX - this.currentX;
+        const deltaTime = currentTime - this.lastTime;
+
+        if (deltaTime > 0) {
+            this.velocity = deltaX / deltaTime;
+        }
+
+        this.currentX = e.clientX;
+        this.lastTime = currentTime;
+
+        this.applyDragTransform(deltaX);
+        e.preventDefault();
+    }
+
+    handleMouseUp(e) {
+        if (!this.isMouseDown) return;
+        this.isMouseDown = false;
+        this.handleTouchEnd({ touches: [{ clientX: this.currentX }] });
+    }
+
+    applyDragTransform(deltaX) {
+        const absDeltaX = Math.abs(deltaX);
+        const maxDragDistance = 100;
+        const opacity = Math.max(0.7, 1 - absDeltaX / maxDragDistance);
+        this.backgroundElement.style.opacity = opacity.toString();
+    }
+
+    resetOpacity() {
+        this.backgroundElement.style.transition = 'opacity 0.2s ease-in-out';
+        this.backgroundElement.style.opacity = '1';
+
+        setTimeout(() => {
+            this.backgroundElement.style.transition = '';
+        }, 200);
+    }
+
+    animateToNextWallpaper(direction, initialVelocity = 0) {
+        if (this.isAnimating) return;
+        this.isAnimating = true;
+
+        this.getNextWallpaper(direction, (nextWallpaperUrl) => {
+            if (nextWallpaperUrl) {
+                this.executeFadeTransition(nextWallpaperUrl, direction);
+            } else {
+                this.resetAnimationState();
+            }
+        });
+    }
+
+    executeFadeTransition(nextWallpaperUrl, direction) {
+        this.backgroundElement.style.transition = `opacity ${this.fadeDuration/2}ms ease-in-out`;
+        this.backgroundElement.style.opacity = '0';
+
+        setTimeout(() => {
+            this.backgroundElement.style.backgroundImage = `url('${nextWallpaperUrl}')`;
+            this.backgroundElement.style.opacity = '1';
+
+            setTimeout(() => {
+                this.resetAnimationState();
+                showToast(direction === 'right' ? '上一张壁纸' : '下一张壁纸');
+            }, this.fadeDuration/2);
+        }, this.fadeDuration/2);
+    }
+
+    resetAnimationState() {
+        this.isAnimating = false;
+        this.backgroundElement.style.transition = '';
+        this.backgroundElement.style.opacity = '1';
+    }
+
+    getNextWallpaper(direction, callback) {
+        if (typeof Android !== 'undefined' && Android.getRandomWallpaperBase64Async) {
+            const callbackId = AsyncCallbackManager.register((wallpaperBase64) => {
+                if (wallpaperBase64 && wallpaperBase64 !== "") {
+                    const imageUrl = `data:image/jpeg;base64,${wallpaperBase64}`;
+                    if (callback) callback(imageUrl);
+                } else {
+                    if (callback) callback(null);
+                }
+            });
+            Android.getRandomWallpaperBase64Async(callbackId);
+        } else {
+            setTimeout(() => {
+                const mockImages = [
+                    'images/default_bg_1.jpg',
+                    'images/nav_air.png',
+                    'images/nav_apps.png',
+                    'images/nav_camera.png'
+                ];
+                const randomImage = mockImages[Math.floor(Math.random() * mockImages.length)];
+                if (callback) callback(randomImage);
+            }, 100);
+        }
+    }
+
+    nextWallpaper() {
+        if (typeof Android !== 'undefined' && Android.getRandomWallpaperBase64Async) {
+            const callbackId = AsyncCallbackManager.register((wallpaperBase64) => {
+                if (wallpaperBase64 && wallpaperBase64 !== "") {
+                    this.setBackgroundImage(`url('data:image/jpeg;base64,${wallpaperBase64}')`);
+                    showToast('下一张壁纸');
+                }
+            });
+            Android.getRandomWallpaperBase64Async(callbackId);
+        }
+    }
+
+    previousWallpaper() {
+        if (typeof Android !== 'undefined' && Android.getRandomWallpaperBase64Async) {
+            const callbackId = AsyncCallbackManager.register((wallpaperBase64) => {
+                if (wallpaperBase64 && wallpaperBase64 !== "") {
+                    this.setBackgroundImage(`url('data:image/jpeg;base64,${wallpaperBase64}')`);
+                    showToast('上一张壁纸');
+                }
+            });
+            Android.getRandomWallpaperBase64Async(callbackId);
+        }
+    }
+
+    setBackgroundImage(imageUrl) {
+        this.backgroundElement.style.transition = 'opacity 0.3s ease-in-out';
+        this.backgroundElement.style.opacity = '0';
+
+        setTimeout(() => {
+            this.backgroundElement.style.backgroundImage = imageUrl;
+            this.backgroundElement.style.opacity = '1';
+        }, 150);
+    }
+}
+
+let wallpaperSwipeManager = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    wallpaperSwipeManager = new WallpaperSwipeManager();
+});
+
+window.WallpaperSwipeManager = WallpaperSwipeManager;
+
+
+// ==================== 兼容函数：替换旧的 addTouchSwipeListener ====================
+
+window.addTouchSwipeListener = function() {
+    console.log('壁纸滑动监听器已由WallpaperSwipeManager管理');
+};
 

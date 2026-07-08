@@ -41,6 +41,13 @@
     <script src="js/storage.js"></script>
     <script src="js/bridge.js"></script>
 
+    <!-- 核心框架层 -->
+    <script src="js/bootstrap.js"></script>
+    <script src="js/panel-controller.js"></script>
+    <script src="js/settings-sync.js"></script>
+    <script src="js/ui-initializer.js"></script>
+    <script src="js/app-list-manager.js"></script>
+
     <!-- 核心功能层 -->
     <script src="js/theme.js"></script>
     <script src="js/widgets.js"></script>
@@ -51,13 +58,10 @@
     <script src="js/app.js"></script>
     <script src="js/toast.js"></script>
     <script src="js/datetime.js"></script>
-    <script src="js/wallpaper.js"></script>
     <script src="js/wallpaper-manager.js"></script>
-    <script src="js/wallpaper-swipe-bootstrap.js"></script>
     <script src="js/weather.js"></script>
     <script src="js/map.js"></script>
     <script src="js/async-callback-manager.js"></script>
-    <script src="js/voice-test-manager.js"></script>
     <script src="js/system-music-manager.js"></script>
     <script src="js/car-state-manager.js"></script>
     <script src="js/gear-bridge.js"></script>
@@ -76,8 +80,9 @@
     <div class="main-container">
         <!-- 顶部状态栏 -->
         <header class="top-status-bar">
-            <!-- 左侧区域：车辆状态 -->
+            <!-- 左侧区域：主题切换 + 车辆状态 -->
             <div class="top-left-section">
+                <div class="theme-toggle-icon" id="themeToggleIcon" title="切换主题">🌙</div>
                 <div class="car-status-indicators">
                     <!-- 档位显示 -->
                     <span class="status-indicator gear-indicator" id="gearIndicator">P档</span>
@@ -113,7 +118,8 @@
                     style="background-image: url('images/wifi.png');"></div>
                 <div class="bluetooth-status-icon" id="bluetoothIcon"
                     style="background-image: url('images/lanya.png');"></div>
-
+                <div class="location-status-icon" id="locationIcon"
+                    style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;white&quot;><path d=&quot;M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z&quot;/></svg>');"></div>
             </div>
         </header>
 
@@ -258,13 +264,7 @@
                             <h3>壁纸类型</h3>
                             <div class="wallpaper-type-list">
                                 <label class="wallpaper-type-item">
-                                    <input type="radio" name="wallpaperType" value="0" checked>
-                                    <span class="type-icon">🏠</span>
-                                    <span class="type-name">默认壁纸</span>
-                                    <span class="type-desc">内置默认背景图片</span>
-                                </label>
-                                <label class="wallpaper-type-item">
-                                    <input type="radio" name="wallpaperType" value="1">
+                                    <input type="radio" name="wallpaperType" value="1" checked>
                                     <span class="type-icon">🌄</span>
                                     <span class="type-name">必应壁纸</span>
                                     <span class="type-desc">每日自动更新精美壁纸</span>
@@ -272,52 +272,32 @@
                                 <label class="wallpaper-type-item">
                                     <input type="radio" name="wallpaperType" value="2">
                                     <span class="type-icon">🖼️</span>
-                                    <span class="type-name">本地图片</span>
-                                    <span class="type-desc">选择单张图片作为壁纸</span>
+                                    <span class="type-name">本地壁纸</span>
+                                    <span class="type-desc">选择图片作为壁纸</span>
                                 </label>
                                 <label class="wallpaper-type-item">
                                     <input type="radio" name="wallpaperType" value="3">
                                     <span class="type-icon">🎬</span>
-                                    <span class="type-name">本地视频</span>
+                                    <span class="type-name">视频壁纸</span>
                                     <span class="type-desc">选择视频作为动态壁纸</span>
                                 </label>
                                 <label class="wallpaper-type-item">
-                                    <input type="radio" name="wallpaperType" value="4">
-                                    <span class="type-icon">📁</span>
-                                    <span class="type-name">本地文件夹</span>
-                                    <span class="type-desc">文件夹内图片/视频自动轮播</span>
-                                </label>
-                                <label class="wallpaper-type-item">
                                     <input type="radio" name="wallpaperType" value="5">
-                                    <span class="type-icon">🌐</span>
-                                    <span class="type-name">iframe壁纸</span>
-                                    <span class="type-desc">3D动态壁纸</span>
+                                    <span class="type-icon">🚗</span>
+                                    <span class="type-name">3D车模</span>
+                                    <span class="type-desc">3D动态车模壁纸</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="setting-section" id="wallpaperPathSection" style="display:none;">
-                            <h3>壁纸路径</h3>
+                            <h3>选择文件</h3>
                             <div class="setting-item">
                                 <input type="text" class="setting-input" id="wallpaperPathInput"
-                                    placeholder="请输入文件或文件夹路径">
+                                    placeholder="请选择文件路径">
                             </div>
                             <div class="setting-item">
                                 <button class="setting-btn" id="pickWallpaperFileBtn">选择文件</button>
-                                <button class="setting-btn" id="pickWallpaperFolderBtn">选择文件夹</button>
-                            </div>
-                        </div>
-
-                        <div class="setting-section">
-                            <h3>轮播设置</h3>
-                            <div class="setting-item">
-                                <label>启用轮播</label>
-                                <input type="checkbox" class="setting-checkbox" id="wallpaperCarouselV2Checkbox">
-                            </div>
-                            <div class="setting-item">
-                                <label>轮播间隔（秒）</label>
-                                <input type="number" class="setting-input setting-input-short" id="wallpaperIntervalV2Input"
-                                    value="15" min="5" max="3600">
                             </div>
                         </div>
 
@@ -333,7 +313,7 @@
                             </div>
                         </div>
 
-                        <div class="setting-section" id="bingWallpaperSection" style="display:none;">
+                        <div class="setting-section" id="bingWallpaperSection">
                             <h3>必应壁纸</h3>
                             <div class="setting-item">
                                 <button class="setting-btn" id="refreshBingWallpaperBtn">立即刷新壁纸</button>
@@ -392,28 +372,6 @@
                             <label>授权管理</label>
                             <button class="setting-button" id="adbAuthorizationBtn">申请ADB</button>
                         </div>
-
-                        <!-- 语音指令测试（开发者工具） -->
-                        <div class="setting-item voice-test-section">
-                            <label>语音指令测试</label>
-                            <div class="voice-test-container">
-                                <input type="text" class="voice-test-input" id="voiceCommandInput"
-                                    placeholder="输入语音指令，如：打开空调、温度调到24度">
-                                <button class="setting-button voice-test-btn" id="voiceTestBtn">发送测试</button>
-                            </div>
-                            <div class="voice-test-result" id="voiceTestResult"></div>
-                            <div class="voice-test-tips">
-                                <p>💡 常用测试指令：</p>
-                                <div class="voice-quick-commands">
-                                    <span class="quick-cmd" data-cmd="打开空调">打开空调</span>
-                                    <span class="quick-cmd" data-cmd="关闭空调">关闭空调</span>
-                                    <span class="quick-cmd" data-cmd="温度调到24度">温度24度</span>
-                                    <span class="quick-cmd" data-cmd="打开除霜">打开除霜</span>
-                                    <span class="quick-cmd" data-cmd="打开近光灯">打开近光灯</span>
-                                    <span class="quick-cmd" data-cmd="切换到舒适模式">舒适模式</span>
-                                </div>
-                            </div>
-                        </div>
                     </section>
 
                     <!-- 界面设置TAB -->
@@ -439,6 +397,23 @@
                                     <span class="type-icon">✨</span>
                                     <span class="type-name">全特效</span>
                                     <span class="type-desc">全部动画特效，最佳视觉体验</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="setting-section">
+                            <h3>主题模式</h3>
+                            <div class="wallpaper-type-list">
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="themeMode" value="dark" checked>
+                                    <span class="type-icon">🌙</span>
+                                    <span class="type-name">深色模式</span>
+                                    <span class="type-desc">适合夜间驾驶，降低眩光</span>
+                                </label>
+                                <label class="wallpaper-type-item">
+                                    <input type="radio" name="themeMode" value="light">
+                                    <span class="type-icon">☀️</span>
+                                    <span class="type-name">白天模式</span>
+                                    <span class="type-desc">适合白天使用，清晰明亮</span>
                                 </label>
                             </div>
                         </div>

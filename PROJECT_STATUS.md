@@ -4,6 +4,42 @@
 >>> 最后更新：2026-07-03
 >> 当前版本：v1.2.0 (生产环境修复完成)
 ---
+## ⚠️ 已知问题：文档与代码脱节（2026-07-07 复盘）
+
+> **本节是 AI 接手的必读项**。下表列出文档承诺与代码实际不符的地方，**以代码现状为准**。
+
+| # | 文档来源 | 文档承诺 | 代码现状 | 影响 |
+|---|---------|---------|---------|------|
+| 1 | `docs/ARCHITECTURE.md` §6.3 | "!important 已精简至约 4 处" | 实际 35 处（`base.css` 34 + `widgets.css` 注释 1） | AI 误以为可以放心加，被迫重复清理 |
+| 2 | `docs/ARCHITECTURE.md` §2.1 | 列出 `voice-test-manager.js` | 已删除 | 表格与现实脱节 |
+| 3 | `docs/ARCHITECTURE.md` §2.1 | 壁纸模块：2 个文件 | 实际 3 个（`wallpaper.js` + `wallpaper-manager.js` + `wallpaper-swipe-bootstrap.js`） | 职责重叠 |
+| 4 | `docs/ARCHITECTURE.md` §2.1 | 未列出的"补丁"模块 | 实际有 4 个 `*-patch.js` 文件 | 历史补救代码未合并 |
+| 5 | `docs/ARCHITECTURE.md` §2.2 核心层 | `WebViewBridge.java` 50+ 接口 | 实际 80+ 接口，已拆分为 7 个 Bridge 子类 | 文档未反映 Bridge 拆分 |
+| 6 | `docs/ARCHITECTURE.md` §7.3 | "添加模块"步骤第 3 条 "在 index.js 中初始化" | index.js 已 3300+ 行，30+ `safeInit()` 调用 | 上帝文件，新功能叠加困难 |
+| 7 | `PROJECT_STATUS.md` 本身 | 最后更新 2026-07-03 | 实际工作已推进到 2026-07-07 | 进度跟踪失真 |
+| 8 | `components.css` 13000+ 行 | 文档未提及 | 实际集中了大量"补丁式"样式块 | 模块边界不清 |
+
+### 🛠 脱节修复行动（2026-07-07 已完成）
+
+- ✅ `docs/ARCHITECTURE.md` §6.3 `!important` 统计已改为 35 处并加备注
+- ✅ `docs/ARCHITECTURE.md` §2.1 模块表已加 ⚠️ 标记（壁纸 3 个文件、`-patch.js` 4 个）
+- ✅ `docs/ARCHITECTURE.md` §2.2 核心层已加 Bridge 拆分说明
+- ✅ `docs/ARCHITECTURE.md` §7.3 "添加模块"步骤第 4 条禁止 `!important`、第 5 条禁止 `*-patch.css`
+- ✅ `docs/ARCHITECTURE.md` 顶部加"文档与代码脱节声明"
+- ✅ `AI_ENTRY_GUIDE.md` 顶部加 ⛔ 硬约束 4 步流程 + 强制阅读顺序 v3.0
+- ✅ `user_profile.md` 加 AI Working Constraints 段，记录"先读文档再改代码"
+- ✅ `project_memory.md` 加 Lessons Learned 段，记录本次教训
+
+### 📋 待办：脱节相关
+
+- [ ] `PROJECT_STATUS.md` 本体大更新（结构化最近 7 天的工作）
+- [ ] 拆 `index.js`（3300+ 行 → 多个 < 500 行的模块）
+- [ ] 合并 `wallpaper.js` + `wallpaper-manager.js` + `wallpaper-swipe-bootstrap.js`
+- [ ] 把 4 个 `*-patch.js` 合并入主模块
+- [ ] 给 `components.css` 拆分成 `panel.css` / `card.css` / `button.css`
+- [ ] 给核心模块加单元测试（WallpaperManager / Settings / Theme）
+
+---
 
 ## 🔧 2026-07-01 生产环境修复（进行中）
 

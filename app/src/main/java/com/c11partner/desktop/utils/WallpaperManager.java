@@ -81,9 +81,15 @@ public class WallpaperManager {
     
     /**
      * 获取壁纸类型
+     * 已弃用 TYPE_DEFAULT，自动迁移为 TYPE_BING
      */
     public int getWallpaperType() {
-        return mPrefs.getInt(KEY_WALLPAPER_TYPE, TYPE_DEFAULT);
+        int type = mPrefs.getInt(KEY_WALLPAPER_TYPE, TYPE_BING);
+        if (type == TYPE_DEFAULT) {
+            type = TYPE_BING;
+            mPrefs.edit().putInt(KEY_WALLPAPER_TYPE, TYPE_BING).apply();
+        }
+        return type;
     }
     
     /**
@@ -165,7 +171,13 @@ public class WallpaperManager {
         int type = getWallpaperType();
         switch (type) {
             case TYPE_BING:
-                return getBingWallpaperUrl();
+                // 检查是否需要刷新必应壁纸
+                String url = getBingWallpaperUrl();
+                if (url.equals(getDefaultWallpaperUrl())) {
+                    // 没有缓存，触发后台获取
+                    refreshBingWallpaperIfNeeded();
+                }
+                return url;
             case TYPE_LOCAL_IMAGE:
                 return getLocalImageWallpaperUrl();
             case TYPE_LOCAL_VIDEO:

@@ -246,6 +246,26 @@ public class SystemBridge extends BaseBridge {
             return false;
         }
     }
+
+    /**
+     * 检查定位（GPS）是否已开启
+     *
+     * @return 定位是否开启
+     */
+    @JavascriptInterface
+    public boolean isLocationEnabled() {
+        try {
+            android.location.LocationManager lm = (android.location.LocationManager)
+                    mContext.getSystemService(Context.LOCATION_SERVICE);
+            if (lm == null) return false;
+            boolean gps = lm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+            boolean network = lm.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER);
+            return gps || network;
+        } catch (Exception e) {
+            logE(TAG, "检查定位状态时出错", e);
+            return false;
+        }
+    }
     // ==================== 系统设置保存方法 ====================
     /**
      * 保存原桌面自启设置

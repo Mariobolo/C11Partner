@@ -180,9 +180,9 @@ const QuickSwitchManager = {
             });
         }
 
-        // 点击面板边缘或空白处关闭
+        // 点击面板内部空白区域关闭
         panel.addEventListener('click', function(e) {
-            const interactive = e.target.closest('.qsp-item, .qsp-switch-grid, .qsp-drive-mode-grid, .qsp-scene-mode-grid, .qsp-mode-grid, #qspSettingsEntry');
+            const interactive = e.target.closest('.qsp-item, #qspSettingsEntry');
             if (!interactive) {
                 self.hidePanel();
             }

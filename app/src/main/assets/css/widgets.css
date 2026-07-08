@@ -47,24 +47,27 @@
     color: #aaa;
 }
 /* ============================================
-   功能控制面板 (Quick Switch Panel)
+   功能控制面板 (Quick Switch Panel) - 全屏
    ============================================ */
 .quick-switch-panel {
     position: fixed;
-    top: 50px;
-    right: 20px;
-    width: 380px;
-    max-height: 80vh;
-    background: rgba(0, 0, 0, 0.92);
-    border-radius: 16px;
-    padding: 20px;
-    z-index: 9999;
-    overflow-y: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    border-radius: 0;
+    padding: 40px;
+    z-index: 9999;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: none;
+    box-shadow: none;
 }
 
 .qsp-title {
@@ -99,37 +102,27 @@
 .qsp-item {
     display: block;
     text-align: center;
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.1) 0%,
-            rgba(255, 255, 255, 0.04) 50%,
-            rgba(0, 0, 0, 0.1) 100%),
-        var(--surface-color);
-    border-radius: 14px;
     padding: 12px 10px;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.25s ease,
-                border-color 0.25s ease,
-                background 0.25s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     min-width: 68px;
     min-height: 72px;
     margin: 0;
     cursor: pointer;
     position: relative;
     overflow: visible;
-    transform-style: flat;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     outline: none;
     user-select: none;
     -webkit-user-select: none;
+    background: rgba(30, 32, 38, 0.65);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .qsp-item.qsp-active {
-    background: rgba(76, 175, 80, 0.2);
-    border-color: rgba(76, 175, 80, 0.4);
-    animation: switchActiveBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: scale(1.05);
 }
 
 .qsp-item > :last-child {
@@ -324,10 +317,12 @@
     font-size: var(--font-size-sm);
     color: var(--info-color);
 }
-/* 网络和蓝牙图标 */
+/* ========== 状态栏图标统一定义（WiFi/蓝牙/定位/5G） ========== */
+/* 所有状态栏右侧图标的基础样式、hover、connected、::after 伪元素均在此统一定义 */
 
 .network-status-icon,
 .bluetooth-status-icon,
+.location-status-icon,
 .network-5g-icon {
     width: 26px;
     height: 26px;
@@ -336,28 +331,91 @@
     background-position: center;
     opacity: 0.85;
     filter: brightness(1.15) contrast(1.1) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
-    transition: all 0.3s var(--easing-elastic);
+    transition: opacity 0.3s ease;
     position: relative;
 }
 
 .network-status-icon:first-child,
 .bluetooth-status-icon:first-child,
+.location-status-icon:first-child,
 .network-5g-icon:first-child {
     margin-left: 0;
 }
 
 .network-status-icon:hover,
-.bluetooth-status-icon:hover {
+.bluetooth-status-icon:hover,
+.location-status-icon:hover,
+.network-5g-icon:hover {
+    opacity: 1;
+    filter: brightness(1.3) contrast(1.15) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+
+.network-status-icon.connected,
+.bluetooth-status-icon.connected,
+.location-status-icon.connected,
+.network-5g-icon.connected {
+    opacity: 0.95;
+    animation: none;
+    filter: brightness(1.2) contrast(1.15) drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.4));
+}
+
+/* 图标发光伪元素（hover 时显示） */
+.network-status-icon::after,
+.bluetooth-status-icon::after,
+.location-status-icon::after,
+.network-5g-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(var(--primary-color-rgb), 0.3) 0%,
+        transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    pointer-events: none;
+}
+
+.network-status-icon:hover::after,
+.bluetooth-status-icon:hover::after,
+.location-status-icon:hover::after,
+.network-5g-icon:hover::after {
+    opacity: 1;
+    animation: iconGlowPulse 2s ease-in-out infinite;
+}
+
+.theme-toggle-icon {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    opacity: 0.85;
+    filter: brightness(1.15) contrast(1.1) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+    transition: all 0.3s var(--easing-elastic);
+    cursor: pointer;
+    margin-right: 12px;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.theme-toggle-icon:hover {
     opacity: 1;
     transform: scale(1.15);
     filter: brightness(1.3) contrast(1.15) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
 }
 
-.network-status-icon.connected,
-.bluetooth-status-icon.connected {
-    opacity: 0.95;
-    animation: none;
-    filter: brightness(1.2) contrast(1.15) drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.4));
+body.theme-light .theme-toggle-icon {
+    filter: brightness(0.9) contrast(1.1) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+body.theme-light .theme-toggle-icon:hover {
+    filter: brightness(1.1) contrast(1.15) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
 }
 /* ========== 时间日期显示 - 【优化点1】终极视觉美化 ========== */
 .layout-left {
@@ -438,7 +496,6 @@
 /* 悬停增强效果 */
 
 .layout-left:hover .time-text#timeDisplay {
-    transform: scale(1.03) translateZ(20px) rotateX(2deg);
     text-shadow: 0 0 100px rgba(255, 255, 255, 0.2),
         0 12px 50px rgba(0, 0, 0, 0.55),
         0 6px 30px rgba(0, 0, 0, 0.4);
@@ -546,80 +603,25 @@
     box-sizing: border-box;
     border-radius: var(--radius-lg);
     vertical-align: top;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    background: rgba(30, 32, 38, 0.55);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    -webkit-mask: linear-gradient(#fff 0 0);
+    background: rgba(30, 32, 38, 0.5);
     color: var(--text-primary);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
         box-shadow 0.35s ease,
         border-color 0.35s ease,
         background 0.35s ease;
     position: relative;
     overflow: hidden;
-    transform-style: flat;
     white-space: normal;
 }
-/* Widget卡片渐变发光边框 */
+/* Widget卡片 - 移除不必要的伪元素以提升性能 */
 
-.widget::before {
-    content: '';
-    position: absolute;
-    inset: -1.5px;
-    border-radius: 20px;
-    padding: 1.5px;
-    background: linear-gradient(
-        135deg,
-        rgba(var(--primary-color-rgb), 0.25) 0%,
-        rgba(var(--secondary-color-rgb), 0.15) 25%,
-        rgba(255, 255, 255, 0.08) 50%,
-        rgba(var(--primary-color-rgb), 0.1) 75%,
-        rgba(var(--secondary-color-rgb), 0.2) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0.4;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* 增强版渐变光泽扫过效果 */
-
+.widget::before,
 .widget::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 70%;
-    height: 100%;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.06) 25%,
-        rgba(255, 255, 255, 0.12) 50%,
-        rgba(255, 255, 255, 0.06) 75%,
-        transparent 100%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 1;
-}
-
-.widget:hover::after {
-    opacity: 1;
-    animation: widgetShimmer 2.5s ease-in-out infinite;
-}
-
-@keyframes widgetShimmer {
-
-    0% { left: -100%; }
-    100% { left: 150%; }
-
+    display: none;
 }
 
 .widget:hover::before {
@@ -683,70 +685,49 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(30, 32, 38, 0.65);
     border-radius: 16px;
     padding: 14px 12px;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     min-width: 64px;
     margin: 0;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transform-style: flat;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
-/* 快捷应用渐变边框发光 */
 
-.quick-app-item::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 16px;
-    padding: 1px;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.2) 30%,
-        rgba(255, 255, 255, 0.3) 50%,
-        rgba(255, 255, 255, 0.2) 70%,
-        transparent 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    z-index: 2;
+.quick-app-item > :first-child {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border-radius: 12px;
+    margin: 0 auto 4px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
 }
-/* 快捷应用光泽扫过效果增强 */
 
+.quick-app-item > :last-child {
+    font-size: 11.5px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* 快捷应用 - 移除不必要的伪元素以提升性能 */
+
+.quick-app-item::before,
 .quick-app-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 70%;
-    height: 100%;
-    background: linear-gradient(
-        135deg,
-        rgba(var(--primary-color-rgb), 0.15) 0%,
-        rgba(var(--secondary-color-rgb), 0.08) 50%,
-        transparent 100%
-    );
-    transform: skewX(-15deg);
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    opacity: 0.4;
-    inset: -1px;
-    border-radius: 16px;
-    padding: 1px;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    display: none;
 }
 
 .quick-app-item:hover::before {
@@ -771,33 +752,24 @@
 }
 
 .quick-app-item:hover {
-    /* 性能优化: box-shadow 简化 */
     background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0.06) 50%,
-        rgba(var(--primary-color-rgb), 0.08) 100%
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(var(--primary-color-rgb), 0.1) 100%
     );
-    transform: translateY(-10px) scale(1.08) rotateX(8deg) rotateY(-4deg);
-    border-color: rgba(var(--primary-color-rgb), 0.3);
-    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.5),
-        0 12px 36px rgba(0, 0, 0, 0.4),
-        0 4px 12px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
-        0 0 50px rgba(var(--primary-color-rgb), 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+    opacity: 0.95;
 }
-/* 点击波纹扩散效果 */
 
 .quick-app-item:active {
-    /* 性能优化: box-shadow 简化 */
-    transform: translateY(-2px) scale(0.98) rotateX(-2deg);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45),
-        0 2px 8px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
-        inset 0 3px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(var(--primary-color-rgb), 0.15) 50%,
+        rgba(var(--primary-color-rgb), 0.08) 100%
+    );
+    opacity: 0.9;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
 }
 
 .quick-app-icon {
@@ -912,9 +884,11 @@
     position: relative;
     transform-style: flat;
     overflow: hidden;
-    background: rgba(30, 32, 38, 0.85);
+    background: rgba(30, 32, 38, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.11);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     animation: switchesFloat 5.5s ease-in-out infinite;
     animation-play-state: paused;
 }
@@ -1065,24 +1039,17 @@
             rgba(255, 255, 255, 0.07) 50%, 
             rgba(var(--primary-color-rgb), 0.08) 100%),
         var(--surface-hover);
-    transform: translateY(-8px) scale(1.06) rotateX(6deg) rotateY(-3deg);
-    border-color: rgba(var(--primary-color-rgb), 0.35);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.48),
-        0 10px 30px rgba(0, 0, 0, 0.38),
-        0 3px 10px rgba(0, 0, 0, 0.28),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.28),
-        0 0 40px rgba(var(--primary-color-rgb), 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+    opacity: 0.95;
 }
-/* 点击3D按压反馈 */
+/* 点击反馈 */
 .qsp-item:active {
-    transform: scale(0.92);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.35),
-        0 0 20px rgba(var(--primary-color-rgb), 0.2),
-        inset 0 3px 8px rgba(0, 0, 0, 0.25);
-    transition: transform 0.1s ease;
+    background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.08) 0%, 
+            rgba(var(--primary-color-rgb), 0.15) 50%, 
+            rgba(var(--primary-color-rgb), 0.08) 100%),
+        var(--surface-hover);
+    opacity: 0.9;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
 }
 /* 确保松手后transform恢复，不卡住 */
 /* 状态切换弹性动画 */
@@ -1143,7 +1110,10 @@
     position: relative;
     transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
-    background: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.08);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
         inset 0 -1px 0 rgba(0, 0, 0, 0.2);
@@ -1158,13 +1128,7 @@
         0 0 30px rgba(var(--primary-color-rgb), 0.25),
         inset 0 1px 0 rgba(255, 255, 255, 0.25),
         inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-    background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.15) 0%, 
-            rgba(255, 255, 255, 0.05) 50%, 
-            rgba(var(--primary-color-rgb), 0.1) 100%),
-        linear-gradient(135deg, 
-            rgba(var(--primary-color-rgb), 0.15) 0%, 
-            rgba(var(--secondary-color-rgb), 0.08) 100%);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .qsp-item > :last-child {
@@ -1193,9 +1157,9 @@
     text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
 }
 
-/* ========== 天气组件 - 【优化点1】3D视觉终极美化 ========== */
+/* ========== 天气组件 ========== */
 .weather-widget {
-    min-width: 240px;
+    min-width: 380px;
     padding: 16px 20px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -1204,77 +1168,21 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, 
-            rgba(100, 210, 255, 0.08) 0%, 
-            rgba(255, 255, 255, 0.07) 25%, 
-            rgba(255, 190, 110, 0.05) 60%, 
-            rgba(0, 0, 0, 0.12) 100%),
-        rgba(30, 32, 38, 0.85);
+    background: rgba(30, 32, 38, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4),
-        0 6px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    animation: weatherFloat 4.5s ease-in-out infinite;
-    animation-play-state: paused;
 }
-/* 天气Widget渐变发光边框 */
-/* 天气Widget三径向渐变氛围光（已合并增强版） */
+/* 天气组件 - 移除不必要的伪元素以提升性能 */
 
-.weather-widget::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 30% 30%, 
-            rgba(135, 206, 250, 0.12) 0%, 
-            transparent 40%),
-        radial-gradient(circle at 70% 70%, 
-            rgba(255, 215, 0, 0.08) 0%, 
-            transparent 40%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    border-radius: 20px;
+.weather-widget::after,
+.weather-widget::before {
+    display: none;
 }
-/* 增强版光泽扫过效果（已合并） */
 
-.weather-widget .weather-shimmer {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.08) 30%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.08) 70%,
-        transparent 100%);
-    transform: skewX(-15deg);
-    pointer-events: none;
-    opacity: 0;
-    z-index: 1;
-    transition: all 0.7s ease;
-}
-/* 悬停3D透视效果增强 */
-
-width: 72px;
-    height: 72px;
-    opacity: 1;
-    filter: 
-        drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4))
-        drop-shadow(0 0 20px rgba(100, 200, 255, 0.15));
-    margin-right: 0;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    flex-shrink: 0;
-    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    transform-style: preserve-3d;
 /* 天气#字形布局子区域 */
 .weather-left {
     display: flex;
@@ -1558,28 +1466,7 @@ linear-gradient(135deg,
     text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.7),
         0 0 40px rgba(var(--primary-color-rgb), 0.4);
 }
-/* ========== 网络/蓝牙图标终极美化 ========== */
-.network-status-icon,
-.bluetooth-status-icon,
-.network-status-icon::after,
-.bluetooth-status-icon::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: radial-gradient(circle,
-        rgba(var(--primary-color-rgb), 0.2) 0%,
-        transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.network-status-icon:hover::after,
-.bluetooth-status-icon:hover::after {
-    opacity: 1;
-    animation: iconGlowPulse 2s ease-in-out infinite;
-}
+/* ========== 网络/蓝牙图标美化已统一到上方主定义区（第320行） ========== */
 /* ============================================
    骨架屏占位、脉冲加载、渐变扫过、多状态加载动画
    ============================================ */
@@ -1991,6 +1878,7 @@ linear-gradient(135deg,
         }
         .network-status-icon,
     .bluetooth-status-icon,
+    .location-status-icon,
     .network-5g-icon {
             width: 22px;
             height: 22px;
@@ -2097,37 +1985,20 @@ linear-gradient(135deg,
         }
 }
 /* ========== 减少动效模式适配 ========== */
-/* ========== 胎压组件 - 【优化点3】3D视觉终极美化 ========== */
+/* ========== 胎压组件 ========== */
 .car-widget {
-    min-width: 260px;
+    min-width: 380px;
+    height: var(--widget-height, 120px);
     padding: var(--spacing-xl);
     position: relative;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-}
-/* 胎压卡片渐变背景 */
-
-.car-widget::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 30%, 
-            rgba(var(--primary-color-rgb), 0.06) 0%, 
-            transparent 50%),
-        radial-gradient(ellipse at 20% 80%, 
-            rgba(var(--secondary-color-rgb), 0.04) 0%, 
-            transparent 50%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    background: rgba(30, 32, 38, 0.5);
     border-radius: 20px;
-}
-
-.car-widget:hover::before {
-    opacity: 1;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .car-image {
+    position: absolute;
     width: 100%;
     height: 100%;
     opacity: 0.65;
@@ -2137,13 +2008,14 @@ linear-gradient(135deg,
     background-repeat: no-repeat;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .car-widget:hover .car-image {
     opacity: 0.8;
-    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5))
-        drop-shadow(0 0 40px rgba(var(--primary-color-rgb), 0.2));
-    transform: scale(1.06) rotateX(4deg) translateY(-4px);
+    transform: translate(-50%, -50%) scale(1.06);
 }
 
 .tire-pressure {
@@ -2238,14 +2110,14 @@ linear-gradient(135deg,
 }
 
 .car-widget:hover .tire-pressure {
-    background: linear-gradient(135deg, 
-            rgba(var(--primary-color-rgb), 0.3) 0%, 
+    background: linear-gradient(135deg,
+            rgba(var(--primary-color-rgb), 0.3) 0%,
             rgba(var(--primary-color-rgb), 0.15) 100%);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
         0 0 20px rgba(var(--primary-color-rgb), 0.25),
         0 0 0 1px rgba(var(--primary-color-rgb), 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    transform: scale(1.1) translateZ(10px);
+    transform: scale(1.1);
     border-color: rgba(var(--primary-color-rgb), 0.5);
 }
 
@@ -2280,6 +2152,27 @@ linear-gradient(135deg,
     color: rgba(255, 255, 255, 0.8);
 }
 
+/* 胎压指示器四角定位 */
+.tire-pressure.front-left {
+    top: 12px;
+    left: 12px;
+}
+
+.tire-pressure.front-right {
+    top: 12px;
+    right: 12px;
+}
+
+.tire-pressure.rear-left {
+    bottom: 12px;
+    left: 12px;
+}
+
+.tire-pressure.rear-right {
+    bottom: 12px;
+    right: 12px;
+}
+
 .tire-loading-tip {
     font-size: var(--font-size-xs);
     color: var(--text-tertiary);
@@ -2299,53 +2192,16 @@ linear-gradient(135deg,
     padding: 18px 24px;
     position: relative;
     perspective: 1200px;
-    transform-style: preserve-3d;
-    background: linear-gradient(135deg, 
-            rgba(138, 43, 226, 0.08) 0%, 
-            rgba(255, 255, 255, 0.06) 30%, 
-            rgba(255, 105, 180, 0.05) 60%, 
-            rgba(0, 0, 0, 0.12) 100%),
-        rgba(30, 32, 38, 0.85);
+    background: rgba(30, 32, 38, 0.5);
     overflow: hidden;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
-/* 音乐Widget渐变发光边框 */
+/* 音乐组件 - 移除不必要的伪元素以提升性能 */
 
-.music-widget::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 20px;
-    padding: 1px;
-    background: linear-gradient(
-        135deg,
-        rgba(138, 43, 226, 0.3) 0%,
-        rgba(var(--primary-color-rgb), 0.2) 30%,
-        rgba(255, 105, 180, 0.2) 60%,
-        transparent 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0.6;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* 音乐Widget双径向渐变氛围光 */
-
+.music-widget::before,
 .music-widget::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 20% 20%, 
-            rgba(138, 43, 226, 0.15) 0%, 
-            transparent 60%),
-        radial-gradient(ellipse at 80% 80%, 
-            rgba(255, 105, 180, 0.12) 0%, 
-            transparent 60%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    border-radius: 20px;
+    display: none;
 }
 /* 光泽扫过效果 */
 
@@ -2908,7 +2764,7 @@ linear-gradient(135deg,
 /* 音乐控制区 */
 /* ========== 地图导航组件 ========== */
 .map-widget {
-    min-width: 240px;
+    min-width: 380px;
     display: inline-flex;
     flex-direction: row;
     justify-content: center;
@@ -3473,39 +3329,8 @@ linear-gradient(135deg,
     opacity: 1;
 }
 /* 天气图标优化 - 已合并到主定义 */
-/* 状态栏图标优化 */
+/* 状态栏图标 transition/::after 已统一到第320行主定义区，此处历史重复定义已删除 */
 
-.network-status-icon,
-.bluetooth-status-icon {
-    position: relative;
-    transition: all var(--transition-fast);
-}
-
-.network-status-icon::after,
-.bluetooth-status-icon::after,
-.network-5g-icon::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150%;
-    height: 150%;
-    background: radial-gradient(
-        circle,
-        rgba(var(--primary-color-rgb), 0.3) 0%,
-        transparent 70%
-    );
-    opacity: 0;
-    transition: opacity var(--transition-fast);
-    pointer-events: none;
-}
-
-.network-status-icon:hover::after,
-.bluetooth-status-icon:hover::after,
-.network-5g-icon:hover::after {
-    opacity: 1;
-}
 /* 音乐控制图标优化 */
 
 .music-control-btn {
@@ -5524,18 +5349,12 @@ opacity: 1;
     padding: 14px 18px;
     min-width: 48px;
     min-height: 48px;
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.1) 0%,
-            rgba(255, 255, 255, 0.04) 50%,
-            rgba(0, 0, 0, 0.1) 100%),
-        var(--surface-color);
+    background: rgba(30, 32, 38, 0.65);
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3),
-        0 2px 8px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
@@ -6239,10 +6058,6 @@ background: linear-gradient(
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
-        .quick-switch-panel {
-            width: 95vw;
-            max-height: 85vh;
-        }
         .quick-switch-body {
             padding: 16px;
         }
@@ -6259,6 +6074,30 @@ background: linear-gradient(
         }
 }
 /* 屏幕阅读器隐藏文本 - 视觉隐藏但可朗读 */
+
+/* ============================================
+   白天模式 - Widget背景适配
+   ============================================ */
+body.theme-light .widget,
+body.theme-light .weather-widget,
+body.theme-light .car-widget,
+body.theme-light .music-widget,
+body.theme-light .quick-switches-widget {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-light .quick-switch-panel {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+body.theme-light .qsp-item {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+body.theme-light .qsp-item.qsp-active {
+    background: rgba(var(--primary-color-rgb), 0.15);
+}
 
 /* 开关状态ARIA标签支持 */
 
@@ -6676,12 +6515,7 @@ background: linear-gradient(
 /* 更多按钮图标特殊样式 */
 
 .qsp-item:hover > :first-child {
-    background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.12) 0%, 
-            rgba(255, 255, 255, 0.04) 100%),
-        linear-gradient(135deg, 
-            rgba(180, 180, 180, 0.15) 0%, 
-            rgba(120, 120, 120, 0.08) 100%);
+    background-color: rgba(255, 255, 255, 0.12);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45),
         0 0 25px rgba(150, 150, 150, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -7148,17 +6982,8 @@ background: linear-gradient(
     border: 1px solid rgba(255, 165, 0, 0.4);
 }
 /* 右侧信息区域 - 已合并 */
-/* 蓝牙和WiFi图标 */
-
-.bluetooth-status-icon,
-.network-status-icon {
-    width: 20px;
-    height: 20px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.7;
-}
+/* 蓝牙和WiFi图标样式已统一在上方 .network-status-icon/.bluetooth-status-icon/.location-status-icon 定义（26x26），
+   此处历史重复定义已删除以避免尺寸不一致导致图标错位 */
 /* ========================================
    快捷开关重构 - 空调控制样式
    ======================================== */
@@ -7370,11 +7195,7 @@ footer.status-bar {
         .gear-indicator:hover {
             transform: scale(1.1);
         }
-        .network-status-icon:hover,
-    .bluetooth-status-icon:hover {
-            opacity: 1;
-            transform: scale(1.15);
-        }
+    /* 状态栏图标 hover 已统一到第320行主定义区，此处历史重复定义（含违规 scale）已删除 */
     /* 空调控件 hover */
         .ac-control:hover::after,
     .ac-hcs:hover::after {
@@ -7461,6 +7282,7 @@ footer.status-bar {
 .gear-indicator,
 .network-status-icon,
 .bluetooth-status-icon,
+.location-status-icon,
 .map-icon,
 .wind-display,
 .center-controls,

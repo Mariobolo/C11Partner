@@ -348,3 +348,160 @@
 .glass-xl { backdrop-filter: var(--backdrop-glass-xl); -webkit-backdrop-filter: var(--backdrop-glass-xl); }
 .glass-ultra { backdrop-filter: var(--backdrop-glass-ultra); -webkit-backdrop-filter: var(--backdrop-glass-ultra); }
 
+/* ============================================
+   白天模式主题
+   通过 body.theme-light 激活
+   ============================================ */
+body.theme-light {
+    --text-primary: rgba(30, 30, 35, 0.95);
+    --text-secondary: rgba(30, 30, 35, 0.7);
+    --text-tertiary: rgba(30, 30, 35, 0.5);
+    --text-disabled: rgba(30, 30, 35, 0.3);
+
+    --bg-dark: rgba(255, 255, 255, 0.85);
+    --bg-medium: rgba(255, 255, 255, 0.6);
+    --bg-light: rgba(255, 255, 255, 0.4);
+    --bg-card: rgba(240, 240, 245, 0.7);
+    --bg-overlay: rgba(255, 255, 255, 0.6);
+
+    --surface-color: rgba(0, 0, 0, 0.05);
+    --surface-hover: rgba(0, 0, 0, 0.08);
+    --surface-active: rgba(0, 0, 0, 0.12);
+    --surface-disabled: rgba(0, 0, 0, 0.03);
+
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-light: rgba(0, 0, 0, 0.05);
+
+    --color-text-primary: rgba(30, 30, 35, 0.95);
+    --color-text-secondary: rgba(30, 30, 35, 0.7);
+    --color-text-tertiary: rgba(30, 30, 35, 0.5);
+    --color-text-disabled: rgba(30, 30, 35, 0.3);
+    --color-text-placeholder: rgba(30, 30, 35, 0.35);
+
+    --color-bg-page: #f0f0f5;
+    --color-bg-card: rgba(240, 240, 245, 0.7);
+    --color-bg-surface: rgba(0, 0, 0, 0.04);
+    --color-bg-surface-hover: rgba(0, 0, 0, 0.08);
+    --color-bg-surface-active: rgba(0, 0, 0, 0.12);
+    --color-bg-overlay: rgba(255, 255, 255, 0.7);
+    --color-bg-backdrop: rgba(240, 240, 245, 0.85);
+
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-border-light: rgba(0, 0, 0, 0.05);
+    --color-border-strong: rgba(0, 0, 0, 0.15);
+}
+
+/* ========== 日间模式 - 组件样式覆盖 ========== */
+
+/* 状态栏 */
+body.theme-light .top-status-bar {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+body.theme-light .status-indicator,
+body.theme-light .gear-indicator,
+body.theme-light .speed-indicator,
+body.theme-light .turn-indicator,
+body.theme-light .lock-indicator,
+body.theme-light .dw-status {
+    color: rgba(30, 30, 35, 0.85);
+}
+body.theme-light .network-status-icon,
+body.theme-light .bluetooth-status-icon,
+body.theme-light .location-status-icon {
+    filter: brightness(0.3) contrast(1.2) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
+}
+
+/* 时钟、日期 */
+body.theme-light .time-text,
+body.theme-light .date-text,
+body.theme-light .lunar-calendar-text {
+    color: rgba(30, 30, 35, 0.95);
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+}
+body.theme-light .layout-left:hover .time-text#timeDisplay {
+    filter: drop-shadow(0 0 60px rgba(var(--primary-color-rgb), 0.3));
+}
+
+/* 快捷应用 */
+body.theme-light .quick-apps-widget {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .quick-app-item {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .quick-app-item > :last-child {
+    color: rgba(30, 30, 35, 0.9);
+}
+
+/* 快捷开关 */
+body.theme-light .quick-switches-widget {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .qsp-item {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .qsp-item > :last-child {
+    color: rgba(30, 30, 35, 0.9);
+}
+
+/* 音乐组件 */
+body.theme-light .music-widget {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .music-title,
+body.theme-light .music-artist {
+    color: rgba(30, 30, 35, 0.9);
+}
+body.theme-light .music-control-btn {
+    filter: brightness(0.3);
+}
+
+/* 地图组件 */
+body.theme-light .map-widget {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .nav-button {
+    color: rgba(30, 30, 35, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* 天气组件 */
+body.theme-light .weather-widget {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .weather-temp,
+body.theme-light .weather-desc,
+body.theme-light .weather-city {
+    color: rgba(30, 30, 35, 0.9);
+}
+
+/* 胎压/车控组件 */
+body.theme-light .car-widget {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+body.theme-light .car-status-label,
+body.theme-light .tire-pressure-value {
+    color: rgba(30, 30, 35, 0.9);
+}
+
+/* 主题切换图标 */
+body.theme-light .theme-toggle-icon {
+    filter: brightness(0.3);
+}
+
+/* 背景遮罩 */
+body.theme-light .background-container::after {
+    background: rgba(255, 255, 255, 0.3);
+}
+
