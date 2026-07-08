@@ -108,43 +108,39 @@ index.html <script> 标签按以下顺序加载：
 3. bridge.js             ← Android 接口封装（无依赖）
 
 4. bootstrap.js          ← 初始化队列（AppBootstrap）
-5. panel-controller.js   ← 面板显示/隐藏（PanelController）
-6. settings-sync.js      ← 设置同步（SettingsSync）
-7. ui-initializer.js     ← UI 初始化（UiInitializer）
-8. app-list-manager.js  ← 应用列表管理（AppListManager）
+5. settings-sync.js      ← 设置同步（SettingsSync）
+6. app-list-manager.js  ← 应用列表管理（AppListManager）
 
-9. theme.js             ← 主题切换
-10. widgets.js           ← Widget 管理
+7. theme.js             ← 主题切换
+8. widgets.js           ← Widget 管理
 
-11. music.js             ← 音乐可视化
-12. settings.js          ← 设置面板逻辑
-13. app.js               ← 应用管理逻辑
-14. toast.js             ← 提示组件
-15. datetime.js          ← 时间日期
-16. wallpaper-manager.js ← 壁纸管理（WallpaperManager + WallpaperSwipeManager）
-17. weather.js           ← 天气模块
-18. map.js               ← 地图模块
-19. async-callback-manager.js ← 异步回调管理
-20. system-music-manager.js   ← 系统音乐信息
-21. car-state-manager.js      ← 车辆状态管理
-22. gear-bridge.js             ← 档位桥接
-23. automation-manager.js     ← 自动化场景
-24. quick-switch-manager.js   ← 快捷开关
-25. index.js                  ← 主入口（统一初始化）
+9. music.js             ← 音乐可视化
+10. settings.js          ← 设置面板逻辑
+11. app.js               ← 应用管理逻辑
+12. toast.js             ← 提示组件
+13. datetime.js          ← 时间日期
+14. wallpaper-manager.js ← 壁纸管理（WallpaperManager + WallpaperSwipeManager）
+15. weather.js           ← 天气模块
+16. map.js               ← 地图模块
+17. async-callback-manager.js ← 异步回调管理
+18. system-music-manager.js   ← 系统音乐信息
+19. car-state-manager.js      ← 车辆状态管理
+20. gear-bridge.js             ← 档位桥接
+21. automation-manager.js     ← 自动化场景
+22. quick-switch-manager.js   ← 快捷开关
+23. index.js                  ← 主入口（统一初始化 + 面板控制 + UI初始化）
 ```
 
 ### 3.3 模块职责和公开接口
 
 | 模块 | 文件 | 职责 | window 挂载 | 公开方法 |
 |------|------|------|------------|----------|
-| 工具 | `utils.js` | 通用工具函数 | — | `escapeHtml()`, `normalizeAppIcon()`, `blurAfterClick()` |
+| 工具 | `utils.js` | 通用工具函数 | — | `escapeHtml()`, `normalizeAppIcon()`, `blurAfterClick()`, `debounce()`, `throttle()` |
 | 存储 | `storage.js` | localStorage 封装 | — | `get()`, `set()`, `remove()` |
 | 桥接 | `bridge.js` | Android 接口代理 | — | `Android` 对象 |
-| 引导 | `bootstrap.js` | 初始化队列 | `AppBootstrap` | `registerInit()`, `safeInit()`, `debounce()`, `throttle()` |
-| 面板 | `panel-controller.js` | 面板显示/隐藏 | `PanelController` | `showSettingsModal()`, `hideSettingsModal()`, `showAppsModal()`, `hideAppsModal()` |
-| 设置同步 | `settings-sync.js` | 设置项读写 | `SettingsSync` | `loadWallpaperSettings()`, `initEffectLevel()` |
-| UI初始化 | `ui-initializer.js` | DOM 初始化绑定 | `UiInitializer` | `loadQuickApps()`, `loadQuickSwitches()`, `updateNetworkAndBluetoothStatus()` |
-| 应用列表 | `app-list-manager.js` | 应用面板管理 | `AppListManager` | `initAppsModal()`, `loadAppList()`, `renderAppsList()` |
+| 引导 | `bootstrap.js` | 初始化队列 | `AppBootstrap` | `registerInit()`, `safeInit()`, `runInit()` |
+| 设置同步 | `settings-sync.js` | 设置项读写 | `SettingsSync` | `loadWallpaperSettings()`, `initEffectLevel()`, `applyEffectLevel()`, `initThemeMode()`, `applyThemeMode()`, `initThemeToggleIcon()`, `toggleWallpaperCarousel()`, `restoreDefaultWallpaper()` |
+| 应用列表 | `app-list-manager.js` | 应用面板管理 | `AppListManager` | `initAppsModal()`, `loadAppList()`, `renderAppsList()`, `initAlphabetNav()`, `showAddToQuickAppsDialog()`, `showRemoveFromQuickAppsDialog()` |
 | 主题 | `theme.js` | 日夜模式切换 | — | `toggleTheme()`, `setTheme()` |
 | 音乐 | `music.js` | 频谱可视化 | — | `updateMusicVisualization()`, `updateMusicStatus()` |
 | 壁纸 | `wallpaper-manager.js` | 壁纸切换/轮播 | `WallpaperManager` + `WallpaperSwipeManager` | `init()`, `nextWallpaper()`, `toggleCarousel()` |
@@ -155,7 +151,7 @@ index.html <script> 标签按以下顺序加载：
 | 系统音乐 | `system-music-manager.js` | 音乐信息显示 | — | `init()`, `updateMusicInfo()` |
 | 档位桥接 | `gear-bridge.js` | 档位前后端桥接 | — | `init()` |
 | 异步回调 | `async-callback-manager.js` | 回调统一管理 | — | `register()`, `execute()` |
-| 入口 | `index.js` | 统一初始化 + 设置面板 | — | `safeInit()`, `initSettingsModal()` |
+| 入口 | `index.js` | 统一初始化 + 面板控制 + UI初始化 | — | `safeInit()`, `showSettingsModal()`, `hideSettingsModal()`, `showAppsModal()`, `hideAppsModal()`, `initSettingsModal()`, `loadQuickApps()`, `loadQuickSwitches()`, `updateNetworkAndBluetoothStatus()` |
 
 ### 3.4 CSS 文件组织
 

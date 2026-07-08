@@ -13,7 +13,7 @@
 | 类型 | 文件数 | 总行数 | 说明 |
 |------|--------|--------|------|
 | JS | 26 | 8,559 | 含 2 个未使用的 patch 文件 |
-| CSS | 9 | 29,339 | 含未引入的 main.css(24行) 和 music.css(747行) |
+| CSS | 7 | 28,568 | 7 个均在 index.html 中引入 |
 | HTML | 1 | ~350 | index.html |
 
 **JS 文件明细：**
@@ -56,10 +56,8 @@
 | pages.css | 5,244 | ✅ | 页面级布局 |
 | animations.css | 1,961 | ✅ | 动画关键帧 |
 | responsive.css | 1,417 | ✅ | 响应式适配 |
-| music.css | 747 | ❌ | 未引入（music.js 内联？） |
 | theme.css | 489 | ✅ | 主题变量 |
 | base.css | 579 | ✅ | 基础重置 |
-| main.css | 24 | ❌ | 废弃 |
 
 ### 1.2 后端 (Java)
 
