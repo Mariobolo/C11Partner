@@ -122,8 +122,8 @@
 
 ## 其他待办（低优先级）
 
-- [ ] 删除废弃 patch 文件（one-click-permission-patch.js, tasks-btn-adb-patch.js）
-- [ ] 确认 android_interface.js（291行）是否使用，未使用则删除
+- [x] 删除废弃 patch 文件（one-click-permission-patch.js, tasks-btn-adb-patch.js）✅ 已完成（2026-07-09）
+- [x] 确认 android_interface.js（291行）是否使用，未使用则删除 ✅ 已完成（2026-07-09，未被 index.html 引入）
 - [ ] 更新 PROJECT_STATUS.md 反映阶段2完成后的代码统计
 
 ---
@@ -167,6 +167,8 @@
 - debounce/throttle 统一使用 utils.js 的 window.debounce / window.throttle
 - 阶段4共删除2个CSS文件（main.css、music.css），清理 widgets.css 重复定义，共减少约800行
 - CSS文件从9个减少到7个：theme.css, base.css, animations.css, components.css, widgets.css, pages.css, responsive.css
+- 额外清理：删除3个废弃JS文件（one-click-permission-patch.js、tasks-btn-adb-patch.js、android_interface.js），更新 code_index.json
+- JS文件从23个减少到20个
 
 ---
 
