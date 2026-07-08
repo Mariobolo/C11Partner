@@ -41,15 +41,16 @@
 
 **目标**：移除冗余中间层（panel-controller.js, ui-initializer.js），简化初始化流程，减少代码量约35%
 
-### 步骤2.1：删除 panel-controller.js，合并到 index.js
-- **状态**：`[~]` 进行中
-- **文件**：`app/src/main/assets/js/panel-controller.js`（93行）
+### 步骤2.1：删除 panel-controller.js，合并到 index.js ✅ 已完成
+- **状态**：`[x]` 已完成（2026-07-09）
+- **文件**：`app/src/main/assets/js/panel-controller.js`（106行，已删除）
 - **操作**：
-  1. 读取 panel-controller.js 内容
-  2. 将面板显示/隐藏逻辑（showSettingsModal/hideSettingsModal/showAppsModal/hideAppsModal）合并到 index.js
-  3. 从 index.html 移除 panel-controller.js 引入
-  4. 删除 panel-controller.js 文件
-  5. 验证面板开关和点击关闭逻辑正常
+  1. ✅ 读取 panel-controller.js 内容
+  2. ✅ 将6个函数（showSettingsModal/hideSettingsModal/showAppsModal/hideAppsModal/initWallpaperDoubleClick/handleWallpaperLongPress）合并到 index.js
+  3. ✅ 从 index.html 移除 panel-controller.js 引入
+  4. ✅ 删除 panel-controller.js 文件
+  5. ✅ 编译验证通过（BUILD SUCCESSFUL）
+- **提交记录**：cb35a92 refactor: 前端bug修复并合并panel-controller.js到index.js
 
 ### 步骤2.2：删除 ui-initializer.js，合并到 index.js
 - **状态**：`[ ]` 待执行
@@ -117,26 +118,35 @@
 
 ### 当前交接（2026-07-09）
 
-**正在执行**：阶段2步骤2.1 - 删除 panel-controller.js 并合并到 index.js
+**正在执行**：阶段2步骤2.2 - 删除 ui-initializer.js 并合并到 index.js
 
 **已完成**：
 - 阶段1文档整理全部完成
 - 创建 DEV_PLAN.md 和 CONTEXT.md 两个记忆文件
+- ✅ 步骤2.1：删除 panel-controller.js（106行），6个函数已合并到 index.js
 
 **下一步具体操作**：
-1. 读取 `app/src/main/assets/js/panel-controller.js` 全部内容
-2. 读取 `app/src/main/assets/js/index.js` 找到面板相关逻辑
-3. 将 panel-controller.js 的面板显示/隐藏函数合并到 index.js
-4. 注意保留 active 类 + display 配合的关闭逻辑（上次会话修复的）
-5. 从 index.html 移除 `<script src="js/panel-controller.js"></script>`
-6. 删除 panel-controller.js 文件
+1. 读取 `app/src/main/assets/js/ui-initializer.js` 全部内容（427行）
+2. 读取 `app/src/main/assets/js/index.js` 中的 UiInitializer 适配层（第144-176行附近）
+3. 将 ui-initializer.js 的核心方法（loadQuickApps/loadQuickSwitches/updateNetworkAndBluetoothStatus 等）合并到 index.js
+4. 注意：ui-initializer.js 中有些方法可能已被其他模块直接调用（window.UiInitializer.xxx）
+5. 从 index.html 移除 `<script src="js/ui-initializer.js"></script>`
+6. 删除 ui-initializer.js 文件
 7. 编译验证
 
 **注意事项**：
-- 面板关闭逻辑：先移除 active 类，等动画结束再 display:none
-- 面板打开逻辑：先 display:flex，再添加 active 类
-- 面板可见性判断：用 classList.contains('active')
-- 点击关闭：检查 event.target === modal（只有点击背景层才关闭）
+- ui-initializer.js 是较大的文件（427行），合并时注意保持功能完整
+- 合并后 index.js 行数会增加，但总体减少了中间层
+- 面板控制规范已在 index.js 中（步骤2.1合并），不要重复
+- 注意检查是否有其他文件直接调用 `window.UiInitializer` 或 `UiInitializer.xxx`
+
+**已知的 index.js 适配层**（需替换为实际实现或直接删除）：
+- loadQuickApps, loadQuickSwitches, updateACControlStatus
+- checkWifiStatus, checkBluetoothStatus, checkLocationStatus
+- updateNetworkAndBluetoothStatus, initHorizontalScroll
+- updateMusicProgress, initAcTemperature, updateAcTemperature
+- updateAcState, updateWindLevel, initMusicControls
+- addTimeDisplayClickEvent, initNavigationButtons
 
 ---
 
