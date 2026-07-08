@@ -12,7 +12,7 @@
 
 | 类型 | 文件数 | 总行数 | 说明 |
 |------|--------|--------|------|
-| JS | 28 | 8,615 | 含 3 个未使用的 patch 文件 |
+| JS | 26 | 8,559 | 含 2 个未使用的 patch 文件 |
 | CSS | 9 | 29,339 | 含未引入的 main.css(24行) 和 music.css(747行) |
 | HTML | 1 | ~350 | index.html |
 
@@ -20,31 +20,29 @@
 
 | 文件 | 行数 | 状态 | 说明 |
 |------|------|------|------|
-| index.js | 515 | ✅ 使用中 | 主入口，统一初始化 |
+| index.js | 1,003 | ✅ 使用中 | 主入口，统一初始化（含面板控制+UI初始化） |
 | wallpaper-manager.js | 812 | ✅ 使用中 | 壁纸管理（最大文件） |
 | widgets.js | 603 | ✅ 使用中 | Widget 管理 |
 | utils.js | 414 | ✅ 使用中 | 工具函数 |
 | quick-switch-manager.js | 422 | ✅ 使用中 | 快捷开关 |
 | automation-manager.js | 396 | ✅ 使用中 | 自动化场景 |
-| app.js | 366 | ✅ 使用中 | 应用管理 |
 | app-list-manager.js | 389 | ✅ 使用中 | 应用列表 |
+| app.js | 366 | ✅ 使用中 | 应用管理 |
+| settings.js | 402 | ✅ 使用中 | 设置面板 |
 | car-state-manager.js | 355 | ✅ 使用中 | 车辆状态 |
 | music.js | 337 | ✅ 使用中 | 音乐可视化 |
-| settings.js | 402 | ✅ 使用中 | 设置面板 |
-| ui-initializer.js | 427 | ✅ 使用中 | UI 初始化（待合并） |
-| bridge.js | 194 | ✅ 使用中 | Android 接口 |
+| theme.js | 233 | ✅ 使用中 | 主题切换 |
 | android_interface.js | 291 | ⚠️ 待确认 | 可能未引入 |
+| gear-bridge.js | 184 | ✅ 使用中 | 档位桥接 |
+| bridge.js | 194 | ✅ 使用中 | Android 接口 |
 | system-music-manager.js | 179 | ✅ 使用中 | 系统音乐 |
 | settings-sync.js | 174 | ✅ 使用中 | 设置同步 |
 | storage.js | 174 | ✅ 使用中 | 本地存储 |
-| gear-bridge.js | 184 | ✅ 使用中 | 档位桥接 |
 | map.js | 169 | ✅ 使用中 | 地图模块 |
 | weather.js | 166 | ✅ 使用中 | 天气 |
 | toast.js | 144 | ✅ 使用中 | 提示组件 |
 | datetime.js | 143 | ✅ 使用中 | 时间日期 |
-| theme.js | 233 | ✅ 使用中 | 主题切换 |
-| panel-controller.js | 93 | ✅ 使用中 | 面板控制（待合并） |
-| bootstrap.js | 76 | ✅ 使用中 | 初始化队列 |
+| bootstrap.js | 52 | ✅ 使用中 | 初始化队列（已简化） |
 | async-callback-manager.js | 59 | ✅ 使用中 | 异步回调 |
 | one-click-permission-patch.js | 58 | ❌ 未引入 | 废弃 patch |
 | tasks-btn-adb-patch.js | 49 | ❌ 未引入 | 废弃 patch |
@@ -83,21 +81,14 @@
 | ARCHITECTURE.md | ✅ 已更新 | 架构文档 |
 | PROJECT_STATUS.md | ✅ 本文件 | 项目状态 |
 | DEVELOPMENT_GUIDE.md | ⚠️ 待更新 | 开发指南 |
-| CODE_INDEX.md | ⚠️ 待更新 | 代码索引 |
-| JS_API_REFERENCE.md | ⚠️ 待更新 | 接口文档 |
+| CODE_INDEX.md | ✅ 已更新 | 代码索引（v2.1） |
+| JS_API_REFERENCE.md | ✅ 已更新 | 接口文档（v2.1） |
 | FAQ.md | ✅ 保留 | 常见问题 |
 | COMMIT_CONVENTION.md | ✅ 保留 | 提交规范 |
 | DEVICE_CONFIG.md | ✅ 保留 | 设备配置 |
 | TESTING.md | ✅ 保留 | 测试方法 |
 | ICON_RESOURCES.md | ✅ 保留 | 图标资源 |
 | LEAPMOTOR_LOG_ANALYSIS.md | ✅ 保留 | 日志分析 |
-| REFACTORING_PLAN.md | ❌ 待删除 | 已过期 |
-| INDEX_JS_MODULE_BREAKDOWN.md | ❌ 待删除 | 已过期 |
-| INDEX_JS_MODULES.md | ❌ 待删除 | 已过期 |
-| CSS_DUPLICATE_SELECTORS.md | ❌ 待删除 | 已过期 |
-| CSS_DUPLICATE_ANALYSIS.md | ❌ 待删除 | 已过期 |
-| AGP_UPGRADE_PLAN.md | ❌ 待删除 | 已过期 |
-| CAR_CONTROL_API.md | ❌ 待合并 | 合并到 JS_API_REFERENCE |
 
 ---
 
@@ -124,9 +115,7 @@
 |------|--------|------|------|
 | 快捷应用加载 | 高 | ⚠️ | Android API 返回空时 fallback mock 数据 |
 | 日间模式样式 | 中 | ⚠️ | theme.css 中 body.theme-light 覆盖不完整 |
-| 前端冗余层清理 | 中 | 📋 计划中 | panel-controller.js + ui-initializer.js 待合并 |
-| 废弃文件清理 | 低 | 📋 计划中 | 3 个 patch JS + 2 个未引入 CSS |
-| 文档过期清理 | 低 | 📋 计划中 | 6 个过期文档待删除 |
+| 废弃文件清理 | 低 | 📋 计划中 | 2 个 patch JS + 2 个未引入 CSS |
 
 ---
 
@@ -134,11 +123,9 @@
 
 | 债务类型 | 严重度 | 说明 |
 |---------|--------|------|
-| 前端中间层冗余 | 中 | panel-controller.js 和 ui-initializer.js 增加调用链深度 |
 | CSS 重复定义 | 中 | .widget 等选择器在多文件重复定义 |
 | android_interface.js 未引入 | 低 | 可能是旧文件，待确认是否删除 |
 | music.css 未引入 | 低 | 可能内联在 music.js 中，待确认 |
-| index.js 历史包袱 | 低 | 含 safeInit 适配层，待简化 |
 
 ---
 
@@ -146,13 +133,13 @@
 
 | 阶段 | 目标 | 状态 |
 |------|------|------|
-| 阶段1：文档整理 | 重写所有核心文档 | 🔄 进行中 |
-| 阶段2：前端清理 | 删除中间层，扁平化结构 | 📋 待开始 |
-| 阶段3：接口对齐 | 前后端接口文档一致 | 📋 待开始 |
+| 阶段1：文档整理 | 重写所有核心文档 | ✅ 已完成 |
+| 阶段2：前端清理 | 删除中间层，扁平化结构 | ✅ 已完成 |
+| 阶段3：接口对齐 | 前后端接口文档一致 | 🔄 进行中 |
 | 阶段4：CSS 清理 | 去除重复样式 | 📋 待开始 |
 | 阶段5：功能验证 | 编译安装测试 | 📋 待开始 |
 
 ---
 
-**文档版本**：v2.0
+**文档版本**：v2.1
 **最后更新**：2026-07-09
