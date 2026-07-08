@@ -19,8 +19,8 @@
 |------|------|------|------|
 | 阶段1 | 文档整理 | ✅ 已完成 | 重写6个核心文档，删除12个过期文档 |
 | 阶段2 | 前端清理 | ✅ 已完成 | 删除冗余中间层，合并到 index.js，简化初始化流程 |
-| 阶段3 | 接口对齐 | ⏳ 待执行 | 前后端接口文档一致验证 |
-| 阶段4 | CSS 清理 | ⏳ 待执行 | 去除重复样式 |
+| 阶段3 | 接口对齐 | ✅ 已完成 | 前后端接口文档一致验证 |
+| 阶段4 | CSS 清理 | ✅ 已完成 | 去除重复样式，修复伪元素冲突 |
 | 阶段5 | 功能验证 | ⏳ 待执行 | 编译安装，逐一测试所有功能 |
 
 ---
@@ -99,11 +99,11 @@
 
 ---
 
-## 阶段4：CSS 清理 🔄 进行中
+## 阶段4：CSS 清理 ✅ 已完成
 
 - [x] 删除未引入的 main.css（24行）✅ 已完成（2026-07-09）
 - [x] 确认 music.css（768行）— 未引入且无引用，已删除 ✅ 已完成（2026-07-09）
-- [ ] 去除重复样式选择器（需深入分析 widgets.css 重复定义）
+- [x] 去除重复样式选择器（widgets.css 重复定义清理，修复伪元素冲突）✅ 已完成（2026-07-09）
 - [x] 验证 !important 仅在 base.css 中使用 ✅ 已完成（2026-07-09，35处均在base.css）
 
 ---
@@ -132,7 +132,7 @@
 
 ### 当前交接（2026-07-09）
 
-**正在执行**：阶段4 - CSS 清理（进行中）
+**正在执行**：阶段5 - 功能验证（待执行）
 
 **已完成**：
 - ✅ 阶段1文档整理全部完成
@@ -146,19 +146,26 @@
   - JS_API_REFERENCE.md v2.1：修复返回值类型（void→boolean）、补充缺失方法（getCarState/toggleAC/setCameraOverspeedLimit等）、修正参数签名、新增副屏接口章节
   - CODE_INDEX.md v2.1：移除已删除的 panel-controller.js 和 ui-initializer.js、更新文件行数、补充缺失接口、修正返回值类型
   - PROJECT_STATUS.md v2.1：更新代码统计（JS 26文件→8,559行）、移除过期文档标记、更新待修复问题和技术债务列表
-- ✅ 阶段4 CSS 清理（部分完成）
+- ✅ 阶段4 CSS 清理全部完成
   - 删除 main.css（26行）：@import 入口文件，index.html 已直接引入各CSS
   - 删除 music.css（768行）：未在 index.html 引入，JS 无特有类名引用，widgets.css 已有完整音乐组件样式
+  - 清理 widgets.css 重复样式选择器：修复 .widget、.quick-app-item、.music-widget、.weather-widget 伪元素冲突（`display: none` 阻止悬停效果），删除冗余重复定义和破碎代码
   - 验证 !important：仅 base.css 中有 35 处（特效等级+触摸优化），符合规范
 
 **下一步具体操作**：
-1. 去除重复样式选择器（widgets.css 中发现多处重复定义，如 .vinyl-dot、.btn-prev/.btn-play/.btn-next 等在不同位置重复定义）
+1. 编译安装 APK 到设备
+2. 测试面板开关（设置/应用/开关面板）
+3. 测试时钟显示（秒数不闪烁）
+4. 测试应用列表加载
+5. 测试快捷开关功能
+6. 测试壁纸切换
+7. 测试车控功能
 
 **注意事项**：
 - 阶段2共删除2个文件（panel-controller.js、ui-initializer.js），精简 bootstrap.js 39行，清理 index.js 适配层67行
 - index.js 内部现在直接调用 SettingsSync.xxx 和 AppListManager.xxx，不再有中间适配层
 - debounce/throttle 统一使用 utils.js 的 window.debounce / window.throttle
-- 阶段4已删除2个CSS文件（main.css、music.css），共减少794行
+- 阶段4共删除2个CSS文件（main.css、music.css），清理 widgets.css 重复定义，共减少约800行
 - CSS文件从9个减少到7个：theme.css, base.css, animations.css, components.css, widgets.css, pages.css, responsive.css
 
 ---
