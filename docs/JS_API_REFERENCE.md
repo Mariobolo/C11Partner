@@ -1,1247 +1,424 @@
-# WebViewBridge JS 接口文档
+# C11Partner JS 接口文档
 
-> 📋 WebViewBridge JS 接口参考文档
-> 
-> 最后更新：2026-07-03
-> 
-> 接口总数：173 个（含34个新增方法）
-
----
-
-## 📑 目录
-
-- [360全景](#360全景)
-- [灯光控制](#灯光控制)
-- [驾驶/场景模式](#驾驶场景模式)
-- [空调控制](#空调控制)
-- [音量控制](#音量控制)
-- [副屏相关](#副屏相关)
-- [语音控制](#语音控制)
-- [音乐相关](#音乐相关)
-- [应用管理](#应用管理)
-- [壁纸相关](#壁纸相关)
-- [ADB相关](#adb相关)
-- [时间日期](#时间日期)
-- [系统设置](#系统设置)
-- [状态获取](#状态获取)
-- [保存/设置](#保存设置)
-- [其他](#其他)
+> 🔌 前后端接口契约文档，所有 JS 可调用的 Android 方法
+>
+> 最后更新：2026-07-09
+>
+> 调用方式：`Android.methodName(参数)`（通过 WebViewBridge 的 `@JavascriptInterface`）
 
 ---
 
-## 360全景
+## 一、车控接口
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `startCamera360()` | - | `boolean` | - |
-| `navigateToHome()` | 导航回家（唤起高德） | `void` | - |
-| `navigateToCompany()` | 导航去公司（唤起高德） | `void` | - |
-| `getCarState()` | 获取车辆状态JSON | `String` | - |
+> 委托链：WebViewBridge → CarControlBridge → CarControlManager
 
-## 灯光控制
+### 1.1 灯光控制
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `getAmbientLightColor()` | - | `int` | - |
-| `isAmbientLightEnabled()` | - | `boolean` | - |
-| `setAmbientLightColor()` | - | `boolean` | `color`: int |
-| `setAmbientLightEnabled()` | - | `boolean` | `enabled`: boolean |
-| `setLowBeamLight()` | 近光灯开关 | `boolean` | `on`: boolean |
-| `isLowBeamLightOn()` | 获取近光灯状态 | `boolean` | - |
-| `setPedestrianAlert()` | 行人警示开关 | `boolean` | `on`: boolean |
-| `isPedestrianAlertOn()` | 获取行人警示状态 | `boolean` | - |
-| `setPositionLight()` | 示廓灯开关 | `boolean` | `on`: boolean |
-| `isPositionLightOn()` | 获取示廓灯状态 | `boolean` | - |
-| `setRearFogLight()` | 后雾灯开关 | `boolean` | `on`: boolean |
-| `isRearFogLightOn()` | 获取后雾灯状态 | `boolean` | - |
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setLowBeamLight(on)` | `boolean` | void | 近光灯开关 |
+| `isLowBeamLightOn()` | — | `boolean` | 查询近光灯 |
+| `setRearFogLight(on)` | `boolean` | void | 后雾灯开关 |
+| `isRearFogLightOn()` | — | `boolean` | 查询后雾灯 |
+| `setPositionLight(on)` | `boolean` | void | 示廓灯开关 |
+| `isPositionLightOn()` | — | `boolean` | 查询示廓灯 |
+| `setPedestrianAlert(on)` | `boolean` | void | 行人警示音开关 |
+| `isPedestrianAlertOn()` | — | `boolean` | 查询行人警示 |
 
-## 驾驶/场景模式
+### 1.2 驾驶模式
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `setCampingMode()` | - | `boolean` | `on`: boolean |
-| `setDriveMode()` | - | `boolean` | `mode`: int |
-| `setGuardMode()` | - | `boolean` | `on`: boolean |
-| `setPowerSaveMode()` | - | `boolean` | `on`: boolean |
-| `setRestMode()` | - | `boolean` | `on`: boolean |
-| `setSentinelMode()` | - | `boolean` | `on`: boolean |
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setDriveMode(mode)` | `int(0-5)` | void | 0=经济 1=舒适 2=运动 3=雪地 4=泥地 5=沙地 |
+| `setGuardMode(on)` | `boolean` | void | 守护模式 |
+| `setRestMode(on)` | `boolean` | void | 小憩模式 |
+| `setCampingMode(on)` | `boolean` | void | 露营模式 |
+| `setPowerSaveMode(on)` | `boolean` | void | 省电模式 |
+| `setSentinelMode(on)` | `boolean` | void | 哨兵模式 |
 
-## 空调控制
+### 1.3 空调控制
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `toggleAC()` | 空调开关（新） | `boolean` | - |
-| `toggleAirConditioning()` | 空调开关 | `boolean` | - |
-| `toggleDefrost()` | 除霜开关 | `boolean` | - |
-| `increaseTemperature()` | 温度+1 | `boolean` | - |
-| `decreaseTemperature()` | 温度-1 | `boolean` | - |
-| `decreaseWindSpeed()` | 风量-1 | `boolean` | - |
-| `increaseWindSpeed()` | 风量+1 | `boolean` | - |
-| `adjustWindLevel(delta)` | 调整风量（相对值） | `boolean` | `delta`: int |
-| `adjustTemperature(delta)` | 调整温度（相对值） | `boolean` | `delta`: int |
-| `getAcInfo()` | 获取空调状态JSON | `String` | - |
-| `getDriverTemp()` | - | `int` | - |
-| `getPassengerTemp()` | - | `int` | - |
-| `getWindLevel()` | - | `int` | - |
-| `isAcEnabled()` | - | `boolean` | - |
-| `setAcEnabled()` | - | `boolean` | `enabled`: boolean |
-| `setDriverTemp()` | - | `boolean` | `temp`: int |
-| `setMaxCooling()` | 最大制冷开关 | `boolean` | `on`: boolean |
-| `isMaxCoolingOn()` | 获取最大制冷状态 | `boolean` | - |
-| `setPassengerTemp()` | - | `boolean` | `temp`: int |
-| `setWindLevel()` | - | `boolean` | `level`: int |
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setAcEnabled(on)` | `boolean` | void | 空调开关 |
+| `isAcEnabled()` | — | `boolean` | 查询空调状态 |
+| `setWindLevel(level)` | `int(1-7)` | void | 风量等级 |
+| `getWindLevel()` | — | `int` | 获取风量 |
+| `setDriverTemp(temp)` | `int(16-30)` | void | 主驾温度（摄氏度） |
+| `getDriverTemp()` | — | `int` | 获取主驾温度 |
+| `setPassengerTemp(temp)` | `int(16-30)` | void | 副驾温度 |
+| `getPassengerTemp()` | — | `int` | 获取副驾温度 |
+| `toggleAirConditioning()` | — | void | 切换空调 |
+| `toggleDefrost()` | — | void | 切换除霜 |
+| `toggleMute()` | — | void | 切换静音 |
+| `increaseTemperature()` | — | void | 温度+1 |
+| `decreaseTemperature()` | — | void | 温度-1 |
+| `increaseWindSpeed()` | — | void | 风量+1 |
+| `decreaseWindSpeed()` | — | void | 风量-1 |
+| `getAcInfo()` | — | `String(JSON)` | 空调信息（风量/温度/开关等） |
+| `setMaxCooling(on)` | `boolean` | void | 极速制冷 |
+| `isMaxCoolingOn()` | — | `boolean` | 查询极速制冷 |
 
-## 音量控制
+### 1.4 座椅控制
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `getCallVolume()` | - | `int` | - |
-| `getMusicVolume()` | - | `int` | - |
-| `getNaviVolume()` | - | `int` | - |
-| `setCallVolume()` | - | `boolean` | `volume`: int |
-| `setMusicVolume()` | - | `void` | `volume`: int |
-| `setNaviVolume()` | - | `boolean` | `volume`: int |
-| `volumeDown()` | - | `void` | - |
-| `volumeUp()` | - | `void` | - |
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setDriverSeatHeating(level)` | `int(0-3)` | void | 0=关 1-3=加热等级 |
+| `setPassengerSeatHeating(level)` | `int(0-3)` | void | 副驾座椅加热 |
+| `setDriverSeatVentilation(level)` | `int(0-3)` | void | 主驾座椅通风 |
+| `setPassengerSeatVentilation(level)` | `int(0-3)` | void | 副驾座椅通风 |
+| `setSteeringWheelHeating(on)` | `boolean` | void | 方向盘加热 |
 
-## 副屏相关
+### 1.5 后视镜控制
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `isSecondaryScreenEnabled()` | - | `boolean` | - |
-| `setSecondaryScreenEnabled()` | - | `boolean` | `enabled`: boolean |
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `foldMirrors()` | — | void | 折叠后视镜 |
+| `unfoldMirrors()` | — | void | 展开后视镜 |
+| `setMirrorHeating(on)` | `boolean` | void | 后视镜加热 |
 
-## 语音控制
+### 1.6 音量控制
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `isSpeechEnabled()` | - | `boolean` | - |
-| `sendVoiceCommand()` | - | `boolean` | `command`: String |
-| `setSpeechEnabled()` | - | `boolean` | `enabled`: boolean |
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setCallVolume(v)` | `int(0-15)` | void | 蓝牙电话音量 |
+| `getCallVolume()` | — | `int` | 获取电话音量 |
+| `setNaviVolume(v)` | `int(0-15)` | void | 导航音量 |
+| `getNaviVolume()` | — | `int` | 获取导航音量 |
+| `setMusicVolume(v)` | `int(0-15)` | void | 媒体音量 |
+| `getMusicVolume()` | — | `int` | 获取媒体音量 |
+| `volumeUp()` | — | void | 音量+1 |
+| `volumeDown()` | — | void | 音量-1 |
 
-## 音乐相关
+### 1.7 氛围灯/夜间模式
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `getCurrentMusicArtist()` | - | `String` | - |
-| `getCurrentMusicName()` | - | `String` | - |
-| `getMusicProgressInfo()` | - | `String` | - |
-| `getSystemMusicInfo()` | - | `String` | - |
-| `isMusicPlaying()` | - | `boolean` | - |
-| `isNotificationListenerEnabled()` | - | `boolean` | - |
-| `nextMusic()` | - | `void` | - |
-| `openNotificationListenerSettings()` | - | `void` | - |
-| `playPauseMusic()` | - | `void` | - |
-| `playPause()` | 旧API兼容，同playPauseMusic | `void` | - |
-| `playNext()` | 旧API兼容，同nextMusic | `void` | - |
-| `playPrevious()` | 旧API兼容，同prevMusic | `void` | - |
-| `playMusic()` | 直接播放 | `void` | - |
-| `pauseMusic()` | 直接暂停 | `void` | - |
-| `hasNotificationAccess()` | 检查通知权限 | `boolean` | - |
-| `playSongAtIndex()` | - | `void` | `index`: int |
-| `prevMusic()` | - | `void` | - |
-| `startMusicVisualizer()` | - | `void` | - |
-| `stopMusicVisualizer()` | - | `void` | - |
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setAmbientLightEnabled(on)` | `boolean` | void | 氛围灯开关 |
+| `isAmbientLightEnabled()` | — | `boolean` | 查询氛围灯 |
+| `setAmbientLightColor(color)` | `int(0-16)` | void | 氛围灯颜色 |
+| `getAmbientLightColor()` | — | `int` | 获取氛围灯颜色 |
+| `setNightMode(on)` | `boolean` | void | 夜间模式开关 |
+| `isNightModeOn()` | — | `boolean` | 查询夜间模式 |
 
-## 应用管理
+### 1.8 其他车控
 
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `getAppListAsync(cb)` | 异步获取应用列表 | `void` | `callbackId`: String |
-| `showToast(msg)` | 显示Toast提示 | `void` | `message`: String |
-| `setDefaultDesktop()` | 设置默认桌面 | `void` | - |
-| `addQuickApp()` | - | `void` | `name`: String, `packageName`: String, `iconBase64`: String |
-| `getAllApps()` | - | `String` | - |
-| `getAllComponentConfigs()` | - | `String` | - |
-| `getAppIcon()` | - | `String` | `packageName`: String |
-| `getAppInfo()` | - | `String` | `packageName`: String |
-| `getAppList()` | - | `String` | - |
-| `getAppVersionInfo()` | - | `String` | - |
-| `getConfigApp()` | - | `String` | `buttonId`: String |
-| `getQuickAppList()` | - | `String` | - |
-| `getSystemApps()` | - | `String` | - |
-| `getUserApps()` | - | `String` | - |
-| `isAppInstalled()` | - | `boolean` | `packageName`: String |
-| `isComponentEnabled()` | - | `boolean` | `componentName`: String |
-| `isQuickApp()` | - | `boolean` | `packageName`: String |
-| `launchApp()` | - | `void` | `packageName`: String |
-| `openAppInfo()` | - | `void` | `packageName`: String |
-| `openAppSettings()` | - | `void` | - |
-| `removeQuickApp()` | - | `void` | `packageName`: String |
-| `restartApp()` | - | `void` | - |
-| `saveComponentConfig()` | - | `boolean` | `componentName`: String, `isEnabled`: boolean |
-| `saveConfigApp()` | - | `void` | `buttonId`: String, `appName`: String, `packageName`: String, `appIcon`: String |
-| `saveSystemLauncherSetting()` | - | `boolean` | `enabled`: boolean |
-| `saveSystemLauncherSettingAsync()` | - | `void` | `enabled`: final boolean, `callbackId`: final String |
-
-## 壁纸相关
-
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `deleteCurrentWallpaper()` | - | `boolean` | - |
-| `getRandomWallpaper()` | - | `String` | - |
-| `getRandomWallpaperAsync()` | - | `void` | `callbackId`: final String |
-| `getRandomWallpaperBase64()` | - | `String` | - |
-| `getRandomWallpaperBase64Async()` | - | `void` | `callbackId`: final String |
-| `getWallpaperSettings()` | - | `String` | - |
-| `getWallpaperSettingsAsync()` | - | `void` | `callbackId`: final String |
-| `pauseWallpaperCarousel()` | - | `void` | - |
-| `resumeWallpaperCarousel()` | - | `void` | - |
-| `saveWallpaperCarouselSetting()` | - | `boolean` | `enabled`: boolean |
-| `saveWallpaperCarouselSettingAsync()` | - | `void` | `enabled`: final boolean, `callbackId`: final String |
-| `saveWallpaperSwitchInterval()` | - | `boolean` | `interval`: int |
-| `saveWallpaperSwitchIntervalAsync()` | - | `void` | `interval`: final int, `callbackId`: final String |
-| `sendWallpaperSettingsChangedBroadcast()` | - | `void` | - |
-| `updateWallpaperCategories()` | - | `void` | - |
-
-## ADB相关
-
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `enableAdbDebugging()` | 启用ADB调试 | `void` | - |
-| `executeAdbCommand(cmd)` | 执行ADB命令 | `void` | `command`: String |
-| `openRecentsViaAdb()` | ADB方式打开最近任务 | `void` | - |
-| `executeAdbPermissionGrant()` | - | `void` | - |
-| `setDefaultDesktopViaAdb()` | - | `void` | - |
-| `triggerUsbDebugAuthorization()` | - | `void` | - |
-| `triggerWirelessAdbAuthorization()` | - | `void` | - |
-
-## 时间日期
-
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `getLunarCalendar()` | - | `String` | - |
-| `getScreenTimeout()` | - | `int` | - |
-| `setScreenTimeout()` | - | `boolean` | `seconds`: int |
-| `updateCategoryEnabled()` | - | `void` | `categoryId`: String, `enabled`: boolean |
-| `updateCategoryEnabledAsync()` | - | `void` | `categoryId`: final String, `enabled`: final boolean, `callbackId`: final String |
-
-## 系统设置
-
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `getAutomationSettings()` | 获取自动化设置JSON | `String` | - |
-| `setAutomationSettings(json)` | 保存自动化设置 | `boolean` | `settingsJson`: String |
-| `setAutomationScenarioEnabled(id, on)` | 启用/禁用场景 | `boolean` | `scenarioId`: String, `enabled`: boolean |
-| `isPresentationShowing()` | 副屏是否显示 | `boolean` | - |
-| `hidePresentation()` | 隐藏副屏 | `void` | - |
-| `showCarStatusPresentation()` | 显示车辆状态副屏 | `boolean` | - |
-| `getEnabledCategoriesAsync(cb)` | 异步获取已启用壁纸分类 | `void` | `callbackId`: String |
-| `isBluetoothConnected()` | - | `boolean` | - |
-| `isWifiConnected()` | - | `boolean` | - |
-| `openSystemSettings()` | - | `void` | - |
-| `saveBootGreetingSetting()` | - | `boolean` | `enabled`: boolean |
-| `saveRandomModeSetting()` | - | `boolean` | `enabled`: boolean |
-| `saveSpecifiedModeSetting()` | - | `boolean` | `enabled`: boolean |
-| `setBluetoothEnabled()` | 蓝牙开关 | `boolean` | `enabled`: boolean |
-| `isBluetoothEnabled()` | 获取蓝牙状态 | `boolean` | - |
-| `setNightMode()` | 夜间模式开关 | `boolean` | `on`: boolean |
-| `isNightModeOn()` | 获取夜间模式状态 | `boolean` | - |
-| `setWifiEnabled()` | WiFi开关 | `boolean` | `enabled`: boolean |
-| `isWifiEnabled()` | 获取WiFi状态 | `boolean` | - |
-
-## 状态获取
-
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `getBatteryInfo()` | - | `String` | - |
-| `getEnabledCategories()` | - | `String` | - |
-| `getMemoryInfo()` | - | `String` | - |
-| `getPlaylist()` | - | `String` | - |
-| `getRepeatMode()` | - | `int` | - |
-| `getScreenBrightness()` | - | `int` | - |
-| `getSystemVersionInfo()` | - | `String` | - |
-| `isAutoBrightnessEnabled()` | - | `boolean` | - |
-| `isCameraOverspeedLimitEnabled()` | - | `boolean` | - |
-| `isScreenOn()` | - | `boolean` | - |
-| `isShuffleEnabled()` | - | `boolean` | - |
-| `isVehicleLocked()` | - | `boolean` | - |
-| `isVideoWhileDrivingEnabled()` | - | `boolean` | - |
-
-## 保存/设置
-
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `setAutoBrightness()` | - | `boolean` | `enabled`: boolean |
-| `setCameraOverspeedLimit()` | - | `boolean` | `enabled`: boolean |
-| `setDriverSeatHeating()` | - | `boolean` | `level`: int |
-| `setDriverSeatVentilation()` | - | `boolean` | `level`: int |
-| `setMirrorHeating()` | - | `boolean` | `on`: boolean |
-| `setPassengerSeatHeating()` | - | `boolean` | `level`: int |
-| `setPassengerSeatVentilation()` | - | `boolean` | `level`: int |
-| `setPlaybackSpeed()` | - | `void` | `speed`: float |
-| `setRepeatMode()` | - | `void` | `mode`: int |
-| `setScreenBrightness()` | - | `boolean` | `brightness`: int |
-| `setShuffleMode()` | - | `void` | `enabled`: boolean |
-| `setSteeringWheelHeating()` | - | `boolean` | `on`: boolean |
-| `setVideoWhileDriving()` | - | `boolean` | `enabled`: boolean |
-
-## 其他
-
-| 方法名 | 说明 | 返回值 | 参数 |
-|--------|------|--------|------|
-| `foldMirrors()` | - | `boolean` | - |
-| `openRecentTasks()` | - | `void` | - |
-| `openRecents()` | - | `void` | - |
-| `seekTo()` | - | `void` | `position`: long |
-| `sendNextTrack()` | - | `boolean` | - |
-| `sendPrevTrack()` | - | `boolean` | - |
-| `unfoldMirrors()` | - | `boolean` | - |
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `startCamera360()` | — | void | 启动360全景 |
+| `setCameraOverspeedLimit(on)` | `boolean` | void | 360超速限制 |
+| `isCameraOverspeedLimitEnabled()` | — | `boolean` | 查询超速限制 |
+| `setWifiEnabled(on)` | `boolean` | void | WiFi开关 |
+| `isWifiEnabled()` | — | `boolean` | 查询WiFi |
+| `setBluetoothEnabled(on)` | `boolean` | void | 蓝牙开关 |
+| `isBluetoothEnabled()` | — | `boolean` | 查询蓝牙 |
+| `setVideoWhileDriving(on)` | `boolean` | void | 行驶中视频 |
+| `isVideoWhileDrivingEnabled()` | — | `boolean` | 查询行驶视频 |
+| `setSecondaryScreenEnabled(on)` | `boolean` | void | 副屏开关 |
+| `isSecondaryScreenEnabled()` | — | `boolean` | 查询副屏 |
+| `setSpeechEnabled(on)` | `boolean` | void | 语音播报开关 |
+| `isSpeechEnabled()` | — | `boolean` | 查询语音播报 |
+| `sendVoiceCommand(cmd)` | `String` | void | 发送语音指令 |
+| `isVehicleLocked()` | — | `boolean` | 查询锁车状态 |
+| `isScreenOn()` | — | `boolean` | 查询屏幕状态 |
 
 ---
 
-## 📝 详细说明
-
-### 360全景
-
-#### `startCamera360()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 79 行
-
-### 灯光控制
-
-#### `getAmbientLightColor()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 227 行
-
-#### `isAmbientLightEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 217 行
-
-#### `setAmbientLightColor()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `color`: `int`
-- **行号**：第 222 行
-
-#### `setAmbientLightEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 212 行
-
-#### `setLowBeamLight()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 93 行
-
-#### `setPedestrianAlert()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 108 行
-
-#### `setPositionLight()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 103 行
-
-#### `setRearFogLight()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 98 行
-
-### 驾驶/场景模式
-
-#### `setCampingMode()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 129 行
-
-#### `setDriveMode()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `mode`: `int`
-- **行号**：第 114 行
-
-#### `setGuardMode()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 119 行
-
-#### `setPowerSaveMode()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 134 行
-
-#### `setRestMode()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 124 行
-
-#### `setSentinelMode()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 139 行
-
-### 空调控制
-
-#### `getDriverTemp()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 175 行
-
-#### `getPassengerTemp()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 185 行
-
-#### `getWindLevel()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 165 行
-
-#### `isAcEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 155 行
-
-#### `setAcEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 150 行
-
-#### `setDriverTemp()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `temp`: `int`
-- **行号**：第 170 行
-
-#### `setMaxCooling()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 145 行
-
-#### `setPassengerTemp()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `temp`: `int`
-- **行号**：第 180 行
-
-#### `setWindLevel()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `level`: `int`
-- **行号**：第 160 行
-
-### 音量控制
-
-#### `getCallVolume()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 196 行
-
-#### `getMusicVolume()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 520 行
-
-#### `getNaviVolume()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 206 行
-
-#### `setCallVolume()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `volume`: `int`
-- **行号**：第 191 行
-
-#### `setMusicVolume()`
-
-- **返回值**：`void`
-- **参数**：
-  - `volume`: `int`
-- **行号**：第 517 行
-
-#### `setNaviVolume()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `volume`: `int`
-- **行号**：第 201 行
-
-#### `volumeDown()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 526 行
-
-#### `volumeUp()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 523 行
-
-### 副屏相关
-
-#### `isSecondaryScreenEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 264 行
-
-#### `setSecondaryScreenEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 259 行
-
-### 语音控制
-
-#### `isSpeechEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 275 行
-
-#### `sendVoiceCommand()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `command`: `String`
-- **行号**：第 280 行
-
-#### `setSpeechEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 270 行
-
-### 音乐相关
-
-#### `getCurrentMusicArtist()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 498 行
-
-#### `getCurrentMusicName()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 495 行
-
-#### `getMusicProgressInfo()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 501 行
-
-#### `getSystemMusicInfo()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 504 行
-
-#### `isMusicPlaying()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 492 行
-
-#### `isNotificationListenerEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 536 行
-
-#### `nextMusic()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 510 行
-
-#### `openNotificationListenerSettings()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 541 行
-
-#### `playPauseMusic()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 507 行
-
-#### `playSongAtIndex()`
-
-- **返回值**：`void`
-- **参数**：
-  - `index`: `int`
-- **行号**：第 550 行
-
-#### `prevMusic()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 513 行
-
-#### `startMusicVisualizer()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 486 行
-
-#### `stopMusicVisualizer()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 489 行
-
-### 应用管理
-
-#### `addQuickApp()`
-
-- **返回值**：`void`
-- **参数**：
-  - `name`: `String`
-  - `packageName`: `String`
-  - `iconBase64`: `String`
-- **行号**：第 389 行
-
-#### `getAllApps()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 362 行
-
-#### `getAllComponentConfigs()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 650 行
-
-#### `getAppIcon()`
-
-- **返回值**：`String`
-- **参数**：
-  - `packageName`: `String`
-- **行号**：第 374 行
-
-#### `getAppInfo()`
-
-- **返回值**：`String`
-- **参数**：
-  - `packageName`: `String`
-- **行号**：第 371 行
-
-#### `getAppList()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 359 行
-
-#### `getAppVersionInfo()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 659 行
-
-#### `getConfigApp()`
-
-- **返回值**：`String`
-- **参数**：
-  - `buttonId`: `String`
-- **行号**：第 405 行
-
-#### `getQuickAppList()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 386 行
-
-#### `getSystemApps()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 368 行
-
-#### `getUserApps()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 365 行
-
-#### `isAppInstalled()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `packageName`: `String`
-- **行号**：第 377 行
-
-#### `isComponentEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `componentName`: `String`
-- **行号**：第 645 行
-
-#### `isQuickApp()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `packageName`: `String`
-- **行号**：第 397 行
-
-#### `launchApp()`
-
-- **返回值**：`void`
-- **参数**：
-  - `packageName`: `String`
-- **行号**：第 380 行
-
-#### `openAppInfo()`
-
-- **返回值**：`void`
-- **参数**：
-  - `packageName`: `String`
-- **行号**：第 383 行
-
-#### `openAppSettings()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 675 行
-
-#### `removeQuickApp()`
-
-- **返回值**：`void`
-- **参数**：
-  - `packageName`: `String`
-- **行号**：第 394 行
-
-#### `restartApp()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 669 行
-
-#### `saveComponentConfig()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `componentName`: `String`
-  - `isEnabled`: `boolean`
-- **行号**：第 640 行
-
-#### `saveConfigApp()`
-
-- **返回值**：`void`
-- **参数**：
-  - `buttonId`: `String`
-  - `appName`: `String`
-  - `packageName`: `String`
-  - `appIcon`: `String`
-- **行号**：第 400 行
-
-#### `saveSystemLauncherSetting()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 572 行
-
-#### `saveSystemLauncherSettingAsync()`
-
-- **返回值**：`void`
-- **参数**：
-  - `enabled`: `final boolean`
-  - `callbackId`: `final String`
-- **行号**：第 577 行
-
-### 壁纸相关
-
-#### `deleteCurrentWallpaper()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 482 行
-
-#### `getRandomWallpaper()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 434 行
-
-#### `getRandomWallpaperAsync()`
-
-- **返回值**：`void`
-- **参数**：
-  - `callbackId`: `final String`
-- **行号**：第 437 行
-
-#### `getRandomWallpaperBase64()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 442 行
-
-#### `getRandomWallpaperBase64Async()`
-
-- **返回值**：`void`
-- **参数**：
-  - `callbackId`: `final String`
-- **行号**：第 447 行
-
-#### `getWallpaperSettings()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 468 行
-
-#### `getWallpaperSettingsAsync()`
-
-- **返回值**：`void`
-- **参数**：
-  - `callbackId`: `final String`
-- **行号**：第 471 行
-
-#### `pauseWallpaperCarousel()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 476 行
-
-#### `resumeWallpaperCarousel()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 479 行
-
-#### `saveWallpaperCarouselSetting()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 409 行
-
-#### `saveWallpaperCarouselSettingAsync()`
-
-- **返回值**：`void`
-- **参数**：
-  - `enabled`: `final boolean`
-  - `callbackId`: `final String`
-- **行号**：第 414 行
-
-#### `saveWallpaperSwitchInterval()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `interval`: `int`
-- **行号**：第 419 行
-
-#### `saveWallpaperSwitchIntervalAsync()`
-
-- **返回值**：`void`
-- **参数**：
-  - `interval`: `final int`
-  - `callbackId`: `final String`
-- **行号**：第 424 行
-
-#### `sendWallpaperSettingsChangedBroadcast()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 429 行
-
-#### `updateWallpaperCategories()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 452 行
-
-### ADB相关
-
-#### `executeAdbPermissionGrant()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 627 行
-
-#### `setDefaultDesktopViaAdb()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 636 行
-
-#### `triggerUsbDebugAuthorization()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 621 行
-
-#### `triggerWirelessAdbAuthorization()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 624 行
-
-### 时间日期
-
-#### `getLunarCalendar()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 597 行
-
-#### `getScreenTimeout()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 617 行
-
-#### `setScreenTimeout()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `seconds`: `int`
-- **行号**：第 614 行
-
-#### `updateCategoryEnabled()`
-
-- **返回值**：`void`
-- **参数**：
-  - `categoryId`: `String`
-  - `enabled`: `boolean`
-- **行号**：第 455 行
-
-#### `updateCategoryEnabledAsync()`
-
-- **返回值**：`void`
-- **参数**：
-  - `categoryId`: `final String`
-  - `enabled`: `final boolean`
-  - `callbackId`: `final String`
-- **行号**：第 463 行
-
-### 系统设置
-
-#### `isBluetoothConnected()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 569 行
-
-#### `isWifiConnected()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 566 行
-
-#### `openSystemSettings()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 672 行
-
-#### `saveBootGreetingSetting()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 582 行
-
-#### `saveRandomModeSetting()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 587 行
-
-#### `saveSpecifiedModeSetting()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 592 行
-
-#### `setBluetoothEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 243 行
-
-#### `setNightMode()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 233 行
-
-#### `setWifiEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 238 行
-
-### 状态获取
-
-#### `getBatteryInfo()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 665 行
-
-#### `getEnabledCategories()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 460 行
-
-#### `getMemoryInfo()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 662 行
-
-#### `getPlaylist()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 547 行
-
-#### `getRepeatMode()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 556 行
-
-#### `getScreenBrightness()`
-
-- **返回值**：`int`
-- **参数**：无
-- **行号**：第 604 行
-
-#### `getSystemVersionInfo()`
-
-- **返回值**：`String`
-- **参数**：无
-- **行号**：第 656 行
-
-#### `isAutoBrightnessEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 610 行
-
-#### `isCameraOverspeedLimitEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 87 行
-
-#### `isScreenOn()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 310 行
-
-#### `isShuffleEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 562 行
-
-#### `isVehicleLocked()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 305 行
-
-#### `isVideoWhileDrivingEnabled()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 253 行
-
-### 保存/设置
-
-#### `setAutoBrightness()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 607 行
-
-#### `setCameraOverspeedLimit()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 82 行
-
-#### `setDriverSeatHeating()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `level`: `int`
-- **行号**：第 316 行
-
-#### `setDriverSeatVentilation()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `level`: `int`
-- **行号**：第 326 行
-
-#### `setMirrorHeating()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 353 行
-
-#### `setPassengerSeatHeating()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `level`: `int`
-- **行号**：第 321 行
-
-#### `setPassengerSeatVentilation()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `level`: `int`
-- **行号**：第 331 行
-
-#### `setPlaybackSpeed()`
-
-- **返回值**：`void`
-- **参数**：
-  - `speed`: `float`
-- **行号**：第 533 行
-
-#### `setRepeatMode()`
-
-- **返回值**：`void`
-- **参数**：
-  - `mode`: `int`
-- **行号**：第 553 行
-
-#### `setScreenBrightness()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `brightness`: `int`
-- **行号**：第 601 行
-
-#### `setShuffleMode()`
-
-- **返回值**：`void`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 559 行
-
-#### `setSteeringWheelHeating()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `on`: `boolean`
-- **行号**：第 337 行
-
-#### `setVideoWhileDriving()`
-
-- **返回值**：`boolean`
-- **参数**：
-  - `enabled`: `boolean`
-- **行号**：第 248 行
-
-### 其他
-
-#### `foldMirrors()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 343 行
-
-#### `openRecentTasks()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 630 行
-
-#### `openRecents()`
-
-- **返回值**：`void`
-- **参数**：无
-- **行号**：第 633 行
-
-#### `seekTo()`
-
-- **返回值**：`void`
-- **参数**：
-  - `position`: `long`
-- **行号**：第 530 行
-
-#### `sendNextTrack()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 299 行
-
-#### `sendPrevTrack()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 290 行
-
-#### `unfoldMirrors()`
-
-- **返回值**：`boolean`
-- **参数**：无
-- **行号**：第 348 行
-
----
-
-## 🔄 重新生成
-
-```bash
-python3 tools/generate_api_docs.py
+## 二、应用接口
+
+> 委托链：WebViewBridge → AppBridge → AppUtils
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `getAppList()` | — | `String(JSON)` | 应用列表（按字母分组，含图标Base64） |
+| `getAllApps()` | — | `String(JSON)` | 所有已安装应用 |
+| `getUserApps()` | — | `String(JSON)` | 用户安装应用 |
+| `getSystemApps()` | — | `String(JSON)` | 系统应用 |
+| `getAppInfo(pkg)` | `String` | `String(JSON)` | 应用信息 |
+| `getAppIcon(pkg)` | `String` | `String(Base64)` | 应用图标 |
+| `isAppInstalled(pkg)` | `String` | `boolean` | 是否已安装 |
+| `launchApp(pkg)` | `String` | void | 启动应用 |
+| `openAppInfo(pkg)` | `String` | void | 打开应用信息页 |
+| `getQuickAppList()` | — | `String(JSON)` | 快捷应用列表 |
+| `addQuickApp(pkg)` | `String` | void | 添加快捷应用 |
+| `removeQuickApp(pkg)` | `String` | void | 移除快捷应用 |
+| `isQuickApp(pkg)` | `String` | `boolean` | 是否快捷应用 |
+| `saveConfigApp(key, val)` | `String, String` | void | 保存配置应用 |
+| `getConfigApp(key)` | `String` | `String` | 获取配置应用 |
+| `getAppListAsync()` | — | void | 异步获取（通过回调） |
+
+**getAppList() 返回 JSON 格式：**
+```json
+{
+  "apps": [
+    {
+      "packageName": "com.amap.android",
+      "appName": "高德地图",
+      "icon": "data:image/png;base64,..."
+    }
+  ]
+}
 ```
+
+---
+
+## 三、壁纸接口
+
+> 委托链：WebViewBridge → WallpaperBridge → WallpaperManager
+
+### 3.1 壁纸设置
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `getWallpaperSettings()` | — | `String(JSON)` | 获取壁纸设置 |
+| `getWallpaperSettingsAsync()` | — | void | 异步获取 |
+| `getWallpaperSettingsV2()` | — | `String(JSON)` | V2版设置 |
+| `setWallpaperType(type)` | `int` | void | 1=必应 2=本地图片 3=本地视频 5=iframe |
+| `setWallpaperPath(path)` | `String` | void | 壁纸路径 |
+| `setWallpaperCarouselEnabled(on)` | `boolean` | void | 轮播开关 |
+| `setWallpaperCarouselInterval(sec)` | `int` | void | 轮播间隔（秒） |
+| `setWallpaperFillMode(mode)` | `int` | void | 填充模式 |
+| `getCurrentWallpaperUrl()` | — | `String` | 当前壁纸URL |
+| `getNextWallpaperUrl()` | — | `String` | 下一张URL |
+| `refreshBingWallpaper()` | — | void | 刷新必应壁纸 |
+| `deleteCurrentWallpaper()` | — | void | 删除当前壁纸 |
+| `pauseWallpaperCarousel()` | — | void | 暂停轮播 |
+| `resumeWallpaperCarousel()` | — | void | 恢复轮播 |
+
+### 3.2 随机壁纸
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `getRandomWallpaper()` | — | `String` | 随机壁纸URL |
+| `getRandomWallpaperAsync()` | — | void | 异步获取URL |
+| `getRandomWallpaperBase64()` | — | `String` | 随机壁纸Base64 |
+| `getRandomWallpaperBase64Async()` | — | void | 异步获取Base64 |
+
+### 3.3 壁纸分类
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `updateWallpaperCategories()` | — | void | 更新分类（从网络） |
+| `updateCategoryEnabled(name, on)` | `String, boolean` | void | 启用/禁用分类 |
+| `updateCategoryEnabledAsync(name, on)` | `String, boolean` | void | 异步更新 |
+| `getEnabledCategories()` | — | `String(JSON)` | 已启用分类 |
+| `getEnabledCategoriesAsync()` | — | void | 异步获取 |
+
+### 3.4 壁纸设置同步
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `saveWallpaperCarouselSetting(on)` | `boolean` | void | 保存轮播设置 |
+| `saveWallpaperCarouselSettingAsync(on)` | `boolean` | void | 异步保存 |
+| `saveWallpaperSwitchInterval(sec)` | `int` | void | 保存切换间隔 |
+| `saveWallpaperSwitchIntervalAsync(sec)` | `int` | void | 异步保存 |
+| `sendWallpaperSettingsChangedBroadcast()` | — | void | 发送设置变更广播 |
+
+---
+
+## 四、音乐接口
+
+> 委托链：WebViewBridge → MusicBridge → MusicNotificationListenerService
+
+### 4.1 播放控制
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `playPauseMusic()` | — | void | 播放/暂停 |
+| `nextMusic()` | — | void | 下一首 |
+| `prevMusic()` | — | void | 上一首 |
+| `seekTo(pos)` | `int(ms)` | void | 跳转到位置 |
+| `setPlaybackSpeed(speed)` | `float` | void | 播放速度 |
+
+### 4.2 状态查询
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `isMusicPlaying()` | — | `boolean` | 播放状态 |
+| `getCurrentMusicName()` | — | `String` | 歌曲名 |
+| `getCurrentMusicArtist()` | — | `String` | 歌手名 |
+| `getMusicProgressInfo()` | — | `String(JSON)` | 进度信息 |
+| `getSystemMusicInfo()` | — | `String(JSON)` | 系统音乐信息 |
+
+### 4.3 可视化
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `startMusicVisualizer()` | — | void | 启动频谱可视化 |
+| `stopMusicVisualizer()` | — | void | 停止可视化 |
+
+### 4.4 播放列表
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `getPlaylist()` | — | `String(JSON)` | 播放列表 |
+| `playSongAtIndex(i)` | `int` | void | 播放指定歌曲 |
+| `setRepeatMode(m)` | `int` | void | 0=不循环 1=单曲 2=列表 |
+| `getRepeatMode()` | — | `int` | 获取循环模式 |
+| `setShuffleMode(on)` | `boolean` | void | 随机播放 |
+| `isShuffleEnabled()` | — | `boolean` | 查询随机 |
+
+### 4.5 通知监听权限
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `isNotificationListenerEnabled()` | — | `boolean` | 检查权限 |
+| `openNotificationListenerSettings()` | — | void | 打开设置页 |
+| `hasNotificationAccess()` | — | `boolean` | 查询权限 |
+
+---
+
+## 五、系统接口
+
+> 委托链：WebViewBridge → SystemBridge
+
+### 5.1 网络状态
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `isWifiConnected()` | — | `boolean` | WiFi是否连接 |
+| `isBluetoothConnected()` | — | `boolean` | 蓝牙是否连接 |
+| `isLocationEnabled()` | — | `boolean` | 定位是否开启 |
+
+### 5.2 屏幕设置
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setScreenBrightness(v)` | `int(0-255)` | void | 屏幕亮度 |
+| `getScreenBrightness()` | — | `int` | 获取亮度 |
+| `setAutoBrightness(on)` | `boolean` | void | 自动亮度 |
+| `isAutoBrightnessEnabled()` | — | `boolean` | 查询自动亮度 |
+| `setScreenTimeout(sec)` | `int` | void | 屏幕超时 |
+| `getScreenTimeout()` | — | `int` | 获取超时 |
+
+### 5.3 系统信息
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `getSystemVersionInfo()` | — | `String(JSON)` | 系统版本 |
+| `getAppVersionInfo()` | — | `String(JSON)` | 应用版本 |
+| `getMemoryInfo()` | — | `String(JSON)` | 内存信息 |
+| `getBatteryInfo()` | — | `String(JSON)` | 电池信息 |
+| `getLunarCalendar()` | — | `String(JSON)` | 农历日期 |
+
+### 5.4 系统操作
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `restartApp()` | — | void | 重启应用 |
+| `openSystemSettings()` | — | void | 打开系统设置 |
+| `openAppSettings()` | — | void | 打开应用设置 |
+| `showToast(msg)` | `String` | void | 显示Toast |
+
+### 5.5 组件配置
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `saveComponentConfig(id, enabled)` | `String, boolean` | void | 保存组件配置 |
+| `isComponentEnabled(id)` | `String` | `boolean` | 查询组件 |
+| `getAllComponentConfigs()` | — | `String(JSON)` | 所有配置 |
+
+### 5.6 其他设置
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `saveSystemLauncherSetting(on)` | `boolean` | void | 原桌面自启 |
+| `saveBootGreetingSetting(on)` | `boolean` | void | 开机问候语 |
+| `saveRandomModeSetting(on)` | `boolean` | void | 随机模式 |
+| `saveSpecifiedModeSetting(mode)` | `String` | void | 指定模式 |
+
+---
+
+## 六、ADB 接口
+
+> 委托链：WebViewBridge → AdbBridge → AdbManager
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `triggerUsbDebugAuthorization()` | — | void | USB调试授权 |
+| `triggerWirelessAdbAuthorization()` | — | void | 本地ADB授权 |
+| `executeAdbPermissionGrant()` | — | void | 授权三大权限 |
+| `setDefaultDesktopViaAdb()` | — | void | 设置默认桌面 |
+| `openRecentTasks()` | — | void | 打开最近任务 |
+| `openRecents()` | — | void | 同上（别名） |
+| `enableAdbDebugging()` | — | void | 启用ADB调试 |
+| `executeAdbCommand(cmd)` | `String` | `String` | 执行ADB命令 |
+
+---
+
+## 七、自动化接口
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `getAutomationSettings()` | — | `String(JSON)` | 获取所有自动化场景配置 |
+| `setAutomationSettings(json)` | `String(JSON)` | void | 保存配置 |
+| `setAutomationScenarioEnabled(id, enabled)` | `String, boolean` | void | 启用/禁用场景 |
+
+**getAutomationSettings() 返回 JSON 格式：**
+```json
+{
+  "scenarios": [
+    {
+      "id": "reverse_360",
+      "name": "倒车自动360",
+      "category": "safety",
+      "enabled": true
+    }
+  ]
+}
+```
+
+---
+
+## 八、导航接口
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `navigateToHome()` | — | void | 导航回家（打开地图APP） |
+| `navigateToCompany()` | — | void | 导航去公司 |
+
+---
+
+## 九、Java → JS 回调
+
+> Java 通过 `webView.evaluateJavascript()` 调用前端全局函数
+
+| 前端函数 | 参数 | 调用时机 |
+|---------|------|---------|
+| `window.updateCarState(json)` | JSON字符串 | 车辆状态变化时（档位/车门/灯光等） |
+| `window.updateMusicStatus(json)` | JSON字符串 | 音乐状态变化时 |
+| `window.updateMusicVisualization(data)` | float数组 | 音乐频谱数据（每帧） |
+| `window.AutomationManager.trigger(id)` | 场景ID | 自动化场景触发时 |
+
+**updateCarState() 参数 JSON 格式：**
+```json
+{
+  "gear": "D",
+  "leftTurnLight": 0,
+  "rightTurnLight": 1,
+  "frontLeftDoor": 0,
+  "frontRightDoor": 0,
+  "speed": 35,
+  "lockState": 1,
+  "lowBeamLight": 0
+}
+```
+
+---
+
+## 十、废弃接口
+
+| 方法 | 替代方法 | 说明 |
+|------|---------|------|
+| `sendPrevTrack()` | `prevMusic()` | 已废弃，保留兼容 |
+| `sendNextTrack()` | `nextMusic()` | 已废弃，保留兼容 |
+| `playPause()` | `playPauseMusic()` | 已废弃，保留兼容 |
+| `playNext()` | `nextMusic()` | 已废弃，保留兼容 |
+| `playPrevious()` | `prevMusic()` | 已废弃，保留兼容 |
+| `playMusic()` | `playPauseMusic()` | 已废弃，保留兼容 |
+| `pauseMusic()` | `playPauseMusic()` | 已废弃，保留兼容 |
+
+---
+
+**文档版本**：v2.0
+**最后更新**：2026-07-09

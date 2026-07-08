@@ -1,199 +1,335 @@
 # C11Partner 架构设计文档
 
-> 📐 本文档描述 C11Partner 的整体架构、模块划分和关键设计决策
+> 📐 本文档是 C11Partner 的唯一架构权威文档，前后端统一描述
 >
-> 最后更新：2026-07-07
-
-> ⚠️ **文档与代码脱节声明**：本文档部分章节（特别是 §6.3 CSS 规范的 `!important` 统计、§2.1 前端模块文件清单、§7 扩展步骤）已在 2026-07-07 与实际代码核对修正。**其他章节（§1-§5、§6.1-§6.2）反映的是项目**设计目标**，与代码现状可能存在偏差**——特别是实际初始化散落在 `index.js` 的 `safeInit()` 链中、模块边界不够清晰等问题，详见 `PROJECT_STATUS.md` 顶部的"已知问题：文档与代码脱节"清单。
-> 
-> **使用建议**：本文档作为"应当是什么"的参考，**不要把文档当现实**。如发现文档与代码不符，**先看代码**再判断。
+> 最后更新：2026-07-09
+> 文档原则：**与代码保持一致，代码变更时同步更新**
 
 ---
 
-## 一、整体架构
+## 一、项目概述
 
-### 1.1 架构总览
+### 1.1 项目定位
+
+C11Partner 是零跑 C11 车机的第三方桌面应用，通过 WebView 技术栈实现 UI，通过 Java 后端实现车控功能。
+
+### 1.2 运行环境
+
+| 项目 | 值 |
+|------|-----|
+| 车机系统 | Android 9 (API 28) |
+| 硬件平台 | 高通 8155 |
+| 屏幕分辨率 | 1920×1080（横屏） |
+| WebView 引擎 | 腾讯 TBS X5 |
+| 开发语言 | 前端 HTML/CSS/JS，后端 Java |
+
+### 1.3 技术选型
+
+| 层面 | 选型 | 理由 |
+|------|------|------|
+| UI 渲染 | WebView + HTML/CSS/JS | 开发效率高、迭代快、定制性强 |
+| JS 桥接 | `@JavascriptInterface` | Android 原生方案，稳定可靠 |
+| 车控方式 | Intent + Settings.Global + Logcat | 三层互补，覆盖面广 |
+| 音乐信息 | 通知监听 (NotificationListenerService) | 兼容所有音乐播放器 |
+| 模块封装 | IIFE + window 挂载 | 无构建工具依赖，简单可靠 |
+
+---
+
+## 二、整体架构
+
+### 2.1 架构总览
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        前端 WebView 层                           │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │  主页面UI   │  │  快捷开关   │  │  车辆状态指示器          │  │
-│  │  index.html │  │  面板      │  │  CarStateManager        │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │  音乐模块   │  │  天气模块   │  │  应用列表/快捷应用      │  │
-│  │  music.js   │  │  weather.js │  │  分类显示               │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-└───────────────────────────────┬─────────────────────────────────┘
-                                │
-                    WebViewBridge (JS桥接层)
-                                │
-┌───────────────────────────────▼─────────────────────────────────┐
+│  (负责 UI 展示和用户交互，不处理业务逻辑)                          │
+│                                                                 │
+│  index.html → CSS(7个文件) + JS(按依赖顺序加载)                  │
+│                                                                 │
+│  Android.xxx()  ────── 调用 ──────►  Java 后端                   │
+│  window.updateXxx() ◄──── 回调 ────   Java 后端                 │
+└─────────────────────────────────────────────────────────────────┘
+                            ↕
+┌─────────────────────────────────────────────────────────────────┐
 │                        后端 Java 层                              │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │  车控管理   │  │  日志监控   │  │  自动化引擎              │  │
-│  │  CarControl │  │  Logcat     │  │  AutomationEngine       │  │
-│  │  Manager    │  │  Monitor    │  │                         │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
-│  │  音乐服务   │  │  副屏管理   │  │  应用管理/数据库        │  │
-│  │  Music      │  │  Secondary  │  │  AppDatabase            │  │
-│  │  Notification│ │  Screen     │  │                         │  │
-│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
-└───────────────────────────────┬─────────────────────────────────┘
-                                │
-              ┌─────────────────┼─────────────────┐
-              │                 │                 │
-    ┌─────────▼──────┐  ┌──────▼───────┐  ┌──────▼───────┐
-    │ Intent 主动控制 │  │ Logcat 被动  │  │ Settings.Global│
-    │  (发送广播)    │  │ 监控(读日志) │  │ 读写系统属性   │
-    └────────────────┘  └──────────────┘  └──────────────┘
-                                │
-┌───────────────────────────────▼─────────────────────────────────┐
+│  (负责功能实现和安全调配，不关心 UI 细节)                          │
+│                                                                 │
+│  MainActivity.java (WebView 容器，生命周期管理)                   │
+│       │                                                         │
+│       ├── WebViewBridge.java (JS 统一入口，委托转发)              │
+│       │     ├── CarControlBridge  → CarControlManager           │
+│       │     ├── AppBridge          → AppUtils                   │
+│       │     ├── WallpaperBridge    → WallpaperManager           │
+│       │     ├── MusicBridge         → MusicNotificationListener  │
+│       │     ├── SystemBridge        → Settings/SystemAPI         │
+│       │     └── AdbBridge           → AdbManager                │
+│       │                                                         │
+│       ├── LogcatMonitorService (CAN 信号解析 → 车辆状态)          │
+│       ├── AutomationEngine (自动化场景触发)                      │
+│       └── LeapMotorCarState (车辆状态数据类)                     │
+└─────────────────────────────────────────────────────────────────┘
+                            ↕
+┌─────────────────────────────────────────────────────────────────┐
 │                    零跑 C11 车机系统层                           │
-│         (Android 9 / API 28 / 高通 8155 / 1920×1080)            │
+│         (Android 9 / API 28 / 高通 8155 / 1920×1080)             │
+│                                                                 │
+│  ① Intent 主动控制  │  ② Logcat 被动监控  │  ③ Settings 读写     │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 1.2 三层车控模型
+### 2.2 三层车控模型
 
-这是 C11Partner 最核心的设计：
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    应用层 (C11Partner)                   │
-├─────────────────────────────────────────────────────────┤
-│  ① Intent主动控制  │  ② Logcat被动监控  │  ③ Settings读写 │
-├─────────────────────────────────────────────────────────┤
-│                    零跑车机系统层                         │
-└─────────────────────────────────────────────────────────┘
-```
+零跑车机没有公开 API，通过逆向分析实现三种控制方式：
 
 | 控制方式 | 说明 | 权限要求 | 实时性 | 典型用途 |
 |---------|------|---------|--------|---------|
-| **Intent主动控制** | 发送系统广播/启动Activity | 普通权限 | 即时 | 启动360、打开空调页面 |
-| **Logcat被动监控** | 读取系统日志解析状态 | READ_LOGS | 秒级延迟 | 档位、车门、转向灯、胎压 |
-| **Settings.Global** | 读写系统全局属性 | WRITE_SECURE_SETTINGS | 即时 | 音量、温度、氛围灯 |
+| **Intent 主动控制** | 发送系统广播/启动 Activity | 普通权限 | 即时 | 启动 360、切换驾驶模式 |
+| **Logcat 被动监控** | 读取系统日志解析状态 | `READ_LOGS` | 秒级延迟 | 档位、车门、转向灯、胎压 |
+| **Settings.Global** | 读写系统全局属性 | `WRITE_SECURE_SETTINGS` | 即时 | 音量、温度、氛围灯 |
 
 ---
 
-## 二、模块划分
+## 三、前端架构
 
-### 2.1 前端模块（WebView）
+### 3.1 设计原则
 
-| 模块 | 文件 | 职责 |
-|------|------|------|
-| **主页面** | `index.html` + `index.js` | 整体布局、`safeInit()` 统一初始化入口（30+ 个模块） |
-| **车辆状态** | `car-state-manager.js` | 接收后端推送，更新状态栏车辆状态 |
-| **档位桥接** | `gear-bridge.js` | 档位状态前后端交互桥接 |
-| **快捷开关** | `quick-switch-manager.js` | 14个快捷开关 + 6个驾驶模式 + 5个场景模式 |
-| **自动化配置** | `automation-manager.js` | 自动化场景配置界面 |
-| **异步回调** | `async-callback-manager.js` | 异步回调统一管理 |
-| **系统音乐** | `system-music-manager.js` | 音乐信息显示和播放控制 |
-| **音乐可视化** | `music.js` | 频谱可视化、播放控制 |
-| **壁纸模块** | `wallpaper-manager.js`（主） + `wallpaper.js`（旧） + `wallpaper-swipe-bootstrap.js`（手势引导） | ⚠️ 三个文件职责重叠，待合并 |
-| **天气模块** | `weather.js` | 天气数据获取和显示（#字形布局） |
-| **应用列表** | 由 `index.js` 内的 `appsModal` 管理 | 应用列表、分类过滤、字母导航 |
-| **UI 工具** | `utils.js` | 触摸处理（blurAfterClick、clearActiveState） |
-| **主题** | `theme.js` | 主题切换逻辑 |
-| **Toast** | `toast.js` | 轻量提示组件 |
-| **自动化补丁** | `one-click-permission-patch.js`、`tasks-btn-adb-patch.js` | ⚠️ 命名带 `-patch.js` 的文件是历史补救代码，应合入主模块 |
+1. **UI 只负责展示和交互**：不处理业务逻辑，业务逻辑通过 `Android.xxx()` 委托给后端
+2. **扁平化结构**：模块间直接调用，无中间层
+3. **IIFE 封装**：每个模块用 IIFE 封装，通过 `window.XxxManager` 暴露公开接口
+4. **统一初始化**：所有初始化在 `window.addEventListener('load')` 中完成
 
-### 2.2 后端模块（Java）
+### 3.2 JS 文件加载顺序
 
-#### 核心层
+```
+index.html <script> 标签按以下顺序加载：
 
-| 模块 | 文件 | 职责 |
-|------|------|------|
-| **主入口** | `MainActivity.java` | 应用主界面，WebView容器，生命周期管理 |
-| **JS桥接（入口）** | `WebViewBridge.java` | 委托层，80+ 个 `@JavascriptInterface` 方法全部转发给下层 Bridge |
-| **JS桥接（实现）** | `bridge/` 目录 7 个 Bridge | `BaseBridge`（公共） + `CarControlBridge` / `WallpaperBridge` / `AppBridge` / `MusicBridge` / `SystemBridge` / `AdbBridge` |
+1. utils.js              ← 基础工具（无依赖）
+2. storage.js            ← 本地存储（无依赖）
+3. bridge.js             ← Android 接口封装（无依赖）
 
-#### 车控层
+4. bootstrap.js          ← 初始化队列（AppBootstrap）
+5. panel-controller.js   ← 面板显示/隐藏（PanelController）
+6. settings-sync.js      ← 设置同步（SettingsSync）
+7. ui-initializer.js     ← UI 初始化（UiInitializer）
+8. app-list-manager.js  ← 应用列表管理（AppListManager）
 
-| 模块 | 文件 | 职责 |
-|------|------|------|
-| **车控管理** | `CarControlManager.java` | 车控功能统一入口，三层控制模型的实现 |
-| **日志监控** | `LogcatMonitorService.java` | 后台服务，持续读取logcat，解析CAN信号 |
-| **车辆状态** | `LeapMotorCarState.java` | 车辆状态数据类，统一管理所有车辆状态 |
-| **360全景** | `LeapMotorCamera360.java` | 360全景启动和管理 |
-| **自动化引擎** | `AutomationEngine.java` | 自动化场景触发和执行，12个预设场景 |
+9. theme.js             ← 主题切换
+10. widgets.js           ← Widget 管理
 
-#### 音乐层
+11. music.js             ← 音乐可视化
+12. settings.js          ← 设置面板逻辑
+13. app.js               ← 应用管理逻辑
+14. toast.js             ← 提示组件
+15. datetime.js          ← 时间日期
+16. wallpaper-manager.js ← 壁纸管理（WallpaperManager + WallpaperSwipeManager）
+17. weather.js           ← 天气模块
+18. map.js               ← 地图模块
+19. async-callback-manager.js ← 异步回调管理
+20. system-music-manager.js   ← 系统音乐信息
+21. car-state-manager.js      ← 车辆状态管理
+22. gear-bridge.js             ← 档位桥接
+23. automation-manager.js     ← 自动化场景
+24. quick-switch-manager.js   ← 快捷开关
+25. index.js                  ← 主入口（统一初始化）
+```
 
-| 模块 | 文件 | 职责 |
-|------|------|------|
-| **音乐服务** | `MusicService.java` | 音乐播放服务 |
-| **通知监听** | `MusicNotificationListenerService.java` | 监听系统音乐通知，提取歌名/歌手 |
-| **媒体会话** | `MediaSessionService.java` | 媒体会话服务 |
+### 3.3 模块职责和公开接口
 
-#### 副屏层
+| 模块 | 文件 | 职责 | window 挂载 | 公开方法 |
+|------|------|------|------------|----------|
+| 工具 | `utils.js` | 通用工具函数 | — | `escapeHtml()`, `normalizeAppIcon()`, `blurAfterClick()` |
+| 存储 | `storage.js` | localStorage 封装 | — | `get()`, `set()`, `remove()` |
+| 桥接 | `bridge.js` | Android 接口代理 | — | `Android` 对象 |
+| 引导 | `bootstrap.js` | 初始化队列 | `AppBootstrap` | `registerInit()`, `safeInit()`, `debounce()`, `throttle()` |
+| 面板 | `panel-controller.js` | 面板显示/隐藏 | `PanelController` | `showSettingsModal()`, `hideSettingsModal()`, `showAppsModal()`, `hideAppsModal()` |
+| 设置同步 | `settings-sync.js` | 设置项读写 | `SettingsSync` | `loadWallpaperSettings()`, `initEffectLevel()` |
+| UI初始化 | `ui-initializer.js` | DOM 初始化绑定 | `UiInitializer` | `loadQuickApps()`, `loadQuickSwitches()`, `updateNetworkAndBluetoothStatus()` |
+| 应用列表 | `app-list-manager.js` | 应用面板管理 | `AppListManager` | `initAppsModal()`, `loadAppList()`, `renderAppsList()` |
+| 主题 | `theme.js` | 日夜模式切换 | — | `toggleTheme()`, `setTheme()` |
+| 音乐 | `music.js` | 频谱可视化 | — | `updateMusicVisualization()`, `updateMusicStatus()` |
+| 壁纸 | `wallpaper-manager.js` | 壁纸切换/轮播 | `WallpaperManager` + `WallpaperSwipeManager` | `init()`, `nextWallpaper()`, `toggleCarousel()` |
+| 天气 | `weather.js` | 天气数据获取 | — | `initWeatherDisplay()`, `fetchWeatherData()` |
+| 车辆状态 | `car-state-manager.js` | 状态栏更新 | `updateCarState()` | `init()`, `updateState()`, `updateGearIndicator()` |
+| 快捷开关 | `quick-switch-manager.js` | 开关面板 | `QuickSwitchManager` | `showPanel()`, `hidePanel()`, `toggleSwitch()` |
+| 自动化 | `automation-manager.js` | 场景配置 | `AutomationManager` | `init()`, `showPanel()`, `toggleScenario()` |
+| 系统音乐 | `system-music-manager.js` | 音乐信息显示 | — | `init()`, `updateMusicInfo()` |
+| 档位桥接 | `gear-bridge.js` | 档位前后端桥接 | — | `init()` |
+| 异步回调 | `async-callback-manager.js` | 回调统一管理 | — | `register()`, `execute()` |
+| 入口 | `index.js` | 统一初始化 + 设置面板 | — | `safeInit()`, `initSettingsModal()` |
 
-| 模块 | 文件 | 职责 |
-|------|------|------|
-| **副屏管理** | `SecondaryScreenManager.java` | 副屏检测和控制 |
-| **副屏显示** | `CarStatusPresentation.java` | 副屏车辆状态显示界面 |
+### 3.4 CSS 文件组织
 
-#### 工具层
+CSS 通过 `index.html` 中的 `<link>` 标签按固定顺序直接引入（不使用 `@import`，因 WebView 支持不完整）。
 
-| 模块 | 文件 | 职责 |
-|------|------|------|
-| **ADB管理** | `AdbManager.java` | ADB连接和命令执行 |
-| **应用管理** | `AppUtils.java` | 应用信息获取和启动 |
-| **服务管理** | `ServiceManager.java` | 服务绑定和管理 |
-| **农历日历** | `LunarCalendarUtils.java` | 农历日期计算 |
+| 顺序 | 文件 | 职责 | 行数(约) |
+|------|------|------|----------|
+| 1 | `theme.css` | CSS 变量、主题色、日夜模式 | 350 |
+| 2 | `base.css` | 基础重置、全局默认值、触摸优化、特效等级 | 2,800 |
+| 3 | `animations.css` | 动画关键帧、过渡效果 | 2,400 |
+| 4 | `components.css` | 通用组件（卡片、按钮、弹窗、设置面板、应用列表） | 15,900 |
+| 5 | `widgets.css` | Widget 专属（状态栏、天气、音乐、快捷开关、Dock） | 10,800 |
+| 6 | `pages.css` | 页面级布局（设置面板、应用列表页） | 5,700 |
+| 7 | `responsive.css` | 响应式适配、媒体查询 | 1,700 |
 
-#### 数据层
+> 加载顺序不可调换，后续文件依赖前面文件定义的变量和基础样式。
+> `!important` 仅允许在 `base.css` 中使用（特效等级切换），其他文件禁止使用。
 
-| 模块 | 文件 | 职责 |
-|------|------|------|
-| **应用数据库** | `AppDatabaseHelper.java` | 应用列表缓存 |
-| **快捷应用** | `QuickAppDatabaseHelper.java` | 快捷应用配置 |
-| **壁纸配置** | `WallpaperSettingsDatabaseHelper.java` | 壁纸设置 |
-| **组件配置** | `ComponentConfigDatabaseHelper.java` | 组件显示配置 |
+### 3.5 初始化流程
+
+```
+window.addEventListener('load', function() {
+    // AppBootstrap.runInit() 按队列执行：
+    
+    1. 设置默认壁纸背景
+    2. 依次执行 registerInit() 注册的初始化函数：
+       - initSettingsModal()      ← 设置面板
+       - loadQuickApps()          ← 快捷应用
+       - loadQuickSwitches()      ← 快捷开关
+       - updateNetworkAndBluetoothStatus() ← 状态栏
+       - initHorizontalScroll()   ← 横向滚动
+       - initMusicControls()      ← 音乐控制
+       - addTimeDisplayClickEvent() ← 时钟点击
+       - initNavigationButtons()  ← 导航按钮
+       - initWallpaperDoubleClick() ← 壁纸双击
+       - handleWallpaperLongPress() ← 壁纸长按
+       - ...其他初始化
+    3. 启动状态栏定时器（5秒间隔更新 WiFi/蓝牙/定位）
+    4. 启动音乐进度定时器
+});
+```
 
 ---
 
-## 三、关键数据流
+## 四、后端架构
 
-### 3.1 车辆状态更新流程
+### 4.1 设计原则
+
+1. **稳重可靠**：所有操作有 try-catch 保护，失败有降级处理
+2. **委托模式**：`WebViewBridge` 作为统一入口，委托给子 Bridge 处理
+3. **职责单一**：每个类只负责一个功能领域
+4. **线程安全**：UI 操作通过 `runOnUiThread()`，耗时操作用线程池
+
+### 4.2 包结构
 
 ```
-LogcatMonitorService (后台服务)
-        │
-        ▼
-  解析 CAN 信号
-  (档位/车门/转向灯/胎压等)
-        │
-        ▼
-LeapMotorCarState (状态数据类)
-        │
-        ├─► CarStateListener (接口回调)
-        │       │
-        │       ▼
-        │  MainActivity (更新前端)
-        │       │
-        │       ▼
-        │  window.updateCarState() (JS调用)
-        │       │
-        │       ▼
-        │  CarStateManager (前端状态管理)
-        │       │
-        │       ▼
-        │  更新顶部状态栏 UI
-        │
-        └─► AutomationEngine (自动化引擎)
-                │
-                ▼
-          检查触发条件
-                │
-                ▼
-          执行自动化动作
-          (开360/语音提示/降音量等)
+com.c11partner.desktop
+├── MainActivity.java              # 主 Activity，WebView 容器
+├── App.java                       # Application 类
+├── CarStateListener.java          # 车辆状态监听接口
+├── CarStatusPresentation.java     # 副屏车辆状态显示
+├── LeapMotorCamera360.java       # 360 全景管理
+├── LeapMotorCarState.java        # 车辆状态数据类
+├── LogcatMonitorService.java     # 日志监控后台服务
+│
+├── bridge/                        # WebView 桥接层
+│   ├── BaseBridge.java            # 桥接基类
+│   ├── WebViewBridge.java        # JS 统一入口（委托转发）
+│   ├── CarControlBridge.java      # 车控功能
+│   ├── AppBridge.java             # 应用管理
+│   ├── WallpaperBridge.java       # 壁纸功能
+│   ├── MusicBridge.java           # 音乐功能
+│   ├── SystemBridge.java          # 系统设置
+│   └── AdbBridge.java             # ADB 授权
+│
+├── adb/                           # ADB 相关
+│   ├── AdbManager.java            # ADB 连接管理
+│   ├── AdbCommandProcessor.java  # ADB 命令处理
+│   ├── AdbIntentForwarder.java   # ADB Intent 转发
+│   └── UsbDebugConnection.java    # USB 调试连接
+│
+├── database/                      # 数据库
+│   ├── AppDatabaseHelper.java     # 应用列表缓存
+│   ├── ComponentConfigDatabaseHelper.java  # 组件配置
+│   ├── ConfigAppDatabaseHelper.java        # 配置应用
+│   ├── QuickAppDatabaseHelper.java         # 快捷应用
+│   ├── WallpaperCategoryDatabaseHelper.java # 壁纸分类
+│   └── WallpaperSettingsDatabaseHelper.java # 壁纸设置
+│
+├── receiver/                      # 广播接收器
+│   └── BootReceiver.java          # 开机启动
+│
+├── service/                       # 服务
+│   ├── MediaSessionService.java   # 媒体会话
+│   ├── MusicNotificationListenerService.java # 音乐通知监听
+│   ├── MusicService.java          # 音乐播放服务
+│   ├── MyAccessibilityService.java # 无障碍服务
+│   └── RecentsAccessibilityService.java # 最近任务无障碍
+│
+└── utils/                         # 工具类
+    ├── AppUtils.java              # 应用信息获取
+    ├── AutomationEngine.java      # 自动化引擎
+    ├── CarControlManager.java     # 车控实现
+    ├── InitManager.java           # 初始化管理
+    ├── LunarCalendarUtils.java    # 农历日历
+    ├── MusicInfoExtractor.java    # 音乐信息提取
+    ├── MusicUtils.java            # 音乐工具
+    ├── MusicVisualizer.java       # 音乐可视化
+    ├── QuoteApiUtils.java         # 名言 API
+    ├── SecondaryScreenManager.java # 副屏管理
+    ├── ServiceManager.java        # 服务管理
+    ├── TaskManager.java           # 任务管理
+    ├── WallpaperCategoryApiUtils.java # 壁纸分类 API
+    ├── WallpaperDownloadUtils.java    # 壁纸下载
+    └── WallpaperManager.java      # 壁纸管理
 ```
 
-### 3.2 车控操作流程
+### 4.3 桥接层结构
+
+```
+JS 调用: Android.methodName(参数)
+           │
+           ▼
+    WebViewBridge.java (@JavascriptInterface)
+           │
+           ├── 车控 → CarControlBridge → CarControlManager
+           │       (50+ 方法: 灯光、空调、模式、音量等)
+           │
+           ├── 应用 → AppBridge → AppUtils
+           │       (15 方法: 应用列表、快捷应用、启动等)
+           │
+           ├── 壁纸 → WallpaperBridge → WallpaperManager
+           │       (26 方法: 切换、轮播、分类、删除等)
+           │
+           ├── 音乐 → MusicBridge → MusicNotificationListenerService
+           │       (12 方法: 播放控制、信息获取等)
+           │
+           ├── 系统 → SystemBridge → Settings API
+           │       (11 方法: 亮度、屏幕超时、系统设置等)
+           │
+           └── ADB → AdbBridge → AdbManager
+                   (4 方法: ADB 授权、权限授予等)
+```
+
+### 4.4 车辆状态更新流程
+
+```
+LogcatMonitorService (后台服务，持续读取日志)
+        │
+        ▼
+  解析 CAN 信号 (档位/车门/转向灯/胎压/车速等)
+        │
+        ▼
+  LeapMotorCarState (状态数据类)
+        │
+        ├──► CarStateListener 回调
+        │       │
+        │       ▼
+        │   MainActivity.updateCarStateToFrontend()
+        │       │
+        │       ▼
+        │   webView.evaluateJavascript("window.updateCarState(json)")
+        │       │
+        │       ▼
+        │   CarStateManager.updateState() → 更新状态栏 UI
+        │
+        └──► AutomationEngine.onXxxChanged()
+                │
+                ▼
+            检查触发条件 → 执行自动化动作
+            (开360/语音提示/降音量等)
+```
+
+### 4.5 车控操作流程
 
 ```
 用户点击快捷开关
@@ -202,208 +338,118 @@ LeapMotorCarState (状态数据类)
   QuickSwitchManager (前端)
         │
         ▼
-  WebViewBridge JS接口调用
+  Android.setLowBeamLight(true)  ← JS 调用
         │
         ▼
-  CarControlManager (后端)
+  WebViewBridge.setLowBeamLight()  ← @JavascriptInterface
         │
-        ├─► 方式1：发送 Intent 广播
-        │       (如：启动360、切换驾驶模式)
+        ▼
+  CarControlBridge.setLowBeamLight()  ← 委托
         │
-        ├─► 方式2：写入 Settings.Global
-        │       (如：音量、温度、氛围灯)
+        ▼
+  CarControlManager.setLowBeamLight()  ← 实现
         │
-        └─► 方式3：语音控制（降级方案）
-                (如：打开除霜、打开空调)
+        ├──► 方式1: 发送 Intent 广播
+        ├──► 方式2: 写入 Settings.Global
+        └──► 方式3: 语音控制（降级方案）
 ```
-
-### 3.3 音乐信息获取流程
-
-```
-系统音乐播放器 (网易云/QQ音乐等)
-        │
-        ▼
-  发出音乐播放通知
-        │
-        ▼
-MusicNotificationListenerService
-  (通知监听服务)
-        │
-        ▼
-  提取歌名/歌手/播放状态
-        │
-        ▼
-  静态变量缓存当前状态
-        │
-        ▼
-  WebViewBridge.getSystemMusicInfo()
-        │
-        ▼
-  SystemMusicManager (前端)
-        │
-        ▼
-  更新音乐模块 UI
-  (歌名、歌手、播放按钮状态)
-```
-
----
-
-## 四、核心设计决策
-
-### 4.1 为什么用 WebView 做 UI？
-
-**优势**：
-1. **开发效率高**：HTML/CSS/JS 比 Android 原生布局灵活得多
-2. **迭代快**：前端热更新方便，不需要重新安装APK
-3. **定制性强**：用户可以自定义主题、布局等
-4. **社区生态**：可以复用大量前端开源组件
-
-**劣势**：
-1. **性能略低**：比原生布局稍慢，但对车载桌面影响不大
-2. **桥接开销**：JS与Java交互有一定开销
-
-### 4.2 为什么用三层车控模型？
-
-零跑车机没有公开的官方 API，我们通过逆向分析找到了三种控制方式：
-
-1. **Intent 广播**：最直接，但不是所有功能都有
-2. **Settings.Global**：最可靠，但需要 WRITE_SECURE_SETTINGS 权限
-3. **Logcat 监控**：只能读不能写，但能获取很多状态
-
-三层模型互补，覆盖尽可能多的车控功能。
-
-### 4.3 为什么用通知监听获取音乐信息？
-
-零跑车机的系统音乐播放器没有公开的 MediaSession API，而通知是所有音乐播放器都会发的，所以：
-
-- **兼容性好**：支持网易云、QQ音乐、酷狗、酷我等几乎所有播放器
-- **实现简单**：不需要逆向各个播放器的内部 API
-- **权限可控**：用户可以手动授权通知监听权限
-
-### 4.4 自动化引擎的设计原则
-
-1. **默认全关**：所有预设场景默认不启用，由用户自行选择
-2. **防抖冷却**：频繁触发的场景（如360全景）有冷却时间，避免反复触发
-3. **降级处理**：某个动作失败不影响其他动作
-4. **可扩展**：用户可以自定义自动化场景（未来版本）
 
 ---
 
 ## 五、权限模型
 
-### 5.1 三大核心权限
+### 5.1 三大核心权限（ADB 授予）
 
 | 权限 | 用途 | 授予方式 |
 |------|------|---------|
-| `READ_LOGS` | 读取系统日志，获取车辆状态 | ADB 命令授予 |
-| `DUMP` | 获取系统状态信息 | ADB 命令授予 |
-| `WRITE_SECURE_SETTINGS` | 写入系统设置，控制车辆功能 | ADB 命令授予 |
+| `READ_LOGS` | 读取系统日志，获取车辆状态 | `adb shell pm grant com.c11partner.desktop android.permission.READ_LOGS` |
+| `DUMP` | 获取系统状态信息 | `adb shell pm grant com.c11partner.desktop android.permission.DUMP` |
+| `WRITE_SECURE_SETTINGS` | 写入系统设置，控制车辆功能 | `adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTINGS` |
 
-### 5.2 其他权限
+### 5.2 用户授权权限
 
 | 权限 | 用途 | 授予方式 |
 |------|------|---------|
-| 通知监听权限 | 读取音乐播放信息 | 用户手动授权 |
-| 悬浮窗权限 | 悬浮窗显示 | 用户手动授权 |
-| 无障碍权限 | 模拟点击等操作 | 用户手动授权 |
+| 通知监听 | 读取音乐播放信息 | 设置页 → 通知使用权 |
+| 悬浮窗 | 悬浮窗显示 | 设置页 → 悬浮窗权限 |
+| 无障碍 | 模拟点击操作 | 设置页 → 无障碍服务 |
 
 ---
 
-## 六、代码组织规范
+## 六、代码规范
 
-### 6.1 包结构
+### 6.1 命名规范
 
-```
-com.c11partner.desktop
-├── MainActivity.java              # 主Activity
-├── LogcatMonitorService.java      # 日志监控服务
-├── LeapMotorCarState.java         # 车辆状态数据类
-├── LeapMotorCamera360.java        # 360全景管理
-├── CarStatusPresentation.java     # 副屏显示
-├── CarStateListener.java          # 状态监听接口
-├── adb/                           # ADB相关
-├── bridge/                        # WebView桥接
-├── database/                      # 数据库
-├── receiver/                      # 广播接收器
-├── service/                       # 服务
-└── utils/                         # 工具类
-```
+| 类型 | 规范 | 示例 |
+|------|------|------|
+| Java 类名 | PascalCase | `CarControlManager` |
+| Java 方法 | camelCase | `setLowBeamLight` |
+| Java 常量 | UPPER_SNAKE | `KEY_STR_CAR_100006` |
+| JS 对象 | PascalCase | `QuickSwitchManager` |
+| JS 函数 | camelCase | `updateCarState` |
+| JS 变量 | camelCase | `isDragging` |
+| CSS 类 | kebab-case | `.quick-switch-panel` |
+| CSS 变量 | `--kebab-case` | `--primary-color` |
 
-### 6.2 命名规范
+### 6.2 JS 模块规范
 
-- **类名**：大驼峰（PascalCase），如 `CarControlManager`
-- **方法名**：小驼峰（camelCase），如 `setLowBeamLight`
-- **常量**：全大写下划线分隔，如 `KEY_STR_CAR_100006`
-- **JS对象**：大驼峰，如 `CarStateManager`
-- **JS函数**：小驼峰，如 `updateCarState`
+- 使用 IIFE 封装：`const XxxManager = (function() { ... return { ... }; })();`
+- 显式挂载到 window：`window.XxxManager = XxxManager;`
+- 公开方法通过 return 暴露，私有方法不暴露
+- 每个模块有 `init()` 方法用于初始化
 
-### 6.3 CSS 组织规范
+### 6.3 CSS 规范
 
-CSS 采用**分模块文件 + `<link>` 标签直接引入**的方式组织，不使用 `@import` 嵌套加载（因 `@import` 在部分 WebView 环境中不生效）。
+- 通过 `<link>` 标签引入，不使用 `@import`
+- `!important` 仅允许在 `base.css` 中使用（特效等级切换）
+- 新增样式禁止使用 `!important`，通过提高选择器优先级解决冲突
+- 颜色使用 CSS 变量（`var(--xxx)`），不硬编码
 
-**文件列表及引入顺序**（`index.html` 中的 `<link>` 标签）：
+### 6.4 Java 规范
 
-1. `theme.css` — CSS 变量、主题色、配色方案
-2. `base.css` — 基础重置样式、全局默认值、触摸设备优化、特效等级样式
-3. `animations.css` — 动画关键帧、过渡效果
-4. `components.css` — 通用组件样式（卡片、按钮、弹窗等；13000+ 行，包含设置面板、TAB、应用列表面板等大块样式）
-5. `widgets.css` — 各 Widget 专属样式（天气、音乐、快捷开关等）
-6. `pages.css` — 页面级布局样式（设置面板、应用列表等）
-7. `responsive.css` — 响应式适配、媒体查询
-
-> **注意**：加载顺序不可调换，后续文件依赖前面文件定义的变量和基础样式。
-
-**`!important` 现实情况（2026-07-07 统计）**：
-
-| 模块 | `!important` 处数 | 用途 |
-|------|------------------|------|
-| `base.css` | 34 | 特效等级 (`body.effect-none/low/high`) 强制覆盖动画/过渡/毛玻璃 |
-| `widgets.css` | 1 | 仅为注释 |
-| `components.css` | 0 | — |
-| 其他 | 0 | — |
-| **合计** | **35** | — |
-
-> ⚠️ 文档早期承诺"精简至约 4 处"的目标**未达成**。当前所有 `!important` 均在 `base.css` 内、有合理用途（特效等级切换 + 触摸设备焦点重置），其他模块保持 0 处，**新增样式严禁使用 `!important`**，如遇样式冲突应通过提高选择器优先级解决。
+- 使用 AndroidX，不用旧 support 库
+- `@JavascriptInterface` 方法必须有对应文档
+- 耗时操作使用线程池，不阻塞主线程
+- UI 操作通过 `runOnUiThread()`
 
 ---
 
 ## 七、扩展开发指南
 
-### 7.1 添加一个新的车控功能
+### 7.1 添加新的车控功能
 
-**步骤**：
-1. 在 `CarControlBridge.java` 中实现控制方法（继承自 `BaseBridge`）
-2. 在 `WebViewBridge.java` 中添加 `@JavascriptInterface` 委托方法（一行 `return mCarControlBridge.xxx();`）
-3. 在前端 `quick-switch-manager.js` 中添加开关 UI
-4. 在 `docs/JS_API_REFERENCE.md` 中更新接口索引
+1. **后端**：`CarControlManager.java` 添加控制方法
+2. **桥接**：`CarControlBridge.java` 添加实现，`WebViewBridge.java` 添加 `@JavascriptInterface` 委托
+3. **前端**：`quick-switch-manager.js` 添加开关 UI
+4. **文档**：更新 `JS_API_REFERENCE.md`
 
-### 7.2 添加一个新的自动化场景
+### 7.2 添加新的前端模块
 
-**步骤**：
-1. 在 `AutomationEngine.java` 中添加触发条件判断
-2. 添加对应的执行动作
-3. 在场景列表中注册新场景
-4. 在前端配置界面添加开关
+1. 创建 `xxx-manager.js`，IIFE 封装并挂载到 `window`
+2. 在 `index.html` 中用 `<script>` 引入（注意依赖顺序）
+3. 在 `index.js` 中通过 `safeInit('initXxx', initXxx)` 注册初始化
+4. CSS 样式添加到对应模块文件（`widgets.css` 或 `components.css`）
 
-### 7.3 添加一个新的前端模块
+### 7.3 添加新的自动化场景
 
-**步骤**：
-1. 创建新的 JS 文件（如 `xxx.js`），采用 IIFE 模块封装：`const XxxManager = (function() { ... return { ... } })();`
-2. 在 `index.html` 中用 `<script>` 引入（注意顺序：被依赖的先引入）
-3. 在 `index.js` 的 `safeInit('initXxx', initXxx)` 统一初始化入口中注册
-4. **如遇样式冲突**：提高 CSS 选择器优先级（如 `#settingsModal.modal.active` 替代 `#settingsModal`），**禁止使用 `!important`**
-5. 添加对应的 CSS 样式到对应模块文件（不要新增 `*-patch.css`）
+1. `AutomationEngine.java` 添加触发条件判断和执行动作
+2. `WebViewBridge.java` 添加配置接口
+3. `automation-manager.js` 添加前端配置开关
 
 ---
 
 ## 八、相关文档
 
-- [车控接口文档](CAR_CONTROL_API.md) - 详细的车控接口列表
-- [开发指南](DEVELOPMENT_GUIDE.md) - 环境搭建和开发流程
-- [代码索引](CODE_INDEX.md) - 函数级快速定位
-- [常见问题](FAQ.md) - 常见问题解答
+| 文档 | 职责 |
+|------|------|
+| [开发指南](DEVELOPMENT_GUIDE.md) | 环境搭建、开发流程、验证清单 |
+| [代码索引](CODE_INDEX.md) | 函数级快速定位 |
+| [JS 接口文档](JS_API_REFERENCE.md) | 前后端接口契约 |
+| [项目状态](PROJECT_STATUS.md) | 当前项目真实状态 |
+| [常见问题](FAQ.md) | 常见问题解答 |
+| [提交规范](COMMIT_CONVENTION.md) | Git 提交规范 |
 
 ---
 
-**文档版本**：v1.1  
-**最后更新**：2026-07-04
+**文档版本**：v2.0
+**最后更新**：2026-07-09

@@ -2,7 +2,7 @@
 
 > 📚 所有文档的总入口，快速找到你需要的文档
 >
-> 最后更新：2026-06-20
+> 最后更新：2026-07-09
 
 ---
 
@@ -12,26 +12,28 @@
 
 | 文档 | 说明 | 适合人群 |
 |------|------|---------|
-| [README.md](../README.md) | 项目介绍和快速开始 | 所有人 |
-| [架构设计](ARCHITECTURE.md) | 整体架构、模块划分、关键设计决策 | 开发者 |
-| [开发指南](DEVELOPMENT_GUIDE.md) | 环境搭建、开发流程、调试方法 | 开发者 |
+| [项目介绍](../README.md) | 项目介绍和版本历史 | 所有人 |
+| [架构设计](ARCHITECTURE.md) | 前后端统一架构、模块划分、设计决策 | 开发者 |
+| [开发指南](DEVELOPMENT_GUIDE.md) | 环境搭建、开发流程、调试方法、验证清单 | 开发者 |
+| [项目状态](PROJECT_STATUS.md) | 代码统计、功能完成度、技术债务 | 开发者 |
 
 ### 开发参考
 
 | 文档 | 说明 | 推荐度 |
 |------|------|--------|
-| [车控接口速查](CAR_CONTROL_API.md) | 所有车控接口的完整列表 ⭐最常用 | ⭐⭐⭐⭐⭐ |
-| [代码索引](CODE_INDEX.md) | 函数级快速定位，节省上下文 ⭐最常用 | ⭐⭐⭐⭐⭐ |
+| [JS 接口文档](JS_API_REFERENCE.md) | 全部 167 个 Android 接口的参数/返回值/示例 | ⭐⭐⭐⭐⭐ |
+| [代码索引](CODE_INDEX.md) | 前端 JS + 后端 Java 函数级快速定位 | ⭐⭐⭐⭐⭐ |
 | [常见问题 FAQ](FAQ.md) | 常见问题解答，遇到问题先看这里 | ⭐⭐⭐⭐ |
 
 ### 其他文档
 
 | 文档 | 说明 |
 |------|------|
-| [日志分析报告](LEAPMOTOR_LOG_ANALYSIS.md) | 零跑车机实车日志分析结果 |
-| [图标素材推荐](ICON_RESOURCES.md) | 图标素材推荐清单 |
-| [项目计划](../PROJECT_PLAN.md) | 详细开发计划和进度 |
-| [项目状态总览](../PROJECT_STATUS.md) | 项目状态总览 |
+| [提交规范](COMMIT_CONVENTION.md) | Git 提交信息格式规范 |
+| [设备配置](DEVICE_CONFIG.md) | 车机设备配置信息 |
+| [测试方法](TESTING.md) | 测试流程和方法 |
+| [图标资源](ICON_RESOURCES.md) | 图标素材推荐清单 |
+| [日志分析](LEAPMOTOR_LOG_ANALYSIS.md) | 零跑车机实车日志分析结果 |
 
 ---
 
@@ -39,51 +41,41 @@
 
 ### 我是用户，想安装使用
 
-1. 看 [README.md](../README.md) 了解项目
+1. 看 [项目介绍](../README.md) 了解项目
 2. 下载最新的 APK 安装包
 3. 按说明授予三大核心权限
 4. 开始使用
 
 ### 我是开发者，想参与开发
 
-1. **先看架构**：[架构设计](ARCHITECTURE.md) - 了解整体结构
-2. **搭环境**：[开发指南](DEVELOPMENT_GUIDE.md) - 环境搭建
-3. **查接口**：[车控接口速查](CAR_CONTROL_API.md) - 车控接口参考
-4. **找代码**：[代码索引](CODE_INDEX.md) - 快速定位函数
-5. **遇问题**：[常见问题 FAQ](FAQ.md) - 常见问题解答
+1. **先看架构**：[架构设计](ARCHITECTURE.md) — 了解前后端整体结构
+2. **搭环境**：[开发指南](DEVELOPMENT_GUIDE.md) — 环境搭建和编译安装
+3. **查接口**：[JS 接口文档](JS_API_REFERENCE.md) — 前后端接口契约
+4. **找代码**：[代码索引](CODE_INDEX.md) — 快速定位函数
+5. **看状态**：[项目状态](PROJECT_STATUS.md) — 了解当前进度
+6. **遇问题**：[常见问题 FAQ](FAQ.md) — 常见问题解答
 
 ---
 
 ## 💡 文档使用技巧
 
-### 1. 代码索引用法（最常用）
+### 代码索引用法（最常用）
 
 修改代码前先查索引，找到行号再精准读取：
 
-```bash
-# 1. 查索引文档，找到函数名和行号
-docs/CODE_INDEX.md
-
-# 2. 精准读取小范围代码（示例）
-sed -n '3770,3785p' app/src/main/java/com/c11partner/desktop/bridge/WebViewBridge.java
+```
+1. 查 CODE_INDEX.md，找到函数名和文件
+2. 用编辑器打开对应文件，跳转到行号
+3. 只读取需要的范围，节省上下文
 ```
 
-**好处**：减少 90%+ 的上下文占用，避免篇幅过长。
+### JS 接口文档用法
 
-### 2. 车控接口速查用法
-
-添加车控功能前，先查接口文档：
+添加新功能前，先查接口文档：
 
 - 确认功能是否已有接口
 - 了解接口的参数和返回值
-- 知道用的是 Intent / Settings / Logcat 哪种方式
-
-### 3. FAQ 用法
-
-遇到问题先查 FAQ：
-
-- 80% 的常见问题都能找到答案
-- 找不到再看日志和代码
+- 知道委托链路（WebViewBridge → 子Bridge → 实现类）
 
 ---
 
@@ -93,17 +85,18 @@ sed -n '3770,3785p' app/src/main/java/com/c11partner/desktop/bridge/WebViewBridg
 
 代码变动后，记得更新相关文档：
 
-1. **代码变动** → 运行 `python3 tools/generate_code_index.py` 更新代码索引
-2. **新增车控功能** → 更新 [车控接口速查](CAR_CONTROL_API.md)
+1. **代码变动** → 更新 [代码索引](CODE_INDEX.md)
+2. **新增接口** → 更新 [JS 接口文档](JS_API_REFERENCE.md)
 3. **架构调整** → 更新 [架构设计](ARCHITECTURE.md)
-4. **遇到新问题** → 补充到 [FAQ](FAQ.md)
+4. **状态变化** → 更新 [项目状态](PROJECT_STATUS.md)
+5. **遇到新问题** → 补充到 [FAQ](FAQ.md)
 
 ### 文档规范
 
-- 文件名：大驼峰 + 下划线，如 `CAR_CONTROL_API.md`
+- 文件名：大驼峰，如 `ARCHITECTURE.md`
 - 标题层级：# 一级、## 二级、### 三级
 - 表格对齐：尽量对齐，美观易读
-- 状态标记：✅ 已完成、⚠️ 待验证、🔍 研究中、🔲 待集成
+- 状态标记：✅ 已完成、⚠️ 待验证、📋 计划中
 
 ---
 
@@ -111,43 +104,8 @@ sed -n '3770,3785p' app/src/main/java/com/c11partner/desktop/bridge/WebViewBridg
 
 - **项目仓库**：https://github.com/Mariobolo/C11Partner
 - **Issues**：https://github.com/Mariobolo/C11Partner/issues
-- **Actions**：https://github.com/Mariobolo/C11Partner/actions
 
 ---
 
-**文档版本**：v1.0  
-**最后更新**：2026-06-20
-
-## 🛠️ 工具脚本
-
-| 工具 | 说明 |
-|------|------|
-| [代码索引生成](../tools/generate_code_index.py) | 自动生成代码索引文档 |
-| [API 文档生成](../tools/generate_api_docs.py) | 自动生成 JS 接口文档 |
-| [提交信息检查](../tools/check_commit_msg.py) | 检查提交信息是否符合规范 |
-
-## 🧪 测试
-
-| 测试文件 | 说明 |
-|---------|------|
-| [提交检查测试](../tests/test_check_commit_msg.py) | 提交信息检查工具的单元测试 |
-
-
----
-
-## 📊 最新进展（2026-06-20）
-
-### 代码质量
-- ✅ 模块化拆分框架就绪（BaseBridge + CarControlBridge + WallpaperBridge + AppBridge）
-- ✅ 车控模块迁移完成 42/46 方法（~91%）
-- ✅ 测试覆盖率：68%（31 个测试全部通过）
-
-### 文档统计
-- 总文档数：17 份
-- 代码索引：633 个函数/方法精准行号
-- JS 接口文档：142 个 @JavascriptInterface 方法
-
----
-
-*文档版本：v1.2*
-*最后更新：2026-06-20*
+**文档版本**：v2.0
+**最后更新**：2026-07-09

@@ -1,517 +1,305 @@
 # C11Partner 开发指南
 
-> 🛠️ 本文档描述如何搭建开发环境、调试和构建 C11Partner
+> 🛠️ 本文档是开发者从零开始搭建环境到发布版本的完整流程
 >
-> 最后更新：2026-07-04
+> 最后更新：2026-07-09
 
 ---
 
 ## 一、环境搭建
 
-### 1.1 开发环境要求
+### 1.1 必需软件
 
-| 工具 | 版本要求 | 说明 |
+| 软件 | 版本要求 | 用途 |
 |------|---------|------|
-| **JDK** | 11+ | Android 开发必需 |
-| **Android Studio** | Arctic Fox+ | 推荐 IDE |
-| **Android SDK** | API 28+ | 零跑车机是 Android 9 (API 28) |
-| **Gradle** | 7.0+ | 构建工具 |
-| **ADB** | 最新版 | 调试必需 |
+| JDK | 17+ | Java 编译 |
+| Android SDK | API 28+ (target 36) | Android 编译 |
+| Android Studio | Hedgehog+ | IDE（可选） |
+| Gradle | 8.9 | 构建工具（项目自带 gradlew） |
+| ADB | 最新版 | 设备调试 |
+| PowerShell | 5.0+ | 构建脚本 |
 
-### 1.2 克隆项目
+### 1.2 环境变量
 
-```bash
-git clone https://github.com/Mariobolo/C11Partner.git
-cd C11Partner
+```powershell
+# 系统环境变量
+JAVA_HOME=C:\Program Files\Java\jdk-17
+ANDROID_HOME=C:\Users\{用户名}\AppData\Local\Android\Sdk
+ANDROID_SDK_ROOT=%ANDROID_HOME%
+
+# PATH 中添加
+%JAVA_HOME%\bin
+%ANDROID_HOME%\platform-tools
+%ANDROID_HOME%\tools
 ```
 
-### 1.3 导入项目
+### 1.3 项目配置
 
-1. 打开 Android Studio
-2. 选择 "Open an Existing Project"
-3. 选择 C11Partner 目录
-4. 等待 Gradle 同步完成
+| 文件 | 说明 |
+|------|------|
+| `local.properties` | SDK 路径（不提交到 Git） |
+| `gradle.properties` | Gradle 配置（JVM 内存等） |
+| `app/build.gradle` | 应用模块配置 |
 
-### 1.4 签名配置
+**local.properties 示例：**
+```properties
+sdk.dir=C:\\Users\\{用户名}\\AppData\\Local\\Android\\Sdk
+```
 
-项目使用开发测试签名，正式发布请替换为自己的签名文件。
+### 1.4 验证环境
 
-**当前签名信息**：
-- 签名文件：`app/dipartner.jks`
-- 密钥库密码：`dipartner123`
-- 密钥别名：`dipartner`
-- 密钥密码：`dipartner123`
+```powershell
+# 验证 JDK
+java -version
 
-**替换签名**：
-1. 把自己的签名文件放到 `app/` 目录
-2. 修改 `app/build.gradle` 中的签名配置
-3. 或者在 `local.properties` 中配置
+# 验证 SDK
+adb version
+
+# 验证项目配置
+cd d:\Stu\Android\C11Partner
+.\gradlew tasks
+```
 
 ---
 
-## 二、开发流程
-
-### 2.1 代码索引（重要！）
-
-修改代码前**务必先查代码索引**，节省上下文：
-
-```bash
-# 查看索引文档
-docs/CODE_INDEX.md
-
-# 重新生成索引（代码变动后）
-python3 tools/generate_code_index.py
-```
-
-### 2.2 常用修改场景
-
-#### 添加新的车控功能
-
-**文件顺序**：
-1. `CarControlManager.java` - 核心实现
-2. `WebViewBridge.java` - JS 接口
-3. `index.js` - 前端 UI (QuickSwitchManager)
-
-**详细步骤**：
-1. 在 `CarControlManager.java` 中添加控制方法
-2. 在 `WebViewBridge.java` 中添加 `@JavascriptInterface` 方法
-3. 在前端 `QuickSwitchManager` 中添加开关
-4. 运行 `python3 tools/generate_code_index.py` 更新索引
-
-#### 修改车辆状态显示
-
-**文件顺序**：
-1. `LogcatMonitorService.java` - 日志解析
-2. `LeapMotorCarState.java` - 状态数据
-3. `MainActivity.java` - 状态推送
-4. `index.js` - 前端显示 (CarStateManager)
-
-#### 添加自动化场景
-
-**文件顺序**：
-1. `AutomationEngine.java` - 核心逻辑
-2. `WebViewBridge.java` - 配置接口
-3. `index.js` - 配置 UI (AutomationManager)
-
-### 2.3 前端开发
-
-前端代码在 `app/src/main/assets/` 目录：
+## 二、项目结构
 
 ```
-assets/
-├── index.html          # 主页面（CSS通过<link>标签按顺序引入）
-├── css/
-│   ├── theme.css      # CSS变量、主题色、配色方案
-│   ├── base.css       # 基础重置样式、全局默认值（仅此处保留!important，约4处）
-│   ├── animations.css # 动画关键帧、过渡效果
-│   ├── components.css # 通用组件样式（卡片、按钮、弹窗等）
-│   ├── widgets.css     # 各Widget专属样式（天气、音乐、快捷开关等）
-│   ├── pages.css      # 页面级布局样式（设置面板、应用列表等）
-│   └── responsive.css # 响应式适配、媒体查询
-├── js/
-│   ├── index.js                    # 主JS入口
-│   ├── car-state-manager.js       # 车辆状态管理器
-│   ├── gear-bridge.js             # 档位状态前后端桥接
-│   ├── automation-manager.js      # 自动化场景配置
-│   ├── quick-switch-manager.js    # 快捷开关管理器
-│   ├── async-callback-manager.js  # 异步回调统一管理
-│   ├── voice-test-manager.js      # 语音控制测试
-│   ├── system-music-manager.js    # 系统音乐信息与播放控制
-│   ├── wallpaper-manager.js       # 壁纸切换、轮播、分类
-│   ├── wallpaper-swipe-bootstrap.js # 壁纸滑动手势引导
-│   ├── weather.js                 # 天气模块
-│   ├── music.js                   # 音乐可视化模块
-│   └── ...
-└── images/             # 图片资源
+C11Partner/
+├── app/
+│   ├── build.gradle                    # 应用模块配置
+│   └── src/main/
+│       ├── assets/                     # 前端资源
+│       │   ├── index.html              # HTML 入口
+│       │   ├── css/                    # 样式文件（7个）
+│       │   ├── js/                     # JS 文件（28个）
+│       │   └── images/                 # 图片资源
+│       ├── java/com/c11partner/desktop/ # Java 后端
+│       │   ├── MainActivity.java       # 主 Activity
+│       │   ├── bridge/                 # 桥接层
+│       │   ├── utils/                  # 工具类
+│       │   ├── service/                # 后台服务
+│       │   ├── database/               # 数据库
+│       │   └── ...
+│       ├── res/                        # Android 资源
+│       └── AndroidManifest.xml        # 清单文件
+├── docs/                               # 项目文档
+├── build.gradle                        # 项目级配置
+├── settings.gradle                     # 模块配置
+└── gradle/                             # Gradle Wrapper
 ```
-
-**CSS 引入说明**：CSS 通过 `index.html` 中的 `<link>` 标签按固定顺序直接引入（theme.css → base.css → animations.css → components.css → widgets.css → pages.css → responsive.css），不使用 `@import`（因 `@import` 在某些 WebView 环境中不生效）。
-
-**调试技巧**：
-- 可以在浏览器中直接打开 `index.html` 预览 UI（部分功能需要 Android 环境）
-- 使用 Chrome DevTools 调试 WebView
 
 ---
 
-## 三、调试方法
+## 三、开发流程
 
-### 3.1 ADB 连接
+### 3.1 日常开发循环
 
-#### USB 连接
-```bash
-# 车机开启开发者选项和USB调试
-# USB线连接车机
+```
+修改代码 → 编译 → 安装 → 验证 → 提交
+```
+
+### 3.2 编译安装
+
+```powershell
+# Debug 编译
+.\gradlew assembleDebug
+
+# 安装到已连接设备
+adb install -r app\build\outputs\apk\debug\app-debug.apk
+
+# 一条命令编译+安装
+.\gradlew assembleDebug; adb install -r app\build\outputs\apk\debug\app-debug.apk
+```
+
+### 3.3 前端开发
+
+前端文件在 `app/src/main/assets/` 目录下，修改后需要重新编译安装。
+
+**快速预览（不需要编译）：**
+1. 修改 assets 下的 JS/CSS/HTML
+2. `adb install -r app\build\outputs\apk\debug\app-debug.apk`
+3. 重新打开应用
+
+**前端文件加载顺序（见 ARCHITECTURE.md §3.2）：**
+- 修改 JS：注意依赖顺序，被依赖的文件先加载
+- 修改 CSS：注意优先级，后加载的文件覆盖先加载的
+- 修改 HTML：JS 在 `<head>` 中加载（注意 DOM 未就绪问题）
+
+### 3.4 后端开发
+
+Java 文件在 `app/src/main/java/com/c11partner/desktop/` 目录下。
+
+**添加新的 JS 接口：**
+1. 在对应 Bridge 类中添加 `@JavascriptInterface` 方法
+2. 在 `WebViewBridge.java` 中添加委托方法
+3. 更新 `JS_API_REFERENCE.md`
+4. 前端通过 `Android.methodName()` 调用
+
+### 3.5 验证清单
+
+每次修改后，按以下清单验证：
+
+| 验证项 | 方法 | 预期结果 |
+|--------|------|---------|
+| 编译通过 | `.\gradlew assembleDebug` | BUILD SUCCESSFUL |
+| 应用启动 | 打开应用 | 无崩溃，桌面正常显示 |
+| 时钟显示 | 观察桌面时钟 | 时间正确，秒数不闪烁 |
+| 快捷应用 | 点击应用图标 | 正常启动 |
+| 快捷开关 | 点击开关 | 状态切换正确 |
+| 设置面板 | 点击设置按钮 | 面板正常显示，点击空白关闭 |
+| 应用面板 | 点击"全部"按钮 | 应用列表正常加载 |
+| 壁纸切换 | 双击桌面 | 壁纸切换 |
+| 车辆状态 | 观察状态栏 | 档位/车门等状态正确 |
+
+---
+
+## 四、调试技巧
+
+### 4.1 前端调试
+
+**查看 JS 日志：**
+```powershell
+# 查看所有日志
+adb logcat -s "chromium" "Console" "System.err"
+
+# 过滤 WebView 控制台
+adb logcat | Select-String "chromium"
+```
+
+**在 JS 中输出日志：**
+```javascript
+console.log('调试信息:', variable);
+```
+
+### 4.2 后端调试
+
+**查看 Java 日志：**
+```powershell
+# 查看应用日志
+adb logcat --pid=$(adb shell pidof com.c11partner.desktop)
+
+# 过滤特定标签
+adb logcat -s "C11Partner" "CarControl" "LogcatMonitor"
+```
+
+### 4.3 ADB 常用命令
+
+```powershell
+# 查看已连接设备
 adb devices
-```
 
-#### 无线 ADB
-```bash
-# 先USB连接，然后切换到无线
-adb tcpip 5555
-adb connect <车机IP>:5555
-```
+# 安装应用
+adb install -r app\build\outputs\apk\debug\app-debug.apk
 
-### 3.2 三大核心权限授予
-
-**必须通过 ADB 授予，普通安装无法获取：**
-
-```bash
-# 1. 读取系统日志（车辆状态监控必需）
+# 授予权限
 adb shell pm grant com.c11partner.desktop android.permission.READ_LOGS
-
-# 2. DUMP权限（获取系统状态）
 adb shell pm grant com.c11partner.desktop android.permission.DUMP
-
-# 3. 写入安全设置（车控功能必需）
 adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTINGS
-```
-
-**一键授权脚本**：
-```bash
-adb shell pm grant com.c11partner.desktop android.permission.READ_LOGS && \
-adb shell pm grant com.c11partner.desktop android.permission.DUMP && \
-adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTINGS
-```
-
-### 3.3 日志查看
-
-#### 查看应用日志
-```bash
-# Windows (旧版ADB不支持--package)
-adb logcat -v time | findstr /i com.c11partner.desktop
-
-# Linux/Mac
-adb logcat -v time --pid=$(adb shell pidof com.c11partner.desktop)
-```
-
-#### 查看车机系统日志
-```bash
-# 查看CAN信号
-adb logcat -v time | findstr /i C11CarSomeIp
-
-# 查看转向灯
-adb logcat -v time | findstr /i AroundService
-
-# 查看胎压
-adb logcat -v time | findstr /i "zza TPMS"
-
-# 查看空调页面
-adb logcat -v time | findstr /i LPSysUI
-```
-
-#### 清空日志
-```bash
-adb logcat -c
-```
-
-### 3.4 Crash 调试
-
-```bash
-# 查看崩溃日志
-adb logcat -v time | findstr /i AndroidRuntime
-
-# 查看ANR
-adb logcat -v time | findstr /i "ANR in"
-```
-
-### 3.5 通知监听权限
-
-音乐模块需要通知监听权限：
-
-1. 安装应用后，打开应用
-2. 点击音乐模块的"授权通知监听"
-3. 跳转到设置页面，开启 C11Partner 的通知使用权
-
-**验证权限**：
-```bash
-adb shell dumpsys notificationListeners
-```
-
----
-
-## 四、构建和发布
-
-### 4.1 调试构建
-
-```bash
-# Debug 构建
-./gradlew assembleDebug
-
-# 输出位置
-app/build/outputs/apk/debug/app-debug.apk
-```
-
-### 4.2 Release 构建
-
-```bash
-# Release 构建
-./gradlew assembleRelease
-
-# 输出位置
-app/build/outputs/apk/release/app-release.apk
-```
-
-### 4.3 安装到车机
-
-```bash
-# 安装 APK
-adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 # 启动应用
 adb shell am start -n com.c11partner.desktop/.MainActivity
-```
 
-### 4.4 GitHub Actions CI/CD
+# 查看应用日志
+adb logcat --pid=$(adb shell pidof com.c11partner.desktop)
 
-项目已配置 GitHub Actions 自动构建：
-
-- 触发条件：push 到 main 分支
-- 构建产物：APK 文件
-- 支持架构：arm64-v8a, x86_64
-
-**查看构建状态**：
-```
-https://github.com/Mariobolo/C11Partner/actions
+# 模拟车辆信号（开发用）
+adb shell am broadcast -a com.c11partner.CAR_STATE --es gear "D"
 ```
 
 ---
 
-## 五、车机逆向分析技巧
+## 五、权限配置
 
-### 5.1 查找系统属性
+### 5.1 首次安装
 
-```bash
-# 查看所有系统属性
-adb shell getprop
+安装后需通过 ADB 授予三大核心权限：
 
-# 搜索车控相关
-adb shell getprop | findstr /i car
-adb shell getprop | findstr /i strCar
-
-# 查看 Settings.Global
-adb shell settings list global
-adb shell settings list global | findstr /i strCar
+```powershell
+adb shell pm grant com.c11partner.desktop android.permission.READ_LOGS
+adb shell pm grant com.c11partner.desktop android.permission.DUMP
+adb shell pm grant com.c11partner.desktop android.permission.WRITE_SECURE_SETTINGS
 ```
 
-### 5.2 查找 Intent Action
+### 5.2 用户授权
 
-```bash
-# 查看已安装应用的 Activity
-adb shell dumpsys package com.leapmotor.camera
+以下权限需用户手动授予：
 
-# 查看系统广播
-adb logcat -v time | findstr /i "Broadcast"
-
-# 查看正在运行的 Activity
-adb shell dumpsys activity activities
-```
-
-### 5.3 日志分析流程
-
-1. **清空日志**：`adb logcat -c`
-2. **执行操作**：在车机上操作某个功能（如开空调、打转向灯）
-3. **抓取日志**：`adb logcat -v time > log.txt`
-4. **分析日志**：搜索关键词，找到相关的 TAG 和 EventId
-
-### 5.4 常用日志 TAG
-
-| TAG | 用途 |
-|-----|------|
-| `C11CarSomeIp` | CAN信号（车门、档位、天窗、锁车） |
-| `AroundService` | 转向灯信号 |
-| `C11CarXml` | 灯光、空调、车速 |
-| `LPSysUI` | 页面操作（空调页面、座椅页面） |
-| `BleControlService` | 遮阳帘控制 |
-| `BtMusicManager` | 蓝牙音乐 |
-| `MediaTlog-CtrlService` | 多媒体控制 |
-| `zza` | 胎压胎温（TPMSBean） |
-| `LeapSystemAppService` | GPS位置 |
+| 权限 | 路径 | 说明 |
+|------|------|------|
+| 通知监听 | 设置 → 应用 → C11伙伴 → 通知使用权 | 读取音乐信息 |
+| 悬浮窗 | 设置 → 应用 → C11伙伴 → 悬浮窗权限 | 悬浮窗显示 |
+| 无障碍 | 设置 → 无障碍 → C11伙伴 | 模拟点击 |
 
 ---
 
-## 六、常见开发问题
+## 六、Git 工作流
 
-### 6.1 编译错误
+### 6.1 分支管理
 
-**WebViewBridge 缺少闭合括号**
-- 症状：编译报错，提示多个方法解析失败
-- 原因：某个方法缺少闭合大括号
-- 解决：检查报错位置附近的方法，补上缺失的括号
+| 分支 | 用途 |
+|------|------|
+| `main` | 生产发布分支 |
+| `dev` | 开发分支 |
+| `feature/*` | 功能分支 |
+| `fix/*` | 修复分支 |
 
-**包名不一致**
-- 症状：运行时找不到类
-- 原因：部分文件还在用旧包名 `com.dipartner.desktop`
-- 解决：全局搜索替换为 `com.c11partner.desktop`
+### 6.2 提交规范
 
-### 6.2 运行时错误
+见 [COMMIT_CONVENTION.md](COMMIT_CONVENTION.md)
 
-**权限拒绝**
-- 症状：调用车控功能失败，日志显示 SecurityException
-- 原因：没有授予 WRITE_SECURE_SETTINGS 权限
-- 解决：用 ADB 授予三大核心权限
-
-**车控功能无效**
-- 症状：调用接口返回成功，但车机没反应
-- 原因：可能是推测的接口不对，或者需要其他条件
-- 解决：实车测试验证，查看系统日志找正确的接口
-
-### 6.3 前端问题
-
-**JS 接口不生效**
-- 症状：前端调用 JS 接口没反应
-- 原因：WebViewBridge 方法名不匹配，或者缺少 @JavascriptInterface
-- 解决：检查方法名和注解，确保一致
-
-**页面加载失败**
-- 症状：白屏或者显示错误
-- 原因：assets 路径不对，或者 JS 有语法错误
-- 解决：用 Chrome DevTools 调试 WebView
-
----
-
-## 七、代码规范
-
-### 7.1 Java 代码规范
-
-- 使用 AndroidX，不要用旧的 support 库
-- 方法名清晰易懂，见名知意
-- 关键方法添加 Javadoc 注释
-- 车控相关方法统一放在 `CarControlManager` 中
-
-### 7.2 JS 代码规范
-
-- 使用 ES6 语法
-- 管理器对象用大驼峰命名
-- 功能模块化，不要都堆在 index.js 里
-- 关键逻辑添加注释
-
-### 7.3 提交规范
-
+**格式：**
 ```
-<type>: <subject>
+<type>(<scope>): <subject>
 
 <body>
 ```
 
-**type 类型**：
-- `feat`：新功能
-- `fix`：修复bug
-- `docs`：文档更新
-- `style`：代码格式调整
-- `refactor`：重构
-- `test`：测试相关
-- `chore`：构建/工具相关
+**类型：**
+- `feat`: 新功能
+- `fix`: 修复
+- `refactor`: 重构
+- `docs`: 文档
+- `style`: 格式
+- `test`: 测试
+- `chore`: 构建
 
-**示例**：
+### 6.3 提交流程
+
+```powershell
+# 1. 查看变更
+git status
+
+# 2. 暂存
+git add <文件路径>
+
+# 3. 提交
+git commit -m "feat(quick-switch): 添加空调控制开关"
+
+# 4. 推送
+git push origin dev
 ```
-feat: 添加氛围灯控制功能
-- CarControlManager 添加 setAmbientLightColor 方法
-- WebViewBridge 添加对应 JS 接口
-- 前端快捷开关添加氛围灯颜色选择
-```
+
+---
+
+## 七、常见问题
+
+见 [FAQ.md](FAQ.md)
 
 ---
 
 ## 八、相关文档
 
-- [架构设计](ARCHITECTURE.md) - 整体架构和模块划分
-- [车控接口文档](CAR_CONTROL_API.md) - 详细的车控接口列表
-- [代码索引](CODE_INDEX.md) - 函数级快速定位
-- [常见问题](FAQ.md) - 常见问题解答
+| 文档 | 职责 |
+|------|------|
+| [架构文档](ARCHITECTURE.md) | 整体架构设计 |
+| [代码索引](CODE_INDEX.md) | 函数级快速定位 |
+| [JS 接口文档](JS_API_REFERENCE.md) | 前后端接口契约 |
+| [项目状态](PROJECT_STATUS.md) | 当前项目真实状态 |
+| [常见问题](FAQ.md) | 常见问题解答 |
+| [提交规范](COMMIT_CONVENTION.md) | Git 提交规范 |
 
 ---
 
-## 九、代码重构验证基线（重要！）
-> 📋 **第一阶段建立的标准化验证流程** - 任何代码修改后必须按此清单验证，确保零风险
-
-### 9.1 核心验证清单
-**必须100%通过的验证项（按优先级排序）：**
-
-| 序号 | 验证模块 | 验证内容 | 验收标准 |
-|------|---------|---------|---------|
-| 1 | **桌面主页面** | 页面整体加载 | 无白屏、无报错、所有widget正常显示 |
-| 2 | **顶部状态栏** | 时间、车辆状态指示器 | 时间正常更新、档位/车门/转向灯/锁车状态正常显示 |
-| 3 | **天气Widget** | 天气卡片显示 | 温度、天气图标、城市名称正常显示 |
-| 4 | **音乐Widget** | 音乐卡片显示 | 黑胶唱片、歌曲信息、控制按钮正常显示 |
-| 5 | **快捷开关Widget** | 5个快捷开关 | 近光灯、极速制冷、360限速、氛围灯、全部按钮 |
-| 6 | **Dock栏** | 底部应用栏 | 4个快捷应用+全部按钮正常显示 |
-| 7 | **快捷开关面板** | 长按360按钮呼出 | 14个快捷开关、6种驾驶模式、5种场景模式 |
-| 8 | **设置面板** | 点击设置按钮 | 壁纸设置、系统设置、组件配置、自动化场景正常显示 |
-| 9 | **应用列表** | 点击全部按钮 | 应用分类、搜索、字母导航正常工作 |
-| 10 | **空调控制** | 点击温度卡片 | 温度调节、风量调节、AC开关正常响应 |
-| 11 | **壁纸功能** | 壁纸切换/删除 | 双击切换壁纸、长按删除功能正常 |
-| 12 | **自动化场景** | 场景配置 | 12个自动化场景开关正常保存 |
-
-### 9.2 标准化验证步骤
-
-#### 【阶段1：基础冒烟测试】（修改后立即执行）
-```bash
-# 1. 构建APK
-./gradlew assembleDebug
-
-# 2. 安装到车机/模拟器
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-
-# 3. 启动应用
-adb shell am start -n com.c11partner.desktop/.MainActivity
-
-# 4. 检查是否有崩溃
-adb logcat -v time | grep -i crash
-```
-
-#### 【阶段2：UI视觉验证】（CSS修改必做）
-1. ✅ 打开应用，等待页面完全加载
-2. ✅ 检查所有Widget卡片：圆角、阴影、毛玻璃效果正常
-3. ✅ 检查文字：颜色、大小、对齐方式正常
-4. ✅ 检查图标：显示正常，无缺失
-5. ✅ 检查动画：悬停效果、过渡动画正常
-6. ✅ 检查响应式：不同分辨率下布局正常
-
-#### 【阶段3：功能交互验证】（JS修改必做）
-1. ✅ 点击所有按钮，确认有点击反馈
-2. ✅ 打开/关闭所有弹窗，确认动画正常
-3. ✅ 测试快捷开关面板的所有开关
-4. ✅ 测试设置面板的所有选项
-5. ✅ 测试应用列表的搜索和分类
-6. ✅ 测试壁纸切换和删除功能
-
-#### 【阶段4：回归测试】（提交前必做）
-1. ✅ 冷启动应用3次，确认无崩溃
-2. ✅ 后台切换5次，确认状态保持
-3. ✅ 横竖屏切换（如支持），确认布局正常
-4. ✅ 检查控制台无JS错误
-5. ✅ 检查logcat无严重异常
-
-### 9.3 CSS重构专项验证
-**针对CSS代码清理/重构的额外验证项：**
-
-| 选择器 | 验证要点 |
-|--------|---------|
-| `.widget` | 所有widget卡片的3D效果、阴影、毛玻璃、悬停动效 |
-| `.top-status-bar` | 状态栏位置、背景、车辆状态指示器显示 |
-| `.weather-widget` | 天气卡片布局、温度显示、图标位置 |
-| `.music-widget` | 音乐卡片布局、黑胶唱片动画、控制按钮 |
-| `.quick-switch-item` | 快捷开关图标、文字、激活状态 |
-| `.dock-bar` | Dock栏位置、应用图标、间距 |
-
-### 9.4 验收通过标准
-✅ **P0级（必须100%通过）**：
-- 应用不崩溃、不ANR
-- 主页面所有元素正常显示
-- 核心功能（开关、设置、应用列表）可正常使用
-
-✅ **P1级（建议通过）**：
-- 所有动画和过渡效果正常
-- 响应式布局无明显错乱
-- 无明显的视觉退化
-
-### 9.5 验证不通过处理流程
-1. **立即回滚**：验证不通过时，优先回滚到上一个稳定版本
-2. **问题定位**：使用二分法定位问题代码
-3. **最小修改**：只修改必要的代码，避免大范围改动
-4. **重新验证**：修改后重新执行完整验证流程
-
----
-
-**文档版本**：v1.2  
-**最后更新**：2026-07-04
+**文档版本**：v2.0
+**最后更新**：2026-07-09
