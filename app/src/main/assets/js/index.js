@@ -1,11 +1,11 @@
 /**
- * index.js - 主入口模块（拆分完成）
- * @description 本文件现在只作为适配层和初始化入口，核心逻辑已拆分到专用模块
+ * index.js - 主入口模块
+ * @description 统一初始化入口 + 设置面板逻辑 + 面板显示/隐藏控制
  */
 
 /**
- * 适配层：将旧全局函数名映射到新模块
- * @description 这是临时层，逐步删除旧函数后将移除
+ * 初始化队列注册函数
+ * @description 将初始化函数注册到 AppBootstrap 队列，若队列不可用则降级到 load 事件
  */
 const safeInit = function(name, fn) {
     if (window.AppBootstrap && window.AppBootstrap.registerInit) {
@@ -17,28 +17,104 @@ const safeInit = function(name, fn) {
     }
 };
 
+/**
+ * 面板显示/隐藏控制（原 panel-controller.js，合并于此）
+ * 规范：active 类 + display 属性配合控制
+ *   打开：先 display:flex，再添加 active 类触发动画
+ *   关闭：先移除 active 类，等动画结束再 display:none
+ *   可见性判断：classList.contains('active')
+ */
 function showSettingsModal() {
-    if (window.PanelController) { PanelController.showSettingsModal(); }
+    const modal = document.getElementById('settingsModal');
+    if (!modal) return;
+    modal.style.display = 'flex';
+    requestAnimationFrame(function() {
+        modal.classList.add('active');
+    });
 }
 
 function hideSettingsModal() {
-    if (window.PanelController) { PanelController.hideSettingsModal(); }
+    const modal = document.getElementById('settingsModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    setTimeout(function() {
+        modal.style.display = 'none';
+    }, 350);
 }
 
 function showAppsModal() {
-    if (window.PanelController) { PanelController.showAppsModal(); }
+    const modal = document.getElementById('appsModal');
+    if (!modal) return;
+    modal.style.display = 'flex';
+    requestAnimationFrame(function() {
+        modal.classList.add('active');
+    });
+
+    // 触发应用列表加载
+    const appsLoading = document.getElementById('appsLoading');
+    const appsList = document.getElementById('appsList');
+    if (appsLoading && appsList) {
+        appsList.style.display = 'none';
+        appsLoading.style.display = 'block';
+    }
+    if (window.AppListManager && typeof window.AppListManager.loadAppList === 'function') {
+        setTimeout(function() {
+            window.AppListManager.loadAppList();
+        }, 1);
+    }
 }
 
 function hideAppsModal() {
-    if (window.PanelController) { PanelController.hideAppsModal(); }
+    const modal = document.getElementById('appsModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    setTimeout(function() {
+        modal.style.display = 'none';
+    }, 350);
 }
 
 function initWallpaperDoubleClick() {
-    if (window.PanelController) { PanelController.initWallpaperDoubleClick(); }
+    const bgContainer = document.querySelector('.background-container');
+    if (!bgContainer) return;
+
+    let lastClickTime = 0;
+    bgContainer.addEventListener('click', function(e) {
+        const now = Date.now();
+        if (now - lastClickTime < 300) {
+            toggleWallpaperCarousel();
+        }
+        lastClickTime = now;
+    });
 }
 
 function handleWallpaperLongPress() {
-    if (window.PanelController) { PanelController.handleWallpaperLongPress(); }
+    const bgContainer = document.querySelector('.background-container');
+    if (!bgContainer) return;
+
+    let longPressTimer = null;
+    let isLongPress = false;
+
+    bgContainer.addEventListener('touchstart', function(e) {
+        isLongPress = false;
+        longPressTimer = setTimeout(function() {
+            isLongPress = true;
+            showSettingsModal();
+        }, 500);
+    });
+
+    bgContainer.addEventListener('touchend', function() {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+    });
+
+    bgContainer.addEventListener('touchmove', function() {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+    });
 }
 
 function loadWallpaperSettings() {
@@ -106,10 +182,6 @@ function updateNetworkAndBluetoothStatus() {
 
 function initHorizontalScroll() {
     if (window.UiInitializer) { UiInitializer.initHorizontalScroll(); }
-}
-
-function registerTimeUpdateListener() {
-    if (window.UiInitializer) { UiInitializer.registerTimeUpdateListener(); }
 }
 
 function updateMusicProgress() {
@@ -211,7 +283,7 @@ function initSettingsModal() {
 
     if (settingsBtn) {
         settingsBtn.addEventListener('click', function () {
-            if (settingsModal.style.display === 'flex') {
+            if (settingsModal.classList.contains('active')) {
                 hideSettingsModal();
             } else {
                 showSettingsModal();
@@ -298,11 +370,8 @@ function initSettingsModal() {
     });
 
     settingsModal.addEventListener('click', function (event) {
-        if (settingsModal.style.display !== 'none') {
-            const interactive = event.target.closest('.tab-button, .setting-item, .setting-button, input, select, button, a, .switch-slider, .wallpaper-type-item, .widget-config-item, .close-btn, #closeSettings');
-            if (!interactive) {
-                hideSettingsModal();
-            }
+        if (event.target === settingsModal) {
+            hideSettingsModal();
         }
     });
 }
@@ -574,7 +643,6 @@ function addClickEffect() {
 /**
  * 统一初始化入口
  */
-safeInit('registerTimeUpdateListener', registerTimeUpdateListener);
 safeInit('addClickEffect', addClickEffect);
 safeInit('initSettingsModal', initSettingsModal);
 safeInit('initAppsModal', initAppsModal);

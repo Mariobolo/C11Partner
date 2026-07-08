@@ -70,13 +70,12 @@
 }
 
 .icon-hover-scale:hover {
-    transform: scale(1.2);
-    filter: drop-shadow(0 4px 12px rgba(var(--primary-color-rgb), 0.4));
+    opacity: 0.85;
+    filter: brightness(1.2);
 }
 
 .icon-hover-scale:active {
-    transform: scale(0.92);
-    filter: drop-shadow(0 2px 6px rgba(var(--primary-color-rgb), 0.3));
+    opacity: 0.6;
 }
 /* 图标悬停旋转效果 */
 
@@ -248,12 +247,12 @@
 }
 
 .nav-button:hover .nav-icon {
-    transform: scale(1.1) translateY(-2px);
-    filter: drop-shadow(0 4px 8px rgba(var(--primary-color-rgb), 0.3));
+    opacity: 0.85;
+    filter: brightness(1.2);
 }
 
 .nav-button:active .nav-icon {
-    transform: scale(0.95);
+    opacity: 0.6;
 }
 /* 控制图标优化 */
 
@@ -263,12 +262,12 @@
 }
 
 .control-icon:hover {
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 12px rgba(var(--primary-color-rgb), 0.5));
+    opacity: 0.85;
+    filter: brightness(1.2);
 }
 
 .control-icon:active {
-    transform: scale(0.9);
+    opacity: 0.6;
 }
 /* ============================================
    【UI美化优化点1】按钮组件视觉与交互动效全面升级
@@ -357,24 +356,14 @@
         rgba(255, 255, 255, 0.14) 100%
     );
     border-color: rgba(255, 255, 255, 0.25);
-    transform: translateY(-4px) scale(1.02) rotateX(3deg);
-    box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.5),
-        0 8px 24px -4px rgba(0, 0, 0, 0.4),
-        0 4px 12px -2px rgba(0, 0, 0, 0.3),
-        0 1px 0 rgba(255, 255, 255, 0.15) inset,
-        0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+    opacity: 0.9;
     filter: brightness(1.05);
 }
 
 .btn:active {
-    transform: translateY(-1px) scale(0.98) rotateX(-2deg);
-    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.35),
-        0 2px 6px rgba(0, 0, 0, 0.25),
-        0 1px 3px rgba(0, 0, 0, 0.2),
-        0 2px 4px rgba(0, 0, 0, 0.3) inset,
-        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    opacity: 0.6;
     filter: brightness(0.95);
-    transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+    transition: opacity 0.1s ease, filter 0.1s ease;
 }
 
 .btn:active::after {
@@ -439,9 +428,7 @@
 }
 
 .btn-primary:active {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3),
-        inset 0 2px 4px rgba(0, 0, 0, 0.2),
-        inset 0 0 0 1px rgba(var(--primary-color-rgb), 0.5);
+    opacity: 0.6;
 }
 /* 图标按钮 - 圆形增强版 */
 
@@ -854,7 +841,7 @@
 }
 
 .modal-close:active {
-    transform: scale(0.95);
+    opacity: 0.6;
 }
 
 .modal-body {
@@ -931,12 +918,12 @@
 }
 
 .modal-footer .btn-primary:hover {
-    transform: translateY(-2px);
+    opacity: 0.9;
     box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.3);
 }
 
 .modal-footer .btn-primary:active {
-    transform: translateY(0);
+    opacity: 0.6;
 }
 
 .modal-footer .btn:not(.btn-primary) {

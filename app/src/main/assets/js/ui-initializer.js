@@ -50,6 +50,25 @@ const UiInitializer = (function() {
                 quickAppsContainer.appendChild(createShowAllAppsButton());
             } catch (e) {
                 console.error('加载快速启动应用列表失败:', e);
+                if (quickAppsWidget) {
+                    quickAppsWidget.style.display = 'flex';
+                }
+                const mockQuickApps = [
+                    { name: '高德地图', packageName: 'com.autonavi.minimap', icon: 'images/ic_launcher.png' },
+                    { name: '音乐', packageName: 'com.android.music', icon: 'images/ic_launcher.png' },
+                    { name: '微信', packageName: 'com.tencent.mm', icon: 'images/ic_launcher.png' },
+                ];
+                mockQuickApps.forEach(app => {
+                    const appItem = document.createElement('div');
+                    appItem.className = 'quick-app-item';
+                    const appSafeName = typeof escapeHtml === 'function' ? escapeHtml(app.name) : app.name;
+                    appItem.innerHTML = `
+                        <div style="background-image: url('${app.icon}');"></div>
+                        <div>${appSafeName}</div>
+                    `;
+                    quickAppsContainer.appendChild(appItem);
+                });
+                quickAppsContainer.appendChild(createShowAllAppsButton());
             }
         } else {
             if (quickAppsWidget) {
@@ -172,8 +191,8 @@ const UiInitializer = (function() {
             allBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 e.preventDefault();
-                if (typeof showSettingsModal === 'function') {
-                    showSettingsModal();
+                if (window.QuickSwitchManager && typeof window.QuickSwitchManager.showPanel === 'function') {
+                    window.QuickSwitchManager.showPanel();
                 }
             });
             container.appendChild(allBtn);
@@ -195,57 +214,60 @@ const UiInitializer = (function() {
     function checkWifiStatus() {
         const wifiIcon = document.getElementById('wifiIcon');
         if (!wifiIcon) return;
+        wifiIcon.style.display = 'block';
 
         if (typeof Android !== 'undefined' && Android.isWifiConnected) {
             try {
                 const isConnected = Android.isWifiConnected();
-                wifiIcon.style.display = isConnected ? 'block' : 'none';
                 wifiIcon.classList.toggle('connected', isConnected);
+                wifiIcon.style.opacity = isConnected ? '0.95' : '0.35';
             } catch (error) {
-                wifiIcon.style.display = 'none';
                 wifiIcon.classList.remove('connected');
+                wifiIcon.style.opacity = '0.35';
             }
         } else {
-            wifiIcon.style.display = 'none';
             wifiIcon.classList.remove('connected');
+            wifiIcon.style.opacity = '0.35';
         }
     }
 
     function checkBluetoothStatus() {
         const bluetoothIcon = document.getElementById('bluetoothIcon');
         if (!bluetoothIcon) return;
+        bluetoothIcon.style.display = 'block';
 
         if (typeof Android !== 'undefined' && Android.isBluetoothConnected) {
             try {
                 const isConnected = Android.isBluetoothConnected();
-                bluetoothIcon.style.display = isConnected ? 'block' : 'none';
                 bluetoothIcon.classList.toggle('connected', isConnected);
+                bluetoothIcon.style.opacity = isConnected ? '0.95' : '0.35';
             } catch (error) {
-                bluetoothIcon.style.display = 'none';
                 bluetoothIcon.classList.remove('connected');
+                bluetoothIcon.style.opacity = '0.35';
             }
         } else {
-            bluetoothIcon.style.display = 'none';
             bluetoothIcon.classList.remove('connected');
+            bluetoothIcon.style.opacity = '0.35';
         }
     }
 
     function checkLocationStatus() {
         const locationIcon = document.getElementById('locationIcon');
         if (!locationIcon) return;
+        locationIcon.style.display = 'block';
 
         if (typeof Android !== 'undefined' && Android.isLocationEnabled) {
             try {
                 const isEnabled = Android.isLocationEnabled();
-                locationIcon.style.display = isEnabled ? 'block' : 'none';
                 locationIcon.classList.toggle('connected', isEnabled);
+                locationIcon.style.opacity = isEnabled ? '0.95' : '0.35';
             } catch (error) {
-                locationIcon.style.display = 'none';
                 locationIcon.classList.remove('connected');
+                locationIcon.style.opacity = '0.35';
             }
         } else {
-            locationIcon.style.display = 'none';
             locationIcon.classList.remove('connected');
+            locationIcon.style.opacity = '0.35';
         }
     }
 
@@ -286,21 +308,6 @@ const UiInitializer = (function() {
             const walk = (x - startX) * 1.5;
             container.scrollLeft = scrollLeft - walk;
         }));
-    }
-
-    function registerTimeUpdateListener() {
-        function updateTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const timeElement = document.getElementById('timeDisplay');
-            if (timeElement) {
-                timeElement.textContent = `${hours}:${minutes}`;
-            }
-        }
-
-        updateTime();
-        setInterval(updateTime, 1000);
     }
 
     function updateMusicProgress() {
@@ -387,9 +394,7 @@ const UiInitializer = (function() {
 
     function addTimeDisplayClickEvent() {
         const timeDisplay = document.getElementById('timeDisplay');
-        const dateDisplay = document.getElementById('dateDisplay');
-        const chineseDate = document.getElementById('chineseDate');
-        const timeContainer = document.querySelector('.time-container');
+        const layoutLeft = document.querySelector('.layout-left');
         
         if (timeDisplay) {
             timeDisplay.addEventListener('click', function() {
@@ -397,23 +402,24 @@ const UiInitializer = (function() {
                     toggleWallpaperCarousel();
                 }
 
-                if (timeContainer) {
-                    const statusBarHeight = 48;
-                    const widgetAreaHeight = 160;
-                    const containerRect = timeContainer.getBoundingClientRect();
-                    const timeWidth = timeDisplay.offsetWidth;
-                    const timeHeight = timeDisplay.offsetHeight;
+                if (layoutLeft) {
+                    const statusBarHeight = 52;
+                    const bottomDockHeight = 80;
+                    const cardAreaHeight = 150;
+                    const timeWidth = layoutLeft.offsetWidth;
+                    const timeHeight = layoutLeft.offsetHeight;
                     
-                    const maxX = window.innerWidth - timeWidth - 40;
-                    const maxY = window.innerHeight - statusBarHeight - widgetAreaHeight - timeHeight - 40;
+                    const maxX = window.innerWidth - timeWidth - 20;
+                    const maxY = window.innerHeight - statusBarHeight - bottomDockHeight - cardAreaHeight - timeHeight - 20;
                     
-                    const randomX = Math.max(20, Math.random() * maxX);
-                    const randomY = Math.max(statusBarHeight + 20, Math.random() * maxY);
+                    const randomX = Math.max(10, Math.random() * maxX);
+                    const randomY = Math.max(statusBarHeight + 10, Math.random() * maxY);
                     
-                    timeContainer.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                    timeContainer.style.left = randomX + 'px';
-                    timeContainer.style.top = randomY + 'px';
-                    timeContainer.style.position = 'absolute';
+                    layoutLeft.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    layoutLeft.style.left = randomX + 'px';
+                    layoutLeft.style.top = randomY + 'px';
+                    layoutLeft.style.position = 'absolute';
+                    layoutLeft.style.right = 'auto';
                 }
             });
         }
@@ -454,7 +460,6 @@ const UiInitializer = (function() {
         checkLocationStatus,
         updateNetworkAndBluetoothStatus,
         initHorizontalScroll,
-        registerTimeUpdateListener,
         updateMusicProgress,
         initAcTemperature,
         updateAcTemperature,

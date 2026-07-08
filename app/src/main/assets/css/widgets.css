@@ -49,7 +49,7 @@
 /* ============================================
    功能控制面板 (Quick Switch Panel) - 全屏
    ============================================ */
-.quick-switch-panel {
+.quick-switch-panel-wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -57,17 +57,34 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+    background: transparent;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.quick-switch-panel {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
     max-height: 100%;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-radius: 0;
-    padding: 40px;
-    z-index: 9999;
+    border-radius: var(--radius-lg);
+    padding: 24px;
     overflow-y: auto;
     overflow-x: hidden;
-    border: none;
-    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 .qsp-title {
@@ -639,11 +656,8 @@ body.theme-light .theme-toggle-icon:hover {
 /* 卡片点击3D按压效果 - 深度触觉反馈 */
 
 .widget:active {
-    /* 性能优化: box-shadow 简化为单层 */
-    transform: translateY(-2px) scale(0.985);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    border-color: rgba(var(--primary-color-rgb), 0.45);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
 }
 /* 卡片呼吸浮动动画 - 微交互增强 */
 
@@ -2669,11 +2683,8 @@ linear-gradient(135deg,
 .btn-prev:active,
 .btn-play:active,
 .btn-next:active {
-    transform: translateY(-1px) scale(0.95);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35),
-        0 0 10px rgba(138, 43, 226, 0.2),
-        inset 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    opacity: 0.6;
+    transition: opacity 0.1s ease;
 }
 /* 播放按钮特殊样式 */
 
@@ -2853,11 +2864,8 @@ linear-gradient(135deg,
 }
 
 .control-icon:active {
-    opacity: 1;
-    transform: scale(0.95) rotateY(-5deg) translateZ(5px);
-    filter: brightness(1.0) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))
-            drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.4));
-    transition: transform 0.1s ease, filter 0.1s ease;
+    opacity: 0.6;
+    transition: opacity 0.1s ease;
 }
 /* 【优化点3】底部Dock栏AC控制按钮动效增强 - 旋转+弹性+发光 */
 /* 中间空调控制区 */
@@ -2989,9 +2997,7 @@ linear-gradient(135deg,
 }
 
 .ac-control:active {
-    opacity: 1;
-    transform: scale(0.92) rotate(-5deg);
-    filter: drop-shadow(0 0 8px rgba(0, 204, 255, 0.5));
+    opacity: 0.6;
 }
 /* AC激活状态旋转动画 */
 
@@ -3104,7 +3110,7 @@ linear-gradient(135deg,
 }
 
 .ac-hcs:active {
-    transform: scale(0.92);
+    opacity: 0.6;
 }
 
 .ac-hcs.active {
@@ -4395,13 +4401,8 @@ linear-gradient(135deg,
 }
 
 .dock-btn:active {
-    transform: translateY(-3px) scale(1.05) rotateX(3deg);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
-        0 2px 8px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(var(--primary-color-rgb), 0.4),
-        0 0 20px rgba(var(--primary-color-rgb), 0.2),
-        inset 0 3px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
 }
 
 .dock-btn:active::after {

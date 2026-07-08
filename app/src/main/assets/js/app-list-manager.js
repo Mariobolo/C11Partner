@@ -193,6 +193,40 @@ const AppListManager = (function() {
         });
     }
 
+    function loadAppList() {
+        const appsLoading = document.getElementById('appsLoading');
+        const appsList = document.getElementById('appsList');
+        const now = Date.now();
+
+        if (cachedAppsData && (now - lastAppListLoadTime < APP_LIST_CACHE_DURATION)) {
+            renderAppsList(cachedAppsData);
+            if (appsLoading) appsLoading.style.display = 'none';
+            if (appsList) appsList.style.display = 'block';
+            return;
+        }
+
+        if (typeof Android !== 'undefined' && Android.getAllApps) {
+            try {
+                const appsJson = Android.getAllApps();
+                const appsData = JSON.parse(appsJson);
+                cachedAppsData = appsData;
+                lastAppListLoadTime = Date.now();
+                renderAppsList(appsData);
+                if (appsLoading) appsLoading.style.display = 'none';
+                if (appsList) appsList.style.display = 'block';
+            } catch (e) {
+                console.error('加载应用列表失败:', e);
+                if (appsLoading) appsLoading.style.display = 'none';
+                if (appsList) appsList.style.display = 'block';
+                renderAppsList(generateAppData());
+            }
+        } else {
+            if (appsLoading) appsLoading.style.display = 'none';
+            if (appsList) appsList.style.display = 'block';
+            renderAppsList(generateAppData());
+        }
+    }
+
     function initAppsModal() {
         const appsBtn = document.getElementById('appsBtn');
         const closeApps = document.getElementById('closeApps');
@@ -215,41 +249,9 @@ const AppListManager = (function() {
         }
         window.setAppListCache = setAppListCache;
 
-        function loadAppList() {
-            const now = Date.now();
-
-            if (cachedAppsData && (now - lastAppListLoadTime < APP_LIST_CACHE_DURATION)) {
-                renderAppsList(cachedAppsData);
-                appsLoading.style.display = 'none';
-                appsList.style.display = 'block';
-                return;
-            }
-
-            if (typeof Android !== 'undefined' && Android.getAllApps) {
-                try {
-                    const appsJson = Android.getAllApps();
-                    const appsData = JSON.parse(appsJson);
-                    cachedAppsData = appsData;
-                    lastAppListLoadTime = Date.now();
-                    renderAppsList(appsData);
-                    appsLoading.style.display = 'none';
-                    appsList.style.display = 'block';
-                } catch (e) {
-                    console.error('加载应用列表失败:', e);
-                    appsLoading.style.display = 'none';
-                    appsList.style.display = 'block';
-                    renderAppsList(generateAppData());
-                }
-            } else {
-                appsLoading.style.display = 'none';
-                appsList.style.display = 'block';
-                renderAppsList(generateAppData());
-            }
-        }
-
         if (appsBtn) {
             appsBtn.addEventListener('click', function () {
-                if (appsModal.style.display !== 'none') {
+                if (appsModal.classList.contains('active')) {
                     hideAppsModal();
                 } else {
                     showAppsModal();
@@ -267,11 +269,8 @@ const AppListManager = (function() {
         }
 
         appsModal.addEventListener('click', function (event) {
-            if (appsModal.style.display !== 'none') {
-                const interactive = event.target.closest('.app-tab, .app-search input, .app-item, .app-icon, .app-name, #closeApps, .close-btn');
-                if (!interactive) {
-                    hideAppsModal();
-                }
+            if (event.target === appsModal) {
+                hideAppsModal();
             }
         });
 
@@ -435,6 +434,7 @@ const AppListManager = (function() {
 
     return {
         initAppsModal,
+        loadAppList,
         renderAppsList,
         escapeHtml,
         normalizeAppIcon,

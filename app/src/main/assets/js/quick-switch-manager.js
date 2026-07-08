@@ -77,23 +77,20 @@ const QuickSwitchManager = {
      * @description 显示快捷开关面板，如不存在则创建
      */
     showPanel: function() {
-        let panel = document.getElementById('quickSwitchPanel');
-        if (!panel) {
-            panel = this.createPanel();
-            document.body.appendChild(panel);
+        let wrapper = document.getElementById('quickSwitchPanelWrapper');
+        if (!wrapper) {
+            wrapper = this.createPanel();
+            document.body.appendChild(wrapper);
         }
-        panel.style.display = 'block';
+        wrapper.style.display = 'block';
         this.refreshSwitchStates();
+        this.isOpen = true;
     },
     
-    /**
-     * 隐藏快捷开关面板
-     * @description 隐藏快捷开关面板
-     */
     hidePanel: function() {
-        const panel = document.getElementById('quickSwitchPanel');
-        if (panel) {
-            panel.style.display = 'none';
+        const wrapper = document.getElementById('quickSwitchPanelWrapper');
+        if (wrapper) {
+            wrapper.style.display = 'none';
         }
         this.isOpen = false;
     },
@@ -104,6 +101,10 @@ const QuickSwitchManager = {
      * @returns {HTMLElement} 创建的面板元素
      */
     createPanel: function() {
+        const wrapper = document.createElement('div');
+        wrapper.id = 'quickSwitchPanelWrapper';
+        wrapper.className = 'quick-switch-panel-wrapper';
+
         const panel = document.createElement('div');
         panel.id = 'quickSwitchPanel';
         panel.className = 'quick-switch-panel';
@@ -180,15 +181,15 @@ const QuickSwitchManager = {
             });
         }
 
-        // 点击面板内部空白区域关闭
-        panel.addEventListener('click', function(e) {
-            const interactive = e.target.closest('.qsp-item, #qspSettingsEntry');
-            if (!interactive) {
+        // 点击父级透明层空白区域关闭
+        wrapper.appendChild(panel);
+        wrapper.addEventListener('click', function(e) {
+            if (e.target === wrapper) {
                 self.hidePanel();
             }
         });
 
-        return panel;
+        return wrapper;
     },
     
     /**
@@ -332,8 +333,6 @@ const QuickSwitchManager = {
         
         const panel = document.getElementById('quickSwitchPanel');
         if (!panel) return;
-        
-        // 更新所有可读取状态的开关
         const statusMap = {
             'lowBeamLight':    window.Android.isLowBeamLightOn ? window.Android.isLowBeamLightOn() : null,
             'rearFogLight':    window.Android.isRearFogLightOn ? window.Android.isRearFogLightOn() : null,

@@ -500,6 +500,14 @@ body.theme-light .theme-toggle-icon {
     filter: brightness(0.3);
 }
 
+/* 通用 Widget */
+body.theme-light .widget {
+    background: rgba(240, 240, 245, 0.6);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    color: rgba(30, 30, 35, 0.95);
+}
+
 /* 背景遮罩 */
 body.theme-light .background-container::after {
     background: rgba(255, 255, 255, 0.3);
