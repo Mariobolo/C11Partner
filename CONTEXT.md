@@ -278,6 +278,19 @@ LogcatMonitorService (后台服务，持续读取日志)
 - 清理 index.js 冗余适配层（删除15个转发函数，改为直接调用模块方法）
 - debounce/throttle 统一使用 utils.js 的全局函数
 
+### 阶段3：接口对齐（2026-07-09 完成）
+
+- JS_API_REFERENCE.md v2.1：修复返回值类型（void→boolean）、补充缺失方法（getCarState/toggleAC/setCameraOverspeedLimit等）、修正参数签名、新增副屏接口章节
+- CODE_INDEX.md v2.1：移除已删除的 panel-controller.js 和 ui-initializer.js、更新文件行数、补充缺失接口、修正返回值类型
+- PROJECT_STATUS.md v2.1：更新代码统计（JS 26文件→8,559行）、移除过期文档标记、更新待修复问题和技术债务列表
+
+### 阶段4：CSS 清理（2026-07-09 部分完成）
+
+- 删除 main.css（26行）：@import 入口文件，index.html 已直接引入各CSS
+- 删除 music.css（768行）：未在 index.html 引入，JS 无特有类名引用，widgets.css 已有完整音乐组件样式
+- 验证 !important：仅 base.css 中有 35 处（特效等级+触摸优化），符合规范
+- 剩余：widgets.css 中重复样式选择器待清理
+
 ### 之前的 Bug 修复
 
 - **时钟秒数闪烁**：删除 ui-initializer.js 中重复的时间更新逻辑，统一使用 datetime.js
@@ -297,11 +310,10 @@ LogcatMonitorService (后台服务，持续读取日志)
 ### 中优先级
 - 废弃 patch 文件未删除（one-click-permission-patch.js, tasks-btn-adb-patch.js）
 - android_interface.js（291行）可能未使用，待确认
-- 未引入的 CSS 文件（main.css 24行, music.css 747行）
+- widgets.css 中存在重复样式选择器，需清理
 
 ### 低优先级
-- PROJECT_STATUS.md 需更新（移除已删除文件标记）
-- CODE_INDEX.md 需更新（反映阶段2后的文件结构）
+- （已完成）PROJECT_STATUS.md 和 CODE_INDEX.md 已在阶段3更新
 
 ---
 

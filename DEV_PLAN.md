@@ -90,20 +90,21 @@
 
 ---
 
-## 阶段3：接口对齐 ⏳ 待执行
+## 阶段3：接口对齐 ✅ 已完成
 
-- [ ] 验证 JS_API_REFERENCE.md 与后端 @JavascriptInterface 方法一致
-- [ ] 验证 CODE_INDEX.md 与实际代码一致
-- [ ] 更新 PROJECT_STATUS.md（移除已删除文件标记）
+- [x] 验证 JS_API_REFERENCE.md 与后端 @JavascriptInterface 方法一致 ✅ 已完成（v2.1）
+- [x] 验证 CODE_INDEX.md 与实际代码一致 ✅ 已完成（v2.1，移除已删除文件）
+- [x] 更新 PROJECT_STATUS.md（移除已删除文件标记，更新代码统计）✅ 已完成（v2.1）
+- **提交记录**：bfc0551 docs: 阶段3接口对齐，更新CODE_INDEX.md和PROJECT_STATUS.md
 
 ---
 
-## 阶段4：CSS 清理 ⏳ 待执行
+## 阶段4：CSS 清理 🔄 进行中
 
-- [ ] 删除未引入的 main.css（24行）
-- [ ] 确认 music.css（747行）是否需要引入
-- [ ] 去除重复样式选择器
-- [ ] 验证 !important 仅在 base.css 中使用
+- [x] 删除未引入的 main.css（24行）✅ 已完成（2026-07-09）
+- [x] 确认 music.css（768行）— 未引入且无引用，已删除 ✅ 已完成（2026-07-09）
+- [ ] 去除重复样式选择器（需深入分析 widgets.css 重复定义）
+- [x] 验证 !important 仅在 base.css 中使用 ✅ 已完成（2026-07-09，35处均在base.css）
 
 ---
 
@@ -131,26 +132,34 @@
 
 ### 当前交接（2026-07-09）
 
-**正在执行**：阶段3 - 接口对齐
+**正在执行**：阶段4 - CSS 清理（进行中）
 
 **已完成**：
-- 阶段1文档整理全部完成
+- ✅ 阶段1文档整理全部完成
 - ✅ 阶段2前端清理全部完成
   - 步骤2.1：删除 panel-controller.js（106行），6个函数已合并到 index.js
   - 步骤2.2：删除 ui-initializer.js（472行），17个函数已合并到 index.js
   - 步骤2.3：简化 bootstrap.js（91行→52行），移除冗余 state/debounce/throttle/addDebouncedClick
   - 步骤2.4：清理 index.js 冗余适配层（删除15个转发函数，改为直接调用模块方法）
   - 步骤2.5：编译验证通过，静态检查无残留引用
+- ✅ 阶段3接口对齐全部完成
+  - JS_API_REFERENCE.md v2.1：修复返回值类型（void→boolean）、补充缺失方法（getCarState/toggleAC/setCameraOverspeedLimit等）、修正参数签名、新增副屏接口章节
+  - CODE_INDEX.md v2.1：移除已删除的 panel-controller.js 和 ui-initializer.js、更新文件行数、补充缺失接口、修正返回值类型
+  - PROJECT_STATUS.md v2.1：更新代码统计（JS 26文件→8,559行）、移除过期文档标记、更新待修复问题和技术债务列表
+- ✅ 阶段4 CSS 清理（部分完成）
+  - 删除 main.css（26行）：@import 入口文件，index.html 已直接引入各CSS
+  - 删除 music.css（768行）：未在 index.html 引入，JS 无特有类名引用，widgets.css 已有完整音乐组件样式
+  - 验证 !important：仅 base.css 中有 35 处（特效等级+触摸优化），符合规范
 
 **下一步具体操作**：
-1. 验证 JS_API_REFERENCE.md 与后端 @JavascriptInterface 方法一致
-2. 验证 CODE_INDEX.md 与实际代码一致
-3. 更新 PROJECT_STATUS.md（移除已删除文件标记）
+1. 去除重复样式选择器（widgets.css 中发现多处重复定义，如 .vinyl-dot、.btn-prev/.btn-play/.btn-next 等在不同位置重复定义）
 
 **注意事项**：
 - 阶段2共删除2个文件（panel-controller.js、ui-initializer.js），精简 bootstrap.js 39行，清理 index.js 适配层67行
 - index.js 内部现在直接调用 SettingsSync.xxx 和 AppListManager.xxx，不再有中间适配层
 - debounce/throttle 统一使用 utils.js 的 window.debounce / window.throttle
+- 阶段4已删除2个CSS文件（main.css、music.css），共减少794行
+- CSS文件从9个减少到7个：theme.css, base.css, animations.css, components.css, widgets.css, pages.css, responsive.css
 
 ---
 
