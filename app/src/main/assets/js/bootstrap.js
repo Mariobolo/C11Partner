@@ -1,38 +1,5 @@
 const AppBootstrap = (function() {
-    const state = {
-        isLoadingSettings: false,
-        categoryCheckboxEventsInitialized: false,
-        componentConfigListenersAdded: false,
-        currentDialog: null,
-        isConfigurableButtonsInitialized: false
-    };
-
-    function debounce(fn, delay = 300) {
-        let timer = null;
-        return function (...args) {
-            if (timer) clearTimeout(timer);
-            timer = setTimeout(() => {
-                fn.apply(this, args);
-            }, delay);
-        };
-    }
-
-    function throttle(fn, interval = 300) {
-        let lastTime = 0;
-        return function (...args) {
-            const now = Date.now();
-            if (now - lastTime >= interval) {
-                lastTime = now;
-                fn.apply(this, args);
-            }
-        };
-    }
-
-    function addDebouncedClick(element, handler, delay = 300, useThrottle = false) {
-        if (!element) return;
-        const wrappedHandler = useThrottle ? throttle(handler, delay) : debounce(handler, delay);
-        element.addEventListener('click', wrappedHandler);
-    }
+    const initQueue = [];
 
     function safeInit(name, fn) {
         try {
@@ -42,27 +9,25 @@ const AppBootstrap = (function() {
         }
     }
 
-    const initQueue = [];
-
     function registerInit(name, fn) {
-        initQueue.push({ name, fn });
+        initQueue.push({ name: name, fn: fn });
     }
 
     function runInit() {
-        const backgroundElement = document.querySelector('.background-image');
+        var backgroundElement = document.querySelector('.background-image');
         if (backgroundElement) {
             backgroundElement.style.backgroundImage = "url('images/default_bg_1.jpg')";
         }
 
-        initQueue.forEach(item => {
-            safeInit(item.name, item.fn);
-        });
+        for (var i = 0; i < initQueue.length; i++) {
+            safeInit(initQueue[i].name, initQueue[i].fn);
+        }
 
         if (typeof updateNetworkAndBluetoothStatus === 'function') {
             updateNetworkAndBluetoothStatus();
         }
 
-        const statusIntervalId = setInterval(function() {
+        var statusIntervalId = setInterval(function() {
             if (typeof updateNetworkAndBluetoothStatus === 'function') {
                 updateNetworkAndBluetoothStatus();
             }
@@ -79,12 +44,8 @@ const AppBootstrap = (function() {
     window.addEventListener('load', runInit);
 
     window.AppBootstrap = {
-        state,
-        debounce,
-        throttle,
-        addDebouncedClick,
-        safeInit,
-        registerInit
+        safeInit: safeInit,
+        registerInit: registerInit
     };
 
     return window.AppBootstrap;

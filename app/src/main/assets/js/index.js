@@ -284,7 +284,7 @@ function loadQuickSwitches() {
             { id: 'tempPlus', name: '温度+', icon: '🔥', type: 'action' },
         ];
 
-        const debounceFn = typeof AppBootstrap !== 'undefined' ? AppBootstrap.debounce : function(fn) { return fn; };
+        const debounceFn = typeof debounce !== 'undefined' ? debounce : function(fn) { return fn; };
 
         acControls.forEach(ctrl => {
             const item = document.createElement('div');
@@ -438,7 +438,7 @@ function initHorizontalScroll() {
     let startX = 0;
     let scrollLeft = 0;
 
-    const debounceFn = typeof AppBootstrap !== 'undefined' ? AppBootstrap.debounce : function(fn) { return fn; };
+    const debounceFn = typeof debounce !== 'undefined' ? debounce : function(fn) { return fn; };
 
     container.addEventListener('mousedown', debounceFn(function(e) {
         isDragging = true;
