@@ -58,13 +58,13 @@ const AppBootstrap = (function() {
             safeInit(item.name, item.fn);
         });
 
-        if (window.UiInitializer && UiInitializer.updateNetworkAndBluetoothStatus) {
-            UiInitializer.updateNetworkAndBluetoothStatus();
+        if (typeof updateNetworkAndBluetoothStatus === 'function') {
+            updateNetworkAndBluetoothStatus();
         }
 
         const statusIntervalId = setInterval(function() {
-            if (window.UiInitializer && UiInitializer.updateNetworkAndBluetoothStatus) {
-                UiInitializer.updateNetworkAndBluetoothStatus();
+            if (typeof updateNetworkAndBluetoothStatus === 'function') {
+                updateNetworkAndBluetoothStatus();
             }
         }, 5000);
 
