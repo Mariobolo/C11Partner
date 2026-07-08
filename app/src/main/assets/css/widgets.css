@@ -634,11 +634,28 @@ body.theme-light .theme-toggle-icon:hover {
     overflow: hidden;
     white-space: normal;
 }
-/* Widget卡片 - 移除不必要的伪元素以提升性能 */
+/* Widget卡片 - 渐变发光边框 */
 
-.widget::before,
-.widget::after {
-    display: none;
+.widget::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius-lg);
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.5) 0%,
+        rgba(var(--secondary-color-rgb), 0.3) 25%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(var(--primary-color-rgb), 0.25) 75%,
+        rgba(var(--secondary-color-rgb), 0.4) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .widget:hover::before {
@@ -737,11 +754,26 @@ body.theme-light .theme-toggle-icon:hover {
     white-space: nowrap;
 }
 
-/* 快捷应用 - 移除不必要的伪元素以提升性能 */
+/* 快捷应用 - 渐变发光边框 */
 
-.quick-app-item::before,
-.quick-app-item::after {
-    display: none;
+.quick-app-item::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--primary-color-rgb), 0.25) 0%,
+        rgba(var(--secondary-color-rgb), 0.15) 50%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .quick-app-item:hover::before {
@@ -754,15 +786,28 @@ body.theme-light .theme-toggle-icon:hover {
     );
 }
 
-.quick-app-item:hover::after {
-    left: 150%;
-    opacity: 1;
+.quick-app-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
     background: linear-gradient(
         135deg,
         rgba(var(--primary-color-rgb), 0.35) 0%,
         rgba(var(--secondary-color-rgb), 0.2) 50%,
         transparent 100%
     );
+    transform: skewX(-15deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.quick-app-item:hover::after {
+    left: 150%;
+    opacity: 1;
 }
 
 .quick-app-item:hover {
@@ -1190,13 +1235,6 @@ body.theme-light .theme-toggle-icon:hover {
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-/* 天气组件 - 移除不必要的伪元素以提升性能 */
-
-.weather-widget::after,
-.weather-widget::before {
-    display: none;
-}
-
 /* 天气#字形布局子区域 */
 .weather-left {
     display: flex;
@@ -2211,11 +2249,44 @@ linear-gradient(135deg,
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
-/* 音乐组件 - 移除不必要的伪元素以提升性能 */
+/* 音乐组件 - 渐变发光边框 */
 
-.music-widget::before,
+.music-widget::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius-lg);
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(138, 43, 226, 0.45) 0%,
+        rgba(var(--primary-color-rgb), 0.3) 30%,
+        rgba(255, 105, 180, 0.3) 60%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 .music-widget::after {
-    display: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        transparent 100%);
+    transform: skewX(-15deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.5s ease;
 }
 /* 光泽扫过效果 */
 
@@ -4585,29 +4656,6 @@ linear-gradient(135deg,
 /* ========== 状态栏整体视觉升级 ========== */
 /* 状态栏渐变边框发光效果 */
 /* ========== 状态栏时间显示增强 ========== */
-/* ========== 车辆状态指示器视觉增强 ========== */
-opacity: 1;
-/* ========== 状态指示器图标增强 ========== */
-.status-indicator:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: scale(1.1);
-}
-/* ========== 档位指示器3D视觉 ========== */
-/* ========== 网络/蓝牙图标终极美化 ========== */
-/* ============================================
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 24px;
-    height: 24px;
-    margin: -12px 0 0 -12px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-top-color: var(--primary-color);
-    border-radius: 50%;
-    animation: loadingSpin 0.8s linear infinite;
-    z-index: 11;
-}
 /* ============================================
    【优化点2】Dock栏 - 视觉与交互动效终极增强
    3D毛玻璃、渐变边框、弹性动画、发光效果
