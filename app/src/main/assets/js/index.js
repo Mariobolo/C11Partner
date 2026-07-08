@@ -81,7 +81,7 @@ function initWallpaperDoubleClick() {
     bgContainer.addEventListener('click', function(e) {
         const now = Date.now();
         if (now - lastClickTime < 300) {
-            toggleWallpaperCarousel();
+            if (window.SettingsSync) { SettingsSync.toggleWallpaperCarousel(); }
         }
         lastClickTime = now;
     });
@@ -117,38 +117,6 @@ function handleWallpaperLongPress() {
     });
 }
 
-function loadWallpaperSettings() {
-    if (window.SettingsSync) { SettingsSync.loadWallpaperSettings(); }
-}
-
-function initEffectLevel() {
-    if (window.SettingsSync) { SettingsSync.initEffectLevel(); }
-}
-
-function applyEffectLevel(level) {
-    if (window.SettingsSync) { SettingsSync.applyEffectLevel(level); }
-}
-
-function initThemeMode() {
-    if (window.SettingsSync) { SettingsSync.initThemeMode(); }
-}
-
-function applyThemeMode(mode) {
-    if (window.SettingsSync) { SettingsSync.applyThemeMode(mode); }
-}
-
-function initThemeToggleIcon() {
-    if (window.SettingsSync) { SettingsSync.initThemeToggleIcon(); }
-}
-
-function toggleWallpaperCarousel() {
-    if (window.SettingsSync) { SettingsSync.toggleWallpaperCarousel(); }
-}
-
-function restoreDefaultWallpaper() {
-    if (window.SettingsSync) { SettingsSync.restoreDefaultWallpaper(); }
-}
-
 /**
  * UI 初始化函数（原 ui-initializer.js，合并于此）
  */
@@ -180,8 +148,8 @@ function loadQuickApps() {
                 const appItem = document.createElement('div');
                 appItem.className = 'quick-app-item';
                 appItem.setAttribute('data-package', app.packageName);
-                const appSafeIcon = typeof normalizeAppIcon === 'function' ? normalizeAppIcon(app.icon) : app.icon;
-                const appSafeName = typeof escapeHtml === 'function' ? escapeHtml(app.name) : app.name;
+                const appSafeIcon = window.AppListManager ? AppListManager.normalizeAppIcon(app.icon) : (app.icon || 'images/ic_launcher.png');
+                const appSafeName = window.AppListManager ? AppListManager.escapeHtml(app.name) : app.name;
                 appItem.innerHTML = `
                     <div style="background-image: url('${appSafeIcon}');"></div>
                     <div>${appSafeName}</div>
@@ -193,8 +161,8 @@ function loadQuickApps() {
                 });
                 appItem.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
-                    if (typeof showRemoveFromQuickAppsDialog === 'function') {
-                        showRemoveFromQuickAppsDialog(app);
+                    if (window.AppListManager && typeof AppListManager.showRemoveFromQuickAppsDialog === 'function') {
+                        AppListManager.showRemoveFromQuickAppsDialog(app);
                     }
                 });
                 quickAppsContainer.appendChild(appItem);
@@ -214,7 +182,7 @@ function loadQuickApps() {
             mockQuickApps.forEach(app => {
                 const appItem = document.createElement('div');
                 appItem.className = 'quick-app-item';
-                const appSafeName = typeof escapeHtml === 'function' ? escapeHtml(app.name) : app.name;
+                const appSafeName = window.AppListManager ? AppListManager.escapeHtml(app.name) : app.name;
                 appItem.innerHTML = `
                     <div style="background-image: url('${app.icon}');"></div>
                     <div>${appSafeName}</div>
@@ -235,7 +203,7 @@ function loadQuickApps() {
         mockQuickApps.forEach(app => {
             const appItem = document.createElement('div');
             appItem.className = 'quick-app-item';
-            const appSafeName = typeof escapeHtml === 'function' ? escapeHtml(app.name) : app.name;
+            const appSafeName = window.AppListManager ? AppListManager.escapeHtml(app.name) : app.name;
             appItem.innerHTML = `
                 <div style="background-image: url('${app.icon}');"></div>
                 <div>${appSafeName}</div>
@@ -551,9 +519,7 @@ function addTimeDisplayClickEvent() {
     
     if (timeDisplay) {
         timeDisplay.addEventListener('click', function() {
-            if (typeof toggleWallpaperCarousel === 'function') {
-                toggleWallpaperCarousel();
-            }
+            if (window.SettingsSync) { SettingsSync.toggleWallpaperCarousel(); }
 
             if (layoutLeft) {
                 const statusBarHeight = 52;
@@ -601,39 +567,6 @@ function initNavigationButtons() {
             }
         });
     }
-}
-
-/**
- * 应用列表管理器适配层
- */
-function initAppsModal() {
-    if (window.AppListManager) { AppListManager.initAppsModal(); }
-}
-
-function renderAppsList(appsData) {
-    if (window.AppListManager) { AppListManager.renderAppsList(appsData); }
-}
-
-function escapeHtml(text) {
-    if (window.AppListManager) { return AppListManager.escapeHtml(text); }
-    return text;
-}
-
-function normalizeAppIcon(icon) {
-    if (window.AppListManager) { return AppListManager.normalizeAppIcon(icon); }
-    return icon || 'images/ic_launcher.png';
-}
-
-function initAlphabetNav() {
-    if (window.AppListManager) { AppListManager.initAlphabetNav(); }
-}
-
-function showAddToQuickAppsDialog(app) {
-    if (window.AppListManager) { AppListManager.showAddToQuickAppsDialog(app); }
-}
-
-function showRemoveFromQuickAppsDialog(app) {
-    if (window.AppListManager) { AppListManager.showRemoveFromQuickAppsDialog(app); }
 }
 
 /**
@@ -1032,7 +965,7 @@ function addClickEffect() {
  */
 safeInit('addClickEffect', addClickEffect);
 safeInit('initSettingsModal', initSettingsModal);
-safeInit('initAppsModal', initAppsModal);
+safeInit('initAppsModal', function() { if (window.AppListManager) AppListManager.initAppsModal(); });
 safeInit('loadQuickApps', loadQuickApps);
 safeInit('loadQuickSwitches', loadQuickSwitches);
 safeInit('initConfigurableButtons', function() {
@@ -1062,6 +995,6 @@ safeInit('initAcTemperature', initAcTemperature);
 safeInit('updateMusicProgress', updateMusicProgress);
 safeInit('addTimeDisplayClickEvent', addTimeDisplayClickEvent);
 safeInit('initNavigationButtons', initNavigationButtons);
-safeInit('initEffectLevel', initEffectLevel);
-safeInit('initThemeMode', initThemeMode);
-safeInit('initThemeToggleIcon', initThemeToggleIcon);
+safeInit('initEffectLevel', function() { if (window.SettingsSync) SettingsSync.initEffectLevel(); });
+safeInit('initThemeMode', function() { if (window.SettingsSync) SettingsSync.initThemeMode(); });
+safeInit('initThemeToggleIcon', function() { if (window.SettingsSync) SettingsSync.initThemeToggleIcon(); });
