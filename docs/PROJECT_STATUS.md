@@ -12,7 +12,7 @@
 
 | 类型 | 文件数 | 总行数 | 说明 |
 |------|--------|--------|------|
-| JS | 23 | 7,247 | 全部在 index.html 中引入 |
+| JS | 24 | 7,542 | 全部在 index.html 中引入 |
 | CSS | 7 | 28,616 | 7 个均在 index.html 中引入 |
 | HTML | 1 | ~350 | index.html |
 
@@ -31,6 +31,7 @@
 | app.js | 366 | ✅ 使用中 | 应用管理 |
 | car-state-manager.js | 355 | ✅ 使用中 | 车辆状态 |
 | music.js | 337 | ✅ 使用中 | 音乐可视化 |
+| debug-tool.js | 295 | ✅ 使用中 | 前端调试工具（默认关闭） |
 | theme.js | 233 | ✅ 使用中 | 主题切换 |
 | bridge.js | 194 | ✅ 使用中 | Android 接口 |
 | gear-bridge.js | 184 | ✅ 使用中 | 档位桥接 |

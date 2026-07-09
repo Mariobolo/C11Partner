@@ -104,6 +104,7 @@
 | app.js | 366 | 应用管理逻辑 | — |
 | car-state-manager.js | 355 | 状态栏更新 | `updateCarState()` |
 | music.js | 337 | 频谱可视化 | — |
+| debug-tool.js | 295 | 前端调试工具（默认关闭） | `DebugTool` |
 | theme.js | 233 | 日夜模式切换 | — |
 | bridge.js | 194 | Android 接口代理 | `Android` 对象 |
 | gear-bridge.js | 184 | 档位前后端桥接 | — |

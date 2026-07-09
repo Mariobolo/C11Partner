@@ -172,7 +172,8 @@
 - 阶段4共删除2个CSS文件（main.css、music.css），清理 widgets.css 重复定义，共减少约800行
 - CSS文件从9个减少到7个：theme.css, base.css, animations.css, components.css, widgets.css, pages.css, responsive.css
 - 额外清理：删除3个废弃JS文件（one-click-permission-patch.js、tasks-btn-adb-patch.js、android_interface.js）
-- JS文件从26个减少到23个（全部在用，无废弃文件），总代码量 7,247 行
+- 新增：debug-tool.js（前端调试工具，295行，默认关闭）
+- JS文件从26个→24个（全部在用，无废弃文件），总代码量 7,542 行
 
 ---
 
