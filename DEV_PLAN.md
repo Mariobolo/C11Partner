@@ -114,6 +114,7 @@
   - ✅ 编译验证通过（BUILD SUCCESSFUL，2026-07-09 16:03）
   - ✅ 安装到模拟器成功（emulator-5556，2026-07-09 16:05）
   - ✅ 修复 CSS 图片路径（widgets.css 中 nav_car.png/nav_map_go_home.png）
+  - ✅ 重新安装验证通过（BUILD SUCCESSFUL，adb install -r，2026-07-09 16:08）
 - [ ] 测试面板开关（设置/应用/开关面板）
 - [ ] 测试时钟显示（秒数不闪烁）
 - [ ] 测试应用列表加载
