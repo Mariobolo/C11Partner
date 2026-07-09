@@ -329,6 +329,42 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "胎压更新: " + name);
             throttledPushCarState();
         }
+
+        @Override
+        public void onSunroofChanged(int state) {
+            Log.d("MainActivity", "天窗状态: " + (state == 3 ? "开" : "关"));
+            throttledPushCarState();
+        }
+
+        @Override
+        public void onSunshadeChanged(int state) {
+            Log.d("MainActivity", "遮阳帘状态: " + (state == 3 ? "开" : "关"));
+            throttledPushCarState();
+        }
+
+        @Override
+        public void onLowBeamLightChanged(boolean isOn) {
+            Log.d("MainActivity", "近光灯: " + (isOn ? "开" : "关"));
+            throttledPushCarState();
+        }
+
+        @Override
+        public void onBluetoothStateChanged(boolean connected) {
+            Log.d("MainActivity", "蓝牙: " + (connected ? "已连接" : "已断开"));
+            throttledPushCarState();
+        }
+
+        @Override
+        public void onScreenStateChanged(boolean on) {
+            Log.d("MainActivity", "屏幕: " + (on ? "点亮" : "熄灭"));
+            throttledPushCarState();
+        }
+
+        @Override
+        public void onAcPageChanged(boolean open) {
+            Log.d("MainActivity", "空调页面: " + (open ? "打开" : "关闭"));
+            throttledPushCarState();
+        }
     };
     
     // 工具类
@@ -440,11 +476,8 @@ public class MainActivity extends AppCompatActivity {
         if (webView != null && isLogcatServiceBound && logcatMonitorService != null) {
             LeapMotorCarState state = logcatMonitorService.getCurrentState();
             if (state != null) {
-                // 更新副屏显示
-                if (webViewBridge != null) {
-                    webViewBridge.updatePresentationCarState(state);
-                }
-                
+                // 注：副屏推送未启用，副屏逻辑（CarStatusPresentation）暂未对接
+                // 主 WebView 状态推送由下方 runOnUiThread 统一负责，避免重复推送
                 runOnUiThread(() -> {
                     try {
                         JSONObject stateJson = new JSONObject();

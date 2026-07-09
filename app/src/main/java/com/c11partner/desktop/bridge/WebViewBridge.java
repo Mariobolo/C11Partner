@@ -9,6 +9,7 @@ import com.c11partner.desktop.LeapMotorCarState;
 import com.c11partner.desktop.LogcatMonitorService;
 import com.c11partner.desktop.service.MediaSessionService;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -726,33 +727,14 @@ public class WebViewBridge extends BaseBridge {
     
     @JavascriptInterface
     public String getCarState() {
-        // 从LogcatMonitorService获取当前车辆状态，复用updatePresentationCarState的JSON构建逻辑
+        // 从LogcatMonitorService获取当前车辆状态，复用 buildPresentationStateJson() 构造逻辑
         try {
             if (mActivity != null) {
                 LogcatMonitorService service = mActivity.getLogcatMonitorService();
                 if (service != null) {
                     LeapMotorCarState state = service.getCurrentState();
                     if (state != null) {
-                        JSONObject stateJson = new JSONObject();
-                        stateJson.put("speed", state.getSpeed());
-                        stateJson.put("gear", state.getGear());
-                        stateJson.put("gearText", state.getGearText());
-                        stateJson.put("leftTurnLight", state.getLeftTurnLight());
-                        stateJson.put("rightTurnLight", state.getRightTurnLight());
-                        stateJson.put("lowBeamLight", state.getLowBeamLight());
-                        stateJson.put("lockState", state.getLockState());
-                        stateJson.put("isLocked", state.isLocked());
-                        stateJson.put("openDoorCount", state.getOpenDoorCount());
-                        stateJson.put("isAnyDoorOpen", state.isAnyDoorOpen());
-                        stateJson.put("sunroof", state.getSunroof());
-                        stateJson.put("bluetoothConnected", state.isBluetoothConnected());
-                        stateJson.put("acPageOpen", state.isAcPageOpen());
-                        stateJson.put("camera360Visible", state.isCamera360Visible());
-                        stateJson.put("frontLeftTirePressure", state.getFrontLeftTirePressure());
-                        stateJson.put("frontRightTirePressure", state.getFrontRightTirePressure());
-                        stateJson.put("rearLeftTirePressure", state.getRearLeftTirePressure());
-                        stateJson.put("rearRightTirePressure", state.getRearRightTirePressure());
-                        return stateJson.toString();
+                        return buildPresentationStateJson(state);
                     }
                 }
             }
@@ -966,13 +948,13 @@ public class WebViewBridge extends BaseBridge {
     }
     
     /**
-     * 更新车辆状态显示（MainActivity调用）
-     * 
-     * @param state 车辆状态对象
+     * 构建车辆状态JSON（精简版，用于副屏或JS主动获取）
+     * 注意：主 WebView 端的状态推送由 MainActivity.updateCarStateToFrontend() 负责
+     *       此方法仅构建 JSON，不再主动推送给前端，避免重复推送
      */
-    public void updatePresentationCarState(final LeapMotorCarState state) {
+    public static String buildPresentationStateJson(final LeapMotorCarState state) {
         if (state == null) {
-            return;
+            return "{}";
         }
         try {
             JSONObject stateJson = new JSONObject();
@@ -994,12 +976,20 @@ public class WebViewBridge extends BaseBridge {
             stateJson.put("frontRightTirePressure", state.getFrontRightTirePressure());
             stateJson.put("rearLeftTirePressure", state.getRearLeftTirePressure());
             stateJson.put("rearRightTirePressure", state.getRearRightTirePressure());
-            
-            String javascript = "javascript:window.updateCarState(" + stateJson.toString() + ")";
-            safeEvaluateJavascript(javascript);
-        } catch (Exception e) {
-            logE(TAG, "更新车辆状态失败", e);
+            return stateJson.toString();
+        } catch (JSONException e) {
+            return "{}";
         }
+    }
+
+    /**
+     * 更新车辆状态显示（MainActivity调用，保留兼容，内部为空）
+     * @deprecated 主WebView状态推送由 MainActivity.updateCarStateToFrontend() 统一负责
+     */
+    @Deprecated
+    public void updatePresentationCarState(final LeapMotorCarState state) {
+        // 不再推送给前端，避免与 MainActivity 重复推送
+        // 如需副屏推送，请使用 buildPresentationStateJson() + 副屏 Presentation 通道
     }
     
     /**

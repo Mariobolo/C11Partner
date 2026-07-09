@@ -433,6 +433,7 @@ public class LogcatMonitorService extends Service {
                 CarControlManager ccm = CarControlManager.getInstance(this);
                 ccm.updateLowBeamLightState(state == 0);
                 Log.d(TAG, "近光灯状态: " + (state == 0 ? "开" : "关"));
+                notifyLowBeamLightChanged(state == 0);
             }
         } catch (Exception e) {
             Log.e(TAG, "解析近光灯信号错误: " + e.getMessage());
@@ -486,11 +487,15 @@ public class LogcatMonitorService extends Service {
      */
     private void parseAcPageState(String line) {
         try {
+            boolean previous = carState.isAcPageOpen();
             if (line.contains("com.leapmotor.carcontrol")) {
                 carState.setAcPageOpen(true);
                 Log.d(TAG, "空调页面已打开");
             } else {
                 carState.setAcPageOpen(false);
+            }
+            if (previous != carState.isAcPageOpen()) {
+                notifyAcPageChanged(carState.isAcPageOpen());
             }
         } catch (Exception e) {
             Log.e(TAG, "解析空调页面状态错误: " + e.getMessage());
@@ -502,12 +507,16 @@ public class LogcatMonitorService extends Service {
      */
     private void parseBluetoothState(String line) {
         try {
+            boolean previous = carState.isBluetoothConnected();
             if (line.contains("connected") || line.contains("已连接")) {
                 carState.setBluetoothConnected(true);
                 Log.d(TAG, "蓝牙已连接");
             } else if (line.contains("disconnected") || line.contains("断开")) {
                 carState.setBluetoothConnected(false);
                 Log.d(TAG, "蓝牙已断开");
+            }
+            if (previous != carState.isBluetoothConnected()) {
+                notifyBluetoothStateChanged(carState.isBluetoothConnected());
             }
         } catch (Exception e) {
             Log.e(TAG, "解析蓝牙状态错误: " + e.getMessage());
@@ -519,12 +528,16 @@ public class LogcatMonitorService extends Service {
      */
     private void parseScreenState(String line) {
         try {
+            boolean previous = carState.isScreenOn();
             if (line.contains("screen on") || line.contains("点亮")) {
                 carState.setScreenOn(true);
                 Log.d(TAG, "屏幕已点亮");
             } else if (line.contains("screen off") || line.contains("熄灭")) {
                 carState.setScreenOn(false);
                 Log.d(TAG, "屏幕已熄灭");
+            }
+            if (previous != carState.isScreenOn()) {
+                notifyScreenStateChanged(carState.isScreenOn());
             }
         } catch (Exception e) {
             Log.e(TAG, "解析屏幕状态错误: " + e.getMessage());
@@ -719,6 +732,72 @@ public class LogcatMonitorService extends Service {
             public void run() {
                 for (CarStateListener listener : listeners) {
                     listener.onNeedStart360(reason);
+                }
+            }
+        });
+    }
+
+    private void notifySunroofChanged(final int state) {
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (CarStateListener listener : listeners) {
+                    listener.onSunroofChanged(state);
+                }
+            }
+        });
+    }
+
+    private void notifySunshadeChanged(final int state) {
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (CarStateListener listener : listeners) {
+                    listener.onSunshadeChanged(state);
+                }
+            }
+        });
+    }
+
+    private void notifyLowBeamLightChanged(final boolean isOn) {
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (CarStateListener listener : listeners) {
+                    listener.onLowBeamLightChanged(isOn);
+                }
+            }
+        });
+    }
+
+    private void notifyBluetoothStateChanged(final boolean connected) {
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (CarStateListener listener : listeners) {
+                    listener.onBluetoothStateChanged(connected);
+                }
+            }
+        });
+    }
+
+    private void notifyScreenStateChanged(final boolean on) {
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (CarStateListener listener : listeners) {
+                    listener.onScreenStateChanged(on);
+                }
+            }
+        });
+    }
+
+    private void notifyAcPageChanged(final boolean open) {
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (CarStateListener listener : listeners) {
+                    listener.onAcPageChanged(open);
                 }
             }
         });
