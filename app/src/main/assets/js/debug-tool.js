@@ -203,7 +203,11 @@ const DebugTool = (function() {
             ['左转向 开/关', 'adb shell log -p D -t AroundService "dealTurnLeftLight mLeftLightSts 1/0"'],
             ['车速 60km/h', 'adb shell log -p D -t C11CarXml "node_name : speed  setTextContent: 60"'],
             ['近光灯 开/关', 'adb shell log -p D -t C11CarXml "node_name : nearLight  setTextContent: 1/0"'],
-            ['蓝牙连接', 'adb shell log -p I -t BtMusicManager "bluetooth connected"']
+            ['蓝牙连接', 'adb shell log -p I -t BtMusicManager "bluetooth connected"'],
+            ['胎压 左前 245/32°C', "adb shell log -p D -t zza 'TPMSBean{pos=0, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=245, singleTireTemp=32}'"],
+            ['胎压 右前 250/35°C', "adb shell log -p D -t zza 'TPMSBean{pos=1, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=250, singleTireTemp=35}'"],
+            ['胎压 左后 248/33°C', "adb shell log -p D -t zza 'TPMSBean{pos=2, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=248, singleTireTemp=33}'"],
+            ['胎压 右后 252/34°C', "adb shell log -p D -t zza 'TPMSBean{pos=3, singleSigSts=0, singleLeakSts=0, singlePressSts=0, singleTempSts=0, singleSensorSts=0, singleTirePress=252, singleTireTemp=34}'"]
         ];
 
         let html = '<div style="margin-bottom:4px;color:#0f0;font-weight:bold;">点击复制命令到剪贴板：</div>';
