@@ -12,40 +12,37 @@
 
 | 类型 | 文件数 | 总行数 | 说明 |
 |------|--------|--------|------|
-| JS | 26 | 8,559 | 含 2 个未使用的 patch 文件 |
-| CSS | 7 | 28,568 | 7 个均在 index.html 中引入 |
+| JS | 23 | 7,247 | 全部在 index.html 中引入 |
+| CSS | 7 | 28,616 | 7 个均在 index.html 中引入 |
 | HTML | 1 | ~350 | index.html |
 
-**JS 文件明细：**
+**JS 文件明细（按行数降序）：**
 
 | 文件 | 行数 | 状态 | 说明 |
 |------|------|------|------|
-| index.js | 1,003 | ✅ 使用中 | 主入口，统一初始化（含面板控制+UI初始化） |
+| index.js | 891 | ✅ 使用中 | 主入口，统一初始化（含面板控制+UI初始化） |
 | wallpaper-manager.js | 812 | ✅ 使用中 | 壁纸管理（最大文件） |
 | widgets.js | 603 | ✅ 使用中 | Widget 管理 |
-| utils.js | 414 | ✅ 使用中 | 工具函数 |
 | quick-switch-manager.js | 422 | ✅ 使用中 | 快捷开关 |
+| utils.js | 414 | ✅ 使用中 | 工具函数 |
+| settings.js | 402 | ✅ 使用中 | 设置面板 |
 | automation-manager.js | 396 | ✅ 使用中 | 自动化场景 |
 | app-list-manager.js | 389 | ✅ 使用中 | 应用列表 |
 | app.js | 366 | ✅ 使用中 | 应用管理 |
-| settings.js | 402 | ✅ 使用中 | 设置面板 |
 | car-state-manager.js | 355 | ✅ 使用中 | 车辆状态 |
 | music.js | 337 | ✅ 使用中 | 音乐可视化 |
 | theme.js | 233 | ✅ 使用中 | 主题切换 |
-| android_interface.js | 291 | ⚠️ 待确认 | 可能未引入 |
-| gear-bridge.js | 184 | ✅ 使用中 | 档位桥接 |
 | bridge.js | 194 | ✅ 使用中 | Android 接口 |
+| gear-bridge.js | 184 | ✅ 使用中 | 档位桥接 |
 | system-music-manager.js | 179 | ✅ 使用中 | 系统音乐 |
-| settings-sync.js | 174 | ✅ 使用中 | 设置同步 |
 | storage.js | 174 | ✅ 使用中 | 本地存储 |
+| settings-sync.js | 174 | ✅ 使用中 | 设置同步 |
 | map.js | 169 | ✅ 使用中 | 地图模块 |
 | weather.js | 166 | ✅ 使用中 | 天气 |
 | toast.js | 144 | ✅ 使用中 | 提示组件 |
 | datetime.js | 143 | ✅ 使用中 | 时间日期 |
-| bootstrap.js | 52 | ✅ 使用中 | 初始化队列（已简化） |
 | async-callback-manager.js | 59 | ✅ 使用中 | 异步回调 |
-| one-click-permission-patch.js | 58 | ❌ 未引入 | 废弃 patch |
-| tasks-btn-adb-patch.js | 49 | ❌ 未引入 | 废弃 patch |
+| bootstrap.js | 41 | ✅ 使用中 | 初始化队列（已简化） |
 
 **CSS 文件明细：**
 
@@ -80,7 +77,7 @@
 | PROJECT_STATUS.md | ✅ 本文件 | 项目状态 |
 | DEVELOPMENT_GUIDE.md | ⚠️ 待更新 | 开发指南 |
 | CODE_INDEX.md | ✅ 已更新 | 代码索引（v2.1） |
-| JS_API_REFERENCE.md | ✅ 已更新 | 接口文档（v2.1） |
+| JS_API_REFERENCE.md | ✅ 已更新 | 接口文档（v2.2，返回值类型对齐） |
 | FAQ.md | ✅ 保留 | 常见问题 |
 | COMMIT_CONVENTION.md | ✅ 保留 | 提交规范 |
 | DEVICE_CONFIG.md | ✅ 保留 | 设备配置 |
@@ -113,7 +110,6 @@
 |------|--------|------|------|
 | 快捷应用加载 | 高 | ⚠️ | Android API 返回空时 fallback mock 数据 |
 | 日间模式样式 | 中 | ⚠️ | theme.css 中 body.theme-light 覆盖不完整 |
-| 废弃文件清理 | 低 | 📋 计划中 | 2 个 patch JS + 2 个未引入 CSS |
 
 ---
 
@@ -121,9 +117,9 @@
 
 | 债务类型 | 严重度 | 说明 |
 |---------|--------|------|
-| CSS 重复定义 | 中 | .widget 等选择器在多文件重复定义 |
-| android_interface.js 未引入 | 低 | 可能是旧文件，待确认是否删除 |
-| music.css 未引入 | 低 | 可能内联在 music.js 中，待确认 |
+| （已清除）前端冗余中间层 | — | 已在阶段2完成清理 |
+| （已清除）废弃文件清理 | — | 3个废弃JS文件、2个未使用CSS已在阶段2-4删除 |
+| （已清除）CSS重复定义 | — | 已在阶段4完成widgets.css清理 |
 
 ---
 
@@ -133,11 +129,11 @@
 |------|------|------|
 | 阶段1：文档整理 | 重写所有核心文档 | ✅ 已完成 |
 | 阶段2：前端清理 | 删除中间层，扁平化结构 | ✅ 已完成 |
-| 阶段3：接口对齐 | 前后端接口文档一致 | 🔄 进行中 |
-| 阶段4：CSS 清理 | 去除重复样式 | 📋 待开始 |
-| 阶段5：功能验证 | 编译安装测试 | 📋 待开始 |
+| 阶段3：接口对齐 | 前后端接口文档一致 | ✅ 已完成 |
+| 阶段4：CSS 清理 | 去除重复样式 | ✅ 已完成 |
+| 阶段5：功能验证 | 编译安装测试 | ⏳ 待执行（需设备连接） |
 
 ---
 
-**文档版本**：v2.1
+**文档版本**：v2.2
 **最后更新**：2026-07-09
