@@ -27,9 +27,11 @@ import android.speech.tts.TextToSpeech;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+import com.tencent.smtt.export.external.interfaces.ConsoleMessage;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.os.Handler;
@@ -685,6 +687,17 @@ public class MainActivity extends AppCompatActivity {
                         webViewBridge.initializeAcStatus("{}");
                     }
                 }
+            }
+        });
+
+        // 设置WebChromeClient：转发JS console.log到logcat，TAG=WebConsole
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                Log.d("WebConsole", consoleMessage.message()
+                        + " -- line " + consoleMessage.lineNumber()
+                        + " of " + consoleMessage.sourceId());
+                return true;
             }
         });
 
