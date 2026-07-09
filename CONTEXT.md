@@ -89,33 +89,33 @@
            → quick-switch-manager.js → index.js
 ```
 
-#### 关键 JS 文件
+#### 关键 JS 文件（按行数降序）
 
 | 文件 | 行数(约) | 职责 | window 挂载 |
 |------|----------|------|------------|
-| utils.js | 414 | 通用工具函数 | — |
-| storage.js | 174 | localStorage 封装 | — |
-| bridge.js | 194 | Android 接口代理 | `Android` 对象 |
-| bootstrap.js | 52 | 初始化队列（已简化） | `AppBootstrap` |
-| settings-sync.js | 174 | 设置项读写 | `SettingsSync` |
-| app-list-manager.js | 389 | 应用面板管理 | `AppListManager` |
-| theme.js | 233 | 日夜模式切换 | — |
+| index.js | 891 | 主入口，统一初始化（含面板控制+UI初始化） | — |
+| wallpaper-manager.js | 812 | 壁纸切换/轮播 | `WallpaperManager` + `WallpaperSwipeManager` |
 | widgets.js | 603 | Widget 管理 | — |
-| music.js | 337 | 频谱可视化 | — |
+| quick-switch-manager.js | 422 | 开关面板 | `QuickSwitchManager` |
+| utils.js | 414 | 通用工具函数 | — |
 | settings.js | 402 | 设置面板逻辑 | — |
+| automation-manager.js | 396 | 场景配置 | `AutomationManager` |
+| app-list-manager.js | 389 | 应用面板管理 | `AppListManager` |
 | app.js | 366 | 应用管理逻辑 | — |
+| car-state-manager.js | 355 | 状态栏更新 | `updateCarState()` |
+| music.js | 337 | 频谱可视化 | — |
+| theme.js | 233 | 日夜模式切换 | — |
+| bridge.js | 194 | Android 接口代理 | `Android` 对象 |
+| gear-bridge.js | 184 | 档位前后端桥接 | — |
+| system-music-manager.js | 179 | 音乐信息显示 | — |
+| storage.js | 174 | localStorage 封装 | — |
+| settings-sync.js | 174 | 设置项读写 | `SettingsSync` |
+| map.js | 169 | 地图模块 | — |
+| weather.js | 166 | 天气数据获取 | — |
 | toast.js | 144 | 提示组件 | — |
 | datetime.js | 143 | 时间日期 | — |
-| wallpaper-manager.js | 812 | 壁纸切换/轮播 | `WallpaperManager` + `WallpaperSwipeManager` |
-| weather.js | 166 | 天气数据获取 | — |
-| map.js | 169 | 地图模块 | — |
 | async-callback-manager.js | 59 | 回调统一管理 | — |
-| system-music-manager.js | 179 | 音乐信息显示 | — |
-| car-state-manager.js | 355 | 状态栏更新 | `updateCarState()` |
-| gear-bridge.js | 184 | 档位前后端桥接 | — |
-| automation-manager.js | 396 | 场景配置 | `AutomationManager` |
-| quick-switch-manager.js | 422 | 开关面板 | `QuickSwitchManager` |
-| index.js | 1003 | 主入口，统一初始化（含面板控制+UI初始化） | — |
+| bootstrap.js | 41 | 初始化队列（已简化） | `AppBootstrap` |
 
 #### CSS 文件（按加载顺序）
 
@@ -274,22 +274,23 @@ LogcatMonitorService (后台服务，持续读取日志)
 
 - 删除 panel-controller.js（106行），6个面板控制函数合并到 index.js
 - 删除 ui-initializer.js（472行），17个UI初始化函数合并到 index.js
-- 简化 bootstrap.js（91行→52行），移除冗余 state/debounce/throttle/addDebouncedClick
+- 简化 bootstrap.js（91行→41行），移除冗余 state/debounce/throttle/addDebouncedClick
 - 清理 index.js 冗余适配层（删除15个转发函数，改为直接调用模块方法）
 - debounce/throttle 统一使用 utils.js 的全局函数
+- 删除3个废弃JS文件：one-click-permission-patch.js、tasks-btn-adb-patch.js、android_interface.js
 
 ### 阶段3：接口对齐（2026-07-09 完成）
 
-- JS_API_REFERENCE.md v2.1：修复返回值类型（void→boolean）、补充缺失方法（getCarState/toggleAC/setCameraOverspeedLimit等）、修正参数签名、新增副屏接口章节
+- JS_API_REFERENCE.md v2.2：修复返回值类型（void→boolean）、补充缺失方法（getCarState/toggleAC/setCameraOverspeedLimit等）、修正参数签名、新增副屏接口章节
 - CODE_INDEX.md v2.1：移除已删除的 panel-controller.js 和 ui-initializer.js、更新文件行数、补充缺失接口、修正返回值类型
-- PROJECT_STATUS.md v2.1：更新代码统计（JS 26文件→8,559行）、移除过期文档标记、更新待修复问题和技术债务列表
+- PROJECT_STATUS.md v2.2：更新代码统计（JS 23文件/7,247行）、移除过期文档标记、更新待修复问题和技术债务列表
 
-### 阶段4：CSS 清理（2026-07-09 部分完成）
+### 阶段4：CSS 清理（2026-07-09 完成）
 
 - 删除 main.css（26行）：@import 入口文件，index.html 已直接引入各CSS
 - 删除 music.css（768行）：未在 index.html 引入，JS 无特有类名引用，widgets.css 已有完整音乐组件样式
+- 清理 widgets.css 重复样式选择器：修复 .widget、.quick-app-item、.music-widget、.weather-widget 伪元素冲突（`display: none` 阻止悬停效果），删除冗余重复定义和破碎代码
 - 验证 !important：仅 base.css 中有 35 处（特效等级+触摸优化），符合规范
-- 剩余：widgets.css 中重复样式选择器待清理
 
 ### 之前的 Bug 修复
 
@@ -308,12 +309,12 @@ LogcatMonitorService (后台服务，持续读取日志)
 - （已清除）前端冗余中间层已在阶段2完成清理
 
 ### 中优先级
-- 废弃 patch 文件未删除（one-click-permission-patch.js, tasks-btn-adb-patch.js）
-- android_interface.js（291行）可能未使用，待确认
-- widgets.css 中存在重复样式选择器，需清理
+- （已清除）废弃 patch 文件已删除
+- （已清除）android_interface.js 已确认未使用并删除
+- （已清除）widgets.css 重复样式选择器已在阶段4清理
 
 ### 低优先级
-- （已完成）PROJECT_STATUS.md 和 CODE_INDEX.md 已在阶段3更新
+- （已完成）PROJECT_STATUS.md 和 CODE_INDEX.md 已更新到 v2.2
 
 ---
 
