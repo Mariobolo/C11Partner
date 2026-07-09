@@ -43,4 +43,10 @@ public interface CarStateListener {
      * @param reason 触发原因
      */
     void onNeedStart360(String reason);
+
+    /**
+     * 胎压变化回调（仅通知，需调用 getCurrentState 获取完整数据）
+     * @param pos 轮胎位置 0=左前,1=右前,2=左后,3=右后
+     */
+    void onTirePressureChanged(int pos);
 }

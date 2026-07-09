@@ -321,6 +321,14 @@ public class MainActivity extends AppCompatActivity {
             Log.i("MainActivity", "触发360全景: " + reason);
             LeapMotorCamera360.startCamera360(MainActivity.this, reason);
         }
+
+        @Override
+        public void onTirePressureChanged(int pos) {
+            String[] names = {"左前", "右前", "左后", "右后"};
+            String name = (pos >= 0 && pos < 4) ? names[pos] : ("位置" + pos);
+            Log.d("MainActivity", "胎压更新: " + name);
+            throttledPushCarState();
+        }
     };
     
     // 工具类

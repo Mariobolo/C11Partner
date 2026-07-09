@@ -573,6 +573,7 @@ public class LogcatMonitorService extends Service {
                         break;
                 }
                 Log.d(TAG, String.format("胎压更新 pos=%d pressure=%dkPa temp=%dC", pos, pressure, temp));
+                notifyTirePressureChanged(pos);
             }
         } catch (Exception e) {
             Log.e(TAG, "解析胎压信号错误: " + e.getMessage());
@@ -654,6 +655,17 @@ public class LogcatMonitorService extends Service {
                 // 通知监听器
                 for (CarStateListener listener : listeners) {
                     listener.onTurnLightChanged(isLeft, state);
+                }
+            }
+        });
+    }
+
+    private void notifyTirePressureChanged(final int pos) {
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (CarStateListener listener : listeners) {
+                    listener.onTirePressureChanged(pos);
                 }
             }
         });
