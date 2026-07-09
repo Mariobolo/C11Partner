@@ -34,18 +34,20 @@ const DebugTool = (function() {
     let lastStateStr = '';
 
     /**
-     * 是否启用调试模式
+     * 是否启用调试模式（默认启用，仅控制面板是否响应点击）
+     * 发行版可通过 localStorage.debug_mode = 'false' 关闭
      */
     function isDebugMode() {
         try {
-            return localStorage.getItem('debug_mode') === 'true';
+            const v = localStorage.getItem('debug_mode');
+            return v !== 'false'; // 默认启用
         } catch (e) {
-            return false;
+            return true;
         }
     }
 
     /**
-     * 初始化：检查开关，绑定档位图标点击
+     * 初始化：绑定档位图标点击
      */
     function init() {
         if (!isDebugMode()) return;

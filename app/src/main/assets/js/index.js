@@ -998,3 +998,27 @@ safeInit('initNavigationButtons', initNavigationButtons);
 safeInit('initEffectLevel', function() { if (window.SettingsSync) SettingsSync.initEffectLevel(); });
 safeInit('initThemeMode', function() { if (window.SettingsSync) SettingsSync.initThemeMode(); });
 safeInit('initThemeToggleIcon', function() { if (window.SettingsSync) SettingsSync.initThemeToggleIcon(); });
+
+/**
+ * 后端回调：注册时间更新监听
+ * 时间更新由 datetime.js 独立处理（每秒 HH:mm:ss），此处保留空实现避免后端调用报错
+ */
+function registerTimeUpdateListener() {
+    console.log('[index.js] registerTimeUpdateListener 已调用，时间更新由 datetime.js 处理');
+}
+
+/**
+ * 后端回调：更新时间显示
+ * datetime.js 已每秒自动更新，此处接收后端推送的时间（可选）
+ */
+window.updateTimeDisplay = function(time, date, lunarDate) {
+    // datetime.js 已独立处理时间显示，此处保留避免后端调用报错
+};
+
+/**
+ * 后端回调：初始化空调状态
+ * 接收后端推送的空调信息JSON，目前无前端处理逻辑，保留避免后端调用报错
+ */
+window.initializeAcStatus = function(acInfo) {
+    console.log('[index.js] initializeAcStatus 已调用，空调信息：' + JSON.stringify(acInfo));
+};
