@@ -16,74 +16,75 @@
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `setLowBeamLight(on)` | `boolean` | void | 近光灯开关 |
+| `setLowBeamLight(on)` | `boolean` | `boolean` | 近光灯开关 |
 | `isLowBeamLightOn()` | — | `boolean` | 查询近光灯 |
-| `setRearFogLight(on)` | `boolean` | void | 后雾灯开关 |
+| `setRearFogLight(on)` | `boolean` | `boolean` | 后雾灯开关 |
 | `isRearFogLightOn()` | — | `boolean` | 查询后雾灯 |
-| `setPositionLight(on)` | `boolean` | void | 示廓灯开关 |
+| `setPositionLight(on)` | `boolean` | `boolean` | 示廓灯开关 |
 | `isPositionLightOn()` | — | `boolean` | 查询示廓灯 |
-| `setPedestrianAlert(on)` | `boolean` | void | 行人警示音开关 |
+| `setPedestrianAlert(on)` | `boolean` | `boolean` | 行人警示音开关 |
 | `isPedestrianAlertOn()` | — | `boolean` | 查询行人警示 |
 
 ### 1.2 驾驶模式
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `setDriveMode(mode)` | `int(0-5)` | void | 0=经济 1=舒适 2=运动 3=雪地 4=泥地 5=沙地 |
-| `setGuardMode(on)` | `boolean` | void | 守护模式 |
-| `setRestMode(on)` | `boolean` | void | 小憩模式 |
-| `setCampingMode(on)` | `boolean` | void | 露营模式 |
-| `setPowerSaveMode(on)` | `boolean` | void | 省电模式 |
-| `setSentinelMode(on)` | `boolean` | void | 哨兵模式 |
+| `setDriveMode(mode)` | `int(0-5)` | `boolean` | 0=经济 1=舒适 2=运动 3=雪地 4=泥地 5=沙地 |
+| `setGuardMode(on)` | `boolean` | `boolean` | 守护模式 |
+| `setRestMode(on)` | `boolean` | `boolean` | 小憩模式 |
+| `setCampingMode(on)` | `boolean` | `boolean` | 露营模式 |
+| `setPowerSaveMode(on)` | `boolean` | `boolean` | 省电模式 |
+| `setSentinelMode(on)` | `boolean` | `boolean` | 哨兵模式 |
 
 ### 1.3 空调控制
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `setAcEnabled(on)` | `boolean` | void | 空调开关 |
+| `setAcEnabled(on)` | `boolean` | `boolean` | 空调开关 |
 | `isAcEnabled()` | — | `boolean` | 查询空调状态 |
-| `setWindLevel(level)` | `int(1-7)` | void | 风量等级 |
+| `setWindLevel(level)` | `int(1-7)` | `boolean` | 风量等级 |
 | `getWindLevel()` | — | `int` | 获取风量 |
-| `setDriverTemp(temp)` | `int(16-30)` | void | 主驾温度（摄氏度） |
+| `setDriverTemp(temp)` | `int(16-30)` | `boolean` | 主驾温度（摄氏度） |
 | `getDriverTemp()` | — | `int` | 获取主驾温度 |
-| `setPassengerTemp(temp)` | `int(16-30)` | void | 副驾温度 |
+| `setPassengerTemp(temp)` | `int(16-30)` | `boolean` | 副驾温度 |
 | `getPassengerTemp()` | — | `int` | 获取副驾温度 |
-| `toggleAirConditioning()` | — | void | 切换空调 |
-| `toggleDefrost()` | — | void | 切换除霜 |
-| `toggleMute()` | — | void | 切换静音 |
-| `increaseTemperature()` | — | void | 温度+1 |
-| `decreaseTemperature()` | — | void | 温度-1 |
-| `increaseWindSpeed()` | — | void | 风量+1 |
-| `decreaseWindSpeed()` | — | void | 风量-1 |
+| `toggleAirConditioning()` | — | `boolean` | 切换空调 |
+| `toggleDefrost()` | — | `boolean` | 切换除霜 |
+| `toggleMute()` | — | `boolean` | 切换静音 |
+| `increaseTemperature()` | — | `boolean` | 温度+1 |
+| `decreaseTemperature()` | — | `boolean` | 温度-1 |
+| `increaseWindSpeed()` | — | `boolean` | 风量+1 |
+| `decreaseWindSpeed()` | — | `boolean` | 风量-1 |
 | `getAcInfo()` | — | `String(JSON)` | 空调信息（风量/温度/开关等） |
-| `setMaxCooling(on)` | `boolean` | void | 极速制冷 |
+| `setMaxCooling(on)` | `boolean` | `boolean` | 极速制冷 |
 | `isMaxCoolingOn()` | — | `boolean` | 查询极速制冷 |
+| `toggleAC()` | — | `boolean` | 切换空调（toggleAirConditioning别名） |
 
 ### 1.4 座椅控制
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `setDriverSeatHeating(level)` | `int(0-3)` | void | 0=关 1-3=加热等级 |
-| `setPassengerSeatHeating(level)` | `int(0-3)` | void | 副驾座椅加热 |
-| `setDriverSeatVentilation(level)` | `int(0-3)` | void | 主驾座椅通风 |
-| `setPassengerSeatVentilation(level)` | `int(0-3)` | void | 副驾座椅通风 |
-| `setSteeringWheelHeating(on)` | `boolean` | void | 方向盘加热 |
+| `setDriverSeatHeating(level)` | `int(0-3)` | `boolean` | 0=关 1-3=加热等级 |
+| `setPassengerSeatHeating(level)` | `int(0-3)` | `boolean` | 副驾座椅加热 |
+| `setDriverSeatVentilation(level)` | `int(0-3)` | `boolean` | 主驾座椅通风 |
+| `setPassengerSeatVentilation(level)` | `int(0-3)` | `boolean` | 副驾座椅通风 |
+| `setSteeringWheelHeating(on)` | `boolean` | `boolean` | 方向盘加热 |
 
 ### 1.5 后视镜控制
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `foldMirrors()` | — | void | 折叠后视镜 |
-| `unfoldMirrors()` | — | void | 展开后视镜 |
-| `setMirrorHeating(on)` | `boolean` | void | 后视镜加热 |
+| `foldMirrors()` | — | `boolean` | 折叠后视镜 |
+| `unfoldMirrors()` | — | `boolean` | 展开后视镜 |
+| `setMirrorHeating(on)` | `boolean` | `boolean` | 后视镜加热 |
 
 ### 1.6 音量控制
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `setCallVolume(v)` | `int(0-15)` | void | 蓝牙电话音量 |
+| `setCallVolume(v)` | `int(0-15)` | `boolean` | 蓝牙电话音量 |
 | `getCallVolume()` | — | `int` | 获取电话音量 |
-| `setNaviVolume(v)` | `int(0-15)` | void | 导航音量 |
+| `setNaviVolume(v)` | `int(0-15)` | `boolean` | 导航音量 |
 | `getNaviVolume()` | — | `int` | 获取导航音量 |
 | `setMusicVolume(v)` | `int(0-15)` | void | 媒体音量 |
 | `getMusicVolume()` | — | `int` | 获取媒体音量 |
@@ -94,33 +95,44 @@
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `setAmbientLightEnabled(on)` | `boolean` | void | 氛围灯开关 |
+| `setAmbientLightEnabled(on)` | `boolean` | `boolean` | 氛围灯开关 |
 | `isAmbientLightEnabled()` | — | `boolean` | 查询氛围灯 |
-| `setAmbientLightColor(color)` | `int(0-16)` | void | 氛围灯颜色 |
+| `setAmbientLightColor(color)` | `int(0-16)` | `boolean` | 氛围灯颜色 |
 | `getAmbientLightColor()` | — | `int` | 获取氛围灯颜色 |
-| `setNightMode(on)` | `boolean` | void | 夜间模式开关 |
+| `setNightMode(on)` | `boolean` | `boolean` | 夜间模式开关 |
 | `isNightModeOn()` | — | `boolean` | 查询夜间模式 |
 
-### 1.8 其他车控
+### 1.8 360全景
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `startCamera360()` | — | void | 启动360全景 |
-| `setCameraOverspeedLimit(on)` | `boolean` | void | 360超速限制 |
+| `startCamera360()` | — | `boolean` | 启动360全景 |
+| `setCameraOverspeedLimit(on)` | `boolean` | `boolean` | 360超速限制 |
 | `isCameraOverspeedLimitEnabled()` | — | `boolean` | 查询超速限制 |
-| `setWifiEnabled(on)` | `boolean` | void | WiFi开关 |
+
+### 1.9 网络与连接
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setWifiEnabled(on)` | `boolean` | `boolean` | WiFi开关 |
 | `isWifiEnabled()` | — | `boolean` | 查询WiFi |
-| `setBluetoothEnabled(on)` | `boolean` | void | 蓝牙开关 |
+| `setBluetoothEnabled(on)` | `boolean` | `boolean` | 蓝牙开关 |
 | `isBluetoothEnabled()` | — | `boolean` | 查询蓝牙 |
-| `setVideoWhileDriving(on)` | `boolean` | void | 行驶中视频 |
+
+### 1.10 其他车控
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `setVideoWhileDriving(on)` | `boolean` | `boolean` | 行驶中视频 |
 | `isVideoWhileDrivingEnabled()` | — | `boolean` | 查询行驶视频 |
-| `setSecondaryScreenEnabled(on)` | `boolean` | void | 副屏开关 |
+| `setSecondaryScreenEnabled(on)` | `boolean` | `boolean` | 副屏开关 |
 | `isSecondaryScreenEnabled()` | — | `boolean` | 查询副屏 |
-| `setSpeechEnabled(on)` | `boolean` | void | 语音播报开关 |
+| `setSpeechEnabled(on)` | `boolean` | `boolean` | 语音播报开关 |
 | `isSpeechEnabled()` | — | `boolean` | 查询语音播报 |
-| `sendVoiceCommand(cmd)` | `String` | void | 发送语音指令 |
+| `sendVoiceCommand(cmd)` | `String` | `boolean` | 发送语音指令 |
 | `isVehicleLocked()` | — | `boolean` | 查询锁车状态 |
 | `isScreenOn()` | — | `boolean` | 查询屏幕状态 |
+| `getCarState()` | — | `String(JSON)` | 获取车辆状态（档位/车速/胎压等） |
 
 ---
 
@@ -140,12 +152,12 @@
 | `launchApp(pkg)` | `String` | void | 启动应用 |
 | `openAppInfo(pkg)` | `String` | void | 打开应用信息页 |
 | `getQuickAppList()` | — | `String(JSON)` | 快捷应用列表 |
-| `addQuickApp(pkg)` | `String` | void | 添加快捷应用 |
+| `addQuickApp(name, pkg, iconBase64)` | `String, String, String` | void | 添加快捷应用 |
 | `removeQuickApp(pkg)` | `String` | void | 移除快捷应用 |
 | `isQuickApp(pkg)` | `String` | `boolean` | 是否快捷应用 |
-| `saveConfigApp(key, val)` | `String, String` | void | 保存配置应用 |
+| `saveConfigApp(buttonId, appName, pkg, icon)` | `String, String, String, String` | void | 保存配置应用 |
 | `getConfigApp(key)` | `String` | `String` | 获取配置应用 |
-| `getAppListAsync()` | — | void | 异步获取（通过回调） |
+| `getAppListAsync(callbackId)` | `String` | void | 异步获取（通过回调） |
 
 **getAppList() 返回 JSON 格式：**
 ```json
@@ -171,7 +183,7 @@
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
 | `getWallpaperSettings()` | — | `String(JSON)` | 获取壁纸设置 |
-| `getWallpaperSettingsAsync()` | — | void | 异步获取 |
+| `getWallpaperSettingsAsync(callbackId)` | `String` | void | 异步获取 |
 | `getWallpaperSettingsV2()` | — | `String(JSON)` | V2版设置 |
 | `setWallpaperType(type)` | `int` | void | 1=必应 2=本地图片 3=本地视频 5=iframe |
 | `setWallpaperPath(path)` | `String` | void | 壁纸路径 |
@@ -181,7 +193,7 @@
 | `getCurrentWallpaperUrl()` | — | `String` | 当前壁纸URL |
 | `getNextWallpaperUrl()` | — | `String` | 下一张URL |
 | `refreshBingWallpaper()` | — | void | 刷新必应壁纸 |
-| `deleteCurrentWallpaper()` | — | void | 删除当前壁纸 |
+| `deleteCurrentWallpaper()` | — | `boolean` | 删除当前壁纸 |
 | `pauseWallpaperCarousel()` | — | void | 暂停轮播 |
 | `resumeWallpaperCarousel()` | — | void | 恢复轮播 |
 
@@ -190,9 +202,9 @@
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
 | `getRandomWallpaper()` | — | `String` | 随机壁纸URL |
-| `getRandomWallpaperAsync()` | — | void | 异步获取URL |
+| `getRandomWallpaperAsync(callbackId)` | `String` | void | 异步获取URL |
 | `getRandomWallpaperBase64()` | — | `String` | 随机壁纸Base64 |
-| `getRandomWallpaperBase64Async()` | — | void | 异步获取Base64 |
+| `getRandomWallpaperBase64Async(callbackId)` | `String` | void | 异步获取Base64 |
 
 ### 3.3 壁纸分类
 
@@ -200,18 +212,18 @@
 |------|------|--------|------|
 | `updateWallpaperCategories()` | — | void | 更新分类（从网络） |
 | `updateCategoryEnabled(name, on)` | `String, boolean` | void | 启用/禁用分类 |
-| `updateCategoryEnabledAsync(name, on)` | `String, boolean` | void | 异步更新 |
+| `updateCategoryEnabledAsync(name, on, callbackId)` | `String, boolean, String` | void | 异步更新 |
 | `getEnabledCategories()` | — | `String(JSON)` | 已启用分类 |
-| `getEnabledCategoriesAsync()` | — | void | 异步获取 |
+| `getEnabledCategoriesAsync(callbackId)` | `String` | void | 异步获取 |
 
 ### 3.4 壁纸设置同步
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `saveWallpaperCarouselSetting(on)` | `boolean` | void | 保存轮播设置 |
-| `saveWallpaperCarouselSettingAsync(on)` | `boolean` | void | 异步保存 |
-| `saveWallpaperSwitchInterval(sec)` | `int` | void | 保存切换间隔 |
-| `saveWallpaperSwitchIntervalAsync(sec)` | `int` | void | 异步保存 |
+| `saveWallpaperCarouselSetting(on)` | `boolean` | `boolean` | 保存轮播设置 |
+| `saveWallpaperCarouselSettingAsync(on, callbackId)` | `boolean, String` | void | 异步保存 |
+| `saveWallpaperSwitchInterval(sec)` | `int` | `boolean` | 保存切换间隔 |
+| `saveWallpaperSwitchIntervalAsync(sec, callbackId)` | `int, String` | void | 异步保存 |
 | `sendWallpaperSettingsChangedBroadcast()` | — | void | 发送设置变更广播 |
 
 ---
@@ -227,7 +239,7 @@
 | `playPauseMusic()` | — | void | 播放/暂停 |
 | `nextMusic()` | — | void | 下一首 |
 | `prevMusic()` | — | void | 上一首 |
-| `seekTo(pos)` | `int(ms)` | void | 跳转到位置 |
+| `seekTo(pos)` | `long(ms)` | void | 跳转到位置 |
 | `setPlaybackSpeed(speed)` | `float` | void | 播放速度 |
 
 ### 4.2 状态查询
@@ -284,11 +296,11 @@
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `setScreenBrightness(v)` | `int(0-255)` | void | 屏幕亮度 |
+| `setScreenBrightness(v)` | `int(0-255)` | `boolean` | 屏幕亮度 |
 | `getScreenBrightness()` | — | `int` | 获取亮度 |
-| `setAutoBrightness(on)` | `boolean` | void | 自动亮度 |
+| `setAutoBrightness(on)` | `boolean` | `boolean` | 自动亮度 |
 | `isAutoBrightnessEnabled()` | — | `boolean` | 查询自动亮度 |
-| `setScreenTimeout(sec)` | `int` | void | 屏幕超时 |
+| `setScreenTimeout(sec)` | `int` | `boolean` | 屏幕超时 |
 | `getScreenTimeout()` | — | `int` | 获取超时 |
 
 ### 5.3 系统信息
@@ -314,7 +326,7 @@
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `saveComponentConfig(id, enabled)` | `String, boolean` | void | 保存组件配置 |
+| `saveComponentConfig(id, enabled)` | `String, boolean` | `boolean` | 保存组件配置 |
 | `isComponentEnabled(id)` | `String` | `boolean` | 查询组件 |
 | `getAllComponentConfigs()` | — | `String(JSON)` | 所有配置 |
 
@@ -322,10 +334,11 @@
 
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
-| `saveSystemLauncherSetting(on)` | `boolean` | void | 原桌面自启 |
-| `saveBootGreetingSetting(on)` | `boolean` | void | 开机问候语 |
-| `saveRandomModeSetting(on)` | `boolean` | void | 随机模式 |
-| `saveSpecifiedModeSetting(mode)` | `String` | void | 指定模式 |
+| `saveSystemLauncherSetting(on)` | `boolean` | `boolean` | 原桌面自启 |
+| `saveSystemLauncherSettingAsync(on, callbackId)` | `boolean, String` | void | 异步保存 |
+| `saveBootGreetingSetting(on)` | `boolean` | `boolean` | 开机问候语 |
+| `saveRandomModeSetting(on)` | `boolean` | `boolean` | 随机模式 |
+| `saveSpecifiedModeSetting(enabled)` | `boolean` | `boolean` | 指定模式 |
 
 ---
 
@@ -342,7 +355,9 @@
 | `openRecentTasks()` | — | void | 打开最近任务 |
 | `openRecents()` | — | void | 同上（别名） |
 | `enableAdbDebugging()` | — | void | 启用ADB调试 |
-| `executeAdbCommand(cmd)` | `String` | `String` | 执行ADB命令 |
+| `executeAdbCommand(cmd)` | `String` | void | 执行ADB命令 |
+| `setDefaultDesktop()` | — | void | 设置默认桌面（别名） |
+| `openRecentsViaAdb()` | — | void | 通过ADB打开最近任务 |
 
 ---
 
@@ -351,8 +366,8 @@
 | 方法 | 参数 | 返回值 | 说明 |
 |------|------|--------|------|
 | `getAutomationSettings()` | — | `String(JSON)` | 获取所有自动化场景配置 |
-| `setAutomationSettings(json)` | `String(JSON)` | void | 保存配置 |
-| `setAutomationScenarioEnabled(id, enabled)` | `String, boolean` | void | 启用/禁用场景 |
+| `setAutomationSettings(json)` | `String(JSON)` | `boolean` | 保存配置 |
+| `setAutomationScenarioEnabled(id, enabled)` | `String, boolean` | `boolean` | 启用/禁用场景 |
 
 **getAutomationSettings() 返回 JSON 格式：**
 ```json
@@ -379,7 +394,17 @@
 
 ---
 
-## 九、Java → JS 回调
+## 九、副屏接口（Stub）
+
+| 方法 | 参数 | 返回值 | 说明 |
+|------|------|--------|------|
+| `isPresentationShowing()` | — | `boolean` | 是否显示副屏 |
+| `hidePresentation()` | — | void | 隐藏副屏 |
+| `showCarStatusPresentation()` | — | `boolean` | 显示车辆状态副屏 |
+
+---
+
+## 十、Java → JS 回调
 
 > Java 通过 `webView.evaluateJavascript()` 调用前端全局函数
 
@@ -389,24 +414,37 @@
 | `window.updateMusicStatus(json)` | JSON字符串 | 音乐状态变化时 |
 | `window.updateMusicVisualization(data)` | float数组 | 音乐频谱数据（每帧） |
 | `window.AutomationManager.trigger(id)` | 场景ID | 自动化场景触发时 |
+| `window.updateTimeDisplay(time, date, lunarDate)` | String, String, String | 时间更新 |
+| `window.initializeAcStatus(json)` | JSON字符串 | 空调状态初始化 |
+| `window.handleWallpaperUpdateNotification()` | — | 壁纸更新通知 |
 
 **updateCarState() 参数 JSON 格式：**
 ```json
 {
+  "speed": 35,
   "gear": "D",
+  "gearText": "D",
   "leftTurnLight": 0,
   "rightTurnLight": 1,
-  "frontLeftDoor": 0,
-  "frontRightDoor": 0,
-  "speed": 35,
+  "lowBeamLight": 0,
   "lockState": 1,
-  "lowBeamLight": 0
+  "isLocked": true,
+  "openDoorCount": 0,
+  "isAnyDoorOpen": false,
+  "sunroof": 0,
+  "bluetoothConnected": true,
+  "acPageOpen": false,
+  "camera360Visible": false,
+  "frontLeftTirePressure": 2.4,
+  "frontRightTirePressure": 2.4,
+  "rearLeftTirePressure": 2.4,
+  "rearRightTirePressure": 2.4
 }
 ```
 
 ---
 
-## 十、废弃接口
+## 十一、废弃接口
 
 | 方法 | 替代方法 | 说明 |
 |------|---------|------|
@@ -420,5 +458,5 @@
 
 ---
 
-**文档版本**：v2.0
+**文档版本**：v2.1
 **最后更新**：2026-07-09
