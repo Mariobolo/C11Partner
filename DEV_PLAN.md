@@ -115,18 +115,30 @@
   - ✅ 安装到模拟器成功（emulator-5556，2026-07-09 16:05）
   - ✅ 修复 CSS 图片路径（widgets.css 中 nav_car.png/nav_map_go_home.png）
   - ✅ 重新安装验证通过（BUILD SUCCESSFUL，adb install -r，2026-07-09 16:08）
+- [x] 前端静态检查（2026-07-13）
+  - ✅ JS 引入与实际文件完全一致（24个文件）
+  - ✅ 无已删除文件残留引用
+  - ✅ !important 仅 base.css 中使用（35处），widgets.css 仅注释
+  - ✅ 面板控制规范正确（active+display配合）
+  - ✅ 模块 window 挂载正常
+- [x] 修复日间模式样式不完整（2026-07-13，commit 2b6c1c3）
+  - ✅ 添加 modal/tab-navigation/tab-button/setting-item 面板覆盖
+  - ✅ 添加 apps-modal-header/apps-search-bar/search-input 覆盖
+  - ✅ 添加 quick-switch-panel/switch-item 覆盖
+  - ✅ 添加 wallpaper-type-item/app-tab 分类标签覆盖
 - [ ] 测试面板开关（设置/应用/开关面板）
 - [ ] 测试时钟显示（秒数不闪烁）
 - [ ] 测试应用列表加载
 - [ ] 测试快捷开关功能
 - [ ] 测试壁纸切换
 - [ ] 测试车控功能
+- [ ] 测试日间模式显示效果
 
 ---
 
 ## 其他待办（低优先级）
 
-- [x] 删除废弃 patch 文件（one-click-permission-patch.js, tasks-btn-adb-patch.js）✅ 已完成（2026-07-09）
+- [x] 删除废弃 patch 文件（one-click-permissions-patch.js, tasks-btn-adb-patch.js）✅ 已完成（2026-07-09）
 - [x] 确认 android_interface.js（291行）是否使用，未使用则删除 ✅ 已完成（2026-07-09，未被 index.html 引入）
 - [x] 更新 PROJECT_STATUS.md 反映阶段2-4完成后的代码统计 ✅ 已完成（2026-07-09，v2.2）
 
@@ -134,47 +146,35 @@
 
 ## 交接信息
 
-### 当前交接（2026-07-09 16:05）
+### 当前交接（2026-07-13）
 
 **正在执行**：阶段5 - 功能验证（进行中）
 
 **已完成**：
 - ✅ 阶段1文档整理全部完成
 - ✅ 阶段2前端清理全部完成
-  - 步骤2.1：删除 panel-controller.js（106行），6个函数已合并到 index.js
-  - 步骤2.2：删除 ui-initializer.js（472行），17个函数已合并到 index.js
-  - 步骤2.3：简化 bootstrap.js（91行→41行），移除冗余 state/debounce/throttle/addDebouncedClick
-  - 步骤2.4：清理 index.js 冗余适配层（删除15个转发函数，改为直接调用模块方法）
-  - 步骤2.5：编译验证通过，静态检查无残留引用
 - ✅ 阶段3接口对齐全部完成
 - ✅ 阶段4 CSS清理全部完成
-- ✅ 阶段5 步骤1：编译安装验证
-  - 编译通过（BUILD SUCCESSFUL）
-  - 安装到模拟器成功（emulator-5556）
-  - 修复 widgets.css 中2处图片路径错误（nav_car.png/nav_map_go_home.png）
-  - 应用启动正常，无JS错误
-  - 关键模块初始化成功：壁纸滑动、车辆状态、自动化场景、应用列表、音乐状态
+- ✅ 阶段5 编译安装验证（BUILD SUCCESSFUL）
+- ✅ 阶段5 前端静态检查（6项全部通过，2026-07-13）
+- ✅ 阶段5 修复日间模式样式不完整（theme.css +163行，commit 2b6c1c3，2026-07-13）
 
 **下一步具体操作**：
-1. 在模拟器/车机上人工测试：
+1. 连接设备（模拟器或真机），安装 APK 后人工测试：
    - 测试面板开关（设置/应用/开关面板）
    - 测试时钟显示（秒数不闪烁）
    - 测试应用列表加载
    - 测试快捷开关功能
    - 测试壁纸切换
    - 测试车控功能
+   - 测试日间模式显示效果
 
 **注意事项**：
-- 阶段2共删除2个文件（panel-controller.js、ui-initializer.js），精简 bootstrap.js 50行，清理 index.js 适配层约112行
-- index.js 内部现在直接调用 SettingsSync.xxx 和 AppListManager.xxx，不再有中间适配层
-- debounce/throttle 统一使用 utils.js 的 window.debounce / window.throttle
-- 阶段4共删除2个CSS文件（main.css、music.css），清理 widgets.css 重复定义，共减少约800行
-- CSS文件从9个减少到7个：theme.css, base.css, animations.css, components.css, widgets.css, pages.css, responsive.css
-- 额外清理：删除3个废弃JS文件（one-click-permission-patch.js、tasks-btn-adb-patch.js、android_interface.js）
-- 新增：debug-tool.js（前端调试工具，295行，默认关闭）
-- JS文件从26个→24个（全部在用，无废弃文件），总代码量 7,542 行
+- 日间模式已添加面板覆盖样式（modal/tab/setting/quick-switch/apps），需在设备上验证效果
+- 当前无设备连接，功能测试项需要人工在设备上执行
+- 快捷应用加载 fallback 逻辑已确认合理（API返回空数组时显示提示，API不可用时显示 mock 数据）
 
 ---
 
-**文档版本**：v1.0
+**文档版本**：v1.1
 **维护规则**：每次任务状态变化时同步更新本文档
