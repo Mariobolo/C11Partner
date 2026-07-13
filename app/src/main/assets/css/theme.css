@@ -513,3 +513,166 @@ body.theme-light .background-container::after {
     background: rgba(255, 255, 255, 0.3);
 }
 
+/* ========== 日间模式 - 面板覆盖 ========== */
+
+/* Modal 遮罩层 */
+body.theme-light .modal {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(200, 200, 210, 0.85) 100%
+    );
+}
+
+/* Modal 内容区 */
+body.theme-light .modal-content {
+    background: rgba(245, 245, 250, 0.92);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.15),
+        0 30px 60px -30px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal 头部 */
+body.theme-light .modal-header {
+    background: linear-gradient(
+        180deg,
+        rgba(230, 230, 240, 0.8) 0%,
+        rgba(245, 245, 250, 0.5) 100%
+    );
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-light .modal-header h2 {
+    background: linear-gradient(135deg, rgba(30, 30, 35, 0.95) 0%, rgba(60, 60, 70, 0.9) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.theme-light .modal-close {
+    color: rgba(30, 30, 35, 0.6);
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-light .modal-close:hover {
+    color: rgba(200, 50, 50, 0.9);
+    background: rgba(200, 50, 50, 0.08);
+    border-color: rgba(200, 50, 50, 0.2);
+}
+
+/* 应用列表弹窗头部 */
+body.theme-light .apps-modal-header {
+    background: rgba(230, 230, 240, 0.6);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+/* 搜索栏 */
+body.theme-light .apps-search-bar {
+    background: rgba(230, 230, 240, 0.4);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+body.theme-light .apps-search-bar input {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(30, 30, 35, 0.95);
+}
+
+body.theme-light .apps-search-bar input::placeholder {
+    color: rgba(30, 30, 35, 0.4);
+}
+
+/* Tab 导航 */
+body.theme-light .tab-navigation {
+    background: linear-gradient(180deg,
+        rgba(230, 230, 240, 0.7) 0%,
+        rgba(220, 220, 230, 0.5) 100%);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+body.theme-light .tab-button {
+    color: rgba(30, 30, 35, 0.6);
+}
+
+body.theme-light .tab-button.active {
+    color: rgba(30, 30, 35, 0.95);
+}
+
+/* 设置项 */
+body.theme-light .setting-item {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(0, 0, 0, 0.03) 100%);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+body.theme-light .setting-item label {
+    color: rgba(30, 30, 35, 0.9);
+}
+
+body.theme-light .setting-item .setting-value {
+    color: rgba(30, 30, 35, 0.6);
+}
+
+/* 快捷开关面板 */
+body.theme-light .quick-switch-panel .modal-content {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(245, 245, 250, 0.6) 40%,
+        rgba(230, 230, 240, 0.5) 100%);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+body.theme-light .switch-item {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+body.theme-light .switch-item:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 分类标签 */
+body.theme-light .app-tab {
+    color: rgba(30, 30, 35, 0.6);
+}
+
+body.theme-light .app-tab:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+body.theme-light .app-tab.active {
+    color: rgba(30, 30, 35, 0.95);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* 壁纸类型选择 */
+body.theme-light .wallpaper-type-item {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+body.theme-light .wallpaper-type-item:hover {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.theme-light .wallpaper-type-name,
+body.theme-light .type-name {
+    color: rgba(30, 30, 35, 0.9);
+}
+
+body.theme-light .wallpaper-type-desc,
+body.theme-light .type-desc {
+    color: rgba(30, 30, 35, 0.5);
+}
+
