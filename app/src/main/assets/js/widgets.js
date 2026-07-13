@@ -261,7 +261,7 @@
          * @returns {boolean} 切换后的显示状态
          */
         toggle: function(id) {
-            if (this.states[id]?.visible) {
+            if (this.states[id] && this.states[id].visible) {
                 this.hide(id);
                 return false;
             } else {

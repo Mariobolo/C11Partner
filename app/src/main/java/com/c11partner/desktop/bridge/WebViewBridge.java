@@ -72,7 +72,7 @@ public class WebViewBridge extends BaseBridge {
      * 通知前端更新壁纸 - 传递给WallpaperBridge
      */
     public void notifyWallpaperUpdate() {
-        safeEvaluateJavascript("javascript:window.handleWallpaperUpdateNotification()");
+        safeEvaluateJavascript("javascript:if(typeof window.handleWallpaperUpdateNotification === 'function') { window.handleWallpaperUpdateNotification(); }");
     }
 
     // ==================== CarControlBridge 委托方法 ====================
@@ -939,7 +939,7 @@ public class WebViewBridge extends BaseBridge {
      */
     public void updateTimeDisplay(final String time, final String date, final String lunarDate) {
         String javascript = String.format(
-            "javascript:window.updateTimeDisplay(%s, %s, %s)",
+            "javascript:if(typeof window.updateTimeDisplay === 'function') { window.updateTimeDisplay(%s, %s, %s); }",
             JSONObject.quote(time),
             JSONObject.quote(date),
             JSONObject.quote(lunarDate)
@@ -998,6 +998,6 @@ public class WebViewBridge extends BaseBridge {
      * @param acInfoJson 空调状态JSON字符串
      */
     public void initializeAcStatus(String acInfoJson) {
-        safeEvaluateJavascript("javascript:window.initializeAcStatus(" + acInfoJson + ")");
+        safeEvaluateJavascript("javascript:if(typeof window.initializeAcStatus === 'function') { window.initializeAcStatus(" + acInfoJson + "); }");
     }
 }

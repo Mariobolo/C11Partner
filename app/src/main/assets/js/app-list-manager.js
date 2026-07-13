@@ -227,6 +227,18 @@ const AppListManager = (function() {
         }
     }
 
+    function setAppListCache(appListJson) {
+        try {
+            if (appListJson && appListJson !== "") {
+                cachedAppsData = JSON.parse(appListJson);
+                lastAppListLoadTime = Date.now();
+            }
+        } catch (e) {
+            console.error('解析预加载应用列表时出错:', e);
+        }
+    }
+    window.setAppListCache = setAppListCache;
+
     function initAppsModal() {
         const appsBtn = document.getElementById('appsBtn');
         const closeApps = document.getElementById('closeApps');
@@ -236,18 +248,6 @@ const AppListManager = (function() {
         const appsList = document.getElementById('appsList');
 
         if (!appsModal) return;
-
-        function setAppListCache(appListJson) {
-            try {
-                if (appListJson && appListJson !== "") {
-                    cachedAppsData = JSON.parse(appListJson);
-                    lastAppListLoadTime = Date.now();
-                }
-            } catch (e) {
-                console.error('解析预加载应用列表时出错:', e);
-            }
-        }
-        window.setAppListCache = setAppListCache;
 
         if (appsBtn) {
             appsBtn.addEventListener('click', function () {
