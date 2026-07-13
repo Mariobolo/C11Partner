@@ -126,6 +126,11 @@
   - ✅ 添加 apps-modal-header/apps-search-bar/search-input 覆盖
   - ✅ 添加 quick-switch-panel/switch-item 覆盖
   - ✅ 添加 wallpaper-type-item/app-tab 分类标签覆盖
+- [x] 修复前端启动错误（2026-07-14，commit ff2b6a6）
+  - ✅ 修复 widgets.js 可选链操作符语法错误（Android 9 WebView 不支持 ?.）
+  - ✅ 修复 setAppListCache 定义在 initAppsModal 内部导致调用时机错误
+  - ✅ 修复后端4处 JS 调用缺少函数存在性检查（updateTimeDisplay/initializeAcStatus/handleWallpaperUpdateNotification/setAppListCache）
+  - ✅ 应用启动验证通过，无 Uncaught 错误
 - [ ] 测试面板开关（设置/应用/开关面板）
 - [ ] 测试时钟显示（秒数不闪烁）
 - [ ] 测试应用列表加载
@@ -148,41 +153,37 @@
 
 ### 当前交接（2026-07-14）
 
-**正在执行**：阶段5 - 功能验证（阻塞：无设备连接）
+**正在执行**：阶段5 - 功能验证（模拟器已启动，可继续测试）
 
 **已完成**：
 - ✅ 阶段1文档整理全部完成
 - ✅ 阶段2前端清理全部完成
 - ✅ 阶段3接口对齐全部完成
 - ✅ 阶段4 CSS清理全部完成
-- ✅ 阶段5 编译验证（BUILD SUCCESSFUL，2026-07-14）
-- ✅ 阶段5 前端静态检查（6项全部通过，2026-07-14）
-- ✅ 阶段5 修复日间模式样式不完整（theme.css +163行，commit 2b6c1c3）
-- ✅ 代码规范检查（!important 仅在 base.css 中使用，符合规范）
-- ✅ Git 推送成功（4个本地提交已推送）
+- ✅ 阶段5 编译验证（BUILD SUCCESSFUL）
+- ✅ 阶段5 前端静态检查（6项全部通过）
+- ✅ 阶段5 修复日间模式样式不完整（commit 2b6c1c3）
+- ✅ 修复 AVD 配置（C11Test.ini UTF-8 BOM 问题），模拟器成功启动
+- ✅ 修复前端启动错误（widgets.js 可选链 + setAppListCache 定义位置 + 后端防御检查），commit ff2b6a6
+- ✅ 应用启动验证通过，无 Uncaught 错误
+- ✅ 模拟器正在运行（emulator-5554），可继续功能测试
 
-**阻塞原因**：
-- AVD 模拟器配置损坏（`C:\Users\Mario\.android\avd\C11Test.ini` 文件为空）
-- 无法写入 AVD 配置文件（工作目录外，权限限制）
-- 无真机或其他模拟器连接
+**当前状态**：
+- 模拟器：emulator-5554 已连接并运行
+- 应用：已安装并启动，无前端错误
+- 权限：存储权限已授予，沉浸模式提示已确认
 
 **下一步具体操作**：
-1. **修复 AVD 配置**（推荐）：通过 Android Studio 打开 AVD Manager 删除并重建 C11Test，或手动写入 `C11Test.ini`：
-   ```
-   avd.ini.encoding=UTF-8
-   path=C:\Users\Mario\.android\avd\C11Test.avd
-   path.rel=avd\C11Test.avd
-   target=android-28
-   ```
-2. **或连接真机/其他模拟器**：adb devices 确认连接后继续
-3. 安装 APK 后测试功能：
-   - 面板开关（设置/应用/开关面板）
-   - 时钟显示（秒数不闪烁）
-   - 应用列表加载
-   - 快捷开关功能
-   - 壁纸切换
-   - 车控功能
-   - 日间模式显示效果
+1. 继续阶段5功能测试：
+   - 测试面板开关（设置/应用/开关面板）
+   - 测试时钟显示（秒数不闪烁）
+   - 测试应用列表加载
+   - 测试快捷开关功能
+   - 测试壁纸切换
+   - 测试车控功能
+   - 测试日间模式显示效果
+2. 可通过 adb shell input tap 发送点击事件测试 UI
+3. 可通过 adb logcat -s WebConsole 查看前端日志
 
 ---
 
