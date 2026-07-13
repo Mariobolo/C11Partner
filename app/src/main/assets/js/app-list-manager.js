@@ -265,7 +265,10 @@ const AppListManager = (function() {
         }
 
         if (closeApps) {
-            closeApps.addEventListener('click', hideAppsModal);
+            closeApps.addEventListener('click', function() {
+                console.log('[app-list-manager] closeApps clicked');
+                hideAppsModal();
+            });
         }
 
         appsModal.addEventListener('click', function (event) {

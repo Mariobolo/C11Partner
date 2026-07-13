@@ -612,7 +612,10 @@ function initSettingsModal() {
     }
 
     if (closeSettings) {
-        closeSettings.addEventListener('click', hideSettingsModal);
+        closeSettings.addEventListener('click', function() {
+            console.log('[index.js] closeSettings clicked');
+            hideSettingsModal();
+        });
     }
 
     tabButtons.forEach(button => {
@@ -989,6 +992,7 @@ safeInit('addTouchSwipeListener', addTouchSwipeListener);
 safeInit('initHorizontalScroll', initHorizontalScroll);
 safeInit('updateNetworkAndBluetoothStatus', updateNetworkAndBluetoothStatus);
 safeInit('initWallpaperDoubleClick', initWallpaperDoubleClick);
+safeInit('handleWallpaperLongPress', handleWallpaperLongPress);
 safeInit('initComponentVisibility', initComponentVisibility);
 safeInit('initMusicControls', initMusicControls);
 safeInit('initAcTemperature', initAcTemperature);
