@@ -195,6 +195,10 @@
    - 主题模式：getThemeMode() / setThemeMode()
    - 特效等级：getEffectLevel() / setEffectLevel()
    - 壁纸轮播：toggleWallpaperCarousel() / restoreDefaultWallpaper()
+4. commit d876083 - 补齐pickLocalWallpaperFile/pickLocalWallpaperFolder接口
+   - 扫描前端108个Android.xxx()调用，全部与后端接口对齐
+   - 修复WallpaperBridge.java中方法声明缺失问题
+   - 后端总接口数：205个（前端实际使用108个）
 
 **已知限制**（非 bug）：
 - 全屏面板（设置/应用）无法通过点击背景关闭，需通过×按钮关闭（modal-content 100%覆盖，设计如此）
@@ -204,7 +208,7 @@
 - 真机实测验证面板关闭按钮交互
 - 模拟 CAN 信号验证车控状态更新
 - 验证壁纸切换的完整流程
-- 继续扫描前端 JS 中 Android.xxx() 调用，确保接口完整性
+- 完善 pickLocalWallpaperFile/Folder 的实际文件选择器实现
 
 ---
 
