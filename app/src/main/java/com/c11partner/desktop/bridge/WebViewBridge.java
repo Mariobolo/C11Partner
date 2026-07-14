@@ -527,6 +527,12 @@ public class WebViewBridge extends BaseBridge {
     @JavascriptInterface
     public boolean deleteCurrentWallpaper() { return mWallpaperBridge.deleteCurrentWallpaper(); }
 
+    @JavascriptInterface
+    public void pickLocalWallpaperFile() { mWallpaperBridge.pickLocalWallpaperFile(); }
+
+    @JavascriptInterface
+    public void pickLocalWallpaperFolder() { mWallpaperBridge.pickLocalWallpaperFolder(); }
+
     // ==================== MusicBridge 委托方法 ====================
     @JavascriptInterface
     public void startMusicVisualizer() { mMusicBridge.startMusicVisualizer(); }

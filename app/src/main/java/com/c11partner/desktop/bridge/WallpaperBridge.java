@@ -2,6 +2,7 @@ package com.c11partner.desktop.bridge;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 import com.c11partner.desktop.MainActivity;
 import com.c11partner.desktop.utils.WallpaperManager;
@@ -840,12 +841,18 @@ public class WallpaperBridge extends BaseBridge {
      * 选择本地壁纸文件（调用系统文件选择器）
      * 预留接口，后续实现
      */
+    @JavascriptInterface
     public void pickLocalWallpaperFile() {
         Log.d(TAG, "选择本地壁纸文件（预留接口）");
         // TODO: 调用系统文件选择器
     }
     
     /**
+     * 选择本地壁纸文件夹（调用系统文件夹选择器）
+     * 预留接口，后续实现
+     */
+    @JavascriptInterface
+    public void pickLocalWallpaperFolder() {
         Log.d(TAG, "选择本地壁纸文件夹（预留接口）");
         // TODO: 调用系统文件夹选择器
     }
