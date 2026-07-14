@@ -928,6 +928,114 @@ public class WebViewBridge extends BaseBridge {
         }
     }
 
+    // ==================== 前端兼容性补充方法（别名与封装） ====================
+
+    @JavascriptInterface
+    public int getMusicProgress() {
+        try {
+            String progressJson = mMusicBridge.getMusicProgressInfo();
+            if (progressJson != null) {
+                JSONObject json = new JSONObject(progressJson);
+                long currentPosition = json.optLong("currentPosition", 0);
+                long duration = json.optLong("duration", 0);
+                if (duration > 0) {
+                    return (int) (currentPosition * 100 / duration);
+                }
+            }
+        } catch (Exception e) {
+            logE(TAG, "getMusicProgress失败", e);
+        }
+        return 0;
+    }
+
+    @JavascriptInterface
+    public void toggleMusicPlayback() {
+        mMusicBridge.playPauseMusic();
+    }
+
+    @JavascriptInterface
+    public void openAdbSettings() {
+        mAdbBridge.triggerUsbDebugAuthorization();
+    }
+
+    @JavascriptInterface
+    public String getComponentConfigs() {
+        return mSystemBridge.getAllComponentConfigs();
+    }
+
+    @JavascriptInterface
+    public boolean setComponentVisible(String componentName, boolean isVisible) {
+        return mSystemBridge.saveComponentConfig(componentName, isVisible);
+    }
+
+    @JavascriptInterface
+    public boolean increaseWindLevel() {
+        return mCarControlBridge.adjustWindLevel(1);
+    }
+
+    @JavascriptInterface
+    public boolean decreaseWindLevel() {
+        return mCarControlBridge.adjustWindLevel(-1);
+    }
+
+    @JavascriptInterface
+    public String getThemeMode() {
+        return mCarControlBridge.isNightModeOn() ? "light" : "dark";
+    }
+
+    @JavascriptInterface
+    public void setThemeMode(String mode) {
+        mCarControlBridge.setNightMode("light".equals(mode));
+    }
+
+    @JavascriptInterface
+    public String getEffectLevel() {
+        try {
+            String level = mContext.getSharedPreferences("app_settings", 0)
+                .getString("effect_level", "none");
+            return (level != null) ? level : "none";
+        } catch (Exception e) {
+            return "none";
+        }
+    }
+
+    @JavascriptInterface
+    public void setEffectLevel(String level) {
+        try {
+            mContext.getSharedPreferences("app_settings", 0).edit()
+                .putString("effect_level", level).apply();
+        } catch (Exception e) {
+            logE(TAG, "setEffectLevel失败", e);
+        }
+    }
+
+    @JavascriptInterface
+    public boolean toggleWallpaperCarousel() {
+        try {
+            String settingsJson = mWallpaperBridge.getWallpaperSettings();
+            if (settingsJson != null) {
+                JSONObject json = new JSONObject(settingsJson);
+                boolean current = json.optBoolean("wallpaper_carousel", false);
+                boolean newValue = !current;
+                mWallpaperBridge.saveWallpaperCarouselSetting(newValue);
+                return true;
+            }
+        } catch (Exception e) {
+            logE(TAG, "toggleWallpaperCarousel失败", e);
+        }
+        return false;
+    }
+
+    @JavascriptInterface
+    public void restoreDefaultWallpaper() {
+        try {
+            mWallpaperBridge.setWallpaperType(1);
+            mWallpaperBridge.saveWallpaperCarouselSetting(false);
+        } catch (Exception e) {
+            logE(TAG, "restoreDefaultWallpaper失败", e);
+        }
+    }
+
     // ==================== MainActivity 调用的UI更新方法 ====================
     
     /**
