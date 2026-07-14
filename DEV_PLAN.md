@@ -186,6 +186,16 @@
 1. commit ff2b6a6 - 修复 widgets.js 可选链 + setAppListCache + 后端防御检查
 2. commit ebd3db9 - 修复 handleWallpaperLongPress 注册 + 关闭按钮样式 + 调试日志
 
+**阶段6（持续优化）新增记录**：
+3. commit 0d7daf8 - 补齐13个前端调用但缺失的JS接口方法
+   - 音乐进度：getMusicProgress() / toggleMusicPlayback()
+   - ADB设置：openAdbSettings()
+   - 组件配置：getComponentConfigs() / setComponentVisible()
+   - 风量控制：increaseWindLevel() / decreaseWindLevel()
+   - 主题模式：getThemeMode() / setThemeMode()
+   - 特效等级：getEffectLevel() / setEffectLevel()
+   - 壁纸轮播：toggleWallpaperCarousel() / restoreDefaultWallpaper()
+
 **已知限制**（非 bug）：
 - 全屏面板（设置/应用）无法通过点击背景关闭，需通过×按钮关闭（modal-content 100%覆盖，设计如此）
 - 模拟器 ADB input tap 无法精确触发 WebView 内元素点击（X5 WebView 限制，真机不受影响）
@@ -194,6 +204,7 @@
 - 真机实测验证面板关闭按钮交互
 - 模拟 CAN 信号验证车控状态更新
 - 验证壁纸切换的完整流程
+- 继续扫描前端 JS 中 Android.xxx() 调用，确保接口完整性
 
 ---
 
